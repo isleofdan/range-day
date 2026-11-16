@@ -1,0 +1,399 @@
+{
+ "_about": "The two courses. Each models a public range. plates lists each steel plate: its distance, its width and height in inches, and how high it sits above the firing line (riseFt), computed from farPlateRiseFt in proportion to distance. altitudeFt is the range's height above sea level, for the air.",
+ "cta-piru": {
+  "name": "Canyon course (modeled on California Tactical Academy, Piru)",
+  "address": {
+   "value": "6700 Holser Canyon Road, Piru, CA 93040",
+   "source": {
+    "url": "https://ctala.com/contact-us/",
+    "read": "2026-11-16",
+    "note": "the range's own contact page; it adds that it was previously known as Wes Thompson's Piru Rifle Range. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "steelTo": {
+   "value": 1000,
+   "source": {
+    "url": "https://ctala.com/public-range/",
+    "read": "2026-11-16",
+    "note": "\"Steel targets are set from 100 yards all the way up to 1000 yards\"; https://ctala.com/the-ultimate-guide-to-1000-yard-rifle-ranges-in-california-why-cta-stands-out/ says paper 50 to 400 yards and steel 100 to 1,000 yards. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "altitudeFt": {
+   "value": 850,
+   "estimate": "no elevation service could be reached from this session. Holser Canyon is listed at 830 ft at the canyon (USGS Piru quadrangle via https://www.topozone.com/?p=750134) and the town of Piru at 709 ft (https://www.topozone.com/?p=661862); the range is about 1.5 miles up the canyon road, so 850 ft"
+  },
+  "farPlateRiseFt": {
+   "value": 200,
+   "estimate": "the owner remembers the far plates on a slope \"that rises to maybe a couple hundred feet\"; the 1,000-yard plate is set 200 ft above the firing line and the others in proportion to distance. One value to adjust"
+  },
+  "zeroYards": [
+   {
+    "value": 25,
+    "source": {
+     "url": "https://ctala.com/the-ultimate-guide-to-1000-yard-rifle-ranges-in-california-why-cta-stands-out/",
+     "read": "2026-11-16",
+     "note": "paper targets from 50 to 400 yards; 25 yards is a bench distance. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   },
+   {
+    "value": 50,
+    "source": {
+     "url": "https://ctala.com/the-ultimate-guide-to-1000-yard-rifle-ranges-in-california-why-cta-stands-out/",
+     "read": "2026-11-16",
+     "note": "paper targets from 50 to 400 yards; 25 yards is a bench distance. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   },
+   {
+    "value": 100,
+    "source": {
+     "url": "https://ctala.com/the-ultimate-guide-to-1000-yard-rifle-ranges-in-california-why-cta-stands-out/",
+     "read": "2026-11-16",
+     "note": "paper targets from 50 to 400 yards; 25 yards is a bench distance. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   },
+   {
+    "value": 200,
+    "source": {
+     "url": "https://ctala.com/the-ultimate-guide-to-1000-yard-rifle-ranges-in-california-why-cta-stands-out/",
+     "read": "2026-11-16",
+     "note": "paper targets from 50 to 400 yards; 25 yards is a bench distance. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   }
+  ],
+  "plates": [
+   {
+    "yards": {
+     "value": 200,
+     "source": {
+      "url": "https://ctala.com/public-range/",
+      "read": "2026-11-16",
+      "note": "steel every 100 yards from 100 to 1,000. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "widthIn": {
+     "value": 12,
+     "estimate": "the range publishes no plate sizes; 12 by 18 in plates to 500 yards, 18 by 24 to 800, 24 by 36 beyond are common steel sizes"
+    },
+    "heightIn": {
+     "value": 18,
+     "estimate": "same basis: the same basis as the figure next to it in this entry"
+    }
+   },
+   {
+    "yards": {
+     "value": 300,
+     "source": {
+      "url": "https://ctala.com/public-range/",
+      "read": "2026-11-16",
+      "note": "steel every 100 yards from 100 to 1,000. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "widthIn": {
+     "value": 12,
+     "estimate": "the range publishes no plate sizes; 12 by 18 in plates to 500 yards, 18 by 24 to 800, 24 by 36 beyond are common steel sizes"
+    },
+    "heightIn": {
+     "value": 18,
+     "estimate": "same basis: the same basis as the figure next to it in this entry"
+    }
+   },
+   {
+    "yards": {
+     "value": 400,
+     "source": {
+      "url": "https://ctala.com/public-range/",
+      "read": "2026-11-16",
+      "note": "steel every 100 yards from 100 to 1,000. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "widthIn": {
+     "value": 12,
+     "estimate": "the range publishes no plate sizes; 12 by 18 in plates to 500 yards, 18 by 24 to 800, 24 by 36 beyond are common steel sizes"
+    },
+    "heightIn": {
+     "value": 18,
+     "estimate": "same basis: the same basis as the figure next to it in this entry"
+    }
+   },
+   {
+    "yards": {
+     "value": 500,
+     "source": {
+      "url": "https://ctala.com/public-range/",
+      "read": "2026-11-16",
+      "note": "steel every 100 yards from 100 to 1,000. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "widthIn": {
+     "value": 12,
+     "estimate": "the range publishes no plate sizes; 12 by 18 in plates to 500 yards, 18 by 24 to 800, 24 by 36 beyond are common steel sizes"
+    },
+    "heightIn": {
+     "value": 18,
+     "estimate": "same basis: the same basis as the figure next to it in this entry"
+    }
+   },
+   {
+    "yards": {
+     "value": 600,
+     "source": {
+      "url": "https://ctala.com/public-range/",
+      "read": "2026-11-16",
+      "note": "steel every 100 yards from 100 to 1,000. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "widthIn": {
+     "value": 18,
+     "estimate": "the range publishes no plate sizes; 12 by 18 in plates to 500 yards, 18 by 24 to 800, 24 by 36 beyond are common steel sizes"
+    },
+    "heightIn": {
+     "value": 24,
+     "estimate": "same basis: the same basis as the figure next to it in this entry"
+    }
+   },
+   {
+    "yards": {
+     "value": 700,
+     "source": {
+      "url": "https://ctala.com/public-range/",
+      "read": "2026-11-16",
+      "note": "steel every 100 yards from 100 to 1,000. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "widthIn": {
+     "value": 18,
+     "estimate": "the range publishes no plate sizes; 12 by 18 in plates to 500 yards, 18 by 24 to 800, 24 by 36 beyond are common steel sizes"
+    },
+    "heightIn": {
+     "value": 24,
+     "estimate": "same basis: the same basis as the figure next to it in this entry"
+    }
+   },
+   {
+    "yards": {
+     "value": 800,
+     "source": {
+      "url": "https://ctala.com/public-range/",
+      "read": "2026-11-16",
+      "note": "steel every 100 yards from 100 to 1,000. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "widthIn": {
+     "value": 18,
+     "estimate": "the range publishes no plate sizes; 12 by 18 in plates to 500 yards, 18 by 24 to 800, 24 by 36 beyond are common steel sizes"
+    },
+    "heightIn": {
+     "value": 24,
+     "estimate": "same basis: the same basis as the figure next to it in this entry"
+    }
+   },
+   {
+    "yards": {
+     "value": 900,
+     "source": {
+      "url": "https://ctala.com/public-range/",
+      "read": "2026-11-16",
+      "note": "steel every 100 yards from 100 to 1,000. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "widthIn": {
+     "value": 24,
+     "estimate": "the range publishes no plate sizes; 12 by 18 in plates to 500 yards, 18 by 24 to 800, 24 by 36 beyond are common steel sizes"
+    },
+    "heightIn": {
+     "value": 36,
+     "estimate": "same basis: the same basis as the figure next to it in this entry"
+    }
+   },
+   {
+    "yards": {
+     "value": 1000,
+     "source": {
+      "url": "https://ctala.com/public-range/",
+      "read": "2026-11-16",
+      "note": "steel every 100 yards from 100 to 1,000. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "widthIn": {
+     "value": 24,
+     "estimate": "the range publishes no plate sizes; 12 by 18 in plates to 500 yards, 18 by 24 to 800, 24 by 36 beyond are common steel sizes"
+    },
+    "heightIn": {
+     "value": 36,
+     "estimate": "same basis: the same basis as the figure next to it in this entry"
+    }
+   }
+  ]
+ },
+ "angeles-sylmar": {
+  "name": "Rifle line (modeled on Angeles Shooting Ranges, Sylmar)",
+  "address": {
+   "value": "12651 Little Tujunga Canyon Road, Sylmar (Lake View Terrace), CA 91342",
+   "source": {
+    "url": "https://www.angelesranges.com/rangeInfo/ourServices.php",
+    "read": "2026-11-16",
+    "note": "the range's own services page did not show the street address in the indexed text; third-party listings give it, with the city as Lake View Terrace. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "steelTo": {
+   "value": 600,
+   "source": {
+    "url": "https://www.angelesranges.com/rangeInfo/ourServices.php",
+    "read": "2026-11-16",
+    "note": "berms at 100, 200, 300, 400, 500 and 600 yards; steel at 600; paper to 200 yards on weekends and 300 on weekdays; 100-yard targets at the benches. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "altitudeFt": {
+   "value": 1500,
+   "estimate": "no elevation service could be reached from this session. Sylmar is about 1,270 ft (https://en.wikipedia.org/wiki/Sylmar,_Los_Angeles) and the range sits up Little Tujunga Canyon above the town; 1,500 ft"
+  },
+  "farPlateRiseFt": {
+   "value": 0,
+   "estimate": "the owner described no slope at this range; the plates are set level with the firing line"
+  },
+  "zeroYards": [
+   {
+    "value": 25,
+    "source": {
+     "url": "https://www.angelesranges.com/rangeInfo/ourServices.php",
+     "read": "2026-11-16",
+     "note": "paper targets at 100 and 200 yards; 25 and 50 yards are bench distances. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   },
+   {
+    "value": 50,
+    "source": {
+     "url": "https://www.angelesranges.com/rangeInfo/ourServices.php",
+     "read": "2026-11-16",
+     "note": "paper targets at 100 and 200 yards; 25 and 50 yards are bench distances. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   },
+   {
+    "value": 100,
+    "source": {
+     "url": "https://www.angelesranges.com/rangeInfo/ourServices.php",
+     "read": "2026-11-16",
+     "note": "paper targets at 100 and 200 yards; 25 and 50 yards are bench distances. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   },
+   {
+    "value": 200,
+    "source": {
+     "url": "https://www.angelesranges.com/rangeInfo/ourServices.php",
+     "read": "2026-11-16",
+     "note": "paper targets at 100 and 200 yards; 25 and 50 yards are bench distances. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   }
+  ],
+  "plates": [
+   {
+    "yards": {
+     "value": 100,
+     "source": {
+      "url": "https://www.angelesranges.com/rangeInfo/ourServices.php",
+      "read": "2026-11-16",
+      "note": "steel at each 100-yard berm. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "widthIn": {
+     "value": 12,
+     "estimate": "the range publishes no plate sizes; common steel sizes"
+    },
+    "heightIn": {
+     "value": 18,
+     "estimate": "same basis: the same basis as the figure next to it in this entry"
+    }
+   },
+   {
+    "yards": {
+     "value": 200,
+     "source": {
+      "url": "https://www.angelesranges.com/rangeInfo/ourServices.php",
+      "read": "2026-11-16",
+      "note": "steel at each 100-yard berm. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "widthIn": {
+     "value": 12,
+     "estimate": "the range publishes no plate sizes; common steel sizes"
+    },
+    "heightIn": {
+     "value": 18,
+     "estimate": "same basis: the same basis as the figure next to it in this entry"
+    }
+   },
+   {
+    "yards": {
+     "value": 300,
+     "source": {
+      "url": "https://www.angelesranges.com/rangeInfo/ourServices.php",
+      "read": "2026-11-16",
+      "note": "steel at each 100-yard berm. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "widthIn": {
+     "value": 12,
+     "estimate": "the range publishes no plate sizes; common steel sizes"
+    },
+    "heightIn": {
+     "value": 18,
+     "estimate": "same basis: the same basis as the figure next to it in this entry"
+    }
+   },
+   {
+    "yards": {
+     "value": 400,
+     "source": {
+      "url": "https://www.angelesranges.com/rangeInfo/ourServices.php",
+      "read": "2026-11-16",
+      "note": "steel at each 100-yard berm. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "widthIn": {
+     "value": 18,
+     "estimate": "the range publishes no plate sizes; common steel sizes"
+    },
+    "heightIn": {
+     "value": 24,
+     "estimate": "same basis: the same basis as the figure next to it in this entry"
+    }
+   },
+   {
+    "yards": {
+     "value": 500,
+     "source": {
+      "url": "https://www.angelesranges.com/rangeInfo/ourServices.php",
+      "read": "2026-11-16",
+      "note": "steel at each 100-yard berm. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "widthIn": {
+     "value": 18,
+     "estimate": "the range publishes no plate sizes; common steel sizes"
+    },
+    "heightIn": {
+     "value": 24,
+     "estimate": "same basis: the same basis as the figure next to it in this entry"
+    }
+   },
+   {
+    "yards": {
+     "value": 600,
+     "source": {
+      "url": "https://www.angelesranges.com/rangeInfo/ourServices.php",
+      "read": "2026-11-16",
+      "note": "steel at each 100-yard berm. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "widthIn": {
+     "value": 18,
+     "estimate": "the range publishes no plate sizes; common steel sizes"
+    },
+    "heightIn": {
+     "value": 24,
+     "estimate": "same basis: the same basis as the figure next to it in this entry"
+    }
+   }
+  ]
+ }
+}

@@ -1,0 +1,318 @@
+{
+ "_about": "The rifle set. barrelIn is the barrel length the loads' speeds are given for. sightHeightIn is how far the sight line sits above the bore for each sight the rifle can carry. boreOffsetMoa is the rifle's mechanical offset with the sight at its middle setting: the reason a sight needs zeroing. sights lists the sights (data/sights.json) the rifle can carry.",
+ "bcm-ar15": {
+  "name": "BCM AR-15 carbine, 5.56",
+  "caliber": "5.56x45",
+  "playable": true,
+  "barrelIn": {
+   "value": 16,
+   "estimate": "the owner is unsure whether the barrel is 16 or 18 inches; 16 is used and marked. BCM's 16-inch carbines: https://www.bravocompanymfg.com/bcm-recce16-mcmr.html"
+  },
+  "sightHeightIn": {
+   "ar-irons": {
+    "value": 2.6,
+    "source": {
+     "url": "https://www.ar15.build/guides/optic-mounting-height-over-bore",
+     "read": "2026-11-16",
+     "note": "\"A standard AR sight plane is 2.6 inches above the bore, the height of an M4's front sight base\"; BCM publishes no figure. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   }
+  },
+  "boreOffsetMoa": {
+   "up": {
+    "value": -3.2,
+    "estimate": "a sight set to its mechanical middle is a few minutes off on most rifles; the figure is chosen so the rifle needs zeroing, not measured"
+   },
+   "right": {
+    "value": 1.6,
+    "estimate": "same basis as the elevation offset"
+   }
+  },
+  "recoilFactor": {
+   "value": 1,
+   "estimate": "the reference for the view's recoil: a 5.56 carbine"
+  },
+  "sights": [
+   "ar-irons"
+  ],
+  "loads": [
+   "imi-m193",
+   "imi-razorcore-69",
+   "federal-gmm-69",
+   "imi-razorcore-77"
+  ]
+ },
+ "iwi-tavor-sar": {
+  "name": "IWI Tavor SAR, 5.56",
+  "caliber": "5.56x45",
+  "playable": false,
+  "barrelIn": {
+   "value": 16.5,
+   "source": {
+    "url": "https://iwi.us/firearms/tavor-sar/5-56-nato-16-5in-barrel-left-hand",
+    "read": "2026-11-16",
+    "note": "IWI US: 16.5 in barrel, 26.125 in overall, 7.9 lb (the brief said 16 in; IWI's figure is used). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "sightHeightIn": {
+   "tavor-irons": {
+    "value": 3,
+    "estimate": "IWI publishes no sight height. Owners report 3.75 in on a SAR (https://ar15.com/forums/armory/X95_scope_mount_height/43-476622/) and about 2.1 in for a dot on a SAR (Reddit); Manticore's replacement rail is sold as raising the factory rail about half an inch to AR height (https://www.opticsplanet.com/manticore-arms-tavor-x95-overwatch-top-rail.html). 3.0 is the middle of the reported band; the field report gives the second crossing for the whole band"
+   },
+   "pa-md25": {
+    "value": 3,
+    "estimate": "same basis as the iron sights: a dot in its low mount sits about where the folding irons do"
+   },
+   "pa-magnifier": {
+    "value": 3,
+    "estimate": "behind the dot at the same height"
+   }
+  },
+  "boreOffsetMoa": {
+   "up": {
+    "value": -2.4,
+    "estimate": "chosen so the rifle needs zeroing, not measured"
+   },
+   "right": {
+    "value": 2.1,
+    "estimate": "same basis: the same basis as the figure next to it in this entry"
+   }
+  },
+  "recoilFactor": {
+   "value": 0.9,
+   "estimate": "a heavier 5.56 bullpup"
+  },
+  "sights": [
+   "tavor-irons",
+   "pa-md25",
+   "pa-magnifier"
+  ],
+  "loads": [
+   "imi-m193",
+   "imi-razorcore-69",
+   "federal-gmm-69",
+   "imi-razorcore-77"
+  ]
+ },
+ "iwi-x95": {
+  "name": "IWI Tavor X95, 5.56",
+  "caliber": "5.56x45",
+  "playable": false,
+  "barrelIn": {
+   "value": 16.5,
+   "source": {
+    "url": "https://iwi.us/firearms/tavor-x95/",
+    "read": "2026-11-16",
+    "note": "IWI US: 16.5 in barrel, 26.125 in overall, 7.9 lb. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "sightHeightIn": {
+   "tavor-irons": {
+    "value": 3,
+    "estimate": "as for the Tavor SAR: not published by IWI; the middle of the reported 2.1 to 3.75 in band"
+   },
+   "pa-md25": {
+    "value": 3,
+    "estimate": "same basis: the same basis as the figure next to it in this entry"
+   }
+  },
+  "boreOffsetMoa": {
+   "up": {
+    "value": -1.9,
+    "estimate": "chosen so the rifle needs zeroing, not measured"
+   },
+   "right": {
+    "value": -2.6,
+    "estimate": "same basis: the same basis as the figure next to it in this entry"
+   }
+  },
+  "recoilFactor": {
+   "value": 0.9,
+   "estimate": "a heavier 5.56 bullpup"
+  },
+  "sights": [
+   "tavor-irons",
+   "pa-md25"
+  ],
+  "loads": [
+   "imi-m193",
+   "imi-razorcore-69",
+   "federal-gmm-69",
+   "imi-razorcore-77"
+  ]
+ },
+ "ak-762": {
+  "name": "AK-pattern rifle, 7.62x39",
+  "caliber": "7.62x39",
+  "playable": false,
+  "barrelIn": {
+   "value": 16.3,
+   "source": {
+    "url": "https://en.wikipedia.org/wiki/AKM",
+    "read": "2026-11-16",
+    "note": "AKM barrel 415 mm (16.3 in); Arsenal's distributor lists the same: https://armatec.bg/products/7-62x39-mm-akm-kalashnikov. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "sightHeightIn": {
+   "ak-irons": {
+    "value": 1.9,
+    "source": {
+     "url": "https://en.wikipedia.org/wiki/AK-47",
+     "read": "2026-11-16",
+     "note": "\"sight line elements are approximately 48.5 mm (1.9 in) over the bore axis\". read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   },
+   "pa-3x-acss": {
+    "value": 3,
+    "estimate": "a prism sight on a side-rail mount sits about an inch above the irons; no maker figure"
+   }
+  },
+  "boreOffsetMoa": {
+   "up": {
+    "value": -4.5,
+    "estimate": "chosen so the rifle needs zeroing, not measured"
+   },
+   "right": {
+    "value": 3,
+    "estimate": "same basis: the same basis as the figure next to it in this entry"
+   }
+  },
+  "recoilFactor": {
+   "value": 1.4,
+   "estimate": "a 7.62x39 rifle kicks harder than a 5.56 carbine"
+  },
+  "sights": [
+   "ak-irons",
+   "pa-3x-acss"
+  ],
+  "loads": [
+   "silver-bear-123",
+   "ppu-123",
+   "sb-124",
+   "yugo-m67"
+  ]
+ },
+ "ak-545": {
+  "name": "AK-pattern rifle, 5.45x39",
+  "caliber": "5.45x39",
+  "playable": false,
+  "barrelIn": {
+   "value": 16.3,
+   "source": {
+    "url": "https://en.wikipedia.org/wiki/AK-74",
+    "read": "2026-11-16",
+    "note": "AK-74 barrel 415 mm (16.3 in). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "sightHeightIn": {
+   "ak-irons": {
+    "value": 1.9,
+    "source": {
+     "url": "https://en.wikipedia.org/wiki/AK-74",
+     "read": "2026-11-16",
+     "note": "48.5 mm over the bore axis, as for the AK-47. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   }
+  },
+  "boreOffsetMoa": {
+   "up": {
+    "value": -3.8,
+    "estimate": "chosen so the rifle needs zeroing, not measured"
+   },
+   "right": {
+    "value": -1.2,
+    "estimate": "same basis: the same basis as the figure next to it in this entry"
+   }
+  },
+  "recoilFactor": {
+   "value": 1,
+   "estimate": "close to a 5.56 carbine"
+  },
+  "sights": [
+   "ak-irons"
+  ],
+  "loads": [
+   "hornady-545-60"
+  ]
+ },
+ "molot-vepr-54r": {
+  "name": "Molot Vepr, 7.62x54R",
+  "caliber": "7.62x54R",
+  "playable": true,
+  "barrelIn": {
+   "value": 20.5,
+   "estimate": "the importer (FIME Group, https://fimegroup.com/vepr-rifle/vepr-762x54r/) lists the thumbhole-stock Vepr in 7.62x54R with 16.5 in (VPR-76254-01), 20.5 in (VPR-76254-02) and 23.2 in (VPR-76254-03) barrels; the owner remembers a long barrel of about 18 in, so the 20.5-inch model is the nearest listed length and is used. If the rifle was the 23.2-inch model the loads' speeds rise by about 55 fps"
+  },
+  "sightHeightIn": {
+   "vepr-irons": {
+    "value": 2,
+    "estimate": "not published by Molot or FIME; AK-pattern irons sit 1.9 in over the bore (https://en.wikipedia.org/wiki/AK-47), and one review of the .308 Vepr says about 4 in, which does not fit an AK receiver; 2.0 used"
+   },
+   "utg-2-7x44": {
+    "value": 3,
+    "estimate": "a scope on the Vepr's side rail mount sits about an inch above the irons; no maker figure"
+   }
+  },
+  "boreOffsetMoa": {
+   "up": {
+    "value": -7.5,
+    "estimate": "a freshly mounted scope on a side rail is usually several minutes off; chosen so the rifle needs zeroing, not measured"
+   },
+   "right": {
+    "value": 3.4,
+    "estimate": "same basis: the same basis as the figure next to it in this entry"
+   }
+  },
+  "recoilFactor": {
+   "value": 2.2,
+   "estimate": "a 7.62x54R rifle kicks far harder than a 5.56 carbine; the brief asks for a longer recoil on this rifle"
+  },
+  "sights": [
+   "vepr-irons",
+   "utg-2-7x44"
+  ],
+  "loads": [
+   "sb-174-hpbt",
+   "ppu-182",
+   "sb-180-sp",
+   "wolf-203-sp",
+   "silver-bear-174",
+   "wolf-174"
+  ]
+ },
+ "remington-22": {
+  "name": "Remington bolt-action .22 LR, heavy barrel",
+  "caliber": ".22 LR",
+  "playable": false,
+  "barrelIn": {
+   "value": 20,
+   "estimate": "the model is not identified. Remington's heavy-barrel bolt rimfires: 504-T HB, 20 in (https://www.chuckhawks.com/subscribers/product_review_page/remington_504-T.htm); 541-T HB (https://bluebookofgunvalues.com/products/remington-model-541t); 40-X rimfire, 27 to 28 in (https://bluebookofgunvalues.com/products/remington-model-40-xb-rangemaster-rimfire). 20 in used until the model is named"
+  },
+  "sightHeightIn": {
+   "rem-irons": {
+    "value": 0.9,
+    "estimate": "open sights on a rimfire sporter sit under an inch over the bore; no maker figure"
+   }
+  },
+  "boreOffsetMoa": {
+   "up": {
+    "value": -2,
+    "estimate": "chosen so the rifle needs zeroing, not measured"
+   },
+   "right": {
+    "value": 1,
+    "estimate": "same basis: the same basis as the figure next to it in this entry"
+   }
+  },
+  "recoilFactor": {
+   "value": 0.1,
+   "estimate": "a .22 barely moves the view"
+  },
+  "sights": [
+   "rem-irons"
+  ],
+  "loads": [
+   "cci-sv-40"
+  ]
+ }
+}
