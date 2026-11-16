@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}} — firing line</title>
+<link rel="stylesheet" href="/app.css">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#8c3b1e">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<script src="/sentry.min.js"></script>
+<script src="/crash.js"></script>
+<script src="/install.js" defer></script>
+</head>
+<body class="line">
+<header class="bar">
+  <a class="name" href="/">{{TITLE}}</a>
+  <nav><a id="to-zero" href="/zero">Zero bench</a><a href="/logout">Sign out</a></nav>
+</header>
+<main class="game">
+  <h1>Firing line</h1>
+  <p id="intro" class="muted">Loading…</p>
+  <div class="controls">
+    <div class="field"><label for="plate">Plate</label><select id="plate"></select></div>
+    <div class="field"><label for="load">Load</label><select id="load"></select></div>
+  </div>
+  <div class="viewwrap"><canvas id="view" width="400" height="400"></canvas></div>
+  <p id="result" class="readout">Drag the view to hold off the plate. Press and hold <strong>Steady</strong>, then <strong>Fire</strong>.</p>
+  <div id="zoomrow" class="field zoom"><label for="zoom">Zoom <span id="zoom-text" class="mono"></span></label><input id="zoom" type="range" min="2" max="7" step="0.5" value="2"></div>
+  <div class="knobs">
+    <div class="knob">
+      <span class="muted">Elevation</span>
+      <div class="pair"><button id="el-down" type="button" class="btn inline">▼ down</button><button id="el-up" type="button" class="btn inline">▲ up</button></div>
+      <span id="el-text" class="mono"></span>
+    </div>
+    <div class="knob">
+      <span class="muted">Windage</span>
+      <div class="pair"><button id="wd-left" type="button" class="btn inline">◀ left</button><button id="wd-right" type="button" class="btn inline">right ▶</button></div>
+      <span id="wd-text" class="mono"></span>
+    </div>
+  </div>
+  <p id="zero-note" class="muted small"></p>
+  <h2>Shot log</h2>
+  <p class="muted small">Each shot's distance, sight setting and where it landed, so you can build your own table. Kept on this device.</p>
+  <div class="tablewrap"><table id="log" class="log"><thead><tr><th>#</th><th>Yards</th><th>Elev.</th><th>Wind.</th><th>Zoom</th><th>Held</th><th>Landed</th></tr></thead><tbody></tbody></table></div>
+  <div class="row"><button id="clear-log" type="button" class="btn inline secondary">Clear the log</button></div>
+  <h2>Setting</h2>
+  <label class="check"><input id="show-conditions" type="checkbox"> Show the conditions (the true wind, temperature, and the engine's drop, for learning)</label>
+  <pre id="conditions" class="mono small conditions"></pre>
+</main>
+<div class="firebar">
+  <button id="steady" type="button" class="btn">Steady (hold)</button>
+  <button id="fire" type="button" class="btn fire">Fire</button>
+</div>
+<script src="/engine.js"></script>
+<script src="/game.js"></script>
+<script src="/line.js"></script>
+</body>
+</html>
