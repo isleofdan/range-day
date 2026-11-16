@@ -85,7 +85,7 @@
     const tau = 1.2;
     for (const [v, x] of [['vu', 'up'], ['vr', 'right']]) {
       wander[v] += (-wander[v] / tau) * dt + amp * Math.sqrt(dt) * E.gaussian() * 0.9;
-      wander[x] += wander[v] * dt * 2.2 - (wander[x] / 3) * dt; // pulled back toward the hold
+      wander[x] += wander[v] * dt * 0.6 - (wander[x] / 3) * dt; // pulled back toward the hold; rested, about 0.23 MOA either way
     }
     const breathe = steady ? 0 : 0.25 * Math.sin((2 * Math.PI * now) / 4.2);
     wander.breath = breathe;

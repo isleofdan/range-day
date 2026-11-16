@@ -9,6 +9,40 @@
   sent. Turning it on is an ask for the origin chat: a later session on the
   machine follows step 4.
 
+- **One engine, in `public/engine.js`,** loaded by the pages as a script and
+  by the tests as a module, so there is one set of maths. Fourth-order
+  Runge-Kutta at 1 ms steps; ICAO standard air for the drag coefficients
+  (the convention the makers' own tables follow, as the two reference
+  checks show).
+- **The data file is the only place a number lives**, each figure with its
+  source and the date read or an estimate with its basis; `lib/data.js`
+  refuses a bare number. This session read maker pages through the search
+  engine's indexed text, because the cloud session's network allows web
+  search but no page fetches; every source note says so.
+- **Drag tables** come from the open-source py-ballisticcalc library's copy
+  of the standard G1 and G7 functions, at a named commit, because
+  jbmballistics.com could not be reached; the engine is checked against
+  two makers' published tables to confirm them.
+- **Sellier & Bellot's 174 gr 7.62x54R load uses its G7 figure** (0.240),
+  because the maker's own drop table follows it to 1,000 m within 0.06
+  MOA, while their G1 figure (0.477) only matches to about 700 m.
+- **The Vepr's barrel is 20.5 in** in the data: the importer lists the
+  thumbhole-stock model with 16.5, 20.5 and 23.2 in barrels and the owner
+  remembers a long barrel of about 18 in; the nearest listed length is
+  used, marked an estimate.
+- **A rifle needs zeroing because of its own offset** (`boreOffsetMoa` in
+  `data/rifles.json`, a fixed estimate per rifle), not because of a random
+  draw: so a saved zero means something and tests can repeat it.
+- **Two courses, two pairings:** the canyon course (modeled on California
+  Tactical Academy, Piru; steel 200 to 1,000 yards, the far plates up a
+  slope set by one value, `farPlateRiseFt` = 200) with the Vepr and the
+  UTG scope; the rifle line (modeled on Angeles Shooting Ranges, Sylmar;
+  steel 100 to 600, level) with the AR-15 and iron sights. The other five
+  rifles, the red dots, the magnifier and the drop reticle are in the data
+  for later sessions.
+- **The home page keeps the line "This is Range Day"**, because the kit's
+  Deploy workflow greps the signed-in page for it.
+
 ## Decisions inherited from the kit (starting-kit-one, 2 Oct 2026)
 
 - **What the kit is.** A floor, not a framework: the smallest folder that

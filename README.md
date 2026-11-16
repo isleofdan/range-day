@@ -1,94 +1,63 @@
-# Starting kit
+# Range Day
 
-The folder every new app of Dan's is copied from, so a new app starts with
-its plumbing already right instead of rebuilding it each time. Dan never
-opens the kit itself. What he sees is an app made from it:
+A long-range target-shooting game for one player, on a phone or a
+computer. It recreates shooting at steel plates from 100 to 1,000 yards
+in dry, brown, brushy canyon hills, on two courses modeled on public
+ranges north of Los Angeles. The realism is in the physics and the
+sights, not in the graphics: every bullet is flown step by step through
+one physics engine (gravity, drag from the standard G1 or G7 tables, the
+range's air, wind in three stretches that gusts, a target above or below
+the shooter by geometry, the sight's height, the load's spread), and the
+player looks through the rifle's real sight, zeroes it on paper in real
+clicks, then works out the drop and the wind for each distance himself.
 
-- **A sign-in page** of the app's own (a plain web form, never the
-  browser's username-and-password box), so it works inside the phone's
-  in-app browsers: a link opened from the Claude app, Gmail or Slack. One
-  passphrase; signing in once keeps that browser signed in for 30 days.
-  Spaces typed before or after the passphrase are ignored.
-- **The app's screens**, laid out for a phone (412×915) and for a computer
-  (1280×800 and wider). The kit carries one sample screen that says
-  "This is <the app's name>".
-- **A status page** (`/status`) with an "alive since" line (when this copy
-  of the app started, and which version of the code it runs) and the last
-  error from anything outside the app it called, with that service's own
-  status and message, so a failure can be read on screen.
+## The screens
 
-Behind that, for the Claude Code sessions that build apps:
+- **Home** (`/`): pick a course and rifle (two pairings now: the canyon
+  course with a 7.62x54R Vepr and a UTG 2-7x scope; the rifle line with
+  an AR-15 and its iron sights), pick the load, see the saved zero for
+  that rifle and load or "not zeroed yet".
+- **Zero bench** (`/zero`): a 36-inch paper with a 1-inch grid at 25, 50,
+  100 or 200 yards. Fire a group, read where it lands, turn the sight's
+  elevation and windage in its real click values, fire again, press
+  **Save this zero**. The zero is saved on the device for that rifle and
+  load. Changing the load keeps the sight where it is, so the group moves
+  as it would in life.
+- **Firing line** (`/line`): the view through the sight. The scope zooms
+  across its real range; the iron sights show the front post, wide
+  against a far plate. The aim wanders the way a rested rifle does; drag
+  to hold off, hold **Steady**, press **Fire**. The bullet takes its real
+  flight time; a miss throws dust where it landed, a hit rings late by the
+  flight time plus the sound's trip back. Recoil knocks the view off for a
+  moment. No drop or wind figure is given: the wind shows only as heat
+  shimmer leaning, brush moving and the dust's drift. A shot log lists each
+  shot's distance, sight setting, hold and where it landed. One setting,
+  off by default, **Show the conditions**, prints the true wind,
+  temperature and the engine's drop, for learning.
 
-- **One-press deploy.** A GitHub Actions workflow run by hand ("Deploy")
-  creates the app on Fly.io in Tokyo if it does not exist, sets the
-  passphrase from the repository secret every time, deploys, then signs in
-  through the sign-in page as a person would and prints the result.
-  A second workflow ("Remove the Fly app") deletes the app, for a trial
-  copy that should stop costing.
-- **Notes that travel with every app:** this `README.md` (what the app is,
-  for a stranger), `PLAN.md` (state and decisions, a close-out note per
-  session), `CLAUDE.md` (the rules every session on the app follows), and
-  `docs/reports/` (one field report per session).
+One MOA is a minute of angle, 1/60 of a degree, about 1 inch at 100
+yards; sights click in MOA.
 
-## Routes
+## Where the numbers come from
 
-- `/login` (the sign-in page and its form), `/logout`, `/alive` (the alive
-  line, plain text), `/app.css`: open.
-- `/manifest.webmanifest`, `/sw.js`, `/install.js`, `/icon-192.png`,
-  `/icon-512.png`: open, because Chrome fetches them without the cookie to
-  install the app on the phone.
-- `/sentry.min.js`, `/crash.js`: open, because the sign-in page loads them
-  too (crash reporting, below).
-- `/` (the sample screen), `/status` (the status page): behind the cookie,
-  like every route an app adds.
-- `POST /crash-test`: behind the cookie. It throws
-  `Error('crash-test: this app reports crashes')`, which the server reports
-  like any unexpected error and answers 500. Signed out it sends the
-  browser to the sign-in page (303). The deploy calls it.
+`data/` holds every figure the game uses: each load's speed, drag figure
+and drag model, each rifle's barrel length and sight height, each sight's
+click value, each course's plates and height above sea level, and the
+weather ranges. Every figure carries the maker's page address and the
+date it was read, or the word "estimate" and its basis. `lib/data.js`
+refuses a bare number, and `npm test` runs that check over the whole
+folder. The engine is `public/engine.js`; `test/engine.test.js` checks
+it against two makers' own published trajectory tables.
 
-## Crash reports
+Nothing in this repository says whose rifles these are; the rifle set is
+described as a set of rifles, and the ranges appear as the public
+businesses they are.
 
-Every app made from the kit reports its unexpected errors to Sentry: a
-server error that answers 500, and an error thrown in a page.
-Only the error and where in the code it happened leave the app: the
-error's type and message, how it was caught, and its stack frames with
-file, function, line and column. The same rule runs on the server and in
-the page (`public/crash.js`, which `lib/crash.js` also uses), and it keeps
-a short list rather than removing a few things: an event keeps its id,
-time, level, platform, environment, the SDK's name and version, and those
-exceptions; everything else is dropped. (After the scrub, Sentry's SDK adds
-its own package and integration names, the IP setting below, and a trace
-id: protocol details, nothing about Dan or the machine.) So nothing is sent of the request
-(address, query, headers, cookie, body), the user or the IP address (the
-page tells Sentry not to record it), the transaction name, extra data,
-tags, the server's name, the machine, operating system, device, locale or
-time zone, the installed modules, the source lines around each frame, local
-variables, the breadcrumbs that carry addresses, logs or page text (http,
-fetch, xhr, console, navigation, ui.*), or the query and fragment of any
-address in a stack frame. Sentry 11 gathers most of that by default
-whatever `sendDefaultPii` says, so `public/crash.js` also turns off its
-`dataCollection` options and the integrations that gather source lines,
-variables, contexts and modules. Two limits: an error's own message is
-sent as written, so code should not put what Dan typed into one; and a
-page's report travels as an ordinary request from his browser, which tells
-Sentry the app's address and the browser's name, as any request to another
-site does. Reporting is on only when the environment
-variable `SENTRY_DSN` is set; the server then writes it into every page as
-`<meta name="sentry-dsn">`. The DSN is public by Sentry's design: it only
-lets anyone send new events
-(https://docs.sentry.io/concepts/key-terms/dsn-explainer/). In the kit it
-is empty (`fly.toml`, `[env]`), so the kit, `npm test` and a local run send
-nothing. A new app's session puts the app's own DSN there
-(`docs/NEW-APP.md`, "Crash reporting"). The deploy then signs in and calls
-`POST /crash-test` to prove the chain; each Sentry issue becomes a card on
-Dan's Wall in the Spine (Sentry's alert calls the Spine). The browser part
-is Sentry's own SDK, built into one file served from the app
-(`public/sentry.min.js`, `npm run build`, committed), so a page loads
-scripts only from its own site.
+## Status page
 
-How to start a new app from the kit: `docs/NEW-APP.md`.
-Where each piece came from: `docs/SOURCES.md`.
-What the shop is for: `SIGN.md`, copied into every app unchanged.
+`/status` shows the "alive since" line (when this copy started and which
+version of the code it runs) and the last error from anything outside
+the app it called. The app calls nothing outside itself.
 
 ## Running it on a computer
 
@@ -97,7 +66,7 @@ What the shop is for: `SIGN.md`, copied into every app unchanged.
 
 Then open http://localhost:8080 and sign in with `try-me`.
 `npm run check` runs every check (`npm test`, then `npm run screenshots`,
-which saves the screens at both sizes into `docs/reports/`). They also run
-by themselves after every edit an agent makes and on every push and pull
-request: `docs/CHECKS.md`. What an agent may and may not touch:
-`CLAUDE.md`.
+which saves the screens at both sizes into `docs/reports/screenshots/`).
+They also run by themselves after every edit an agent makes and on every
+push and pull request: `docs/CHECKS.md`. What an agent may and may not
+touch: `CLAUDE.md`. What the shop is for: `SIGN.md`.

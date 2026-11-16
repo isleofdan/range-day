@@ -16,8 +16,8 @@ The 3 Oct 2026 afternoon run used a fresh builder on the faster CPU.
 | Check | What it proves |
 | - | - |
 | syntax | Every `.js`, `.mjs` and `.cjs` file outside `node_modules` parses (`node --check`, file by file). |
-| tests | `npm test`: the gate, the alive line, the status page, `lib/upstream.js` and crash reporting (`test/crash.test.js`: off with no DSN, the scrub and its keep-list, Sentry's settings, the pages, the committed bundle, `POST /crash-test`, what a crash sends to a stand-in for Sentry, the deploy step), against a real server (21 tests in the kit: 10 before crash reporting, 11 added by kit-crash-one, 26 Oct 2026). |
-| screenshots | `npm run screenshots`: every screen at phone (412×915) and computer (1280×800) size, signing in through the form, with no sideways scrolling (16 checks in the kit). Needs Playwright's browser. |
+| tests | `npm test`: the kit's 21 (the gate, the alive line, the status page, `lib/upstream.js`, crash reporting) plus Range Day's: `test/data.test.js` (8: every figure sourced or an estimate with its basis, cross-references, the drag tables' shape), `test/engine.test.js` (10: the engine against Sellier & Bellot's and Federal's published tables, wind, uphill geometry, the X95 crossing figure, repeatability, clicks, the transonic reading at Piru's far plate) and `test/browser.test.js` (3, in a real browser signing in through the form: the zero holds across a reload and moves with the load by the engine's figure; the firing line gives no hit when the engine says miss at a plate's edge; every screen at both sizes with no sideways scroll). The browser tests are skipped, and say so, where Playwright's browser is missing. 42 tests in all (range-day-one, 16 Nov 2026). |
+| screenshots | `npm run screenshots`: every screen at phone (412×915) and computer (1280×800) size, signing in through the form, with no sideways scrolling: sign-in, home, status, the zero bench before and after adjusting, the firing line through the scope at 2× and 7×, through iron sights at 600 yards, a miss with its dust, the shot log, and "Show the conditions" on (48 checks). Needs Playwright's browser. |
 
 `npm run check` runs all three in that order, stops at the first failure,
 and ends with one line: `check: all passed: …`, or
@@ -41,7 +41,7 @@ committed is not a result.
 Only checks that finish in a few seconds run after every edit; the
 screenshots start a browser and run on push and pull request only.
 
-An app whose `npm test` takes more than 20 seconds puts a fast subset in
+On this app the browser tests make `npm test` take about 14 s in a cloud session (16 Nov 2026); the hook's limit is 30 s. An app whose `npm test` takes more than 20 seconds puts a fast subset in
 `npm run test:fast` and points the hook at it; the full set runs in the
 Checks workflow. The hook's limit is 30 seconds.
 

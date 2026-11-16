@@ -187,3 +187,31 @@ and preserve its busy-session wait/fail guard. No implicit force restart.
 - **The passphrase is set on every deploy** from the repository secret.
   Do not go back to setting it only when missing: then changing the secret
   in GitHub would never reach the app.
+
+
+## Range Day's own rules
+
+These bind every session on this app, on top of the kit's rules above.
+
+- **One physics engine, used by everything.** Every bullet on every
+  screen flies through `public/engine.js` with the same inputs. The zero
+  bench and the firing line never have separate maths, and no screen ever
+  corrects a result to make a hit easier. A test that proves a screen's
+  result is compared with the engine's own figure.
+- **Every number in the game's data has a source in the data file.**
+  `data/*.json` is the only place a figure lives; each is
+  `{value, source: {url, read}}` or `{value, estimate: "<its basis>"}`.
+  `lib/data.js` refuses a bare number at load and `test/data.test.js`
+  runs that check. Nothing from recollection; a figure the maker does not
+  publish is an estimate with its basis written out.
+- **Nothing in the repository says whose rifles these are.** No person's
+  name, no home details; the ranges appear only as the public businesses
+  they are; the rifle set is a set of rifles. This limits statements about
+  ownership only.
+- **Plain words on every screen:** yards, inches, clicks; MOA spelled out
+  once as "minute of angle (about 1 inch at 100 yards)".
+- **Drawings and sounds are made in code.** No downloaded images, sounds
+  or fonts.
+- **The zero and the shot log live on the device** (`localStorage`), every
+  read and write wrapped so a refusal shows "not saved on this device"
+  instead of breaking a screen. No server-side records.
