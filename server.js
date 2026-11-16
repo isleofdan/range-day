@@ -94,6 +94,18 @@ function route(method, pattern, run) { routes.push({ method, pattern, run }); }
 
 route('GET', /^\/$/, (req, res) => sendHtml(res, 200, page('index.html')));
 
+// Range Day's screens and data. The game's data (data/*.json) is checked
+// at startup: a figure without a source or an estimate stops the server.
+const gameData = require('./lib/data').load();
+if (gameData.problems.length) {
+  throw new Error('data/: ' + gameData.problems.join('; '));
+}
+route('GET', /^\/zero$/, (req, res) => sendHtml(res, 200, page('zero.html')));
+route('GET', /^\/line$/, (req, res) => sendHtml(res, 200, page('line.html')));
+route('GET', /^\/api\/data$/, (req, res) => sendJson(res, 200, gameData.flat));
+// The page scripts, behind the cookie like the screens that use them.
+route('GET', /^\/(engine|game|home|zero|line)\.js$/, (req, res, m) => { if (!serveStatic(res, PUBLIC, `/${m[1]}.js`)) sendJson(res, 404, { error: 'not found' }); });
+
 route('GET', /^\/status$/, (req, res) => {
   const { calls, lastError: e } = upstream.state();
   const headline = e ? `${e.service} answered ${e.status ?? 'nothing'} at ${e.at.replace('T', ' ').replace(/\.\d+Z$/, ' UTC')}`
