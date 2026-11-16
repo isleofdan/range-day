@@ -24,7 +24,7 @@
   },
   "farPlateRiseFt": {
    "value": 200,
-   "estimate": "the owner remembers the far plates on a slope \"that rises to maybe a couple hundred feet\"; the 1,000-yard plate is set 200 ft above the firing line and the others in proportion to distance. One value to adjust"
+   "estimate": "the brief puts the far plates on a slope \"that rises to maybe a couple hundred feet\"; the 1,000-yard plate is set 200 ft above the firing line and the others in proportion to distance. One value to adjust"
   },
   "zeroYards": [
    {
@@ -285,7 +285,7 @@
   },
   "farPlateRiseFt": {
    "value": 0,
-   "estimate": "the owner described no slope at this range; the plates are set level with the firing line"
+   "estimate": "the brief describes no slope at this range; the plates are set level with the firing line"
   },
   "zeroYards": [
    {

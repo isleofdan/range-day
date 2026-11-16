@@ -6,7 +6,7 @@
   "playable": true,
   "barrelIn": {
    "value": 16,
-   "estimate": "the owner is unsure whether the barrel is 16 or 18 inches; 16 is used and marked. BCM's 16-inch carbines: https://www.bravocompanymfg.com/bcm-recce16-mcmr.html"
+   "estimate": "the brief gives the barrel as 16 or 18 inches, unsure; 16 is used and marked. BCM's 16-inch carbines: https://www.bravocompanymfg.com/bcm-recce16-mcmr.html"
   },
   "sightHeightIn": {
    "ar-irons": {
@@ -241,7 +241,7 @@
   "playable": true,
   "barrelIn": {
    "value": 20.5,
-   "estimate": "the importer (FIME Group, https://fimegroup.com/vepr-rifle/vepr-762x54r/) lists the thumbhole-stock Vepr in 7.62x54R with 16.5 in (VPR-76254-01), 20.5 in (VPR-76254-02) and 23.2 in (VPR-76254-03) barrels; the owner remembers a long barrel of about 18 in, so the 20.5-inch model is the nearest listed length and is used. If the rifle was the 23.2-inch model the loads' speeds rise by about 55 fps"
+   "estimate": "the importer (FIME Group, https://fimegroup.com/vepr-rifle/vepr-762x54r/) lists the thumbhole-stock Vepr in 7.62x54R with 16.5 in (VPR-76254-01), 20.5 in (VPR-76254-02) and 23.2 in (VPR-76254-03) barrels; the brief describes a long barrel of about 18 in, so the 20.5-inch model is the nearest listed length and is used. If the rifle was the 23.2-inch model the loads' speeds rise by about 55 fps"
   },
   "sightHeightIn": {
    "vepr-irons": {

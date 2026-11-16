@@ -27,8 +27,8 @@
   because the maker's own drop table follows it to 1,000 m within 0.06
   MOA, while their G1 figure (0.477) only matches to about 700 m.
 - **The Vepr's barrel is 20.5 in** in the data: the importer lists the
-  thumbhole-stock model with 16.5, 20.5 and 23.2 in barrels and the owner
-  remembers a long barrel of about 18 in; the nearest listed length is
+  thumbhole-stock model with 16.5, 20.5 and 23.2 in barrels and the brief
+  describes a long barrel of about 18 in; the nearest listed length is
   used, marked an estimate.
 - **A rifle needs zeroing because of its own offset** (`boreOffsetMoa` in
   `data/rifles.json`, a fixed estimate per rifle), not because of a random
