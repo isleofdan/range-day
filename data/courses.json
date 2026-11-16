@@ -62,6 +62,10 @@
   ],
   "plates": [
    {
+    "lateralYd": {
+     "value": -4,
+     "estimate": "where each plate stands sideways from the firing line's center, in yards: the range publishes no layout; plates are spread left and right so they do not hide one another"
+    },
     "yards": {
      "value": 200,
      "source": {
@@ -80,6 +84,10 @@
     }
    },
    {
+    "lateralYd": {
+     "value": 7,
+     "estimate": "where each plate stands sideways from the firing line's center, in yards: the range publishes no layout; plates are spread left and right so they do not hide one another"
+    },
     "yards": {
      "value": 300,
      "source": {
@@ -98,6 +106,10 @@
     }
    },
    {
+    "lateralYd": {
+     "value": -10,
+     "estimate": "where each plate stands sideways from the firing line's center, in yards: the range publishes no layout; plates are spread left and right so they do not hide one another"
+    },
     "yards": {
      "value": 400,
      "source": {
@@ -116,6 +128,10 @@
     }
    },
    {
+    "lateralYd": {
+     "value": 13,
+     "estimate": "where each plate stands sideways from the firing line's center, in yards: the range publishes no layout; plates are spread left and right so they do not hide one another"
+    },
     "yards": {
      "value": 500,
      "source": {
@@ -134,6 +150,10 @@
     }
    },
    {
+    "lateralYd": {
+     "value": -16,
+     "estimate": "where each plate stands sideways from the firing line's center, in yards: the range publishes no layout; plates are spread left and right so they do not hide one another"
+    },
     "yards": {
      "value": 600,
      "source": {
@@ -152,6 +172,10 @@
     }
    },
    {
+    "lateralYd": {
+     "value": 19,
+     "estimate": "where each plate stands sideways from the firing line's center, in yards: the range publishes no layout; plates are spread left and right so they do not hide one another"
+    },
     "yards": {
      "value": 700,
      "source": {
@@ -170,6 +194,10 @@
     }
    },
    {
+    "lateralYd": {
+     "value": -22,
+     "estimate": "where each plate stands sideways from the firing line's center, in yards: the range publishes no layout; plates are spread left and right so they do not hide one another"
+    },
     "yards": {
      "value": 800,
      "source": {
@@ -188,6 +216,10 @@
     }
    },
    {
+    "lateralYd": {
+     "value": 25,
+     "estimate": "where each plate stands sideways from the firing line's center, in yards: the range publishes no layout; plates are spread left and right so they do not hide one another"
+    },
     "yards": {
      "value": 900,
      "source": {
@@ -206,6 +238,10 @@
     }
    },
    {
+    "lateralYd": {
+     "value": -28,
+     "estimate": "where each plate stands sideways from the firing line's center, in yards: the range publishes no layout; plates are spread left and right so they do not hide one another"
+    },
     "yards": {
      "value": 1000,
      "source": {
@@ -287,6 +323,10 @@
   ],
   "plates": [
    {
+    "lateralYd": {
+     "value": 3,
+     "estimate": "where each plate stands sideways, in yards: the range publishes no layout; spread so they do not hide one another"
+    },
     "yards": {
      "value": 100,
      "source": {
@@ -305,6 +345,10 @@
     }
    },
    {
+    "lateralYd": {
+     "value": -5,
+     "estimate": "where each plate stands sideways, in yards: the range publishes no layout; spread so they do not hide one another"
+    },
     "yards": {
      "value": 200,
      "source": {
@@ -323,6 +367,10 @@
     }
    },
    {
+    "lateralYd": {
+     "value": 7,
+     "estimate": "where each plate stands sideways, in yards: the range publishes no layout; spread so they do not hide one another"
+    },
     "yards": {
      "value": 300,
      "source": {
@@ -341,6 +389,10 @@
     }
    },
    {
+    "lateralYd": {
+     "value": -9,
+     "estimate": "where each plate stands sideways, in yards: the range publishes no layout; spread so they do not hide one another"
+    },
     "yards": {
      "value": 400,
      "source": {
@@ -359,6 +411,10 @@
     }
    },
    {
+    "lateralYd": {
+     "value": 11,
+     "estimate": "where each plate stands sideways, in yards: the range publishes no layout; spread so they do not hide one another"
+    },
     "yards": {
      "value": 500,
      "source": {
@@ -377,6 +433,10 @@
     }
    },
    {
+    "lateralYd": {
+     "value": -13,
+     "estimate": "where each plate stands sideways, in yards: the range publishes no layout; spread so they do not hide one another"
+    },
     "yards": {
      "value": 600,
      "source": {

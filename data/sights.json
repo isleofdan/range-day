@@ -28,8 +28,8 @@
    "estimate": "the A2 front post is 0.07 in wide seen over a sight radius of about 14.75 in on a 16-inch carbine: 0.07 / 14.75 radians = 16 MOA. Dimensions are the common ones, not a BCM figure"
   },
   "apertureMoa": {
-   "value": 120,
-   "estimate": "the large (0.2 in) aperture seen at about 2.5 in from the eye covers about 2 degrees; drawn as the dark ring around the view"
+   "value": 300,
+   "estimate": "the large (0.2 in) aperture seen at about 2.5 in from the eye covers about 4.6 degrees (0.2 / 2.5 radians, 275 MOA); the lit circle inside the dark ring is drawn 300 MOA across"
   },
   "zoom": {
    "low": {
@@ -43,12 +43,12 @@
   },
   "fovFtAt100": {
    "low": {
-    "value": 400,
-    "estimate": "the eye's view through the rear aperture spans about 2 degrees of the world past the ring: drawn as about 400 ft at 100 yards"
+    "value": 35,
+    "estimate": "the drawn view is 400 MOA (6.7 degrees) across, 35 ft at 100 yards: the aperture's circle with a little dark ring around it"
    },
    "high": {
-    "value": 400,
-    "estimate": "same: the same basis as the figure next to it in this entry"
+    "value": 35,
+    "estimate": "the same: iron sights magnify nothing"
    }
   }
  },
@@ -72,7 +72,7 @@
    "estimate": "as the AR post, a little narrower"
   },
   "apertureMoa": {
-   "value": 120,
+   "value": 300,
    "estimate": "as the AR aperture"
   },
   "zoom": {
@@ -87,12 +87,12 @@
   },
   "fovFtAt100": {
    "low": {
-    "value": 400,
+    "value": 35,
     "estimate": "as the AR irons"
    },
    "high": {
-    "value": 400,
-    "estimate": "same: the same basis as the figure next to it in this entry"
+    "value": 35,
+    "estimate": "as the AR irons"
    }
   }
  },
@@ -131,12 +131,12 @@
   },
   "fovFtAt100": {
    "low": {
-    "value": 400,
-    "estimate": "the eye's view"
+    "value": 35,
+    "estimate": "as the AR irons: the drawn view is 400 MOA across"
    },
    "high": {
-    "value": 400,
-    "estimate": "same: the same basis as the figure next to it in this entry"
+    "value": 35,
+    "estimate": "as the AR irons"
    }
   }
  },
@@ -175,12 +175,12 @@
   },
   "fovFtAt100": {
    "low": {
-    "value": 400,
-    "estimate": "the eye's view"
+    "value": 35,
+    "estimate": "as the AR irons: the drawn view is 400 MOA across"
    },
    "high": {
-    "value": 400,
-    "estimate": "same: the same basis as the figure next to it in this entry"
+    "value": 35,
+    "estimate": "as the AR irons"
    }
   }
  },
@@ -219,12 +219,12 @@
   },
   "fovFtAt100": {
    "low": {
-    "value": 400,
-    "estimate": "the eye's view"
+    "value": 35,
+    "estimate": "as the AR irons: the drawn view is 400 MOA across"
    },
    "high": {
-    "value": 400,
-    "estimate": "same: the same basis as the figure next to it in this entry"
+    "value": 35,
+    "estimate": "as the AR irons"
    }
   }
  },
@@ -275,12 +275,12 @@
   },
   "fovFtAt100": {
    "low": {
-    "value": 300,
-    "estimate": "a 25 mm window held at arm's length: drawn as about 300 ft at 100 yards"
+    "value": 50,
+    "estimate": "a 25 mm window seen from about 10 in away covers about 10 degrees, 600 MOA: 50 ft at 100 yards"
    },
    "high": {
-    "value": 300,
-    "estimate": "same: the same basis as the figure next to it in this entry"
+    "value": 50,
+    "estimate": "unmagnified, the same"
    }
   }
  },
@@ -323,11 +323,11 @@
   },
   "fovFtAt100": {
    "low": {
-    "value": 300,
-    "estimate": "the dot's view"
+    "value": 50,
+    "estimate": "the dot's view when flipped aside"
    },
    "high": {
-    "value": 100,
+    "value": 17,
     "estimate": "the dot's view divided by three"
    }
   }

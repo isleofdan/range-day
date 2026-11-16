@@ -51,13 +51,13 @@ test('the whole rifle set is in the data; two rifles are playable now', () => {
   assert.equal(Object.keys(flat.loads).filter((k) => !k.startsWith('_')).length, 16);
 });
 
-test('the drag tables are the standard shape: Cd rises through Mach 1 and falls beyond', () => {
+test('the drag tables are the standard shape: Cd peaks just past Mach 1 and is lower well below and well above it', () => {
   for (const name of ['G1', 'G7']) {
     const t = flat.physics.dragTables[name];
     assert.ok(t.length > 50, name);
     const at = (m) => t.find((r) => r[0] === m)[1];
-    assert.ok(at(1.0) > at(0.5), `${name}: Cd(1.0) > Cd(0.5)`);
-    assert.ok(at(1.0) > at(2.5), `${name}: Cd(1.0) > Cd(2.5)`);
+    assert.ok(at(1.2) > at(0.5), `${name}: Cd(1.2) > Cd(0.5)`);
+    assert.ok(at(1.2) > at(4.0), `${name}: Cd(1.2) > Cd(4.0)`);
     for (let i = 1; i < t.length; i++) assert.ok(t[i][0] > t[i - 1][0], `${name}: sorted at row ${i}`);
   }
   assert.equal(flat.physics.dragTables.G1[0][1], 0.2629);
