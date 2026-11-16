@@ -33,9 +33,17 @@
   // If a zero is saved for this rifle and load, the sight starts there.
   function applyZero() {
     const z = RD.getZero(rifleId, loadId);
-    if (z) { setting = { elevationClicks: z.elevationClicks, windageClicks: z.windageClicks }; RD.setSight(rifleId, sightId, setting); $('zero-note').textContent = `Sight set to the saved ${z.zeroYards}-yard zero for this load. Every click from here is yours.`; }
-    else $('zero-note').textContent = 'No zero saved for this load: the sight is wherever it was last left. The zero bench is the place to fix that.';
-    showSetting();
+    if (z) { setting = { elevationClicks: z.elevationClicks, windageClicks: z.windageClicks }; RD.setSight(rifleId, sightId, setting); }
+    showSetting(); zeroNote();
+  }
+  // The note under the knobs: where the sight stands against this load's saved zero.
+  function zeroNote() {
+    const z = RD.getZero(rifleId, loadId);
+    const btn = $('use-zero');
+    if (!z) { $('zero-note').textContent = 'No zero saved for this load: the sight is wherever it was last left. The zero bench is the place to fix that.'; btn.hidden = true; return; }
+    const at = z.elevationClicks === setting.elevationClicks && z.windageClicks === setting.windageClicks;
+    $('zero-note').textContent = at ? `Sight at the saved ${z.zeroYards}-yard zero for this load. Every click from here is yours.` : `The sight is not at this load's saved ${z.zeroYards}-yard zero (elevation ${RD.clicksText(z.elevationClicks, sight.clickMoa, 'up', 'down')}, windage ${RD.clicksText(z.windageClicks, sight.windageClickMoa, 'right', 'left')}); it stays where you left it.`;
+    btn.hidden = at;
   }
 
   $('intro').textContent = `${course.name}. ${rifle.name} with ${sight.name}. Steel ${plates[0].yards} to ${plates[plates.length - 1].yards} yards${course.farPlateRiseFt ? ', the far plates up the slope' : ''}.`;
@@ -273,14 +281,17 @@
     const next = setting[which] + delta;
     if (Math.abs(next) > sight.clicks) { $('result').textContent = `That knob is at the end of its travel (${sight.clicks} clicks).`; return; }
     setting = { ...setting, [which]: next };
-    RD.clickSound(); RD.setSight(rifleId, sightId, setting); showSetting();
+    RD.clickSound(); RD.setSight(rifleId, sightId, setting); showSetting(); zeroNote();
   }
   $('el-up').addEventListener('click', () => turn('elevationClicks', 1));
   $('el-down').addEventListener('click', () => turn('elevationClicks', -1));
   $('wd-right').addEventListener('click', () => turn('windageClicks', 1));
   $('wd-left').addEventListener('click', () => turn('windageClicks', -1));
   $('plate').addEventListener('change', (e) => { plateIx = Number(e.target.value); hold.up = 0; hold.right = 0; conditions(); });
-  $('load').addEventListener('change', (e) => { loadId = e.target.value; log = RD.getLog(rifleId, loadId); renderLog(); applyZero(); $('to-zero').href = `/zero?course=${courseId}&rifle=${rifleId}&load=${loadId}`; });
+  // Changing the load keeps the sight where it is (the brief's rule); restoring
+  // that load's saved zero is the player's own press on the button below.
+  $('load').addEventListener('change', (e) => { loadId = e.target.value; log = RD.getLog(rifleId, loadId); renderLog(); zeroNote(); $('to-zero').href = `/zero?course=${courseId}&rifle=${rifleId}&load=${loadId}`; conditions(); });
+  $('use-zero').addEventListener('click', () => { const z = RD.getZero(rifleId, loadId); if (!z) return; setting = { elevationClicks: z.elevationClicks, windageClicks: z.windageClicks }; RD.setSight(rifleId, sightId, setting); RD.clickSound(); showSetting(); zeroNote(); });
   $('zoom').addEventListener('input', (e) => { mag = Number(e.target.value); zoomText(); });
   $('show-conditions').addEventListener('change', (e) => { RD.setShowConditions(e.target.checked); conditions(); });
   $('clear-log').addEventListener('click', () => { log = []; RD.setLog(rifleId, loadId, log); renderLog(); });

@@ -145,3 +145,4 @@ body.line main { padding-bottom: 110px; }
 .firebar .btn.on { outline: 3px solid var(--fg); }
 @media (prefers-color-scheme: dark) { .viewwrap canvas { background: #111; } }
 @media (min-width: 900px) { .choices { grid-template-columns: 1fr 1fr; } }
+.row:has(> [hidden]:only-child) { display: none; }

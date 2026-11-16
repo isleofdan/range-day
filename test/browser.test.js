@@ -100,6 +100,20 @@ test('verify 4: zero the Vepr at 100 yards, reload, the zero is still there; cha
   console.log(`  load change at 200 yd, same sight: the 203 gr group landed ${(other.up - same.up).toFixed(1)} in from the 174 gr group; the engine's figure ${predicted.toFixed(1)} in`);
   assert.ok(Math.abs(predicted) > 1, 'the two loads differ at 200 yards');
   assert.ok(Math.abs((other.up - same.up) - predicted) < 4, `moved ${other.up - same.up}, engine ${predicted}`);
+  // On the firing line too: changing the load keeps the sight; the saved zero is a button.
+  await page.goto(`${base}/line?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('#fire');
+  const lineEl = await page.textContent('#el-text');
+  assert.equal(lineEl, el, 'the firing line opens at the saved zero for the arriving load');
+  await page.click('#el-up'); await page.click('#el-up');
+  const moved = await page.textContent('#el-text');
+  await page.selectOption('#load', 'wolf-203-sp');
+  assert.equal(await page.textContent('#el-text'), moved, 'changing the load on the firing line keeps the sight where it was');
+  assert.ok(await page.isHidden('#use-zero'), 'no saved zero for the other load: no button');
+  await page.selectOption('#load', 'sb-174-hpbt');
+  assert.equal(await page.textContent('#el-text'), moved, 'changing back keeps the sight too');
+  assert.ok(await page.isVisible('#use-zero'), 'the saved zero is offered as a button');
+  await page.click('#use-zero');
+  assert.equal(await page.textContent('#el-text'), el, 'the button sets the sight to the saved zero');
   assert.deepEqual(errors, []);
   await context.close();
 });

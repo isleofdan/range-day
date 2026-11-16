@@ -42,6 +42,23 @@ test('reference 1: S&B 174 gr 7.62x54R against the maker\'s table, G7 0.240, wit
   console.log('  S&B 174 gr (G7 0.240, sight 2.0 in, 100 m zero):\n    ' + lines.join('\n    '));
 });
 
+// The same load on S&B's US page, in yards with a 100 yd zero: rows at the brief's own distances.
+const SB_YD = { 100: 0, 300: -15.1, 600: -104, 1000: -439 };
+test('reference 1, in yards: S&B\'s US-page table at 100, 300, 600 and 1,000 yd, with the engine\'s 10 mph drift beside it (S&B publish no drift)', () => {
+  const load = { muzzleFps: 2585, bc: 0.240, dragModel: 'G7' };
+  const base = { load, drag, conditions: ICAO, wind: [], sightHeightIn: 2.0 };
+  const el = E.zeroElevationMoa(base, 100);
+  const lines = [];
+  for (const y of Object.keys(SB_YD).map(Number)) {
+    const r = E.fly({ ...base, elevationMoa: el, windageMoa: 0, targetYards: y });
+    const w = E.fly({ ...base, elevationMoa: el, windageMoa: 0, targetYards: y, wind: [{ fromYards: 0, toYards: 2000, speedMph: 10, fromDegrees: 270 }] });
+    const diff = moa(r.hit.upIn - SB_YD[y], y);
+    lines.push(`${y} yd: drop ${r.hit.upIn.toFixed(1)} vs S&B ${SB_YD[y]} in (${diff.toFixed(2)} MOA); engine drift ${w.hit.rightIn.toFixed(1)} in; ${r.speedFps.toFixed(0)} fps`);
+    assert.ok(Math.abs(diff) <= (y <= 600 ? 0.2 : 0.5), lines[lines.length - 1]);
+  }
+  console.log('  S&B 174 gr, yards table (100 yd zero):\n    ' + lines.join('\n    '));
+});
+
 test('reference 1, note: with S&B\'s G1 figure the same table is matched only to 700 m; the G7 figure is the one their table follows', () => {
   const load = { muzzleFps: 788 / 0.3048, bc: 0.477, dragModel: 'G1' };
   const base = { load, drag, conditions: ICAO, wind: [], sightHeightIn: 2.0 };
