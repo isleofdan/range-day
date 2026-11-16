@@ -40,7 +40,7 @@ const SCREENS = [
   { name: 'line-irons-600', path: '/line?course=angeles-sylmar&rifle=bcm-ar15&load=federal-gmm-69', expect: '600 yards', act: async (page) => { await page.waitForSelector('#fire'); await page.selectOption('#plate', '5'); await settle(page, 400); } },
   { name: 'line-miss-dust', path: PIRU, expect: 'Miss', act: async (page) => {
     // Unzeroed, the first shot at 200 yards lands well low: a miss, with its dust.
-    await page.waitForSelector('#fire'); await page.evaluate(() => { localStorage.removeItem('range-day:sight:molot-vepr-54r:utg-2-7x44'); RangeDayLine.setZoom(7); });
+    await page.waitForSelector('#fire'); await page.evaluate(() => { localStorage.removeItem('range-day:sight:molot-vepr-54r:utg-2-7x44'); localStorage.removeItem('range-day:zero:molot-vepr-54r:sb-174-hpbt'); localStorage.removeItem('range-day:log:molot-vepr-54r:sb-174-hpbt'); RangeDayLine.setZoom(7); });
     await page.reload(); await page.waitForSelector('#fire'); await page.evaluate(() => RangeDayLine.setZoom(7)); await page.click('#fire'); await settle(page, 1400);
   } },
   { name: 'line-shot-log', path: PIRU, expect: 'miss:', act: async (page) => { await page.waitForSelector('#fire'); await page.evaluate(() => document.getElementById('log').scrollIntoView()); await settle(page, 200); } },
