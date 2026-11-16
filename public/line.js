@@ -240,7 +240,7 @@
       const upIn = r.hit.upIn + aimUp * ipm, rightIn = r.hit.rightIn + aimRight * ipm;
       const hit = Math.abs(upIn) <= p.heightIn / 2 && Math.abs(rightIn) <= p.widthIn / 2;
       entry.hit = hit; entry.where = hit ? `hit (${RD.whereText(upIn, rightIn)} of center)` : `miss: ${RD.whereText(upIn, rightIn)}`;
-      entry.upIn = Math.round(upIn * 10) / 10; entry.rightIn = Math.round(rightIn * 10) / 10;
+      entry.upIn = upIn; entry.rightIn = rightIn; // full precision: the hit test and the tests use these; the words above are what the screen shows
       pending.push({ at: now + r.timeS, entry, rightMoa: rightIn / ipm, upMoa: upIn / ipm, yards: p.yards, hit, upIn, rightIn, dist: p.yards, mach: r.mach });
     }
     $('result').textContent = `Shot ${entry.n} away at ${p.yards} yards…`;
