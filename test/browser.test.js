@@ -184,6 +184,29 @@ test('a browser that refuses storage: every screen says "not saved on this devic
   await context.close();
 });
 
+test('a browser that reads but refuses to write: the zero bench and the firing line say the sight setting is not saved', { skip }, async () => {
+  const context = await browser.newContext({ viewport: { width: 412, height: 915 } });
+  await context.addInitScript(() => {
+    const real = window.localStorage;
+    const half = { getItem: (k) => real.getItem(k), setItem() { throw new Error('write refused'); }, removeItem() { throw new Error('write refused'); } };
+    Object.defineProperty(window, 'localStorage', { get: () => half });
+  });
+  const page = await context.newPage();
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  await page.goto(`${base}/login`); await page.fill('#passphrase', PASS); await page.click('button[type=submit]'); await page.waitForURL(`${base}/`);
+  await page.goto(`${base}/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('#fire5');
+  await page.click('#el-up');
+  assert.match(await page.textContent('#saved'), /Sight setting not saved on this device/);
+  await page.click('#save');
+  assert.match(await page.textContent('#saved'), /Zero not saved on this device/);
+  await page.goto(`${base}/line?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('#fire');
+  await page.click('#el-up');
+  assert.match(await page.textContent('#zero-note'), /Sight setting not saved on this device/);
+  assert.deepEqual(errors, []);
+  await context.close();
+});
+
 test('every screen renders at 412x915 and 1280x800 with no sideways scroll and no console error', { skip }, async () => {
   for (const viewport of [{ width: 412, height: 915 }, { width: 1280, height: 800 }]) {
     const { page, context, errors } = await signedIn(viewport);

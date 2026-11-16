@@ -33,8 +33,10 @@
   // If a zero is saved for this rifle and load, the sight starts there.
   function applyZero() {
     const z = RD.getZero(rifleId, loadId);
-    if (z && z !== RD.store.FAILED) { setting = { elevationClicks: z.elevationClicks, windageClicks: z.windageClicks }; RD.setSight(rifleId, sightId, setting); }
+    let written = true;
+    if (z && z !== RD.store.FAILED) { setting = { elevationClicks: z.elevationClicks, windageClicks: z.windageClicks }; written = RD.setSight(rifleId, sightId, setting); }
     showSetting(); zeroNote();
+    if (!written) $('zero-note').textContent = 'Sight setting not saved on this device: the browser refused to store it. It holds while this page is open.';
   }
   // The note under the knobs: where the sight stands against this load's saved zero.
   function zeroNote() {
@@ -286,7 +288,8 @@
     const next = setting[which] + delta;
     if (Math.abs(next) > sight.clicks) { $('result').textContent = `That knob is at the end of its travel (${sight.clicks} clicks).`; return; }
     setting = { ...setting, [which]: next };
-    RD.clickSound(); RD.setSight(rifleId, sightId, setting); showSetting(); zeroNote();
+    RD.clickSound(); showSetting(); zeroNote();
+    if (!RD.setSight(rifleId, sightId, setting)) $('zero-note').textContent = 'Sight setting not saved on this device: the browser refused to store it. It holds while this page is open.';
   }
   $('el-up').addEventListener('click', () => turn('elevationClicks', 1));
   $('el-down').addEventListener('click', () => turn('elevationClicks', -1));
@@ -296,7 +299,7 @@
   // Changing the load keeps the sight where it is (the brief's rule); restoring
   // that load's saved zero is the player's own press on the button below.
   $('load').addEventListener('change', (e) => { loadId = e.target.value; log = RD.getLog(rifleId, loadId); renderLog(); zeroNote(); $('to-zero').href = `/zero?course=${courseId}&rifle=${rifleId}&load=${loadId}`; conditions(); });
-  $('use-zero').addEventListener('click', () => { const z = RD.getZero(rifleId, loadId); if (!z) return; setting = { elevationClicks: z.elevationClicks, windageClicks: z.windageClicks }; RD.setSight(rifleId, sightId, setting); RD.clickSound(); showSetting(); zeroNote(); });
+  $('use-zero').addEventListener('click', () => { const z = RD.getZero(rifleId, loadId); if (!z || z === RD.store.FAILED) return; setting = { elevationClicks: z.elevationClicks, windageClicks: z.windageClicks }; RD.clickSound(); showSetting(); zeroNote(); if (!RD.setSight(rifleId, sightId, setting)) $('zero-note').textContent = 'Sight setting not saved on this device: the browser refused to store it. It holds while this page is open.'; });
   $('zoom').addEventListener('input', (e) => { mag = Number(e.target.value); zoomText(); });
   $('show-conditions').addEventListener('change', (e) => { RD.setShowConditions(e.target.checked); conditions(); });
   $('clear-log').addEventListener('click', () => { log = []; RD.setLog(rifleId, loadId, log); renderLog(); });
