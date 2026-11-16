@@ -1,6 +1,15 @@
 # Plan
 
-## Decisions (starting-kit-one, 2 Oct 2026)
+## Decisions (range-day-one, 16 Nov 2026)
+
+- **Crash reporting is off for now.** The Sentry token that `docs/NEW-APP.md`
+  step 4 needs (`/data/home/dan/.config/sentry/auth-token`) lives on the
+  rented Linux machine only, and this app was built in a cloud session on
+  Dan's instruction. `SENTRY_DSN` in `fly.toml` stays empty, so nothing is
+  sent. Turning it on is an ask for the origin chat: a later session on the
+  machine follows step 4.
+
+## Decisions inherited from the kit (starting-kit-one, 2 Oct 2026)
 
 - **What the kit is.** A floor, not a framework: the smallest folder that
   carries a sign-in page, a deploy, a status page, the notes files and the
