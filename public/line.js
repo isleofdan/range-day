@@ -127,7 +127,7 @@
       const sway = Math.sin(now * (1.5 + b.s) + b.ph) * wind * 0.12 * b.s;
       const [x, y] = toScreen(b.az + sway, b.up);
       if (x < -20 || x > size + 20 || y < -20 || y > size + 20) continue;
-      const r = Math.max(1.5, 14 * b.s * k / 7);
+      const r = Math.max(1.5, 5 * b.s * k / 7);
       g.fillStyle = '#4f5a2f'; g.beginPath(); g.ellipse(x, y, r, r * 0.7, 0, 0, 7); g.fill();
     }
     // the plates on their posts, each at its real angular size
@@ -149,8 +149,8 @@
         const jr = ((j * 37) % 11) / 11 - 0.5, ju = ((j * 53) % 7) / 7;
         const drift = (wind * 1.4667 * age) / (p.yards * 3) * 3438; // ft/s × s over the distance, in MOA
         const [x, y] = toScreen(p.rightMoa + jr * scale * (1 + age) + drift, p.upMoa + ju * scale * (0.5 + age * 0.8));
-        g.fillStyle = `rgba(214, 190, 150, ${Math.max(0, 0.7 - age / 3)})`;
-        g.beginPath(); g.arc(x, y, Math.max(1, scale * k * 0.35 * (0.6 + age)), 0, 7); g.fill();
+        g.fillStyle = `rgba(222, 200, 160, ${Math.max(0, 0.9 - age / 3.2)})`;
+        g.beginPath(); g.arc(x, y, Math.max(2, scale * k * 0.5 * (0.6 + age)), 0, Math.PI * 2); g.fill();
       }
     }
     // heat shimmer leaning with the wind (seen through magnification)
