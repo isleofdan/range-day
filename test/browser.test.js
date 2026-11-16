@@ -158,6 +158,32 @@ test('verify 5: the firing line gives no hit when the engine says miss, at a pla
   await context.close();
 });
 
+test('a browser that refuses storage: every screen says "not saved on this device" instead of breaking', { skip }, async () => {
+  const context = await browser.newContext({ viewport: { width: 412, height: 915 } });
+  await context.addInitScript(() => {
+    const broken = { getItem() { throw new Error('storage refused'); }, setItem() { throw new Error('storage refused'); }, removeItem() { throw new Error('storage refused'); } };
+    Object.defineProperty(window, 'localStorage', { get: () => broken });
+  });
+  const page = await context.newPage();
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  await page.goto(`${base}/login`); await page.fill('#passphrase', PASS); await page.click('button[type=submit]'); await page.waitForURL(`${base}/`);
+  await page.waitForSelector('.choice');
+  assert.match(await page.textContent('#zero'), /Zero not saved on this device/);
+  await page.goto(`${base}/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('#fire5');
+  assert.match(await page.textContent('#saved'), /Zero not saved on this device/);
+  await page.click('#el-up');
+  assert.match(await page.textContent('#saved'), /not saved on this device/);
+  await page.click('#fire5');
+  assert.match(await page.textContent('#group'), /Last 5 shots/);
+  await page.click('#save');
+  assert.match(await page.textContent('#saved'), /Zero not saved on this device/);
+  await page.goto(`${base}/line?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('#fire');
+  assert.match(await page.textContent('#zero-note'), /Zero not saved on this device/);
+  assert.deepEqual(errors, []);
+  await context.close();
+});
+
 test('every screen renders at 412x915 and 1280x800 with no sideways scroll and no console error', { skip }, async () => {
   for (const viewport of [{ width: 412, height: 915 }, { width: 1280, height: 800 }]) {
     const { page, context, errors } = await signedIn(viewport);

@@ -33,13 +33,14 @@
   // If a zero is saved for this rifle and load, the sight starts there.
   function applyZero() {
     const z = RD.getZero(rifleId, loadId);
-    if (z) { setting = { elevationClicks: z.elevationClicks, windageClicks: z.windageClicks }; RD.setSight(rifleId, sightId, setting); }
+    if (z && z !== RD.store.FAILED) { setting = { elevationClicks: z.elevationClicks, windageClicks: z.windageClicks }; RD.setSight(rifleId, sightId, setting); }
     showSetting(); zeroNote();
   }
   // The note under the knobs: where the sight stands against this load's saved zero.
   function zeroNote() {
     const z = RD.getZero(rifleId, loadId);
     const btn = $('use-zero');
+    if (z === RD.store.FAILED) { $('zero-note').textContent = 'Zero not saved on this device: the browser refused to read its storage. The sight starts at its middle and holds while this page is open.'; btn.hidden = true; return; }
     if (!z) { $('zero-note').textContent = 'No zero saved for this load: the sight is wherever it was last left. The zero bench is the place to fix that.'; btn.hidden = true; return; }
     const at = z.elevationClicks === setting.elevationClicks && z.windageClicks === setting.windageClicks;
     $('zero-note').textContent = at ? `Sight at the saved ${z.zeroYards}-yard zero for this load. Every click from here is yours.` : `The sight is not at this load's saved ${z.zeroYards}-yard zero (elevation ${RD.clicksText(z.elevationClicks, sight.clickMoa, 'up', 'down')}, windage ${RD.clicksText(z.windageClicks, sight.windageClickMoa, 'right', 'left')}); it stays where you left it.`;
@@ -57,7 +58,7 @@
 
   // --- state of the view ----------------------------------------------------------------
   const hold = { up: 0, right: 0 };      // where the player holds the reticle, MOA from the plate center
-  const wander = { up: 0, right: 0, vu: 0, vr: 0 };
+  const wander = { up: 0, right: 0, vu: 0, vr: 0, breath: 0 };
   const recoil = { up: 0, right: 0 };
   let steady = false, lastShotAt = -10, now = 0, last = performance.now() / 1000;
   const dust = [];                         // {rightMoa, upMoa, bornAt, yards}
@@ -83,7 +84,10 @@
     return { up, right };
   }
   const pxPerMoa = () => view.size / RD.fovMoa(sight, mag);
-  const center = () => ({ up: hold.up + wander.up + recoil.up, right: hold.right + wander.right + recoil.right });
+  // Where the reticle points right now: the hold, the wander, the breathing
+  // and the recoil. The view is drawn from this and the shot is fired from
+  // this, the same state, so the bullet goes where the sight showed.
+  const center = () => ({ up: hold.up + wander.up + wander.breath + recoil.up, right: hold.right + wander.right + recoil.right });
   const toScreen = (rightMoa, upMoa) => { const c = center(), k = pxPerMoa(); return [view.size / 2 + (rightMoa - c.right) * k, view.size / 2 - (upMoa - c.up) * k]; };
 
   // --- the aim's wander: slow, small, worse after a shot, calmer when held steady ----------
@@ -212,7 +216,8 @@
     if (pending.length > 2) return;
     const p = plate(), load = d.loads[loadId];
     // Where the reticle points, in MOA from the plate's center, at the trigger pull.
-    const aimUp = hold.up + wander.up + wander.breath, aimRight = hold.right + wander.right;
+    const aim = center();
+    const aimUp = aim.up, aimRight = aim.right;
     const r = E.shoot({
       load, drag: d.physics.dragTables,
       rifle: { sightHeightIn: rifle.sightHeightIn[sightId], boreOffsetMoa: rifle.boreOffsetMoa },

@@ -122,6 +122,7 @@
   });
   function showSaved() {
     const z = RD.getZero(rifleId, loadId);
+    if (z === RD.store.FAILED) { $('saved').textContent = 'Zero not saved on this device: the browser refused to read its storage. The sight setting holds while this page is open.'; return; }
     $('saved').textContent = z ? `Saved zero for ${d.loads[loadId].name}: ${z.zeroYards} yards, elevation ${RD.clicksText(z.elevationClicks, sight.clickMoa, 'up', 'down')}, windage ${RD.clicksText(z.windageClicks, sight.windageClickMoa, 'right', 'left')}.` : `No zero saved yet for ${d.loads[loadId].name}.`;
   }
   function conditions() {
@@ -130,4 +131,5 @@
     $('conditions').textContent = `Conditions (the setting "Show the conditions" is on): ${day.tempF} F, ${day.pressureInHg} inHg, humidity ${Math.round(day.humidity * 100)}%, wind at the bench ${w.speedMph} mph ${RD.windWord(w.fromDegrees)}.`;
   }
   showSetting(); showSaved(); conditions(); draw(); readout();
+  if (RD.sightReadFailed(rifleId, sightId)) $('group').textContent = 'The browser refused to read its storage: the sight starts at its middle and nothing saves on this device while that lasts.';
 }());

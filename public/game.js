@@ -18,14 +18,19 @@ window.RD = (function () {
   // Every read and write is wrapped: a browser that refuses storage (a
   // private window, a full disk) must not break a screen; it shows
   // "not saved on this device" instead.
+  // A read that the browser refuses answers FAILED, never null, so a screen
+  // can say "not saved on this device" instead of "no zero saved yet".
+  const FAILED = Object.freeze({ failed: true });
   const store = {
-    get(key) { try { const v = localStorage.getItem(`range-day:${key}`); return v ? JSON.parse(v) : null; } catch { return null; } },
+    FAILED,
+    get(key) { try { const v = localStorage.getItem(`range-day:${key}`); return v ? JSON.parse(v) : null; } catch { return FAILED; } },
     set(key, value) { try { localStorage.setItem(`range-day:${key}`, JSON.stringify(value)); return true; } catch { return false; } },
     remove(key) { try { localStorage.removeItem(`range-day:${key}`); return true; } catch { return false; } },
   };
   // The sight as it is physically set on the rifle (clicks from the middle).
   const sightKey = (rifle, sight) => `sight:${rifle}:${sight}`;
-  const getSight = (rifle, sight) => store.get(sightKey(rifle, sight)) || { elevationClicks: 0, windageClicks: 0 };
+  const getSight = (rifle, sight) => { const v = store.get(sightKey(rifle, sight)); return v && v !== FAILED ? v : { elevationClicks: 0, windageClicks: 0 }; };
+  const sightReadFailed = (rifle, sight) => store.get(sightKey(rifle, sight)) === FAILED;
   const setSight = (rifle, sight, v) => store.set(sightKey(rifle, sight), v);
   // A saved zero: the sight setting the player was satisfied with for that
   // rifle and load, at that distance.
@@ -33,7 +38,7 @@ window.RD = (function () {
   const getZero = (rifle, load) => store.get(zeroKey(rifle, load));
   const setZero = (rifle, load, v) => store.set(zeroKey(rifle, load), v);
   const logKey = (rifle, load) => `log:${rifle}:${load}`;
-  const getLog = (rifle, load) => store.get(logKey(rifle, load)) || [];
+  const getLog = (rifle, load) => { const v = store.get(logKey(rifle, load)); return Array.isArray(v) ? v : []; };
   const setLog = (rifle, load, v) => store.set(logKey(rifle, load), v);
   const showConditions = () => store.get('show-conditions') === true;
   const setShowConditions = (on) => store.set('show-conditions', on === true);
@@ -182,5 +187,5 @@ window.RD = (function () {
   // A small seeded random for the drawn terrain, so a course looks the same each visit.
   function hash(str) { let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
 
-  return { E, data, store, getSight, setSight, getZero, setZero, getLog, setLog, showConditions, setShowConditions, drawDay, day, newDay, conditionsOf, audio, shotSound, ringSound, thudSound, clickSound, qs, esc, sign, moaOf, clicksText, whereText, windWord, crosswindMph, fovMoa, fitCanvas, hash };
+  return { E, data, store, getSight, sightReadFailed, setSight, getZero, setZero, getLog, setLog, showConditions, setShowConditions, drawDay, day, newDay, conditionsOf, audio, shotSound, ringSound, thudSound, clickSound, qs, esc, sign, moaOf, clicksText, whereText, windWord, crosswindMph, fovMoa, fitCanvas, hash };
 }());

@@ -34,7 +34,9 @@
   function showZero() {
     const r = d.rifles[pick.rifle], s = d.sights[pick.sight];
     const z = RD.getZero(pick.rifle, loadSel.value);
-    if (z) {
+    if (z === RD.store.FAILED) {
+      zeroLine.innerHTML = `<strong>Zero not saved on this device:</strong> the browser refused to read its storage, so no zero can be kept here for the ${RD.esc(r.name)}.`;
+    } else if (z) {
       zeroLine.innerHTML = `<strong>Zeroed</strong> at ${z.zeroYards} yards: elevation ${RD.esc(RD.clicksText(z.elevationClicks, s.clickMoa, 'up', 'down'))}, windage ${RD.esc(RD.clicksText(z.windageClicks, s.windageClickMoa, 'right', 'left'))}.`;
     } else {
       zeroLine.innerHTML = `<strong>Not zeroed yet</strong> for the ${RD.esc(r.name)} with this load. Start at the zero bench.`;
