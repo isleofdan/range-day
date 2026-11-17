@@ -44,10 +44,10 @@ test('every load has a speed, a coefficient with its drag model, and a spread', 
   }
 });
 
-test('the whole rifle set is in the data; two rifles are playable now', () => {
+test('the whole rifle set is in the data; all seven rifles are playable', () => {
   const ids = Object.keys(flat.rifles).filter((k) => !k.startsWith('_'));
   assert.equal(ids.length, 7);
-  assert.deepEqual(ids.filter((k) => flat.rifles[k].playable).sort(), ['bcm-ar15', 'molot-vepr-54r']);
+  assert.deepEqual(ids.filter((k) => flat.rifles[k].playable).sort(), ids.slice().sort());
   assert.equal(Object.keys(flat.loads).filter((k) => !k.startsWith('_')).length, 16);
 });
 
@@ -73,6 +73,29 @@ test('each course has plates every 100 yards to its published steel distance, wi
     assert.ok(typeof c.farPlateRiseFt === 'number' && typeof c.altitudeFt === 'number', id);
   }
   assert.equal(flat.courses['cta-piru'].farPlateRiseFt, 200);
+});
+
+test('every sliding leaf names its settings, its service load and a derived angle per setting; every notch sight has a notch width', () => {
+  for (const [sightId, leafKey] of [['ak-irons', 'leaf'], ['ak-irons', 'leaf545'], ['vepr-irons', 'leaf']]) {
+    const leaf = flat.sights[sightId][leafKey];
+    assert.deepEqual(leaf.settingsMeters, [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000], `${sightId}.${leafKey}`);
+    assert.equal(leaf.moaAbove100.length, 10);
+    assert.equal(leaf.moaAbove100[0].moaAbove100, 0);
+    for (let i = 1; i < 10; i++) assert.ok(leaf.moaAbove100[i].moaAbove100 > leaf.moaAbove100[i - 1].moaAbove100, `${sightId}.${leafKey}: setting ${i + 1} is higher than ${i}`);
+    assert.ok(leaf.serviceLoad.muzzleMps > 600 && leaf.serviceLoad.bc > 0.2, `${sightId}.${leafKey}: service load`);
+    assert.match(raw.sights[sightId][leafKey].moaAbove100.estimate, /derived by this app's engine/);
+  }
+  for (const id of ['ak-irons', 'vepr-irons', 'rem-irons']) assert.ok(flat.sights[id].notchMoa > 10 && flat.sights[id].apertureMoa === 0, `${id}: a notch, no ring`);
+  assert.equal(flat.sights['ak-irons'].battleSettingMeters, undefined);
+  assert.equal(flat.sights['ak-irons'].leaf.battleSettingMeters, 300);
+  assert.equal(flat.sights['ak-irons'].leaf545.battleSettingMeters, 400);
+});
+
+test('the Tavor dot sits 3.89 in over the bore on both Tavors, the height in the sources\' band that puts the 50-yard zero\'s second crossing nearest 300 yards', () => {
+  assert.equal(flat.rifles['iwi-tavor-sar'].sightHeightIn['pa-md25'], 3.89);
+  assert.equal(flat.rifles['iwi-x95'].sightHeightIn['pa-md25'], 3.89);
+  assert.equal(flat.rifles['iwi-tavor-sar'].sightHeightIn['pa-magnifier'], 3.89);
+  assert.match(raw.rifles['iwi-x95'].sightHeightIn['pa-md25'].estimate, /remembered zero/);
 });
 
 test('the raw data keeps the page address and the date read beside every sourced figure', () => {

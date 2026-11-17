@@ -1,5 +1,5 @@
 {
- "_about": "The sights. clickMoa is what one click of elevation moves the strike, windageClickMoa one click of windage, in minutes of angle; clicks is the travel each way from the middle. zoom is the magnification range; fovFtAt100 the field of view in feet at 100 yards at the lowest and highest zoom.",
+ "_about": "The sights. clickMoa is what one click of elevation moves the strike, windageClickMoa one click of windage, in minutes of angle; clicks is the travel each way from the middle. zoom is the magnification range; fovFtAt100 the field of view in feet at 100 yards at the lowest and highest zoom. frontPostMoa is the front post's width over the sight radius (how wide it looks against the target); apertureMoa the rear ring's lit circle and notchMoa the rear notch's width as the eye sees them; dotMoa a red dot's size. leaf is a sliding rear leaf: its marked settings, the service load it was cut for, and each setting's angle above the 100 m setting, derived with the engine (leaf545: the same leaf on the 5.45x39 rifle, cut for its own load).",
  "ar-irons": {
   "name": "AR-15 iron sights (front post, rear aperture)",
   "kind": "iron",
@@ -97,7 +97,7 @@
   }
  },
  "ak-irons": {
-  "name": "AK iron sights (front post, rear notch)",
+  "name": "AK iron sights (front post, rear notch, sliding leaf)",
   "kind": "iron",
   "clickMoa": {
    "value": 2,
@@ -138,10 +138,220 @@
     "value": 35,
     "estimate": "as the AR irons"
    }
+  },
+  "leaf": {
+   "unit": "meters",
+   "settingsMeters": {
+    "value": [
+     100,
+     200,
+     300,
+     400,
+     500,
+     600,
+     700,
+     800,
+     900,
+     1000
+    ],
+    "source": {
+     "url": "https://en.wikipedia.org/wiki/AKM",
+     "read": "2026-11-17",
+     "note": "the AKM's rear tangent sight is marked in 100 m steps from 100 to 1,000 m, with a battle setting \"П\". read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   },
+   "serviceLoad": {
+    "name": "Soviet 57-N-231 (M43) steel-core ball",
+    "grains": {
+     "value": 123,
+     "source": {
+      "url": "https://modernfirearms.net/en/cartridge/7-62x39-m43-soviet-intermediate-cartridge/",
+      "read": "2026-11-17",
+      "note": "57-N-231: an 8 g (123 gr) steel-core ball bullet. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "muzzleMps": {
+     "value": 715,
+     "source": {
+      "url": "https://en.wikipedia.org/wiki/AKM",
+      "read": "2026-11-17",
+      "note": "AKM muzzle velocity 715 m/s. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "bc": {
+     "value": 0.309,
+     "source": {
+      "url": "https://www.milsurps.com/archive/index.php/t-44425.html",
+      "read": "2026-11-17",
+      "note": "a compiled table of military loads gives the 57-N-231 bullet G1 0.309 (G7 0.155) at 715 to 725 m/s from an AKM; not a maker figure. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "dragModel": "G1"
+   },
+   "moaAbove100": {
+    "value": [
+     {
+      "meters": 100,
+      "moaAbove100": 0
+     },
+     {
+      "meters": 200,
+      "moaAbove100": 3.5
+     },
+     {
+      "meters": 300,
+      "moaAbove100": 8.48
+     },
+     {
+      "meters": 400,
+      "moaAbove100": 14.81
+     },
+     {
+      "meters": 500,
+      "moaAbove100": 22.68
+     },
+     {
+      "meters": 600,
+      "moaAbove100": 32.35
+     },
+     {
+      "meters": 700,
+      "moaAbove100": 43.9
+     },
+     {
+      "meters": 800,
+      "moaAbove100": 57.32
+     },
+     {
+      "meters": 900,
+      "moaAbove100": 72.58
+     },
+     {
+      "meters": 1000,
+      "moaAbove100": 89.64
+     }
+    ],
+    "estimate": "derived by this app's engine, not published by the maker: the bore angle that zeroes the service load (Soviet 57-N-231 (M43) steel-core ball, 123 gr at 715 m/s, G1 0.309) at each setting's distance, less the angle at the 100 m setting, with the sight 1.9 in over the bore in standard sea-level air, in minutes of angle: 100 m 0, 200 m 3.5, 300 m 8.48, 400 m 14.81, 500 m 22.68, 600 m 32.35, 700 m 43.9, 800 m 57.32, 900 m 72.58, 1000 m 89.64. The 5.45x39 rifle carries the same leaf (data/rifles.json), with its own service load: see the 5.45 entry under leaf545."
+   },
+   "battleSettingMeters": {
+    "value": 300,
+    "source": {
+     "url": "https://en.wikipedia.org/wiki/AKM",
+     "read": "2026-11-17",
+     "note": "the \"П\" (point-blank) setting of the 7.62x39 AKM corresponds to a 300 m zero. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   }
+  },
+  "leaf545": {
+   "unit": "meters",
+   "settingsMeters": {
+    "value": [
+     100,
+     200,
+     300,
+     400,
+     500,
+     600,
+     700,
+     800,
+     900,
+     1000
+    ],
+    "source": {
+     "url": "https://ar15discounts.com/products/izhmash-rear-sight-assembly-for-ak-74-and-ak-100-series-1000m-with-cyrillic-p-battle-mark-russian/",
+     "read": "2026-11-17",
+     "note": "the AK-74 rear sight: 1,000 m scale with the Cyrillic \"П\" battle mark. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   },
+   "serviceLoad": {
+    "name": "Soviet 7N6 steel-core ball",
+    "grains": {
+     "value": 53,
+     "source": {
+      "url": "https://weaponsystems.net/system/1512-5.45x39mm+Soviet",
+      "read": "2026-11-17",
+      "note": "7N6 projectile 3.43 g (53 gr). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "muzzleMps": {
+     "value": 880,
+     "source": {
+      "url": "https://en.wikipedia.org/wiki/AK-74",
+      "read": "2026-11-17",
+      "note": "AK-74, 415 mm barrel: 880 to 900 m/s; Rosoboronexport lists 7N6 at 880 m/s. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "bc": {
+     "value": 0.339,
+     "source": {
+      "url": "https://www.milsurps.com/archive/index.php/t-44425.html",
+      "read": "2026-11-17",
+      "note": "a compiled table gives the 7N6 bullet G1 0.339 (G7 0.170) at 870 to 910 m/s from an AK-74M; the US Army BRL measured G7 0.168; not a maker figure. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "dragModel": "G1"
+   },
+   "moaAbove100": {
+    "value": [
+     {
+      "meters": 100,
+      "moaAbove100": 0
+     },
+     {
+      "meters": 200,
+      "moaAbove100": 1.9
+     },
+     {
+      "meters": 300,
+      "moaAbove100": 4.82
+     },
+     {
+      "meters": 400,
+      "moaAbove100": 8.46
+     },
+     {
+      "meters": 500,
+      "moaAbove100": 12.91
+     },
+     {
+      "meters": 600,
+      "moaAbove100": 18.33
+     },
+     {
+      "meters": 700,
+      "moaAbove100": 24.94
+     },
+     {
+      "meters": 800,
+      "moaAbove100": 32.97
+     },
+     {
+      "meters": 900,
+      "moaAbove100": 42.57
+     },
+     {
+      "meters": 1000,
+      "moaAbove100": 53.8
+     }
+    ],
+    "estimate": "derived by this app's engine, not published by the maker: the bore angle that zeroes the service load (Soviet 7N6 steel-core ball, 53 gr at 880 m/s, G1 0.339) at each setting's distance, less the angle at the 100 m setting, with the sight 1.9 in over the bore in standard sea-level air, in minutes of angle: 100 m 0, 200 m 1.9, 300 m 4.82, 400 m 8.46, 500 m 12.91, 600 m 18.33, 700 m 24.94, 800 m 32.97, 900 m 42.57, 1000 m 53.8. Used by the 5.45x39 rifle (ak-545) in place of leaf."
+   },
+   "battleSettingMeters": {
+    "value": 400,
+    "source": {
+     "url": "https://en.wikipedia.org/wiki/AK-74",
+     "read": "2026-11-17",
+     "note": "the 5.45x39 rear sight's \"П\" setting corresponds to a 400 m zero (one Russian optics page says about 440 m). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   }
+  },
+  "notchMoa": {
+   "value": 24,
+   "estimate": "the rear notch is about 2.5 mm wide and sits about 14 in (355 mm) from the eye on an AK: 2.5 / 355 radians = 24 MOA across as the eye sees it; the front post (frontPostMoa) is measured over the sight radius, against the target"
   }
  },
  "vepr-irons": {
-  "name": "Vepr iron sights (front post, rear notch)",
+  "name": "Vepr iron sights (front post, rear notch, sliding leaf)",
   "kind": "iron",
   "clickMoa": {
    "value": 2,
@@ -182,10 +392,109 @@
     "value": 35,
     "estimate": "as the AR irons"
    }
+  },
+  "leaf": {
+   "unit": "meters",
+   "settingsMeters": {
+    "value": [
+     100,
+     200,
+     300,
+     400,
+     500,
+     600,
+     700,
+     800,
+     900,
+     1000
+    ],
+    "source": {
+     "url": "https://blog.k-var.com/hunting/vepr-ak-hunting/",
+     "read": "2026-11-17",
+     "note": "the Vepr's tangent rear sight is graduated to 1,000 m and the slider locks at 100 m intervals; retail listings say \"windage adjustable 1000m rear sight leaf\". read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   },
+   "serviceLoad": {
+    "name": "Soviet 57-N-323S (LPS) steel-core ball",
+    "grains": {
+     "value": 148,
+     "source": {
+      "url": "https://gunrf.ru/rg_patron_7_62x54_eng.html",
+      "read": "2026-11-17",
+      "note": "LPS bullet 9.6 g (148 gr). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "muzzleMps": {
+     "value": 828,
+     "source": {
+      "url": "https://en.wikipedia.org/wiki/SVD_(rifle)",
+      "read": "2026-11-17",
+      "note": "57-N-323S ball at 828 m/s from the SVD (the 1,000 m military scale the leaf carries). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "bc": {
+     "value": 0.374,
+     "source": {
+      "url": "https://en.wikipedia.org/wiki/7.62%C3%9754mmR",
+      "read": "2026-11-17",
+      "note": "the conventional steel-core bullet: G1 about 0.374, G7 about 0.187; a compiled table gives 0.381 G1. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "dragModel": "G1"
+   },
+   "moaAbove100": {
+    "value": [
+     {
+      "meters": 100,
+      "moaAbove100": 0
+     },
+     {
+      "meters": 200,
+      "moaAbove100": 2.15
+     },
+     {
+      "meters": 300,
+      "moaAbove100": 5.37
+     },
+     {
+      "meters": 400,
+      "moaAbove100": 9.32
+     },
+     {
+      "meters": 500,
+      "moaAbove100": 14.07
+     },
+     {
+      "meters": 600,
+      "moaAbove100": 19.74
+     },
+     {
+      "meters": 700,
+      "moaAbove100": 26.53
+     },
+     {
+      "meters": 800,
+      "moaAbove100": 34.62
+     },
+     {
+      "meters": 900,
+      "moaAbove100": 44.15
+     },
+     {
+      "meters": 1000,
+      "moaAbove100": 55.18
+     }
+    ],
+    "estimate": "derived by this app's engine, not published by the maker: the bore angle that zeroes the service load (Soviet 57-N-323S (LPS) steel-core ball, 148 gr at 828 m/s, G1 0.374) at each setting's distance, less the angle at the 100 m setting, with the sight 2 in over the bore in standard sea-level air, in minutes of angle: 100 m 0, 200 m 2.15, 300 m 5.37, 400 m 9.32, 500 m 14.07, 600 m 19.74, 700 m 26.53, 800 m 34.62, 900 m 44.15, 1000 m 55.18. The Vepr is a hunting rifle on the RPK pattern; its leaf carries the military 1,000 m scale, so the military ball load is the one the scale was cut for."
+   }
+  },
+  "notchMoa": {
+   "value": 24,
+   "estimate": "as the AK notch: about 2.5 mm wide, about 14 in from the eye"
   }
  },
  "rem-irons": {
-  "name": "Open rimfire sights",
+  "name": "Open rimfire sights (front bead, rear notch)",
   "kind": "iron",
   "clickMoa": {
    "value": 3,
@@ -226,6 +535,10 @@
     "value": 35,
     "estimate": "as the AR irons"
    }
+  },
+  "notchMoa": {
+   "value": 22,
+   "estimate": "a rimfire sporter's rear notch is about 2 mm wide and sits about 12 in (305 mm) from the eye: 2 / 305 radians = 22 MOA across as the eye sees it"
   }
  },
  "pa-md25": {

@@ -1,5 +1,5 @@
 {
- "_about": "The rifle set. barrelIn is the barrel length the loads' speeds are given for. sightHeightIn is how far the sight line sits above the bore for each sight the rifle can carry. boreOffsetMoa is the rifle's mechanical offset with the sight at its middle setting: the reason a sight needs zeroing. sights lists the sights (data/sights.json) the rifle can carry.",
+ "_about": "The rifle set. barrelIn is the barrel length the loads' speeds are given for. sightHeightIn is how far the sight line sits above the bore for each sight the rifle can carry. boreOffsetMoa is the rifle's mechanical offset with the sight at its middle setting: the reason a sight needs zeroing. sights lists the sights (data/sights.json) the rifle can carry; the first is the sight the rifle opened with before every sight was playable, which an address without a sight still opens.",
  "bcm-ar15": {
   "name": "BCM AR-15 carbine, 5.56",
   "caliber": "5.56x45",
@@ -45,7 +45,7 @@
  "iwi-tavor-sar": {
   "name": "IWI Tavor SAR, 5.56",
   "caliber": "5.56x45",
-  "playable": false,
+  "playable": true,
   "barrelIn": {
    "value": 16.5,
    "source": {
@@ -60,12 +60,12 @@
     "estimate": "IWI publishes no sight height. Owners report 3.75 in on a SAR (https://ar15.com/forums/armory/X95_scope_mount_height/43-476622/) and about 2.1 in for a dot on a SAR (Reddit); Manticore's replacement rail is sold as raising the factory rail about half an inch to AR height (https://www.opticsplanet.com/manticore-arms-tavor-x95-overwatch-top-rail.html). 3.0 is the middle of the reported band; the field report gives the second crossing for the whole band"
    },
    "pa-md25": {
-    "value": 3,
-    "estimate": "same basis as the iron sights: a dot in its low mount sits about where the folding irons do"
+    "value": 3.89,
+    "estimate": "IWI publishes no rail height. Band from the sources: a Tavor SAR owner measured 3.75 in over the bore with a scope in an AR-height (about 1.5 in) mount (https://www.ar15.com/forums/armory/Tavor_sight_height_over_bore_/43-412550/), which puts the Tavor rail about 2.25 in over the bore; Manticore sells its rail as raising the factory rail about 1/2 in to AR height (https://manticorearms.com/product/x95-overwatch-full-length-top-rail/); an X95 owner puts its rail about 0.2 in under an AR's (https://www.ar15.com/forums/armory/Got-a-Tavor-X95--have-questions-on-optic-height-/43-472463/). The MD-25 ships with a low base (0.96 in to the dot's center) and a riser with spacers (1.41, 1.535 and 1.64 in) (https://www.optics-trade.eu/blog/primary-arms-slx-md-25-red-dot-sight-instruction-manual/, https://www.targettamers.com/red-dot-sights/primary-arms-slx-md-25-gen-ii-review/). So the dot sits between about 3.2 in (low base) and 3.9 in (riser and thick spacer) over the bore, the owner-reported band being 2.1 to 3.75. Within that band the engine puts the second crossing of a 50-yard zero with IMI M193 (3,066 fps) at 258 yd for 3.21 in, 290 yd for 3.75 in and 299 yd for 3.89 in; the brief's remembered zero was on at 50 and again near 300, so 3.89 in (the riser with its thick spacer) is used"
    },
    "pa-magnifier": {
-    "value": 3,
-    "estimate": "behind the dot at the same height"
+    "value": 3.89,
+    "estimate": "behind the dot at the dot's height (the same basis as the dot's figure in this entry)"
    }
   },
   "boreOffsetMoa": {
@@ -97,7 +97,7 @@
  "iwi-x95": {
   "name": "IWI Tavor X95, 5.56",
   "caliber": "5.56x45",
-  "playable": false,
+  "playable": true,
   "barrelIn": {
    "value": 16.5,
    "source": {
@@ -112,8 +112,8 @@
     "estimate": "as for the Tavor SAR: not published by IWI; the middle of the reported 2.1 to 3.75 in band"
    },
    "pa-md25": {
-    "value": 3,
-    "estimate": "same basis: the same basis as the figure next to it in this entry"
+    "value": 3.89,
+    "estimate": "as for the Tavor SAR: IWI publishes no rail height. Band from the sources: a Tavor SAR owner measured 3.75 in over the bore with a scope in an AR-height (about 1.5 in) mount (https://www.ar15.com/forums/armory/Tavor_sight_height_over_bore_/43-412550/), which puts the Tavor rail about 2.25 in over the bore; Manticore sells its rail as raising the factory rail about 1/2 in to AR height (https://manticorearms.com/product/x95-overwatch-full-length-top-rail/); an X95 owner puts its rail about 0.2 in under an AR's (https://www.ar15.com/forums/armory/Got-a-Tavor-X95--have-questions-on-optic-height-/43-472463/). The MD-25 ships with a low base (0.96 in to the dot's center) and a riser with spacers (1.41, 1.535 and 1.64 in) (https://www.optics-trade.eu/blog/primary-arms-slx-md-25-red-dot-sight-instruction-manual/, https://www.targettamers.com/red-dot-sights/primary-arms-slx-md-25-gen-ii-review/). So the dot sits between about 3.2 in (low base) and 3.9 in (riser and thick spacer) over the bore, the owner-reported band being 2.1 to 3.75. Within that band the engine puts the second crossing of a 50-yard zero with IMI M193 (3,066 fps) at 258 yd for 3.21 in, 290 yd for 3.75 in and 299 yd for 3.89 in; the brief's remembered zero was on at 50 and again near 300, so 3.89 in (the riser with its thick spacer) is used"
    }
   },
   "boreOffsetMoa": {
@@ -144,7 +144,7 @@
  "ak-762": {
   "name": "AK-pattern rifle, 7.62x39",
   "caliber": "7.62x39",
-  "playable": false,
+  "playable": true,
   "barrelIn": {
    "value": 16.3,
    "source": {
@@ -195,7 +195,7 @@
  "ak-545": {
   "name": "AK-pattern rifle, 5.45x39",
   "caliber": "5.45x39",
-  "playable": false,
+  "playable": true,
   "barrelIn": {
    "value": 16.3,
    "source": {
@@ -283,7 +283,7 @@
  "remington-22": {
   "name": "Remington bolt-action .22 LR, heavy barrel",
   "caliber": ".22 LR",
-  "playable": false,
+  "playable": true,
   "barrelIn": {
    "value": 20,
    "estimate": "the model is not identified. Remington's heavy-barrel bolt rimfires: 504-T HB, 20 in (https://www.chuckhawks.com/subscribers/product_review_page/remington_504-T.htm); 541-T HB (https://bluebookofgunvalues.com/products/remington-model-541t); 40-X rimfire, 27 to 28 in (https://bluebookofgunvalues.com/products/remington-model-40-xb-rangemaster-rimfire). 20 in used until the model is named"
