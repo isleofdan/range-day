@@ -148,10 +148,18 @@ test('the book\'s order and come-up: lines sort newest first by the moment and t
   assert.match(RD.comeUpText(line, 2), /minutes of angle up from the 100-yard zero$/);
   assert.equal(RD.comeUpMoa({ elevationClicks: 3, elevationMoa: 6, zero: { zeroYards: 100, elevationClicks: 1 } }, 2), 4, 'a zero from an older copy without elevationMoa counts clicks');
   assert.equal(RD.comeUpMoa({ elevationClicks: -1, elevationMoa: -2, zero: null }, 2), -2, 'no zero: from the middle');
-  const good = { kind: 'range-day copy', version: 1, zeros: [], book: [{ rifle: 'a', sight: 'b', load: 'c', id: 'd:1', on: '2026-11-17', course: 'x', yards: 100, elevationClicks: 0, windageClicks: 0, upIn: 0, rightIn: 0 }], cold_bore: [], days: [] };
-  assert.equal(RD.checkCopy(good), true);
+  const bookLine = { rifle: 'a', sight: 'b', load: 'c', id: 'd:1', day: 'd', on: '2026-11-17', course: 'x', yards: 100, elevationClicks: 2, windageClicks: 0, elevationMoa: 4, windageMoa: 0, leaf: null, zero: { zeroYards: 100, elevationClicks: 1, windageClicks: 0 }, heldUpMoa: 0.5, heldRightMoa: 0, tempF: 52, windCall: { from: 'left', mph: 6 }, upIn: 1.2, rightIn: -0.4, struck: false, note: '' };
+  const coldLine = { rifle: 'a', load: 'c', id: 'd:1', day: 'd', on: '2026-11-17', course: 'x', sight: 'b', yards: 300, elevationClicks: 2, windageClicks: 0, leaf: null, windCall: null, tempF: 52, hit: false, upIn: null, rightIn: null };
+  const good = { kind: 'range-day copy', version: 1, zeros: [], book: [bookLine], cold_bore: [coldLine], days: [] };
+  assert.equal(RD.checkCopy(good), true, 'a complete book line (with a zero and a call) and a cold-bore line (into the ground, not called) pass');
+  assert.throws(() => RD.checkCopy({ ...good, book: [{ ...bookLine, tempF: undefined }] }), /book\[0\]\.tempF is missing; it must be a number/);
+  assert.throws(() => RD.checkCopy({ ...good, book: [{ ...bookLine, windCall: 'left' }] }), /book\[0\]\.windCall is "left"; it must be an object or null/);
+  assert.throws(() => RD.checkCopy({ ...good, book: [{ ...bookLine, zero: { zeroYards: 100 } }] }), /book\[0\]\.zero\.elevationClicks is missing/);
+  assert.throws(() => RD.checkCopy({ ...good, book: [{ ...bookLine, heldUpMoa: null }] }), /book\[0\]\.heldUpMoa is null; it must be a number/);
+  assert.throws(() => RD.checkCopy({ ...good, cold_bore: [{ ...coldLine, hit: 'yes' }] }), /cold_bore\[0\]\.hit is "yes"; it must be a boolean/);
+  assert.throws(() => RD.checkCopy({ ...good, cold_bore: [{ ...coldLine, windCall: { from: 'left' } }] }), /cold_bore\[0\]\.windCall\.mph is missing/);
   assert.throws(() => RD.checkCopy({ ...good, version: 3 }), /its "version" is 3; this app reads version 1/);
-  assert.throws(() => RD.checkCopy({ ...good, book: [{ ...good.book[0], hit: true, yards: undefined }] }), /book\[0\]\.yards is missing; it must be a number\. Nothing was loaded\./);
+  assert.throws(() => RD.checkCopy({ ...good, book: [{ ...bookLine, yards: undefined }] }), /book\[0\]\.yards is missing; it must be a number\. Nothing was loaded\./);
   assert.throws(() => RD.checkCopy({ ...good, days: [5] }), /days\[0\] is not a record/);
   // A day's inside is checked too: the box, the weather with its three stretches of wind, every shot.
   const day = RD.startDay({ courses: flat.courses, weather: W, loads: flat.loads }, { courseId: 'cta-piru', rifleId: 'molot-vepr-54r', loadId: 'sb-174-hpbt', sightId: 'utg-2-7x44' }, 7, 'afternoon', E.seeded(3)).day;

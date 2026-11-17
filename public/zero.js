@@ -102,7 +102,7 @@
       if (!rec.saved) $('saved').textContent = 'The day is not saved on this device (the browser refused its storage); it holds while this page is open.';
     }
     draw(); readout(); rounds();
-    if (day.endedAt) $('group').textContent += ` That was the last round: the box of ${day.box.size} is empty and the day is over. The day's page has every shot.`;
+    if (day.endedAt) { $('group').textContent += ` That was the last round: the box of ${day.box.size} is empty and the day is over. The day's page follows.`; setTimeout(() => { location.href = `/day?id=${encodeURIComponent(day.id)}`; }, 3000); }
   }
   function readout() {
     const mine = holes.filter((h) => h.loadId === loadId);

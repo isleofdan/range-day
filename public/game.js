@@ -343,8 +343,8 @@ window.RD = (function () {
   // The shape every line of a copy must have: field name to the kind of value.
   const SHAPES = {
     zeros: { rifle: 'string', sight: 'string', load: 'string', zeroYards: 'number', elevationClicks: 'number', windageClicks: 'number' },
-    book: { rifle: 'string', sight: 'string', load: 'string', id: 'string', on: 'string', course: 'string', yards: 'number', elevationClicks: 'number', windageClicks: 'number', upIn: 'number', rightIn: 'number' },
-    cold_bore: { rifle: 'string', load: 'string', id: 'string', on: 'string', course: 'string', sight: 'string', yards: 'number', elevationClicks: 'number', windageClicks: 'number', hit: 'boolean' },
+    book: { rifle: 'string', sight: 'string', load: 'string', id: 'string', day: 'string', on: 'string', course: 'string', yards: 'number', elevationClicks: 'number', windageClicks: 'number', elevationMoa: 'number', windageMoa: 'number', leaf: 'number|null', zero: 'object|null', heldUpMoa: 'number', heldRightMoa: 'number', tempF: 'number', windCall: 'object|null', upIn: 'number', rightIn: 'number', struck: 'boolean', note: 'string' },
+    cold_bore: { rifle: 'string', load: 'string', id: 'string', day: 'string', on: 'string', course: 'string', sight: 'string', yards: 'number', elevationClicks: 'number', windageClicks: 'number', leaf: 'number|null', windCall: 'object|null', tempF: 'number', hit: 'boolean', upIn: 'number|null', rightIn: 'number|null' },
     days: { id: 'string', startedAt: 'string', date: 'string', course: 'string', rifle: 'string', load: 'string', month: 'number', timeOfDay: 'string', shots: 'array', box: 'object', weather: 'object' },
   };
   // Inside a day: the box, the weather (with its three stretches of wind) and every shot.
@@ -352,6 +352,8 @@ window.RD = (function () {
     box: { size: 'number', left: 'number' },
     weather: { tempF: 'number', humidity: 'number', altitudeFt: 'number', pressureInHg: 'number', wind: 'array' },
     windStretch: { fromYards: 'number', toYards: 'number', speedMph: 'number', fromDegrees: 'number' },
+    zero: { zeroYards: 'number', elevationClicks: 'number', windageClicks: 'number' }, // a book line's saved zero
+    windCall: { from: 'string', mph: 'number' }, // a stated call; null is "not called"
     shot: { n: 'number', place: 'string', yards: 'number', elevationClicks: 'number', windageClicks: 'number', reached: 'boolean' },
     lineShot: { hit: 'boolean', heldUpMoa: 'number', heldRightMoa: 'number' }, // a shot at steel has these too; a bench shot has no hit
   };
@@ -361,8 +363,9 @@ window.RD = (function () {
   // the faulty field and what it must be, so a bad file loads nothing.
   function checkCopy(obj) {
     const notACopy = (why) => new Error(`This is not a Range Day copy: ${why}`);
-    const isKind = (v, kind) => (kind === 'array' ? Array.isArray(v) : kind === 'object' ? Boolean(v && typeof v === 'object' && !Array.isArray(v)) : (typeof v === kind && !(kind === 'number' && Number.isNaN(v))));
-    const kindName = (kind) => (kind === 'array' ? 'a list' : kind === 'object' ? 'an object' : `a ${kind}`);
+    const isOne = (v, kind) => (kind === 'null' ? v === null : kind === 'array' ? Array.isArray(v) : kind === 'object' ? Boolean(v && typeof v === 'object' && !Array.isArray(v)) : (typeof v === kind && !(kind === 'number' && Number.isNaN(v))));
+    const isKind = (v, kind) => kind.split('|').some((k) => isOne(v, k));
+    const kindName = (kind) => kind.split('|').map((k) => (k === 'array' ? 'a list' : k === 'object' ? 'an object' : k === 'null' ? 'null' : `a ${k}`)).join(' or ');
     // Checks one record against a shape; `at` is its path in the file, for the message.
     const checkRecord = (rec, shape, at) => {
       if (!isKind(rec, 'object')) throw notACopy(`${at} is not a record (an object with ${Object.keys(shape).join(', ')}). Nothing was loaded.`);
@@ -376,6 +379,9 @@ window.RD = (function () {
     if (!COPY_VERSIONS.includes(obj.version)) throw notACopy(`its "version" is ${JSON.stringify(obj.version)}; this app reads version ${COPY_VERSIONS.join(', ')}.`);
     for (const k of ['zeros', 'book', 'cold_bore', 'days']) if (!Array.isArray(obj[k])) throw notACopy(`"${k}" is missing or not a list.`);
     for (const [list, shape] of Object.entries(SHAPES)) obj[list].forEach((rec, i) => checkRecord(rec, shape, `${list}[${i}]`));
+    // Inside a book line: its saved zero and its wind call, where not null; inside a cold-bore line, its wind call.
+    obj.book.forEach((l, i) => { if (l.zero) checkRecord(l.zero, DAY_SHAPES.zero, `book[${i}].zero`); if (l.windCall) checkRecord(l.windCall, DAY_SHAPES.windCall, `book[${i}].windCall`); });
+    obj.cold_bore.forEach((l, i) => { if (l.windCall) checkRecord(l.windCall, DAY_SHAPES.windCall, `cold_bore[${i}].windCall`); });
     // A day's inside: the box, the weather and its wind, every shot.
     obj.days.forEach((day, i) => {
       const at = `days[${i}]`;

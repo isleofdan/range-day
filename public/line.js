@@ -403,7 +403,8 @@
   // breathing, no recoil) and a seeded draw, so two shots can be compared;
   // the bullet still flies through the engine exactly as the player's does
   // (the gusts are read at the clock's zero, so the wind is the same too).
-  // The box and the day's end.
+  // The box and the day's end. When the last round has landed the screen says so, then shows the day's page.
+  const DAY_PAGE_AFTER_MS = 3000;
   const rounds = () => { $('rounds').textContent = RD.roundsText(day); $('fire').classList.toggle('spent', Boolean(day.endedAt) || day.box.left <= 0); };
   const dayOver = () => Boolean(day.endedAt) || day.box.left <= 0;
   function fire(seed) {
@@ -473,7 +474,7 @@
     delete shot.first;
     const rec = RD.recordShot(day, shot, pending.length > 0);
     if (!rec.saved) notes.push('The day is not saved on this device (the browser refused its storage).');
-    if (rec.ended) notes.push(`The box of ${day.box.size} is empty: the day is over. The day's page has every shot.`);
+    if (rec.ended) { notes.push(`The box of ${day.box.size} is empty: the day is over. The day's page follows.`); setTimeout(() => { location.href = `/day?id=${encodeURIComponent(day.id)}`; }, DAY_PAGE_AFTER_MS); }
     rounds(); bookLine();
     const sub = s.mach != null && s.mach < 1.2 ? ` The bullet arrived at Mach ${s.mach.toFixed(2)}${s.mach < 1 ? ', below the speed of sound' : ', nearly down to the speed of sound'}.` : '';
     $('result').innerHTML = (s.hit ? `<strong>Hit</strong> at ${s.dist} yards, ${RD.esc(RD.whereText(s.upIn, s.rightIn))} of center. The ring comes back ${soundBack.toFixed(1)} s later.${sub}` : `<strong>Miss</strong> at ${s.dist} yards: ${RD.esc(s.entry.where.replace('miss: ', ''))}. Watch the dust.${sub}`) + (notes.length ? ` ${RD.esc(notes.join(' '))}` : '');

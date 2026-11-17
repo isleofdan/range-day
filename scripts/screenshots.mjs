@@ -65,7 +65,7 @@ const SCREENS = [
   // The box empty: twenty shots at the 100-yard plate.
   { name: 'line-box-empty', path: AR, expect: 'the day is over', act: async (page) => { await plate(page, 0); for (let i = 0; i < 20; i++) await seededShot(page, 200 + i); await settle(page, 300); } },
   // The day's page of a finished day (the one just shot).
-  { name: 'day-finished', path: AR, expect: 'ended when the box was empty', act: async (page) => { await plate(page, 0); for (let i = 0; i < 20; i++) await seededShot(page, 300 + i); await page.goto(`${base}/day`); await page.waitForSelector('#shots tbody tr'); } },
+  { name: 'day-finished', path: AR, expect: 'ended when the box was empty', act: async (page) => { await plate(page, 0); for (let i = 0; i < 20; i++) await seededShot(page, 300 + i); await page.waitForURL(/\/day\?id=/, { timeout: 10000 }); await page.waitForSelector('#shots tbody tr'); } },
   // The book page with several distances, one struck line and a note.
   { name: 'book-several', path: AR, expect: 'Restore', act: async (page) => {
     await ready(page); await page.evaluate(() => { for (const k of Object.keys(localStorage)) if (k.startsWith('range-day:book:') || k.startsWith('range-day:cold-bore:')) localStorage.removeItem(k); });

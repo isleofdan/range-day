@@ -101,8 +101,9 @@ test('verify 5: the box: a new day shows the load\'s full box; five on the bench
   const before = await page.evaluate(() => RangeDayZero.holes.length);
   await page.click('#fire1', { force: true }).catch(() => {});
   assert.equal(await page.evaluate(() => RangeDayZero.holes.length), before, 'no more holes');
-  // The day's page lists every shot: 5 + 12 + 3 = 20.
-  await page.goto(`${base}/day?id=${encodeURIComponent(day.id)}`); await page.waitForSelector('#shots tbody tr');
+  // The day's page is shown when the day ends, and lists every shot: 5 + 12 + 3 = 20.
+  await page.waitForURL(/\/day\?id=/, { timeout: 10000 }); await page.waitForSelector('#shots tbody tr');
+  assert.equal(new URL(page.url()).searchParams.get('id'), day.id, 'the page of the day that just ended');
   assert.equal(await page.$$eval('#shots tbody tr', (r) => r.length), 20);
   assert.match(await page.textContent('#facts'), /a box of 20, 20 fired, 0 left; ended when the box was empty/);
   console.log(`  box of 20: 5 at the bench, 12 at steel, then "Fire five" fired 3; the day's page lists ${await page.$$eval('#shots tbody tr', (r) => r.length)} shots`);
@@ -118,6 +119,8 @@ test('verify 5: the box: a new day shows the load\'s full box; five on the bench
   await wait(300);
   assert.equal(await page.evaluate(() => RangeDayLine.log.length + RangeDayLine.pending), logBefore, 'nothing fired');
   assert.match(await page.textContent('#result'), /The day is over: the box of 20 is empty/);
+  await page.waitForURL(/\/day\?id=/, { timeout: 10000 }); await page.waitForSelector('#facts');
+  assert.match(await page.textContent('#facts'), /ended when the box was empty/, 'the line too ends on the day\'s page');
   assert.deepEqual(errors, []);
   await context.close();
 });
@@ -328,6 +331,7 @@ test('verify 10: nothing on the phone is lost: a zero, a sight setting and a log
   await page.selectOption('#plate', '0');
   for (let i = 0; i < 20; i++) await seededShot(page, 40 + i);
   assert.match(await page.textContent('#rounds'), /the day is over/);
+  await page.waitForURL(/\/day\?id=/, { timeout: 10000 });
   const after = await page.evaluate((keys) => Object.fromEntries(keys.map((k) => [k, JSON.parse(localStorage.getItem(k))])), Object.keys(before));
   assert.deepStrictEqual(after['range-day:zero:bcm-ar15:ar-irons:imi-m193'], before['range-day:zero:bcm-ar15:ar-irons:imi-m193'], 'the zero is untouched');
   assert.deepStrictEqual(after['range-day:sight:bcm-ar15:ar-irons'], before['range-day:sight:bcm-ar15:ar-irons'], 'the sight setting is untouched');
