@@ -1,5 +1,5 @@
 {
- "_about": "Every load the rifle set uses. muzzleFps is the speed from the barrel the rifle in this set actually has; where the maker measured in a different barrel the figure is an estimate by the rule stated. bc is the ballistic coefficient the engine uses with dragModel (G1 or G7); where the maker publishes both, the one the maker's own trajectory table follows is used. spreadMoa is the five-shot extreme spread in minutes of angle (MOA, 1/60 of a degree, about 1.047 inches at 100 yards) expected from that rifle and load.",
+ "_about": "Every load the rifle set uses. muzzleFps is the speed from the barrel the rifle in this set actually has; where the maker measured in a different barrel the figure is an estimate by the rule stated. bc is the ballistic coefficient the engine uses with dragModel (G1 or G7); where the maker publishes both, the one the maker's own trajectory table follows is used. spreadMoa is the five-shot extreme spread in minutes of angle (MOA, 1/60 of a degree, about 1.047 inches at 100 yards) expected from that rifle and load. boxCount is the number of rounds in the box the maker sells it in: a day at the range has one box.",
  "imi-m193": {
   "caliber": "5.56x45",
   "name": "IMI M193 55 gr full metal jacket",
@@ -39,6 +39,14 @@
   "spreadMoa": {
    "value": 2.5,
    "estimate": "ball ammunition from a 16-inch carbine; makers publish no group size. Match loads are set tighter than ball and surplus"
+  },
+  "boxCount": {
+   "value": 20,
+   "source": {
+    "url": "https://www.luckygunner.com/5-56x45-55-grain-fmj-m193-imi-20-rounds",
+    "read": "2026-11-17",
+    "note": "IMI M193, 20 rounds per box, 50 boxes per case. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
   }
  },
  "imi-razorcore-69": {
@@ -68,6 +76,10 @@
   "spreadMoa": {
    "value": 1.25,
    "estimate": "a match load in a 16-inch carbine with iron sights or a dot; makers publish no group size. Set tighter than ball"
+  },
+  "boxCount": {
+   "value": 20,
+   "estimate": "no 20-round retail listing of the 69 gr Razor Core was found (only a 500-round case, https://www.luckygunner.com/5-56-45mm-69-grain-match-hpbt-imi-500-rounds); IMI's 77 gr Razor Core is sold in boxes of 20, so 20 is used"
   }
  },
  "federal-gmm-69": {
@@ -109,6 +121,14 @@
   "spreadMoa": {
    "value": 1,
    "estimate": "the match load most AR-15s group tightest with; Federal publishes no group size"
+  },
+  "boxCount": {
+   "value": 20,
+   "source": {
+    "url": "https://shop.marksman-llc.com/products/ammo-federal-gm223m-029465089320-2031",
+    "read": "2026-11-17",
+    "note": "Federal GM223M Gold Medal 69 gr Sierra MatchKing, 20 per box, 10 per case. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
   }
  },
  "imi-razorcore-77": {
@@ -150,6 +170,14 @@
   "spreadMoa": {
    "value": 1,
    "estimate": "a heavy match load; makers publish no group size. Set like the Federal match load"
+  },
+  "boxCount": {
+   "value": 20,
+   "source": {
+    "url": "https://www.primaryarms.com/imi-razor-core-5-56-nato-77gr-sierra-matchking-hp-box-of-20",
+    "read": "2026-11-17",
+    "note": "IMI Razor Core 77 gr, box of 20. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
   }
  },
  "silver-bear-123": {
@@ -183,6 +211,14 @@
   "spreadMoa": {
    "value": 3,
    "estimate": "steel-cased ball ammunition from an AK-pattern rifle; makers publish no group size"
+  },
+  "boxCount": {
+   "value": 20,
+   "source": {
+    "url": "https://www.bulkammo.com/bulk-7-62x39mm-ammo-762x39123grfmja762nfmjsilverbear-20",
+    "read": "2026-11-17",
+    "note": "Silver Bear 7.62x39 123 gr FMJ, 20 rounds. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
   }
  },
  "ppu-123": {
@@ -216,6 +252,14 @@
   "spreadMoa": {
    "value": 2.5,
    "estimate": "brass-cased ball from an AK-pattern rifle; makers publish no group size"
+  },
+  "boxCount": {
+   "value": 20,
+   "source": {
+    "url": "https://www.grafs.com/catalog/product/productId/104736",
+    "read": "2026-11-17",
+    "note": "Prvi Partizan 7.62x39 123 gr, 20 per box, 50 per case. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
   }
  },
  "sb-124": {
@@ -261,6 +305,14 @@
   "spreadMoa": {
    "value": 2.5,
    "estimate": "brass-cased ball from an AK-pattern rifle; makers publish no group size"
+  },
+  "boxCount": {
+   "value": 20,
+   "source": {
+    "url": "https://www.midwestgunworks.com/page/mgwi/prod/sb76239a",
+    "read": "2026-11-17",
+    "note": "Sellier & Bellot 7.62x39 124 gr FMJ, SB76239A, 20 round box. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
   }
  },
  "yugo-m67": {
@@ -290,6 +342,14 @@
   "spreadMoa": {
    "value": 3,
    "estimate": "surplus ball from an AK-pattern rifle; no group size exists. Set like the other steel-cased ball"
+  },
+  "boxCount": {
+   "value": 15,
+   "source": {
+    "url": "https://trueshotammo.com/products/military-surplus-yugoslavian-7-62x39-m67-123-grain-fmj-1260-round-crate",
+    "read": "2026-11-17",
+    "note": "Yugoslav M67 surplus: a 1,260-round crate \"packaged in individual boxes of 15 rounds\". read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
   }
  },
  "hornady-545-60": {
@@ -331,6 +391,14 @@
   "spreadMoa": {
    "value": 1.5,
    "estimate": "a varmint load with a thin-jacket bullet from an AK-pattern rifle; Hornady publishes no group size"
+  },
+  "boxCount": {
+   "value": 20,
+   "source": {
+    "url": "https://palmettostatearmory.com/hornady-black-5-45x39mm-60gr-v-max-steel-cased-ammunition-20rds-81246.html",
+    "read": "2026-11-17",
+    "note": "Hornady BLACK 5.45x39 60 gr V-MAX, 81246, 20-round box. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
   }
  },
  "sb-174-hpbt": {
@@ -376,6 +444,14 @@
   "spreadMoa": {
    "value": 1,
    "estimate": "a match load; S&B publishes no group size. Set tightest of the 7.62x54R loads"
+  },
+  "boxCount": {
+   "value": 20,
+   "source": {
+    "url": "https://www.luckygunner.com/sellier-bellot-7-62x54r-ammo-for-sale-762x54r174hpbtsb-20",
+    "read": "2026-11-17",
+    "note": "Sellier & Bellot 7.62x54R 174 gr HPBT, 20 rounds. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
   }
  },
  "ppu-182": {
@@ -421,6 +497,14 @@
   "spreadMoa": {
    "value": 1.5,
    "estimate": "brass-cased full metal jacket boat tail; PPU publishes no group size"
+  },
+  "boxCount": {
+   "value": 20,
+   "source": {
+    "url": "https://simmonssportinggoods.com/ppu-ppm7-match-7-62x54mmr-182-gr-full-metal-jacket-20rd-box",
+    "read": "2026-11-17",
+    "note": "PPU Match 7.62x54R 182 gr FMJ, 20 rounds. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
   }
  },
  "sb-180-sp": {
@@ -466,6 +550,14 @@
   "spreadMoa": {
    "value": 2,
    "estimate": "a hunting soft point; S&B publishes no group size"
+  },
+  "boxCount": {
+   "value": 20,
+   "source": {
+    "url": "https://www.midwestgunworks.com/page/mgwi/prod/SB76254RB",
+    "read": "2026-11-17",
+    "note": "Sellier & Bellot 7.62x54R 180 gr SP, SB76254RB, 20 round box. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
   }
  },
  "wolf-203-sp": {
@@ -495,6 +587,14 @@
   "spreadMoa": {
    "value": 3,
    "estimate": "steel-cased hunting ammunition; Wolf publishes no group size"
+  },
+  "boxCount": {
+   "value": 20,
+   "source": {
+    "url": "https://www.luckygunner.com/762x54r-203-grain-sp-wpa-military-classic-20-rounds",
+    "read": "2026-11-17",
+    "note": "Wolf WPA Military Classic 7.62x54R 203 gr SP, 20 rounds. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
   }
  },
  "silver-bear-174": {
@@ -528,6 +628,14 @@
   "spreadMoa": {
    "value": 2.5,
    "estimate": "steel-cased ball; Barnaul publishes no group size"
+  },
+  "boxCount": {
+   "value": 20,
+   "source": {
+    "url": "https://www.luckygunner.com/silver-bear-7-62x54r-ammo-for-sale-762x54r174fmja754nfmjsilverbear-20",
+    "read": "2026-11-17",
+    "note": "Silver Bear 7.62x54R 174 gr FMJ, 20 rounds per box, 25 boxes per case. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
   }
  },
  "wolf-174": {
@@ -557,6 +665,14 @@
   "spreadMoa": {
    "value": 2.5,
    "estimate": "steel-cased ball; Wolf publishes no group size"
+  },
+  "boxCount": {
+   "value": 20,
+   "source": {
+    "url": "https://www.luckygunner.com/wolf-7-62x54r-ammo-for-sale-762x54r174fmjwolfwpapf-20",
+    "read": "2026-11-17",
+    "note": "Wolf WPA Polyformance 7.62x54R 174 gr FMJ, 20 rounds per box, 25 boxes per case. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
   }
  },
  "cci-sv-40": {
@@ -590,6 +706,14 @@
   "spreadMoa": {
    "value": 1.5,
    "estimate": "standard-velocity .22 from a heavy-barrel bolt rifle; CCI publishes no group size"
+  },
+  "boxCount": {
+   "value": 50,
+   "source": {
+    "url": "https://www.luckygunner.com/22-lr-40-gr-lrn-cci-standard-velocity-50-rounds",
+    "read": "2026-11-17",
+    "note": "CCI Standard Velocity .22 LR 40 gr, 50 rounds per box. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
   }
  }
 }

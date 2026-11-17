@@ -786,5 +786,16 @@
    "value": 2.5,
    "estimate": "the ground's unevenness drawn at each distance: a couple of feet"
   }
+ },
+ "powderTemperature": {
+  "_about": "How a load's muzzle speed follows the temperature of the day: speed = the load's muzzleFps + fpsPerDegreeF × (the day's temperature − referenceTempF). Applied in one place in the engine (public/engine.js, fly) for every shot on every screen; the makers' reference tables are checked without it, at their own conditions.",
+  "fpsPerDegreeF": {
+   "value": 1,
+   "estimate": "no ammunition maker in this set publishes its load's temperature sensitivity, and the powders in factory ammunition are not named. Published rules of thumb: about 1 fps per degree F for double-base powders, 0.3 to 0.5 for average single-base and 0.1 to 0.2 for the most stable (Bryan Litz's figures as quoted at https://precisionrifleblog.com/2025/03/08/powder-temperature-sensitivity/); 1.7 fps per degree F for IMR powders (the NRA Fact Book as quoted at https://www.americanhunter.org/content/can-outside-temperature-affect-cartridge-velocity/); measured 0.14 to 0.33 fps per degree for temperature-stable handloading powders (https://www.longrangehunting.com/threads/testing-for-muzzle-velocity-temperature-sensitivity-part-1-the-powder.176037/). Military ball and inexpensive factory ammunition use ordinary powders, so 1 fps per degree F, the middle of the published figures, is used for every load until a maker publishes its own"
+  },
+  "referenceTempF": {
+   "value": 70,
+   "estimate": "the temperature the makers' published speeds are taken as measured at: SAAMI's centerfire velocity procedure conditions ammunition at 70 ± 2 F (as quoted at https://thefiringline.com/forums/showthread.php?t=597891), and its current rimfire standard allows 60 to 80 F (SAAMI Z299.1, https://saami.org/wp-content/uploads/2026/05/SAAMI-Z299.1-R2026-Rimfire-FINAL-Approved-2026-05-08.pdf), whose middle is 70 F"
+  }
  }
 }

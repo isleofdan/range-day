@@ -2,42 +2,50 @@
 // The zero bench: a paper target with a 1-inch grid at 25, 50, 100 or 200
 // yards. The rifle rests on the bench and is aimed at the center; each
 // shot flies through the engine with the sight as set, the rifle's own
-// offset and the load's spread, and the hole is drawn where it lands. The
-// player turns the sight in real clicks and saves the zero when satisfied.
-// Changing the load keeps the sight where it is, so the group moves as it
-// would in life.
+// offset, the load's spread and the day's air, and the hole is drawn where
+// it lands. The player turns the sight in real clicks and saves the zero
+// when satisfied. Every shot comes out of the day's box; the day is one
+// load, so the load is fixed here while the day is open.
 (async function () {
   const E = RD.E;
   const d = await RD.data();
   const q = RD.qs();
-  const c = RD.chooseFrom(d, q);
+  const entered = RD.enterDay(d, RD.chooseFrom(d, q), q);
+  const c = entered.c;
+  let day = entered.day;
   const { courseId, rifleId, sightId } = c;
   const course = { id: courseId, ...d.courses[courseId] };
   const rifle = d.rifles[rifleId];
   const sight = d.sights[sightId];
-  // A sliding rear leaf (the AK-pattern rifles and the Vepr's irons): its settings and each one's angle.
-  const leaf = sight.kind === 'iron' ? (rifleId === 'ak-545' ? sight.leaf545 : sight.leaf) || null : null;
-  let loadId = c.loadId;
+  // A sliding rear leaf (the AK-pattern rifles and the Vepr's irons): its settings and each one's angle, from the rifle's record.
+  const leaf = RD.leafOf(d, rifleId, sightId);
+  const loadId = c.loadId;
   RD.remember(c);
-  const day = RD.day(course, d.weather);
+  const weather = day.weather;
   let distance = 100;
   let setting = RD.getSight(rifleId, sightId);
   let holes = []; // {upIn, rightIn, loadId}
 
   const $ = (id) => document.getElementById(id);
-  $('intro').textContent = `${rifle.name}, ${sight.name}. Aim is the center of the paper (36 inches square); the grid is 1 inch. Air: ${day.tempF} F at ${course.altitudeFt} ft.`;
+  $('intro').textContent = `${rifle.name}, ${sight.name}, ${d.loads[loadId].name}. Aim is the center of the paper (36 inches square); the grid is 1 inch.`;
+  const dayLine = () => {
+    let t = RD.dayWords(weather, d.weather);
+    if (entered.redirected) t += ` A day is already open with the ${rifle.name} and ${d.loads[loadId].name} on the ${course.name.replace(/ \(modeled on.*\)$/, '')}, so that day is shown, not the one the address asked for.`;
+    if (!entered.saved || RD.dayReadFailed()) t += ' The day is not saved on this device (the browser refused its storage); it holds while this page is open.';
+    $('day-line').textContent = t;
+  };
+  dayLine();
   $('distance').innerHTML = course.zeroYards.map((y) => `<option value="${y}"${y === distance ? ' selected' : ''}>${y} yards</option>`).join('');
-  $('load').innerHTML = rifle.loads.map((l) => `<option value="${l}"${l === loadId ? ' selected' : ''}>${RD.esc(d.loads[l].name)}</option>`).join('');
   $('sight-name').textContent = sight.name;
   $('click-help').textContent = `One click of elevation moves the strike ${sight.clickMoa} MOA (about ${(sight.clickMoa * E.inchesPerMoa(100)).toFixed(1)} inches at 100 yards); one click of windage ${sight.windageClickMoa} MOA. ${sight.kind === 'iron' ? 'Elevation is the front post; windage is the rear drum.' : 'The scope\'s turrets.'}`;
-  const lineHref = () => `/line${RD.params({ ...c, loadId })}`;
-  $('to-line').href = lineHref();
+  $('to-line').href = `/line${RD.params(c)}`;
+  $('to-day').href = `/day?id=${encodeURIComponent(day.id)}`;
 
   const canvas = $('view');
   let view = RD.fitCanvas(canvas, 560);
   window.addEventListener('resize', () => { view = RD.fitCanvas(canvas, 560); draw(); });
 
-  // The paper: 24 inches square, 1-inch grid, a 2-inch black square at the
+  // The paper: 36 inches square, 1-inch grid, a 2-inch black square at the
   // center and heavier lines every 6 inches. Scale: the paper fills the view.
   function draw() {
     const { g, size } = view;
@@ -73,19 +81,28 @@
     }
   }
 
+  // The box: how many are left, and whether the day is over.
+  const rounds = () => { $('rounds').textContent = RD.roundsText(day); const over = Boolean(day.endedAt) || day.box.left <= 0; $('fire1').disabled = over; $('fire5').disabled = over; };
   function fire(n) {
+    if (day.endedAt || day.box.left <= 0) { $('group').textContent = `The day is over: the box of ${day.box.size} is empty. Pack up is done for you; the day's page has every shot.`; return; }
+    const out = RD.takeRounds(day, n);
+    if (!out) { rounds(); return; }
     const load = d.loads[loadId];
     RD.shotSound(0.5);
-    for (let i = 0; i < n; i++) {
+    for (let i = 0; i < out; i++) {
       const r = E.shoot({
-        load, drag: d.physics.dragTables,
+        load, drag: d.physics.dragTables, powder: d.physics.powderTemperature,
         rifle: { sightHeightIn: rifle.sightHeightIn[sightId], boreOffsetMoa: { up: rifle.boreOffsetMoa.up + leafMoa(), right: rifle.boreOffsetMoa.right } },
         sight: { clickMoa: sight.clickMoa, windageClickMoa: sight.windageClickMoa, elevationClicks: setting.elevationClicks, windageClicks: setting.windageClicks },
-        targetYards: distance, targetRiseFt: 0, conditions: RD.conditionsOf(day), wind: day.wind, t0: performance.now() / 1000,
+        targetYards: distance, targetRiseFt: 0, conditions: RD.conditionsOf(weather), wind: weather.wind, t0: performance.now() / 1000,
       });
       if (r.reached) holes.push({ upIn: r.hit.upIn, rightIn: r.hit.rightIn, loadId });
+      const shot = { place: 'bench', yards: distance, sight: sightId, elevationClicks: setting.elevationClicks, windageClicks: setting.windageClicks, leaf: leaf ? leaf.settingsMeters[setting.leafIx || 0] : null, reached: r.reached, upIn: r.reached ? Math.round(r.hit.upIn * 100) / 100 : null, rightIn: r.reached ? Math.round(r.hit.rightIn * 100) / 100 : null };
+      const rec = RD.recordShot(day, shot, i < out - 1);
+      if (!rec.saved) $('saved').textContent = 'The day is not saved on this device (the browser refused its storage); it holds while this page is open.';
     }
-    draw(); readout();
+    draw(); readout(); rounds();
+    if (day.endedAt) { $('group').textContent += ` That was the last round: the box of ${day.box.size} is empty and the day is over. The day's page follows.`; setTimeout(() => { location.href = `/day?id=${encodeURIComponent(day.id)}`; }, 3000); }
   }
   function readout() {
     const mine = holes.filter((h) => h.loadId === loadId);
@@ -127,11 +144,14 @@
   $('fire5').addEventListener('click', () => fire(5));
   $('fresh').addEventListener('click', () => { holes = []; draw(); readout(); });
   $('distance').addEventListener('change', (e) => { distance = Number(e.target.value); holes = []; draw(); readout(); });
-  $('load').addEventListener('change', (e) => { loadId = e.target.value; $('to-line').href = lineHref(); RD.remember({ ...c, loadId }); draw(); readout(); showSaved(); });
   $('save').addEventListener('click', () => {
     const z = { elevationClicks: setting.elevationClicks, windageClicks: setting.windageClicks, zeroYards: distance, sight: sightId, savedAt: new Date().toISOString() };
     if (leaf) z.leafIx = setting.leafIx || 0;
     if (RD.setZero(rifleId, sightId, loadId, z)) showSaved(); else $('saved').textContent = 'Zero not saved on this device: the browser refused to store it. The sight setting still holds while this page is open.';
+  });
+  $('pack-up').addEventListener('click', () => {
+    const packed = RD.packUp();
+    location.href = packed ? `/day?id=${encodeURIComponent(packed.id)}` : '/';
   });
   function showSaved() {
     const z = RD.getZero(rifleId, sightId, loadId);
@@ -140,9 +160,11 @@
   }
   function conditions() {
     if (!RD.showConditions()) { $('conditions').textContent = ''; return; }
-    const w = day.wind[0];
-    $('conditions').textContent = `Conditions (the setting "Show the conditions" is on): ${day.tempF} F, ${day.pressureInHg} inHg, humidity ${Math.round(day.humidity * 100)}%, wind at the bench ${w.speedMph} mph ${RD.windWord(w.fromDegrees)}.`;
+    const w = weather.wind[0];
+    $('conditions').textContent = `Conditions (the setting "Show the conditions" is on): ${weather.tempF} F, ${weather.pressureInHg} inHg, humidity ${Math.round(weather.humidity * 100)}%, wind at the bench ${w.speedMph} mph ${RD.windWord(w.fromDegrees)}${weather.santaAna ? ', a Santa Ana day' : ''}.`;
   }
-  showSetting(); showSaved(); conditions(); draw(); readout();
+  showSetting(); showSaved(); conditions(); draw(); readout(); rounds();
   if (RD.sightReadFailed(rifleId, sightId)) $('group').textContent = 'The browser refused to read its storage: the sight starts at its middle and nothing saves on this device while that lasts.';
+  // For the tests: the day as this page holds it.
+  window.RangeDayZero = { get day() { return day; }, get setting() { return setting; }, get holes() { return holes; } };
 }());

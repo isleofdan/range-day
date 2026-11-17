@@ -133,6 +133,15 @@
 
   // --- the shot --------------------------------------------------------------
 
+  // The speed the bullet leaves the barrel at on this day: the load's
+  // published speed, moved by the powder's temperature sensitivity from
+  // the reference temperature the makers measure at (data/physics.json,
+  // powderTemperature). Without a powder figure the speed is the load's.
+  function muzzleSpeed(load, atm, powder) {
+    if (!powder || powder.fpsPerDegreeF == null) return load.muzzleFps;
+    return load.muzzleFps + powder.fpsPerDegreeF * (atm.tempF - (powder.referenceTempF == null ? atm.tempF : powder.referenceTempF));
+  }
+
   /* fly(input) flies one bullet and returns where it is at the target.
      input:
        load:  {muzzleFps, bc, dragModel: 'G1'|'G7'}
@@ -144,11 +153,17 @@
        targetRiseFt: how much higher (negative: lower) the target is than
                      the muzzle; the line of sight is tilted to reach it
        conditions: {altitudeFt, tempF, pressureInHg, humidity}
+       powder: {fpsPerDegreeF, referenceTempF}, optional: how the load's
+               muzzle speed follows the day's temperature (powder burns
+               faster warm): speed = muzzleFps + fpsPerDegreeF × (tempF −
+               referenceTempF). The one place this is applied; left out,
+               the speed is the load's as given (the makers' tables)
        wind: stretches (see windAt); may be empty
        t0: the clock at the shot (s), for the gusts
        maxTimeS: give up after this long (default 6 s)
      returns:
-       {hit: {upIn, rightIn}       offsets from the aim point at the target,
+       {muzzleFps                  the speed the bullet left the barrel at,
+        hit: {upIn, rightIn}       offsets from the aim point at the target,
                                    in inches, measured square to the line of
                                    sight (up and right positive)
         timeS, speedFps, mach, subsonic, lineOfSightAngle,
@@ -166,6 +181,7 @@
     // Line of sight L and its perpendicular "up" U in the vertical plane.
     const L = [Math.cos(alpha), Math.sin(alpha), 0];
     const U = [-Math.sin(alpha), Math.cos(alpha), 0];
+    const muzzleFps = muzzleSpeed(load, atm, input.powder);
     const sh = (input.sightHeightIn || 0) / 12;
     const el = (input.elevationMoa || 0) * MOA;
     const wd = (input.windageMoa || 0) * MOA;
@@ -177,7 +193,7 @@
       Math.sin(wd),
     ];
     let p = [-sh * U[0], -sh * U[1], 0];
-    let v = [dir[0] * load.muzzleFps, dir[1] * load.muzzleFps, dir[2] * load.muzzleFps];
+    let v = [dir[0] * muzzleFps, dir[1] * muzzleFps, dir[2] * muzzleFps];
     const k = atm.density * A_STD / (2 * M_STD * bc); // a = k * Cd * vrel^2
     const t0 = input.t0 || 0;
     const wind = input.wind || [];
@@ -225,7 +241,7 @@
       if (p[1] < -200) break; // into the ground long before the target
     }
     if (along < R) {
-      return { reached: false, timeS: t, trace, lineOfSightAngle: alpha, hit: null };
+      return { reached: false, muzzleFps, timeS: t, trace, lineOfSightAngle: alpha, hit: null };
     }
     // Interpolate the last step to the exact distance along L.
     const f = (R - prevAlong) / (along - prevAlong);
@@ -240,6 +256,7 @@
     const boreUpFt = -sh + R * Math.tan(el);
     return {
       reached: true,
+      muzzleFps,
       hit: { upIn: upFt * 12, rightIn: pe[2] * 12 },
       timeS: te,
       speedFps: speed,
@@ -321,7 +338,7 @@
     const elevationMoa = (sight.elevationClicks || 0) * sight.clickMoa + (offset.up || 0) + spread.upMoa;
     const windageMoa = (sight.windageClicks || 0) * (sight.windageClickMoa || sight.clickMoa) + (offset.right || 0) + spread.rightMoa;
     const r = fly({ ...input, sightHeightIn: input.rifle ? input.rifle.sightHeightIn : input.sightHeightIn, elevationMoa, windageMoa });
-    const muzzleMach = input.load.muzzleFps / air(input.conditions).mach1;
+    const muzzleMach = r.muzzleFps / air(input.conditions).mach1;
     r.startedSupersonic = muzzleMach > SUPERSONIC_START;
     if (r.reached && r.transonic && r.startedSupersonic) {
       const extra = spreadSigmaMoa(input.load.spreadMoa, r.mach, muzzleMach) - sigma;
@@ -378,5 +395,5 @@
     return null;
   }
 
-  return { G, MOA, DT, STD_DENSITY, SUPERSONIC_START, air, airDensity, pressureAt, speedOfSound, cdAt, windAt, fly, shoot, spreadSigmaMoa, gaussian, seeded, inchesPerMoa, zeroElevationMoa, table, secondCrossingYards };
+  return { G, MOA, DT, STD_DENSITY, SUPERSONIC_START, air, airDensity, pressureAt, speedOfSound, cdAt, windAt, muzzleSpeed, fly, shoot, spreadSigmaMoa, gaussian, seeded, inchesPerMoa, zeroElevationMoa, table, secondCrossingYards };
 }));

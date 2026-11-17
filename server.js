@@ -100,11 +100,19 @@ const gameData = require('./lib/data').load();
 if (gameData.problems.length) {
   throw new Error('data/: ' + gameData.problems.join('; '));
 }
+// The rifle set comes from gun records (lib/guns.js): data/rifles.json
+// wrapped as records, or the file GUN_RECORDS_FILE names. A bad record
+// stops the server with its name and the fault.
+const guns = require('./lib/guns').load(gameData.raw);
+gameData.flat.rifles = guns.rifles;
+console.log(`rifles: ${Object.keys(guns.rifles).length} from ${guns.from}`);
 route('GET', /^\/zero$/, (req, res) => sendHtml(res, 200, page('zero.html')));
 route('GET', /^\/line$/, (req, res) => sendHtml(res, 200, page('line.html')));
+route('GET', /^\/day$/, (req, res) => sendHtml(res, 200, page('day.html')));
+route('GET', /^\/book$/, (req, res) => sendHtml(res, 200, page('book.html')));
 route('GET', /^\/api\/data$/, (req, res) => sendJson(res, 200, gameData.flat));
 // The page scripts, behind the cookie like the screens that use them.
-route('GET', /^\/(engine|game|home|zero|line)\.js$/, (req, res, m) => { if (!serveStatic(res, PUBLIC, `/${m[1]}.js`)) sendJson(res, 404, { error: 'not found' }); });
+route('GET', /^\/(engine|game|home|zero|line|day|book)\.js$/, (req, res, m) => { if (!serveStatic(res, PUBLIC, `/${m[1]}.js`)) sendJson(res, 404, { error: 'not found' }); });
 
 route('GET', /^\/status$/, (req, res) => {
   const { calls, lastError: e } = upstream.state();

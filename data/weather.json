@@ -1,42 +1,91 @@
 {
- "_about": "Each visit to a course draws a warm dry day and a light, variable canyon breeze from these ranges. The wind is drawn in three stretches of the path (near, middle, far) that differ from one another, each with a gust that changes over time.",
- "tempF": {
+ "_about": "The weather a day at the range is drawn from, by course, by month and by time of day (morning, midday, afternoon). Each course has twelve months, each with the mean daily low and high (F), the mean relative humidity, the mean wind (mph) and the chance of a Santa Ana day. A time of day puts the temperature between the low and the high (tempAt), scales the wind (windFactor) and shifts the humidity; dayToDaySpreadF is the day-to-day scatter around the month's figure. The wind is drawn in three stretches of the path that differ from one another, each with a gust, and always has some crosswind. A Santa Ana day replaces the wind, the humidity and part of the temperature. humiditySpread and humidityBounds are the humidity's day-to-day scatter and its floor and ceiling; stretchDirectionWobbleDegrees is how far each stretch's wind direction may differ from the day's.",
+ "timesOfDay": {
+  "morning": {
+   "name": "morning",
+   "tempAt": {
+    "value": 0.15,
+    "estimate": "where between the month's mean low and mean high the temperature sits: a morning at the range (soon after opening, 8 to 10 am) is near the day's low, which comes just before sunrise, and has begun to climb"
+   },
+   "windFactor": {
+    "value": 0.55,
+    "estimate": "the wind at this time of day as a share of the day's mean: in these inland valleys the sea breeze \"build[s] during daylight hours, typically peaking in the late afternoon when inland heating is at its peak\" (https://gotbooks.miracosta.edu/fieldtrips/weather/weather.html) and the land breeze of the night is light, so a morning runs at about half the daily mean, midday about the mean, and an afternoon about half again as much; not a measured hourly climatology, which neither site publishes"
+   },
+   "humidityShift": {
+    "value": 0.15,
+    "estimate": "relative humidity is highest in the cool of the morning and lowest in the heat of the afternoon; about 15 points above the daily mean in the morning and 15 below in the afternoon, the usual swing for a dry inland day; not measured for these sites"
+   }
+  },
+  "midday": {
+   "name": "midday",
+   "tempAt": {
+    "value": 0.6,
+    "estimate": "late morning to early afternoon, 11 am to 1 pm: most of the way from the low to the high"
+   },
+   "windFactor": {
+    "value": 1,
+    "estimate": "the same basis as the morning's factor in this file: about the daily mean"
+   },
+   "humidityShift": {
+    "value": 0,
+    "estimate": "the same basis as the morning's shift in this file: about the daily mean"
+   }
+  },
+  "afternoon": {
+   "name": "afternoon",
+   "tempAt": {
+    "value": 0.95,
+    "estimate": "mid afternoon, 2 to 4 pm: at or near the day's high"
+   },
+   "windFactor": {
+    "value": 1.45,
+    "estimate": "the same basis as the morning's factor in this file: the sea breeze's late-afternoon peak, about half again the daily mean"
+   },
+   "humidityShift": {
+    "value": -0.15,
+    "estimate": "the same basis as the morning's shift in this file: about 15 points below the daily mean"
+   }
+  }
+ },
+ "dayToDaySpreadF": {
+  "value": 6,
+  "estimate": "a day at the range is not the month's average day: the temperature is drawn within plus or minus 6 F of the month's figure for that time of day (uniformly). The day-to-day standard deviation of daily highs in Southern California runs about 5 to 7 F; not computed from these sites' records"
+ },
+ "humiditySpread": {
+  "value": 0.05,
+  "estimate": "the day-to-day scatter of the relative humidity around the month's figure for that time of day: plus or minus 5 points, drawn uniformly; the same kind of estimate as dayToDaySpreadF, not computed from these sites' records"
+ },
+ "humidityBounds": {
   "low": {
-   "value": 72,
-   "estimate": "a warm day at either range: Santa Clarita's April mean daily high is 74 to 76 F and July's 92 to 100 F (https://en.wikipedia.org/wiki/Santa_Clarita,_California); Fillmore, next to Piru, April 74 F and July 81 F (https://en.wikipedia.org/wiki/Fillmore,_California). 72 to 95 F covers a warm spring or summer afternoon at both"
+   "value": 0.03,
+   "estimate": "the lowest relative humidity a day can have, as a fraction: the driest Santa Ana afternoons reach single digits, so 3 percent is the floor"
   },
   "high": {
-   "value": 95,
+   "value": 0.98,
+   "estimate": "the highest: air that is nearly saturated, as on a foggy morning; 98 percent is the ceiling"
+  }
+ },
+ "stretchDirectionWobbleDegrees": {
+  "value": 25,
+  "estimate": "each of the three stretches of the path has its own wind direction, within plus or minus 25 degrees of the day's, because the canyon walls and the slope bend the wind along the path; an estimate, not measured at these ranges"
+ },
+ "windSpread": {
+  "low": {
+   "value": 0.5,
+   "estimate": "a day's wind is drawn between half and 1.6 times the month's mean for that time of day: calm days and breezy days both happen; the band is an estimate around the mean, not a measured distribution"
+  },
+  "high": {
+   "value": 1.6,
    "estimate": "same basis: the same basis as the figure next to it in this entry"
   }
  },
- "humidity": {
+ "gustShare": {
   "low": {
-   "value": 0.15,
-   "estimate": "no humidity normals were found for either site; a dry inland afternoon in Southern California runs 15 to 40 percent (a single NWS Saugus afternoon reading of 34 percent was found)"
+   "value": 0.2,
+   "estimate": "the gust on top of the steady wind, as a share of it: 20 to 50 percent, the usual gust factor of a light to moderate breeze over rough brushy ground; not measured at these ranges"
   },
   "high": {
-   "value": 0.4,
-   "estimate": "same basis: the same basis as the figure next to it in this entry"
-  }
- },
- "windMph": {
-  "low": {
-   "value": 3,
-   "estimate": "Santa Clarita's average hourly wind runs 5.5 to 6.6 mph in summer (https://weatherspark.com/s/1726/1/Average-Summer-Weather-in-Santa-Clarita-California-United-States); a light canyon breeze is drawn between 3 and 10 mph"
-  },
-  "high": {
-   "value": 10,
-   "estimate": "same basis: the same basis as the figure next to it in this entry"
-  }
- },
- "gustMph": {
-  "low": {
-   "value": 1,
-   "estimate": "the gust part, on top of the steady wind"
-  },
-  "high": {
-   "value": 4,
+   "value": 0.5,
    "estimate": "same basis: the same basis as the figure next to it in this entry"
   }
  },
@@ -62,5 +111,981 @@
    340
   ],
   "estimate": "the wind comes from anywhere but straight down the range: between 20 and 160 degrees (from the right-hand side, clockwise from downrange) or 200 to 340 (from the left), so there is always some crosswind"
+ },
+ "santaAna": {
+  "_about": "A Santa Ana day: the dry offshore wind of the cooler months. Drawn with the month's chance; on such a day the wind, the humidity and the temperature below replace the month's figures, and the wind is strongest in the morning.",
+  "windMph": {
+   "low": {
+    "value": 15,
+    "source": {
+     "url": "https://www.hometownstation.com/santa-clarita-news/weather/santa-ana-winds-bring-red-flag-warning-to-santa-clarita-614203",
+     "read": "2026-11-17",
+     "note": "the National Weather Service's scale as the Santa Clarita station reports it: a weak Santa Ana event is 15 to 25 mph winds out of the northeast with gusts to 40 mph; a moderate one 20 to 30 mph with gusts to 50; a strong one 20 to 40 mph with gusts to 60. The game draws the weak-to-moderate band, 15 to 30 mph. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   },
+   "high": {
+    "value": 30,
+    "source": {
+     "url": "https://www.hometownstation.com/santa-clarita-news/weather/santa-ana-winds-bring-red-flag-warning-to-santa-clarita-614203",
+     "read": "2026-11-17",
+     "note": "the top of the moderate band; see the figure next to it. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   }
+  },
+  "gustMph": {
+   "low": {
+    "value": 10,
+    "source": {
+     "url": "https://www.hometownstation.com/santa-clarita-news/weather/santa-ana-winds-bring-red-flag-warning-to-santa-clarita-614203",
+     "read": "2026-11-17",
+     "note": "gusts to 40 mph on a 15 to 25 mph wind and to 50 on a 20 to 30 mph wind: 10 to 20 mph on top of the steady wind. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   },
+   "high": {
+    "value": 20,
+    "source": {
+     "url": "https://www.hometownstation.com/santa-clarita-news/weather/santa-ana-winds-bring-red-flag-warning-to-santa-clarita-614203",
+     "read": "2026-11-17",
+     "note": "see the figure next to it. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   }
+  },
+  "humidity": {
+   "low": {
+    "value": 0.08,
+    "source": {
+     "url": "https://www.hometownstation.com/santa-clarita-news/weather/santa-ana-winds-bring-red-flag-warning-to-santa-clarita-614203",
+     "read": "2026-11-17",
+     "note": "\"humidity levels are also expected to drop down to around 10 to 20 percent, with some areas expected to reach single digits\". read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   },
+   "high": {
+    "value": 0.2,
+    "source": {
+     "url": "https://www.hometownstation.com/santa-clarita-news/weather/santa-ana-winds-bring-red-flag-warning-to-santa-clarita-614203",
+     "read": "2026-11-17",
+     "note": "see the figure next to it. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   }
+  },
+  "tempAboveNormalF": {
+   "value": 10,
+   "estimate": "the same report had temperatures \"in the mid 80s to lower 90s\" in Santa Clarita in October, against the month's mean high of 81 F; a Santa Ana day runs about 10 F above the month's figure for that time of day"
+  },
+  "windFactorByTime": {
+   "morning": {
+    "value": 1.2,
+    "estimate": "Santa Ana winds \"reach their maximum in the morning and decay to their minimum in the late afternoon\" (Guzman-Morales et al. 2016, https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2016GL067887): the morning carries 1.2 times the drawn speed, midday the drawn speed, the afternoon 0.7 of it"
+   },
+   "midday": {
+    "value": 1,
+    "estimate": "the same basis as the morning's factor in this entry"
+   },
+   "afternoon": {
+    "value": 0.7,
+    "estimate": "the same basis as the morning's factor in this entry"
+   }
+  }
+ },
+ "words": {
+  "_about": "The one word the day is described with, by temperature in F: cold below the first figure, cool to the second, mild to the third, warm to the fourth, hot above it; \"dry\" is added when the humidity is below dryBelow.",
+  "coldBelowF": {
+   "value": 45,
+   "estimate": "the words a shooter would use for the air; plain thresholds, not a measurement: cold under 45, cool 45 to 64, mild 65 to 74, warm 75 to 84, hot from 85"
+  },
+  "coolBelowF": {
+   "value": 65,
+   "estimate": "same basis: the same basis as the figure next to it in this entry"
+  },
+  "mildBelowF": {
+   "value": 75,
+   "estimate": "same basis: the same basis as the figure next to it in this entry"
+  },
+  "warmBelowF": {
+   "value": 85,
+   "estimate": "same basis: the same basis as the figure next to it in this entry"
+  },
+  "dryBelow": {
+   "value": 0.25,
+   "estimate": "air under 25 percent relative humidity is called dry; a plain threshold"
+  }
+ },
+ "courses": {
+  "angeles-sylmar": {
+   "months": [
+    {
+     "name": "January",
+     "lowF": {
+      "value": 46.6,
+      "source": {
+       "url": "https://www.climatestotravel.com/climate/united-states/santa-clarita",
+       "read": "2026-11-17",
+       "note": "Santa Clarita, 1991 to 2020 averages, \"January\": minimum 8.1 C, maximum 17.3 C (the mean daily low and high), converted to Fahrenheit; Santa Clarita is the nearest place publishing a full monthly table; Whiteman Airport near Sylmar reads January 67/46, March 70/48 and September 88/62 F (https://www.timeanddate.com/weather/usa/sylmar/climate), within a few degrees. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "highF": {
+      "value": 63.1,
+      "source": {
+       "url": "https://www.climatestotravel.com/climate/united-states/santa-clarita",
+       "read": "2026-11-17",
+       "note": "Santa Clarita, 1991 to 2020 averages, \"January\": minimum 8.1 C, maximum 17.3 C (the mean daily low and high), converted to Fahrenheit; Santa Clarita is the nearest place publishing a full monthly table; Whiteman Airport near Sylmar reads January 67/46, March 70/48 and September 88/62 F (https://www.timeanddate.com/weather/usa/sylmar/climate), within a few degrees. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "humidity": {
+      "value": 0.51,
+      "source": {
+       "url": "https://www.timeanddate.com/weather/usa/sylmar/climate",
+       "read": "2026-11-17",
+       "note": "timeanddate, Whiteman Airport about 5 miles from Sylmar, 1992 to 2021: January 51 percent, the mean relative humidity. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "windMph": {
+      "value": 8.8,
+      "source": {
+       "url": "https://weatherspark.com/y/1726/Average-Weather-in-Santa-Clarita-California-United-States-Year-Round",
+       "read": "2026-11-17",
+       "note": "Weather Spark, \"average hourly wind speed\" by month: January 8.8 mph (the wind over the whole day; the time-of-day factors below shape it). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "santaAnaChance": {
+      "value": 0.15,
+      "estimate": "the chance that a day drawn in this month is a Santa Ana day (the hot, dry offshore wind of the cooler months). Basis: Santa Ana events \"occur at least twice per average month\" from October to April, are most frequent in December, and the hourly index \"reach[es] their maximum in the morning\" (Guzman-Morales et al. 2016, Geophysical Research Letters, https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2016GL067887); an event lasts about 1.5 days on average and there are 10 to 25 a year (https://en.wikipedia.org/wiki/Santa_Ana_winds, citing Raphael 2003); so about 3 days a month from October to April (a chance near 0.1), more in December and January, a rare September one, none from May to August"
+     }
+    },
+    {
+     "name": "February",
+     "lowF": {
+      "value": 44.8,
+      "source": {
+       "url": "https://www.climatestotravel.com/climate/united-states/santa-clarita",
+       "read": "2026-11-17",
+       "note": "Santa Clarita, 1991 to 2020 averages, \"February\": minimum 7.1 C, maximum 18.2 C (the mean daily low and high), converted to Fahrenheit; Santa Clarita is the nearest place publishing a full monthly table; Whiteman Airport near Sylmar reads January 67/46, March 70/48 and September 88/62 F (https://www.timeanddate.com/weather/usa/sylmar/climate), within a few degrees. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "highF": {
+      "value": 64.8,
+      "source": {
+       "url": "https://www.climatestotravel.com/climate/united-states/santa-clarita",
+       "read": "2026-11-17",
+       "note": "Santa Clarita, 1991 to 2020 averages, \"February\": minimum 7.1 C, maximum 18.2 C (the mean daily low and high), converted to Fahrenheit; Santa Clarita is the nearest place publishing a full monthly table; Whiteman Airport near Sylmar reads January 67/46, March 70/48 and September 88/62 F (https://www.timeanddate.com/weather/usa/sylmar/climate), within a few degrees. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "humidity": {
+      "value": 0.54,
+      "estimate": "the mean relative humidity, interpolated between the months the page publishes (https://www.timeanddate.com/weather/usa/sylmar/climate: January 51, March 57, September 53 percent)"
+     },
+     "windMph": {
+      "value": 8.2,
+      "source": {
+       "url": "https://weatherspark.com/y/1726/Average-Weather-in-Santa-Clarita-California-United-States-Year-Round",
+       "read": "2026-11-17",
+       "note": "Weather Spark, \"average hourly wind speed\" by month: February 8.2 mph (the wind over the whole day; the time-of-day factors below shape it). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "santaAnaChance": {
+      "value": 0.12,
+      "estimate": "the chance that a day drawn in this month is a Santa Ana day (the hot, dry offshore wind of the cooler months). Basis: Santa Ana events \"occur at least twice per average month\" from October to April, are most frequent in December, and the hourly index \"reach[es] their maximum in the morning\" (Guzman-Morales et al. 2016, Geophysical Research Letters, https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2016GL067887); an event lasts about 1.5 days on average and there are 10 to 25 a year (https://en.wikipedia.org/wiki/Santa_Ana_winds, citing Raphael 2003); so about 3 days a month from October to April (a chance near 0.1), more in December and January, a rare September one, none from May to August"
+     }
+    },
+    {
+     "name": "March",
+     "lowF": {
+      "value": 47.1,
+      "source": {
+       "url": "https://www.climatestotravel.com/climate/united-states/santa-clarita",
+       "read": "2026-11-17",
+       "note": "Santa Clarita, 1991 to 2020 averages, \"March\": minimum 8.4 C, maximum 21.3 C (the mean daily low and high), converted to Fahrenheit; Santa Clarita is the nearest place publishing a full monthly table; Whiteman Airport near Sylmar reads January 67/46, March 70/48 and September 88/62 F (https://www.timeanddate.com/weather/usa/sylmar/climate), within a few degrees. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "highF": {
+      "value": 70.3,
+      "source": {
+       "url": "https://www.climatestotravel.com/climate/united-states/santa-clarita",
+       "read": "2026-11-17",
+       "note": "Santa Clarita, 1991 to 2020 averages, \"March\": minimum 8.4 C, maximum 21.3 C (the mean daily low and high), converted to Fahrenheit; Santa Clarita is the nearest place publishing a full monthly table; Whiteman Airport near Sylmar reads January 67/46, March 70/48 and September 88/62 F (https://www.timeanddate.com/weather/usa/sylmar/climate), within a few degrees. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "humidity": {
+      "value": 0.57,
+      "source": {
+       "url": "https://www.timeanddate.com/weather/usa/sylmar/climate",
+       "read": "2026-11-17",
+       "note": "timeanddate, Whiteman Airport about 5 miles from Sylmar, 1992 to 2021: March 57 percent, the mean relative humidity. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "windMph": {
+      "value": 7.9,
+      "source": {
+       "url": "https://weatherspark.com/y/1726/Average-Weather-in-Santa-Clarita-California-United-States-Year-Round",
+       "read": "2026-11-17",
+       "note": "Weather Spark, \"average hourly wind speed\" by month: March 7.9 mph (the wind over the whole day; the time-of-day factors below shape it). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "santaAnaChance": {
+      "value": 0.08,
+      "estimate": "the chance that a day drawn in this month is a Santa Ana day (the hot, dry offshore wind of the cooler months). Basis: Santa Ana events \"occur at least twice per average month\" from October to April, are most frequent in December, and the hourly index \"reach[es] their maximum in the morning\" (Guzman-Morales et al. 2016, Geophysical Research Letters, https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2016GL067887); an event lasts about 1.5 days on average and there are 10 to 25 a year (https://en.wikipedia.org/wiki/Santa_Ana_winds, citing Raphael 2003); so about 3 days a month from October to April (a chance near 0.1), more in December and January, a rare September one, none from May to August"
+     }
+    },
+    {
+     "name": "April",
+     "lowF": {
+      "value": 48.7,
+      "source": {
+       "url": "https://www.climatestotravel.com/climate/united-states/santa-clarita",
+       "read": "2026-11-17",
+       "note": "Santa Clarita, 1991 to 2020 averages, \"April\": minimum 9.3 C, maximum 23.4 C (the mean daily low and high), converted to Fahrenheit; Santa Clarita is the nearest place publishing a full monthly table; Whiteman Airport near Sylmar reads January 67/46, March 70/48 and September 88/62 F (https://www.timeanddate.com/weather/usa/sylmar/climate), within a few degrees. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "highF": {
+      "value": 74.1,
+      "source": {
+       "url": "https://www.climatestotravel.com/climate/united-states/santa-clarita",
+       "read": "2026-11-17",
+       "note": "Santa Clarita, 1991 to 2020 averages, \"April\": minimum 9.3 C, maximum 23.4 C (the mean daily low and high), converted to Fahrenheit; Santa Clarita is the nearest place publishing a full monthly table; Whiteman Airport near Sylmar reads January 67/46, March 70/48 and September 88/62 F (https://www.timeanddate.com/weather/usa/sylmar/climate), within a few degrees. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "humidity": {
+      "value": 0.56,
+      "estimate": "the mean relative humidity, interpolated between the months the page publishes (https://www.timeanddate.com/weather/usa/sylmar/climate: January 51, March 57, September 53 percent)"
+     },
+     "windMph": {
+      "value": 7.8,
+      "source": {
+       "url": "https://weatherspark.com/y/1726/Average-Weather-in-Santa-Clarita-California-United-States-Year-Round",
+       "read": "2026-11-17",
+       "note": "Weather Spark, \"average hourly wind speed\" by month: April 7.8 mph (the wind over the whole day; the time-of-day factors below shape it). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "santaAnaChance": {
+      "value": 0.06,
+      "estimate": "the chance that a day drawn in this month is a Santa Ana day (the hot, dry offshore wind of the cooler months). Basis: Santa Ana events \"occur at least twice per average month\" from October to April, are most frequent in December, and the hourly index \"reach[es] their maximum in the morning\" (Guzman-Morales et al. 2016, Geophysical Research Letters, https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2016GL067887); an event lasts about 1.5 days on average and there are 10 to 25 a year (https://en.wikipedia.org/wiki/Santa_Ana_winds, citing Raphael 2003); so about 3 days a month from October to April (a chance near 0.1), more in December and January, a rare September one, none from May to August"
+     }
+    },
+    {
+     "name": "May",
+     "lowF": {
+      "value": 53.4,
+      "source": {
+       "url": "https://www.climatestotravel.com/climate/united-states/santa-clarita",
+       "read": "2026-11-17",
+       "note": "Santa Clarita, 1991 to 2020 averages, \"May\": minimum 11.9 C, maximum 27.1 C (the mean daily low and high), converted to Fahrenheit; Santa Clarita is the nearest place publishing a full monthly table; Whiteman Airport near Sylmar reads January 67/46, March 70/48 and September 88/62 F (https://www.timeanddate.com/weather/usa/sylmar/climate), within a few degrees. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "highF": {
+      "value": 80.8,
+      "source": {
+       "url": "https://www.climatestotravel.com/climate/united-states/santa-clarita",
+       "read": "2026-11-17",
+       "note": "Santa Clarita, 1991 to 2020 averages, \"May\": minimum 11.9 C, maximum 27.1 C (the mean daily low and high), converted to Fahrenheit; Santa Clarita is the nearest place publishing a full monthly table; Whiteman Airport near Sylmar reads January 67/46, March 70/48 and September 88/62 F (https://www.timeanddate.com/weather/usa/sylmar/climate), within a few degrees. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "humidity": {
+      "value": 0.56,
+      "estimate": "the mean relative humidity, interpolated between the months the page publishes (https://www.timeanddate.com/weather/usa/sylmar/climate: January 51, March 57, September 53 percent)"
+     },
+     "windMph": {
+      "value": 7,
+      "source": {
+       "url": "https://weatherspark.com/y/1726/Average-Weather-in-Santa-Clarita-California-United-States-Year-Round",
+       "read": "2026-11-17",
+       "note": "Weather Spark, \"average hourly wind speed\" by month: May 7 mph (the wind over the whole day; the time-of-day factors below shape it). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "santaAnaChance": {
+      "value": 0,
+      "estimate": "the chance that a day drawn in this month is a Santa Ana day (the hot, dry offshore wind of the cooler months). Basis: Santa Ana events \"occur at least twice per average month\" from October to April, are most frequent in December, and the hourly index \"reach[es] their maximum in the morning\" (Guzman-Morales et al. 2016, Geophysical Research Letters, https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2016GL067887); an event lasts about 1.5 days on average and there are 10 to 25 a year (https://en.wikipedia.org/wiki/Santa_Ana_winds, citing Raphael 2003); so about 3 days a month from October to April (a chance near 0.1), more in December and January, a rare September one, none from May to August"
+     }
+    },
+    {
+     "name": "June",
+     "lowF": {
+      "value": 56.7,
+      "source": {
+       "url": "https://www.climatestotravel.com/climate/united-states/santa-clarita",
+       "read": "2026-11-17",
+       "note": "Santa Clarita, 1991 to 2020 averages, \"June\": minimum 13.7 C, maximum 30.8 C (the mean daily low and high), converted to Fahrenheit; Santa Clarita is the nearest place publishing a full monthly table; Whiteman Airport near Sylmar reads January 67/46, March 70/48 and September 88/62 F (https://www.timeanddate.com/weather/usa/sylmar/climate), within a few degrees. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "highF": {
+      "value": 87.4,
+      "source": {
+       "url": "https://www.climatestotravel.com/climate/united-states/santa-clarita",
+       "read": "2026-11-17",
+       "note": "Santa Clarita, 1991 to 2020 averages, \"June\": minimum 13.7 C, maximum 30.8 C (the mean daily low and high), converted to Fahrenheit; Santa Clarita is the nearest place publishing a full monthly table; Whiteman Airport near Sylmar reads January 67/46, March 70/48 and September 88/62 F (https://www.timeanddate.com/weather/usa/sylmar/climate), within a few degrees. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "humidity": {
+      "value": 0.55,
+      "estimate": "the mean relative humidity, interpolated between the months the page publishes (https://www.timeanddate.com/weather/usa/sylmar/climate: January 51, March 57, September 53 percent)"
+     },
+     "windMph": {
+      "value": 6.4,
+      "source": {
+       "url": "https://weatherspark.com/y/1726/Average-Weather-in-Santa-Clarita-California-United-States-Year-Round",
+       "read": "2026-11-17",
+       "note": "Weather Spark, \"average hourly wind speed\" by month: June 6.4 mph (the wind over the whole day; the time-of-day factors below shape it). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "santaAnaChance": {
+      "value": 0,
+      "estimate": "the chance that a day drawn in this month is a Santa Ana day (the hot, dry offshore wind of the cooler months). Basis: Santa Ana events \"occur at least twice per average month\" from October to April, are most frequent in December, and the hourly index \"reach[es] their maximum in the morning\" (Guzman-Morales et al. 2016, Geophysical Research Letters, https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2016GL067887); an event lasts about 1.5 days on average and there are 10 to 25 a year (https://en.wikipedia.org/wiki/Santa_Ana_winds, citing Raphael 2003); so about 3 days a month from October to April (a chance near 0.1), more in December and January, a rare September one, none from May to August"
+     }
+    },
+    {
+     "name": "July",
+     "lowF": {
+      "value": 63.1,
+      "source": {
+       "url": "https://www.climatestotravel.com/climate/united-states/santa-clarita",
+       "read": "2026-11-17",
+       "note": "Santa Clarita, 1991 to 2020 averages, \"July\": minimum 17.3 C, maximum 34.6 C (the mean daily low and high), converted to Fahrenheit; Santa Clarita is the nearest place publishing a full monthly table; Whiteman Airport near Sylmar reads January 67/46, March 70/48 and September 88/62 F (https://www.timeanddate.com/weather/usa/sylmar/climate), within a few degrees. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "highF": {
+      "value": 94.3,
+      "source": {
+       "url": "https://www.climatestotravel.com/climate/united-states/santa-clarita",
+       "read": "2026-11-17",
+       "note": "Santa Clarita, 1991 to 2020 averages, \"July\": minimum 17.3 C, maximum 34.6 C (the mean daily low and high), converted to Fahrenheit; Santa Clarita is the nearest place publishing a full monthly table; Whiteman Airport near Sylmar reads January 67/46, March 70/48 and September 88/62 F (https://www.timeanddate.com/weather/usa/sylmar/climate), within a few degrees. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "humidity": {
+      "value": 0.54,
+      "estimate": "the mean relative humidity, interpolated between the months the page publishes (https://www.timeanddate.com/weather/usa/sylmar/climate: January 51, March 57, September 53 percent)"
+     },
+     "windMph": {
+      "value": 5.8,
+      "source": {
+       "url": "https://weatherspark.com/y/1726/Average-Weather-in-Santa-Clarita-California-United-States-Year-Round",
+       "read": "2026-11-17",
+       "note": "Weather Spark, \"average hourly wind speed\" by month: July 5.8 mph (the wind over the whole day; the time-of-day factors below shape it). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "santaAnaChance": {
+      "value": 0,
+      "estimate": "the chance that a day drawn in this month is a Santa Ana day (the hot, dry offshore wind of the cooler months). Basis: Santa Ana events \"occur at least twice per average month\" from October to April, are most frequent in December, and the hourly index \"reach[es] their maximum in the morning\" (Guzman-Morales et al. 2016, Geophysical Research Letters, https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2016GL067887); an event lasts about 1.5 days on average and there are 10 to 25 a year (https://en.wikipedia.org/wiki/Santa_Ana_winds, citing Raphael 2003); so about 3 days a month from October to April (a chance near 0.1), more in December and January, a rare September one, none from May to August"
+     }
+    },
+    {
+     "name": "August",
+     "lowF": {
+      "value": 64,
+      "source": {
+       "url": "https://www.climatestotravel.com/climate/united-states/santa-clarita",
+       "read": "2026-11-17",
+       "note": "Santa Clarita, 1991 to 2020 averages, \"August\": minimum 17.8 C, maximum 35.4 C (the mean daily low and high), converted to Fahrenheit; Santa Clarita is the nearest place publishing a full monthly table; Whiteman Airport near Sylmar reads January 67/46, March 70/48 and September 88/62 F (https://www.timeanddate.com/weather/usa/sylmar/climate), within a few degrees. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "highF": {
+      "value": 95.7,
+      "source": {
+       "url": "https://www.climatestotravel.com/climate/united-states/santa-clarita",
+       "read": "2026-11-17",
+       "note": "Santa Clarita, 1991 to 2020 averages, \"August\": minimum 17.8 C, maximum 35.4 C (the mean daily low and high), converted to Fahrenheit; Santa Clarita is the nearest place publishing a full monthly table; Whiteman Airport near Sylmar reads January 67/46, March 70/48 and September 88/62 F (https://www.timeanddate.com/weather/usa/sylmar/climate), within a few degrees. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "humidity": {
+      "value": 0.54,
+      "estimate": "the mean relative humidity, interpolated between the months the page publishes (https://www.timeanddate.com/weather/usa/sylmar/climate: January 51, March 57, September 53 percent)"
+     },
+     "windMph": {
+      "value": 5.5,
+      "source": {
+       "url": "https://weatherspark.com/y/1726/Average-Weather-in-Santa-Clarita-California-United-States-Year-Round",
+       "read": "2026-11-17",
+       "note": "Weather Spark, \"average hourly wind speed\" by month: August 5.5 mph (the wind over the whole day; the time-of-day factors below shape it). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "santaAnaChance": {
+      "value": 0,
+      "estimate": "the chance that a day drawn in this month is a Santa Ana day (the hot, dry offshore wind of the cooler months). Basis: Santa Ana events \"occur at least twice per average month\" from October to April, are most frequent in December, and the hourly index \"reach[es] their maximum in the morning\" (Guzman-Morales et al. 2016, Geophysical Research Letters, https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2016GL067887); an event lasts about 1.5 days on average and there are 10 to 25 a year (https://en.wikipedia.org/wiki/Santa_Ana_winds, citing Raphael 2003); so about 3 days a month from October to April (a chance near 0.1), more in December and January, a rare September one, none from May to August"
+     }
+    },
+    {
+     "name": "September",
+     "lowF": {
+      "value": 62.4,
+      "source": {
+       "url": "https://www.climatestotravel.com/climate/united-states/santa-clarita",
+       "read": "2026-11-17",
+       "note": "Santa Clarita, 1991 to 2020 averages, \"September\": minimum 16.9 C, maximum 32.7 C (the mean daily low and high), converted to Fahrenheit; Santa Clarita is the nearest place publishing a full monthly table; Whiteman Airport near Sylmar reads January 67/46, March 70/48 and September 88/62 F (https://www.timeanddate.com/weather/usa/sylmar/climate), within a few degrees. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "highF": {
+      "value": 90.9,
+      "source": {
+       "url": "https://www.climatestotravel.com/climate/united-states/santa-clarita",
+       "read": "2026-11-17",
+       "note": "Santa Clarita, 1991 to 2020 averages, \"September\": minimum 16.9 C, maximum 32.7 C (the mean daily low and high), converted to Fahrenheit; Santa Clarita is the nearest place publishing a full monthly table; Whiteman Airport near Sylmar reads January 67/46, March 70/48 and September 88/62 F (https://www.timeanddate.com/weather/usa/sylmar/climate), within a few degrees. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "humidity": {
+      "value": 0.53,
+      "source": {
+       "url": "https://www.timeanddate.com/weather/usa/sylmar/climate",
+       "read": "2026-11-17",
+       "note": "timeanddate, Whiteman Airport about 5 miles from Sylmar, 1992 to 2021: September 53 percent, the mean relative humidity. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "windMph": {
+      "value": 5.6,
+      "source": {
+       "url": "https://weatherspark.com/y/1726/Average-Weather-in-Santa-Clarita-California-United-States-Year-Round",
+       "read": "2026-11-17",
+       "note": "Weather Spark, \"average hourly wind speed\" by month: September 5.6 mph (the wind over the whole day; the time-of-day factors below shape it). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "santaAnaChance": {
+      "value": 0.02,
+      "estimate": "the chance that a day drawn in this month is a Santa Ana day (the hot, dry offshore wind of the cooler months). Basis: Santa Ana events \"occur at least twice per average month\" from October to April, are most frequent in December, and the hourly index \"reach[es] their maximum in the morning\" (Guzman-Morales et al. 2016, Geophysical Research Letters, https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2016GL067887); an event lasts about 1.5 days on average and there are 10 to 25 a year (https://en.wikipedia.org/wiki/Santa_Ana_winds, citing Raphael 2003); so about 3 days a month from October to April (a chance near 0.1), more in December and January, a rare September one, none from May to August"
+     }
+    },
+    {
+     "name": "October",
+     "lowF": {
+      "value": 56.3,
+      "source": {
+       "url": "https://www.climatestotravel.com/climate/united-states/santa-clarita",
+       "read": "2026-11-17",
+       "note": "Santa Clarita, 1991 to 2020 averages, \"October\": minimum 13.5 C, maximum 27.3 C (the mean daily low and high), converted to Fahrenheit; Santa Clarita is the nearest place publishing a full monthly table; Whiteman Airport near Sylmar reads January 67/46, March 70/48 and September 88/62 F (https://www.timeanddate.com/weather/usa/sylmar/climate), within a few degrees. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "highF": {
+      "value": 81.1,
+      "source": {
+       "url": "https://www.climatestotravel.com/climate/united-states/santa-clarita",
+       "read": "2026-11-17",
+       "note": "Santa Clarita, 1991 to 2020 averages, \"October\": minimum 13.5 C, maximum 27.3 C (the mean daily low and high), converted to Fahrenheit; Santa Clarita is the nearest place publishing a full monthly table; Whiteman Airport near Sylmar reads January 67/46, March 70/48 and September 88/62 F (https://www.timeanddate.com/weather/usa/sylmar/climate), within a few degrees. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "humidity": {
+      "value": 0.53,
+      "estimate": "the mean relative humidity, interpolated between the months the page publishes (https://www.timeanddate.com/weather/usa/sylmar/climate: January 51, March 57, September 53 percent)"
+     },
+     "windMph": {
+      "value": 6.6,
+      "source": {
+       "url": "https://weatherspark.com/y/1726/Average-Weather-in-Santa-Clarita-California-United-States-Year-Round",
+       "read": "2026-11-17",
+       "note": "Weather Spark, \"average hourly wind speed\" by month: October 6.6 mph (the wind over the whole day; the time-of-day factors below shape it). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "santaAnaChance": {
+      "value": 0.08,
+      "estimate": "the chance that a day drawn in this month is a Santa Ana day (the hot, dry offshore wind of the cooler months). Basis: Santa Ana events \"occur at least twice per average month\" from October to April, are most frequent in December, and the hourly index \"reach[es] their maximum in the morning\" (Guzman-Morales et al. 2016, Geophysical Research Letters, https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2016GL067887); an event lasts about 1.5 days on average and there are 10 to 25 a year (https://en.wikipedia.org/wiki/Santa_Ana_winds, citing Raphael 2003); so about 3 days a month from October to April (a chance near 0.1), more in December and January, a rare September one, none from May to August"
+     }
+    },
+    {
+     "name": "November",
+     "lowF": {
+      "value": 49.3,
+      "source": {
+       "url": "https://www.climatestotravel.com/climate/united-states/santa-clarita",
+       "read": "2026-11-17",
+       "note": "Santa Clarita, 1991 to 2020 averages, \"November\": minimum 9.6 C, maximum 21.8 C (the mean daily low and high), converted to Fahrenheit; Santa Clarita is the nearest place publishing a full monthly table; Whiteman Airport near Sylmar reads January 67/46, March 70/48 and September 88/62 F (https://www.timeanddate.com/weather/usa/sylmar/climate), within a few degrees. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "highF": {
+      "value": 71.2,
+      "source": {
+       "url": "https://www.climatestotravel.com/climate/united-states/santa-clarita",
+       "read": "2026-11-17",
+       "note": "Santa Clarita, 1991 to 2020 averages, \"November\": minimum 9.6 C, maximum 21.8 C (the mean daily low and high), converted to Fahrenheit; Santa Clarita is the nearest place publishing a full monthly table; Whiteman Airport near Sylmar reads January 67/46, March 70/48 and September 88/62 F (https://www.timeanddate.com/weather/usa/sylmar/climate), within a few degrees. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "humidity": {
+      "value": 0.52,
+      "estimate": "the mean relative humidity, interpolated between the months the page publishes (https://www.timeanddate.com/weather/usa/sylmar/climate: January 51, March 57, September 53 percent)"
+     },
+     "windMph": {
+      "value": 8,
+      "source": {
+       "url": "https://weatherspark.com/y/1726/Average-Weather-in-Santa-Clarita-California-United-States-Year-Round",
+       "read": "2026-11-17",
+       "note": "Weather Spark, \"average hourly wind speed\" by month: November 8 mph (the wind over the whole day; the time-of-day factors below shape it). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "santaAnaChance": {
+      "value": 0.14,
+      "estimate": "the chance that a day drawn in this month is a Santa Ana day (the hot, dry offshore wind of the cooler months). Basis: Santa Ana events \"occur at least twice per average month\" from October to April, are most frequent in December, and the hourly index \"reach[es] their maximum in the morning\" (Guzman-Morales et al. 2016, Geophysical Research Letters, https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2016GL067887); an event lasts about 1.5 days on average and there are 10 to 25 a year (https://en.wikipedia.org/wiki/Santa_Ana_winds, citing Raphael 2003); so about 3 days a month from October to April (a chance near 0.1), more in December and January, a rare September one, none from May to August"
+     }
+    },
+    {
+     "name": "December",
+     "lowF": {
+      "value": 44.2,
+      "source": {
+       "url": "https://www.climatestotravel.com/climate/united-states/santa-clarita",
+       "read": "2026-11-17",
+       "note": "Santa Clarita, 1991 to 2020 averages, \"December\": minimum 6.8 C, maximum 16.9 C (the mean daily low and high), converted to Fahrenheit; Santa Clarita is the nearest place publishing a full monthly table; Whiteman Airport near Sylmar reads January 67/46, March 70/48 and September 88/62 F (https://www.timeanddate.com/weather/usa/sylmar/climate), within a few degrees. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "highF": {
+      "value": 62.4,
+      "source": {
+       "url": "https://www.climatestotravel.com/climate/united-states/santa-clarita",
+       "read": "2026-11-17",
+       "note": "Santa Clarita, 1991 to 2020 averages, \"December\": minimum 6.8 C, maximum 16.9 C (the mean daily low and high), converted to Fahrenheit; Santa Clarita is the nearest place publishing a full monthly table; Whiteman Airport near Sylmar reads January 67/46, March 70/48 and September 88/62 F (https://www.timeanddate.com/weather/usa/sylmar/climate), within a few degrees. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "humidity": {
+      "value": 0.52,
+      "estimate": "the mean relative humidity, interpolated between the months the page publishes (https://www.timeanddate.com/weather/usa/sylmar/climate: January 51, March 57, September 53 percent)"
+     },
+     "windMph": {
+      "value": 8.9,
+      "source": {
+       "url": "https://weatherspark.com/y/1726/Average-Weather-in-Santa-Clarita-California-United-States-Year-Round",
+       "read": "2026-11-17",
+       "note": "Weather Spark, \"average hourly wind speed\" by month: December 8.9 mph (the wind over the whole day; the time-of-day factors below shape it). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "santaAnaChance": {
+      "value": 0.2,
+      "estimate": "the chance that a day drawn in this month is a Santa Ana day (the hot, dry offshore wind of the cooler months). Basis: Santa Ana events \"occur at least twice per average month\" from October to April, are most frequent in December, and the hourly index \"reach[es] their maximum in the morning\" (Guzman-Morales et al. 2016, Geophysical Research Letters, https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2016GL067887); an event lasts about 1.5 days on average and there are 10 to 25 a year (https://en.wikipedia.org/wiki/Santa_Ana_winds, citing Raphael 2003); so about 3 days a month from October to April (a chance near 0.1), more in December and January, a rare September one, none from May to August"
+     }
+    }
+   ]
+  },
+  "cta-piru": {
+   "months": [
+    {
+     "name": "January",
+     "lowF": {
+      "value": 44.4,
+      "source": {
+       "url": "https://www.weather-us.com/en/california-usa/fillmore-climate",
+       "read": "2026-11-17",
+       "note": "weather-us, Fillmore (the next town down the Santa Clara River valley from Piru): January average low 44.4 F. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "highF": {
+      "value": 60.6,
+      "source": {
+       "url": "https://www.weather-us.com/en/california-usa/fillmore-climate",
+       "read": "2026-11-17",
+       "note": "weather-us, Fillmore (the next town down the Santa Clara River valley from Piru): January average high 60.6 F. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "humidity": {
+      "value": 0.54,
+      "source": {
+       "url": "https://www.weather-atlas.com/en/california-usa/fillmore-climate",
+       "read": "2026-11-17",
+       "note": "weather-atlas, Fillmore: January 54 percent, the mean relative humidity. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "windMph": {
+      "value": 8.3,
+      "source": {
+       "url": "https://weatherspark.com/y/1673/Average-Weather-in-Fillmore-California-United-States-Year-Round",
+       "read": "2026-11-17",
+       "note": "Weather Spark, \"average hourly wind speed\" by month: January 8.3 mph (the wind over the whole day; the time-of-day factors below shape it). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "santaAnaChance": {
+      "value": 0.15,
+      "estimate": "the chance that a day drawn in this month is a Santa Ana day (the hot, dry offshore wind of the cooler months). Basis: Santa Ana events \"occur at least twice per average month\" from October to April, are most frequent in December, and the hourly index \"reach[es] their maximum in the morning\" (Guzman-Morales et al. 2016, Geophysical Research Letters, https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2016GL067887); an event lasts about 1.5 days on average and there are 10 to 25 a year (https://en.wikipedia.org/wiki/Santa_Ana_winds, citing Raphael 2003); so about 3 days a month from October to April (a chance near 0.1), more in December and January, a rare September one, none from May to August"
+     }
+    },
+    {
+     "name": "February",
+     "lowF": {
+      "value": 43.3,
+      "source": {
+       "url": "https://www.weather-us.com/en/california-usa/fillmore-climate",
+       "read": "2026-11-17",
+       "note": "weather-us, Fillmore (the next town down the Santa Clara River valley from Piru): February average low 43.3 F. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "highF": {
+      "value": 59.9,
+      "source": {
+       "url": "https://www.weather-us.com/en/california-usa/fillmore-climate",
+       "read": "2026-11-17",
+       "note": "weather-us, Fillmore (the next town down the Santa Clara River valley from Piru): February average high 59.9 F. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "humidity": {
+      "value": 0.57,
+      "estimate": "the mean relative humidity, interpolated between the months the page publishes (https://www.weather-atlas.com/en/california-usa/fillmore-climate: January 54, March 60, June 56, November 47 percent)"
+     },
+     "windMph": {
+      "value": 7.9,
+      "source": {
+       "url": "https://weatherspark.com/y/1673/Average-Weather-in-Fillmore-California-United-States-Year-Round",
+       "read": "2026-11-17",
+       "note": "Weather Spark, \"average hourly wind speed\" by month: February 7.9 mph (the wind over the whole day; the time-of-day factors below shape it). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "santaAnaChance": {
+      "value": 0.12,
+      "estimate": "the chance that a day drawn in this month is a Santa Ana day (the hot, dry offshore wind of the cooler months). Basis: Santa Ana events \"occur at least twice per average month\" from October to April, are most frequent in December, and the hourly index \"reach[es] their maximum in the morning\" (Guzman-Morales et al. 2016, Geophysical Research Letters, https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2016GL067887); an event lasts about 1.5 days on average and there are 10 to 25 a year (https://en.wikipedia.org/wiki/Santa_Ana_winds, citing Raphael 2003); so about 3 days a month from October to April (a chance near 0.1), more in December and January, a rare September one, none from May to August"
+     }
+    },
+    {
+     "name": "March",
+     "lowF": {
+      "value": 43.7,
+      "source": {
+       "url": "https://www.weather-us.com/en/california-usa/fillmore-climate",
+       "read": "2026-11-17",
+       "note": "weather-us, Fillmore (the next town down the Santa Clara River valley from Piru): March average low 43.7 F. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "highF": {
+      "value": 62.8,
+      "source": {
+       "url": "https://www.weather-us.com/en/california-usa/fillmore-climate",
+       "read": "2026-11-17",
+       "note": "weather-us, Fillmore (the next town down the Santa Clara River valley from Piru): March average high 62.8 F. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "humidity": {
+      "value": 0.6,
+      "source": {
+       "url": "https://www.weather-atlas.com/en/california-usa/fillmore-climate",
+       "read": "2026-11-17",
+       "note": "weather-atlas, Fillmore: March 60 percent, the mean relative humidity. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "windMph": {
+      "value": 7.7,
+      "source": {
+       "url": "https://weatherspark.com/y/1673/Average-Weather-in-Fillmore-California-United-States-Year-Round",
+       "read": "2026-11-17",
+       "note": "Weather Spark, \"average hourly wind speed\" by month: March 7.7 mph (the wind over the whole day; the time-of-day factors below shape it). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "santaAnaChance": {
+      "value": 0.08,
+      "estimate": "the chance that a day drawn in this month is a Santa Ana day (the hot, dry offshore wind of the cooler months). Basis: Santa Ana events \"occur at least twice per average month\" from October to April, are most frequent in December, and the hourly index \"reach[es] their maximum in the morning\" (Guzman-Morales et al. 2016, Geophysical Research Letters, https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2016GL067887); an event lasts about 1.5 days on average and there are 10 to 25 a year (https://en.wikipedia.org/wiki/Santa_Ana_winds, citing Raphael 2003); so about 3 days a month from October to April (a chance near 0.1), more in December and January, a rare September one, none from May to August"
+     }
+    },
+    {
+     "name": "April",
+     "lowF": {
+      "value": 46,
+      "source": {
+       "url": "https://www.weather-us.com/en/california-usa/fillmore-climate",
+       "read": "2026-11-17",
+       "note": "weather-us, Fillmore (the next town down the Santa Clara River valley from Piru): April average low 46 F. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "highF": {
+      "value": 66.9,
+      "source": {
+       "url": "https://www.weather-us.com/en/california-usa/fillmore-climate",
+       "read": "2026-11-17",
+       "note": "weather-us, Fillmore (the next town down the Santa Clara River valley from Piru): April average high 66.9 F. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "humidity": {
+      "value": 0.59,
+      "estimate": "the mean relative humidity, interpolated between the months the page publishes (https://www.weather-atlas.com/en/california-usa/fillmore-climate: January 54, March 60, June 56, November 47 percent)"
+     },
+     "windMph": {
+      "value": 7.6,
+      "source": {
+       "url": "https://weatherspark.com/y/1673/Average-Weather-in-Fillmore-California-United-States-Year-Round",
+       "read": "2026-11-17",
+       "note": "Weather Spark, \"average hourly wind speed\" by month: April 7.6 mph (the wind over the whole day; the time-of-day factors below shape it). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "santaAnaChance": {
+      "value": 0.06,
+      "estimate": "the chance that a day drawn in this month is a Santa Ana day (the hot, dry offshore wind of the cooler months). Basis: Santa Ana events \"occur at least twice per average month\" from October to April, are most frequent in December, and the hourly index \"reach[es] their maximum in the morning\" (Guzman-Morales et al. 2016, Geophysical Research Letters, https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2016GL067887); an event lasts about 1.5 days on average and there are 10 to 25 a year (https://en.wikipedia.org/wiki/Santa_Ana_winds, citing Raphael 2003); so about 3 days a month from October to April (a chance near 0.1), more in December and January, a rare September one, none from May to August"
+     }
+    },
+    {
+     "name": "May",
+     "lowF": {
+      "value": 50.4,
+      "source": {
+       "url": "https://www.weather-us.com/en/california-usa/fillmore-climate",
+       "read": "2026-11-17",
+       "note": "weather-us, Fillmore (the next town down the Santa Clara River valley from Piru): May average low 50.4 F. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "highF": {
+      "value": 70.5,
+      "source": {
+       "url": "https://www.weather-us.com/en/california-usa/fillmore-climate",
+       "read": "2026-11-17",
+       "note": "weather-us, Fillmore (the next town down the Santa Clara River valley from Piru): May average high 70.5 F. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "humidity": {
+      "value": 0.57,
+      "estimate": "the mean relative humidity, interpolated between the months the page publishes (https://www.weather-atlas.com/en/california-usa/fillmore-climate: January 54, March 60, June 56, November 47 percent)"
+     },
+     "windMph": {
+      "value": 6.8,
+      "source": {
+       "url": "https://weatherspark.com/y/1673/Average-Weather-in-Fillmore-California-United-States-Year-Round",
+       "read": "2026-11-17",
+       "note": "Weather Spark, \"average hourly wind speed\" by month: May 6.8 mph (the wind over the whole day; the time-of-day factors below shape it). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "santaAnaChance": {
+      "value": 0,
+      "estimate": "the chance that a day drawn in this month is a Santa Ana day (the hot, dry offshore wind of the cooler months). Basis: Santa Ana events \"occur at least twice per average month\" from October to April, are most frequent in December, and the hourly index \"reach[es] their maximum in the morning\" (Guzman-Morales et al. 2016, Geophysical Research Letters, https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2016GL067887); an event lasts about 1.5 days on average and there are 10 to 25 a year (https://en.wikipedia.org/wiki/Santa_Ana_winds, citing Raphael 2003); so about 3 days a month from October to April (a chance near 0.1), more in December and January, a rare September one, none from May to August"
+     }
+    },
+    {
+     "name": "June",
+     "lowF": {
+      "value": 55.9,
+      "source": {
+       "url": "https://www.weather-us.com/en/california-usa/fillmore-climate",
+       "read": "2026-11-17",
+       "note": "weather-us, Fillmore (the next town down the Santa Clara River valley from Piru): June average low 55.9 F. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "highF": {
+      "value": 77.5,
+      "source": {
+       "url": "https://www.weather-us.com/en/california-usa/fillmore-climate",
+       "read": "2026-11-17",
+       "note": "weather-us, Fillmore (the next town down the Santa Clara River valley from Piru): June average high 77.5 F. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "humidity": {
+      "value": 0.56,
+      "source": {
+       "url": "https://www.weather-atlas.com/en/california-usa/fillmore-climate",
+       "read": "2026-11-17",
+       "note": "weather-atlas, Fillmore: June 56 percent, the mean relative humidity. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "windMph": {
+      "value": 5.9,
+      "source": {
+       "url": "https://weatherspark.com/y/1673/Average-Weather-in-Fillmore-California-United-States-Year-Round",
+       "read": "2026-11-17",
+       "note": "Weather Spark, \"average hourly wind speed\" by month: June 5.9 mph (the wind over the whole day; the time-of-day factors below shape it). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "santaAnaChance": {
+      "value": 0,
+      "estimate": "the chance that a day drawn in this month is a Santa Ana day (the hot, dry offshore wind of the cooler months). Basis: Santa Ana events \"occur at least twice per average month\" from October to April, are most frequent in December, and the hourly index \"reach[es] their maximum in the morning\" (Guzman-Morales et al. 2016, Geophysical Research Letters, https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2016GL067887); an event lasts about 1.5 days on average and there are 10 to 25 a year (https://en.wikipedia.org/wiki/Santa_Ana_winds, citing Raphael 2003); so about 3 days a month from October to April (a chance near 0.1), more in December and January, a rare September one, none from May to August"
+     }
+    },
+    {
+     "name": "July",
+     "lowF": {
+      "value": 57,
+      "source": {
+       "url": "https://www.bestplaces.net/weather/city/california/fillmore",
+       "read": "2026-11-17",
+       "note": "Bestplaces, Fillmore: July average low 57 F (weather-us publishes January to June, Bestplaces the whole year; the two agree within 3 F where both publish). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "highF": {
+      "value": 85,
+      "source": {
+       "url": "https://www.bestplaces.net/weather/city/california/fillmore",
+       "read": "2026-11-17",
+       "note": "Bestplaces, Fillmore: July average high 85 F (weather-us publishes January to June, Bestplaces the whole year; the two agree within 3 F where both publish). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "humidity": {
+      "value": 0.54,
+      "estimate": "the mean relative humidity, interpolated between the months the page publishes (https://www.weather-atlas.com/en/california-usa/fillmore-climate: January 54, March 60, June 56, November 47 percent)"
+     },
+     "windMph": {
+      "value": 5.2,
+      "source": {
+       "url": "https://weatherspark.com/y/1673/Average-Weather-in-Fillmore-California-United-States-Year-Round",
+       "read": "2026-11-17",
+       "note": "Weather Spark, \"average hourly wind speed\" by month: July 5.2 mph (the wind over the whole day; the time-of-day factors below shape it). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "santaAnaChance": {
+      "value": 0,
+      "estimate": "the chance that a day drawn in this month is a Santa Ana day (the hot, dry offshore wind of the cooler months). Basis: Santa Ana events \"occur at least twice per average month\" from October to April, are most frequent in December, and the hourly index \"reach[es] their maximum in the morning\" (Guzman-Morales et al. 2016, Geophysical Research Letters, https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2016GL067887); an event lasts about 1.5 days on average and there are 10 to 25 a year (https://en.wikipedia.org/wiki/Santa_Ana_winds, citing Raphael 2003); so about 3 days a month from October to April (a chance near 0.1), more in December and January, a rare September one, none from May to August"
+     }
+    },
+    {
+     "name": "August",
+     "lowF": {
+      "value": 56,
+      "source": {
+       "url": "https://www.bestplaces.net/weather/city/california/fillmore",
+       "read": "2026-11-17",
+       "note": "Bestplaces, Fillmore: August average low 56 F (weather-us publishes January to June, Bestplaces the whole year; the two agree within 3 F where both publish). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "highF": {
+      "value": 86,
+      "source": {
+       "url": "https://www.bestplaces.net/weather/city/california/fillmore",
+       "read": "2026-11-17",
+       "note": "Bestplaces, Fillmore: August average high 86 F (weather-us publishes January to June, Bestplaces the whole year; the two agree within 3 F where both publish). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "humidity": {
+      "value": 0.52,
+      "estimate": "the mean relative humidity, interpolated between the months the page publishes (https://www.weather-atlas.com/en/california-usa/fillmore-climate: January 54, March 60, June 56, November 47 percent)"
+     },
+     "windMph": {
+      "value": 5.1,
+      "source": {
+       "url": "https://weatherspark.com/y/1673/Average-Weather-in-Fillmore-California-United-States-Year-Round",
+       "read": "2026-11-17",
+       "note": "Weather Spark, \"average hourly wind speed\" by month: August 5.1 mph (the wind over the whole day; the time-of-day factors below shape it). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "santaAnaChance": {
+      "value": 0,
+      "estimate": "the chance that a day drawn in this month is a Santa Ana day (the hot, dry offshore wind of the cooler months). Basis: Santa Ana events \"occur at least twice per average month\" from October to April, are most frequent in December, and the hourly index \"reach[es] their maximum in the morning\" (Guzman-Morales et al. 2016, Geophysical Research Letters, https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2016GL067887); an event lasts about 1.5 days on average and there are 10 to 25 a year (https://en.wikipedia.org/wiki/Santa_Ana_winds, citing Raphael 2003); so about 3 days a month from October to April (a chance near 0.1), more in December and January, a rare September one, none from May to August"
+     }
+    },
+    {
+     "name": "September",
+     "lowF": {
+      "value": 55,
+      "source": {
+       "url": "https://www.bestplaces.net/weather/city/california/fillmore",
+       "read": "2026-11-17",
+       "note": "Bestplaces, Fillmore: September average low 55 F (weather-us publishes January to June, Bestplaces the whole year; the two agree within 3 F where both publish). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "highF": {
+      "value": 84,
+      "source": {
+       "url": "https://www.bestplaces.net/weather/city/california/fillmore",
+       "read": "2026-11-17",
+       "note": "Bestplaces, Fillmore: September average high 84 F (weather-us publishes January to June, Bestplaces the whole year; the two agree within 3 F where both publish). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "humidity": {
+      "value": 0.51,
+      "estimate": "the mean relative humidity, interpolated between the months the page publishes (https://www.weather-atlas.com/en/california-usa/fillmore-climate: January 54, March 60, June 56, November 47 percent)"
+     },
+     "windMph": {
+      "value": 5.4,
+      "source": {
+       "url": "https://weatherspark.com/y/1673/Average-Weather-in-Fillmore-California-United-States-Year-Round",
+       "read": "2026-11-17",
+       "note": "Weather Spark, \"average hourly wind speed\" by month: September 5.4 mph (the wind over the whole day; the time-of-day factors below shape it). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "santaAnaChance": {
+      "value": 0.02,
+      "estimate": "the chance that a day drawn in this month is a Santa Ana day (the hot, dry offshore wind of the cooler months). Basis: Santa Ana events \"occur at least twice per average month\" from October to April, are most frequent in December, and the hourly index \"reach[es] their maximum in the morning\" (Guzman-Morales et al. 2016, Geophysical Research Letters, https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2016GL067887); an event lasts about 1.5 days on average and there are 10 to 25 a year (https://en.wikipedia.org/wiki/Santa_Ana_winds, citing Raphael 2003); so about 3 days a month from October to April (a chance near 0.1), more in December and January, a rare September one, none from May to August"
+     }
+    },
+    {
+     "name": "October",
+     "lowF": {
+      "value": 50,
+      "source": {
+       "url": "https://www.bestplaces.net/weather/city/california/fillmore",
+       "read": "2026-11-17",
+       "note": "Bestplaces, Fillmore: October average low 50 F (weather-us publishes January to June, Bestplaces the whole year; the two agree within 3 F where both publish). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "highF": {
+      "value": 79,
+      "source": {
+       "url": "https://www.bestplaces.net/weather/city/california/fillmore",
+       "read": "2026-11-17",
+       "note": "Bestplaces, Fillmore: October average high 79 F (weather-us publishes January to June, Bestplaces the whole year; the two agree within 3 F where both publish). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "humidity": {
+      "value": 0.49,
+      "estimate": "the mean relative humidity, interpolated between the months the page publishes (https://www.weather-atlas.com/en/california-usa/fillmore-climate: January 54, March 60, June 56, November 47 percent)"
+     },
+     "windMph": {
+      "value": 6.4,
+      "source": {
+       "url": "https://weatherspark.com/y/1673/Average-Weather-in-Fillmore-California-United-States-Year-Round",
+       "read": "2026-11-17",
+       "note": "Weather Spark, \"average hourly wind speed\" by month: October 6.4 mph (the wind over the whole day; the time-of-day factors below shape it). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "santaAnaChance": {
+      "value": 0.08,
+      "estimate": "the chance that a day drawn in this month is a Santa Ana day (the hot, dry offshore wind of the cooler months). Basis: Santa Ana events \"occur at least twice per average month\" from October to April, are most frequent in December, and the hourly index \"reach[es] their maximum in the morning\" (Guzman-Morales et al. 2016, Geophysical Research Letters, https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2016GL067887); an event lasts about 1.5 days on average and there are 10 to 25 a year (https://en.wikipedia.org/wiki/Santa_Ana_winds, citing Raphael 2003); so about 3 days a month from October to April (a chance near 0.1), more in December and January, a rare September one, none from May to August"
+     }
+    },
+    {
+     "name": "November",
+     "lowF": {
+      "value": 44,
+      "source": {
+       "url": "https://www.bestplaces.net/weather/city/california/fillmore",
+       "read": "2026-11-17",
+       "note": "Bestplaces, Fillmore: November average low 44 F (weather-us publishes January to June, Bestplaces the whole year; the two agree within 3 F where both publish). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "highF": {
+      "value": 73,
+      "source": {
+       "url": "https://www.bestplaces.net/weather/city/california/fillmore",
+       "read": "2026-11-17",
+       "note": "Bestplaces, Fillmore: November average high 73 F (weather-us publishes January to June, Bestplaces the whole year; the two agree within 3 F where both publish). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "humidity": {
+      "value": 0.47,
+      "source": {
+       "url": "https://www.weather-atlas.com/en/california-usa/fillmore-climate",
+       "read": "2026-11-17",
+       "note": "weather-atlas, Fillmore: November 47 percent, the mean relative humidity. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "windMph": {
+      "value": 7.6,
+      "source": {
+       "url": "https://weatherspark.com/y/1673/Average-Weather-in-Fillmore-California-United-States-Year-Round",
+       "read": "2026-11-17",
+       "note": "Weather Spark, \"average hourly wind speed\" by month: November 7.6 mph (the wind over the whole day; the time-of-day factors below shape it). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "santaAnaChance": {
+      "value": 0.14,
+      "estimate": "the chance that a day drawn in this month is a Santa Ana day (the hot, dry offshore wind of the cooler months). Basis: Santa Ana events \"occur at least twice per average month\" from October to April, are most frequent in December, and the hourly index \"reach[es] their maximum in the morning\" (Guzman-Morales et al. 2016, Geophysical Research Letters, https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2016GL067887); an event lasts about 1.5 days on average and there are 10 to 25 a year (https://en.wikipedia.org/wiki/Santa_Ana_winds, citing Raphael 2003); so about 3 days a month from October to April (a chance near 0.1), more in December and January, a rare September one, none from May to August"
+     }
+    },
+    {
+     "name": "December",
+     "lowF": {
+      "value": 40,
+      "source": {
+       "url": "https://www.bestplaces.net/weather/city/california/fillmore",
+       "read": "2026-11-17",
+       "note": "Bestplaces, Fillmore: December average low 40 F (weather-us publishes January to June, Bestplaces the whole year; the two agree within 3 F where both publish). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "highF": {
+      "value": 67,
+      "source": {
+       "url": "https://www.bestplaces.net/weather/city/california/fillmore",
+       "read": "2026-11-17",
+       "note": "Bestplaces, Fillmore: December average high 67 F (weather-us publishes January to June, Bestplaces the whole year; the two agree within 3 F where both publish). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "humidity": {
+      "value": 0.51,
+      "estimate": "the mean relative humidity, interpolated between the months the page publishes (https://www.weather-atlas.com/en/california-usa/fillmore-climate: January 54, March 60, June 56, November 47 percent)"
+     },
+     "windMph": {
+      "value": 8.4,
+      "source": {
+       "url": "https://weatherspark.com/y/1673/Average-Weather-in-Fillmore-California-United-States-Year-Round",
+       "read": "2026-11-17",
+       "note": "Weather Spark, \"average hourly wind speed\" by month: December 8.4 mph (the wind over the whole day; the time-of-day factors below shape it). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+      }
+     },
+     "santaAnaChance": {
+      "value": 0.2,
+      "estimate": "the chance that a day drawn in this month is a Santa Ana day (the hot, dry offshore wind of the cooler months). Basis: Santa Ana events \"occur at least twice per average month\" from October to April, are most frequent in December, and the hourly index \"reach[es] their maximum in the morning\" (Guzman-Morales et al. 2016, Geophysical Research Letters, https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2016GL067887); an event lasts about 1.5 days on average and there are 10 to 25 a year (https://en.wikipedia.org/wiki/Santa_Ana_winds, citing Raphael 2003); so about 3 days a month from October to April (a chance near 0.1), more in December and January, a rare September one, none from May to August"
+     }
+    }
+   ]
+  }
  }
 }
