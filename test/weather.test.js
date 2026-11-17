@@ -128,6 +128,26 @@ test('verify 2 and 3: what the coldest and the hottest day do to a bullet, throu
   console.log('  ' + lines.join('\n  '));
 });
 
+test('the book\'s order and come-up: lines sort newest first by the moment and the shot number, not as text; the come-up counts the leaf; a bad copy is refused whole', () => {
+  const lines = [9, 10, 2, 11].map((n) => ({ id: `d:${n}`, n, day: 'd', on: '2026-11-17', at: `2026-11-17T10:00:${String(n).padStart(2, '0')}.000Z` }));
+  assert.deepEqual(lines.slice().sort(RD.newestFirst).map((l) => l.n), [11, 10, 9, 2]);
+  const old = [9, 10].map((n) => ({ id: `d:${n}`, on: '2026-11-16' })); // lines from an older copy: no `at`, no `n`
+  assert.deepEqual([...old, lines[2]].sort(RD.newestFirst).map((l) => l.id), ['d:2', 'd:10', 'd:9']);
+  // The AK's irons: 2 MOA clicks; the leaf at 3 is 7.04 MOA above the leaf at 1. Zeroed at 100 with the leaf at 1 and +2 clicks; the hit at 300 with the leaf at 3 and the same clicks.
+  const leaf = flat.sights['ak-irons'].leaf;
+  const zero = { zeroYards: 100, elevationClicks: 2, windageClicks: 0, leafIx: 0, leaf: 100, elevationMoa: 2 * 2 + leaf.moaAbove100[0].moaAbove100 };
+  const line = { elevationClicks: 2, windageClicks: 0, leaf: 300, elevationMoa: 2 * 2 + leaf.moaAbove100[2].moaAbove100, zero };
+  assert.equal(RD.comeUpMoa(line, 2), Math.round(leaf.moaAbove100[2].moaAbove100 * 100) / 100, 'the leaf\'s angle is the come-up when the clicks are the same');
+  assert.match(RD.comeUpText(line, 2), /minutes of angle up from the 100-yard zero$/);
+  assert.equal(RD.comeUpMoa({ elevationClicks: 3, elevationMoa: 6, zero: { zeroYards: 100, elevationClicks: 1 } }, 2), 4, 'a zero from an older copy without elevationMoa counts clicks');
+  assert.equal(RD.comeUpMoa({ elevationClicks: -1, elevationMoa: -2, zero: null }, 2), -2, 'no zero: from the middle');
+  const good = { kind: 'range-day copy', version: 1, zeros: [], book: [{ rifle: 'a', sight: 'b', load: 'c', id: 'd:1', on: '2026-11-17', course: 'x', yards: 100, elevationClicks: 0, windageClicks: 0, upIn: 0, rightIn: 0 }], cold_bore: [], days: [] };
+  assert.equal(RD.checkCopy(good), true);
+  assert.throws(() => RD.checkCopy({ ...good, version: 3 }), /its "version" is 3; this app reads version 1/);
+  assert.throws(() => RD.checkCopy({ ...good, book: [{ ...good.book[0], hit: true, yards: undefined }] }), /book\[0\]\.yards is missing; it must be a number\. Nothing was loaded\./);
+  assert.throws(() => RD.checkCopy({ ...good, days: [5] }), /days\[0\] is not a record/);
+});
+
 test('a shot through shoot() with the powder figure starts at the day\'s speed and reports it', () => {
   const r = E.shoot({ load: flat.loads['imi-m193'], drag: flat.physics.dragTables, powder: flat.physics.powderTemperature, rifle: { sightHeightIn: 2.6, boreOffsetMoa: { up: 0, right: 0 } }, sight: { clickMoa: 1, elevationClicks: 5, windageClicks: 0 }, targetYards: 300, conditions: { altitudeFt: 0, tempF: 100 }, wind: [], rand: E.seeded(1) });
   assert.equal(Math.round(r.muzzleFps), flat.loads['imi-m193'].muzzleFps + 30);

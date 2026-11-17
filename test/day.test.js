@@ -367,13 +367,18 @@ test('verify 11: "Save a copy" after a day with hits, then "Load a copy" on an e
   assert.match(await page.textContent('#saved'), /Saved zero for IMI M193.*100 yards/, 'the zero came back');
   // Not a copy.
   const reasons = [];
-  for (const bad of ['{"hello": 1}', '{"kind": "range-day copy", "zeros": []}', '[1, 2]']) {
+  const malformed = JSON.parse(text); malformed.book[0].yards = 'far';
+  const keysBefore = await page.evaluate(() => Object.keys(localStorage).sort().join(' '));
+  for (const bad of ['{"hello": 1}', '{"kind": "range-day copy", "version": 1, "zeros": []}', '[1, 2]', '{"kind": "range-day copy", "version": 2, "zeros": [], "book": [], "cold_bore": [], "days": []}', JSON.stringify(malformed)]) {
     reasons.push(await page.evaluate((t) => { try { RD.loadCopy(JSON.parse(t)); return 'accepted'; } catch (e) { return e.message; } }, bad));
   }
   console.log('  refused: ' + reasons.join('\n  refused: '));
   assert.match(reasons[0], /not a Range Day copy: its "kind" is undefined/);
-  assert.match(reasons[1], /not a complete Range Day copy: "book" is missing or not a list/);
+  assert.match(reasons[1], /not a Range Day copy: "book" is missing or not a list/);
   assert.match(reasons[2], /not a Range Day copy: the file does not hold a record/);
+  assert.match(reasons[3], /not a Range Day copy: its "version" is 2; this app reads version 1/);
+  assert.match(reasons[4], /not a Range Day copy: book\[0\]\.yards is "far"; it must be a number\. Nothing was loaded\./);
+  assert.equal(await page.evaluate(() => Object.keys(localStorage).sort().join(' ')), keysBefore, 'a refused file wrote nothing');
   assert.deepEqual(errors, []);
   await context.close();
 });
