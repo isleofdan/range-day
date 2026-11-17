@@ -1,10 +1,10 @@
 {
- "_about": "Physics constants and the standard drag tables. Every figure is {value, source:{url, read}} or {value, estimate}. The G1 and G7 tables are the standard drag functions (drag coefficient against Mach number) as published by JBM Ballistics (https://www.jbmballistics.com/ballistics/downloads/downloads.shtml); this session could not reach jbmballistics.com (the session's network allows no page fetches), so the rows were copied from the open-source py-ballisticcalc library's copy of the same tables, at the commit named, which the library documents as the standard G1/G7 functions. Verified against a published reference in the field report.",
+ "_about": "Physics constants and the standard drag tables. Every figure is {value, source:{url, read}} or {value, estimate}. The G1 and G7 tables are the standard drag functions (drag coefficient against Mach number) as published by JBM Ballistics (https://www.jbmballistics.com/ballistics/downloads/downloads.shtml); this session could not reach jbmballistics.com (the session's network allows no page fetches), so the rows were copied from the open-source py-ballisticcalc library's copy of the same tables, at the commit named, which the library documents as the standard G1/G7 functions. Verified against a published reference in the field report. dust is the size, in feet, of the puff a miss throws up, drawn through the same scale as the plates at every zoom.",
  "dragTables": {
   "G1": {
    "value": [
     [
-     0.0,
+     0,
      0.2629
     ],
     [
@@ -104,7 +104,7 @@
      0.4448
     ],
     [
-     1.0,
+     1,
      0.4805
     ],
     [
@@ -196,7 +196,7 @@
      0.6003
     ],
     [
-     2.0,
+     2,
      0.5934
     ],
     [
@@ -256,7 +256,7 @@
      0.5168
     ],
     [
-     3.0,
+     3,
      0.5133
     ],
     [
@@ -296,7 +296,7 @@
      0.501
     ],
     [
-     4.0,
+     4,
      0.5006
     ],
     [
@@ -316,7 +316,7 @@
      0.499
     ],
     [
-     5.0,
+     5,
      0.4988
     ]
    ],
@@ -329,7 +329,7 @@
   "G7": {
    "value": [
     [
-     0.0,
+     0,
      0.1198
     ],
     [
@@ -433,7 +433,7 @@
      0.2993
     ],
     [
-     1.0,
+     1,
      0.3803
     ],
     [
@@ -521,7 +521,7 @@
      0.301
     ],
     [
-     2.0,
+     2,
      0.298
     ],
     [
@@ -601,7 +601,7 @@
      0.2451
     ],
     [
-     3.0,
+     3,
      0.2424
     ],
     [
@@ -641,7 +641,7 @@
      0.1975
     ],
     [
-     4.0,
+     4,
      0.1935
     ],
     [
@@ -661,7 +661,7 @@
      0.1672
     ],
     [
-     5.0,
+     5,
      0.1618
     ]
    ],
@@ -710,6 +710,28 @@
   "fiveShotExtremeSpreadOverSigma": {
    "value": 3.06,
    "estimate": "The expected extreme spread of five shots from a round normal scatter is about 3.06 standard deviations (Taylor and Grubbs, 'Approximate probability distributions for the extreme spread', 1975); groups are quoted as five-shot extreme spread, so sigma = spread / 3.06."
+  },
+  "appliesOnlyAboveMuzzleMach": {
+   "value": 1.2,
+   "estimate": "It is the passage through the sound barrier that unsettles a bullet, so the two factors above apply only to a bullet that left the barrel above Mach 1.2; a load that starts below that (the .22 at 1,070 fps, Mach 0.96) never crosses anything and keeps its own spread at every distance. The threshold is the top of the transonic band, the same figure the first factor uses."
+  }
+ },
+ "dust": {
+  "startFt": {
+   "value": 2,
+   "estimate": "a rifle bullet into dry dirt throws a puff about 2 ft across at the first instant (a plume twice the height of a boot, as range videos show); not measured"
+  },
+  "endFt": {
+   "value": 7,
+   "estimate": "the puff grows to about 7 ft across as it thins over its life, before it is too thin to see"
+  },
+  "lifeS": {
+   "value": 3,
+   "estimate": "about 3 s from the strike until the dust has thinned away in a light breeze"
+  },
+  "riseFt": {
+   "value": 4,
+   "estimate": "the puff's center rises about 4 ft over its life"
   }
  }
 }

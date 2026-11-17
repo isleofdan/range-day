@@ -159,3 +159,36 @@ test('the far plate at Piru: the 174 gr match load arrives right at the sound ba
   assert.ok(match.reached && match.mach > 0.9 && match.mach < 1.05 && match.transonic, `match Mach ${match.mach}`);
   assert.ok(sp.reached && sp.subsonic && sp.mach < 0.9, `soft point Mach ${sp.mach}`);
 });
+
+test('subsonic start: the .22 at 100 yd scatters with its own spread, no multiplier; the S&B 174 gr at 1,000 yd still gets the transonic factor', () => {
+  const rifle = { sightHeightIn: 0.9, boreOffsetMoa: { up: 0, right: 0 } };
+  const sight = { clickMoa: 3, windageClickMoa: 3, elevationClicks: 0, windageClicks: 0 };
+  // The .22: leaves the barrel at Mach 0.96, arrives at 100 yd near Mach 0.8.
+  const twentyTwo = flat.loads['cci-sv-40'];
+  const base22 = { load: twentyTwo, drag, rifle, sight, conditions: ICAO, wind: [], targetYards: 100 };
+  const one = E.shoot({ ...base22, rand: E.seeded(3) });
+  assert.ok(one.reached && one.subsonic && one.startedSupersonic === false, `the .22 arrives subsonic (Mach ${one.mach.toFixed(2)}) having started below Mach 1.2`);
+  const rand = E.seeded(11);
+  const hits = Array.from({ length: 60 }, () => E.shoot({ ...base22, rand }).hit);
+  const mean = hits.reduce((s, h) => s + h.upIn, 0) / hits.length;
+  const sd = Math.sqrt(hits.reduce((s, h) => s + (h.upIn - mean) ** 2, 0) / hits.length);
+  const own = E.inchesPerMoa(100) * (twentyTwo.spreadMoa / 3.06);
+  console.log(`  .22 at 100 yd: per-axis scatter ${sd.toFixed(2)} in; the load's own figure ${own.toFixed(2)} in (with the subsonic multiplier it would be ${(own * 2.5).toFixed(2)})`);
+  assert.ok(sd > own * 0.65 && sd < own * 1.45, `sd ${sd.toFixed(3)} vs own sigma ${own.toFixed(3)}: no multiplier`);
+  assert.equal(E.spreadSigmaMoa(1.5, 0.8, 0.96), 1.5 / 3.06, 'spreadSigmaMoa: a bullet that started subsonic keeps its own sigma');
+  assert.equal(E.spreadSigmaMoa(1.5, 0.8, 2.3), (1.5 / 3.06) * 2.5, 'spreadSigmaMoa: one that started supersonic and arrived subsonic gets the factor');
+  assert.equal(E.spreadSigmaMoa(1.5, 1.1, 2.3), (1.5 / 3.06) * 1.5, 'transonic factor');
+  // The match load at the far plate: starts at Mach 2.26, arrives at Mach 0.97: the transonic factor applies as before.
+  const match = flat.loads['sb-174-hpbt'];
+  const baseM = { load: match, drag, rifle: { sightHeightIn: 3, boreOffsetMoa: { up: 0, right: 0 } }, sight: { clickMoa: 0.25, windageClickMoa: 0.25, elevationClicks: 180, windageClicks: 0 }, conditions: { altitudeFt: 850, tempF: 85 }, wind: [], targetYards: 1000, targetRiseFt: 200 };
+  const far = E.shoot({ ...baseM, rand: E.seeded(5) });
+  assert.ok(far.reached && far.transonic && far.startedSupersonic === true, `match load Mach ${far.mach.toFixed(2)} at 1,000 yd, started supersonic`);
+  const randM = E.seeded(13);
+  const farHits = Array.from({ length: 60 }, () => E.shoot({ ...baseM, rand: randM }).hit);
+  const meanM = farHits.reduce((s, h) => s + h.upIn, 0) / farHits.length;
+  const sdM = Math.sqrt(farHits.reduce((s, h) => s + (h.upIn - meanM) ** 2, 0) / farHits.length);
+  const ownM = E.inchesPerMoa(1000) * (match.spreadMoa / 3.06);
+  const factor = far.mach < 1 ? 2.5 : 1.5;
+  console.log(`  S&B 174 gr at 1,000 yd (Mach ${far.mach.toFixed(2)}): per-axis scatter ${sdM.toFixed(1)} in; own figure ${ownM.toFixed(1)} in, with the factor ${(ownM * factor).toFixed(1)} in`);
+  assert.ok(sdM > ownM * 1.15, `sd ${sdM.toFixed(2)} should exceed the load's own ${ownM.toFixed(2)}: the factor still applies`);
+});
