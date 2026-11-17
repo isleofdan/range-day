@@ -76,6 +76,52 @@
 
 (Each session appends its own, in order.)
 
+### range-day-three — 17 Nov 2026 (cloud session, from the Wall card `range-day`)
+
+- **Stands:** the day and the book, pull request #6 (branch
+  `claude/range-day-card-brief-g7vyih`): a day at the range is one course,
+  one rifle, one load and one box (each load's `boxCount`, sourced), on a
+  day drawn by month and time of day from `data/weather.json` (twelve
+  months per course from Santa Clarita's and Fillmore's published
+  figures; morning, midday, afternoon; a Santa Ana day with its monthly
+  chance), kept on the device and resumed, ended when the box empties or
+  by "Pack up" (reversed by "Back to the range"), kept with every shot
+  and shown on `/day`; the data book (`/book`): one line per hit on
+  steel, by itself, grouped by distance with the come-up from the saved
+  zero, strike-out, notes, the span line, the book line under the sight
+  setting on the firing line, "Save a copy" and "Load a copy"; the wind
+  call, written into each shot's row; the cold-bore record; muzzle speed
+  following the day's temperature (one figure in `data/physics.json`,
+  applied in one place in the engine); the gun-record seam (`lib/guns.js`:
+  `fromRecords`, `fromFiles`, `load`, `GUN_RECORDS_FILE`); no screen names
+  a rifle by its id. 85 tests, 36 screenshot states at both sizes, Checks
+  green. `docs/RECORDS.md` lists every record the app keeps. Merged as
+  `e0848d7` on Dan's typed line after nine result checks (eight rounds of
+  findings, each fixed; the ninth PASS, job 20261117-141137-618b20) and
+  deployed by Deploy run 44102133656 (green, 102 s). Production rendering
+  is unverified from the session (its proxy refuses the address with
+  "CONNECT tunnel failed, response 403"); the Deploy run's alive check and
+  the Checks run are the proof until Dan's phone is.
+- **Decided:** one load per day, so the bench and the line have no load
+  select (the load is named in the day block); a finished day is
+  finished: the line opened again starts a new day with the same picks;
+  a day with no shot leaves no record and is replaced by another choice;
+  an open day with shots wins over an address and says so; a new device
+  opens the first playable rifle in the set (the AR-15; the brief's rule);
+  the muzzle-speed figure is 1 fps per degree F from 70 F for every load,
+  an estimate until a maker publishes one; the Santa Ana day's chance,
+  wind, humidity and warmth are from published counts and the National
+  Weather Service's scale; the time-of-day wind shares are estimates
+  (neither site publishes an hourly climatology); home's doors carry the
+  month and time of day; the copy file's lines carry their rifle, sight
+  and load beside the `measured` names; sight ids left the screens too
+  (`aimWanderFactor`, `frontBead` in the data).
+- **Next session needs:** the gun-record build (the names in the report's
+  "For the gun-record build"); the look at the deployed app from a session
+  that can open range-day-dan.fly.dev; photographs of the ranges; the
+  re-read of the maker pages; crash reporting from the Linux machine
+  (unchanged). Report: `docs/reports/range-day-three-report.md`.
+
 ### range-day-two — 17 Nov 2026 (cloud session, from the Wall card `range-day`)
 
 - **Stands:** all seven rifles playable and every sight drawn, merged into
