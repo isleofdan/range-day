@@ -25,8 +25,15 @@
     <div class="field"><label for="load">Load</label><select id="load"></select></div>
   </div>
   <div class="viewwrap"><canvas id="view" width="400" height="400"></canvas></div>
+  <p id="setting-line" class="setting mono"></p>
   <p id="result" class="readout">Drag the view to hold off the plate. Press and hold <strong>Steady</strong>, then <strong>Fire</strong>.</p>
   <div id="zoomrow" class="field zoom"><label for="zoom">Zoom <span id="zoom-text" class="mono"></span></label><input id="zoom" type="range" min="2" max="7" step="0.5" value="2"></div>
+  <div id="magrow" class="row" hidden><button id="magnifier" type="button" class="btn inline secondary">Magnifier</button></div>
+  <div id="leafrow" class="knob leaf" hidden>
+    <span class="muted">Rear leaf (the sliding range setting; the number is hundreds of meters)</span>
+    <div class="pair"><button id="leaf-down" type="button" class="btn inline">◀ nearer</button><button id="leaf-up" type="button" class="btn inline">farther ▶</button></div>
+    <span id="leaf-text" class="mono"></span>
+  </div>
   <div class="knobs">
     <div class="knob">
       <span class="muted">Elevation</span>

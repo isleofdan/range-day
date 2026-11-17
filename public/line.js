@@ -28,6 +28,10 @@
   let plateIx = 0;
   let mag = sight.zoom.low;
   let setting = RD.getSight(rifleId, sightId);
+  // The magnifier behind the dot (the Tavor SAR): flipped in or out. It has no
+  // adjustments and no zero of its own; it only magnifies the dot's view.
+  const magnifier = c.magnifierId && sight.kind === 'dot' ? d.sights[c.magnifierId] : null;
+  const magnifierIn = () => Boolean(magnifier && setting.magnifier);
   const seed = RD.hash(courseId);
   const terrainRand = E.seeded(seed);
   const $ = (id) => document.getElementById(id);
@@ -88,7 +92,10 @@
     const right = ((p.lateralYd / p.yards - a.lateralYd / a.yards) * 180 * 60) / Math.PI;
     return { up, right };
   }
-  const pxPerMoa = () => view.size / RD.fovMoa(sight, mag);
+  // The field of view across the drawn view, in MOA: the sight's at this zoom; the magnifier's when it is flipped in.
+  const fovMoa = () => (magnifierIn() ? (magnifier.fovFtAt100.high * 12) / E.inchesPerMoa(100) : RD.fovMoa(sight, mag));
+  const viewMag = () => (magnifierIn() ? magnifier.magnification : mag);
+  const pxPerMoa = () => view.size / fovMoa();
   // Where the reticle points right now: the hold, the wander, the breathing
   // and the recoil. The view is drawn from this and the shot is fired from
   // this, the same state, so the bullet goes where the sight showed.
@@ -171,7 +178,7 @@
       }
     }
     // heat shimmer leaning with the wind (seen through magnification)
-    if (mag >= 2.5) {
+    if (viewMag() >= 2.5) {
       g.strokeStyle = 'rgba(255,255,255,0.10)'; g.lineWidth = 1.2;
       for (let i = 0; i < 14; i++) {
         const y0 = size * 0.45 + i * (size * 0.04);
@@ -186,34 +193,65 @@
     drawSight(g, size, k);
   }
 
+  // Every sight picture is a drawing of angles: a mark, a dot or a post is
+  // so many MOA wide at the view's scale (k pixels per MOA), nothing more.
+  // The bullet still flies through the engine from the sight's setting.
   function drawSight(g, size, k) {
     const cx = size / 2, cy = size / 2;
+    if (sight.kind === 'dot') return drawDot(g, size, k, cx, cy);
     if (sight.kind === 'scope') {
       // the tube: black outside the circle
       g.save(); g.beginPath(); g.rect(0, 0, size, size); g.arc(cx, cy, cx - 4, 0, Math.PI * 2, true); g.fillStyle = '#050505'; g.fill('evenodd'); g.restore();
       g.strokeStyle = 'rgba(0,0,0,0.85)'; g.lineWidth = 2; g.beginPath(); g.arc(cx, cy, cx - 4, 0, Math.PI * 2); g.stroke();
-      // mil-dot reticle: fine crosshair, dots every 3.44 MOA, heavy posts outside
-      const dot = sight.reticle.dotSpacingMoa * k;
-      g.strokeStyle = '#111'; g.lineWidth = 1;
-      g.beginPath(); g.moveTo(0, cy); g.lineTo(size, cy); g.moveTo(cx, 0); g.lineTo(cx, size); g.stroke();
-      g.fillStyle = '#111';
-      for (let i = 1; i <= 5; i++) for (const [x, y] of [[cx + i * dot, cy], [cx - i * dot, cy], [cx, cy + i * dot], [cx, cy - i * dot]]) { g.beginPath(); g.arc(x, y, Math.max(1.2, 0.2 * k), 0, 7); g.fill(); }
-      g.lineWidth = Math.max(3, 1.0 * k);
-      const post = 5.5 * dot;
-      g.beginPath(); g.moveTo(0, cy); g.lineTo(cx - post, cy); g.moveTo(cx + post, cy); g.lineTo(size, cy); g.moveTo(cx, 0); g.lineTo(cx, cy - post); g.moveTo(cx, cy + post); g.lineTo(cx, size); g.stroke();
-    } else {
-      // iron sights: the rear aperture's circle, dark and soft around it; the front post rising to the center
-      const r = (sight.apertureMoa * k) / 2;
-      const ring = g.createRadialGradient(cx, cy, r * 0.9, cx, cy, r * 1.25);
-      ring.addColorStop(0, 'rgba(0,0,0,0)'); ring.addColorStop(1, 'rgba(0,0,0,0.97)');
-      g.fillStyle = ring; g.fillRect(0, 0, size, size);
-      const w = sight.frontPostMoa * k;
-      g.fillStyle = '#141414';
-      g.fillRect(cx - w / 2, cy, w, size);
-      // the post's protective wings, blurred by nearness to the eye
-      g.fillStyle = 'rgba(20,20,20,0.35)';
-      g.fillRect(cx - w * 2.6, cy - w * 0.4, w * 0.5, size); g.fillRect(cx + w * 2.1, cy - w * 0.4, w * 0.5, size);
+      if (sight.reticle && sight.reticle.kind === 'mil-dot') return drawMilDot(g, size, k, cx, cy);
+      return;
     }
+    if (sight.apertureMoa > 0) return drawRingAndPost(g, size, k, cx, cy);
+  }
+
+  // A red dot: an unmagnified view through a round window, the dot covering
+  // the data's minutes of angle at every distance. No crosshair, no marks.
+  // Outside the window the world is still there (the other eye sees it),
+  // dimmed by the sight's body; with the magnifier flipped in, the view is
+  // a tube: black outside, the window and the dot both magnified.
+  function drawDot(g, size, k, cx, cy) {
+    const r = cx - 4;
+    g.save(); g.beginPath(); g.rect(0, 0, size, size); g.arc(cx, cy, r, 0, Math.PI * 2, true);
+    g.fillStyle = magnifierIn() ? '#050505' : 'rgba(30, 26, 22, 0.82)'; g.fill('evenodd'); g.restore();
+    g.strokeStyle = 'rgba(0,0,0,0.9)'; g.lineWidth = magnifierIn() ? 3 : 6; g.beginPath(); g.arc(cx, cy, r, 0, Math.PI * 2); g.stroke();
+    // a faint tint on the glass
+    g.fillStyle = 'rgba(120, 150, 255, 0.05)'; g.beginPath(); g.arc(cx, cy, r, 0, Math.PI * 2); g.fill();
+    const dot = Math.max(2, sight.dotMoa * k);
+    const glow = g.createRadialGradient(cx, cy, 0, cx, cy, dot);
+    glow.addColorStop(0, 'rgba(255, 40, 30, 1)'); glow.addColorStop(0.5, 'rgba(255, 40, 30, 0.95)'); glow.addColorStop(1, 'rgba(255, 60, 40, 0)');
+    g.fillStyle = glow; g.beginPath(); g.arc(cx, cy, dot, 0, Math.PI * 2); g.fill();
+    g.fillStyle = 'rgba(255, 36, 28, 0.9)'; g.beginPath(); g.arc(cx, cy, dot / 2, 0, Math.PI * 2); g.fill();
+  }
+
+  // The mil-dot reticle: fine crosshair, dots every 3.44 MOA, heavy posts outside.
+  function drawMilDot(g, size, k, cx, cy) {
+    const dot = sight.reticle.dotSpacingMoa * k;
+    g.strokeStyle = '#111'; g.lineWidth = 1;
+    g.beginPath(); g.moveTo(0, cy); g.lineTo(size, cy); g.moveTo(cx, 0); g.lineTo(cx, size); g.stroke();
+    g.fillStyle = '#111';
+    for (let i = 1; i <= 5; i++) for (const [x, y] of [[cx + i * dot, cy], [cx - i * dot, cy], [cx, cy + i * dot], [cx, cy - i * dot]]) { g.beginPath(); g.arc(x, y, Math.max(1.2, 0.2 * k), 0, 7); g.fill(); }
+    g.lineWidth = Math.max(3, 1.0 * k);
+    const post = 5.5 * dot;
+    g.beginPath(); g.moveTo(0, cy); g.lineTo(cx - post, cy); g.moveTo(cx + post, cy); g.lineTo(size, cy); g.moveTo(cx, 0); g.lineTo(cx, cy - post); g.moveTo(cx, cy + post); g.lineTo(cx, size); g.stroke();
+  }
+
+  // Iron sights with a ring: the rear aperture's circle, dark and soft around it; the front post rising to the center.
+  function drawRingAndPost(g, size, k, cx, cy) {
+    const r = (sight.apertureMoa * k) / 2;
+    const ring = g.createRadialGradient(cx, cy, r * 0.9, cx, cy, r * 1.25);
+    ring.addColorStop(0, 'rgba(0,0,0,0)'); ring.addColorStop(1, 'rgba(0,0,0,0.97)');
+    g.fillStyle = ring; g.fillRect(0, 0, size, size);
+    const w = sight.frontPostMoa * k;
+    g.fillStyle = '#141414';
+    g.fillRect(cx - w / 2, cy, w, size);
+    // the post's protective wings, blurred by nearness to the eye
+    g.fillStyle = 'rgba(20,20,20,0.35)';
+    g.fillRect(cx - w * 2.6, cy - w * 0.4, w * 0.5, size); g.fillRect(cx + w * 2.1, cy - w * 0.4, w * 0.5, size);
   }
 
   // --- the shot -----------------------------------------------------------------------------
@@ -287,7 +325,16 @@
   function showSetting() {
     $('el-text').textContent = RD.clicksText(setting.elevationClicks, sight.clickMoa, 'up', 'down');
     $('wd-text').textContent = RD.clicksText(setting.windageClicks, sight.windageClickMoa, 'right', 'left');
+    const extra = leaf ? `Leaf ${RD.leafText(leaf, setting.leafIx || 0)}` : magnifier ? (magnifierIn() ? `Magnifier in (${magnifier.magnification}×)` : 'Magnifier out (1×)') : '';
+    $('setting-line').textContent = RD.settingLine(setting, sight, extra);
+    if (magnifier) $('magnifier').textContent = magnifierIn() ? `Magnifier is in (${magnifier.magnification}×): flip it out` : 'Magnifier is out (1×): flip it in';
+    if (leaf) $('leaf-text').textContent = RD.leafText(leaf, setting.leafIx || 0);
     conditions();
+  }
+  const storeSetting = () => { if (!RD.setSight(rifleId, sightId, setting)) $('zero-note').textContent = 'Sight setting not saved on this device: the browser refused to store it. It holds while this page is open.'; };
+  if (magnifier) {
+    $('magrow').hidden = false;
+    $('magnifier').addEventListener('click', () => { setting = { ...setting, magnifier: !magnifierIn() }; RD.clickSound(); showSetting(); storeSetting(); });
   }
   function turn(which, delta) {
     const next = setting[which] + delta;

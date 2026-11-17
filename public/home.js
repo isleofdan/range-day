@@ -37,7 +37,7 @@
     const r = d.rifles[c.rifleId];
     $('sight').innerHTML = sightsOf(c.rifleId).map((s) => `<option value="${s}"${s === c.sightId ? ' selected' : ''}>${RD.esc(sightLabel(c.rifleId, s))}</option>`).join('');
     $('load').innerHTML = r.loads.map((l) => `<option value="${l}"${l === c.loadId ? ' selected' : ''}>${RD.esc(d.loads[l].name)}</option>`).join('');
-    $('course').innerHTML = COURSE_IDS.map((k) => `<option value="${k}"${k === c.courseId ? ' selected' : ''}>${RD.esc(d.courses[k].name.replace(/ (modeled on.*)$/, ""))}</option>`).join('');
+    $('course').innerHTML = COURSE_IDS.map((k) => `<option value="${k}"${k === c.courseId ? ' selected' : ''}>${RD.esc(d.courses[k].name.replace(/ \(modeled on.*\)$/, ''))}</option>`).join('');
     showZero();
   }
   function showZero() {
