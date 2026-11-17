@@ -163,6 +163,14 @@ test('verify 6: a day stays open across a reload with the same rounds and weathe
   assert.ok(await page2.isHidden('#magrow'), 'no magnifier control: the Vepr has none');
   const given = await page2.evaluate(async () => { RangeDayLine.setHold(0, 0); RangeDayLine.fire(8); await new Promise((r) => setTimeout(r, 1500)); return RangeDayLine.lastShotInput; });
   assert.equal(given.sightHeightIn, flat.rifles['molot-vepr-54r'].sightHeightIn['utg-2-7x44'], 'the engine is given the open rifle\'s own sight height');
+  // Two bullets in the air at once keep the order they were fired in: the far plate's bullet (nearly two seconds) is fired first, the near plate's lands first.
+  await line(page2, 'course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt');
+  const nBefore = (await page2.evaluate(() => RangeDayLine.day)).shots.length;
+  await page2.evaluate(async () => { RangeDayLine.setHold(0, 0); document.getElementById('plate').value = '8'; document.getElementById('plate').dispatchEvent(new Event('change')); RangeDayLine.fire(31); document.getElementById('plate').value = '0'; document.getElementById('plate').dispatchEvent(new Event('change')); RangeDayLine.fire(32); });
+  for (let i = 0; i < 60; i++) { await wait(100); if ((await page2.evaluate(() => RangeDayLine.pending)) === 0) break; }
+  const ordered = (await page2.evaluate(() => RangeDayLine.day)).shots.slice(nBefore);
+  assert.deepEqual(ordered.map((s) => s.yards), [1000, 200], 'the day keeps the firing order, not the landing order');
+  assert.deepEqual(ordered.map((s) => s.n), [nBefore + 1, nBefore + 2]);
   // A shot still in the air when Pack up is pressed is kept, with its result: the far plate's flight is nearly two seconds.
   await line(page2, 'course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt');
   await page2.selectOption('#plate', '8');
@@ -183,7 +191,7 @@ test('verify 6: a day stays open across a reload with the same rounds and weathe
   assert.equal(await page2.evaluate(() => RD.openDay()), null);
   await page2.click('#back'); await page2.waitForSelector('#fire');
   const restored = await page2.evaluate(() => RangeDayLine.day);
-  assert.equal(restored.id, packedDay.id); assert.equal(restored.box.left, 17); assert.equal(restored.endedAt, null);
+  assert.equal(restored.id, packedDay.id); assert.equal(restored.box.left, 15); assert.equal(restored.endedAt, null);
   assert.equal(await page2.evaluate(() => RD.finishedDays().some((x) => x.id === RangeDayLine.day.id)), false, 'it is open again, not finished');
   assert.deepEqual(errors, []);
   await context.close();
@@ -437,7 +445,12 @@ test('verify 13: the phone: home with no day open shows the picks, When and both
     assert.equal(r.scrollY, 0);
     for (const b of r.boxes) assert.ok(b.ok, `${id}: ${b.sel} at ${b.top.toFixed(0)}-${b.bottom.toFixed(0)} inside 915`);
     lines.push(`${id}: When bottom ${r.boxes[4].bottom.toFixed(0)}, zero line bottom ${r.boxes[5].bottom.toFixed(0)}, doors bottom ${r.boxes[7].bottom.toFixed(0)} of 915`);
+    assert.match(await page.getAttribute('#go-book', 'href'), new RegExp(`rifle=${id}&`), 'the book link follows the rifle picked');
   }
+  // The book link follows the sight and the load too.
+  await page.click('.rifle[data-rifle="iwi-tavor-sar"]'); await page.waitForSelector('.rifle.picked[data-rifle="iwi-tavor-sar"]');
+  await page.selectOption('#sight', 'pa-md25'); await page.selectOption('#load', 'federal-gmm-69');
+  assert.match(await page.getAttribute('#go-book', 'href'), /rifle=iwi-tavor-sar&sight=pa-md25&load=federal-gmm-69/);
   // A day open: home shows the day, its sight pick and its doors.
   await line(page, AR); await page.selectOption('#plate', '0'); await seededShot(page, 61);
   const r1 = await inside(['#view', '#rounds', '#setting-line', '#book-line']);

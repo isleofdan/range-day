@@ -436,7 +436,8 @@
     lastShotAt = now;
     const ipm = inchPerMoa(p.yards);
     const entry = { n: log.length + 1, yards: p.yards, el: setAt.elevationClicks, wd: setAt.windageClicks, leaf: leaf ? leaf.settingsMeters[setAt.leafIx || 0] : undefined, zoom: mag, heldUp: Math.round(aimUp * 10) / 10, heldRight: Math.round(aimRight * 10) / 10, day: day.id, tempF: weather.tempF, call: call.from == null ? null : { from: call.from, mph: call.from === 'none' ? 0 : call.mph }, conditionsShown: shown };
-    const shot = { place: 'line', yards: p.yards, sight: sightId, elevationClicks: setAt.elevationClicks, windageClicks: setAt.windageClicks, elevationMoa: Math.round((setAt.elevationClicks * sight.clickMoa + leafMoa()) * 100) / 100, windageMoa: Math.round(setAt.windageClicks * sight.windageClickMoa * 100) / 100, leaf: entry.leaf ?? null, zero: zeroAt && zeroAt !== RD.store.FAILED ? { zeroYards: zeroAt.zeroYards, elevationClicks: zeroAt.elevationClicks, windageClicks: zeroAt.windageClicks, leafIx: leaf ? (zeroAt.leafIx || 0) : null, leaf: leaf ? leaf.settingsMeters[zeroAt.leafIx || 0] : null, elevationMoa: Math.round((zeroAt.elevationClicks * sight.clickMoa + (leaf ? leaf.moaAbove100[zeroAt.leafIx || 0].moaAbove100 : 0)) * 100) / 100 } : null, heldUpMoa: entry.heldUp, heldRightMoa: entry.heldRight, windCall: entry.call, conditionsShown: shown, first };
+    // The shot's number in the day is given now, at the trigger pull, so two bullets in the air keep the order they were fired in.
+    const shot = { n: day.shots.length + pending.length + 1, place: 'line', yards: p.yards, sight: sightId, elevationClicks: setAt.elevationClicks, windageClicks: setAt.windageClicks, elevationMoa: Math.round((setAt.elevationClicks * sight.clickMoa + leafMoa()) * 100) / 100, windageMoa: Math.round(setAt.windageClicks * sight.windageClickMoa * 100) / 100, leaf: entry.leaf ?? null, zero: zeroAt && zeroAt !== RD.store.FAILED ? { zeroYards: zeroAt.zeroYards, elevationClicks: zeroAt.elevationClicks, windageClicks: zeroAt.windageClicks, leafIx: leaf ? (zeroAt.leafIx || 0) : null, leaf: leaf ? leaf.settingsMeters[zeroAt.leafIx || 0] : null, elevationMoa: Math.round((zeroAt.elevationClicks * sight.clickMoa + (leaf ? leaf.moaAbove100[zeroAt.leafIx || 0].moaAbove100 : 0)) * 100) / 100 } : null, heldUpMoa: entry.heldUp, heldRightMoa: entry.heldRight, windCall: entry.call, conditionsShown: shown, first };
     $('cold-line').hidden = true;
     if (!r.reached) {
       entry.where = 'into the ground before the plate'; entry.hit = false;
@@ -459,7 +460,7 @@
     if (!RD.setLog(rifleId, sightId, loadId, log)) $('zero-note').textContent = 'Shot log not saved on this device (storage is off); it holds for this page only.';
     // The day's record of the shot, the book line for a hit, the cold-bore line for the day's first shot at a plate.
     const shot = { ...s.shot, hit: Boolean(s.hit), reached: s.upIn != null, upIn: s.upIn != null ? Math.round(s.upIn * 100) / 100 : null, rightIn: s.rightIn != null ? Math.round(s.rightIn * 100) / 100 : null, book: false, coldBore: false };
-    const n = day.shots.length + 1;
+    const n = s.shot.n;
     const id = `${day.id}:${n}`;
     const base = { id, day: day.id, n, at: new Date().toISOString(), on: day.date, course: courseId, yards: shot.yards, elevationClicks: shot.elevationClicks, windageClicks: shot.windageClicks, leaf: shot.leaf, windCall: shot.windCall, tempF: weather.tempF, upIn: shot.upIn, rightIn: shot.rightIn };
     let notes = [];

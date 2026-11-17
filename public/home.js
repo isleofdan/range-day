@@ -81,6 +81,7 @@
     const p = RD.params(c) + when();
     $('go-zero').href = `/zero${p}`;
     $('go-line').href = `/line${p}`;
+    if ($('go-book')) $('go-book').href = `/book${RD.params(c)}`;
     $('course-blurb').textContent = `${d.courses[c.courseId].name}: ${d.courses[c.courseId].blurb || ''}`;
     $('box-blurb').textContent = `A day at the range is one box of ${d.loads[c.loadId].boxCount} rounds of this load; the day ends when the box is empty.`;
     RD.remember(c);

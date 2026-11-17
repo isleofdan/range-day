@@ -214,10 +214,13 @@ window.RD = (function () {
   // Writes one shot into the day (place 'bench' or 'line'); ends the day when the box is empty and nothing is still in the air.
   function recordShot(day, shot, inFlight) {
     if (!day) return { saved: false };
-    shot.n = day.shots.length + 1;
+    // The number is the shot's place in the day's firing order: given at the trigger pull by the
+    // firing line (a bench shot has none in flight, so it is simply the next); the list stays in that order.
+    if (typeof shot.n !== 'number') shot.n = day.shots.reduce((m, x) => Math.max(m, x.n || 0), 0) + 1;
     shot.at = new Date().toISOString();
-    if (!day.firstShotPlace) day.firstShotPlace = shot.place;
+    if (!day.firstShotPlace || shot.n === 1) day.firstShotPlace = shot.place;
     day.shots.push(shot);
+    day.shots.sort((a, b) => a.n - b.n);
     let ended = false;
     if (day.box.left <= 0 && !inFlight) { finishDay(day, 'empty'); ended = true; } else saveOpenDay(day);
     return { saved: true, ended };
