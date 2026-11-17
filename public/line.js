@@ -204,6 +204,7 @@
       g.save(); g.beginPath(); g.rect(0, 0, size, size); g.arc(cx, cy, cx - 4, 0, Math.PI * 2, true); g.fillStyle = '#050505'; g.fill('evenodd'); g.restore();
       g.strokeStyle = 'rgba(0,0,0,0.85)'; g.lineWidth = 2; g.beginPath(); g.arc(cx, cy, cx - 4, 0, Math.PI * 2); g.stroke();
       if (sight.reticle && sight.reticle.kind === 'mil-dot') return drawMilDot(g, size, k, cx, cy);
+      if (sight.reticle && sight.reticle.marksMoaBelowZero) return drawDropReticle(g, size, k, cx, cy);
       return;
     }
     if (sight.apertureMoa > 0) return drawRingAndPost(g, size, k, cx, cy);
@@ -238,6 +239,33 @@
     g.lineWidth = Math.max(3, 1.0 * k);
     const post = 5.5 * dot;
     g.beginPath(); g.moveTo(0, cy); g.lineTo(cx - post, cy); g.moveTo(cx + post, cy); g.lineTo(size, cy); g.moveTo(cx, 0); g.lineTo(cx, cy - post); g.moveTo(cx, cy + post); g.lineTo(cx, size); g.stroke();
+  }
+
+  // The ACSS drop reticle (the 3x prism sight): drawn from data/sights.json
+  // and only what the manual's text supports: a chevron whose tip is the
+  // zero point (50 yards), its base the 200-yard hold, then a hold mark at
+  // each distance the manual names, each at its derived angle below the
+  // tip. Left out, because the text does not describe them: the ranging
+  // ladder, wind holds, numbers beside the marks, the outer crosshair and
+  // the illumination. The marks are angles for the manual's load; with the
+  // loads in the set the bullet lands where the engine says.
+  function drawDropReticle(g, size, k, cx, cy) {
+    const marks = sight.reticle.marksMoaBelowZero;
+    const base = marks.find((m) => m.yards === sight.reticle.marksYards[0]) || marks[0];
+    const baseY = cy + base.moaBelowZero * k;
+    const halfW = Math.max(3, 1.5 * k); // the chevron's half-width at its base: a drawing choice, not a manual figure
+    g.strokeStyle = '#111'; g.lineWidth = Math.max(1.2, 0.25 * k); g.lineJoin = 'miter';
+    g.beginPath(); g.moveTo(cx - halfW, baseY); g.lineTo(cx, cy); g.lineTo(cx + halfW, baseY); g.stroke();
+    // the hold marks below the chevron
+    const tick = Math.max(3, 1.2 * k);
+    for (const m of marks) {
+      if (m === base) continue;
+      const y = cy + m.moaBelowZero * k;
+      g.beginPath(); g.moveTo(cx - tick, y); g.lineTo(cx + tick, y); g.stroke();
+    }
+    // a fine stem joining the marks, as the manual's picture has them on one line
+    g.lineWidth = Math.max(0.8, 0.12 * k);
+    g.beginPath(); g.moveTo(cx, baseY); g.lineTo(cx, cy + marks[marks.length - 1].moaBelowZero * k); g.stroke();
   }
 
   // Iron sights with a ring: the rear aperture's circle, dark and soft around it; the front post rising to the center.
