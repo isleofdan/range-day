@@ -163,6 +163,19 @@ test('verify 6: a day stays open across a reload with the same rounds and weathe
   assert.ok(await page2.isHidden('#magrow'), 'no magnifier control: the Vepr has none');
   const given = await page2.evaluate(async () => { RangeDayLine.setHold(0, 0); RangeDayLine.fire(8); await new Promise((r) => setTimeout(r, 1500)); return RangeDayLine.lastShotInput; });
   assert.equal(given.sightHeightIn, flat.rifles['molot-vepr-54r'].sightHeightIn['utg-2-7x44'], 'the engine is given the open rifle\'s own sight height');
+  // A shot still in the air when Pack up is pressed is kept, with its result: the far plate's flight is nearly two seconds.
+  await line(page2, 'course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt');
+  await page2.selectOption('#plate', '8');
+  const shotsBefore = (await page2.evaluate(() => RangeDayLine.day)).shots.length;
+  await page2.evaluate(() => { RangeDayLine.setHold(0, 0); RangeDayLine.fire(9); });
+  assert.equal(await page2.evaluate(() => RangeDayLine.pending), 1, 'the bullet is in the air');
+  await page2.click('#pack-up'); await page2.waitForURL(/\/day\?id=/); await page2.waitForSelector('#back');
+  const packedEarly = await page2.evaluate(() => RD.finishedDays()[0]);
+  assert.equal(packedEarly.shots.length, shotsBefore + 1, 'the shot in flight is in the finished day');
+  const lastShot = packedEarly.shots[packedEarly.shots.length - 1];
+  assert.equal(lastShot.yards, 1000); assert.equal(typeof lastShot.hit, 'boolean'); assert.equal(typeof lastShot.reached, 'boolean');
+  assert.match(await page2.textContent('#shots tbody'), /1000/);
+  await page2.click('#back'); await page2.waitForSelector('#fire');
   // Pack up early, then back to the range.
   const packedDay = await page2.evaluate(() => RangeDayLine.day);
   await page2.click('#pack-up'); await page2.waitForURL(/\/day\?id=/); await page2.waitForSelector('#back');
@@ -170,7 +183,7 @@ test('verify 6: a day stays open across a reload with the same rounds and weathe
   assert.equal(await page2.evaluate(() => RD.openDay()), null);
   await page2.click('#back'); await page2.waitForSelector('#fire');
   const restored = await page2.evaluate(() => RangeDayLine.day);
-  assert.equal(restored.id, packedDay.id); assert.equal(restored.box.left, 18); assert.equal(restored.endedAt, null);
+  assert.equal(restored.id, packedDay.id); assert.equal(restored.box.left, 17); assert.equal(restored.endedAt, null);
   assert.equal(await page2.evaluate(() => RD.finishedDays().some((x) => x.id === RangeDayLine.day.id)), false, 'it is open again, not finished');
   assert.deepEqual(errors, []);
   await context.close();
