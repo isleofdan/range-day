@@ -1,0 +1,534 @@
+{
+ "_about": "The sights. clickMoa is what one click of elevation moves the strike, windageClickMoa one click of windage, in minutes of angle; clicks is the travel each way from the middle. zoom is the magnification range; fovFtAt100 the field of view in feet at 100 yards at the lowest and highest zoom.",
+ "ar-irons": {
+  "name": "AR-15 iron sights (front post, rear aperture)",
+  "kind": "iron",
+  "clickMoa": {
+   "value": 1.75,
+   "source": {
+    "url": "https://www.thefirearmblog.com/blog/2022/10/13/the-a2-sight-how-it-works-and-how-to-use-it/",
+    "read": "2026-11-16",
+    "note": "front post elevation on a 16-inch carbine: 1.25 MOA per click on a 20-inch rifle (https://www.ssusa.org/content/everything-you-wanted-to-know-about-ar-15-service-rifle-iron-sights/), more on the carbine's shorter sight radius; compiled tables give 1.875 (https://smith-wessonforum.com/threads/s-w-m-p-15-iron-sight-adjustment-question.615786) and 1.5 to 2.0 (FM 3-22.9 figures at 25 m, https://www.globalsecurity.org/military/library/policy/army/fm/3-22-9/c05.htm); 1.75 is the middle of the band. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "windageClickMoa": {
+   "value": 0.75,
+   "source": {
+    "url": "https://www.thefirearmblog.com/blog/2022/10/13/the-a2-sight-how-it-works-and-how-to-use-it/",
+    "read": "2026-11-16",
+    "note": "rear windage on a carbine: 0.5 MOA per click on the rifle, 0.62 to 0.75 on the carbine across the same sources; 0.75 used. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "clicks": {
+   "value": 12,
+   "estimate": "the front post has about 12 clicks of useful travel each way from a mid setting; the rear drum far more. Not a maker figure"
+  },
+  "frontPostMoa": {
+   "value": 16,
+   "estimate": "the A2 front post is 0.07 in wide seen over a sight radius of about 14.75 in on a 16-inch carbine: 0.07 / 14.75 radians = 16 MOA. Dimensions are the common ones, not a BCM figure"
+  },
+  "apertureMoa": {
+   "value": 300,
+   "estimate": "the large (0.2 in) aperture seen at about 2.5 in from the eye covers about 4.6 degrees (0.2 / 2.5 radians, 275 MOA); the lit circle inside the dark ring is drawn 300 MOA across"
+  },
+  "zoom": {
+   "low": {
+    "value": 1,
+    "estimate": "iron sights magnify nothing"
+   },
+   "high": {
+    "value": 1,
+    "estimate": "iron sights magnify nothing"
+   }
+  },
+  "fovFtAt100": {
+   "low": {
+    "value": 35,
+    "estimate": "the drawn view is 400 MOA (6.7 degrees) across, 35 ft at 100 yards: the aperture's circle with a little dark ring around it"
+   },
+   "high": {
+    "value": 35,
+    "estimate": "the same: iron sights magnify nothing"
+   }
+  }
+ },
+ "tavor-irons": {
+  "name": "Tavor folding iron sights",
+  "kind": "iron",
+  "clickMoa": {
+   "value": 1.5,
+   "estimate": "IWI publishes no click value; a short-radius folding sight, about 1.5 MOA"
+  },
+  "windageClickMoa": {
+   "value": 1,
+   "estimate": "same basis: the same basis as the figure next to it in this entry"
+  },
+  "clicks": {
+   "value": 10,
+   "estimate": "same basis: the same basis as the figure next to it in this entry"
+  },
+  "frontPostMoa": {
+   "value": 14,
+   "estimate": "as the AR post, a little narrower"
+  },
+  "apertureMoa": {
+   "value": 300,
+   "estimate": "as the AR aperture"
+  },
+  "zoom": {
+   "low": {
+    "value": 1,
+    "estimate": "none: the same basis as the figure next to it in this entry"
+   },
+   "high": {
+    "value": 1,
+    "estimate": "none: the same basis as the figure next to it in this entry"
+   }
+  },
+  "fovFtAt100": {
+   "low": {
+    "value": 35,
+    "estimate": "as the AR irons"
+   },
+   "high": {
+    "value": 35,
+    "estimate": "as the AR irons"
+   }
+  }
+ },
+ "ak-irons": {
+  "name": "AK iron sights (front post, rear notch)",
+  "kind": "iron",
+  "clickMoa": {
+   "value": 2,
+   "estimate": "the AK front post screws up and down with a tool, no clicks; a quarter turn moves the strike about 2 MOA (not a maker figure)"
+  },
+  "windageClickMoa": {
+   "value": 2,
+   "estimate": "the front post is drifted sideways in its base, no clicks; one tap about 2 MOA"
+  },
+  "clicks": {
+   "value": 10,
+   "estimate": "about the useful travel"
+  },
+  "frontPostMoa": {
+   "value": 14,
+   "estimate": "a 2 mm post over a 15-inch radius: about 14 MOA"
+  },
+  "apertureMoa": {
+   "value": 0,
+   "estimate": "an open notch, no ring"
+  },
+  "zoom": {
+   "low": {
+    "value": 1,
+    "estimate": "none: the same basis as the figure next to it in this entry"
+   },
+   "high": {
+    "value": 1,
+    "estimate": "none: the same basis as the figure next to it in this entry"
+   }
+  },
+  "fovFtAt100": {
+   "low": {
+    "value": 35,
+    "estimate": "as the AR irons: the drawn view is 400 MOA across"
+   },
+   "high": {
+    "value": 35,
+    "estimate": "as the AR irons"
+   }
+  }
+ },
+ "vepr-irons": {
+  "name": "Vepr iron sights (front post, rear notch)",
+  "kind": "iron",
+  "clickMoa": {
+   "value": 2,
+   "estimate": "as the AK irons"
+  },
+  "windageClickMoa": {
+   "value": 2,
+   "estimate": "as the AK irons"
+  },
+  "clicks": {
+   "value": 10,
+   "estimate": "as the AK irons"
+  },
+  "frontPostMoa": {
+   "value": 12,
+   "estimate": "a longer sight radius than the AK"
+  },
+  "apertureMoa": {
+   "value": 0,
+   "estimate": "an open notch"
+  },
+  "zoom": {
+   "low": {
+    "value": 1,
+    "estimate": "none: the same basis as the figure next to it in this entry"
+   },
+   "high": {
+    "value": 1,
+    "estimate": "none: the same basis as the figure next to it in this entry"
+   }
+  },
+  "fovFtAt100": {
+   "low": {
+    "value": 35,
+    "estimate": "as the AR irons: the drawn view is 400 MOA across"
+   },
+   "high": {
+    "value": 35,
+    "estimate": "as the AR irons"
+   }
+  }
+ },
+ "rem-irons": {
+  "name": "Open rimfire sights",
+  "kind": "iron",
+  "clickMoa": {
+   "value": 3,
+   "estimate": "a stepped rear leaf; no clicks"
+  },
+  "windageClickMoa": {
+   "value": 3,
+   "estimate": "drifted: the same basis as the figure next to it in this entry"
+  },
+  "clicks": {
+   "value": 6,
+   "estimate": "about the useful travel"
+  },
+  "frontPostMoa": {
+   "value": 10,
+   "estimate": "a bead over a 16-inch radius"
+  },
+  "apertureMoa": {
+   "value": 0,
+   "estimate": "an open notch"
+  },
+  "zoom": {
+   "low": {
+    "value": 1,
+    "estimate": "none: the same basis as the figure next to it in this entry"
+   },
+   "high": {
+    "value": 1,
+    "estimate": "none: the same basis as the figure next to it in this entry"
+   }
+  },
+  "fovFtAt100": {
+   "low": {
+    "value": 35,
+    "estimate": "as the AR irons: the drawn view is 400 MOA across"
+   },
+   "high": {
+    "value": 35,
+    "estimate": "as the AR irons"
+   }
+  }
+ },
+ "pa-md25": {
+  "name": "Primary Arms SLx MD-25 red dot, 2 MOA dot",
+  "kind": "dot",
+  "clickMoa": {
+   "value": 0.5,
+   "source": {
+    "url": "https://www.primaryarms.com/primary-arms-slx-md25-rotary-knob-25mm-microdot-gen-2-autolive-2-moa-red-dot-reticle",
+    "read": "2026-11-16",
+    "note": "click value 1/2 MOA; adjustment range plus or minus 50 MOA. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "windageClickMoa": {
+   "value": 0.5,
+   "source": {
+    "url": "https://www.primaryarms.com/primary-arms-slx-md25-rotary-knob-25mm-microdot-gen-2-autolive-2-moa-red-dot-reticle",
+    "read": "2026-11-16",
+    "note": "read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "clicks": {
+   "value": 100,
+   "source": {
+    "url": "https://www.primaryarms.com/primary-arms-slx-md25-rotary-knob-25mm-microdot-gen-2-autolive-2-moa-red-dot-reticle",
+    "read": "2026-11-16",
+    "note": "plus or minus 50 MOA at 1/2 MOA per click. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "dotMoa": {
+   "value": 2,
+   "source": {
+    "url": "https://www.primaryarms.com/primary-arms-slx-md25-rotary-knob-25mm-microdot-gen-2-autolive-2-moa-red-dot-reticle",
+    "read": "2026-11-16",
+    "note": "read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "zoom": {
+   "low": {
+    "value": 1,
+    "estimate": "unmagnified: the same basis as the figure next to it in this entry"
+   },
+   "high": {
+    "value": 1,
+    "estimate": "unmagnified: the same basis as the figure next to it in this entry"
+   }
+  },
+  "fovFtAt100": {
+   "low": {
+    "value": 50,
+    "estimate": "a 25 mm window seen from about 10 in away covers about 10 degrees, 600 MOA: 50 ft at 100 yards"
+   },
+   "high": {
+    "value": 50,
+    "estimate": "unmagnified, the same"
+   }
+  }
+ },
+ "pa-magnifier": {
+  "name": "Primary Arms SLx 3x micro magnifier, flip to side (behind the dot)",
+  "kind": "magnifier",
+  "magnification": {
+   "value": 3,
+   "source": {
+    "url": "https://www.primaryarms.com/primary-arms-slx-3x-micro-magnifier",
+    "read": "2026-11-16",
+    "note": "read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "clickMoa": {
+   "value": 0,
+   "estimate": "a magnifier has no adjustment of its own; the dot's clicks apply"
+  },
+  "windageClickMoa": {
+   "value": 0,
+   "estimate": "same: the same basis as the figure next to it in this entry"
+  },
+  "clicks": {
+   "value": 0,
+   "estimate": "none: the same basis as the figure next to it in this entry"
+  },
+  "zoom": {
+   "low": {
+    "value": 1,
+    "estimate": "flipped aside"
+   },
+   "high": {
+    "value": 3,
+    "source": {
+     "url": "https://www.primaryarms.com/primary-arms-slx-3x-micro-magnifier",
+     "read": "2026-11-16",
+     "note": "read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   }
+  },
+  "fovFtAt100": {
+   "low": {
+    "value": 50,
+    "estimate": "the dot's view when flipped aside"
+   },
+   "high": {
+    "value": 17,
+    "estimate": "the dot's view divided by three"
+   }
+  }
+ },
+ "pa-3x-acss": {
+  "name": "Primary Arms SLx 3x32 Gen III prism sight, ACSS CQB reticle for 7.62x39 / 300 Blackout",
+  "kind": "scope",
+  "clickMoa": {
+   "value": 0.25,
+   "source": {
+    "url": "https://www.primaryarms.com/primary-arms-slx-3x32mm-gen-iii-prism-scope-with-acss-cqb-300blk-762x39mm-reticle",
+    "read": "2026-11-16",
+    "note": "1/4 MOA clicks; 60 MOA total travel; eye relief 2.72 to 2.92 in. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "windageClickMoa": {
+   "value": 0.25,
+   "source": {
+    "url": "https://www.primaryarms.com/primary-arms-slx-3x32mm-gen-iii-prism-scope-with-acss-cqb-300blk-762x39mm-reticle",
+    "read": "2026-11-16",
+    "note": "read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "clicks": {
+   "value": 120,
+   "source": {
+    "url": "https://www.primaryarms.com/primary-arms-slx-3x32mm-gen-iii-prism-scope-with-acss-cqb-300blk-762x39mm-reticle",
+    "read": "2026-11-16",
+    "note": "60 MOA total at 1/4 MOA per click: 120 clicks each way. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "zoom": {
+   "low": {
+    "value": 3,
+    "source": {
+     "url": "https://www.primaryarms.com/primary-arms-slx-3x32mm-gen-iii-prism-scope-with-acss-cqb-300blk-762x39mm-reticle",
+     "read": "2026-11-16",
+     "note": "read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   },
+   "high": {
+    "value": 3,
+    "source": {
+     "url": "https://www.primaryarms.com/primary-arms-slx-3x32mm-gen-iii-prism-scope-with-acss-cqb-300blk-762x39mm-reticle",
+     "read": "2026-11-16",
+     "note": "fixed 3x. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   }
+  },
+  "fovFtAt100": {
+   "low": {
+    "value": 31.5,
+    "source": {
+     "url": "https://www.primaryarms.com/primary-arms-slx-3x32mm-gen-iii-prism-scope-with-acss-cqb-300blk-762x39mm-reticle",
+     "read": "2026-11-16",
+     "note": "field of view 31.5 ft at 100 yards. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   },
+   "high": {
+    "value": 31.5,
+    "source": {
+     "url": "https://www.primaryarms.com/primary-arms-slx-3x32mm-gen-iii-prism-scope-with-acss-cqb-300blk-762x39mm-reticle",
+     "read": "2026-11-16",
+     "note": "read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   }
+  },
+  "reticle": {
+   "zeroYards": {
+    "value": 50,
+    "source": {
+     "url": "https://admin2.optics-trade.eu/media/instructions/PAC3XAK-GENIII-300BO_Reticle_Manual.pdf",
+     "read": "2026-11-16",
+     "note": "the reticle manual (distributor copy): zero at 50 yards on the tip of the chevron; the chevron's base is the 200-yard hold, then marks at 250, 300, 400, 500 and 600 yards for supersonic 7.62x39 or 300 Blackout. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   },
+   "marksYards": {
+    "value": [
+     200,
+     250,
+     300,
+     400,
+     500,
+     600
+    ],
+    "source": {
+     "url": "https://admin2.optics-trade.eu/media/instructions/PAC3XAK-GENIII-300BO_Reticle_Manual.pdf",
+     "read": "2026-11-16",
+     "note": "read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   },
+   "calibration": {
+    "grains": {
+     "value": 124,
+     "source": {
+      "url": "https://admin2.optics-trade.eu/media/instructions/PAC3XAK-GENIII-300BO_Reticle_Manual.pdf",
+      "read": "2026-11-16",
+      "note": "the manual's sample load: 124 gr at 2,330 fps with a 50-yard zero. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "muzzleFps": {
+     "value": 2330,
+     "source": {
+      "url": "https://admin2.optics-trade.eu/media/instructions/PAC3XAK-GENIII-300BO_Reticle_Manual.pdf",
+      "read": "2026-11-16",
+      "note": "read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "bc": {
+     "value": 0.294,
+     "estimate": "the manual states no coefficient; Barnaul's 123 gr full metal jacket (G1 0.294) is the common load of that weight"
+    }
+   },
+   "marksMoaBelowZero": {
+    "value": [
+     {
+      "yards": 200,
+      "moaBelowZero": 1.41
+     },
+     {
+      "yards": 250,
+      "moaBelowZero": 3.4
+     },
+     {
+      "yards": 300,
+      "moaBelowZero": 5.72
+     },
+     {
+      "yards": 400,
+      "moaBelowZero": 11.31
+     },
+     {
+      "yards": 500,
+      "moaBelowZero": 18.29
+     },
+     {
+      "yards": 600,
+      "moaBelowZero": 26.84
+     }
+    ],
+    "estimate": "derived by this app's engine, not published by Primary Arms: the hold-under of the manual's calibration load (124 gr at 2,330 fps, G1 0.294, 50-yard zero, sight 3.0 in over the bore, standard sea-level air) at each marked distance, in MOA below the zero line: 200 yd 1.41, 250 yd 3.4, 300 yd 5.72, 400 yd 11.31, 500 yd 18.29, 600 yd 26.84"
+   }
+  }
+ },
+ "utg-2-7x44": {
+  "name": "UTG AccuShot 2-7x44 30 mm long eye relief scope (SCP3-274LAOIEW)",
+  "kind": "scope",
+  "clickMoa": {
+   "value": 0.25,
+   "source": {
+    "url": "https://www.opticsplanet.com/leapers-2-7x44-30mm-long-eye-relief-scout-rifle-scope.html",
+    "read": "2026-11-16",
+    "note": "retailer listing of the maker's specification (no leapers.com page surfaced in search): 1/4 MOA per click, zero-locking target turrets, 30 mm tube, illuminated mil-dot reticle, eye relief 9.5 to 11 in. Chosen as the likeliest UTG scope reaching 7x for a Vepr: UTG's other 2-7x (SCP-27PRGW) is sold as a handgun scope with 13.8 to 25 in of eye relief, and UTG makes no 1-7x; a long-eye-relief scope is what fits a side-rail or cover mount on an AK-pattern rifle. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "windageClickMoa": {
+   "value": 0.25,
+   "source": {
+    "url": "https://www.opticsplanet.com/leapers-2-7x44-30mm-long-eye-relief-scout-rifle-scope.html",
+    "read": "2026-11-16",
+    "note": "read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "clicks": {
+   "value": 160,
+   "estimate": "the listing gives no travel figure; 40 MOA each way is typical of a 30 mm tube"
+  },
+  "zoom": {
+   "low": {
+    "value": 2,
+    "source": {
+     "url": "https://www.opticsplanet.com/leapers-2-7x44-30mm-long-eye-relief-scout-rifle-scope.html",
+     "read": "2026-11-16",
+     "note": "read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   },
+   "high": {
+    "value": 7,
+    "source": {
+     "url": "https://www.opticsplanet.com/leapers-2-7x44-30mm-long-eye-relief-scout-rifle-scope.html",
+     "read": "2026-11-16",
+     "note": "read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   }
+  },
+  "fovFtAt100": {
+   "low": {
+    "value": 14,
+    "estimate": "the listing gives no field of view; long-eye-relief 2-7x scopes see about 14 ft at 100 yards at 2x"
+   },
+   "high": {
+    "value": 4.5,
+    "estimate": "and about 4.5 ft at 7x"
+   }
+  },
+  "reticle": {
+   "kind": "mil-dot",
+   "dotSpacingMoa": {
+    "value": 3.44,
+    "estimate": "a mil-dot reticle's dots are one milliradian apart, 3.44 MOA, by definition"
+   }
+  }
+ }
+}

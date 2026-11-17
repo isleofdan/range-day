@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}} — zero bench</title>
+<link rel="stylesheet" href="/app.css">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#8c3b1e">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<script src="/sentry.min.js"></script>
+<script src="/crash.js"></script>
+<script src="/install.js" defer></script>
+</head>
+<body>
+<header class="bar">
+  <a class="name" href="/">{{TITLE}}</a>
+  <nav><a id="to-line" href="/line">Firing line</a><a href="/logout">Sign out</a></nav>
+</header>
+<main class="game">
+  <h1>Zero bench</h1>
+  <p id="intro" class="muted">Loading…</p>
+  <div class="viewwrap"><canvas id="view" width="400" height="400"></canvas></div>
+  <p id="group" class="readout">No shots yet. Fire a group, read where it lands against the center, then turn the sight.</p>
+  <div class="controls">
+    <div class="field"><label for="distance">Paper at</label><select id="distance"></select></div>
+    <div class="field"><label for="load">Load</label><select id="load"></select></div>
+  </div>
+  <div class="row fire">
+    <button id="fire1" type="button" class="btn inline">Fire one</button>
+    <button id="fire5" type="button" class="btn inline">Fire five</button>
+    <button id="fresh" type="button" class="btn inline secondary">Fresh paper</button>
+  </div>
+  <h2 id="sight-name">Sight</h2>
+  <div class="knobs">
+    <div class="knob">
+      <span class="muted">Elevation</span>
+      <div class="pair"><button id="el-down" type="button" class="btn inline">▼ down</button><button id="el-up" type="button" class="btn inline">▲ up</button></div>
+      <span id="el-text" class="mono"></span>
+    </div>
+    <div class="knob">
+      <span class="muted">Windage</span>
+      <div class="pair"><button id="wd-left" type="button" class="btn inline">◀ left</button><button id="wd-right" type="button" class="btn inline">right ▶</button></div>
+      <span id="wd-text" class="mono"></span>
+    </div>
+  </div>
+  <p id="click-help" class="muted"></p>
+  <div class="row">
+    <button id="save" type="button" class="btn inline">Save this zero</button>
+  </div>
+  <p id="saved" class="readout"></p>
+  <p id="conditions" class="muted small"></p>
+</main>
+<script src="/engine.js"></script>
+<script src="/game.js"></script>
+<script src="/zero.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}}</title>
+<link rel="stylesheet" href="/app.css">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#8c3b1e">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<script src="/sentry.min.js"></script>
+<script src="/crash.js"></script>
+<script src="/install.js" defer></script>
+</head>
+<body>
+<header class="bar">
+  <a class="name" href="/">{{TITLE}}</a>
+  <nav><a href="/status">Status</a><a href="/logout">Sign out</a></nav>
+</header>
+<main>
+  <h1>Pick a course and a rifle</h1>
+  <p class="muted">This is {{TITLE}}: steel plates from 100 to 1,000 yards in dry canyon hills, shot through the rifle's own sight. Zero the rifle on paper first, then work out the drop and the wind yourself. Elevation and windage are set in clicks; one MOA is a minute of angle, about 1 inch at 100 yards.</p>
+  <div id="choices" class="choices"><p class="muted">Loading…</p></div>
+  <h2>Load</h2>
+  <label for="load" class="muted">The ammunition in the rifle</label>
+  <select id="load"></select>
+  <p id="zero" class="zero-line"></p>
+  <div class="row">
+    <a id="go-zero" class="btn inline" href="/zero">Zero bench</a>
+    <a id="go-line" class="btn inline secondary" href="/line">Firing line</a>
+  </div>
+  <h2>The whole set</h2>
+  <p class="muted">Recorded, with their loads and sights, for the sessions that make them playable:</p>
+  <ul id="set" class="set"></ul>
+</main>
+<script src="/engine.js"></script>
+<script src="/game.js"></script>
+<script src="/home.js"></script>
+</body>
+</html>

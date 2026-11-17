@@ -1,0 +1,595 @@
+{
+ "_about": "Every load the rifle set uses. muzzleFps is the speed from the barrel the rifle in this set actually has; where the maker measured in a different barrel the figure is an estimate by the rule stated. bc is the ballistic coefficient the engine uses with dragModel (G1 or G7); where the maker publishes both, the one the maker's own trajectory table follows is used. spreadMoa is the five-shot extreme spread in minutes of angle (MOA, 1/60 of a degree, about 1.047 inches at 100 yards) expected from that rifle and load.",
+ "imi-m193": {
+  "caliber": "5.56x45",
+  "name": "IMI M193 55 gr full metal jacket",
+  "grains": {
+   "value": 55,
+   "source": {
+    "url": "https://www.luckygunner.com/5-56x45-55-grain-fmj-m193-imi-500-rounds",
+    "read": "2026-11-16",
+    "note": "retailer listing of the IMI load; no IMI page could be found by search. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "makerFps": {
+   "value": 3166,
+   "source": {
+    "url": "https://www.shootingillustrated.com/articles/2019/2/13/review-imi-ammunition",
+    "read": "2026-11-16",
+    "note": "Shooting Illustrated: \"advertised 3,166 fps from a 20-inch barrel\"; the review measured 3,080 fps from a 16.25-inch barrel at 21 F. IMI publishes no page this session could find. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "makerBarrelIn": {
+   "value": 20,
+   "source": {
+    "url": "https://www.shootingillustrated.com/articles/2019/2/13/review-imi-ammunition",
+    "read": "2026-11-16",
+    "note": "the advertised figure's barrel. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "muzzleFps": {
+   "value": 3066,
+   "estimate": "3,166 fps from 20 in, adjusted from the maker's test barrel by 25 feet per second per inch of barrel, the usual rule of thumb for 5.56 (Gorilla Ammunition lists its 69 gr Sierra load at 2,900 fps from 24 in and 2,630 fps from 16 in, 34 fps per inch, https://www.gorillaammo.com/?p=224; the standard 25 fps per inch is used), for the 16-inch barrel in this set"
+  },
+  "bc": {
+   "value": 0.243,
+   "estimate": "IMI publishes no ballistic coefficient. 0.243 G1 is the figure listed for Hornady's 55 gr full metal jacket boat tail bullet (#2267), a bullet of the same weight and shape, on retailer pages quoting Hornady (https://x-reload.com/hrn-2267.html, https://recreationid.com/hornady/traditional-fmj-22-55-g-rifle-bullets-mpn-2267.html, read 2026-11-16)"
+  },
+  "dragModel": "G1",
+  "spreadMoa": {
+   "value": 2.5,
+   "estimate": "ball ammunition from a 16-inch carbine; makers publish no group size. Match loads are set tighter than ball and surplus"
+  }
+ },
+ "imi-razorcore-69": {
+  "caliber": "5.56x45",
+  "name": "IMI Razor Core 69 gr Sierra MatchKing",
+  "grains": {
+   "value": 69,
+   "source": {
+    "url": "https://www.luckygunner.com/5-56-45mm-69-grain-match-hpbt-imi-500-rounds",
+    "read": "2026-11-16",
+    "note": "retailer listing; IMI publishes no speed for this load anywhere found. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "muzzleFps": {
+   "value": 2700,
+   "estimate": "IMI publishes no speed. Other makers' 69 gr Sierra MatchKing loads: Federal 2,950 fps from 24 in (https://www.federalpremium.com/rifle/gold-medal/gold-medal-sierra-matchking/11-GM223M.html), Black Hills 2,850 fps from 20 in (https://www.black-hills.com/?p=1480), Gorilla 2,630 fps from 16 in (https://www.gorillaammo.com/?p=224), Wilson Combat 2,700 fps from 16 in (https://www.kygunco.com/product/wilson-combat-a223-69-hpbt-223-rem-69gr-sierra-hpbt-m-2700-fps-20rd). 2,700 fps from the 16-inch barrel sits in that band"
+  },
+  "bc": {
+   "value": 0.305,
+   "source": {
+    "url": "https://www.sierrabullets.com/?p=30532",
+    "read": "2026-11-16",
+    "note": "Sierra #1380 69 gr MatchKing: G1 .301 above 2,800 fps, .305 between 2,800 and 2,200 fps, .317 below 2,200 fps; the middle band covers most of the flight. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "dragModel": "G1",
+  "spreadMoa": {
+   "value": 1.25,
+   "estimate": "a match load in a 16-inch carbine with iron sights or a dot; makers publish no group size. Set tighter than ball"
+  }
+ },
+ "federal-gmm-69": {
+  "caliber": "5.56x45",
+  "name": "Federal Gold Medal Match 69 gr Sierra MatchKing (GM223M)",
+  "grains": {
+   "value": 69,
+   "source": {
+    "url": "https://www.federalpremium.com/rifle/gold-medal/gold-medal-sierra-matchking/11-GM223M.html",
+    "read": "2026-11-16",
+    "note": "read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "makerFps": {
+   "value": 2950,
+   "source": {
+    "url": "https://www.federalpremium.com/rifle/gold-medal/gold-medal-sierra-matchking/11-GM223M.html",
+    "read": "2026-11-16",
+    "note": "Federal's page; its table: 2,642 / 2,353 / 2,084 / 1,832 / 1,604 fps at 100 to 500 yards, drop +1.7 / 0 / -8.1 / -24.1 / -51.0 in with a 200-yard zero and sights 1.5 in above the bore, 10 mph wind drift 1.0 / 4.3 / 10.3 / 19.3 / 32.4 in. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "makerBarrelIn": {
+   "value": 24,
+   "estimate": "Federal's GM223M page does not show the test barrel in the indexed text; Federal's other Gold Medal rifle pages and its rifle FAQ state 24 in"
+  },
+  "muzzleFps": {
+   "value": 2750,
+   "estimate": "2,950 fps from 24 in, adjusted from the maker's test barrel by 25 feet per second per inch of barrel, the usual rule of thumb for 5.56 (Gorilla Ammunition lists its 69 gr Sierra load at 2,900 fps from 24 in and 2,630 fps from 16 in, 34 fps per inch, https://www.gorillaammo.com/?p=224; the standard 25 fps per inch is used), for the 16-inch barrel in this set"
+  },
+  "bc": {
+   "value": 0.301,
+   "source": {
+    "url": "https://www.federalpremium.com/rifle/gold-medal/gold-medal-sierra-matchking/11-GM223M.html",
+    "read": "2026-11-16",
+    "note": "Federal: G1 .301, G7 .165; Federal's own table follows the G1 figure (checked in the field report). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "dragModel": "G1",
+  "spreadMoa": {
+   "value": 1,
+   "estimate": "the match load most AR-15s group tightest with; Federal publishes no group size"
+  }
+ },
+ "imi-razorcore-77": {
+  "caliber": "5.56x45",
+  "name": "IMI Razor Core 77 gr Sierra MatchKing",
+  "grains": {
+   "value": 77,
+   "source": {
+    "url": "https://www.primaryarms.com/imi-razor-core-5-56-nato-77gr-sierra-matchking-hp-box-of-20",
+    "read": "2026-11-16",
+    "note": "read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "muzzleFps": {
+   "value": 2740,
+   "source": {
+    "url": "https://www.primaryarms.com/imi-razor-core-5-56-nato-77gr-sierra-matchking-hp-box-of-20",
+    "read": "2026-11-16",
+    "note": "retailers quoting IMI: 2,740 fps from a 16-inch barrel (also https://www.ableammo.com/catalog/imi-systems-razor-core-rifle-ammunition-imirazor-556mm-nato-hpbt-match-2740-fps-rdbx-p-148640.html); The Firearm Blog measured about 2,689 fps from 14.5 in and 2,820 fps from 20 in. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "makerBarrelIn": {
+   "value": 16,
+   "source": {
+    "url": "https://www.primaryarms.com/imi-razor-core-5-56-nato-77gr-sierra-matchking-hp-box-of-20",
+    "read": "2026-11-16",
+    "note": "the barrel the 2,740 fps figure is quoted for; it matches the set's 16-inch barrel, so no adjustment. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "bc": {
+   "value": 0.372,
+   "source": {
+    "url": "https://sierrabullets.com/22-cal-77-gr-hpbt-matchking-smk/",
+    "read": "2026-11-16",
+    "note": "Sierra #9377 77 gr MatchKing: G1 .372 at 3,000 fps and above, .362 between 3,000 and 1,700 fps, .343 below, as retailers quote Sierra; Sierra's page itself did not show the figures in the indexed text. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "dragModel": "G1",
+  "spreadMoa": {
+   "value": 1,
+   "estimate": "a heavy match load; makers publish no group size. Set like the Federal match load"
+  }
+ },
+ "silver-bear-123": {
+  "caliber": "7.62x39",
+  "name": "Silver Bear 123 gr full metal jacket (Barnaul)",
+  "grains": {
+   "value": 123,
+   "source": {
+    "url": "https://www.barnaulpatron.ru/en/catalog/patrony-dlya-nareznogo-oruzhiya/7-62x39/",
+    "read": "2026-11-16",
+    "note": "Barnaul plant catalogue, 8.0 g. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "muzzleFps": {
+   "value": 2543,
+   "source": {
+    "url": "https://www.barnaulpatron.ru/en/catalog/patrony-dlya-nareznogo-oruzhiya/7-62x39/",
+    "read": "2026-11-16",
+    "note": "Barnaul: 775 m/s; the US importer page https://www.barnaulammo.com/rifle-ammo/barnaul-762x39.php repeats 2,543 fps. Test barrel not published; used as the 16.3-inch rifle's speed. Retailers list the Silver Bear box at 2,401 to 2,460 fps. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "bc": {
+   "value": 0.294,
+   "source": {
+    "url": "https://www.barnaulpatron.ru/en/catalog/patrony-dlya-nareznogo-oruzhiya/7-62x39/",
+    "read": "2026-11-16",
+    "note": "Barnaul: G1 0.294 for the 8.0 g full metal jacket. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "dragModel": "G1",
+  "spreadMoa": {
+   "value": 3,
+   "estimate": "steel-cased ball ammunition from an AK-pattern rifle; makers publish no group size"
+  }
+ },
+ "ppu-123": {
+  "caliber": "7.62x39",
+  "name": "Prvi Partizan 123 gr full metal jacket",
+  "grains": {
+   "value": 123,
+   "source": {
+    "url": "https://ppu-usa.com/ppu/7-62x39/",
+    "read": "2026-11-16",
+    "note": "read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "muzzleFps": {
+   "value": 2460,
+   "source": {
+    "url": "https://ppu-usa.com/wp-content/uploads/2020/01/PPU-2020.pdf",
+    "read": "2026-11-16",
+    "note": "PPU 2020 catalogue: 2,460 fps (750 m/s), G1 0.330. The importer's older web page https://ppu-usa.com/ppu/7-62x39/ and the 2017 catalogue say 2,350 fps and G1 0.271; the newer catalogue is used. Test barrel not published; used as the 16.3-inch rifle's speed. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "bc": {
+   "value": 0.33,
+   "source": {
+    "url": "https://ppu-usa.com/wp-content/uploads/2020/01/PPU-2020.pdf",
+    "read": "2026-11-16",
+    "note": "PPU 2020 catalogue. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "dragModel": "G1",
+  "spreadMoa": {
+   "value": 2.5,
+   "estimate": "brass-cased ball from an AK-pattern rifle; makers publish no group size"
+  }
+ },
+ "sb-124": {
+  "caliber": "7.62x39",
+  "name": "Sellier & Bellot 124 gr full metal jacket",
+  "grains": {
+   "value": 124,
+   "source": {
+    "url": "https://www.sellier-bellot.cz/en/products/rifle-ammunition/rifle-ammunition-fmj/detail/132/",
+    "read": "2026-11-16",
+    "note": "8.00 g. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "makerFps": {
+   "value": 2421,
+   "source": {
+    "url": "https://www.sellier-bellot.cz/en/products/rifle-ammunition/rifle-ammunition-fmj/detail/132/",
+    "read": "2026-11-16",
+    "note": "S&B: 738 m/s from a 520 mm (20.5 in) barrel; G1 0.286, G7 0.143; their table: -19.1 / -71.0 / -168.5 cm at 200 / 300 / 400 m with a 100 m zero. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "makerBarrelIn": {
+   "value": 20.5,
+   "source": {
+    "url": "https://www.sellierbellot.us/products/rifle-ammunition/rifle-ammunition-fmj/detail/132/",
+    "read": "2026-11-16",
+    "note": "read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "muzzleFps": {
+   "value": 2337,
+   "estimate": "2,421 fps from 20.5 in, adjusted from the maker's test barrel by 20 feet per second per inch of barrel; Lucky Gunner measured 7.62x39 losing on average 137 fps between 16.5 and 10.5 in, 23 fps per inch (https://www.luckygunner.com/lounge/7-62x39-barrel-length-vs-velocity-what-the-data-shows/), and a slower-burning rifle cartridge loses a little less per inch, for the 16.3-inch barrel in this set"
+  },
+  "bc": {
+   "value": 0.286,
+   "source": {
+    "url": "https://www.sellier-bellot.cz/en/products/rifle-ammunition/rifle-ammunition-fmj/detail/132/",
+    "read": "2026-11-16",
+    "note": "S&B G1 0.286 (G7 0.143 also published). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "dragModel": "G1",
+  "spreadMoa": {
+   "value": 2.5,
+   "estimate": "brass-cased ball from an AK-pattern rifle; makers publish no group size"
+  }
+ },
+ "yugo-m67": {
+  "caliber": "7.62x39",
+  "name": "Yugoslav M67 surplus 124 gr full metal jacket",
+  "grains": {
+   "value": 123,
+   "source": {
+    "url": "https://www.yugoimport.com/sites/default/files/documents/2022-10/7,62%20x%2039%20mm%20BALL%20M67.pdf",
+    "read": "2026-11-16",
+    "note": "Yugoimport data sheet: bullet 8 g, lead-antimony core (sold as 124 gr). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "muzzleFps": {
+   "value": 2405,
+   "source": {
+    "url": "https://www.yugoimport.com/sites/default/files/documents/2022-10/7,62%20x%2039%20mm%20BALL%20M67.pdf",
+    "read": "2026-11-16",
+    "note": "Yugoimport: average velocity at 25 m 733 m/s; the barrel is not stated on this sheet (sibling sheets use a 600 mm proof barrel). Used as the 16.3-inch rifle's speed; forum chronographs from AK barrels read 2,307 to 2,402 fps. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "bc": {
+   "value": 0.29,
+   "estimate": "no maker publishes a coefficient for M67. Haag (2001, https://arch.ies.gov.pl/images/PDF/2001/vol_46/46_haag.pdf) measured the M43 ball bullet at about 0.29 to 0.30 G1; M67 is a lighter flat-base lead-core bullet of the same profile, so 0.29"
+  },
+  "dragModel": "G1",
+  "spreadMoa": {
+   "value": 3,
+   "estimate": "surplus ball from an AK-pattern rifle; no group size exists. Set like the other steel-cased ball"
+  }
+ },
+ "hornady-545-60": {
+  "caliber": "5.45x39",
+  "name": "Hornady 60 gr V-Max, steel case (#81246)",
+  "grains": {
+   "value": 60,
+   "source": {
+    "url": "https://www.hornady.com/ammunition/rifle/5.45-x-39mm-60gr-v-max-hornady-black",
+    "read": "2026-11-16",
+    "note": "read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "muzzleFps": {
+   "value": 2810,
+   "source": {
+    "url": "https://www.hornady.com/ammunition/rifle/5.45-x-39mm-60gr-v-max-hornady-black",
+    "read": "2026-11-16",
+    "note": "Hornady's figures as retailers repeat them (https://www.ammunitiontogo.com/200rds-5-45x39-hornady-black-60gr-v-max-ammo): 2,810 fps from a 16-inch barrel; 2,495 / 2,201 / 1,927 fps at 100 / 200 / 300 yards. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "makerBarrelIn": {
+   "value": 16,
+   "source": {
+    "url": "https://www.ammunitiontogo.com/200rds-5-45x39-hornady-black-60gr-v-max-ammo",
+    "read": "2026-11-16",
+    "note": "retailer attributing the 16-inch test barrel to Hornady; the set's rifle is 16.3 in, no adjustment. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "bc": {
+   "value": 0.285,
+   "source": {
+    "url": "https://www.hornady.com/bullets/rifle/5.45-cal-.2215-60-gr-v-max",
+    "read": "2026-11-16",
+    "note": "G1 0.285 for bullet #2207, as retailers quote Hornady. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "dragModel": "G1",
+  "spreadMoa": {
+   "value": 1.5,
+   "estimate": "a varmint load with a thin-jacket bullet from an AK-pattern rifle; Hornady publishes no group size"
+  }
+ },
+ "sb-174-hpbt": {
+  "caliber": "7.62x54R",
+  "name": "Sellier & Bellot 174 gr hollow point boat tail match",
+  "grains": {
+   "value": 174,
+   "source": {
+    "url": "https://www.sellier-bellot.cz/en/products/rifle-ammunition/rifle-ammunition-target-match/detail/186/",
+    "read": "2026-11-16",
+    "note": "11.3 g. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "makerFps": {
+   "value": 2585,
+   "source": {
+    "url": "https://www.sellierbellot.us/products/rifle-ammunition/rifle-ammunition-target-match/detail/186/",
+    "read": "2026-11-16",
+    "note": "S&B: 788 m/s (2,585 fps) from a 600 mm (23.5 in) barrel; G1 0.477, G7 0.240; their table with a 100 m zero: -0.4 / 0 / -13.6 / -49.3 / -111.3 / -204.7 / -336 / -515 / -751 / -1060 / -1459 cm at 50 / 100 / 200 ... 1000 m; 727 / 668 / 612 / 559 m/s at 100 to 400 m. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "makerBarrelIn": {
+   "value": 23.5,
+   "source": {
+    "url": "https://www.sellierbellot.us/products/rifle-ammunition/rifle-ammunition-target-match/detail/186/",
+    "read": "2026-11-16",
+    "note": "read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "muzzleFps": {
+   "value": 2525,
+   "estimate": "2,585 fps from 23.5 in, adjusted from the maker's test barrel by 20 feet per second per inch of barrel; Lucky Gunner measured 7.62x39 losing on average 137 fps between 16.5 and 10.5 in, 23 fps per inch (https://www.luckygunner.com/lounge/7-62x39-barrel-length-vs-velocity-what-the-data-shows/), and a slower-burning rifle cartridge loses a little less per inch, for the 20.5-inch barrel in this set"
+  },
+  "bc": {
+   "value": 0.24,
+   "source": {
+    "url": "https://www.sellier-bellot.cz/en/products/rifle-ammunition/rifle-ammunition-target-match/detail/186/",
+    "read": "2026-11-16",
+    "note": "S&B G7 0.240 (G1 0.477 also published); S&B's own drop table follows the G7 figure to 1,000 m (checked in the field report), so the engine uses G7 for this load. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "dragModel": "G7",
+  "spreadMoa": {
+   "value": 1,
+   "estimate": "a match load; S&B publishes no group size. Set tightest of the 7.62x54R loads"
+  }
+ },
+ "ppu-182": {
+  "caliber": "7.62x54R",
+  "name": "Prvi Partizan 182 gr full metal jacket boat tail",
+  "grains": {
+   "value": 182,
+   "source": {
+    "url": "https://www.prvipartizan.com/download/PPU_2018.pdf",
+    "read": "2026-11-16",
+    "note": "11.8 g, article A-169. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "makerFps": {
+   "value": 2625,
+   "source": {
+    "url": "https://www.prvipartizan.com/download/PPU_2018.pdf",
+    "read": "2026-11-16",
+    "note": "PPU catalogue: 800 m/s from a 610 mm (24 in) barrel; 744 / 690 / 639 m/s at 100 / 200 / 300 m. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "makerBarrelIn": {
+   "value": 24,
+   "source": {
+    "url": "https://www.prvipartizan.com/download/PPU_2018.pdf",
+    "read": "2026-11-16",
+    "note": "610 mm. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "muzzleFps": {
+   "value": 2555,
+   "estimate": "2,625 fps from 24 in, adjusted from the maker's test barrel by 20 feet per second per inch of barrel; Lucky Gunner measured 7.62x39 losing on average 137 fps between 16.5 and 10.5 in, 23 fps per inch (https://www.luckygunner.com/lounge/7-62x39-barrel-length-vs-velocity-what-the-data-shows/), and a slower-burning rifle cartridge loses a little less per inch, for the 20.5-inch barrel in this set"
+  },
+  "bc": {
+   "value": 0.544,
+   "source": {
+    "url": "https://www.prvipartizan.com/download/PPU_2018.pdf",
+    "read": "2026-11-16",
+    "note": "PPU bullet table, bullet B-169, G1 0.544 (a second 182 gr bullet, B-529, is listed at 0.520; the current loading's bullet is not stated). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "dragModel": "G1",
+  "spreadMoa": {
+   "value": 1.5,
+   "estimate": "brass-cased full metal jacket boat tail; PPU publishes no group size"
+  }
+ },
+ "sb-180-sp": {
+  "caliber": "7.62x54R",
+  "name": "Sellier & Bellot 180 gr soft point",
+  "grains": {
+   "value": 180,
+   "source": {
+    "url": "https://www.sellier-bellot.cz/en/products/rifle-ammunition/rifle-ammunition-sp/detail/129/",
+    "read": "2026-11-16",
+    "note": "read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "makerFps": {
+   "value": 2625,
+   "source": {
+    "url": "https://www.sellier-bellot.cz/en/products/rifle-ammunition/rifle-ammunition-sp/detail/129/",
+    "read": "2026-11-16",
+    "note": "S&B: 800 m/s from a 730 mm (28.75 in) barrel; G1 0.305, G7 0.153; -14.9 / -56.0 / -132.0 cm at 200 / 300 / 400 m with a 100 m zero. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "makerBarrelIn": {
+   "value": 28.75,
+   "source": {
+    "url": "https://www.sellierbellot.us/products/rifle-ammunition/rifle-ammunition-sp/detail/129/",
+    "read": "2026-11-16",
+    "note": "read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "muzzleFps": {
+   "value": 2460,
+   "estimate": "2,625 fps from 28.75 in, adjusted from the maker's test barrel by 20 feet per second per inch of barrel; Lucky Gunner measured 7.62x39 losing on average 137 fps between 16.5 and 10.5 in, 23 fps per inch (https://www.luckygunner.com/lounge/7-62x39-barrel-length-vs-velocity-what-the-data-shows/), and a slower-burning rifle cartridge loses a little less per inch, for the 20.5-inch barrel in this set"
+  },
+  "bc": {
+   "value": 0.305,
+   "source": {
+    "url": "https://www.sellier-bellot.cz/en/products/rifle-ammunition/rifle-ammunition-sp/detail/129/",
+    "read": "2026-11-16",
+    "note": "S&B G1 0.305. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "dragModel": "G1",
+  "spreadMoa": {
+   "value": 2,
+   "estimate": "a hunting soft point; S&B publishes no group size"
+  }
+ },
+ "wolf-203-sp": {
+  "caliber": "7.62x54R",
+  "name": "Wolf 203 gr soft point",
+  "grains": {
+   "value": 203,
+   "source": {
+    "url": "https://www.ammoman.com/7-62-x-54-r-wpa-military-classic-203-grain-sp-20-rounds",
+    "read": "2026-11-16",
+    "note": "retailer; Wolf's own table lists the load as 200 gr soft point. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "muzzleFps": {
+   "value": 2380,
+   "source": {
+    "url": "http://wolfammo.com/steel-casing.aspx",
+    "read": "2026-11-16",
+    "note": "Wolf's steel-case table: 7.62x54R 200 gr soft point, 2,380 fps; retailers list the 203 gr box at the same 2,380 fps. Barrel not published; used as the 20.5-inch rifle's speed. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "bc": {
+   "value": 0.4,
+   "estimate": "Wolf publishes no coefficient. A 200 gr .311 soft point sits between S&B's 180 gr soft point (G1 0.305) and PPU's 182 gr boat tail (0.544); 0.40 is the middle of that band"
+  },
+  "dragModel": "G1",
+  "spreadMoa": {
+   "value": 3,
+   "estimate": "steel-cased hunting ammunition; Wolf publishes no group size"
+  }
+ },
+ "silver-bear-174": {
+  "caliber": "7.62x54R",
+  "name": "Silver Bear 174 gr full metal jacket (Barnaul)",
+  "grains": {
+   "value": 174,
+   "source": {
+    "url": "https://www.barnaulammo.com/rifle-ammo/barnaul-762x54R.php",
+    "read": "2026-11-16",
+    "note": "11.3 g. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "muzzleFps": {
+   "value": 2592,
+   "source": {
+    "url": "https://www.barnaulammo.com/rifle-ammo/barnaul-762x54R.php",
+    "read": "2026-11-16",
+    "note": "Barnaul: 2,592 fps (790 m/s on https://www.barnaulpatron.ru/ru/catalog/puli/7-62x54r-/). Barrel not published; used as the 20.5-inch rifle's speed. Retailers list the Silver Bear box at 2,559 fps. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "bc": {
+   "value": 0.445,
+   "source": {
+    "url": "https://www.barnaulammo.com/rifle-ammo/barnaul-762x54R.php",
+    "read": "2026-11-16",
+    "note": "Barnaul: G1 0.445. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "dragModel": "G1",
+  "spreadMoa": {
+   "value": 2.5,
+   "estimate": "steel-cased ball; Barnaul publishes no group size"
+  }
+ },
+ "wolf-174": {
+  "caliber": "7.62x54R",
+  "name": "Wolf 174 gr full metal jacket",
+  "grains": {
+   "value": 174,
+   "source": {
+    "url": "http://wolfammo.com/steel-casing.aspx",
+    "read": "2026-11-16",
+    "note": "read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "muzzleFps": {
+   "value": 2558,
+   "source": {
+    "url": "http://wolfammo.com/steel-casing.aspx",
+    "read": "2026-11-16",
+    "note": "Wolf's steel-case table: 7.62x54R 174 gr full metal jacket, 2,558 fps. Barrel not published; used as the 20.5-inch rifle's speed. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "bc": {
+   "value": 0.445,
+   "estimate": "Wolf publishes no coefficient; Barnaul's 174 gr full metal jacket of the same shape is G1 0.445 (https://www.barnaulammo.com/rifle-ammo/barnaul-762x54R.php)"
+  },
+  "dragModel": "G1",
+  "spreadMoa": {
+   "value": 2.5,
+   "estimate": "steel-cased ball; Wolf publishes no group size"
+  }
+ },
+ "cci-sv-40": {
+  "caliber": ".22 LR",
+  "name": "CCI Standard Velocity 40 gr lead round nose (#0035)",
+  "grains": {
+   "value": 40,
+   "source": {
+    "url": "https://www.cci-ammunition.com/rimfire/cci/standard-velocity/6-35.html",
+    "read": "2026-11-16",
+    "note": "read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "muzzleFps": {
+   "value": 1070,
+   "source": {
+    "url": "https://www.cci-ammunition.com/rimfire/cci/standard-velocity/6-35.html",
+    "read": "2026-11-16",
+    "note": "CCI: 1,070 fps; 977 / 940 / 908 fps at 50 / 75 / 100 yards. Test barrel not published. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "bc": {
+   "value": 0.12,
+   "source": {
+    "url": "https://www.cci-ammunition.com/rimfire/cci/standard-velocity/6-35.html",
+    "read": "2026-11-16",
+    "note": "CCI: .120 (drag model not stated; taken as G1, the model CCI's tables use). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+   }
+  },
+  "dragModel": "G1",
+  "spreadMoa": {
+   "value": 1.5,
+   "estimate": "standard-velocity .22 from a heavy-barrel bolt rifle; CCI publishes no group size"
+  }
+ }
+}

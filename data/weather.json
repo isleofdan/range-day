@@ -1,0 +1,66 @@
+{
+ "_about": "Each visit to a course draws a warm dry day and a light, variable canyon breeze from these ranges. The wind is drawn in three stretches of the path (near, middle, far) that differ from one another, each with a gust that changes over time.",
+ "tempF": {
+  "low": {
+   "value": 72,
+   "estimate": "a warm day at either range: Santa Clarita's April mean daily high is 74 to 76 F and July's 92 to 100 F (https://en.wikipedia.org/wiki/Santa_Clarita,_California); Fillmore, next to Piru, April 74 F and July 81 F (https://en.wikipedia.org/wiki/Fillmore,_California). 72 to 95 F covers a warm spring or summer afternoon at both"
+  },
+  "high": {
+   "value": 95,
+   "estimate": "same basis: the same basis as the figure next to it in this entry"
+  }
+ },
+ "humidity": {
+  "low": {
+   "value": 0.15,
+   "estimate": "no humidity normals were found for either site; a dry inland afternoon in Southern California runs 15 to 40 percent (a single NWS Saugus afternoon reading of 34 percent was found)"
+  },
+  "high": {
+   "value": 0.4,
+   "estimate": "same basis: the same basis as the figure next to it in this entry"
+  }
+ },
+ "windMph": {
+  "low": {
+   "value": 3,
+   "estimate": "Santa Clarita's average hourly wind runs 5.5 to 6.6 mph in summer (https://weatherspark.com/s/1726/1/Average-Summer-Weather-in-Santa-Clarita-California-United-States); a light canyon breeze is drawn between 3 and 10 mph"
+  },
+  "high": {
+   "value": 10,
+   "estimate": "same basis: the same basis as the figure next to it in this entry"
+  }
+ },
+ "gustMph": {
+  "low": {
+   "value": 1,
+   "estimate": "the gust part, on top of the steady wind"
+  },
+  "high": {
+   "value": 4,
+   "estimate": "same basis: the same basis as the figure next to it in this entry"
+  }
+ },
+ "gustPeriodS": {
+  "low": {
+   "value": 6,
+   "estimate": "gusts come and go over several seconds"
+  },
+  "high": {
+   "value": 14,
+   "estimate": "same basis: the same basis as the figure next to it in this entry"
+  }
+ },
+ "stretchVariation": {
+  "value": 0.35,
+  "estimate": "the three stretches of the path differ from the day's wind by up to 35 percent, and the far stretch (up the slope at Piru) is the most different"
+ },
+ "windFromDegrees": {
+  "value": [
+   20,
+   160,
+   200,
+   340
+  ],
+  "estimate": "the wind comes from anywhere but straight down the range: between 20 and 160 degrees (from the right-hand side, clockwise from downrange) or 200 to 340 (from the left), so there is always some crosswind"
+ }
+}
