@@ -47,6 +47,10 @@ Nothing: the brief was Dan's two sentences and the proposal he said yes to, and 
 1. **The zeroing supply starts at one box of the load and is not in the copy file.** Recommended: keep it; if a copy should carry it, a later session adds a `supply` list to the copy, one shape.
 2. **A day left open is closed on the next date.** Recommended: keep it; the alternative (an open day shown on home for ever) is what the change would otherwise leave.
 
+## After Dan's line (added at the close-out)
+
+Dan typed `yes, merge and deploy range-day-four, then merge its notes`. Pull request #8 merged as `44945f8` (head `da124f6`); the Deploy workflow ran once on `main`, run 44112027183, green in 59 s (https://github.com/isleofdan/range-day/actions/runs/44112027183). One attempt to open https://range-day-dan.fly.dev/alive from this session was refused by its proxy ("CONNECT tunnel failed, response 403"), so production rendering is unverified from here; the Deploy run's own alive check passed. The notes pull request carries this report and the `PLAN.md` note.
+
 ## What the next session needs
 
 - The gun-record build (unchanged from range-day-three's report): the supply is one more record keyed by rifle and load, `{ size, left, opened }`.

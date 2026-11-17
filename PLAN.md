@@ -88,7 +88,12 @@
   "Open another box"; a day ends by Pack up, or by itself when the app is
   next opened on a later date (`endedBy: "left"`). Nothing moves the
   player off a screen on a timer. 85 tests, 37 screenshot states, Checks
-  green. Report: `docs/reports/range-day-four-report.md`.
+  green. Merged as `44945f8` on Dan's typed line after one result check
+  (PASS, job 20261117-145803-5234aa) and deployed by Deploy run
+  44112027183 (green, 59 s). Production rendering is unverified from the
+  session (its proxy refuses the address, "CONNECT tunnel failed,
+  response 403"); the Deploy run's alive check passed. Report:
+  `docs/reports/range-day-four-report.md`.
 - **Decided:** Dan's rule replaces range-day-three's "when the last round
   is fired the day is over" ("I seem to keep getting thrown out of zero
   bench in the middle of working there"; "give me a separate supply for
