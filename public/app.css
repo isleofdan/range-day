@@ -106,10 +106,20 @@ input[type=password], input[type=text] {
 }
 
 /* Range Day's screens. */
-.choices { display: grid; gap: 12px; margin: 0 0 8px; }
-.choice { display: grid; gap: 4px; text-align: left; padding: 14px 16px; border: 2px solid var(--line); border-radius: 12px; background: var(--card); color: var(--fg); font: inherit; cursor: pointer; }
-.choice.picked { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent) inset; }
-.choice strong { font-size: 18px; }
+main.home { padding-top: 12px; }
+main.home h1 { margin: 4px 0 6px; font-size: 22px; }
+.rifles { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 0 0 8px; }
+.rifle { display: grid; gap: 1px; text-align: left; padding: 6px 10px; min-height: 48px; border: 2px solid var(--line); border-radius: 10px; background: var(--card); color: var(--fg); font: inherit; cursor: pointer; }
+.rifle.picked { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent) inset; }
+.rifle .rname { font-size: 15px; line-height: 1.25; font-weight: 600; }
+.rifle .rmark { font-size: 13px; line-height: 1.2; color: var(--muted); }
+.rifle .rmark.yes { color: var(--accent); }
+.picks { display: grid; grid-template-columns: 1fr 1fr; gap: 0 10px; }
+.picks .wide { grid-column: 1 / -1; }
+.picks .field label { margin: 6px 0 3px; }
+.picks select { padding: 9px 8px; font-size: 16px; }
+main.home .zero-line { margin: 10px 0 8px; padding: 8px 12px; font-size: 16px; }
+main.home .row.doors { margin: 0 0 8px; }
 select, input[type=range] { width: 100%; font-size: 17px; padding: 12px 10px; border-radius: 10px; border: 1px solid var(--line); background: var(--card); color: var(--fg); }
 input[type=range] { padding: 0; height: 44px; }
 .row { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }

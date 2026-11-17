@@ -11,6 +11,7 @@ window.RD = (function () {
   let DATA = null;
   async function data() {
     if (!DATA) DATA = await (await fetch('/api/data', { headers: { accept: 'application/json' } })).json();
+    defaultSightOf = (rifle) => (DATA.rifles[rifle] ? DATA.rifles[rifle].defaultSight : null);
     return DATA;
   }
 
@@ -27,19 +28,59 @@ window.RD = (function () {
     set(key, value) { try { localStorage.setItem(`range-day:${key}`, JSON.stringify(value)); return true; } catch { return false; } },
     remove(key) { try { localStorage.removeItem(`range-day:${key}`); return true; } catch { return false; } },
   };
-  // The sight as it is physically set on the rifle (clicks from the middle).
+  // The sight as it is physically set on the rifle (clicks from the middle;
+  // on a sight with a sliding leaf, which setting the leaf is at; on the dot
+  // with a magnifier behind it, whether the magnifier is flipped in).
   const sightKey = (rifle, sight) => `sight:${rifle}:${sight}`;
-  const getSight = (rifle, sight) => { const v = store.get(sightKey(rifle, sight)); return v && v !== FAILED ? v : { elevationClicks: 0, windageClicks: 0 }; };
+  const getSight = (rifle, sight) => { const v = store.get(sightKey(rifle, sight)); return v && v !== FAILED ? { elevationClicks: 0, windageClicks: 0, ...v } : { elevationClicks: 0, windageClicks: 0 }; };
   const sightReadFailed = (rifle, sight) => store.get(sightKey(rifle, sight)) === FAILED;
   const setSight = (rifle, sight, v) => store.set(sightKey(rifle, sight), v);
-  // A saved zero: the sight setting the player was satisfied with for that
-  // rifle and load, at that distance.
-  const zeroKey = (rifle, load) => `zero:${rifle}:${load}`;
-  const getZero = (rifle, load) => store.get(zeroKey(rifle, load));
-  const setZero = (rifle, load, v) => store.set(zeroKey(rifle, load), v);
-  const logKey = (rifle, load) => `log:${rifle}:${load}`;
-  const getLog = (rifle, load) => { const v = store.get(logKey(rifle, load)); return Array.isArray(v) ? v : []; };
-  const setLog = (rifle, load, v) => store.set(logKey(rifle, load), v);
+
+  // A saved zero belongs to a rifle, a sight and a load (several sights can
+  // sit on one rifle); so does the shot log. Before every sight could be
+  // chosen (range-day-one) both were kept per rifle and load, the zero
+  // recording which sight made it. Those records keep working: when nothing
+  // is stored in the new form, the old record is read for the sight it
+  // names (a log: for the rifle's sight of that time, defaultSight in
+  // data/rifles.json), written forward, and left in place.
+  const zeroKey = (rifle, sight, load) => `zero:${rifle}:${sight}:${load}`;
+  const oldZeroKey = (rifle, load) => `zero:${rifle}:${load}`;
+  const logKey = (rifle, sight, load) => `log:${rifle}:${sight}:${load}`;
+  const oldLogKey = (rifle, load) => `log:${rifle}:${load}`;
+  let defaultSightOf = () => null; // set once the data is loaded (data() below)
+  function getZero(rifle, sight, load) {
+    const v = store.get(zeroKey(rifle, sight, load));
+    if (v) return v; // a record, or FAILED
+    const old = store.get(oldZeroKey(rifle, load));
+    if (!old || old === FAILED) return old === FAILED ? FAILED : null;
+    const madeWith = old.sight || defaultSightOf(rifle);
+    if (madeWith !== sight) return null;
+    store.set(zeroKey(rifle, sight, load), old); // forward; the old record stays
+    return old;
+  }
+  const setZero = (rifle, sight, load, v) => store.set(zeroKey(rifle, sight, load), v);
+  function getLog(rifle, sight, load) {
+    const v = store.get(logKey(rifle, sight, load));
+    if (Array.isArray(v)) return v;
+    if (v === FAILED) return [];
+    if (sight !== defaultSightOf(rifle)) return [];
+    const old = store.get(oldLogKey(rifle, load));
+    if (!Array.isArray(old)) return [];
+    store.set(logKey(rifle, sight, load), old);
+    return old;
+  }
+  const setLog = (rifle, sight, load, v) => store.set(logKey(rifle, sight, load), v);
+  // Whether any zero is saved on this device for a rifle (any sight, any load): for the home screen's list.
+  function zeroCount(rifle, rifleData) {
+    let n = 0;
+    for (const sight of rifleData.sights) for (const load of rifleData.loads) { const z = getZero(rifle, sight, load); if (z && z !== FAILED) n++; }
+    return n;
+  }
+  // What was last used on this device: the rifle, and per rifle its sight, load and course.
+  const getLast = () => { const v = store.get('last'); return v && v !== FAILED ? v : null; };
+  const setLast = (v) => store.set('last', v);
+  const getLastFor = (rifle) => { const v = store.get(`last:${rifle}`); return v && v !== FAILED ? v : null; };
+  const setLastFor = (rifle, v) => store.set(`last:${rifle}`, v);
   const showConditions = () => store.get('show-conditions') === true;
   const setShowConditions = (on) => store.set('show-conditions', on === true);
 
@@ -140,6 +181,41 @@ window.RD = (function () {
     n.connect(f).connect(g).connect(c.destination); n.start(t);
   }
 
+  // --- what the address asks for -----------------------------------------------------------
+  // course, rifle, sight and load from the address; a missing or unknown
+  // piece falls back to the last used on this device, then to the rifle's
+  // own default (an address without a sight opens the sight the rifle had
+  // before every sight could be chosen, so old links still work).
+  function chooseFrom(d, q) {
+    const last = getLast();
+    const rifleId = d.rifles[q.rifle] ? q.rifle : (last && d.rifles[last.rifle] ? last.rifle : 'molot-vepr-54r');
+    const rifle = d.rifles[rifleId];
+    const lastFor = getLastFor(rifleId) || {};
+    const playableSights = rifle.sights.filter((s) => d.sights[s].kind !== 'magnifier');
+    const sightId = playableSights.includes(q.sight) ? q.sight : (q.rifle && !q.sight ? rifle.defaultSight : (playableSights.includes(lastFor.sight) ? lastFor.sight : rifle.defaultSight));
+    const loadId = rifle.loads.includes(q.load) ? q.load : (rifle.loads.includes(lastFor.load) ? lastFor.load : rifle.loads[0]);
+    const firstCourse = rifleId === 'molot-vepr-54r' ? 'cta-piru' : 'angeles-sylmar';
+    const courseId = d.courses[q.course] ? q.course : (d.courses[lastFor.course] ? lastFor.course : firstCourse);
+    return { rifleId, sightId, loadId, courseId, magnifierId: rifle.sights.find((s) => d.sights[s].kind === 'magnifier') || null };
+  }
+  const params = (c) => `?course=${c.courseId}&rifle=${c.rifleId}&sight=${c.sightId}&load=${c.loadId}`;
+  // Remember the choice, for next time on this device.
+  function remember(c) { setLast({ rifle: c.rifleId }); setLastFor(c.rifleId, { sight: c.sightId, load: c.loadId, course: c.courseId }); }
+
+  // --- a knob: press for one step; press and hold to repeat, speeding up -------------------------------
+  // The first step comes on the press (never on the click, so a tap is one
+  // step, not two); from 400 ms on it repeats, each repeat a little faster,
+  // down to about 20 steps a second. Enter or the space bar step once.
+  function holdRepeat(button, step) {
+    let timer = null;
+    const stop = () => { if (timer) { clearTimeout(timer); timer = null; } };
+    const go = (delay) => { timer = setTimeout(() => { step(); go(Math.max(50, delay * 0.8)); }, delay); };
+    button.addEventListener('pointerdown', (e) => { if (e.button !== 0) return; e.preventDefault(); stop(); step(); go(400); try { button.setPointerCapture(e.pointerId); } catch {} });
+    for (const ev of ['pointerup', 'pointercancel', 'lostpointercapture']) button.addEventListener(ev, stop);
+    button.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); step(); } });
+    button.addEventListener('contextmenu', (e) => e.preventDefault());
+  }
+
   // --- helpers -------------------------------------------------------------------------
   const qs = () => Object.fromEntries(new URLSearchParams(location.search));
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -149,6 +225,18 @@ window.RD = (function () {
   function clicksText(clicks, per, upWord, downWord) {
     if (!clicks) return '0 clicks (middle)';
     return `${sign(clicks)} clicks (${moaOf(Math.abs(clicks), per)} MOA ${clicks > 0 ? upWord : downWord})`;
+  }
+  // The one line under the view: "Elevation +12 clicks (3 MOA up) · Windage 0 clicks (middle)" plus the leaf or the magnifier.
+  function settingLine(setting, sight, extra) {
+    const parts = [`Elevation ${clicksText(setting.elevationClicks, sight.clickMoa, 'up', 'down')}`, `Windage ${clicksText(setting.windageClicks, sight.windageClickMoa, 'right', 'left')}`];
+    if (extra) parts.push(extra);
+    return parts.join(' · ');
+  }
+  // A leaf setting's name: "3 (300 m)", or "П (300 m, the battle setting)".
+  function leafText(leaf, ix) {
+    const m = leaf.settingsMeters[ix];
+    const battle = leaf.battleSettingMeters === m ? ', the "П" battle setting' : '';
+    return `${m / 100} (${m} m${battle})`;
   }
   // "7 in low, 12 in right" from an offset in inches against the aim point
   function whereText(upIn, rightIn) {
@@ -187,5 +275,5 @@ window.RD = (function () {
   // A small seeded random for the drawn terrain, so a course looks the same each visit.
   function hash(str) { let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
 
-  return { E, data, store, getSight, sightReadFailed, setSight, getZero, setZero, getLog, setLog, showConditions, setShowConditions, drawDay, day, newDay, conditionsOf, audio, shotSound, ringSound, thudSound, clickSound, qs, esc, sign, moaOf, clicksText, whereText, windWord, crosswindMph, fovMoa, fitCanvas, hash };
+  return { E, data, store, getSight, sightReadFailed, setSight, getZero, setZero, getLog, setLog, zeroCount, getLast, setLast, getLastFor, setLastFor, chooseFrom, params, remember, holdRepeat, settingLine, leafText, showConditions, setShowConditions, drawDay, day, newDay, conditionsOf, audio, shotSound, ringSound, thudSound, clickSound, qs, esc, sign, moaOf, clicksText, whereText, windWord, crosswindMph, fovMoa, fitCanvas, hash };
 }());

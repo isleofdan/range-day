@@ -14,13 +14,15 @@
   const E = RD.E;
   const d = await RD.data();
   const q = RD.qs();
-  const courseId = d.courses[q.course] ? q.course : 'cta-piru';
+  const c = RD.chooseFrom(d, q);
+  const { courseId, rifleId, sightId } = c;
   const course = { id: courseId, ...d.courses[courseId] };
-  const rifleId = d.rifles[q.rifle] && d.rifles[q.rifle].playable ? q.rifle : (courseId === 'cta-piru' ? 'molot-vepr-54r' : 'bcm-ar15');
   const rifle = d.rifles[rifleId];
-  const sightId = rifleId === 'molot-vepr-54r' ? 'utg-2-7x44' : 'ar-irons';
   const sight = d.sights[sightId];
-  let loadId = rifle.loads.includes(q.load) ? q.load : rifle.loads[0];
+  // A sliding rear leaf (the AK-pattern rifles and the Vepr's irons): its settings and each one's angle.
+  const leaf = sight.kind === 'iron' ? (rifleId === 'ak-545' ? sight.leaf545 : sight.leaf) || null : null;
+  let loadId = c.loadId;
+  RD.remember(c);
   const day = RD.day(course, d.weather);
   const plates = course.plates;
   let plateIx = 0;
@@ -32,15 +34,15 @@
 
   // If a zero is saved for this rifle and load, the sight starts there.
   function applyZero() {
-    const z = RD.getZero(rifleId, loadId);
+    const z = RD.getZero(rifleId, sightId, loadId);
     let written = true;
-    if (z && z !== RD.store.FAILED) { setting = { elevationClicks: z.elevationClicks, windageClicks: z.windageClicks }; written = RD.setSight(rifleId, sightId, setting); }
+    if (z && z !== RD.store.FAILED) { setting = { ...setting, elevationClicks: z.elevationClicks, windageClicks: z.windageClicks, ...(leaf && z.leafIx != null ? { leafIx: z.leafIx } : {}) }; written = RD.setSight(rifleId, sightId, setting); }
     showSetting(); zeroNote();
     if (!written) $('zero-note').textContent = 'Sight setting not saved on this device: the browser refused to store it. It holds while this page is open.';
   }
   // The note under the knobs: where the sight stands against this load's saved zero.
   function zeroNote() {
-    const z = RD.getZero(rifleId, loadId);
+    const z = RD.getZero(rifleId, sightId, loadId);
     const btn = $('use-zero');
     if (z === RD.store.FAILED) { $('zero-note').textContent = 'Zero not saved on this device: the browser refused to read its storage. The sight starts at its middle and holds while this page is open.'; btn.hidden = true; return; }
     if (!z) { $('zero-note').textContent = 'No zero saved for this load: the sight is wherever it was last left. The zero bench is the place to fix that.'; btn.hidden = true; return; }
@@ -52,7 +54,8 @@
   $('intro').textContent = `${course.name}. ${rifle.name} with ${sight.name}. Steel ${plates[0].yards} to ${plates[plates.length - 1].yards} yards${course.farPlateRiseFt ? ', the far plates up the slope' : ''}.`;
   $('plate').innerHTML = plates.map((p, i) => `<option value="${i}">${p.yards} yards (${p.widthIn} × ${p.heightIn} in steel)</option>`).join('');
   $('load').innerHTML = rifle.loads.map((l) => `<option value="${l}"${l === loadId ? ' selected' : ''}>${RD.esc(d.loads[l].name)}</option>`).join('');
-  $('to-zero').href = `/zero?course=${courseId}&rifle=${rifleId}&load=${loadId}`;
+  const zeroHref = () => `/zero${RD.params({ ...c, loadId })}`;
+  $('to-zero').href = zeroHref();
   if (sight.zoom.high === sight.zoom.low) $('zoomrow').hidden = true;
   else { $('zoom').min = sight.zoom.low; $('zoom').max = sight.zoom.high; $('zoom').value = mag; }
   const zoomText = () => { $('zoom-text').textContent = `${mag}×`; };
@@ -66,7 +69,7 @@
   const dust = [];                         // {rightMoa, upMoa, bornAt, yards}
   const pending = [];                      // shots in flight
   const marks = [];                        // {plateIx, rightIn, upIn, at} paint splashes on plates
-  let log = RD.getLog(rifleId, loadId);
+  let log = RD.getLog(rifleId, sightId, loadId);
   let flash = 0;
 
   const canvas = $('view');
@@ -222,7 +225,7 @@
     const aimUp = aim.up, aimRight = aim.right;
     const r = E.shoot({
       load, drag: d.physics.dragTables,
-      rifle: { sightHeightIn: rifle.sightHeightIn[sightId], boreOffsetMoa: rifle.boreOffsetMoa },
+      rifle: { sightHeightIn: rifle.sightHeightIn[sightId], boreOffsetMoa: { up: rifle.boreOffsetMoa.up + leafMoa(), right: rifle.boreOffsetMoa.right } },
       sight: { clickMoa: sight.clickMoa, windageClickMoa: sight.windageClickMoa, elevationClicks: setting.elevationClicks, windageClicks: setting.windageClicks },
       targetYards: p.yards, targetRiseFt: riseOf(p), conditions: RD.conditionsOf(day), wind: day.wind, t0: now,
     });
@@ -231,7 +234,7 @@
     recoil.up += 14 * rifle.recoilFactor * (0.8 + Math.random() * 0.4); recoil.right += 4 * rifle.recoilFactor * (0.5 + Math.random());
     lastShotAt = now;
     const ipm = inchPerMoa(p.yards);
-    const entry = { n: log.length + 1, yards: p.yards, el: setting.elevationClicks, wd: setting.windageClicks, zoom: mag, heldUp: Math.round(aimUp * 10) / 10, heldRight: Math.round(aimRight * 10) / 10 };
+    const entry = { n: log.length + 1, yards: p.yards, el: setting.elevationClicks, wd: setting.windageClicks, leaf: leaf ? leaf.settingsMeters[setting.leafIx || 0] : undefined, zoom: mag, heldUp: Math.round(aimUp * 10) / 10, heldRight: Math.round(aimRight * 10) / 10 };
     if (!r.reached) {
       entry.where = 'into the ground before the plate'; entry.hit = false;
       pending.push({ at: now + r.timeS, entry, rightMoa: aimRight, upMoa: -(p.heightIn / ipm) * 2, yards: p.yards, hit: false, dist: p.yards });
@@ -250,7 +253,7 @@
     if (s.hit) { marks.push({ plateIx, rightIn: s.rightIn, upIn: s.upIn, at: now }); RD.ringSound(soundBack, Math.max(0.15, 1 - s.dist / 1300)); }
     else { dust.push({ rightMoa: s.rightMoa, upMoa: s.upMoa, bornAt: now, yards: s.yards }); RD.thudSound(soundBack, Math.max(0.05, 0.5 - s.dist / 2500)); }
     log.push(s.entry);
-    if (!RD.setLog(rifleId, loadId, log)) $('zero-note').textContent = 'Shot log not saved on this device (storage is off); it holds for this page only.';
+    if (!RD.setLog(rifleId, sightId, loadId, log)) $('zero-note').textContent = 'Shot log not saved on this device (storage is off); it holds for this page only.';
     const sub = s.mach != null && s.mach < 1.2 ? ` The bullet arrived at Mach ${s.mach.toFixed(2)}${s.mach < 1 ? ', below the speed of sound' : ', nearly down to the speed of sound'}.` : '';
     $('result').innerHTML = s.hit ? `<strong>Hit</strong> at ${s.dist} yards, ${RD.esc(RD.whereText(s.upIn, s.rightIn))} of center. The ring comes back ${soundBack.toFixed(1)} s later.${sub}` : `<strong>Miss</strong> at ${s.dist} yards: ${RD.esc(s.entry.where.replace('miss: ', ''))}. Watch the dust.${sub}`;
     renderLog();
@@ -267,7 +270,7 @@
     $('show-conditions').checked = on;
     if (!on) { $('conditions').textContent = ''; return; }
     const p = plate(), load = d.loads[loadId];
-    const base = { load, drag: d.physics.dragTables, sightHeightIn: rifle.sightHeightIn[sightId], elevationMoa: setting.elevationClicks * sight.clickMoa + rifle.boreOffsetMoa.up, windageMoa: setting.windageClicks * sight.windageClickMoa + rifle.boreOffsetMoa.right, targetYards: p.yards, targetRiseFt: riseOf(p), conditions: RD.conditionsOf(day), t0: now };
+    const base = { load, drag: d.physics.dragTables, sightHeightIn: rifle.sightHeightIn[sightId], elevationMoa: setting.elevationClicks * sight.clickMoa + rifle.boreOffsetMoa.up + leafMoa(), windageMoa: setting.windageClicks * sight.windageClickMoa + rifle.boreOffsetMoa.right, targetYards: p.yards, targetRiseFt: riseOf(p), conditions: RD.conditionsOf(day), t0: now };
     const still = E.fly({ ...base, wind: [] }), windy = E.fly({ ...base, wind: day.wind });
     const lines = [
       `Air: ${day.tempF} F, ${day.pressureInHg} inHg at ${day.altitudeFt} ft, humidity ${Math.round(day.humidity * 100)}%.`,
@@ -279,6 +282,8 @@
   }
 
   // --- controls -----------------------------------------------------------------------------------------
+  // The leaf's angle above its 100 m setting, which the bore takes like any click: through the engine, as part of the elevation.
+  const leafMoa = () => (leaf ? leaf.moaAbove100[setting.leafIx || 0].moaAbove100 : 0);
   function showSetting() {
     $('el-text').textContent = RD.clicksText(setting.elevationClicks, sight.clickMoa, 'up', 'down');
     $('wd-text').textContent = RD.clicksText(setting.windageClicks, sight.windageClickMoa, 'right', 'left');
@@ -298,11 +303,11 @@
   $('plate').addEventListener('change', (e) => { plateIx = Number(e.target.value); hold.up = 0; hold.right = 0; conditions(); });
   // Changing the load keeps the sight where it is (the brief's rule); restoring
   // that load's saved zero is the player's own press on the button below.
-  $('load').addEventListener('change', (e) => { loadId = e.target.value; log = RD.getLog(rifleId, loadId); renderLog(); zeroNote(); $('to-zero').href = `/zero?course=${courseId}&rifle=${rifleId}&load=${loadId}`; conditions(); });
-  $('use-zero').addEventListener('click', () => { const z = RD.getZero(rifleId, loadId); if (!z || z === RD.store.FAILED) return; setting = { elevationClicks: z.elevationClicks, windageClicks: z.windageClicks }; RD.clickSound(); showSetting(); zeroNote(); if (!RD.setSight(rifleId, sightId, setting)) $('zero-note').textContent = 'Sight setting not saved on this device: the browser refused to store it. It holds while this page is open.'; });
+  $('load').addEventListener('change', (e) => { loadId = e.target.value; log = RD.getLog(rifleId, sightId, loadId); renderLog(); zeroNote(); $('to-zero').href = zeroHref(); RD.remember({ ...c, loadId }); conditions(); });
+  $('use-zero').addEventListener('click', () => { const z = RD.getZero(rifleId, sightId, loadId); if (!z || z === RD.store.FAILED) return; setting = { ...setting, elevationClicks: z.elevationClicks, windageClicks: z.windageClicks, ...(leaf && z.leafIx != null ? { leafIx: z.leafIx } : {}) }; RD.clickSound(); showSetting(); zeroNote(); if (!RD.setSight(rifleId, sightId, setting)) $('zero-note').textContent = 'Sight setting not saved on this device: the browser refused to store it. It holds while this page is open.'; });
   $('zoom').addEventListener('input', (e) => { mag = Number(e.target.value); zoomText(); });
   $('show-conditions').addEventListener('change', (e) => { RD.setShowConditions(e.target.checked); conditions(); });
-  $('clear-log').addEventListener('click', () => { log = []; RD.setLog(rifleId, loadId, log); renderLog(); });
+  $('clear-log').addEventListener('click', () => { log = []; RD.setLog(rifleId, sightId, loadId, log); renderLog(); });
   const steadyOn = () => { steady = true; $('steady').classList.add('on'); };
   const steadyOff = () => { steady = false; $('steady').classList.remove('on'); };
   $('steady').addEventListener('pointerdown', (e) => { e.preventDefault(); steadyOn(); });

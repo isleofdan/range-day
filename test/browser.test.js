@@ -77,7 +77,7 @@ test('verify 4: zero the Vepr at 100 yards, reload, the zero is still there; cha
   await page.reload(); await page.waitForSelector('#fire5');
   assert.equal(await page.textContent('#el-text'), el, 'the sight setting survives a reload');
   assert.match(await page.textContent('#saved'), /Saved zero for Sellier & Bellot 174 gr.*100 yards/);
-  await page.goto(`${base}/?rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('.choice');
+  await page.goto(`${base}/?rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('.rifle');
   assert.match(await page.textContent('#zero'), /Zeroed at 100 yards/);
   // Change the load: the sight stays, the group lands where the engine puts the other load.
   await page.goto(`${base}/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('#fire5');
@@ -168,7 +168,7 @@ test('a browser that refuses storage: every screen says "not saved on this devic
   const errors = [];
   page.on('pageerror', (e) => errors.push(e.message));
   await page.goto(`${base}/login`); await page.fill('#passphrase', PASS); await page.click('button[type=submit]'); await page.waitForURL(`${base}/`);
-  await page.waitForSelector('.choice');
+  await page.waitForSelector('.rifle');
   assert.match(await page.textContent('#zero'), /Zero not saved on this device/);
   await page.goto(`${base}/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('#fire5');
   assert.match(await page.textContent('#saved'), /Zero not saved on this device/);
@@ -212,10 +212,84 @@ test('every screen renders at 412x915 and 1280x800 with no sideways scroll and n
     const { page, context, errors } = await signedIn(viewport);
     for (const p of ['/', '/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt', '/line?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt', '/line?course=angeles-sylmar&rifle=bcm-ar15&load=imi-m193']) {
       await page.goto(`${base}${p}`);
-      await page.waitForSelector(p === '/' ? '.choice' : '#el-up');
+      await page.waitForSelector(p === '/' ? '.rifle' : '#el-up');
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `${p} at ${viewport.width}: no sideways scroll`);
     }
     assert.deepEqual(errors, []);
     await context.close();
   }
+});
+
+test('verify 6: a zero and a log written in the old form (per rifle and load) for the Vepr and the AR-15 show on home, the bench and the line', { skip }, async () => {
+  const { page, context, errors } = await signedIn();
+  // Records as range-day-one wrote them: zero:<rifle>:<load> naming its sight, log:<rifle>:<load>.
+  await page.evaluate(() => {
+    localStorage.clear();
+    localStorage.setItem('range-day:zero:molot-vepr-54r:sb-174-hpbt', JSON.stringify({ elevationClicks: 31, windageClicks: -13, zeroYards: 100, sight: 'utg-2-7x44', savedAt: '2026-11-16T12:00:00.000Z' }));
+    localStorage.setItem('range-day:log:molot-vepr-54r:sb-174-hpbt', JSON.stringify([{ n: 1, yards: 200, el: 31, wd: -13, zoom: 2, heldUp: 0, heldRight: 0, hit: false, where: 'miss: 9.0 in low, centered', upIn: -9.04, rightIn: 0.2 }]));
+    localStorage.setItem('range-day:zero:bcm-ar15:federal-gmm-69', JSON.stringify({ elevationClicks: 2, windageClicks: -2, zeroYards: 50, sight: 'ar-irons', savedAt: '2026-11-16T12:00:00.000Z' }));
+    localStorage.setItem('range-day:log:bcm-ar15:federal-gmm-69', JSON.stringify([{ n: 1, yards: 100, el: 2, wd: -2, zoom: 1, heldUp: 0, heldRight: 0, hit: true, where: 'hit (level, centered of center)', upIn: 0.3, rightIn: -0.1 }]));
+  });
+  // Home: the Vepr's rifle button says a zero is saved; the zero line shows it for its scope.
+  await page.goto(`${base}/?rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('.rifle');
+  assert.match(await page.textContent('.rifle[data-rifle="molot-vepr-54r"] .rmark'), /zeroed/);
+  assert.match(await page.textContent('.rifle[data-rifle="bcm-ar15"] .rmark'), /zeroed/);
+  assert.match(await page.textContent('.rifle[data-rifle="iwi-x95"] .rmark'), /no zero saved/);
+  assert.match(await page.textContent('#zero'), /Zeroed at 100 yards with the UTG.*\+31 clicks/);
+  // The bench and the line, by the old address form (no sight): the Vepr opens with its scope at that zero.
+  await page.goto(`${base}/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('#fire5');
+  assert.match(await page.textContent('#saved'), /Saved zero for Sellier & Bellot 174 gr.*100 yards, elevation \+31 clicks/);
+  await page.goto(`${base}/line?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('#fire');
+  assert.match(await page.textContent('#intro'), /UTG AccuShot 2-7x44/);
+  assert.match(await page.textContent('#el-text'), /\+31 clicks/);
+  assert.match(await page.textContent('#log tbody'), /9\.0 in low/);
+  // The AR too, and the old records are still in place beside the new ones.
+  await page.goto(`${base}/line?course=angeles-sylmar&rifle=bcm-ar15&load=federal-gmm-69`); await page.waitForSelector('#fire');
+  assert.match(await page.textContent('#el-text'), /\+2 clicks/);
+  assert.match(await page.textContent('#log tbody'), /hit \(level, centered/);
+  const keys = await page.evaluate(() => Object.keys(localStorage).sort());
+  for (const k of ['range-day:zero:molot-vepr-54r:sb-174-hpbt', 'range-day:zero:molot-vepr-54r:utg-2-7x44:sb-174-hpbt', 'range-day:log:molot-vepr-54r:utg-2-7x44:sb-174-hpbt', 'range-day:zero:bcm-ar15:ar-irons:federal-gmm-69', 'range-day:log:bcm-ar15:ar-irons:federal-gmm-69', 'range-day:log:bcm-ar15:federal-gmm-69']) assert.ok(keys.includes(k), `${k} is stored`);
+  // The old Vepr zero was made with the scope: the Vepr's irons have no zero.
+  await page.goto(`${base}/line?course=cta-piru&rifle=molot-vepr-54r&sight=vepr-irons&load=sb-174-hpbt`); await page.waitForSelector('#fire');
+  assert.match(await page.textContent('#zero-note'), /No zero saved/);
+  assert.deepEqual(errors, []);
+  await context.close();
+});
+
+test('verify 7: the old addresses without a sight open the Vepr with its scope on the line and the bench', { skip }, async () => {
+  const { page, context, errors } = await signedIn();
+  await page.goto(`${base}/line?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('#fire');
+  assert.match(await page.textContent('#intro'), /Molot Vepr, 7.62x54R with UTG AccuShot 2-7x44/);
+  assert.ok(await page.isVisible('#zoom'), 'the scope has its zoom');
+  await page.goto(`${base}/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('#fire5');
+  assert.match(await page.textContent('#intro'), /Molot Vepr, 7.62x54R, UTG AccuShot 2-7x44/);
+  assert.match(await page.textContent('#click-help'), /0\.25 MOA/);
+  // The installed app's start page, bare: it opens, with the last rifle picked.
+  await page.goto(`${base}/`); await page.waitForSelector('.rifle.picked');
+  assert.equal(await page.getAttribute('.rifle.picked', 'data-rifle'), 'molot-vepr-54r');
+  assert.match(await page.getAttribute('#go-line', 'href'), /sight=utg-2-7x44/);
+  assert.deepEqual(errors, []);
+  await context.close();
+});
+
+test('verify 11: home at 412x915, each of the seven rifles chosen in turn: both doors and the zero line are inside the screen without scrolling', { skip }, async () => {
+  const { page, context, errors } = await signedIn({ width: 412, height: 915 });
+  await page.goto(`${base}/`); await page.waitForSelector('.rifle');
+  const rifles = await page.$$eval('.rifle', (els) => els.map((e) => e.dataset.rifle));
+  assert.equal(rifles.length, 7);
+  const lines = [];
+  for (const id of rifles) {
+    await page.click(`.rifle[data-rifle="${id}"]`);
+    await page.waitForSelector(`.rifle.picked[data-rifle="${id}"]`);
+    const r = await page.evaluate(() => {
+      const box = (sel) => { const b = document.querySelector(sel).getBoundingClientRect(); return { top: b.top, bottom: b.bottom, left: b.left, right: b.right }; };
+      return { scrollY: window.scrollY, zero: box('#zero'), goZero: box('#go-zero'), goLine: box('#go-line'), h: window.innerHeight, w: window.innerWidth };
+    });
+    lines.push(`${id}: zero line bottom ${r.zero.bottom.toFixed(0)}, Zero bench bottom ${r.goZero.bottom.toFixed(0)}, Firing line bottom ${r.goLine.bottom.toFixed(0)} of ${r.h}`);
+    assert.equal(r.scrollY, 0);
+    for (const b of [r.zero, r.goZero, r.goLine]) assert.ok(b.top >= 0 && b.bottom <= r.h && b.left >= 0 && b.right <= r.w, `${id}: ${JSON.stringify(b)} inside ${r.w}x${r.h}`);
+  }
+  console.log('  ' + lines.join('\n  '));
+  assert.deepEqual(errors, []);
+  await context.close();
 });

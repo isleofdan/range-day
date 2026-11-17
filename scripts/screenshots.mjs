@@ -26,7 +26,7 @@ const PIRU = '/line?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt';
 const ZERO = '/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt';
 const settle = (page, ms) => page.waitForTimeout(ms);
 const SCREENS = [
-  { name: 'home', path: '/', expect: 'This is ', act: (page) => page.waitForSelector('.choice') },
+  { name: 'home', path: '/', expect: 'This is ', act: (page) => page.waitForSelector('.rifle') },
   { name: 'status', path: '/status', expect: 'alive since ' },
   { name: 'zero-before', path: ZERO, expect: 'center of the group', act: async (page) => { await page.waitForSelector('#fire5'); await page.click('#fire5'); await settle(page, 200); } },
   { name: 'zero-after', path: ZERO, expect: 'Saved zero', act: async (page) => {
