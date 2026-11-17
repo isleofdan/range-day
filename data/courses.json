@@ -1,5 +1,5 @@
 {
- "_about": "The two courses. Each models a public range. plates lists each steel plate: its distance, its width and height in inches, how high it stands above the firing line (riseFt, its own figure, used by the engine and the drawing alike) and where it stands sideways (lateralYd, placed by angle as seen from the firing line). altitudeFt is the range's height above sea level, for the air.",
+ "_about": "The two courses. Each models a public range. plates lists each steel plate: its distance, its width and height in inches, how high it stands above the firing line (riseFt, its own figure, used by the engine and the drawing alike) and where it stands sideways (lateralYd, placed by angle as seen from the firing line). altitudeFt is the range's height above sea level, for the air. blurb is the one line home shows about the course.",
  "cta-piru": {
   "name": "Canyon course (modeled on California Tactical Academy, Piru)",
   "address": {
@@ -291,7 +291,8 @@
      "estimate": "how high the plate stands above the firing line, in feet: the brief puts the far plates on a slope \"that rises to maybe a couple hundred feet\", so the 1,000-yard plate is 200 ft up (range-day-one brief) and the others follow a slope that steepens with distance, 200 × (yards / 1000)^1.6, so each farther plate sits visibly higher in the view than the one before it (the steps are 14 to 25 minutes of angle). An estimate until photographs of the range decide it"
     }
    }
-  ]
+  ],
+  "blurb": "Steel every 100 yards from 200 to 1,000, the far plates up the canyon slope."
  },
  "angeles-sylmar": {
   "name": "Rifle line (modeled on Angeles Shooting Ranges, Sylmar)",
@@ -506,6 +507,7 @@
      "estimate": "how high the plate stands above the firing line, in feet: nothing published describes how the ground runs toward the 600-yard berm (the range's own pages name only the berm distances), so a gentle rise is used, 1 ft at 100 yards growing as the square of the distance to 36 ft at 600 (about 1 degree at the far berm), which puts each farther plate 11 minutes of angle higher in the view than the one before it. An estimate until photographs of the range decide it"
     }
    }
-  ]
+  ],
+  "blurb": "Steel every 100 yards from 100 to 600, up a gentle rise."
  }
 }

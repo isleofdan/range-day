@@ -1,5 +1,5 @@
 {
- "_about": "The sights. clickMoa is what one click of elevation moves the strike, windageClickMoa one click of windage, in minutes of angle; clicks is the travel each way from the middle. zoom is the magnification range; fovFtAt100 the field of view in feet at 100 yards at the lowest and highest zoom. frontPostMoa is the front post's width over the sight radius (how wide it looks against the target); apertureMoa the rear ring's lit circle and notchMoa the rear notch's width as the eye sees them; dotMoa a red dot's size. leaf is a sliding rear leaf: its marked settings, the service load it was cut for, and each setting's angle above the 100 m setting, derived with the engine (leaf545: the same leaf on the 5.45x39 rifle, cut for its own load). notchDepthMoa is the rear notch's depth as the eye sees it; stemWidthMoa a bead's stem; a drop reticle's chevronHalfWidthMoa and markHalfWidthMoa are its drawn widths.",
+ "_about": "The sights. clickMoa is what one click of elevation moves the strike, windageClickMoa one click of windage, in minutes of angle; clicks is the travel each way from the middle. zoom is the magnification range; fovFtAt100 the field of view in feet at 100 yards at the lowest and highest zoom. frontPostMoa is the front post's width over the sight radius (how wide it looks against the target); apertureMoa the rear ring's lit circle and notchMoa the rear notch's width as the eye sees them; dotMoa a red dot's size. leaf is a sliding rear leaf: its marked settings, the service load it was cut for, and each setting's angle above the 100 m setting, derived with the engine (leaf545: the same leaf on the 5.45x39 rifle, cut for its own load). notchDepthMoa is the rear notch's depth as the eye sees it; stemWidthMoa a bead's stem; a drop reticle's chevronHalfWidthMoa and markHalfWidthMoa are its drawn widths. aimWanderFactor scales the drawn wander of the aim through this sight (1 where absent). frontBead marks a front sight that is a round bead on a stem rather than a flat post.",
  "ar-irons": {
   "name": "AR-15 iron sights (front post, rear aperture)",
   "kind": "iron",
@@ -50,6 +50,10 @@
     "value": 35,
     "estimate": "the same: iron sights magnify nothing"
    }
+  },
+  "aimWanderFactor": {
+   "value": 1.3,
+   "estimate": "the aim wanders a little more through the AR's small aperture than through other sights (the view is dimmer and the post coarser); 1.3 times the standard wander, a drawing figure, not a measurement"
   }
  },
  "tavor-irons": {
@@ -555,7 +559,8 @@
   "stemWidthMoa": {
    "value": 3,
    "estimate": "the thin stem the bead stands on, seen over the sight radius: about a third of the bead's width; not a maker figure"
-  }
+  },
+  "frontBead": true
  },
  "pa-md25": {
   "name": "Primary Arms SLx MD-25 red dot, 2 MOA dot",
