@@ -357,7 +357,7 @@ window.RD = (function () {
     windStretch: { fromYards: 'number', toYards: 'number', speedMph: 'number', fromDegrees: 'number' },
     zero: { zeroYards: 'number', elevationClicks: 'number', windageClicks: 'number' }, // a book line's saved zero
     windCall: { from: 'string', mph: 'number' }, // a stated call; null is "not called"
-    shot: { n: 'number', place: 'string', yards: 'number', elevationClicks: 'number', windageClicks: 'number', reached: 'boolean' },
+    shot: { n: 'number', place: 'string', yards: 'number', elevationClicks: 'number', windageClicks: 'number', reached: 'boolean', upIn: 'number|null', rightIn: 'number|null' },
     lineShot: { hit: 'boolean', heldUpMoa: 'number', heldRightMoa: 'number' }, // a shot at steel has these too; a bench shot has no hit
   };
   const PLACES = ['bench', 'line'];
@@ -398,6 +398,11 @@ window.RD = (function () {
         checkRecord(s, DAY_SHAPES.shot, `${at}.shots[${j}]`);
         if (!PLACES.includes(s.place)) throw notACopy(`${at}.shots[${j}].place is ${JSON.stringify(s.place)}; it must be one of ${PLACES.join(', ')}. Nothing was loaded.`);
         if (s.place === 'line') checkRecord(s, DAY_SHAPES.lineShot, `${at}.shots[${j}]`);
+        // Where it landed: a shot that reached has both coordinates in inches; one that went into the ground has null for both.
+        for (const f of ['upIn', 'rightIn']) {
+          if (s.reached && typeof s[f] !== 'number') throw notACopy(`${at}.shots[${j}].${f} is ${JSON.stringify(s[f])}; a shot that reached must have it as a number. Nothing was loaded.`);
+          if (!s.reached && s[f] !== null) throw notACopy(`${at}.shots[${j}].${f} is ${JSON.stringify(s[f])}; a shot that did not reach must have it as null. Nothing was loaded.`);
+        }
       });
     });
     return true;

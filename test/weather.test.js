@@ -164,7 +164,7 @@ test('the book\'s order and come-up: lines sort newest first by the moment and t
   // A day's inside is checked too: the box, the weather with its three stretches of wind, every shot.
   const day = RD.startDay({ courses: flat.courses, weather: W, loads: flat.loads }, { courseId: 'cta-piru', rifleId: 'molot-vepr-54r', loadId: 'sb-174-hpbt', sightId: 'utg-2-7x44' }, 7, 'afternoon', E.seeded(3)).day;
   day.shots.push({ n: 1, place: 'bench', yards: 100, sight: 'utg-2-7x44', elevationClicks: 0, windageClicks: 0, leaf: null, reached: true, upIn: -7.9, rightIn: 1.2 }); // a bench shot: no hit, no hold
-  day.shots.push({ n: 2, place: 'line', yards: 600, elevationClicks: 20, windageClicks: 0, hit: false, reached: true, heldUpMoa: 0, heldRightMoa: 0 });
+  day.shots.push({ n: 2, place: 'line', yards: 600, elevationClicks: 20, windageClicks: 0, hit: false, reached: true, upIn: -14.3, rightIn: 2.1, heldUpMoa: 0, heldRightMoa: 0 });
   assert.equal(RD.checkCopy({ ...good, days: [day] }), true, 'a real day with a bench shot and a shot at steel passes');
   const with_ = (change) => { const d = JSON.parse(JSON.stringify(day)); change(d); return { ...good, days: [d] }; };
   assert.throws(() => RD.checkCopy(with_((d) => { d.shots = [null]; })), /days\[0\]\.shots\[0\] is not a record/);
@@ -175,6 +175,12 @@ test('the book\'s order and come-up: lines sort newest first by the moment and t
   assert.throws(() => RD.checkCopy(with_((d) => { d.shots[0].place = 'car park'; })), /shots\[0\]\.place is "car park"; it must be one of bench, line/);
   assert.throws(() => RD.checkCopy(with_((d) => { d.shots[1].yards = '600'; })), /shots\[1\]\.yards is "600"; it must be a number/);
   assert.throws(() => RD.checkCopy(with_((d) => { delete d.shots[1].hit; })), /shots\[1\]\.hit is missing; it must be a boolean/);
+  // Where a shot landed: a shot that reached carries both coordinates as numbers; one into the ground carries null for both.
+  assert.throws(() => RD.checkCopy(with_((d) => { delete d.shots[0].upIn; })), /shots\[0\]\.upIn is missing; it must be a number or null/);
+  assert.throws(() => RD.checkCopy(with_((d) => { d.shots[1].rightIn = 'left'; })), /shots\[1\]\.rightIn is "left"; it must be a number or null/);
+  assert.throws(() => RD.checkCopy(with_((d) => { d.shots[1].upIn = null; })), /shots\[1\]\.upIn is null; a shot that reached must have it as a number/);
+  assert.throws(() => RD.checkCopy(with_((d) => { d.shots[0].reached = false; })), /shots\[0\]\.upIn is -7\.9; a shot that did not reach must have it as null/);
+  assert.ok(RD.checkCopy(with_((d) => { d.shots[0].reached = false; d.shots[0].upIn = null; d.shots[0].rightIn = null; })), 'a shot into the ground, with null coordinates, passes');
   assert.throws(() => RD.checkCopy(with_((d) => { d.timeOfDay = 'night'; })), /timeOfDay is "night"; it must be one of morning, midday, afternoon/);
 });
 

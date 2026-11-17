@@ -155,7 +155,9 @@ before anything is written: a file whose `kind` is not
 any of whose records lacks a required field or has one of the wrong kind
 (for example `book[3].yards` not a number), including a day's box,
 weather, three stretches of wind and every shot (for example
-`days[0].shots[1]` not a record), is refused with that field named, and
+`days[0].shots[1]` not a record; a shot that reached must carry where it
+landed, `upIn` and `rightIn`, as numbers, and one that went into the
+ground must carry null for both), is refused with that field named, and
 nothing is loaded. The book, cold-bore and
 zero lines use the field names of the gun record's `measured` section,
 so the file can be taken as it is by the build that keeps records

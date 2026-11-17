@@ -405,8 +405,9 @@ test('verify 11: "Save a copy" after a day with hits, then "Load a copy" on an e
   const reasons = [];
   const malformed = JSON.parse(text); malformed.book[0].yards = 'far';
   const nested = JSON.parse(text); nested.days[0].shots[1] = null;
+  const landing = JSON.parse(text); const reachedShot = landing.days[0].shots.find((s) => s.reached); reachedShot.upIn = 'high';
   const keysBefore = await page.evaluate(() => Object.keys(localStorage).sort().join(' '));
-  for (const bad of ['{"hello": 1}', '{"kind": "range-day copy", "version": 1, "zeros": []}', '[1, 2]', '{"kind": "range-day copy", "version": 2, "zeros": [], "book": [], "cold_bore": [], "days": []}', JSON.stringify(malformed), JSON.stringify(nested)]) {
+  for (const bad of ['{"hello": 1}', '{"kind": "range-day copy", "version": 1, "zeros": []}', '[1, 2]', '{"kind": "range-day copy", "version": 2, "zeros": [], "book": [], "cold_bore": [], "days": []}', JSON.stringify(malformed), JSON.stringify(nested), JSON.stringify(landing)]) {
     reasons.push(await page.evaluate((t) => { try { RD.loadCopy(JSON.parse(t)); return 'accepted'; } catch (e) { return e.message; } }, bad));
   }
   console.log('  refused: ' + reasons.join('\n  refused: '));
@@ -415,7 +416,8 @@ test('verify 11: "Save a copy" after a day with hits, then "Load a copy" on an e
   assert.match(reasons[2], /not a Range Day copy: the file does not hold a record/);
   assert.match(reasons[3], /not a Range Day copy: its "version" is 2; this app reads version 1/);
   assert.match(reasons[4], /not a Range Day copy: book\[0\]\.yards is "far"; it must be a number\. Nothing was loaded\./);
-  assert.match(reasons[5], /not a Range Day copy: days\[0\]\.shots\[1\] is not a record \(an object with n, place, yards, elevationClicks, windageClicks, reached\)\. Nothing was loaded\./);
+  assert.match(reasons[5], /not a Range Day copy: days\[0\]\.shots\[1\] is not a record \(an object with n, place, yards, elevationClicks, windageClicks, reached, upIn, rightIn\)\. Nothing was loaded\./);
+  assert.match(reasons[6], /not a Range Day copy: days\[0\]\.shots\[\d+\]\.upIn is "high"; it must be a number or null\. Nothing was loaded\./);
   assert.equal(await page.evaluate(() => Object.keys(localStorage).sort().join(' ')), keysBefore, 'a refused file wrote nothing');
   assert.deepEqual(errors, []);
   await context.close();
