@@ -50,7 +50,7 @@
     const btn = $('use-zero');
     if (z === RD.store.FAILED) { $('zero-note').textContent = 'Zero not saved on this device: the browser refused to read its storage. The sight starts at its middle and holds while this page is open.'; btn.hidden = true; return; }
     if (!z) { $('zero-note').textContent = 'No zero saved for this load: the sight is wherever it was last left. The zero bench is the place to fix that.'; btn.hidden = true; return; }
-    const at = z.elevationClicks === setting.elevationClicks && z.windageClicks === setting.windageClicks;
+    const at = z.elevationClicks === setting.elevationClicks && z.windageClicks === setting.windageClicks && (!leaf || (z.leafIx || 0) === (setting.leafIx || 0));
     $('zero-note').textContent = at ? `Sight at the saved ${z.zeroYards}-yard zero for this load. Every click from here is yours.` : `The sight is not at this load's saved ${z.zeroYards}-yard zero (elevation ${RD.clicksText(z.elevationClicks, sight.clickMoa, 'up', 'down')}, windage ${RD.clicksText(z.windageClicks, sight.windageClickMoa, 'right', 'left')}); it stays where you left it.`;
     btn.hidden = at;
   }
@@ -208,6 +208,44 @@
       return;
     }
     if (sight.apertureMoa > 0) return drawRingAndPost(g, size, k, cx, cy);
+    return drawNotchAndPost(g, size, k, cx, cy);
+  }
+
+  // Open sights: the rear notch, soft because it is near the eye, its top
+  // edge level with the center; the front post standing in the notch with
+  // its top at the center, light either side of it. A bead-fronted sight
+  // (the .22) has a round bead on a thinner stem. The notch's width and the
+  // post's width are the data's minutes of angle at the view's scale. The
+  // leaf behind the notch is not drawn: raising it raises the whole rear
+  // sight, and the shooter re-aligns post and notch, so the picture is the
+  // same and only the bore's angle changes (through the engine).
+  function drawNotchAndPost(g, size, k, cx, cy) {
+    const notchW = sight.notchMoa * k, depth = notchW * 0.9;
+    const postW = sight.frontPostMoa * k;
+    const bead = sightId === 'rem-irons';
+    // the rear sight blade: everything below the center line, except the notch, is its dark face
+    g.save();
+    if ('filter' in g) g.filter = 'blur(2.5px)';
+    g.fillStyle = '#17150f';
+    g.beginPath();
+    g.rect(0, cy, cx - notchW / 2, size); g.rect(cx + notchW / 2, cy, cx - notchW / 2, size); g.rect(cx - notchW / 2, cy + depth, notchW, size);
+    g.fill();
+    // the blade's shoulders fade upward a little: nearness to the eye
+    const haze = g.createLinearGradient(0, cy - notchW * 0.25, 0, cy);
+    haze.addColorStop(0, 'rgba(23,21,15,0)'); haze.addColorStop(1, 'rgba(23,21,15,0.35)');
+    g.fillStyle = haze; g.fillRect(0, cy - notchW * 0.25, size, notchW * 0.25);
+    g.restore();
+    // the front post (or bead and stem), sharper, its top at the center
+    g.save();
+    if ('filter' in g) g.filter = 'blur(0.6px)';
+    g.fillStyle = '#101010';
+    if (bead) {
+      g.fillRect(cx - postW * 0.25, cy + postW * 0.45, postW * 0.5, size);
+      g.beginPath(); g.arc(cx, cy + postW / 2, postW / 2, 0, Math.PI * 2); g.fill();
+    } else {
+      g.fillRect(cx - postW / 2, cy, postW, size);
+    }
+    g.restore();
   }
 
   // A red dot: an unmagnified view through a round window, the dot covering
@@ -326,7 +364,7 @@
   }
   function renderLog() {
     const body = $('log').querySelector('tbody');
-    body.innerHTML = log.slice().reverse().map((e) => `<tr class="${e.hit ? 'hit' : 'miss'}"><td>${e.n}</td><td>${e.yards}</td><td>${RD.sign(e.el)}</td><td>${RD.sign(e.wd)}</td><td>${e.zoom}×</td><td>${heldText(e)}</td><td>${RD.esc(e.where)}</td></tr>`).join('');
+    body.innerHTML = log.slice().reverse().map((e) => `<tr class="${e.hit ? 'hit' : 'miss'}"><td>${e.n}</td><td>${e.yards}</td><td>${RD.sign(e.el)}</td><td>${RD.sign(e.wd)}${e.leaf != null ? ` · leaf ${e.leaf / 100}` : ''}</td><td>${e.zoom}×</td><td>${heldText(e)}</td><td>${RD.esc(e.where)}</td></tr>`).join('');
   }
   const heldText = (e) => (Math.abs(e.heldUp) < 0.3 && Math.abs(e.heldRight) < 0.3) ? 'center' : `${Math.abs(e.heldUp).toFixed(1)} ${e.heldUp > 0 ? 'high' : 'low'}, ${Math.abs(e.heldRight).toFixed(1)} ${e.heldRight > 0 ? 'right' : 'left'} (MOA)`;
 
@@ -360,6 +398,16 @@
     conditions();
   }
   const storeSetting = () => { if (!RD.setSight(rifleId, sightId, setting)) $('zero-note').textContent = 'Sight setting not saved on this device: the browser refused to store it. It holds while this page is open.'; };
+  if (leaf) {
+    $('leafrow').hidden = false;
+    const moveLeaf = (delta) => {
+      const ix = (setting.leafIx || 0) + delta;
+      if (ix < 0 || ix >= leaf.settingsMeters.length) { $('result').textContent = `The leaf is at the end of its slide (${leaf.settingsMeters[ix < 0 ? 0 : leaf.settingsMeters.length - 1]} m).`; return; }
+      setting = { ...setting, leafIx: ix }; RD.clickSound(); showSetting(); zeroNote(); storeSetting();
+    };
+    $('leaf-up').addEventListener('click', () => moveLeaf(1));
+    $('leaf-down').addEventListener('click', () => moveLeaf(-1));
+  }
   if (magnifier) {
     $('magrow').hidden = false;
     $('magnifier').addEventListener('click', () => { setting = { ...setting, magnifier: !magnifierIn() }; RD.clickSound(); showSetting(); storeSetting(); });
