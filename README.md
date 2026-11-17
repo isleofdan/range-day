@@ -13,27 +13,41 @@ clicks, then works out the drop and the wind for each distance himself.
 
 ## The screens
 
-- **Home** (`/`): pick a course and rifle (two pairings now: the canyon
-  course with a 7.62x54R Vepr and a UTG 2-7x scope; the rifle line with
-  an AR-15 and its iron sights), pick the load, see the saved zero for
-  that rifle and load or "not zeroed yet".
+- **Home** (`/`): pick the rifle (seven: an AR-15, a Tavor SAR, a Tavor
+  X95, an AK-pattern rifle in 7.62x39, one in 5.45x39, a Molot Vepr in
+  7.62x54R and a bolt-action .22), then the sight among the ones that
+  rifle carries, the load and the course, each on its own. The rifle
+  list says which rifles have a zero saved on this device; the zero line
+  says where this rifle, sight and load stand ("not zeroed yet" sends
+  you to the bench). The last choice on this device is picked when the
+  page opens. Two courses: the canyon course (steel every 100 yards from
+  200 to 1,000, up the slope) and the rifle line (100 to 600, up a
+  gentle rise).
 - **Zero bench** (`/zero`): a 36-inch paper with a 1-inch grid at 25, 50,
   100 or 200 yards. Fire a group, read where it lands, turn the sight's
-  elevation and windage in its real click values, fire again, press
-  **Save this zero**. The zero is saved on the device for that rifle and
-  load. Changing the load keeps the sight where it is, so the group moves
-  as it would in life.
-- **Firing line** (`/line`): the view through the sight. The scope zooms
-  across its real range; the iron sights show the front post, wide
-  against a far plate. The aim wanders the way a rested rifle does; drag
+  elevation and windage in its real clicks (a press is one click, holding
+  repeats, a second pair moves a whole minute of angle on the finer
+  sights), fire again, press **Save this zero**. The zero is saved on the
+  device for that rifle, sight and load. Changing the load keeps the
+  sight where it is, so the group moves as it would in life.
+- **Firing line** (`/line`): the view through the sight. A scope zooms
+  across its real range with its mil-dot reticle; the 3x prism sight
+  shows its drop reticle (chevron and hold marks, drawn from the data);
+  the red dot is an unmagnified window with a 2 MOA dot, and on the Tavor
+  SAR a magnifier flips in behind it; the iron sights show a ring and
+  post, or a notch and post with a sliding rear leaf whose settings (in
+  hundreds of meters) raise the bore by the derived angle. The plates
+  stand on their own berms up the hillside, each with a yardage board,
+  paler with distance. The aim wanders the way a rested rifle does; drag
   to hold off, hold **Steady**, press **Fire**. The bullet takes its real
-  flight time; a miss throws dust where it landed, a hit rings late by the
-  flight time plus the sound's trip back. Recoil knocks the view off for a
-  moment. No drop or wind figure is given: the wind shows only as heat
-  shimmer leaning, brush moving and the dust's drift. A shot log lists each
-  shot's distance, sight setting, hold and where it landed. One setting,
-  off by default, **Show the conditions**, prints the true wind,
-  temperature and the engine's drop, for learning.
+  flight time; a miss throws a puff of dust of real size where it landed,
+  a hit rings late by the flight time plus the sound's trip back. Recoil
+  knocks the view off for a moment. One line under the view always states
+  the sight's setting. No drop or wind figure is given: the wind shows
+  only as heat shimmer leaning, brush moving and the dust's drift. A shot
+  log lists each shot's distance, sight setting, leaf, hold and where it
+  landed. One setting, off by default, **Show the conditions**, prints the
+  true wind, temperature and the engine's drop, for learning.
 
 One MOA is a minute of angle, 1/60 of a degree, about 1 inch at 100
 yards; sights click in MOA.
@@ -42,12 +56,16 @@ yards; sights click in MOA.
 
 `data/` holds every figure the game uses: each load's speed, drag figure
 and drag model, each rifle's barrel length and sight height, each sight's
-click value, each course's plates and height above sea level, and the
-weather ranges. Every figure carries the maker's page address and the
+click value, dot size, reticle marks or leaf settings (each setting's
+angle derived with the engine from the service load the leaf was cut
+for), each course's plates (distance, size, height above the firing line
+and place across the view), the dust's size, and the weather ranges. Every figure carries the maker's page address and the
 date it was read, or the word "estimate" and its basis. `lib/data.js`
 refuses a bare number, and `npm test` runs that check over the whole
 folder. The engine is `public/engine.js`; `test/engine.test.js` checks
-it against two makers' own published trajectory tables.
+it against five makers' own published trajectory tables (Sellier &
+Bellot in 7.62x54R and 7.62x39, Federal in 5.56, Hornady in 5.45x39,
+CCI in .22 LR).
 
 Nothing in this repository says whose rifles these are; the rifle set is
 described as a set of rifles, and the ranges appear as the public

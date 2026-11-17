@@ -265,10 +265,15 @@
      Mach 1 it is through the barrier. The extra spread there is an
      estimate: +50% of sigma in the transonic band and +150% once
      subsonic, which is the order long-range shooters report for match
-     bullets and is marked an estimate in the data file. */
-  function spreadSigmaMoa(spreadMoa, mach) {
+     bullets and is marked an estimate in the data file. It is the
+     passage through the barrier that unsettles a bullet, so the factors
+     apply only to a bullet that left the barrel above Mach 1.2
+     (muzzleMach); a .22 that starts at Mach 0.96 never crosses anything
+     and keeps its own spread. */
+  const SUPERSONIC_START = 1.2;
+  function spreadSigmaMoa(spreadMoa, mach, muzzleMach) {
     let sigma = (spreadMoa || 0) / 3.06;
-    if (mach != null) {
+    if (mach != null && (muzzleMach == null || muzzleMach > SUPERSONIC_START)) {
       if (mach < 1) sigma *= 2.5;
       else if (mach < 1.2) sigma *= 1.5;
     }
@@ -316,8 +321,10 @@
     const elevationMoa = (sight.elevationClicks || 0) * sight.clickMoa + (offset.up || 0) + spread.upMoa;
     const windageMoa = (sight.windageClicks || 0) * (sight.windageClickMoa || sight.clickMoa) + (offset.right || 0) + spread.rightMoa;
     const r = fly({ ...input, sightHeightIn: input.rifle ? input.rifle.sightHeightIn : input.sightHeightIn, elevationMoa, windageMoa });
-    if (r.reached && r.transonic) {
-      const extra = spreadSigmaMoa(input.load.spreadMoa, r.mach) - sigma;
+    const muzzleMach = input.load.muzzleFps / air(input.conditions).mach1;
+    r.startedSupersonic = muzzleMach > SUPERSONIC_START;
+    if (r.reached && r.transonic && r.startedSupersonic) {
+      const extra = spreadSigmaMoa(input.load.spreadMoa, r.mach, muzzleMach) - sigma;
       const inchPerMoa = (input.targetYards * 36) * MOA; // 1 MOA at this distance, in inches
       r.hit.upIn += gaussian(rand) * extra * inchPerMoa;
       r.hit.rightIn += gaussian(rand) * extra * inchPerMoa;
@@ -371,5 +378,5 @@
     return null;
   }
 
-  return { G, MOA, DT, STD_DENSITY, air, airDensity, pressureAt, speedOfSound, cdAt, windAt, fly, shoot, spreadSigmaMoa, gaussian, seeded, inchesPerMoa, zeroElevationMoa, table, secondCrossingYards };
+  return { G, MOA, DT, STD_DENSITY, SUPERSONIC_START, air, airDensity, pressureAt, speedOfSound, cdAt, windAt, fly, shoot, spreadSigmaMoa, gaussian, seeded, inchesPerMoa, zeroElevationMoa, table, secondCrossingYards };
 }));

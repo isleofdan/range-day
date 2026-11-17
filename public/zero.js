@@ -10,13 +10,15 @@
   const E = RD.E;
   const d = await RD.data();
   const q = RD.qs();
-  const courseId = d.courses[q.course] ? q.course : 'cta-piru';
+  const c = RD.chooseFrom(d, q);
+  const { courseId, rifleId, sightId } = c;
   const course = { id: courseId, ...d.courses[courseId] };
-  const rifleId = d.rifles[q.rifle] && d.rifles[q.rifle].playable ? q.rifle : (courseId === 'cta-piru' ? 'molot-vepr-54r' : 'bcm-ar15');
   const rifle = d.rifles[rifleId];
-  const sightId = rifleId === 'molot-vepr-54r' ? 'utg-2-7x44' : 'ar-irons';
   const sight = d.sights[sightId];
-  let loadId = rifle.loads.includes(q.load) ? q.load : rifle.loads[0];
+  // A sliding rear leaf (the AK-pattern rifles and the Vepr's irons): its settings and each one's angle.
+  const leaf = sight.kind === 'iron' ? (rifleId === 'ak-545' ? sight.leaf545 : sight.leaf) || null : null;
+  let loadId = c.loadId;
+  RD.remember(c);
   const day = RD.day(course, d.weather);
   let distance = 100;
   let setting = RD.getSight(rifleId, sightId);
@@ -28,7 +30,8 @@
   $('load').innerHTML = rifle.loads.map((l) => `<option value="${l}"${l === loadId ? ' selected' : ''}>${RD.esc(d.loads[l].name)}</option>`).join('');
   $('sight-name').textContent = sight.name;
   $('click-help').textContent = `One click of elevation moves the strike ${sight.clickMoa} MOA (about ${(sight.clickMoa * E.inchesPerMoa(100)).toFixed(1)} inches at 100 yards); one click of windage ${sight.windageClickMoa} MOA. ${sight.kind === 'iron' ? 'Elevation is the front post; windage is the rear drum.' : 'The scope\'s turrets.'}`;
-  $('to-line').href = `/line?course=${courseId}&rifle=${rifleId}&load=${loadId}`;
+  const lineHref = () => `/line${RD.params({ ...c, loadId })}`;
+  $('to-line').href = lineHref();
 
   const canvas = $('view');
   let view = RD.fitCanvas(canvas, 560);
@@ -76,7 +79,7 @@
     for (let i = 0; i < n; i++) {
       const r = E.shoot({
         load, drag: d.physics.dragTables,
-        rifle: { sightHeightIn: rifle.sightHeightIn[sightId], boreOffsetMoa: rifle.boreOffsetMoa },
+        rifle: { sightHeightIn: rifle.sightHeightIn[sightId], boreOffsetMoa: { up: rifle.boreOffsetMoa.up + leafMoa(), right: rifle.boreOffsetMoa.right } },
         sight: { clickMoa: sight.clickMoa, windageClickMoa: sight.windageClickMoa, elevationClicks: setting.elevationClicks, windageClicks: setting.windageClicks },
         targetYards: distance, targetRiseFt: 0, conditions: RD.conditionsOf(day), wind: day.wind, t0: performance.now() / 1000,
       });
@@ -94,36 +97,46 @@
     const off = holes.length - holes.filter((h) => Math.abs(h.upIn) <= 18 && Math.abs(h.rightIn) <= 18).length;
     $('group').textContent = `Last ${last.length} shot${last.length > 1 ? 's' : ''} at ${distance} yards: center of the group ${RD.whereText(up, right)}; spread ${far.toFixed(1)} inches (${(far / E.inchesPerMoa(distance)).toFixed(1)} MOA).${off ? ` ${off} shot${off > 1 ? 's' : ''} missed the paper (the paper is 36 inches square; the backer shows them).` : ''}`;
   }
+  // The leaf's angle above its 100 m setting, which the bore takes like any click: through the engine, as part of the elevation.
+  const leafMoa = () => (leaf ? leaf.moaAbove100[setting.leafIx || 0].moaAbove100 : 0);
   function showSetting() {
     $('el-text').textContent = RD.clicksText(setting.elevationClicks, sight.clickMoa, 'up', 'down');
     $('wd-text').textContent = RD.clicksText(setting.windageClicks, sight.windageClickMoa, 'right', 'left');
+    $('setting-line').textContent = RD.settingLine(setting, sight, leaf ? `Leaf ${RD.leafText(leaf, setting.leafIx || 0)}` : '');
+    if (leaf) $('leaf-text').textContent = RD.leafText(leaf, setting.leafIx || 0);
   }
-  function turn(which, delta) {
-    const limit = sight.clicks;
-    const next = setting[which] + delta;
-    if (Math.abs(next) > limit) { $('saved').textContent = `The ${which === 'elevationClicks' ? 'elevation' : 'windage'} is at the end of its travel (${limit} clicks).`; return; }
+  // The knobs: a press is one click, holding repeats, the coarse pair moves a whole MOA; the limits stop them.
+  RD.wireKnobs(document, sight, () => setting, (which, next) => {
     setting = { ...setting, [which]: next };
     RD.clickSound();
     if (!RD.setSight(rifleId, sightId, setting)) $('saved').textContent = 'Sight setting not saved on this device (storage is off); it holds for this page only.';
     showSetting();
+  }, (text) => { $('saved').textContent = text; });
+  if (leaf) {
+    $('leafrow').hidden = false;
+    const moveLeaf = (delta) => {
+      const ix = (setting.leafIx || 0) + delta;
+      if (ix < 0 || ix >= leaf.settingsMeters.length) { $('saved').textContent = `The leaf is at the end of its slide (${leaf.settingsMeters[ix < 0 ? 0 : leaf.settingsMeters.length - 1]} m).`; return; }
+      setting = { ...setting, leafIx: ix }; RD.clickSound(); showSetting();
+      if (!RD.setSight(rifleId, sightId, setting)) $('saved').textContent = 'Sight setting not saved on this device (storage is off); it holds for this page only.';
+    };
+    $('leaf-up').addEventListener('click', () => moveLeaf(1));
+    $('leaf-down').addEventListener('click', () => moveLeaf(-1));
   }
-  $('el-up').addEventListener('click', () => turn('elevationClicks', 1));
-  $('el-down').addEventListener('click', () => turn('elevationClicks', -1));
-  $('wd-right').addEventListener('click', () => turn('windageClicks', 1));
-  $('wd-left').addEventListener('click', () => turn('windageClicks', -1));
   $('fire1').addEventListener('click', () => fire(1));
   $('fire5').addEventListener('click', () => fire(5));
   $('fresh').addEventListener('click', () => { holes = []; draw(); readout(); });
   $('distance').addEventListener('change', (e) => { distance = Number(e.target.value); holes = []; draw(); readout(); });
-  $('load').addEventListener('change', (e) => { loadId = e.target.value; $('to-line').href = `/line?course=${courseId}&rifle=${rifleId}&load=${loadId}`; draw(); readout(); showSaved(); });
+  $('load').addEventListener('change', (e) => { loadId = e.target.value; $('to-line').href = lineHref(); RD.remember({ ...c, loadId }); draw(); readout(); showSaved(); });
   $('save').addEventListener('click', () => {
     const z = { elevationClicks: setting.elevationClicks, windageClicks: setting.windageClicks, zeroYards: distance, sight: sightId, savedAt: new Date().toISOString() };
-    if (RD.setZero(rifleId, loadId, z)) showSaved(); else $('saved').textContent = 'Zero not saved on this device: the browser refused to store it. The sight setting still holds while this page is open.';
+    if (leaf) z.leafIx = setting.leafIx || 0;
+    if (RD.setZero(rifleId, sightId, loadId, z)) showSaved(); else $('saved').textContent = 'Zero not saved on this device: the browser refused to store it. The sight setting still holds while this page is open.';
   });
   function showSaved() {
-    const z = RD.getZero(rifleId, loadId);
+    const z = RD.getZero(rifleId, sightId, loadId);
     if (z === RD.store.FAILED) { $('saved').textContent = 'Zero not saved on this device: the browser refused to read its storage. The sight setting holds while this page is open.'; return; }
-    $('saved').textContent = z ? `Saved zero for ${d.loads[loadId].name}: ${z.zeroYards} yards, elevation ${RD.clicksText(z.elevationClicks, sight.clickMoa, 'up', 'down')}, windage ${RD.clicksText(z.windageClicks, sight.windageClickMoa, 'right', 'left')}.` : `No zero saved yet for ${d.loads[loadId].name}.`;
+    $('saved').textContent = z ? `Saved zero for ${d.loads[loadId].name}: ${z.zeroYards} yards, elevation ${RD.clicksText(z.elevationClicks, sight.clickMoa, 'up', 'down')}, windage ${RD.clicksText(z.windageClicks, sight.windageClickMoa, 'right', 'left')}${leaf && z.leafIx != null ? `, leaf ${RD.leafText(leaf, z.leafIx)}` : ''}.` : `No zero saved yet for ${d.loads[loadId].name} with this sight.`;
   }
   function conditions() {
     if (!RD.showConditions()) { $('conditions').textContent = ''; return; }

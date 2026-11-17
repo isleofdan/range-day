@@ -25,19 +25,29 @@
     <div class="field"><label for="load">Load</label><select id="load"></select></div>
   </div>
   <div class="viewwrap"><canvas id="view" width="400" height="400"></canvas></div>
+  <p id="setting-line" class="setting mono"></p>
   <p id="result" class="readout">Drag the view to hold off the plate. Press and hold <strong>Steady</strong>, then <strong>Fire</strong>.</p>
   <div id="zoomrow" class="field zoom"><label for="zoom">Zoom <span id="zoom-text" class="mono"></span></label><input id="zoom" type="range" min="2" max="7" step="0.5" value="2"></div>
+  <div id="magrow" class="row" hidden><button id="magnifier" type="button" class="btn inline secondary">Magnifier</button></div>
+  <div id="leafrow" class="knob leaf" hidden>
+    <span class="muted">Rear leaf (the sliding range setting; the number is hundreds of meters)</span>
+    <div class="pair"><button id="leaf-down" type="button" class="btn inline">◀ nearer</button><button id="leaf-up" type="button" class="btn inline">farther ▶</button></div>
+    <span id="leaf-text" class="mono"></span>
+  </div>
   <div class="knobs">
     <div class="knob">
       <span class="muted">Elevation</span>
       <div class="pair"><button id="el-down" type="button" class="btn inline">▼ down</button><button id="el-up" type="button" class="btn inline">▲ up</button></div>
+      <div class="pair coarse"><button id="el-down-moa" type="button" class="btn inline secondary">▼ 1 MOA</button><button id="el-up-moa" type="button" class="btn inline secondary">▲ 1 MOA</button></div>
       <span id="el-text" class="mono"></span>
     </div>
     <div class="knob">
       <span class="muted">Windage</span>
       <div class="pair"><button id="wd-left" type="button" class="btn inline">◀ left</button><button id="wd-right" type="button" class="btn inline">right ▶</button></div>
+      <div class="pair coarse"><button id="wd-left-moa" type="button" class="btn inline secondary">◀ 1 MOA</button><button id="wd-right-moa" type="button" class="btn inline secondary">1 MOA ▶</button></div>
       <span id="wd-text" class="mono"></span>
     </div>
+  </div>
   </div>
   <p id="zero-note" class="muted small"></p>
   <div class="row"><button id="use-zero" type="button" class="btn inline secondary" hidden>Set the sight to this load's saved zero</button></div>

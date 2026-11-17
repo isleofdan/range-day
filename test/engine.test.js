@@ -111,17 +111,20 @@ test('uphill is geometry: the 1,000-yard plate 200 ft up needs less elevation th
   assert.ok(Math.abs(up.lineOfSightAngle - Math.atan2(200, 3000)) < 1e-9);
 });
 
-test('the X95 check for the report: M193 from 16 in, sight 3.0 in, zeroed at 50 yd: where it crosses the line of sight again', () => {
+test('verify 3, the Tavor dot\'s height: M193 zeroed at 50 yd, where it crosses the line of sight again across the sources\' band, and at the data\'s 3.89 in', () => {
   const load = flat.loads['imi-m193'];
   const base = { load, drag, conditions: ICAO, wind: [] };
   const lines = [];
-  for (const sh of [2.6, 3.0, 3.75]) {
+  for (const sh of [2.6, 3.0, 3.21, 3.75, 3.89]) {
     const el = E.zeroElevationMoa({ ...base, sightHeightIn: sh }, 50);
     const x = E.secondCrossingYards({ ...base, sightHeightIn: sh }, el, 600);
     lines.push(`sight ${sh} in: second crossing at ${x ? x.toFixed(0) : 'none'} yd`);
     assert.ok(x > 150 && x < 400, lines[lines.length - 1]);
+    if (sh === 3.89) assert.ok(Math.abs(x - 300) < 5, `at the data's height the second crossing is within 5 yd of 300: ${x}`);
   }
-  console.log('  IMI M193 at ' + load.muzzleFps + ' fps, 50 yd zero:\n    ' + lines.join('\n    '));
+  const chosen = flat.rifles['iwi-x95'].sightHeightIn['pa-md25'];
+  assert.equal(chosen, 3.89);
+  console.log('  IMI M193 at ' + load.muzzleFps + ' fps, 50 yd zero (the data uses ' + chosen + ' in on both Tavors):\n    ' + lines.join('\n    '));
 });
 
 test('a shot through shoot() repeats with the same seed and scatters with the load\'s spread', () => {
@@ -158,4 +161,132 @@ test('the far plate at Piru: the 174 gr match load arrives right at the sound ba
   console.log(`  1,000 yd plate at Piru: 174 gr match Mach ${match.mach.toFixed(2)} (${match.speedFps.toFixed(0)} fps); 180 gr soft point Mach ${sp.mach.toFixed(2)} (${sp.speedFps.toFixed(0)} fps)`);
   assert.ok(match.reached && match.mach > 0.9 && match.mach < 1.05 && match.transonic, `match Mach ${match.mach}`);
   assert.ok(sp.reached && sp.subsonic && sp.mach < 0.9, `soft point Mach ${sp.mach}`);
+});
+
+test('subsonic start: the .22 at 100 yd scatters with its own spread, no multiplier; the S&B 174 gr at 1,000 yd still gets the transonic factor', () => {
+  const rifle = { sightHeightIn: 0.9, boreOffsetMoa: { up: 0, right: 0 } };
+  const sight = { clickMoa: 3, windageClickMoa: 3, elevationClicks: 0, windageClicks: 0 };
+  // The .22: leaves the barrel at Mach 0.96, arrives at 100 yd near Mach 0.8.
+  const twentyTwo = flat.loads['cci-sv-40'];
+  const base22 = { load: twentyTwo, drag, rifle, sight, conditions: ICAO, wind: [], targetYards: 100 };
+  const one = E.shoot({ ...base22, rand: E.seeded(3) });
+  assert.ok(one.reached && one.subsonic && one.startedSupersonic === false, `the .22 arrives subsonic (Mach ${one.mach.toFixed(2)}) having started below Mach 1.2`);
+  const rand = E.seeded(11);
+  const hits = Array.from({ length: 60 }, () => E.shoot({ ...base22, rand }).hit);
+  const mean = hits.reduce((s, h) => s + h.upIn, 0) / hits.length;
+  const sd = Math.sqrt(hits.reduce((s, h) => s + (h.upIn - mean) ** 2, 0) / hits.length);
+  const own = E.inchesPerMoa(100) * (twentyTwo.spreadMoa / 3.06);
+  console.log(`  .22 at 100 yd: per-axis scatter ${sd.toFixed(2)} in; the load's own figure ${own.toFixed(2)} in (with the subsonic multiplier it would be ${(own * 2.5).toFixed(2)})`);
+  assert.ok(sd > own * 0.65 && sd < own * 1.45, `sd ${sd.toFixed(3)} vs own sigma ${own.toFixed(3)}: no multiplier`);
+  assert.equal(E.spreadSigmaMoa(1.5, 0.8, 0.96), 1.5 / 3.06, 'spreadSigmaMoa: a bullet that started subsonic keeps its own sigma');
+  assert.equal(E.spreadSigmaMoa(1.5, 0.8, 2.3), (1.5 / 3.06) * 2.5, 'spreadSigmaMoa: one that started supersonic and arrived subsonic gets the factor');
+  assert.equal(E.spreadSigmaMoa(1.5, 1.1, 2.3), (1.5 / 3.06) * 1.5, 'transonic factor');
+  // The match load at the far plate: starts at Mach 2.26, arrives at Mach 0.97: the transonic factor applies as before.
+  const match = flat.loads['sb-174-hpbt'];
+  const baseM = { load: match, drag, rifle: { sightHeightIn: 3, boreOffsetMoa: { up: 0, right: 0 } }, sight: { clickMoa: 0.25, windageClickMoa: 0.25, elevationClicks: 180, windageClicks: 0 }, conditions: { altitudeFt: 850, tempF: 85 }, wind: [], targetYards: 1000, targetRiseFt: 200 };
+  const far = E.shoot({ ...baseM, rand: E.seeded(5) });
+  assert.ok(far.reached && far.transonic && far.startedSupersonic === true, `match load Mach ${far.mach.toFixed(2)} at 1,000 yd, started supersonic`);
+  const randM = E.seeded(13);
+  const farHits = Array.from({ length: 60 }, () => E.shoot({ ...baseM, rand: randM }).hit);
+  const meanM = farHits.reduce((s, h) => s + h.upIn, 0) / farHits.length;
+  const sdM = Math.sqrt(farHits.reduce((s, h) => s + (h.upIn - meanM) ** 2, 0) / farHits.length);
+  const ownM = E.inchesPerMoa(1000) * (match.spreadMoa / 3.06);
+  const factor = far.mach < 1 ? 2.5 : 1.5;
+  console.log(`  S&B 174 gr at 1,000 yd (Mach ${far.mach.toFixed(2)}): per-axis scatter ${sdM.toFixed(1)} in; own figure ${ownM.toFixed(1)} in, with the factor ${(ownM * factor).toFixed(1)} in`);
+  assert.ok(sdM > ownM * 1.15, `sd ${sdM.toFixed(2)} should exceed the load's own ${ownM.toFixed(2)}: the factor still applies`);
+});
+
+// --- verify 2: the new calibers against a maker's table ----------------------------------------------------
+// Sellier & Bellot 124 gr FMJ 7.62x39 (SB76239A): the maker's US page in yards (100 yd zero) and the Czech page in
+// metres (100 m zero), read through the search engine's indexed text on 2026-11-17 (data/loads.json, sb-124).
+const SB39_YD = { 100: [0, null], 200: [-5.7, 1854], 300: [-21.7, 1599] };
+const SB39_M = { 100: [0, null], 200: [-19.1, null], 300: [-71.0, 466] };
+test('verify 2, 7.62x39: S&B 124 gr against S&B\'s own tables (yards and metres), G1 0.286, within 0.2 MOA', () => {
+  const lines = [];
+  {
+    const load = { muzzleFps: 2421, bc: 0.286, dragModel: 'G1' };
+    const base = { load, drag, conditions: ICAO, wind: [], sightHeightIn: 2.0 };
+    const el = E.zeroElevationMoa(base, 100);
+    for (const y of Object.keys(SB39_YD).map(Number)) {
+      const r = E.fly({ ...base, elevationMoa: el, windageMoa: 0, targetYards: y });
+      const [drop, v] = SB39_YD[y];
+      const diff = moa(r.hit.upIn - drop, y);
+      lines.push(`${y} yd: drop ${r.hit.upIn.toFixed(1)} vs S&B ${drop} in (${diff.toFixed(2)} MOA); ${r.speedFps.toFixed(0)}${v ? ` vs ${v}` : ''} fps`);
+      assert.ok(Math.abs(diff) <= 0.2, lines[lines.length - 1]);
+      if (v) assert.ok(Math.abs(r.speedFps - v) < 20, lines[lines.length - 1]);
+    }
+  }
+  {
+    const load = { muzzleFps: 738 / 0.3048, bc: 0.286, dragModel: 'G1' };
+    const base = { load, drag, conditions: ICAO, wind: [], sightHeightIn: 2.0 };
+    const el = E.zeroElevationMoa(base, 100 / 0.9144);
+    for (const m of Object.keys(SB39_M).map(Number)) {
+      const y = m / 0.9144;
+      const r = E.fly({ ...base, elevationMoa: el, windageMoa: 0, targetYards: y });
+      const [drop, v] = SB39_M[m];
+      const diff = moa(r.hit.upIn - drop / 2.54, y);
+      lines.push(`${m} m: drop ${(r.hit.upIn * 2.54).toFixed(1)} vs S&B ${drop} cm (${diff.toFixed(2)} MOA); ${(r.speedFps * 0.3048).toFixed(0)}${v ? ` vs ${v}` : ''} m/s`);
+      assert.ok(Math.abs(diff) <= 0.2, lines[lines.length - 1]);
+      if (v) assert.ok(Math.abs(r.speedFps * 0.3048 - v) < 8, lines[lines.length - 1]);
+    }
+  }
+  console.log('  S&B 124 gr 7.62x39 (G1 0.286, sight 2.0 in, 2,421 fps / 738 m/s):\n    ' + lines.join('\n    '));
+});
+
+// Hornady BLACK 5.45x39 60 gr V-MAX (#81246): Hornady's table on its product page (200 yd zero), read 2026-11-17. The
+// table is reproduced with Army Standard Metro air (59 F, 29.53 inHg, 78% humidity) and the sight 1.75 in over the
+// bore; under ICAO air the drop at 500 yd is 0.25 MOA off, so those are the inputs the table follows.
+const HORNADY = { 100: [1.9, 2495], 200: [0, 2202], 300: [-9.1, 1929], 400: [-27.7, 1679], 500: [-58.6, 1457] };
+test('verify 2, 5.45x39: Hornady 60 gr V-MAX against Hornady\'s table, G1 0.285, within 0.2 MOA to 500 yd', () => {
+  const load = { muzzleFps: 2810, bc: 0.285, dragModel: 'G1' };
+  const base = { load, drag, conditions: { altitudeFt: 0, tempF: 59, pressureInHg: 29.53, humidity: 0.78 }, wind: [], sightHeightIn: 1.75 };
+  const el = E.zeroElevationMoa(base, 200);
+  const lines = [];
+  for (const y of Object.keys(HORNADY).map(Number)) {
+    const r = E.fly({ ...base, elevationMoa: el, windageMoa: 0, targetYards: y });
+    const [drop, v] = HORNADY[y];
+    const diff = moa(r.hit.upIn - drop, y);
+    lines.push(`${y} yd: drop ${r.hit.upIn.toFixed(1)} vs Hornady ${drop} in (${diff.toFixed(2)} MOA); ${r.speedFps.toFixed(0)} vs ${v} fps`);
+    assert.ok(Math.abs(diff) <= 0.2, lines[lines.length - 1]);
+    assert.ok(Math.abs(r.speedFps - v) < 10, lines[lines.length - 1]);
+  }
+  console.log('  Hornady 5.45x39 60 gr (G1 0.285, Army Standard Metro air, sight 1.75 in, 200 yd zero):\n    ' + lines.join('\n    '));
+});
+
+// CCI Standard Velocity 40 gr (#0035): CCI's own table (100 yd zero, sights 1.5 in above the bore), read 2026-11-17.
+const CCI = { 25: [2.2, null], 50: [3.8, 977], 75: [3.1, 940], 100: [0, 908] };
+test('verify 2, .22 LR: CCI Standard Velocity 40 gr against CCI\'s table, G1 0.12, within 0.2 MOA to 100 yd', () => {
+  const load = flat.loads['cci-sv-40'];
+  const base = { load, drag, conditions: ICAO, wind: [], sightHeightIn: 1.5 };
+  const el = E.zeroElevationMoa(base, 100);
+  const lines = [];
+  for (const y of Object.keys(CCI).map(Number)) {
+    const r = E.fly({ ...base, elevationMoa: el, windageMoa: 0, targetYards: y });
+    const [drop, v] = CCI[y];
+    const diff = moa(r.hit.upIn - drop, y);
+    lines.push(`${y} yd: ${r.hit.upIn.toFixed(2)} vs CCI ${drop} in (${diff.toFixed(2)} MOA); ${r.speedFps.toFixed(0)}${v ? ` vs ${v}` : ''} fps`);
+    assert.ok(Math.abs(diff) <= 0.2, lines[lines.length - 1]);
+    if (v) assert.ok(Math.abs(r.speedFps - v) < 6, lines[lines.length - 1]);
+  }
+  console.log(`  CCI .22 LR 40 gr (G1 ${load.bc}, ${load.muzzleFps} fps, sight 1.5 in, 100 yd zero):\n    ` + lines.join('\n    '));
+});
+
+// --- verify 9: the drop reticle with the set's loads, reported, not forced ----------------------------------------
+test('verify 9: zeroed at 50 yd on the chevron tip with each 7.62x39 load, where the bullet lands when each mark is held on the plate (a table, no pass or fail)', () => {
+  const sight = flat.sights['pa-3x-acss'], rifle = flat.rifles['ak-762'];
+  const lines = [];
+  for (const loadId of rifle.loads) {
+    const load = flat.loads[loadId];
+    const base = { load, drag, conditions: ICAO, wind: [], sightHeightIn: rifle.sightHeightIn['pa-3x-acss'] };
+    const el = E.zeroElevationMoa(base, sight.reticle.zeroYards);
+    const cells = sight.reticle.marksMoaBelowZero.map((m) => {
+      const r = E.fly({ ...base, elevationMoa: el, windageMoa: 0, targetYards: m.yards });
+      // holding the mark on the plate: the bullet sits where it is against the zero line, plus the mark's angle below it
+      const vsMark = r.hit.upIn + m.moaBelowZero * E.inchesPerMoa(m.yards);
+      return `${m.yards} yd ${vsMark >= 0 ? '+' : ''}${vsMark.toFixed(1)} in`;
+    });
+    lines.push(`${load.name} (${load.muzzleFps} fps): ${cells.join(', ')}`);
+    assert.ok(cells.length === 6);
+  }
+  console.log('  ACSS marks held on the plate, 50 yd zero on the tip, sight 3.0 in, standard air (+ high, - low):\n    ' + lines.join('\n    '));
 });

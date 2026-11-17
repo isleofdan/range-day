@@ -1,5 +1,5 @@
 {
- "_about": "The two courses. Each models a public range. plates lists each steel plate: its distance, its width and height in inches, and how high it sits above the firing line (riseFt), computed from farPlateRiseFt in proportion to distance. altitudeFt is the range's height above sea level, for the air.",
+ "_about": "The two courses. Each models a public range. plates lists each steel plate: its distance, its width and height in inches, how high it stands above the firing line (riseFt, its own figure, used by the engine and the drawing alike) and where it stands sideways (lateralYd, placed by angle as seen from the firing line). altitudeFt is the range's height above sea level, for the air.",
  "cta-piru": {
   "name": "Canyon course (modeled on California Tactical Academy, Piru)",
   "address": {
@@ -21,10 +21,6 @@
   "altitudeFt": {
    "value": 850,
    "estimate": "no elevation service could be reached from this session. Holser Canyon is listed at 830 ft at the canyon (USGS Piru quadrangle via https://www.topozone.com/?p=750134) and the town of Piru at 709 ft (https://www.topozone.com/?p=661862); the range is about 1.5 miles up the canyon road, so 850 ft"
-  },
-  "farPlateRiseFt": {
-   "value": 200,
-   "estimate": "the brief puts the far plates on a slope \"that rises to maybe a couple hundred feet\"; the 1,000-yard plate is set 200 ft above the firing line and the others in proportion to distance. One value to adjust"
   },
   "zeroYards": [
    {
@@ -63,8 +59,8 @@
   "plates": [
    {
     "lateralYd": {
-     "value": -4,
-     "estimate": "where each plate stands sideways from the firing line's center, in yards: the range publishes no layout; plates are spread left and right so they do not hide one another"
+     "value": -6.3,
+     "estimate": "where the plate stands sideways, in yards, from the line straight downrange: the range publishes no layout; the plates are placed by their angle as seen from the firing line, -108 minutes of angle (nearest on the left, each farther plate 27 minutes of angle further right), so no two share a spot and the order reads across the hillside"
     },
     "yards": {
      "value": 200,
@@ -81,12 +77,16 @@
     "heightIn": {
      "value": 18,
      "estimate": "same basis: the same basis as the figure next to it in this entry"
+    },
+    "riseFt": {
+     "value": 15,
+     "estimate": "how high the plate stands above the firing line, in feet: the brief puts the far plates on a slope \"that rises to maybe a couple hundred feet\", so the 1,000-yard plate is 200 ft up (range-day-one brief) and the others follow a slope that steepens with distance, 200 × (yards / 1000)^1.6, so each farther plate sits visibly higher in the view than the one before it (the steps are 14 to 25 minutes of angle). An estimate until photographs of the range decide it"
     }
    },
    {
     "lateralYd": {
-     "value": 7,
-     "estimate": "where each plate stands sideways from the firing line's center, in yards: the range publishes no layout; plates are spread left and right so they do not hide one another"
+     "value": -7.1,
+     "estimate": "where the plate stands sideways, in yards, from the line straight downrange: the range publishes no layout; the plates are placed by their angle as seen from the firing line, -81 minutes of angle (nearest on the left, each farther plate 27 minutes of angle further right), so no two share a spot and the order reads across the hillside"
     },
     "yards": {
      "value": 300,
@@ -103,12 +103,16 @@
     "heightIn": {
      "value": 18,
      "estimate": "same basis: the same basis as the figure next to it in this entry"
+    },
+    "riseFt": {
+     "value": 29,
+     "estimate": "how high the plate stands above the firing line, in feet: the brief puts the far plates on a slope \"that rises to maybe a couple hundred feet\", so the 1,000-yard plate is 200 ft up (range-day-one brief) and the others follow a slope that steepens with distance, 200 × (yards / 1000)^1.6, so each farther plate sits visibly higher in the view than the one before it (the steps are 14 to 25 minutes of angle). An estimate until photographs of the range decide it"
     }
    },
    {
     "lateralYd": {
-     "value": -10,
-     "estimate": "where each plate stands sideways from the firing line's center, in yards: the range publishes no layout; plates are spread left and right so they do not hide one another"
+     "value": -6.3,
+     "estimate": "where the plate stands sideways, in yards, from the line straight downrange: the range publishes no layout; the plates are placed by their angle as seen from the firing line, -54 minutes of angle (nearest on the left, each farther plate 27 minutes of angle further right), so no two share a spot and the order reads across the hillside"
     },
     "yards": {
      "value": 400,
@@ -125,12 +129,16 @@
     "heightIn": {
      "value": 18,
      "estimate": "same basis: the same basis as the figure next to it in this entry"
+    },
+    "riseFt": {
+     "value": 46,
+     "estimate": "how high the plate stands above the firing line, in feet: the brief puts the far plates on a slope \"that rises to maybe a couple hundred feet\", so the 1,000-yard plate is 200 ft up (range-day-one brief) and the others follow a slope that steepens with distance, 200 × (yards / 1000)^1.6, so each farther plate sits visibly higher in the view than the one before it (the steps are 14 to 25 minutes of angle). An estimate until photographs of the range decide it"
     }
    },
    {
     "lateralYd": {
-     "value": 13,
-     "estimate": "where each plate stands sideways from the firing line's center, in yards: the range publishes no layout; plates are spread left and right so they do not hide one another"
+     "value": -3.9,
+     "estimate": "where the plate stands sideways, in yards, from the line straight downrange: the range publishes no layout; the plates are placed by their angle as seen from the firing line, -27 minutes of angle (nearest on the left, each farther plate 27 minutes of angle further right), so no two share a spot and the order reads across the hillside"
     },
     "yards": {
      "value": 500,
@@ -147,12 +155,16 @@
     "heightIn": {
      "value": 18,
      "estimate": "same basis: the same basis as the figure next to it in this entry"
+    },
+    "riseFt": {
+     "value": 66,
+     "estimate": "how high the plate stands above the firing line, in feet: the brief puts the far plates on a slope \"that rises to maybe a couple hundred feet\", so the 1,000-yard plate is 200 ft up (range-day-one brief) and the others follow a slope that steepens with distance, 200 × (yards / 1000)^1.6, so each farther plate sits visibly higher in the view than the one before it (the steps are 14 to 25 minutes of angle). An estimate until photographs of the range decide it"
     }
    },
    {
     "lateralYd": {
-     "value": -16,
-     "estimate": "where each plate stands sideways from the firing line's center, in yards: the range publishes no layout; plates are spread left and right so they do not hide one another"
+     "value": 0,
+     "estimate": "where the plate stands sideways, in yards, from the line straight downrange: the range publishes no layout; the plates are placed by their angle as seen from the firing line, 0 minutes of angle (nearest on the left, each farther plate 27 minutes of angle further right), so no two share a spot and the order reads across the hillside"
     },
     "yards": {
      "value": 600,
@@ -169,12 +181,16 @@
     "heightIn": {
      "value": 24,
      "estimate": "same basis: the same basis as the figure next to it in this entry"
+    },
+    "riseFt": {
+     "value": 88,
+     "estimate": "how high the plate stands above the firing line, in feet: the brief puts the far plates on a slope \"that rises to maybe a couple hundred feet\", so the 1,000-yard plate is 200 ft up (range-day-one brief) and the others follow a slope that steepens with distance, 200 × (yards / 1000)^1.6, so each farther plate sits visibly higher in the view than the one before it (the steps are 14 to 25 minutes of angle). An estimate until photographs of the range decide it"
     }
    },
    {
     "lateralYd": {
-     "value": 19,
-     "estimate": "where each plate stands sideways from the firing line's center, in yards: the range publishes no layout; plates are spread left and right so they do not hide one another"
+     "value": 5.5,
+     "estimate": "where the plate stands sideways, in yards, from the line straight downrange: the range publishes no layout; the plates are placed by their angle as seen from the firing line, 27 minutes of angle (nearest on the left, each farther plate 27 minutes of angle further right), so no two share a spot and the order reads across the hillside"
     },
     "yards": {
      "value": 700,
@@ -191,12 +207,16 @@
     "heightIn": {
      "value": 24,
      "estimate": "same basis: the same basis as the figure next to it in this entry"
+    },
+    "riseFt": {
+     "value": 113,
+     "estimate": "how high the plate stands above the firing line, in feet: the brief puts the far plates on a slope \"that rises to maybe a couple hundred feet\", so the 1,000-yard plate is 200 ft up (range-day-one brief) and the others follow a slope that steepens with distance, 200 × (yards / 1000)^1.6, so each farther plate sits visibly higher in the view than the one before it (the steps are 14 to 25 minutes of angle). An estimate until photographs of the range decide it"
     }
    },
    {
     "lateralYd": {
-     "value": -22,
-     "estimate": "where each plate stands sideways from the firing line's center, in yards: the range publishes no layout; plates are spread left and right so they do not hide one another"
+     "value": 12.6,
+     "estimate": "where the plate stands sideways, in yards, from the line straight downrange: the range publishes no layout; the plates are placed by their angle as seen from the firing line, 54 minutes of angle (nearest on the left, each farther plate 27 minutes of angle further right), so no two share a spot and the order reads across the hillside"
     },
     "yards": {
      "value": 800,
@@ -213,12 +233,16 @@
     "heightIn": {
      "value": 24,
      "estimate": "same basis: the same basis as the figure next to it in this entry"
+    },
+    "riseFt": {
+     "value": 140,
+     "estimate": "how high the plate stands above the firing line, in feet: the brief puts the far plates on a slope \"that rises to maybe a couple hundred feet\", so the 1,000-yard plate is 200 ft up (range-day-one brief) and the others follow a slope that steepens with distance, 200 × (yards / 1000)^1.6, so each farther plate sits visibly higher in the view than the one before it (the steps are 14 to 25 minutes of angle). An estimate until photographs of the range decide it"
     }
    },
    {
     "lateralYd": {
-     "value": 25,
-     "estimate": "where each plate stands sideways from the firing line's center, in yards: the range publishes no layout; plates are spread left and right so they do not hide one another"
+     "value": 21.2,
+     "estimate": "where the plate stands sideways, in yards, from the line straight downrange: the range publishes no layout; the plates are placed by their angle as seen from the firing line, 81 minutes of angle (nearest on the left, each farther plate 27 minutes of angle further right), so no two share a spot and the order reads across the hillside"
     },
     "yards": {
      "value": 900,
@@ -235,12 +259,16 @@
     "heightIn": {
      "value": 36,
      "estimate": "same basis: the same basis as the figure next to it in this entry"
+    },
+    "riseFt": {
+     "value": 169,
+     "estimate": "how high the plate stands above the firing line, in feet: the brief puts the far plates on a slope \"that rises to maybe a couple hundred feet\", so the 1,000-yard plate is 200 ft up (range-day-one brief) and the others follow a slope that steepens with distance, 200 × (yards / 1000)^1.6, so each farther plate sits visibly higher in the view than the one before it (the steps are 14 to 25 minutes of angle). An estimate until photographs of the range decide it"
     }
    },
    {
     "lateralYd": {
-     "value": -28,
-     "estimate": "where each plate stands sideways from the firing line's center, in yards: the range publishes no layout; plates are spread left and right so they do not hide one another"
+     "value": 31.4,
+     "estimate": "where the plate stands sideways, in yards, from the line straight downrange: the range publishes no layout; the plates are placed by their angle as seen from the firing line, 108 minutes of angle (nearest on the left, each farther plate 27 minutes of angle further right), so no two share a spot and the order reads across the hillside"
     },
     "yards": {
      "value": 1000,
@@ -257,6 +285,10 @@
     "heightIn": {
      "value": 36,
      "estimate": "same basis: the same basis as the figure next to it in this entry"
+    },
+    "riseFt": {
+     "value": 200,
+     "estimate": "how high the plate stands above the firing line, in feet: the brief puts the far plates on a slope \"that rises to maybe a couple hundred feet\", so the 1,000-yard plate is 200 ft up (range-day-one brief) and the others follow a slope that steepens with distance, 200 × (yards / 1000)^1.6, so each farther plate sits visibly higher in the view than the one before it (the steps are 14 to 25 minutes of angle). An estimate until photographs of the range decide it"
     }
    }
   ]
@@ -283,10 +315,6 @@
    "value": 1500,
    "estimate": "no elevation service could be reached from this session. Sylmar is about 1,270 ft (https://en.wikipedia.org/wiki/Sylmar,_Los_Angeles) and the range sits up Little Tujunga Canyon above the town; 1,500 ft"
   },
-  "farPlateRiseFt": {
-   "value": 0,
-   "estimate": "the brief describes no slope at this range; the plates are set level with the firing line"
-  },
   "zeroYards": [
    {
     "value": 25,
@@ -324,8 +352,8 @@
   "plates": [
    {
     "lateralYd": {
-     "value": 3,
-     "estimate": "where each plate stands sideways, in yards: the range publishes no layout; spread so they do not hide one another"
+     "value": 2.2,
+     "estimate": "where the plate stands sideways, in yards, from the line straight downrange: the range publishes no layout; one visitor's description puts the 500 and 600 yard targets a little to the left of the rifle side (https://www.pewpewtactical.com/review-of-angeles-shooting-range-sylmar-ca/), so the plates run from the nearest on the right to the farthest on the left, each 30 minutes of angle further left as seen from the firing line (this plate at 75)"
     },
     "yards": {
      "value": 100,
@@ -342,12 +370,16 @@
     "heightIn": {
      "value": 18,
      "estimate": "same basis: the same basis as the figure next to it in this entry"
+    },
+    "riseFt": {
+     "value": 1,
+     "estimate": "how high the plate stands above the firing line, in feet: nothing published describes how the ground runs toward the 600-yard berm (the range's own pages name only the berm distances), so a gentle rise is used, 1 ft at 100 yards growing as the square of the distance to 36 ft at 600 (about 1 degree at the far berm), which puts each farther plate 11 minutes of angle higher in the view than the one before it. An estimate until photographs of the range decide it"
     }
    },
    {
     "lateralYd": {
-     "value": -5,
-     "estimate": "where each plate stands sideways, in yards: the range publishes no layout; spread so they do not hide one another"
+     "value": 2.6,
+     "estimate": "where the plate stands sideways, in yards, from the line straight downrange: the range publishes no layout; one visitor's description puts the 500 and 600 yard targets a little to the left of the rifle side (https://www.pewpewtactical.com/review-of-angeles-shooting-range-sylmar-ca/), so the plates run from the nearest on the right to the farthest on the left, each 30 minutes of angle further left as seen from the firing line (this plate at 45)"
     },
     "yards": {
      "value": 200,
@@ -364,12 +396,16 @@
     "heightIn": {
      "value": 18,
      "estimate": "same basis: the same basis as the figure next to it in this entry"
+    },
+    "riseFt": {
+     "value": 4,
+     "estimate": "how high the plate stands above the firing line, in feet: nothing published describes how the ground runs toward the 600-yard berm (the range's own pages name only the berm distances), so a gentle rise is used, 1 ft at 100 yards growing as the square of the distance to 36 ft at 600 (about 1 degree at the far berm), which puts each farther plate 11 minutes of angle higher in the view than the one before it. An estimate until photographs of the range decide it"
     }
    },
    {
     "lateralYd": {
-     "value": 7,
-     "estimate": "where each plate stands sideways, in yards: the range publishes no layout; spread so they do not hide one another"
+     "value": 1.3,
+     "estimate": "where the plate stands sideways, in yards, from the line straight downrange: the range publishes no layout; one visitor's description puts the 500 and 600 yard targets a little to the left of the rifle side (https://www.pewpewtactical.com/review-of-angeles-shooting-range-sylmar-ca/), so the plates run from the nearest on the right to the farthest on the left, each 30 minutes of angle further left as seen from the firing line (this plate at 15)"
     },
     "yards": {
      "value": 300,
@@ -386,12 +422,16 @@
     "heightIn": {
      "value": 18,
      "estimate": "same basis: the same basis as the figure next to it in this entry"
+    },
+    "riseFt": {
+     "value": 9,
+     "estimate": "how high the plate stands above the firing line, in feet: nothing published describes how the ground runs toward the 600-yard berm (the range's own pages name only the berm distances), so a gentle rise is used, 1 ft at 100 yards growing as the square of the distance to 36 ft at 600 (about 1 degree at the far berm), which puts each farther plate 11 minutes of angle higher in the view than the one before it. An estimate until photographs of the range decide it"
     }
    },
    {
     "lateralYd": {
-     "value": -9,
-     "estimate": "where each plate stands sideways, in yards: the range publishes no layout; spread so they do not hide one another"
+     "value": -1.7,
+     "estimate": "where the plate stands sideways, in yards, from the line straight downrange: the range publishes no layout; one visitor's description puts the 500 and 600 yard targets a little to the left of the rifle side (https://www.pewpewtactical.com/review-of-angeles-shooting-range-sylmar-ca/), so the plates run from the nearest on the right to the farthest on the left, each 30 minutes of angle further left as seen from the firing line (this plate at -15)"
     },
     "yards": {
      "value": 400,
@@ -408,12 +448,16 @@
     "heightIn": {
      "value": 24,
      "estimate": "same basis: the same basis as the figure next to it in this entry"
+    },
+    "riseFt": {
+     "value": 16,
+     "estimate": "how high the plate stands above the firing line, in feet: nothing published describes how the ground runs toward the 600-yard berm (the range's own pages name only the berm distances), so a gentle rise is used, 1 ft at 100 yards growing as the square of the distance to 36 ft at 600 (about 1 degree at the far berm), which puts each farther plate 11 minutes of angle higher in the view than the one before it. An estimate until photographs of the range decide it"
     }
    },
    {
     "lateralYd": {
-     "value": 11,
-     "estimate": "where each plate stands sideways, in yards: the range publishes no layout; spread so they do not hide one another"
+     "value": -6.5,
+     "estimate": "where the plate stands sideways, in yards, from the line straight downrange: the range publishes no layout; one visitor's description puts the 500 and 600 yard targets a little to the left of the rifle side (https://www.pewpewtactical.com/review-of-angeles-shooting-range-sylmar-ca/), so the plates run from the nearest on the right to the farthest on the left, each 30 minutes of angle further left as seen from the firing line (this plate at -45)"
     },
     "yards": {
      "value": 500,
@@ -430,12 +474,16 @@
     "heightIn": {
      "value": 24,
      "estimate": "same basis: the same basis as the figure next to it in this entry"
+    },
+    "riseFt": {
+     "value": 25,
+     "estimate": "how high the plate stands above the firing line, in feet: nothing published describes how the ground runs toward the 600-yard berm (the range's own pages name only the berm distances), so a gentle rise is used, 1 ft at 100 yards growing as the square of the distance to 36 ft at 600 (about 1 degree at the far berm), which puts each farther plate 11 minutes of angle higher in the view than the one before it. An estimate until photographs of the range decide it"
     }
    },
    {
     "lateralYd": {
-     "value": -13,
-     "estimate": "where each plate stands sideways, in yards: the range publishes no layout; spread so they do not hide one another"
+     "value": -13.1,
+     "estimate": "where the plate stands sideways, in yards, from the line straight downrange: the range publishes no layout; one visitor's description puts the 500 and 600 yard targets a little to the left of the rifle side (https://www.pewpewtactical.com/review-of-angeles-shooting-range-sylmar-ca/), so the plates run from the nearest on the right to the farthest on the left, each 30 minutes of angle further left as seen from the firing line (this plate at -75)"
     },
     "yards": {
      "value": 600,
@@ -452,6 +500,10 @@
     "heightIn": {
      "value": 24,
      "estimate": "same basis: the same basis as the figure next to it in this entry"
+    },
+    "riseFt": {
+     "value": 36,
+     "estimate": "how high the plate stands above the firing line, in feet: nothing published describes how the ground runs toward the 600-yard berm (the range's own pages name only the berm distances), so a gentle rise is used, 1 ft at 100 yards growing as the square of the distance to 36 ft at 600 (about 1 degree at the far berm), which puts each farther plate 11 minutes of angle higher in the view than the one before it. An estimate until photographs of the range decide it"
     }
    }
   ]
