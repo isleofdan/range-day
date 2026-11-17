@@ -34,8 +34,11 @@ async function signedIn(viewport) {
   await page.fill('#passphrase', PASS);
   await page.click('button[type=submit]');
   await page.waitForURL(`${base}/`);
+  await noDay(page);
   return { page, context, errors };
 }
+// Closes any day left open by an earlier test, so a screen opens on the choice its address makes (an open day with shots wins over the address).
+const noDay = (page) => page.evaluate(() => { try { localStorage.removeItem('range-day:day:open'); localStorage.removeItem('range-day:day:packed'); } catch {} });
 const groupCenter = async (page) => {
   const t = await page.textContent('#group');
   const m = /center of the group ([\d.]+) in (low|high), ([\d.]+) in (right|left)|center of the group (level|[\d.]+ in (?:low|high)), (centered|[\d.]+ in (?:right|left))/.exec(t);
@@ -57,8 +60,9 @@ test('verify 4: zero the Vepr at 100 yards, reload, the zero is still there; cha
   const { page, context, errors } = await signedIn();
   await page.goto(`${base}/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`);
   await page.waitForSelector('#fire5');
-  // Walk the group onto the center: the readout says where it is, the clicks are 0.25 MOA.
-  for (let round = 0; round < 4; round++) {
+  // Walk the group onto the center: the readout says where it is, the clicks are 0.25 MOA. Three groups of five
+  // and a final five: the whole box of 20 (a day is one box; the bench refuses to fire when it is empty).
+  for (let round = 0; round < 3; round++) {
     await page.click('#fresh'); await page.click('#fire5');
     const c = await groupCenter(page);
     const elClicks = Math.round(-c.up / (0.25 * E.inchesPerMoa(100)));
@@ -79,39 +83,40 @@ test('verify 4: zero the Vepr at 100 yards, reload, the zero is still there; cha
   assert.match(await page.textContent('#saved'), /Saved zero for Sellier & Bellot 174 gr.*100 yards/);
   await page.goto(`${base}/?rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('.rifle');
   assert.match(await page.textContent('#zero'), /Zeroed at 100 yards/);
-  // Change the load: the sight stays, the group lands where the engine puts the other load.
+  // Change the load (a day is one load, so the other load is a new day from home): the sight stays, and each group lands where the engine puts its load in its day's air.
   await page.goto(`${base}/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('#fire5');
   assert.equal(await page.textContent('#el-text'), el, 'changing nothing keeps the sight');
-  await page.selectOption('#load', 'wolf-203-sp');
-  assert.equal(await page.textContent('#el-text'), el, 'changing the load keeps the sight where it was');
+  assert.ok(await page.isDisabled('#load'), 'the load is fixed while the day is open: one box, one load');
+  await page.selectOption('#distance', '200');
+  await page.click('#fresh'); await page.click('#fire5');
+  const same = await groupCenter(page);
+  const day1 = await page.evaluate(() => RangeDayZero.day.weather);
+  await noDay(page);
+  await page.goto(`${base}/zero?course=cta-piru&rifle=molot-vepr-54r&load=wolf-203-sp`); await page.waitForSelector('#fire5');
+  assert.equal(await page.textContent('#el-text'), el, 'the other load, a new day: the sight is where it was left');
   await page.selectOption('#distance', '200');
   await page.click('#fresh'); await page.click('#fire5');
   const other = await groupCenter(page);
-  await page.selectOption('#load', 'sb-174-hpbt');
-  await page.click('#fresh'); await page.click('#fire5');
-  const same = await groupCenter(page);
-  // The engine's own figure for the difference, with the same sight and air, no spread.
-  const day = await page.evaluate(() => JSON.parse(sessionStorage.getItem('range-day:day:cta-piru')));
+  const day2 = await page.evaluate(() => RangeDayZero.day.weather);
+  // The engine's own figure for the difference, with the same sight, each load in its own day's air, no spread.
   const setting = await page.evaluate(() => JSON.parse(localStorage.getItem('range-day:sight:molot-vepr-54r:utg-2-7x44')));
   const rifle = flat.rifles['molot-vepr-54r'], sight = flat.sights['utg-2-7x44'];
-  const common = { drag: flat.physics.dragTables, sightHeightIn: rifle.sightHeightIn['utg-2-7x44'], elevationMoa: setting.elevationClicks * sight.clickMoa + rifle.boreOffsetMoa.up, windageMoa: setting.windageClicks * sight.windageClickMoa + rifle.boreOffsetMoa.right, targetYards: 200, conditions: { altitudeFt: day.altitudeFt, tempF: day.tempF, pressureInHg: day.pressureInHg, humidity: day.humidity }, wind: day.wind };
-  const a = E.fly({ ...common, load: flat.loads['sb-174-hpbt'] }), b = E.fly({ ...common, load: flat.loads['wolf-203-sp'] });
+  const common = { drag: flat.physics.dragTables, powder: flat.physics.powderTemperature, sightHeightIn: rifle.sightHeightIn['utg-2-7x44'], elevationMoa: setting.elevationClicks * sight.clickMoa + rifle.boreOffsetMoa.up, windageMoa: setting.windageClicks * sight.windageClickMoa + rifle.boreOffsetMoa.right, targetYards: 200 };
+  const cond = (w) => ({ altitudeFt: w.altitudeFt, tempF: w.tempF, pressureInHg: w.pressureInHg, humidity: w.humidity });
+  const a = E.fly({ ...common, load: flat.loads['sb-174-hpbt'], conditions: cond(day1), wind: day1.wind }), b = E.fly({ ...common, load: flat.loads['wolf-203-sp'], conditions: cond(day2), wind: day2.wind });
   const predicted = b.hit.upIn - a.hit.upIn;
-  console.log(`  load change at 200 yd, same sight: the 203 gr group landed ${(other.up - same.up).toFixed(1)} in from the 174 gr group; the engine's figure ${predicted.toFixed(1)} in`);
+  console.log(`  load change at 200 yd, same sight (two days, ${day1.tempF} and ${day2.tempF} F): the 203 gr group landed ${(other.up - same.up).toFixed(1)} in from the 174 gr group; the engine's figure ${predicted.toFixed(1)} in`);
   assert.ok(Math.abs(predicted) > 1, 'the two loads differ at 200 yards');
   assert.ok(Math.abs((other.up - same.up) - predicted) < 4, `moved ${other.up - same.up}, engine ${predicted}`);
-  // On the firing line too: changing the load keeps the sight; the saved zero is a button.
+  // On the firing line too: the load is the day's; the saved zero is a button when the sight has left it.
+  await noDay(page);
   await page.goto(`${base}/line?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('#fire');
   const lineEl = await page.textContent('#el-text');
   assert.equal(lineEl, el, 'the firing line opens at the saved zero for the arriving load');
+  assert.ok(await page.isDisabled('#load'), 'the load is the day\'s on the firing line too');
+  assert.ok(await page.isHidden('#use-zero'), 'at the saved zero: no button');
   await page.click('#el-up'); await page.click('#el-up');
-  const moved = await page.textContent('#el-text');
-  await page.selectOption('#load', 'wolf-203-sp');
-  assert.equal(await page.textContent('#el-text'), moved, 'changing the load on the firing line keeps the sight where it was');
-  assert.ok(await page.isHidden('#use-zero'), 'no saved zero for the other load: no button');
-  await page.selectOption('#load', 'sb-174-hpbt');
-  assert.equal(await page.textContent('#el-text'), moved, 'changing back keeps the sight too');
-  assert.ok(await page.isVisible('#use-zero'), 'the saved zero is offered as a button');
+  assert.ok(await page.isVisible('#use-zero'), 'the saved zero is offered as a button once the sight has left it');
   await page.click('#use-zero');
   assert.equal(await page.textContent('#el-text'), el, 'the button sets the sight to the saved zero');
   assert.deepEqual(errors, []);
@@ -210,9 +215,9 @@ test('a browser that reads but refuses to write: the zero bench and the firing l
 test('every screen renders at 412x915 and 1280x800 with no sideways scroll and no console error', { skip }, async () => {
   for (const viewport of [{ width: 412, height: 915 }, { width: 1280, height: 800 }]) {
     const { page, context, errors } = await signedIn(viewport);
-    for (const p of ['/', '/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt', '/line?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt', '/line?course=angeles-sylmar&rifle=bcm-ar15&load=imi-m193']) {
+    for (const p of ['/', '/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt', '/line?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt', '/line?course=angeles-sylmar&rifle=bcm-ar15&load=imi-m193', '/day', '/book?course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt']) {
       await page.goto(`${base}${p}`);
-      await page.waitForSelector(p === '/' ? '.rifle' : '#el-up');
+      await page.waitForSelector(p === '/' ? '.rifle' : p === '/day' ? '#facts' : p.startsWith('/book') ? '#pages' : '#el-up');
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `${p} at ${viewport.width}: no sideways scroll`);
     }
     assert.deepEqual(errors, []);
@@ -395,12 +400,14 @@ test('verify 5: zero the Tavor SAR with the dot at 50 yd; its irons are not zero
   await page.click('#save');
   assert.match(await page.textContent('#saved'), /Saved zero for IMI M193.*50 yards/);
   const el = await page.textContent('#el-text');
-  // The iron sights on the same rifle: not zeroed.
+  // The iron sights on the same rifle: not zeroed. (The bench's day is closed first: home shows an open day with shots instead of the picks.)
+  await noDay(page);
   await page.goto(`${base}/?rifle=iwi-tavor-sar&sight=tavor-irons&load=imi-m193`); await page.waitForSelector('.rifle');
   assert.match(await page.textContent('#zero'), /Not zeroed yet with the Tavor folding iron sights/);
   await page.goto(`${base}/line?${SAR}&sight=tavor-irons`); await page.waitForSelector('#fire');
   assert.match(await page.textContent('#zero-note'), /No zero saved/);
   // The dot again: the zero is there, on home and on the line.
+  await noDay(page);
   await page.goto(`${base}/?rifle=iwi-tavor-sar&sight=pa-md25&load=imi-m193`); await page.waitForSelector('.rifle');
   assert.match(await page.textContent('#zero'), /Zeroed at 50 yards with the Primary Arms SLx MD-25 red dot/);
   await page.goto(`${base}/line?${SAR}&sight=pa-md25`); await page.waitForSelector('#fire');
@@ -513,6 +520,7 @@ test('verify 12: on both courses the plates stand apart and in order through the
   const { page, context, errors } = await signedIn();
   const lines = [];
   for (const [path, rifle] of [['/line?course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt', 'Vepr, scope at 2x'], ['/line?course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193', 'AR-15, iron sights']]) {
+    await noDay(page);
     await page.goto(`${base}${path}`); await page.waitForSelector('#fire');
     await page.evaluate(() => { if (document.getElementById('zoom').min) RangeDayLine.setZoom(Number(document.getElementById('zoom').min)); });
     const angles = await page.evaluate(() => RangeDayLine.plateAngles);

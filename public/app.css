@@ -167,3 +167,26 @@ body.line main { padding-bottom: 110px; }
 }
 @media (min-width: 900px) { .choices { grid-template-columns: 1fr 1fr; } }
 .row:has(> [hidden]:only-child) { display: none; }
+
+/* The day, the book, the wind call (range-day-three). */
+.dayline { margin: 0 0 8px; padding: 8px 12px; font-size: 16px; border-left: 4px solid var(--accent); background: var(--card); border-radius: 0 10px 10px 0; }
+.bookline, .coldline { margin: 0 0 8px; padding: 6px 10px; background: var(--card); border: 1px solid var(--line); border-radius: 8px; }
+.bookline a { color: var(--accent); }
+.coldline { border-style: dashed; }
+.windcall { display: grid; gap: 6px; margin: 10px 0; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); }
+.windcall .pair { display: grid; gap: 6px; }
+.windcall .pair.four { grid-template-columns: repeat(4, 1fr); }
+.windcall .pair.mph { grid-template-columns: 1fr auto 1fr; align-items: center; text-align: center; }
+.windcall .btn.inline { display: block; width: 100%; margin: 0; min-height: 40px; line-height: 36px; font-size: 14px; padding: 0 4px; white-space: nowrap; touch-action: none; user-select: none; -webkit-user-select: none; }
+.windcall .btn.on { background: var(--accent); color: var(--accent-fg); }
+.firebar .btn.fire.spent { background: #6b6b66; }
+.book .group { margin: 18px 0 6px; }
+.book .span { padding: 8px 12px; border-left: 4px solid var(--accent); background: var(--card); border-radius: 0 10px 10px 0; margin: 0 0 8px; }
+.book .entry { display: grid; gap: 6px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); margin: 0 0 8px; }
+.book .entry.struck .what { text-decoration: line-through; color: var(--muted); }
+.book .entry .what { font-size: 16px; }
+.book .entry .acts { display: grid; grid-template-columns: auto 1fr; gap: 8px; align-items: center; }
+.book .entry input[type=text] { width: 100%; padding: 8px 10px; font-size: 16px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); }
+.book .entry .btn.inline { display: inline-block; width: auto; min-height: 40px; line-height: 36px; font-size: 14px; margin: 0; padding: 0 12px; }
+.copy input[type=file] { display: none; }
+table.shots td.hit { color: var(--accent); font-weight: 600; }

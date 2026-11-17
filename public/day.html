@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}} — the day</title>
+<link rel="stylesheet" href="/app.css">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#8c3b1e">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<script src="/sentry.min.js"></script>
+<script src="/crash.js"></script>
+<script src="/install.js" defer></script>
+</head>
+<body>
+<header class="bar">
+  <a class="name" href="/">{{TITLE}}</a>
+  <nav><a href="/">Home</a><a href="/logout">Sign out</a></nav>
+</header>
+<main class="game day">
+  <h1 id="title">The day</h1>
+  <p id="facts" class="dayline">Loading…</p>
+  <div id="acts" class="row"></div>
+  <p id="note" class="readout" hidden></p>
+  <h2>The cold-bore shot</h2>
+  <p id="cold" class="small"></p>
+  <h2>The shots, in order</h2>
+  <p class="muted small">Bench groups and each shot at steel: the distance, the sight setting, the hold, the wind call and where it landed. A hit marked "book" went into the data book.</p>
+  <div class="tablewrap"><table id="shots" class="log shots"><thead><tr><th>#</th><th>Where</th><th>Yards</th><th>Elev.</th><th>Wind.</th><th>Held</th><th>Call</th><th>Landed</th><th></th></tr></thead><tbody></tbody></table></div>
+  <h2>Other days</h2>
+  <div class="field"><label for="days">Past days on this device</label><select id="days"></select></div>
+  <p id="none" class="muted small"></p>
+</main>
+<script src="/engine.js"></script>
+<script src="/game.js"></script>
+<script src="/day.js"></script>
+</body>
+</html>

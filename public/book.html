@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}} — the book</title>
+<link rel="stylesheet" href="/app.css">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#8c3b1e">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<script src="/sentry.min.js"></script>
+<script src="/crash.js"></script>
+<script src="/install.js" defer></script>
+</head>
+<body>
+<header class="bar">
+  <a class="name" href="/">{{TITLE}}</a>
+  <nav><a id="to-line" href="/line">Firing line</a><a href="/logout">Sign out</a></nav>
+</header>
+<main class="game book">
+  <h1>Data book</h1>
+  <p id="intro" class="muted">Loading…</p>
+  <div class="picks">
+    <div class="field wide"><label for="sight">Page: sight</label><select id="sight"></select></div>
+    <div class="field wide"><label for="load">Load</label><select id="load"></select></div>
+  </div>
+  <p class="muted small">Your own hits on steel, one line each, written when the bullet landed. Nothing here is worked out for you: the come-up on each line is the setting you shot with, counted from the zero you had saved. Strike out a lucky hit or a mistake; it stays, crossed out. One MOA is a minute of angle, about 1 inch at 100 yards.</p>
+  <h2>The cold-bore record</h2>
+  <p class="muted small">The first shot of each day at a plate with this rifle and load, newest first, hit or miss.</p>
+  <div id="cold"></div>
+  <h2>By distance</h2>
+  <div id="pages"></div>
+  <h2 class="copy">A copy of everything on this device</h2>
+  <p class="muted small">"Save a copy" hands you one file holding every book page, the cold-bore records, the finished days and the saved zeros on this device. "Load a copy" reads such a file and adds what this device lacks; it never replaces or removes a line already here. This is how the book moves between the phone and the computer.</p>
+  <div class="row copy">
+    <button id="save-copy" type="button" class="btn inline">Save a copy</button>
+    <button id="load-copy" type="button" class="btn inline secondary">Load a copy</button>
+    <input id="copy-file" type="file" accept="application/json,.json">
+  </div>
+  <p id="copy-note" class="readout" hidden></p>
+</main>
+<script src="/engine.js"></script>
+<script src="/game.js"></script>
+<script src="/book.js"></script>
+</body>
+</html>

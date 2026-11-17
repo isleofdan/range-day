@@ -1,9 +1,10 @@
 'use strict';
-/* What the three screens share: the game's data (from /api/data), the
-   things kept on this device (the sight settings, saved zeros, the shot
-   log, the one setting), the day's weather, the sounds, and small
-   helpers. Every bullet still flies through /engine.js; nothing here does
-   physics. */
+/* What the screens share: the game's data (from /api/data), the things kept
+   on this device (the sight settings, saved zeros, the shot log, the open
+   day and the finished days, the data book, the cold-bore record, the wind
+   call, the one setting), the day's weather, the sounds, and small helpers.
+   Every bullet still flies through /engine.js; nothing here does physics.
+   The records this file keeps, their keys and shapes: docs/RECORDS.md. */
 window.RD = (function () {
   const E = window.RangeDayEngine;
 
@@ -14,6 +15,7 @@ window.RD = (function () {
     defaultSightOf = (rifle) => (DATA.rifles[rifle] ? DATA.rifles[rifle].defaultSight : null);
     return DATA;
   }
+  const rifleIds = (d) => Object.keys(d.rifles).filter((k) => !k.startsWith('_') && d.rifles[k].playable);
 
   // --- what lives on this device -------------------------------------------------
   // Every read and write is wrapped: a browser that refuses storage (a
@@ -27,12 +29,14 @@ window.RD = (function () {
     get(key) { try { const v = localStorage.getItem(`range-day:${key}`); return v ? JSON.parse(v) : null; } catch { return FAILED; } },
     set(key, value) { try { localStorage.setItem(`range-day:${key}`, JSON.stringify(value)); return true; } catch { return false; } },
     remove(key) { try { localStorage.removeItem(`range-day:${key}`); return true; } catch { return false; } },
+    keys() { try { return Object.keys(localStorage).filter((k) => k.startsWith('range-day:')).map((k) => k.slice('range-day:'.length)); } catch { return FAILED; } },
   };
+  const ok = (v) => v && v !== FAILED;
   // The sight as it is physically set on the rifle (clicks from the middle;
   // on a sight with a sliding leaf, which setting the leaf is at; on the dot
   // with a magnifier behind it, whether the magnifier is flipped in).
   const sightKey = (rifle, sight) => `sight:${rifle}:${sight}`;
-  const getSight = (rifle, sight) => { const v = store.get(sightKey(rifle, sight)); return v && v !== FAILED ? { elevationClicks: 0, windageClicks: 0, ...v } : { elevationClicks: 0, windageClicks: 0 }; };
+  const getSight = (rifle, sight) => { const v = store.get(sightKey(rifle, sight)); return ok(v) ? { elevationClicks: 0, windageClicks: 0, ...v } : { elevationClicks: 0, windageClicks: 0 }; };
   const sightReadFailed = (rifle, sight) => store.get(sightKey(rifle, sight)) === FAILED;
   const setSight = (rifle, sight, v) => store.set(sightKey(rifle, sight), v);
 
@@ -76,55 +80,278 @@ window.RD = (function () {
     for (const sight of rifleData.sights) for (const load of rifleData.loads) { const z = getZero(rifle, sight, load); if (z && z !== FAILED) n++; }
     return n;
   }
-  // What was last used on this device: the rifle, and per rifle its sight, load and course.
-  const getLast = () => { const v = store.get('last'); return v && v !== FAILED ? v : null; };
+  // What was last used on this device: the rifle, and per rifle its sight, load and course; the time of day; the wind call.
+  const getLast = () => { const v = store.get('last'); return ok(v) ? v : null; };
   const setLast = (v) => store.set('last', v);
-  const getLastFor = (rifle) => { const v = store.get(`last:${rifle}`); return v && v !== FAILED ? v : null; };
+  const getLastFor = (rifle) => { const v = store.get(`last:${rifle}`); return ok(v) ? v : null; };
   const setLastFor = (rifle, v) => store.set(`last:${rifle}`, v);
   const showConditions = () => store.get('show-conditions') === true;
   const setShowConditions = (on) => store.set('show-conditions', on === true);
+  const TIMES = ['morning', 'midday', 'afternoon'];
+  const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const getWhen = () => { const v = store.get('when'); return ok(v) && TIMES.includes(v.timeOfDay) ? v : { timeOfDay: 'morning' }; };
+  const setWhen = (v) => store.set('when', v);
+  const thisMonth = () => new Date().getMonth() + 1;
+  // The wind call: where from ('left', 'right', 'none'; null = not called) and how strong, in miles an hour.
+  const getWindCall = () => { const v = store.get('wind-call'); return ok(v) ? { from: v.from == null ? null : v.from, mph: Number(v.mph) || 0 } : { from: null, mph: 5 }; };
+  const setWindCall = (v) => store.set('wind-call', v);
+  const windCallText = (w) => (!w || w.from == null ? 'not called' : w.from === 'none' ? 'no wind' : `${w.mph} mph from the ${w.from}`);
 
-  // --- the day ------------------------------------------------------------------------
-  // Each visit to a course draws a warm dry day and a light, variable canyon
-  // breeze from data/weather.json. The draw is kept for the visit (the
-  // browser tab), so the zero bench and the firing line share one day.
-  function drawDay(course, weather, rand) {
+  // --- the day's weather ----------------------------------------------------------------
+  // A day is drawn from data/weather.json for a course, a month (1 to 12)
+  // and a time of day (morning, midday, afternoon): the temperature between
+  // the month's mean low and high, the humidity, the wind in three stretches
+  // of the path that differ from one another and gust, and, with the
+  // month's chance, a Santa Ana day (dry, warm, windy, strongest in the
+  // morning). The random source is an argument so a test can repeat a day.
+  function drawDay(course, weather, month, timeOfDay, rand) {
     const r = rand || Math.random;
     const between = (lo, hi) => lo + (hi - lo) * r();
-    const tempF = Math.round(between(weather.tempF.low, weather.tempF.high));
-    const humidity = Math.round(between(weather.humidity.low, weather.humidity.high) * 100) / 100;
-    const speedMph = Math.round(between(weather.windMph.low, weather.windMph.high) * 10) / 10;
+    const m = weather.courses[course.id].months[(month || thisMonth()) - 1];
+    const tod = weather.timesOfDay[TIMES.includes(timeOfDay) ? timeOfDay : 'morning'];
+    const santaAna = r() < m.santaAnaChance;
+    const sa = weather.santaAna;
+    let tempF = m.lowF + tod.tempAt * (m.highF - m.lowF) + between(-weather.dayToDaySpreadF, weather.dayToDaySpreadF);
+    if (santaAna) tempF += sa.tempAboveNormalF;
+    tempF = Math.round(tempF);
+    const humidity = Math.round((santaAna ? between(sa.humidity.low, sa.humidity.high) : Math.max(0.03, Math.min(0.98, m.humidity + tod.humidityShift + between(-0.05, 0.05)))) * 100) / 100;
+    const speedMph = Math.round((santaAna ? between(sa.windMph.low, sa.windMph.high) * sa.windFactorByTime[tod.name] : m.windMph * tod.windFactor * between(weather.windSpread.low, weather.windSpread.high)) * 10) / 10;
     const [a, b, c, d] = weather.windFromDegrees;
     const fromDegrees = Math.round(r() < 0.5 ? between(a, b) : between(c, d));
     const v = weather.stretchVariation;
-    const stretch = (from, to, factor) => ({
-      fromYards: from, toYards: to,
-      speedMph: Math.round(speedMph * (1 + factor * between(-v, v)) * 10) / 10,
-      fromDegrees: Math.round(fromDegrees + between(-25, 25)),
-      gustMph: Math.round(between(weather.gustMph.low, weather.gustMph.high) * 10) / 10,
-      periodS: Math.round(between(weather.gustPeriodS.low, weather.gustPeriodS.high)),
-      phase: between(0, 6.28),
-    });
+    const stretch = (from, to, factor) => {
+      const speed = Math.round(speedMph * (1 + factor * between(-v, v)) * 10) / 10;
+      return {
+        fromYards: from, toYards: to, speedMph: speed,
+        fromDegrees: Math.round(fromDegrees + between(-25, 25)),
+        gustMph: Math.round((santaAna ? between(sa.gustMph.low, sa.gustMph.high) : speed * between(weather.gustShare.low, weather.gustShare.high)) * 10) / 10,
+        periodS: Math.round(between(weather.gustPeriodS.low, weather.gustPeriodS.high)),
+        phase: between(0, 6.28),
+      };
+    };
     const far = course.steelTo;
     return {
-      course: course.id, tempF, humidity, altitudeFt: course.altitudeFt,
+      course: course.id, month: month || thisMonth(), timeOfDay: tod.name, santaAna,
+      tempF, humidity, altitudeFt: course.altitudeFt,
       pressureInHg: Math.round(E.pressureAt(course.altitudeFt) * 100) / 100,
       speedMph, fromDegrees,
       wind: [stretch(0, far / 3, 0.6), stretch(far / 3, (2 * far) / 3, 0.8), stretch((2 * far) / 3, 100000, 1.0)],
     };
   }
-  function day(course, weather) {
-    const key = `range-day:day:${course.id}`;
-    try { const v = sessionStorage.getItem(key); if (v) return JSON.parse(v); } catch {}
-    const d = drawDay(course, weather);
-    try { sessionStorage.setItem(key, JSON.stringify(d)); } catch {}
-    return d;
+  const conditionsOf = (w) => ({ altitudeFt: w.altitudeFt, tempF: w.tempF, pressureInHg: w.pressureInHg, humidity: w.humidity });
+  // "A cool November morning, 52 F": the month, the time of day and the
+  // temperature, the way a shooter would know the day. Never the wind.
+  function dayWords(w, weather) {
+    const t = weather.words;
+    const word = w.tempF < t.coldBelowF ? 'cold' : w.tempF < t.coolBelowF ? 'cool' : w.tempF < t.mildBelowF ? 'mild' : w.tempF < t.warmBelowF ? 'warm' : 'hot';
+    const dry = w.humidity < t.dryBelow ? ', dry' : '';
+    return `A ${word}${dry} ${MONTHS[w.month - 1]} ${w.timeOfDay}, ${w.tempF} F.`;
   }
-  function newDay(course, weather) {
-    try { sessionStorage.removeItem(`range-day:day:${course.id}`); } catch {}
-    return day(course, weather);
+
+  // --- a day at the range ---------------------------------------------------------------
+  // One day is one course, one rifle, one load and one box of that load, on
+  // a day drawn above. The open day is kept on the device (day:open), so
+  // closing the app and coming back resumes it. A day in which no shot was
+  // fired leaves no record. When the last round is fired, or on "Pack up",
+  // the day is finished and kept (days), with every shot.
+  const localDate = (d) => { const x = d || new Date(); return `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, '0')}-${String(x.getDate()).padStart(2, '0')}`; };
+  const openDay = () => { const v = store.get('day:open'); return ok(v) ? v : null; };
+  const dayReadFailed = () => store.get('day:open') === FAILED;
+  const saveOpenDay = (day) => store.set('day:open', day);
+  const hasShots = (day) => Boolean(day && day.shots && day.shots.length);
+  const finishedDays = () => { const v = store.get('days'); return Array.isArray(v) ? v : []; };
+  const dayById = (id) => (openDay() && openDay().id === id ? openDay() : finishedDays().find((x) => x.id === id) || null);
+  function startDay(d, c, month, timeOfDay, rand) {
+    const course = { id: c.courseId, ...d.courses[c.courseId] };
+    const now = new Date();
+    const day = {
+      id: `${localDate(now)}-${now.getTime().toString(36)}`,
+      startedAt: now.toISOString(), date: localDate(now),
+      course: c.courseId, rifle: c.rifleId, load: c.loadId,
+      month: month || thisMonth(), timeOfDay: TIMES.includes(timeOfDay) ? timeOfDay : 'morning',
+      weather: drawDay(course, d.weather, month || thisMonth(), timeOfDay, rand),
+      box: { size: d.loads[c.loadId].boxCount, left: d.loads[c.loadId].boxCount },
+      shots: [], firstShotPlace: null, endedAt: null, endedBy: null,
+    };
+    store.remove('day:packed');
+    setWhen({ timeOfDay: day.timeOfDay });
+    const saved = saveOpenDay(day);
+    return { day, saved };
   }
-  const conditionsOf = (d) => ({ altitudeFt: d.altitudeFt, tempF: d.tempF, pressureInHg: d.pressureInHg, humidity: d.humidity });
+  // The bench and the line call this on opening: the open day if one has
+  // shots (its rifle, load and course win over the address, and `redirected`
+  // says the address asked for something else), else a day for the choice
+  // made (a shotless open day for another choice is dropped: a mistaken tap
+  // costs nothing). The month and time of day come from the address (home's
+  // doors carry them) or from what was last used.
+  function enterDay(d, c, q) {
+    const open = openDay();
+    const same = (day) => day.rifle === c.rifleId && day.load === c.loadId && day.course === c.courseId;
+    if (open && hasShots(open)) {
+      return { day: open, c: { ...c, rifleId: open.rifle, loadId: open.load, courseId: open.course }, redirected: !same(open), saved: true, fresh: false };
+    }
+    if (open && same(open) && !open.endedAt) return { day: open, c, redirected: false, saved: true, fresh: false };
+    const month = Number(q && q.month) >= 1 && Number(q.month) <= 12 ? Number(q.month) : thisMonth();
+    const timeOfDay = q && TIMES.includes(q.time) ? q.time : getWhen().timeOfDay;
+    const { day, saved } = startDay(d, c, month, timeOfDay);
+    return { day, c, redirected: false, saved, fresh: true };
+  }
+  // Takes up to n rounds out of the box; answers how many came out (0 when the day is over).
+  function takeRounds(day, n) {
+    if (!day || day.endedAt) return 0;
+    const out = Math.max(0, Math.min(n, day.box.left));
+    day.box.left -= out;
+    saveOpenDay(day);
+    return out;
+  }
+  // Writes one shot into the day (place 'bench' or 'line'); ends the day when the box is empty and nothing is still in the air.
+  function recordShot(day, shot, inFlight) {
+    if (!day) return { saved: false };
+    shot.n = day.shots.length + 1;
+    shot.at = new Date().toISOString();
+    if (!day.firstShotPlace) day.firstShotPlace = shot.place;
+    day.shots.push(shot);
+    let ended = false;
+    if (day.box.left <= 0 && !inFlight) { finishDay(day, 'empty'); ended = true; } else saveOpenDay(day);
+    return { saved: true, ended };
+  }
+  // Moves the open day to the finished days. by: 'empty' (the box) or 'packed' (Pack up, which "Back to the range" can undo).
+  function finishDay(day, by) {
+    day.endedAt = new Date().toISOString(); day.endedBy = by;
+    const days = finishedDays().filter((x) => x.id !== day.id);
+    days.unshift(day);
+    store.set('days', days);
+    store.remove('day:open');
+    if (by === 'packed') store.set('day:packed', day.id); else store.remove('day:packed');
+    return day;
+  }
+  // Pack up early, from home, the bench or the line. A day with no shot leaves no record.
+  function packUp() {
+    const day = openDay();
+    if (!day) return null;
+    if (!hasShots(day)) { store.remove('day:open'); return null; }
+    return finishDay(day, 'packed');
+  }
+  // "Back to the range": the last packed-up day is open again, until another day is started.
+  const packedDayId = () => { const v = store.get('day:packed'); return typeof v === 'string' ? v : null; };
+  function restorePacked() {
+    const id = packedDayId();
+    if (!id || openDay()) return null;
+    const days = finishedDays();
+    const day = days.find((x) => x.id === id);
+    if (!day) return null;
+    day.endedAt = null; day.endedBy = null;
+    store.set('days', days.filter((x) => x.id !== id));
+    store.remove('day:packed');
+    saveOpenDay(day);
+    return day;
+  }
+
+  // --- the data book -----------------------------------------------------------------------
+  // One page per rifle, sight and load; one line per hit on steel, written by
+  // itself when the bullet lands, with the field names of the gun record's
+  // `measured` section so a copy of the book can be taken as it is. A line can
+  // be struck out and restored, and takes a note. Nothing here comes from the
+  // engine's prediction: only what the player's own hits were.
+  const bookKey = (rifle, sight, load) => `book:${rifle}:${sight}:${load}`;
+  const getBook = (rifle, sight, load) => { const v = store.get(bookKey(rifle, sight, load)); return Array.isArray(v) ? v : []; };
+  const bookReadFailed = (rifle, sight, load) => store.get(bookKey(rifle, sight, load)) === FAILED;
+  function addBookLine(rifle, sight, load, line) {
+    const lines = getBook(rifle, sight, load);
+    if (lines.some((l) => l.id === line.id)) return true;
+    lines.push({ struck: false, note: '', ...line });
+    return store.set(bookKey(rifle, sight, load), lines);
+  }
+  function changeBookLine(rifle, sight, load, id, patch) {
+    const lines = getBook(rifle, sight, load);
+    const l = lines.find((x) => x.id === id);
+    if (!l) return false;
+    Object.assign(l, patch);
+    return store.set(bookKey(rifle, sight, load), lines);
+  }
+  // The unstruck lines at a distance, newest first.
+  const bookAt = (rifle, sight, load, yards) => getBook(rifle, sight, load).filter((l) => !l.struck && l.yards === yards).sort((a, b) => (a.on < b.on ? 1 : a.on > b.on ? -1 : b.id.localeCompare(a.id)));
+  // The distances that have unstruck lines, nearest below and above a distance.
+  function bookNeighbours(rifle, sight, load, yards) {
+    const ds = [...new Set(getBook(rifle, sight, load).filter((l) => !l.struck).map((l) => l.yards))].sort((a, b) => a - b);
+    return { below: ds.filter((y) => y < yards).pop() ?? null, above: ds.find((y) => y > yards) ?? null, all: ds };
+  }
+  // The come-up: the elevation counted from the saved zero the sight was zeroed at, or from the sight's middle.
+  function comeUpText(line, clickMoa) {
+    if (line.zero) {
+      const up = Math.round((line.elevationClicks - line.zero.elevationClicks) * clickMoa * 100) / 100;
+      return `${Math.abs(up)} minutes of angle ${up >= 0 ? 'up' : 'down'} from the ${line.zero.zeroYards}-yard zero`;
+    }
+    return `${Math.abs(line.elevationMoa)} minutes of angle ${line.elevationMoa >= 0 ? 'up' : 'down'} from the middle (no zero saved)`;
+  }
+
+  // --- the cold-bore record -----------------------------------------------------------------
+  // The first shot of a day, when it is fired at a plate (not at the bench): one line per day, per rifle and load.
+  const coldKey = (rifle, load) => `cold-bore:${rifle}:${load}`;
+  const getColdBore = (rifle, load) => { const v = store.get(coldKey(rifle, load)); return Array.isArray(v) ? v : []; };
+  function addColdBore(rifle, load, line) {
+    const lines = getColdBore(rifle, load);
+    if (lines.some((l) => l.id === line.id)) return true;
+    lines.push(line);
+    return store.set(coldKey(rifle, load), lines);
+  }
+
+  // --- a copy of everything, for moving the book between the phone and the computer ------------
+  // The file holds every book page, the cold-bore records, the finished days
+  // and the saved zeros on this device, each line with its rifle, sight and
+  // load. Loading adds what this device lacks and never replaces or removes a
+  // line already here. The shape: docs/RECORDS.md, "The copy file".
+  const COPY_KIND = 'range-day copy';
+  function makeCopy() {
+    const keys = store.keys();
+    const out = { kind: COPY_KIND, version: 1, savedAt: new Date().toISOString(), zeros: [], book: [], cold_bore: [], days: finishedDays() };
+    if (keys === FAILED) return out;
+    for (const k of keys) {
+      const p = k.split(':');
+      if (p[0] === 'zero' && p.length === 4) { const z = store.get(k); if (ok(z)) out.zeros.push({ rifle: p[1], sight: p[2], load: p[3], zeroYards: z.zeroYards, elevationClicks: z.elevationClicks, windageClicks: z.windageClicks, leafIx: z.leafIx ?? null, saved_on: z.savedAt || null }); }
+      if (p[0] === 'zero' && p.length === 3) { const z = store.get(k); if (ok(z) && z.sight && !keys.includes(`zero:${p[1]}:${z.sight}:${p[2]}`)) out.zeros.push({ rifle: p[1], sight: z.sight, load: p[2], zeroYards: z.zeroYards, elevationClicks: z.elevationClicks, windageClicks: z.windageClicks, leafIx: z.leafIx ?? null, saved_on: z.savedAt || null }); }
+      if (p[0] === 'book' && p.length === 4) { const b = store.get(k); if (Array.isArray(b)) for (const l of b) out.book.push({ rifle: p[1], sight: p[2], load: p[3], ...l }); }
+      if (p[0] === 'cold-bore' && p.length === 3) { const b = store.get(k); if (Array.isArray(b)) for (const l of b) out.cold_bore.push({ rifle: p[1], load: p[2], ...l }); }
+    }
+    return out;
+  }
+  // Checks a parsed file and adds what is missing. Throws an Error with the reason for a file that is not a copy.
+  function loadCopy(obj) {
+    if (!obj || typeof obj !== 'object' || Array.isArray(obj)) throw new Error('This is not a Range Day copy: the file does not hold a record (an object with "kind", "zeros", "book", "cold_bore" and "days").');
+    if (obj.kind !== COPY_KIND) throw new Error(`This is not a Range Day copy: its "kind" is ${JSON.stringify(obj.kind)}, not "${COPY_KIND}".`);
+    for (const k of ['zeros', 'book', 'cold_bore', 'days']) if (!Array.isArray(obj[k])) throw new Error(`This is not a complete Range Day copy: "${k}" is missing or not a list.`);
+    const added = { zeros: 0, book: 0, cold_bore: 0, days: 0 };
+    let failed = false;
+    for (const z of obj.zeros) {
+      if (!z.rifle || !z.sight || !z.load || typeof z.elevationClicks !== 'number') continue;
+      if (ok(getZero(z.rifle, z.sight, z.load))) continue; // never replace a zero already here
+      const rec = { elevationClicks: z.elevationClicks, windageClicks: z.windageClicks || 0, zeroYards: z.zeroYards, sight: z.sight, savedAt: z.saved_on || new Date().toISOString() };
+      if (z.leafIx != null) rec.leafIx = z.leafIx;
+      if (setZero(z.rifle, z.sight, z.load, rec)) added.zeros++; else failed = true;
+    }
+    for (const l of obj.book) {
+      if (!l.rifle || !l.sight || !l.load || !l.id || typeof l.yards !== 'number') continue;
+      const { rifle, sight, load, ...line } = l;
+      if (getBook(rifle, sight, load).some((x) => x.id === line.id)) continue;
+      if (addBookLine(rifle, sight, load, line)) added.book++; else failed = true;
+    }
+    for (const l of obj.cold_bore) {
+      if (!l.rifle || !l.load || !l.id) continue;
+      const { rifle, load, ...line } = l;
+      if (getColdBore(rifle, load).some((x) => x.id === line.id)) continue;
+      if (addColdBore(rifle, load, line)) added.cold_bore++; else failed = true;
+    }
+    const days = finishedDays();
+    const open = openDay();
+    let changed = false;
+    for (const d of obj.days) {
+      if (!d || !d.id || !Array.isArray(d.shots)) continue;
+      if (days.some((x) => x.id === d.id) || (open && open.id === d.id)) continue;
+      days.push(d); added.days++; changed = true;
+    }
+    if (changed) { days.sort((a, b) => (a.startedAt < b.startedAt ? 1 : -1)); if (!store.set('days', days)) failed = true; }
+    return { added, failed };
+  }
 
   // --- sounds, made in code ---------------------------------------------------------
   let ctx = null;
@@ -185,11 +412,13 @@ window.RD = (function () {
   // course, rifle, sight and load from the address (or from a pick on home,
   // with remembered: true); a missing or unknown piece falls back to the
   // last used with that rifle on this device, then to the rifle's own
-  // default (an address without a sight opens the sight the rifle had
-  // before every sight could be chosen, so old links still work).
+  // record (an address without a sight opens the sight the rifle had
+  // before every sight could be chosen, so old links still work; a new
+  // device opens the first playable rifle in the set, on its first course).
   function chooseFrom(d, q) {
     const last = getLast();
-    const rifleId = d.rifles[q.rifle] ? q.rifle : (last && d.rifles[last.rifle] ? last.rifle : 'molot-vepr-54r');
+    const ids = rifleIds(d);
+    const rifleId = ids.includes(q.rifle) ? q.rifle : (last && ids.includes(last.rifle) ? last.rifle : ids[0]);
     const rifle = d.rifles[rifleId];
     const lastFor = getLastFor(rifleId) || {};
     const playableSights = rifle.sights.filter((s) => d.sights[s].kind !== 'magnifier');
@@ -199,13 +428,19 @@ window.RD = (function () {
       : (q.rifle && !q.sight && !q.remembered) ? rifle.defaultSight
       : (playableSights.includes(lastFor.sight) ? lastFor.sight : rifle.defaultSight);
     const loadId = rifle.loads.includes(q.load) ? q.load : (rifle.loads.includes(lastFor.load) ? lastFor.load : rifle.loads[0]);
-    const firstCourse = rifleId === 'molot-vepr-54r' ? 'cta-piru' : 'angeles-sylmar';
-    const courseId = d.courses[q.course] ? q.course : (d.courses[lastFor.course] ? lastFor.course : firstCourse);
+    const courseId = d.courses[q.course] ? q.course : (d.courses[lastFor.course] ? lastFor.course : rifle.firstCourse);
     return { rifleId, sightId, loadId, courseId, magnifierId: rifle.sights.find((s) => d.sights[s].kind === 'magnifier') || null };
   }
   const params = (c) => `?course=${c.courseId}&rifle=${c.rifleId}&sight=${c.sightId}&load=${c.loadId}`;
   // Remember the choice, for next time on this device.
   function remember(c) { setLast({ rifle: c.rifleId }); setLastFor(c.rifleId, { sight: c.sightId, load: c.loadId, course: c.courseId }); }
+  // The sliding rear leaf an iron sight has on this rifle (the rifle's record names a table where the sight has more than one), or null.
+  function leafOf(d, rifleId, sightId) {
+    const sight = d.sights[sightId];
+    if (!sight || sight.kind !== 'iron') return null;
+    const key = (d.rifles[rifleId].sightLeaf || {})[sightId] || 'leaf';
+    return sight[key] || null;
+  }
 
   // --- a knob: press for one step; press and hold to repeat, speeding up -------------------------------
   // The first step comes on the press (never on the click, so a tap is one
@@ -253,6 +488,27 @@ window.RD = (function () {
     return turn;
   }
 
+  // The wind-call control on the firing line: four buttons for where the
+  // wind comes from (none, left, right, not called) and a pair for how
+  // strong, in miles an hour. It starts at the last call on this device;
+  // `onChange` is told each change. The call is read with getWindCall().
+  function wireWindCall(doc, onChange) {
+    const $ = (id) => doc.getElementById(id);
+    let call = getWindCall();
+    const show = () => {
+      for (const b of doc.querySelectorAll('[data-wind-from]')) b.classList.toggle('on', (b.dataset.windFrom === 'null' ? null : b.dataset.windFrom) === call.from);
+      $('wind-mph-row').hidden = !(call.from === 'left' || call.from === 'right');
+      $('wind-mph').textContent = `${call.mph} mph`;
+      $('wind-call-text').textContent = `Wind as you read it: ${windCallText(call)}.`;
+    };
+    const change = (next) => { call = next; setWindCall(call); show(); if (onChange) onChange(call); };
+    for (const b of doc.querySelectorAll('[data-wind-from]')) b.addEventListener('click', () => change({ ...call, from: b.dataset.windFrom === 'null' ? null : b.dataset.windFrom }));
+    holdRepeat($('wind-less'), () => { if (call.mph > 0) change({ ...call, mph: call.mph - 1 }); });
+    holdRepeat($('wind-more'), () => { if (call.mph < 40) change({ ...call, mph: call.mph + 1 }); });
+    show();
+    return () => call;
+  }
+
   // --- helpers -------------------------------------------------------------------------
   const qs = () => Object.fromEntries(new URLSearchParams(location.search));
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -269,6 +525,8 @@ window.RD = (function () {
     if (extra) parts.push(extra);
     return parts.join(' · ');
   }
+  // "14 of 20 rounds left", "the box is empty: the day is over"
+  const roundsText = (day) => (!day ? '' : day.box.left > 0 ? `${day.box.left} of ${day.box.size} rounds left` : `the box of ${day.box.size} is empty: the day is over`);
   // A leaf setting's name: "3 (300 m)", or "П (300 m, the battle setting)".
   function leafText(leaf, ix) {
     const m = leaf.settingsMeters[ix];
@@ -281,6 +539,10 @@ window.RD = (function () {
     const h = Math.abs(rightIn) < 0.5 ? 'centered' : `${Math.abs(rightIn).toFixed(Math.abs(rightIn) > 10 ? 0 : 1)} in ${rightIn > 0 ? 'right' : 'left'}`;
     return `${v}, ${h}`;
   }
+  // "0.5 high, 1.2 right (MOA)" from a hold in minutes of angle
+  const heldText = (up, right) => ((Math.abs(up) < 0.3 && Math.abs(right) < 0.3) ? 'center' : `${Math.abs(up).toFixed(1)} ${up > 0 ? 'high' : 'low'}, ${Math.abs(right).toFixed(1)} ${right > 0 ? 'right' : 'left'} (MOA)`);
+  // "17 Nov 2026" from a date string
+  const dateText = (iso) => { const d = new Date(iso.length === 10 ? `${iso}T12:00:00` : iso); return Number.isNaN(d.getTime()) ? iso : `${d.getDate()} ${MONTHS[d.getMonth()].slice(0, 3)} ${d.getFullYear()}`; };
   const windWord = (deg) => {
     const d = ((deg % 360) + 360) % 360;
     if (d < 22.5 || d >= 337.5) return 'head-on';
@@ -311,6 +573,13 @@ window.RD = (function () {
   }
   // A small seeded random for the drawn terrain, so a course looks the same each visit.
   function hash(str) { let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+  // Hands the browser a file to save.
+  function download(name, text) {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([text], { type: 'application/json' }));
+    a.download = name; document.body.appendChild(a); a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  }
 
-  return { E, data, store, getSight, sightReadFailed, setSight, getZero, setZero, getLog, setLog, zeroCount, getLast, setLast, getLastFor, setLastFor, chooseFrom, params, remember, holdRepeat, wireKnobs, settingLine, leafText, showConditions, setShowConditions, drawDay, day, newDay, conditionsOf, audio, shotSound, ringSound, thudSound, clickSound, qs, esc, sign, moaOf, clicksText, whereText, windWord, crosswindMph, fovMoa, fitCanvas, hash };
+  return { E, data, rifleIds, store, getSight, sightReadFailed, setSight, getZero, setZero, getLog, setLog, zeroCount, getLast, setLast, getLastFor, setLastFor, getWhen, setWhen, thisMonth, TIMES, MONTHS, getWindCall, setWindCall, windCallText, wireWindCall, chooseFrom, params, remember, leafOf, holdRepeat, wireKnobs, settingLine, roundsText, leafText, showConditions, setShowConditions, drawDay, conditionsOf, dayWords, localDate, openDay, dayReadFailed, hasShots, finishedDays, dayById, startDay, enterDay, takeRounds, recordShot, finishDay, packUp, packedDayId, restorePacked, bookKey, getBook, bookReadFailed, addBookLine, changeBookLine, bookAt, bookNeighbours, comeUpText, getColdBore, addColdBore, makeCopy, loadCopy, COPY_KIND, audio, shotSound, ringSound, thudSound, clickSound, qs, esc, sign, moaOf, clicksText, whereText, heldText, dateText, windWord, crosswindMph, fovMoa, fitCanvas, hash, download };
 }());

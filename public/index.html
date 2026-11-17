@@ -15,23 +15,46 @@
 <body>
 <header class="bar">
   <a class="name" href="/">{{TITLE}}</a>
-  <nav><a href="/status">Status</a><a href="/logout">Sign out</a></nav>
+  <nav><a href="/day">Days</a><a href="/status">Status</a><a href="/logout">Sign out</a></nav>
 </header>
 <main class="home">
-  <h1>Pick a rifle</h1>
-  <p class="muted small">This is {{TITLE}}: steel from 100 to 1,000 yards, shot through the rifle's own sight. Zero on paper first; then the drop and the wind are yours to work out.</p>
-  <div id="rifles" class="rifles"><p class="muted">Loading…</p></div>
-  <div class="picks">
-    <div class="field wide"><label for="sight">Sight</label><select id="sight"></select></div>
-    <div class="field"><label for="load">Load</label><select id="load"></select></div>
-    <div class="field"><label for="course">Course</label><select id="course"></select></div>
-  </div>
-  <p id="zero" class="zero-line"></p>
-  <div class="row doors">
-    <a id="go-zero" class="btn inline" href="/zero">Zero bench</a>
-    <a id="go-line" class="btn inline secondary" href="/line">Firing line</a>
-  </div>
-  <p id="course-blurb" class="muted small"></p>
+  <section id="open-day" hidden>
+    <h1>A day is open</h1>
+    <p id="day-card" class="zero-line"></p>
+    <div class="picks">
+      <div class="field wide"><label for="day-sight">Sight</label><select id="day-sight"></select></div>
+    </div>
+    <div class="row doors">
+      <a id="day-zero" class="btn inline" href="/zero">Zero bench</a>
+      <a id="day-line" class="btn inline secondary" href="/line">Firing line</a>
+    </div>
+    <div class="row">
+      <a id="day-page" class="btn inline secondary" href="/day">The day so far</a>
+      <a id="day-book" class="btn inline secondary" href="/book">The book</a>
+      <button id="pack-up" type="button" class="btn inline secondary">Pack up</button>
+    </div>
+    <p id="pack-note" class="muted small"></p>
+  </section>
+  <section id="no-day">
+    <h1>Pick a rifle</h1>
+    <p class="muted small">This is {{TITLE}}: steel from 100 to 1,000 yards, shot through the rifle's own sight. Zero on paper first; then the drop and the wind are yours to work out.</p>
+    <div id="rifles" class="rifles"><p class="muted">Loading…</p></div>
+    <div class="picks">
+      <div class="field wide"><label for="sight">Sight</label><select id="sight"></select></div>
+      <div class="field"><label for="load">Load</label><select id="load"></select></div>
+      <div class="field"><label for="course">Course</label><select id="course"></select></div>
+      <div class="field"><label for="time">When: time of day</label><select id="time"><option value="morning">Morning</option><option value="midday">Midday</option><option value="afternoon">Afternoon</option></select></div>
+      <div class="field"><label for="month">Month</label><select id="month"></select></div>
+    </div>
+    <p id="zero" class="zero-line"></p>
+    <div class="row doors">
+      <a id="go-zero" class="btn inline" href="/zero">Zero bench</a>
+      <a id="go-line" class="btn inline secondary" href="/line">Firing line</a>
+    </div>
+    <p id="course-blurb" class="muted small"></p>
+    <p id="box-blurb" class="muted small"></p>
+    <p id="past" class="small"></p>
+  </section>
   <h2>The whole set</h2>
   <p class="muted small">Every rifle, with its loads and sights. One MOA is a minute of angle, 1/60 of a degree, about 1 inch at 100 yards; sights click in MOA.</p>
   <ul id="set" class="set"></ul>

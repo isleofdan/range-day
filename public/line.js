@@ -8,22 +8,30 @@
    wind shows only as heat shimmer leaning, brush moving and the dust's
    drift, unless the setting "Show the conditions" is on.
 
+   Every shot comes out of the day's box (one load, so the load is fixed
+   while the day is open); when the box is empty the day is over. A hit on
+   steel writes one line in the data book by itself; the day's first shot
+   at a plate goes in the cold-bore record; the wind call stated before the
+   shot is written into its row and never changed.
+
    World coordinates on screen: minutes of angle (MOA) right and up of the
    aimed plate's center. The view's center is the reticle. */
 (async function () {
   const E = RD.E;
   const d = await RD.data();
   const q = RD.qs();
-  const c = RD.chooseFrom(d, q);
+  const entered = RD.enterDay(d, RD.chooseFrom(d, q), q);
+  const c = entered.c;
+  let day = entered.day;
   const { courseId, rifleId, sightId } = c;
   const course = { id: courseId, ...d.courses[courseId] };
   const rifle = d.rifles[rifleId];
   const sight = d.sights[sightId];
-  // A sliding rear leaf (the AK-pattern rifles and the Vepr's irons): its settings and each one's angle.
-  const leaf = sight.kind === 'iron' ? (rifleId === 'ak-545' ? sight.leaf545 : sight.leaf) || null : null;
-  let loadId = c.loadId;
+  // A sliding rear leaf (the AK-pattern rifles and the Vepr's irons): its settings and each one's angle, from the rifle's record.
+  const leaf = RD.leafOf(d, rifleId, sightId);
+  const loadId = c.loadId;
   RD.remember(c);
-  const day = RD.day(course, d.weather);
+  const weather = day.weather;
   const plates = course.plates;
   let plateIx = 0;
   let mag = sight.zoom.low;
@@ -56,10 +64,20 @@
   }
 
   $('intro').textContent = `${course.name}. ${rifle.name} with ${sight.name}. Steel ${plates[0].yards} to ${plates[plates.length - 1].yards} yards${plates[plates.length - 1].riseFt >= 50 ? ', the far plates up the slope' : ', up a gentle rise'}.`;
+  // The day in words and one number: the month, the time of day, the temperature. Never the wind.
+  const dayLine = () => {
+    let t = RD.dayWords(weather, d.weather);
+    if (entered.redirected) t += ` A day is already open with the ${rifle.name} and ${d.loads[loadId].name} on the ${course.name.replace(/ \(modeled on.*\)$/, '')}, so that day is shown, not the one the address asked for.`;
+    if (!entered.saved || RD.dayReadFailed()) t += ' The day is not saved on this device (the browser refused its storage); it holds while this page is open.';
+    $('day-line').textContent = t;
+  };
+  dayLine();
   $('plate').innerHTML = plates.map((p, i) => `<option value="${i}">${p.yards} yards (${p.widthIn} × ${p.heightIn} in steel)</option>`).join('');
-  $('load').innerHTML = rifle.loads.map((l) => `<option value="${l}"${l === loadId ? ' selected' : ''}>${RD.esc(d.loads[l].name)}</option>`).join('');
-  const zeroHref = () => `/zero${RD.params({ ...c, loadId })}`;
+  $('load').innerHTML = `<option value="${loadId}" selected>${RD.esc(d.loads[loadId].name)} (the day's box)</option>`;
+  const zeroHref = () => `/zero${RD.params(c)}`;
   $('to-zero').href = zeroHref();
+  $('to-book').href = `/book${RD.params(c)}`;
+  $('to-day').href = `/day?id=${encodeURIComponent(day.id)}`;
   if (sight.zoom.high === sight.zoom.low) $('zoomrow').hidden = true;
   else { $('zoom').min = sight.zoom.low; $('zoom').max = sight.zoom.high; $('zoom').value = mag; }
   const zoomText = () => { $('zoom-text').textContent = `${mag}×`; };
@@ -76,6 +94,7 @@
   let log = RD.getLog(rifleId, sightId, loadId);
   let flash = 0;
   let lastShotInput = null;
+  let windCall = RD.wireWindCall(document); // a function answering the call as it stands
 
   const canvas = $('view');
   let view = RD.fitCanvas(canvas, 640);
@@ -123,7 +142,7 @@
   // --- the aim's wander: slow, small, worse after a shot, calmer when held steady ----------
   function stepWander(dt) {
     const since = now - lastShotAt;
-    const amp = 0.35 * (steady ? 0.35 : 1) * (1 + 3 * Math.exp(-Math.max(0, since) / 2.5)) * (sightId === 'ar-irons' ? 1.3 : 1);
+    const amp = 0.35 * (steady ? 0.35 : 1) * (1 + 3 * Math.exp(-Math.max(0, since) / 2.5)) * (sight.aimWanderFactor || 1);
     const tau = 1.2;
     for (const [v, x] of [['vu', 'up'], ['vr', 'right']]) {
       wander[v] += (-wander[v] / tau) * dt + amp * Math.sqrt(dt) * E.gaussian() * 0.9;
@@ -148,7 +167,7 @@
     return { yards, sideMoa: (terrainRand() - 0.5) * 2 * toMoa(Math.atan2(40 + yards * 0.25, yards)), ft: S.brushHeightFt.low + terrainRand() * (S.brushHeightFt.high - S.brushHeightFt.low), ph: terrainRand() * 6.3, lift: terrainRand() * 0.6 };
   }).sort((a, b) => b.yards - a.yards);
   const profile = (arr, azMoa, amp, wavelength) => { const i = (azMoa / wavelength) % arr.length; const a = Math.floor(((i % arr.length) + arr.length) % arr.length), b = (a + 1) % arr.length; const f = ((i % 1) + 1) % 1; return (arr[a] * (1 - f) + arr[b] * f) * amp; };
-  const crossMph = () => RD.crosswindMph(day.wind[Math.min(2, Math.floor((plate().yards / course.steelTo) * 3))]);
+  const crossMph = () => RD.crosswindMph(weather.wind[Math.min(2, Math.floor((plate().yards / course.steelTo) * 3))]);
   // The sideways angle of the aimed plate, so the scene's own azimuths (from straight downrange) line up with the view.
   const azOf = (sideMoa) => sideMoa - toMoa(sideAngle(plate()));
 
@@ -285,7 +304,7 @@
   function drawNotchAndPost(g, size, k, cx, cy) {
     const notchW = sight.notchMoa * k, depth = sight.notchDepthMoa * k;
     const postW = sight.frontPostMoa * k;
-    const bead = sightId === 'rem-irons';
+    const bead = Boolean(sight.frontBead);
     // the rear sight blade: everything below the center line, except the notch, is its dark face
     g.save();
     if ('filter' in g) g.filter = 'blur(2.5px)';
@@ -385,18 +404,30 @@
   // breathing, no recoil) and a seeded draw, so two shots can be compared;
   // the bullet still flies through the engine exactly as the player's does
   // (the gusts are read at the clock's zero, so the wind is the same too).
+  // The box and the day's end.
+  const rounds = () => { $('rounds').textContent = RD.roundsText(day); $('fire').classList.toggle('spent', Boolean(day.endedAt) || day.box.left <= 0); };
+  const dayOver = () => Boolean(day.endedAt) || day.box.left <= 0;
   function fire(seed) {
     if (pending.length > 2) return;
+    if (dayOver()) { $('result').textContent = `The day is over: the box of ${day.box.size} is empty. The day's page has every shot; a new day starts from home.`; return; }
+    if (!RD.takeRounds(day, 1)) { rounds(); return; }
+    rounds();
     const p = plate(), load = d.loads[loadId];
+    // Everything the row and the book record is read now, at the trigger pull, never after.
+    const call = windCall();
+    const shown = RD.showConditions();
+    const setAt = { ...setting };
+    const zeroAt = RD.getZero(rifleId, sightId, loadId);
+    const first = day.shots.length === 0 && pending.length === 0;
     // Where the reticle points, in MOA from the plate's center, at the trigger pull.
     const aim = seed == null ? center() : { up: hold.up, right: hold.right };
     const aimUp = aim.up, aimRight = aim.right;
     const r = E.shoot({
       rand: seed == null ? undefined : E.seeded(seed),
-      load, drag: d.physics.dragTables,
+      load, drag: d.physics.dragTables, powder: d.physics.powderTemperature,
       rifle: { sightHeightIn: rifle.sightHeightIn[sightId], boreOffsetMoa: { up: rifle.boreOffsetMoa.up + leafMoa(), right: rifle.boreOffsetMoa.right } },
       sight: { clickMoa: sight.clickMoa, windageClickMoa: sight.windageClickMoa, elevationClicks: setting.elevationClicks, windageClicks: setting.windageClicks },
-      targetYards: p.yards, targetRiseFt: riseOf(p), conditions: RD.conditionsOf(day), wind: day.wind, t0: seed == null ? now : 0,
+      targetYards: p.yards, targetRiseFt: riseOf(p), conditions: RD.conditionsOf(weather), wind: weather.wind, t0: seed == null ? now : 0,
     });
     lastShotInput = { targetYards: p.yards, targetRiseFt: riseOf(p) };
     RD.shotSound(1);
@@ -404,35 +435,77 @@
     recoil.up += 14 * rifle.recoilFactor * (0.8 + Math.random() * 0.4); recoil.right += 4 * rifle.recoilFactor * (0.5 + Math.random());
     lastShotAt = now;
     const ipm = inchPerMoa(p.yards);
-    const entry = { n: log.length + 1, yards: p.yards, el: setting.elevationClicks, wd: setting.windageClicks, leaf: leaf ? leaf.settingsMeters[setting.leafIx || 0] : undefined, zoom: mag, heldUp: Math.round(aimUp * 10) / 10, heldRight: Math.round(aimRight * 10) / 10 };
+    const entry = { n: log.length + 1, yards: p.yards, el: setAt.elevationClicks, wd: setAt.windageClicks, leaf: leaf ? leaf.settingsMeters[setAt.leafIx || 0] : undefined, zoom: mag, heldUp: Math.round(aimUp * 10) / 10, heldRight: Math.round(aimRight * 10) / 10, day: day.id, tempF: weather.tempF, call: call.from == null ? null : { from: call.from, mph: call.from === 'none' ? 0 : call.mph }, conditionsShown: shown };
+    const shot = { place: 'line', yards: p.yards, sight: sightId, elevationClicks: setAt.elevationClicks, windageClicks: setAt.windageClicks, elevationMoa: Math.round((setAt.elevationClicks * sight.clickMoa + leafMoa()) * 100) / 100, windageMoa: Math.round(setAt.windageClicks * sight.windageClickMoa * 100) / 100, leaf: entry.leaf ?? null, zero: zeroAt && zeroAt !== RD.store.FAILED ? { zeroYards: zeroAt.zeroYards, elevationClicks: zeroAt.elevationClicks, windageClicks: zeroAt.windageClicks } : null, heldUpMoa: entry.heldUp, heldRightMoa: entry.heldRight, windCall: entry.call, conditionsShown: shown, first };
+    $('cold-line').hidden = true;
     if (!r.reached) {
       entry.where = 'into the ground before the plate'; entry.hit = false;
-      pending.push({ at: now + r.timeS, entry, rightMoa: aimRight, upMoa: -(p.heightIn / ipm) * 2, yards: p.yards, hit: false, dist: p.yards });
+      pending.push({ at: now + r.timeS, entry, shot, rightMoa: aimRight, upMoa: -(p.heightIn / ipm) * 2, yards: p.yards, hit: false, dist: p.yards });
     } else {
       // The bullet lands where the reticle pointed plus the engine's offset.
       const upIn = r.hit.upIn + aimUp * ipm, rightIn = r.hit.rightIn + aimRight * ipm;
       const hit = Math.abs(upIn) <= p.heightIn / 2 && Math.abs(rightIn) <= p.widthIn / 2;
       entry.hit = hit; entry.where = hit ? `hit (${RD.whereText(upIn, rightIn)} of center)` : `miss: ${RD.whereText(upIn, rightIn)}`;
       entry.upIn = upIn; entry.rightIn = rightIn; // full precision: the hit test and the tests use these; the words above are what the screen shows
-      pending.push({ at: now + r.timeS, entry, rightMoa: rightIn / ipm, upMoa: upIn / ipm, yards: p.yards, hit, upIn, rightIn, dist: p.yards, mach: r.mach });
+      pending.push({ at: now + r.timeS, entry, shot, rightMoa: rightIn / ipm, upMoa: upIn / ipm, yards: p.yards, hit, upIn, rightIn, dist: p.yards, mach: r.mach });
     }
-    $('result').textContent = `Shot ${entry.n} away at ${p.yards} yards…`;
+    $('result').textContent = `Shot ${entry.n} away at ${p.yards} yards…${day.box.left === 0 ? ' That was the last round in the box.' : ''}`;
   }
   function land(s) {
-    const soundBack = (s.dist * 3) / E.speedOfSound(day.tempF);
+    const soundBack = (s.dist * 3) / E.speedOfSound(weather.tempF);
     if (s.hit) { marks.push({ plateIx, rightIn: s.rightIn, upIn: s.upIn, at: now }); RD.ringSound(soundBack, Math.max(0.15, 1 - s.dist / 1300)); }
     else { dust.push({ rightMoa: s.rightMoa, upMoa: s.upMoa, bornAt: now, yards: s.yards }); RD.thudSound(soundBack, Math.max(0.05, 0.5 - s.dist / 2500)); }
     log.push(s.entry);
     if (!RD.setLog(rifleId, sightId, loadId, log)) $('zero-note').textContent = 'Shot log not saved on this device (storage is off); it holds for this page only.';
+    // The day's record of the shot, the book line for a hit, the cold-bore line for the day's first shot at a plate.
+    const shot = { ...s.shot, hit: Boolean(s.hit), reached: s.upIn != null, upIn: s.upIn != null ? Math.round(s.upIn * 100) / 100 : null, rightIn: s.rightIn != null ? Math.round(s.rightIn * 100) / 100 : null, book: false, coldBore: false };
+    const id = `${day.id}:${day.shots.length + 1}`;
+    const base = { id, day: day.id, on: day.date, course: courseId, yards: shot.yards, elevationClicks: shot.elevationClicks, windageClicks: shot.windageClicks, leaf: shot.leaf, windCall: shot.windCall, tempF: weather.tempF, upIn: shot.upIn, rightIn: shot.rightIn };
+    let notes = [];
+    if (shot.hit && !shot.conditionsShown) {
+      shot.book = RD.addBookLine(rifleId, sightId, loadId, { ...base, sight: undefined, elevationMoa: shot.elevationMoa, windageMoa: shot.windageMoa, zero: shot.zero, heldUpMoa: shot.heldUpMoa, heldRightMoa: shot.heldRightMoa });
+      notes.push(shot.book ? 'Written in the book.' : 'Not written in the book: the browser refused its storage.');
+    } else if (shot.hit) notes.push('Not in the book: the conditions were shown.');
+    if (shot.first && !shot.conditionsShown) {
+      shot.coldBore = RD.addColdBore(rifleId, loadId, { ...base, sight: sightId, load: loadId, hit: shot.hit });
+      notes.push(shot.coldBore ? 'The day\'s first shot: in the cold-bore record.' : 'Not in the cold-bore record: the browser refused its storage.');
+    } else if (shot.first) notes.push('The day\'s first shot, but the conditions were shown: not in the cold-bore record.');
+    delete shot.first;
+    const rec = RD.recordShot(day, shot, pending.length > 0);
+    if (!rec.saved) notes.push('The day is not saved on this device (the browser refused its storage).');
+    if (rec.ended) notes.push(`The box of ${day.box.size} is empty: the day is over. The day's page has every shot.`);
+    rounds(); bookLine();
     const sub = s.mach != null && s.mach < 1.2 ? ` The bullet arrived at Mach ${s.mach.toFixed(2)}${s.mach < 1 ? ', below the speed of sound' : ', nearly down to the speed of sound'}.` : '';
-    $('result').innerHTML = s.hit ? `<strong>Hit</strong> at ${s.dist} yards, ${RD.esc(RD.whereText(s.upIn, s.rightIn))} of center. The ring comes back ${soundBack.toFixed(1)} s later.${sub}` : `<strong>Miss</strong> at ${s.dist} yards: ${RD.esc(s.entry.where.replace('miss: ', ''))}. Watch the dust.${sub}`;
+    $('result').innerHTML = (s.hit ? `<strong>Hit</strong> at ${s.dist} yards, ${RD.esc(RD.whereText(s.upIn, s.rightIn))} of center. The ring comes back ${soundBack.toFixed(1)} s later.${sub}` : `<strong>Miss</strong> at ${s.dist} yards: ${RD.esc(s.entry.where.replace('miss: ', ''))}. Watch the dust.${sub}`) + (notes.length ? ` ${RD.esc(notes.join(' '))}` : '');
     renderLog();
+  }
+  // The book for the plate now chosen: the two newest unstruck lines for this
+  // rifle, sight and load at that distance, or what the nearest distances
+  // with lines are. It only shows his own hits; it never turns a knob.
+  function bookLine() {
+    const y = plate().yards;
+    const href = `/book${RD.params(c)}&yards=${y}`;
+    if (RD.bookReadFailed(rifleId, sightId, loadId)) { $('book-line').innerHTML = `<a href="${href}">Book</a>: not saved on this device (the browser refused its storage).`; return; }
+    const lines = RD.bookAt(rifleId, sightId, loadId, y).slice(0, 2);
+    if (!lines.length) {
+      const n = RD.bookNeighbours(rifleId, sightId, loadId, y);
+      const near = [n.below != null ? `${n.below} yards below` : null, n.above != null ? `${n.above} yards above` : null].filter(Boolean);
+      $('book-line').innerHTML = `<a href="${href}">Book</a>: nothing in the book at ${y} yards yet${near.length ? `; the nearest lines are at ${near.join(' and ')}` : ''}.`;
+      return;
+    }
+    const one = (l) => `${RD.sign(l.elevationClicks)}/${RD.sign(l.windageClicks)} clicks${l.leaf != null ? `, leaf ${l.leaf / 100}` : ''}, held ${RD.heldText(l.heldUpMoa, l.heldRightMoa)}, wind ${RD.windCallText(l.windCall)}, ${l.tempF} F, ${RD.dateText(l.on)}`;
+    $('book-line').innerHTML = `<a href="${href}">Book, ${y} yards</a>: ${lines.map((l) => RD.esc(one(l))).join(' · ')}`;
+  }
+  // Before the day's first shot at a plate: it goes in the cold-bore record.
+  function coldLine() {
+    const first = day.shots.length === 0 && pending.length === 0 && !day.endedAt;
+    $('cold-line').hidden = !first;
+    if (first) $('cold-line').textContent = RD.showConditions() ? 'The day\'s first shot is next. With "Show the conditions" on it will not go in the cold-bore record.' : 'The day\'s first shot is next: it goes in the cold-bore record.';
   }
   function renderLog() {
     const body = $('log').querySelector('tbody');
-    body.innerHTML = log.slice().reverse().map((e) => `<tr class="${e.hit ? 'hit' : 'miss'}"><td>${e.n}</td><td>${e.yards}</td><td>${RD.sign(e.el)}</td><td>${RD.sign(e.wd)}${e.leaf != null ? ` · leaf ${e.leaf / 100}` : ''}</td><td>${e.zoom}×</td><td>${heldText(e)}</td><td>${RD.esc(e.where)}</td></tr>`).join('');
+    body.innerHTML = log.slice().reverse().map((e) => `<tr class="${e.hit ? 'hit' : 'miss'}"><td>${e.n}</td><td>${e.yards}</td><td>${RD.sign(e.el)}</td><td>${RD.sign(e.wd)}${e.leaf != null ? ` · leaf ${e.leaf / 100}` : ''}</td><td>${e.zoom}×</td><td>${RD.heldText(e.heldUp, e.heldRight)}</td><td>${e.call === undefined ? '' : RD.esc(RD.windCallText(e.call))}</td><td>${RD.esc(e.where)}${e.conditionsShown ? ' (conditions shown)' : ''}</td></tr>`).join('');
   }
-  const heldText = (e) => (Math.abs(e.heldUp) < 0.3 && Math.abs(e.heldRight) < 0.3) ? 'center' : `${Math.abs(e.heldUp).toFixed(1)} ${e.heldUp > 0 ? 'high' : 'low'}, ${Math.abs(e.heldRight).toFixed(1)} ${e.heldRight > 0 ? 'right' : 'left'} (MOA)`;
 
   // --- the setting: Show the conditions -----------------------------------------------------------
   function conditions() {
@@ -440,11 +513,11 @@
     $('show-conditions').checked = on;
     if (!on) { $('conditions').textContent = ''; return; }
     const p = plate(), load = d.loads[loadId];
-    const base = { load, drag: d.physics.dragTables, sightHeightIn: rifle.sightHeightIn[sightId], elevationMoa: setting.elevationClicks * sight.clickMoa + rifle.boreOffsetMoa.up + leafMoa(), windageMoa: setting.windageClicks * sight.windageClickMoa + rifle.boreOffsetMoa.right, targetYards: p.yards, targetRiseFt: riseOf(p), conditions: RD.conditionsOf(day), t0: now };
-    const still = E.fly({ ...base, wind: [] }), windy = E.fly({ ...base, wind: day.wind });
+    const base = { load, drag: d.physics.dragTables, powder: d.physics.powderTemperature, sightHeightIn: rifle.sightHeightIn[sightId], elevationMoa: setting.elevationClicks * sight.clickMoa + rifle.boreOffsetMoa.up + leafMoa(), windageMoa: setting.windageClicks * sight.windageClickMoa + rifle.boreOffsetMoa.right, targetYards: p.yards, targetRiseFt: riseOf(p), conditions: RD.conditionsOf(weather), t0: now };
+    const still = E.fly({ ...base, wind: [] }), windy = E.fly({ ...base, wind: weather.wind });
     const lines = [
-      `Air: ${day.tempF} F, ${day.pressureInHg} inHg at ${day.altitudeFt} ft, humidity ${Math.round(day.humidity * 100)}%.`,
-      ...day.wind.map((w, i) => `Wind, ${['near', 'middle', 'far'][i]} stretch (${Math.round(w.fromYards)}–${Math.min(Math.round(w.toYards), course.steelTo)} yd): ${w.speedMph} mph ${RD.windWord(w.fromDegrees)}, gusting ${w.gustMph} mph every ${w.periodS} s.`),
+      `Air: ${weather.tempF} F, ${weather.pressureInHg} inHg at ${weather.altitudeFt} ft, humidity ${Math.round(weather.humidity * 100)}%${weather.santaAna ? ', a Santa Ana day' : ''}. Muzzle speed today ${still.muzzleFps.toFixed(0)} fps (the load's ${load.muzzleFps} at ${d.physics.powderTemperature.referenceTempF} F).`,
+      ...weather.wind.map((w, i) => `Wind, ${['near', 'middle', 'far'][i]} stretch (${Math.round(w.fromYards)}–${Math.min(Math.round(w.toYards), course.steelTo)} yd): ${w.speedMph} mph ${RD.windWord(w.fromDegrees)}, gusting ${w.gustMph} mph every ${w.periodS} s.`),
       still.reached ? `Engine, ${p.yards} yd, this sight setting, no spread: ${RD.whereText(still.hit.upIn, still.hit.rightIn)} of the aim with no wind; with the wind ${RD.whereText(windy.hit.upIn, windy.hit.rightIn)} (drift ${(windy.hit.rightIn - still.hit.rightIn).toFixed(1)} in). Flight ${still.timeS.toFixed(2)} s, ${still.speedFps.toFixed(0)} fps at the plate (Mach ${still.mach.toFixed(2)}).` : `Engine: with this sight setting the bullet does not reach ${p.yards} yards.`,
       `Plate ${p.yards} yd sits ${riseOf(p).toFixed(0)} ft above the line (${((losAngle(p) * 180) / Math.PI).toFixed(1)}°); 1 MOA there is ${inchPerMoa(p.yards).toFixed(1)} in.`,
     ];
@@ -483,13 +556,11 @@
     setting = { ...setting, [which]: next };
     RD.clickSound(); showSetting(); zeroNote(); storeSetting();
   }, (text) => { $('result').textContent = text; });
-  $('plate').addEventListener('change', (e) => { plateIx = Number(e.target.value); hold.up = 0; hold.right = 0; conditions(); });
-  // Changing the load keeps the sight where it is (the brief's rule); restoring
-  // that load's saved zero is the player's own press on the button below.
-  $('load').addEventListener('change', (e) => { loadId = e.target.value; log = RD.getLog(rifleId, sightId, loadId); renderLog(); zeroNote(); $('to-zero').href = zeroHref(); RD.remember({ ...c, loadId }); conditions(); });
+  $('plate').addEventListener('change', (e) => { plateIx = Number(e.target.value); hold.up = 0; hold.right = 0; conditions(); bookLine(); });
+  $('pack-up').addEventListener('click', () => { const packed = RD.packUp(); location.href = packed ? `/day?id=${encodeURIComponent(packed.id)}` : '/'; });
   $('use-zero').addEventListener('click', () => { const z = RD.getZero(rifleId, sightId, loadId); if (!z || z === RD.store.FAILED) return; setting = { ...setting, elevationClicks: z.elevationClicks, windageClicks: z.windageClicks, ...(leaf && z.leafIx != null ? { leafIx: z.leafIx } : {}) }; RD.clickSound(); showSetting(); zeroNote(); if (!RD.setSight(rifleId, sightId, setting)) $('zero-note').textContent = 'Sight setting not saved on this device: the browser refused to store it. It holds while this page is open.'; });
   $('zoom').addEventListener('input', (e) => { mag = Number(e.target.value); zoomText(); });
-  $('show-conditions').addEventListener('change', (e) => { RD.setShowConditions(e.target.checked); conditions(); });
+  $('show-conditions').addEventListener('change', (e) => { RD.setShowConditions(e.target.checked); conditions(); coldLine(); });
   $('clear-log').addEventListener('click', () => { log = []; RD.setLog(rifleId, sightId, loadId, log); renderLog(); });
   // Steady is held with one finger while another presses Fire. On a phone
   // the second finger gets no "click" (the browser gives clicks to the first
@@ -522,10 +593,10 @@
     draw();
     requestAnimationFrame(frame);
   }
-  applyZero(); renderLog(); conditions();
+  applyZero(); renderLog(); conditions(); rounds(); bookLine(); coldLine();
   requestAnimationFrame(frame);
   // For the screenshot run and tests: a way to read the state without guessing.
-  window.RangeDayLine = { fire, get log() { return log; }, get pending() { return pending.length; }, get setting() { return setting; }, setHold(up, right) { hold.up = up; hold.right = right; }, setZoom(m) { mag = m; $('zoom').value = m; zoomText(); }, get plate() { return plate(); }, get day() { return day; },
+  window.RangeDayLine = { fire, get log() { return log; }, get pending() { return pending.length; }, get setting() { return setting; }, setHold(up, right) { hold.up = up; hold.right = right; }, setZoom(m) { mag = m; $('zoom').value = m; zoomText(); }, get plate() { return plate(); }, get day() { return day; }, get weather() { return weather; }, get windCall() { return windCall(); },
     // Each plate's angle from the firing line (sideways and upward, in MOA) and the height the drawing uses; the last shot's inputs to the engine.
     get plateAngles() { return plates.map((p) => ({ yards: p.yards, riseFt: riseOf(p), lateralYd: p.lateralYd, upMoa: toMoa(losAngle(p)), rightMoa: toMoa(sideAngle(p)) })); },
     get lastShotInput() { return lastShotInput; },

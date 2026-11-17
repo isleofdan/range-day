@@ -20,13 +20,26 @@
 <main class="game">
   <h1>Firing line</h1>
   <p id="intro" class="muted">Loading…</p>
+  <p id="day-line" class="dayline"></p>
   <div class="controls">
     <div class="field"><label for="plate">Plate</label><select id="plate"></select></div>
-    <div class="field"><label for="load">Load</label><select id="load"></select></div>
+    <div class="field"><label for="load">Load</label><select id="load" disabled></select></div>
   </div>
   <div class="viewwrap"><canvas id="view" width="400" height="400"></canvas></div>
-  <p id="setting-line" class="setting mono"></p>
+  <p class="setting mono"><span id="setting-line"></span> · <span id="rounds"></span></p>
+  <p id="book-line" class="bookline small"></p>
+  <p id="cold-line" class="coldline small" hidden></p>
   <p id="result" class="readout">Drag the view to hold off the plate. Press and hold <strong>Steady</strong>, then <strong>Fire</strong>.</p>
+  <div id="windcall" class="windcall">
+    <span id="wind-call-text" class="small"></span>
+    <div class="pair four">
+      <button type="button" class="btn inline secondary" data-wind-from="none">None</button>
+      <button type="button" class="btn inline secondary" data-wind-from="left">From the left</button>
+      <button type="button" class="btn inline secondary" data-wind-from="right">From the right</button>
+      <button type="button" class="btn inline secondary" data-wind-from="null">Not called</button>
+    </div>
+    <div id="wind-mph-row" class="pair mph" hidden><button id="wind-less" type="button" class="btn inline secondary">− 1 mph</button><span id="wind-mph" class="mono"></span><button id="wind-more" type="button" class="btn inline secondary">+ 1 mph</button></div>
+  </div>
   <div id="zoomrow" class="field zoom"><label for="zoom">Zoom <span id="zoom-text" class="mono"></span></label><input id="zoom" type="range" min="2" max="7" step="0.5" value="2"></div>
   <div id="magrow" class="row" hidden><button id="magnifier" type="button" class="btn inline secondary">Magnifier</button></div>
   <div id="leafrow" class="knob leaf" hidden>
@@ -48,15 +61,20 @@
       <span id="wd-text" class="mono"></span>
     </div>
   </div>
-  </div>
   <p id="zero-note" class="muted small"></p>
   <div class="row"><button id="use-zero" type="button" class="btn inline secondary" hidden>Set the sight to this load's saved zero</button></div>
+  <h2>The day</h2>
+  <div class="row">
+    <a id="to-book" class="btn inline secondary" href="/book">The book</a>
+    <a id="to-day" class="btn inline secondary" href="/day">The day so far</a>
+    <button id="pack-up" type="button" class="btn inline secondary">Pack up</button>
+  </div>
   <h2>Shot log</h2>
-  <p class="muted small">Each shot's distance, sight setting and where it landed, so you can build your own table. Kept on this device.</p>
-  <div class="tablewrap"><table id="log" class="log"><thead><tr><th>#</th><th>Yards</th><th>Elev.</th><th>Wind.</th><th>Zoom</th><th>Held</th><th>Landed</th></tr></thead><tbody></tbody></table></div>
+  <p class="muted small">Each shot's distance, sight setting, wind call and where it landed. Kept on this device; the book keeps the hits by themselves.</p>
+  <div class="tablewrap"><table id="log" class="log"><thead><tr><th>#</th><th>Yards</th><th>Elev.</th><th>Wind.</th><th>Zoom</th><th>Held</th><th>Call</th><th>Landed</th></tr></thead><tbody></tbody></table></div>
   <div class="row"><button id="clear-log" type="button" class="btn inline secondary">Clear the log</button></div>
   <h2>Setting</h2>
-  <label class="check"><input id="show-conditions" type="checkbox"> Show the conditions (the true wind, temperature, and the engine's drop, for learning)</label>
+  <label class="check"><input id="show-conditions" type="checkbox"> Show the conditions (the true wind, temperature, and the engine's drop, for learning; a shot fired with this on goes in the log but not in the book)</label>
   <pre id="conditions" class="mono small conditions"></pre>
 </main>
 <div class="firebar">
