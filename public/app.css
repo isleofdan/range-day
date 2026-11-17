@@ -27,6 +27,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
@@ -137,7 +138,7 @@ main.game { max-width: 680px; }
 .knob { display: grid; gap: 6px; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); }
 .knob .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
 .knob .btn.inline { display: block; width: 100%; margin: 0; min-height: 46px; font-size: 16px; padding: 0 4px; touch-action: none; user-select: none; -webkit-user-select: none; }
-.knob .pair.coarse .btn.inline { min-height: 40px; line-height: 36px; font-size: 15px; }
+.knob .pair.coarse .btn.inline { min-height: 40px; line-height: 36px; font-size: 14px; white-space: nowrap; padding: 0 2px; }
 .knob .pair.coarse[hidden] { display: none; }
 .small { font-size: 15px; }
 .setting { margin: 4px 0 8px; padding: 6px 10px; font-size: 14px; text-align: center; background: var(--card); border: 1px solid var(--line); border-radius: 8px; }
