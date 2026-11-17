@@ -188,7 +188,14 @@ window.RD = (function () {
     const open = openDay();
     const same = (day) => day.rifle === c.rifleId && day.load === c.loadId && day.course === c.courseId;
     if (open && hasShots(open)) {
-      return { day: open, c: { ...c, rifleId: open.rifle, loadId: open.load, courseId: open.course }, redirected: !same(open), saved: true, fresh: false };
+      if (same(open)) return { day: open, c, redirected: false, saved: true, fresh: false };
+      // The address asked for something else: the open day wins, and every choice that depends on
+      // the rifle (the sight, the magnifier) is resolved against the open day's rifle, not the address's.
+      const rifle = d.rifles[open.rifle];
+      const playable = rifle.sights.filter((s) => d.sights[s].kind !== 'magnifier');
+      const sightId = playable.includes(c.sightId) ? c.sightId : chooseFrom(d, { rifle: open.rifle, remembered: true }).sightId;
+      const magnifierId = rifle.sights.find((s) => d.sights[s].kind === 'magnifier') || null;
+      return { day: open, c: { ...c, rifleId: open.rifle, loadId: open.load, courseId: open.course, sightId, magnifierId }, redirected: true, saved: true, fresh: false };
     }
     if (open && same(open) && !open.endedAt) return { day: open, c, redirected: false, saved: true, fresh: false };
     const month = Number(q && q.month) >= 1 && Number(q.month) <= 12 ? Number(q.month) : thisMonth();
@@ -345,7 +352,8 @@ window.RD = (function () {
     box: { size: 'number', left: 'number' },
     weather: { tempF: 'number', humidity: 'number', altitudeFt: 'number', pressureInHg: 'number', wind: 'array' },
     windStretch: { fromYards: 'number', toYards: 'number', speedMph: 'number', fromDegrees: 'number' },
-    shot: { n: 'number', place: 'string', yards: 'number', elevationClicks: 'number', windageClicks: 'number', hit: 'boolean', reached: 'boolean' },
+    shot: { n: 'number', place: 'string', yards: 'number', elevationClicks: 'number', windageClicks: 'number', reached: 'boolean' },
+    lineShot: { hit: 'boolean', heldUpMoa: 'number', heldRightMoa: 'number' }, // a shot at steel has these too; a bench shot has no hit
   };
   const PLACES = ['bench', 'line'];
   const COPY_VERSIONS = [1];
@@ -380,6 +388,7 @@ window.RD = (function () {
       day.shots.forEach((s, j) => {
         checkRecord(s, DAY_SHAPES.shot, `${at}.shots[${j}]`);
         if (!PLACES.includes(s.place)) throw notACopy(`${at}.shots[${j}].place is ${JSON.stringify(s.place)}; it must be one of ${PLACES.join(', ')}. Nothing was loaded.`);
+        if (s.place === 'line') checkRecord(s, DAY_SHAPES.lineShot, `${at}.shots[${j}]`);
       });
     });
     return true;

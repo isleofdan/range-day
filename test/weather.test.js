@@ -148,8 +148,9 @@ test('the book\'s order and come-up: lines sort newest first by the moment and t
   assert.throws(() => RD.checkCopy({ ...good, days: [5] }), /days\[0\] is not a record/);
   // A day's inside is checked too: the box, the weather with its three stretches of wind, every shot.
   const day = RD.startDay({ courses: flat.courses, weather: W, loads: flat.loads }, { courseId: 'cta-piru', rifleId: 'molot-vepr-54r', loadId: 'sb-174-hpbt', sightId: 'utg-2-7x44' }, 7, 'afternoon', E.seeded(3)).day;
-  day.shots.push({ n: 1, place: 'line', yards: 600, elevationClicks: 20, windageClicks: 0, hit: false, reached: true });
-  assert.equal(RD.checkCopy({ ...good, days: [day] }), true, 'a real day passes');
+  day.shots.push({ n: 1, place: 'bench', yards: 100, sight: 'utg-2-7x44', elevationClicks: 0, windageClicks: 0, leaf: null, reached: true, upIn: -7.9, rightIn: 1.2 }); // a bench shot: no hit, no hold
+  day.shots.push({ n: 2, place: 'line', yards: 600, elevationClicks: 20, windageClicks: 0, hit: false, reached: true, heldUpMoa: 0, heldRightMoa: 0 });
+  assert.equal(RD.checkCopy({ ...good, days: [day] }), true, 'a real day with a bench shot and a shot at steel passes');
   const with_ = (change) => { const d = JSON.parse(JSON.stringify(day)); change(d); return { ...good, days: [d] }; };
   assert.throws(() => RD.checkCopy(with_((d) => { d.shots = [null]; })), /days\[0\]\.shots\[0\] is not a record/);
   assert.throws(() => RD.checkCopy(with_((d) => { d.box = {}; })), /days\[0\]\.box\.size is missing; it must be a number\. Nothing was loaded\./);
@@ -157,7 +158,8 @@ test('the book\'s order and come-up: lines sort newest first by the moment and t
   assert.throws(() => RD.checkCopy(with_((d) => { d.weather.wind = [d.weather.wind[0]]; })), /weather\.wind has 1 stretches; it must have 3/);
   assert.throws(() => RD.checkCopy(with_((d) => { d.weather.wind[1].speedMph = 'fresh'; })), /weather\.wind\[1\]\.speedMph is "fresh"; it must be a number/);
   assert.throws(() => RD.checkCopy(with_((d) => { d.shots[0].place = 'car park'; })), /shots\[0\]\.place is "car park"; it must be one of bench, line/);
-  assert.throws(() => RD.checkCopy(with_((d) => { d.shots[0].yards = '600'; })), /shots\[0\]\.yards is "600"; it must be a number/);
+  assert.throws(() => RD.checkCopy(with_((d) => { d.shots[1].yards = '600'; })), /shots\[1\]\.yards is "600"; it must be a number/);
+  assert.throws(() => RD.checkCopy(with_((d) => { delete d.shots[1].hit; })), /shots\[1\]\.hit is missing; it must be a boolean/);
   assert.throws(() => RD.checkCopy(with_((d) => { d.timeOfDay = 'night'; })), /timeOfDay is "night"; it must be one of morning, midday, afternoon/);
 });
 

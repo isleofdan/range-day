@@ -150,15 +150,24 @@ test('verify 6: a day stays open across a reload with the same rounds and weathe
   await line(page2, 'course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt');
   assert.equal((await page2.evaluate(() => RangeDayLine.day)).rifle, 'molot-vepr-54r', 'another choice simply replaces the shotless day');
   assert.equal(await page2.evaluate(() => RD.finishedDays().length), daysBefore, 'no record was kept');
-  // Pack up early, then back to the range.
+  // An address naming another rifle (and a sight the open rifle does not carry) opens the open day, with a sight the open rifle carries, and says so.
   await seededShot(page2, 7);
+  await line(page2, 'course=angeles-sylmar&rifle=iwi-tavor-sar&sight=pa-md25&load=imi-m193');
+  const redirected = await page2.evaluate(() => RangeDayLine.day);
+  assert.equal(redirected.rifle, 'molot-vepr-54r', 'the open day wins over the address');
+  assert.match(await page2.textContent('#intro'), /Molot Vepr.*UTG AccuShot/, 'with a sight the Vepr carries, not the Tavor\'s dot');
+  assert.match(await page2.textContent('#day-line'), /A day is already open with the Molot Vepr/);
+  assert.ok(await page2.isHidden('#magrow'), 'no magnifier control: the Vepr has none');
+  const given = await page2.evaluate(async () => { RangeDayLine.setHold(0, 0); RangeDayLine.fire(8); await new Promise((r) => setTimeout(r, 1500)); return RangeDayLine.lastShotInput; });
+  assert.equal(given.sightHeightIn, flat.rifles['molot-vepr-54r'].sightHeightIn['utg-2-7x44'], 'the engine is given the open rifle\'s own sight height');
+  // Pack up early, then back to the range.
   const packedDay = await page2.evaluate(() => RangeDayLine.day);
   await page2.click('#pack-up'); await page2.waitForURL(/\/day\?id=/); await page2.waitForSelector('#back');
   assert.match(await page2.textContent('#facts'), /packed up early/);
   assert.equal(await page2.evaluate(() => RD.openDay()), null);
   await page2.click('#back'); await page2.waitForSelector('#fire');
   const restored = await page2.evaluate(() => RangeDayLine.day);
-  assert.equal(restored.id, packedDay.id); assert.equal(restored.box.left, 19); assert.equal(restored.endedAt, null);
+  assert.equal(restored.id, packedDay.id); assert.equal(restored.box.left, 18); assert.equal(restored.endedAt, null);
   assert.equal(await page2.evaluate(() => RD.finishedDays().some((x) => x.id === RangeDayLine.day.id)), false, 'it is open again, not finished');
   assert.deepEqual(errors, []);
   await context.close();
@@ -332,14 +341,16 @@ test('verify 10: nothing on the phone is lost: a zero, a sight setting and a log
 
 test('verify 11: "Save a copy" after a day with hits, then "Load a copy" on an empty device gives the same book, cold-bore record, day and zero; loading it twice adds nothing; a file that is not a copy is refused with its reason', { skip }, async () => {
   const { page, context, errors } = await signedIn();
-  // A zero at the bench (one day), then a day with hits at steel (its first shot at a plate: a cold-bore line).
+  // A zero at the bench (one day), then a day with hits at steel (its first shot at a plate: a cold-bore line) that also fires a bench group afterwards.
   await bench(page, AR);
   await page.click('#fire1'); await page.click('#save');
   await noDay(page);
   await line(page, AR);
   await page.selectOption('#plate', '0');
   await seededHit(page, 51); await seededHit(page, 52);
+  await page.click('#to-zero'); await page.waitForSelector('#fire5'); await page.click('#fire5'); // bench shots in the same day: no hit flag on them
   await page.click('#pack-up'); await page.waitForURL(/\/day\?id=/);
+  assert.equal(await page.evaluate(() => RD.finishedDays()[0].shots.filter((s) => s.place === 'bench').length), 5, 'the day holds five bench shots');
   await page.goto(`${base}/book?${AR}`); await page.waitForSelector('.entry');
   const bookText = await page.textContent('#pages'), coldText = await page.textContent('#cold');
   const copy = await page.evaluate(() => RangeDayBook.copy);
