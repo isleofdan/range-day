@@ -338,27 +338,50 @@ window.RD = (function () {
     zeros: { rifle: 'string', sight: 'string', load: 'string', zeroYards: 'number', elevationClicks: 'number', windageClicks: 'number' },
     book: { rifle: 'string', sight: 'string', load: 'string', id: 'string', on: 'string', course: 'string', yards: 'number', elevationClicks: 'number', windageClicks: 'number', upIn: 'number', rightIn: 'number' },
     cold_bore: { rifle: 'string', load: 'string', id: 'string', on: 'string', course: 'string', sight: 'string', yards: 'number', elevationClicks: 'number', windageClicks: 'number', hit: 'boolean' },
-    days: { id: 'string', startedAt: 'string', date: 'string', course: 'string', rifle: 'string', load: 'string', shots: 'array', box: 'object', weather: 'object' },
+    days: { id: 'string', startedAt: 'string', date: 'string', course: 'string', rifle: 'string', load: 'string', month: 'number', timeOfDay: 'string', shots: 'array', box: 'object', weather: 'object' },
   };
+  // Inside a day: the box, the weather (with its three stretches of wind) and every shot.
+  const DAY_SHAPES = {
+    box: { size: 'number', left: 'number' },
+    weather: { tempF: 'number', humidity: 'number', altitudeFt: 'number', pressureInHg: 'number', wind: 'array' },
+    windStretch: { fromYards: 'number', toYards: 'number', speedMph: 'number', fromDegrees: 'number' },
+    shot: { n: 'number', place: 'string', yards: 'number', elevationClicks: 'number', windageClicks: 'number', hit: 'boolean', reached: 'boolean' },
+  };
+  const PLACES = ['bench', 'line'];
   const COPY_VERSIONS = [1];
   // Checks a whole copy before anything is written: throws an Error naming
   // the faulty field and what it must be, so a bad file loads nothing.
   function checkCopy(obj) {
     const notACopy = (why) => new Error(`This is not a Range Day copy: ${why}`);
+    const isKind = (v, kind) => (kind === 'array' ? Array.isArray(v) : kind === 'object' ? Boolean(v && typeof v === 'object' && !Array.isArray(v)) : (typeof v === kind && !(kind === 'number' && Number.isNaN(v))));
+    const kindName = (kind) => (kind === 'array' ? 'a list' : kind === 'object' ? 'an object' : `a ${kind}`);
+    // Checks one record against a shape; `at` is its path in the file, for the message.
+    const checkRecord = (rec, shape, at) => {
+      if (!isKind(rec, 'object')) throw notACopy(`${at} is not a record (an object with ${Object.keys(shape).join(', ')}). Nothing was loaded.`);
+      for (const [field, kind] of Object.entries(shape)) {
+        const v = rec[field];
+        if (!isKind(v, kind)) throw notACopy(`${at}.${field} is ${v === undefined ? 'missing' : JSON.stringify(v)}; it must be ${kindName(kind)}. Nothing was loaded.`);
+      }
+    };
     if (!obj || typeof obj !== 'object' || Array.isArray(obj)) throw notACopy('the file does not hold a record (an object with "kind", "version", "zeros", "book", "cold_bore" and "days").');
     if (obj.kind !== COPY_KIND) throw notACopy(`its "kind" is ${JSON.stringify(obj.kind)}, not "${COPY_KIND}".`);
     if (!COPY_VERSIONS.includes(obj.version)) throw notACopy(`its "version" is ${JSON.stringify(obj.version)}; this app reads version ${COPY_VERSIONS.join(', ')}.`);
     for (const k of ['zeros', 'book', 'cold_bore', 'days']) if (!Array.isArray(obj[k])) throw notACopy(`"${k}" is missing or not a list.`);
-    for (const [list, shape] of Object.entries(SHAPES)) {
-      obj[list].forEach((rec, i) => {
-        if (!rec || typeof rec !== 'object' || Array.isArray(rec)) throw notACopy(`${list}[${i}] is not a record (an object with ${Object.keys(shape).join(', ')}). Nothing was loaded.`);
-        for (const [field, kind] of Object.entries(shape)) {
-          const v = rec[field];
-          const okKind = kind === 'array' ? Array.isArray(v) : kind === 'object' ? (v && typeof v === 'object' && !Array.isArray(v)) : (typeof v === kind && !(kind === 'number' && Number.isNaN(v)));
-          if (!okKind) throw notACopy(`${list}[${i}].${field} is ${v === undefined ? 'missing' : JSON.stringify(v)}; it must be ${kind === 'array' ? 'a list' : kind === 'object' ? 'an object' : `a ${kind}`}. Nothing was loaded.`);
-        }
+    for (const [list, shape] of Object.entries(SHAPES)) obj[list].forEach((rec, i) => checkRecord(rec, shape, `${list}[${i}]`));
+    // A day's inside: the box, the weather and its wind, every shot.
+    obj.days.forEach((day, i) => {
+      const at = `days[${i}]`;
+      checkRecord(day.box, DAY_SHAPES.box, `${at}.box`);
+      checkRecord(day.weather, DAY_SHAPES.weather, `${at}.weather`);
+      if (day.weather.wind.length !== 3) throw notACopy(`${at}.weather.wind has ${day.weather.wind.length} stretches; it must have 3. Nothing was loaded.`);
+      day.weather.wind.forEach((w, j) => checkRecord(w, DAY_SHAPES.windStretch, `${at}.weather.wind[${j}]`));
+      if (!TIMES.includes(day.timeOfDay)) throw notACopy(`${at}.timeOfDay is ${JSON.stringify(day.timeOfDay)}; it must be one of ${TIMES.join(', ')}. Nothing was loaded.`);
+      if (!(day.month >= 1 && day.month <= 12)) throw notACopy(`${at}.month is ${JSON.stringify(day.month)}; it must be 1 to 12. Nothing was loaded.`);
+      day.shots.forEach((s, j) => {
+        checkRecord(s, DAY_SHAPES.shot, `${at}.shots[${j}]`);
+        if (!PLACES.includes(s.place)) throw notACopy(`${at}.shots[${j}].place is ${JSON.stringify(s.place)}; it must be one of ${PLACES.join(', ')}. Nothing was loaded.`);
       });
-    }
+    });
     return true;
   }
   // Checks a parsed file whole, then adds what is missing. Throws an Error with the reason for a file that is not a copy; then nothing was written.

@@ -153,8 +153,10 @@ replaces or removes anything already there. The whole file is checked
 before anything is written: a file whose `kind` is not
 `"range-day copy"`, whose `version` is not 1, whose lists are missing, or
 any of whose records lacks a required field or has one of the wrong kind
-(for example `book[3].yards` not a number) is refused with that field
-named, and nothing is loaded. The book, cold-bore and
+(for example `book[3].yards` not a number), including a day's box,
+weather, three stretches of wind and every shot (for example
+`days[0].shots[1]` not a record), is refused with that field named, and
+nothing is loaded. The book, cold-bore and
 zero lines use the field names of the gun record's `measured` section,
 so the file can be taken as it is by the build that keeps records
 elsewhere.
