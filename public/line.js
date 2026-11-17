@@ -63,7 +63,7 @@
     btn.hidden = at;
   }
 
-  $('intro').textContent = `${course.name}. ${rifle.name} with ${sight.name}. Steel ${plates[0].yards} to ${plates[plates.length - 1].yards} yards${plates[plates.length - 1].riseFt >= 50 ? ', the far plates up the slope' : ', up a gentle rise'}.`;
+  $('intro').textContent = `${course.name.replace(/ \(modeled on.*\)$/, '')}, steel ${plates[0].yards} to ${plates[plates.length - 1].yards} yards. ${rifle.name} with ${sight.name.replace(/ \(.*\)$/, '')}, ${d.loads[loadId].name.replace(/ \(.*\)$/, '')}.`;
   // The day in words and one number: the month, the time of day, the temperature. Never the wind.
   const dayLine = () => {
     let t = RD.dayWords(weather, d.weather);
@@ -73,7 +73,6 @@
   };
   dayLine();
   $('plate').innerHTML = plates.map((p, i) => `<option value="${i}">${p.yards} yards (${p.widthIn} × ${p.heightIn} in steel)</option>`).join('');
-  $('load').innerHTML = `<option value="${loadId}" selected>${RD.esc(d.loads[loadId].name)} (the day's box)</option>`;
   const zeroHref = () => `/zero${RD.params(c)}`;
   $('to-zero').href = zeroHref();
   $('to-book').href = `/book${RD.params(c)}`;
@@ -429,7 +428,7 @@
       sight: { clickMoa: sight.clickMoa, windageClickMoa: sight.windageClickMoa, elevationClicks: setting.elevationClicks, windageClicks: setting.windageClicks },
       targetYards: p.yards, targetRiseFt: riseOf(p), conditions: RD.conditionsOf(weather), wind: weather.wind, t0: seed == null ? now : 0,
     });
-    lastShotInput = { targetYards: p.yards, targetRiseFt: riseOf(p) };
+    lastShotInput = { targetYards: p.yards, targetRiseFt: riseOf(p), sightHeightIn: rifle.sightHeightIn[sightId], muzzleFps: r.muzzleFps, tempF: weather.tempF };
     RD.shotSound(1);
     flash = 0.9;
     recoil.up += 14 * rifle.recoilFactor * (0.8 + Math.random() * 0.4); recoil.right += 4 * rifle.recoilFactor * (0.5 + Math.random());

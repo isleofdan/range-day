@@ -86,7 +86,8 @@ test('verify 4: zero the Vepr at 100 yards, reload, the zero is still there; cha
   // Change the load (a day is one load, so the other load is a new day from home): the sight stays, and each group lands where the engine puts its load in its day's air.
   await page.goto(`${base}/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('#fire5');
   assert.equal(await page.textContent('#el-text'), el, 'changing nothing keeps the sight');
-  assert.ok(await page.isDisabled('#load'), 'the load is fixed while the day is open: one box, one load');
+  assert.match(await page.textContent('#intro'), /Sellier & Bellot 174 gr/, 'the load is the day\'s: named, not chosen, while the day is open');
+  assert.equal(await page.$('#load'), null, 'no load select on the bench: one box, one load');
   await page.selectOption('#distance', '200');
   await page.click('#fresh'); await page.click('#fire5');
   const same = await groupCenter(page);
@@ -113,7 +114,7 @@ test('verify 4: zero the Vepr at 100 yards, reload, the zero is still there; cha
   await page.goto(`${base}/line?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('#fire');
   const lineEl = await page.textContent('#el-text');
   assert.equal(lineEl, el, 'the firing line opens at the saved zero for the arriving load');
-  assert.ok(await page.isDisabled('#load'), 'the load is the day\'s on the firing line too');
+  assert.equal(await page.$('#load'), null, 'no load select on the firing line either');
   assert.ok(await page.isHidden('#use-zero'), 'at the saved zero: no button');
   await page.click('#el-up'); await page.click('#el-up');
   assert.ok(await page.isVisible('#use-zero'), 'the saved zero is offered as a button once the sight has left it');
@@ -264,7 +265,7 @@ test('verify 6: a zero and a log written in the old form (per rifle and load) fo
 test('verify 7: the old addresses without a sight open the Vepr with its scope on the line and the bench', { skip }, async () => {
   const { page, context, errors } = await signedIn();
   await page.goto(`${base}/line?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('#fire');
-  assert.match(await page.textContent('#intro'), /Molot Vepr, 7.62x54R with UTG AccuShot 2-7x44/);
+  assert.match(await page.textContent("#intro"), /Molot Vepr, 7.62x54R with UTG AccuShot 2-7x44/);
   assert.ok(await page.isVisible('#zoom'), 'the scope has its zoom');
   await page.goto(`${base}/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('#fire5');
   assert.match(await page.textContent('#intro'), /Molot Vepr, 7.62x54R, UTG AccuShot 2-7x44/);

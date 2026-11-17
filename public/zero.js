@@ -27,7 +27,7 @@
   let holes = []; // {upIn, rightIn, loadId}
 
   const $ = (id) => document.getElementById(id);
-  $('intro').textContent = `${rifle.name}, ${sight.name}. Aim is the center of the paper (36 inches square); the grid is 1 inch.`;
+  $('intro').textContent = `${rifle.name}, ${sight.name}, ${d.loads[loadId].name}. Aim is the center of the paper (36 inches square); the grid is 1 inch.`;
   const dayLine = () => {
     let t = RD.dayWords(weather, d.weather);
     if (entered.redirected) t += ` A day is already open with the ${rifle.name} and ${d.loads[loadId].name} on the ${course.name.replace(/ \(modeled on.*\)$/, '')}, so that day is shown, not the one the address asked for.`;
@@ -36,7 +36,6 @@
   };
   dayLine();
   $('distance').innerHTML = course.zeroYards.map((y) => `<option value="${y}"${y === distance ? ' selected' : ''}>${y} yards</option>`).join('');
-  $('load').innerHTML = `<option value="${loadId}" selected>${RD.esc(d.loads[loadId].name)} (the day's box)</option>`;
   $('sight-name').textContent = sight.name;
   $('click-help').textContent = `One click of elevation moves the strike ${sight.clickMoa} MOA (about ${(sight.clickMoa * E.inchesPerMoa(100)).toFixed(1)} inches at 100 yards); one click of windage ${sight.windageClickMoa} MOA. ${sight.kind === 'iron' ? 'Elevation is the front post; windage is the rear drum.' : 'The scope\'s turrets.'}`;
   $('to-line').href = `/line${RD.params(c)}`;
@@ -99,9 +98,8 @@
       });
       if (r.reached) holes.push({ upIn: r.hit.upIn, rightIn: r.hit.rightIn, loadId });
       const shot = { place: 'bench', yards: distance, sight: sightId, elevationClicks: setting.elevationClicks, windageClicks: setting.windageClicks, leaf: leaf ? leaf.settingsMeters[setting.leafIx || 0] : null, reached: r.reached, upIn: r.reached ? Math.round(r.hit.upIn * 100) / 100 : null, rightIn: r.reached ? Math.round(r.hit.rightIn * 100) / 100 : null };
-      const rec = RD.recordShot(day, shot, false);
+      const rec = RD.recordShot(day, shot, i < out - 1);
       if (!rec.saved) $('saved').textContent = 'The day is not saved on this device (the browser refused its storage); it holds while this page is open.';
-      if (rec.ended) break;
     }
     draw(); readout(); rounds();
     if (day.endedAt) $('group').textContent += ` That was the last round: the box of ${day.box.size} is empty and the day is over. The day's page has every shot.`;

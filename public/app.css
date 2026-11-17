@@ -129,6 +129,12 @@ input[type=range] { padding: 0; height: 44px; }
 .zero-line { padding: 12px 14px; border-left: 4px solid var(--accent); background: var(--card); border-radius: 0 10px 10px 0; }
 .set li { margin: 0 0 10px; }
 main.game { max-width: 680px; }
+main.game h1 { margin: 2px 0 4px; font-size: 22px; }
+.controls.one { grid-template-columns: 1fr; }
+.controls.one .field { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 10px; }
+.controls.one .field label { margin: 0; }
+.controls.one select { padding: 9px 8px; }
+body.line .viewwrap { margin: 6px 0; }
 .viewwrap { margin: 8px 0; }
 .viewwrap canvas { display: block; margin: 0 auto; border-radius: 10px; touch-action: none; background: #222; }
 .readout { min-height: 1.5em; padding: 10px 12px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; }
@@ -169,8 +175,9 @@ body.line main { padding-bottom: 110px; }
 .row:has(> [hidden]:only-child) { display: none; }
 
 /* The day, the book, the wind call (range-day-three). */
-.dayline { margin: 0 0 8px; padding: 8px 12px; font-size: 16px; border-left: 4px solid var(--accent); background: var(--card); border-radius: 0 10px 10px 0; }
-.bookline, .coldline { margin: 0 0 8px; padding: 6px 10px; background: var(--card); border: 1px solid var(--line); border-radius: 8px; }
+.dayline { margin: 0 0 6px; padding: 6px 12px; font-size: 16px; border-left: 4px solid var(--accent); background: var(--card); border-radius: 0 10px 10px 0; }
+.bookline, .coldline { margin: 0 0 6px; padding: 5px 10px; background: var(--card); border: 1px solid var(--line); border-radius: 8px; }
+body.line .setting { margin: 4px 0 6px; }
 .bookline a { color: var(--accent); }
 .coldline { border-style: dashed; }
 .windcall { display: grid; gap: 6px; margin: 10px 0; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); }

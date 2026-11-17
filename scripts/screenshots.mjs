@@ -30,8 +30,60 @@ const ready = (page) => page.waitForSelector('#fire');
 const plate = async (page, ix) => { await ready(page); await page.selectOption('#plate', String(ix)); await settle(page, 400); };
 // Clears what this device keeps for a rifle and sight, so a state starts from the middle.
 const fresh = (page, rifle, sight) => page.evaluate(([r, s]) => { for (const k of Object.keys(localStorage)) if (k.startsWith(`range-day:sight:${r}:${s}`) || k.startsWith(`range-day:zero:${r}:`) || k.startsWith(`range-day:log:${r}:`)) localStorage.removeItem(k); }, [rifle, sight]);
+// Closes the open day, so a screen opens on the choice its address makes (an open day with shots wins over the address). Every screen starts that way unless it says keepDay.
+const noDay = (page) => page.evaluate(() => { localStorage.removeItem('range-day:day:open'); localStorage.removeItem('range-day:day:packed'); });
+// A seeded shot through the page's own door, landed.
+async function seededShot(page, seed) {
+  const before = await page.evaluate(() => RangeDayLine.log.length);
+  await page.evaluate((s) => RangeDayLine.fire(s), seed);
+  for (let i = 0; i < 150; i++) { await settle(page, 60); if ((await page.evaluate(() => RangeDayLine.log.length)) > before) break; }
+  const log = await page.evaluate(() => RangeDayLine.log); return log[log.length - 1];
+}
+// A seeded hit on the chosen plate: the first shot shows where the seed lands, the hold is moved so the same seed lands on the center.
+async function seededHit(page, seed) {
+  await page.evaluate(() => RangeDayLine.setHold(0, 0));
+  const probe = await seededShot(page, seed);
+  const ipm = probe.yards * 36 * (Math.PI / (180 * 60));
+  await page.evaluate(([u, r]) => RangeDayLine.setHold(u, r), [-probe.upIn / ipm, -probe.rightIn / ipm]);
+  return seededShot(page, seed);
+}
+const AR = '/line?course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193';
 const SCREENS = [
-  { name: 'home', path: '/?rifle=iwi-x95', expect: 'This is ', act: (page) => page.waitForSelector('.rifle.picked[data-rifle="iwi-x95"]') },
+  { name: 'home', path: '/?rifle=iwi-x95', expect: 'When: time of day', act: (page) => page.waitForSelector('.rifle.picked[data-rifle="iwi-x95"]') },
+  // A day is open (shots fired at the bench): home shows the day first, with the doors back into it.
+  { name: 'home-day-open', path: '/zero?course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193', expect: 'A day is open', act: async (page) => { await page.waitForSelector('#fire5'); await page.click('#fire5'); await page.goto(`${base}/`); await page.waitForSelector('#day-card'); } },
+  // The bench in the middle of a day: a group fired, the rounds left beside the setting.
+  { name: 'zero-mid-day', path: '/zero?course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193', expect: 'of 20 rounds left', act: async (page) => { await page.waitForSelector('#fire5'); await page.click('#fire5'); await settle(page, 200); } },
+  // The firing line before the day's first shot: the cold-bore line showing.
+  { name: 'line-first-shot', path: AR, expect: 'first shot is next', act: (page) => plate(page, 0) },
+  // After a hit: the book line filled.
+  { name: 'line-after-hit', path: AR, expect: 'Written in the book', act: async (page) => { await plate(page, 0); await seededHit(page, 11); await settle(page, 300); } },
+  // A plate with nothing in the book yet.
+  { name: 'line-nothing-in-book', path: AR, expect: 'nothing in the book at 600 yards yet', act: async (page) => { await plate(page, 0); await seededHit(page, 12); await plate(page, 5); } },
+  // The wind call changed.
+  { name: 'line-wind-call', path: AR, expect: 'mph from the left', act: async (page) => { await plate(page, 2); await page.click('[data-wind-from="left"]'); await page.click('#wind-more'); await page.click('#wind-more'); await settle(page, 200); } },
+  // The box empty: twenty shots at the 100-yard plate.
+  { name: 'line-box-empty', path: AR, expect: 'the day is over', act: async (page) => { await plate(page, 0); for (let i = 0; i < 20; i++) await seededShot(page, 200 + i); await settle(page, 300); } },
+  // The day's page of a finished day (the one just shot).
+  { name: 'day-finished', path: AR, expect: 'ended when the box was empty', act: async (page) => { await plate(page, 0); for (let i = 0; i < 20; i++) await seededShot(page, 300 + i); await page.goto(`${base}/day`); await page.waitForSelector('#shots tbody tr'); } },
+  // The book page with several distances, one struck line and a note.
+  { name: 'book-several', path: AR, expect: 'Restore', act: async (page) => {
+    await ready(page); await page.evaluate(() => { for (const k of Object.keys(localStorage)) if (k.startsWith('range-day:book:') || k.startsWith('range-day:cold-bore:')) localStorage.removeItem(k); });
+    for (const ix of [0, 1, 2]) { await plate(page, ix); await seededHit(page, 400 + ix); }
+    await page.goto(`${base}/book?course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193`); await page.waitForSelector('.entry');
+    await page.fill('.entry .note', 'wind picked up after this one'); await page.press('.entry .note', 'Tab');
+    await page.click('.entry .strike'); await page.waitForSelector('.entry.struck'); await settle(page, 200);
+  } },
+  // The book page with no hits.
+  { name: 'book-empty', path: '/book?course=angeles-sylmar&rifle=remington-22&sight=rem-irons&load=cci-sv-40', expect: 'Nothing in this book yet', act: (page) => page.waitForSelector('#pages') },
+  // The cold-bore record with several days: three days, each begun with a shot at a plate.
+  { name: 'cold-bore-several', path: AR, expect: 'The cold-bore record', act: async (page) => {
+    for (let dayN = 0; dayN < 3; dayN++) { await noDay(page); await page.goto(`${base}${AR}`); await plate(page, dayN); await seededShot(page, 500 + dayN); }
+    await page.goto(`${base}/book?course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193`); await page.waitForSelector('#cold table');
+  } },
+  // A January morning and a July afternoon on the canyon course through the Vepr's scope.
+  { name: 'line-january-morning', path: `${PIRU}&sight=utg-2-7x44&month=1&time=morning`, expect: 'January morning', act: (page) => plate(page, 4) },
+  { name: 'line-july-afternoon', path: `${PIRU}&sight=utg-2-7x44&month=7&time=afternoon`, expect: 'July afternoon', act: (page) => plate(page, 4) },
   { name: 'status', path: '/status', expect: 'alive since ' },
   { name: 'zero-before', path: ZERO, expect: 'center of the group', act: async (page) => { await page.waitForSelector('#fire5'); await page.click('#fire5'); await settle(page, 200); } },
   { name: 'zero-after', path: ZERO, expect: 'Saved zero', act: async (page) => {
@@ -115,6 +167,7 @@ for (const [size, viewport] of Object.entries(SIZES)) {
   check(`${size}: the passphrase typed into the form signs in`, true);
 
   for (const s of SCREENS) {
+    if (!s.keepDay) await noDay(page);
     await page.goto(`${base}${s.path}`);
     if (s.act) await s.act(page);
     const text = await page.textContent('body');
