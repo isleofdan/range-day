@@ -114,7 +114,7 @@ window.RD = (function () {
     let tempF = m.lowF + tod.tempAt * (m.highF - m.lowF) + between(-weather.dayToDaySpreadF, weather.dayToDaySpreadF);
     if (santaAna) tempF += sa.tempAboveNormalF;
     tempF = Math.round(tempF);
-    const humidity = Math.round((santaAna ? between(sa.humidity.low, sa.humidity.high) : Math.max(0.03, Math.min(0.98, m.humidity + tod.humidityShift + between(-0.05, 0.05)))) * 100) / 100;
+    const humidity = Math.round((santaAna ? between(sa.humidity.low, sa.humidity.high) : Math.max(weather.humidityBounds.low, Math.min(weather.humidityBounds.high, m.humidity + tod.humidityShift + between(-weather.humiditySpread, weather.humiditySpread)))) * 100) / 100;
     const speedMph = Math.round((santaAna ? between(sa.windMph.low, sa.windMph.high) * sa.windFactorByTime[tod.name] : m.windMph * tod.windFactor * between(weather.windSpread.low, weather.windSpread.high)) * 10) / 10;
     const [a, b, c, d] = weather.windFromDegrees;
     const fromDegrees = Math.round(r() < 0.5 ? between(a, b) : between(c, d));
@@ -123,7 +123,7 @@ window.RD = (function () {
       const speed = Math.round(speedMph * (1 + factor * between(-v, v)) * 10) / 10;
       return {
         fromYards: from, toYards: to, speedMph: speed,
-        fromDegrees: Math.round(fromDegrees + between(-25, 25)),
+        fromDegrees: Math.round(fromDegrees + between(-weather.stretchDirectionWobbleDegrees, weather.stretchDirectionWobbleDegrees)),
         gustMph: Math.round((santaAna ? between(sa.gustMph.low, sa.gustMph.high) : speed * between(weather.gustShare.low, weather.gustShare.high)) * 10) / 10,
         periodS: Math.round(between(weather.gustPeriodS.low, weather.gustPeriodS.high)),
         phase: between(0, 6.28),
@@ -188,7 +188,14 @@ window.RD = (function () {
     const open = openDay();
     const same = (day) => day.rifle === c.rifleId && day.load === c.loadId && day.course === c.courseId;
     if (open && hasShots(open)) {
-      return { day: open, c: { ...c, rifleId: open.rifle, loadId: open.load, courseId: open.course }, redirected: !same(open), saved: true, fresh: false };
+      if (same(open)) return { day: open, c, redirected: false, saved: true, fresh: false };
+      // The address asked for something else: the open day wins, and every choice that depends on
+      // the rifle (the sight, the magnifier) is resolved against the open day's rifle, not the address's.
+      const rifle = d.rifles[open.rifle];
+      const playable = rifle.sights.filter((s) => d.sights[s].kind !== 'magnifier');
+      const sightId = playable.includes(c.sightId) ? c.sightId : chooseFrom(d, { rifle: open.rifle, remembered: true }).sightId;
+      const magnifierId = rifle.sights.find((s) => d.sights[s].kind === 'magnifier') || null;
+      return { day: open, c: { ...c, rifleId: open.rifle, loadId: open.load, courseId: open.course, sightId, magnifierId }, redirected: true, saved: true, fresh: false };
     }
     if (open && same(open) && !open.endedAt) return { day: open, c, redirected: false, saved: true, fresh: false };
     const month = Number(q && q.month) >= 1 && Number(q.month) <= 12 ? Number(q.month) : thisMonth();
@@ -207,10 +214,13 @@ window.RD = (function () {
   // Writes one shot into the day (place 'bench' or 'line'); ends the day when the box is empty and nothing is still in the air.
   function recordShot(day, shot, inFlight) {
     if (!day) return { saved: false };
-    shot.n = day.shots.length + 1;
+    // The number is the shot's place in the day's firing order: given at the trigger pull by the
+    // firing line (a bench shot has none in flight, so it is simply the next); the list stays in that order.
+    if (typeof shot.n !== 'number') shot.n = day.shots.reduce((m, x) => Math.max(m, x.n || 0), 0) + 1;
     shot.at = new Date().toISOString();
-    if (!day.firstShotPlace) day.firstShotPlace = shot.place;
+    if (!day.firstShotPlace || shot.n === 1) day.firstShotPlace = shot.place;
     day.shots.push(shot);
+    day.shots.sort((a, b) => a.n - b.n);
     let ended = false;
     if (day.box.left <= 0 && !inFlight) { finishDay(day, 'empty'); ended = true; } else saveOpenDay(day);
     return { saved: true, ended };
@@ -269,20 +279,38 @@ window.RD = (function () {
     Object.assign(l, patch);
     return store.set(bookKey(rifle, sight, load), lines);
   }
+  // Newest first, for every list of lines (the book page, the line under the
+  // setting, the cold-bore record): by the moment the shot landed (`at`),
+  // then by the shot's number in its day (`n`), as numbers; a line from an
+  // older copy without them falls back to its date and the number in its id.
+  const shotNumber = (l) => (typeof l.n === 'number' ? l.n : Number((String(l.id || '').split(':')[1]) || 0));
+  const when = (l) => l.at || `${l.on || ''}T00:00:00.000Z`;
+  function newestFirst(a, b) {
+    if (when(a) !== when(b)) return when(a) < when(b) ? 1 : -1;
+    if ((a.day || '') !== (b.day || '')) return (a.day || '') < (b.day || '') ? 1 : -1;
+    return shotNumber(b) - shotNumber(a);
+  }
   // The unstruck lines at a distance, newest first.
-  const bookAt = (rifle, sight, load, yards) => getBook(rifle, sight, load).filter((l) => !l.struck && l.yards === yards).sort((a, b) => (a.on < b.on ? 1 : a.on > b.on ? -1 : b.id.localeCompare(a.id)));
+  const bookAt = (rifle, sight, load, yards) => getBook(rifle, sight, load).filter((l) => !l.struck && l.yards === yards).sort(newestFirst);
   // The distances that have unstruck lines, nearest below and above a distance.
   function bookNeighbours(rifle, sight, load, yards) {
     const ds = [...new Set(getBook(rifle, sight, load).filter((l) => !l.struck).map((l) => l.yards))].sort((a, b) => a - b);
     return { below: ds.filter((y) => y < yards).pop() ?? null, above: ds.find((y) => y > yards) ?? null, all: ds };
   }
-  // The come-up: the elevation counted from the saved zero the sight was zeroed at, or from the sight's middle.
+  // The come-up in minutes of angle: the shot's elevation (clicks and, on a
+  // sight with a sliding leaf, the leaf's own angle) less the saved zero's
+  // (its clicks and the leaf setting it was saved with); from the sight's
+  // middle where no zero was saved.
+  function comeUpMoa(line, clickMoa) {
+    const shotMoa = typeof line.elevationMoa === 'number' ? line.elevationMoa : line.elevationClicks * clickMoa;
+    if (!line.zero) return Math.round(shotMoa * 100) / 100;
+    const zeroMoa = typeof line.zero.elevationMoa === 'number' ? line.zero.elevationMoa : line.zero.elevationClicks * clickMoa;
+    return Math.round((shotMoa - zeroMoa) * 100) / 100;
+  }
   function comeUpText(line, clickMoa) {
-    if (line.zero) {
-      const up = Math.round((line.elevationClicks - line.zero.elevationClicks) * clickMoa * 100) / 100;
-      return `${Math.abs(up)} minutes of angle ${up >= 0 ? 'up' : 'down'} from the ${line.zero.zeroYards}-yard zero`;
-    }
-    return `${Math.abs(line.elevationMoa)} minutes of angle ${line.elevationMoa >= 0 ? 'up' : 'down'} from the middle (no zero saved)`;
+    const up = comeUpMoa(line, clickMoa);
+    if (line.zero) return `${Math.abs(up)} minutes of angle ${up >= 0 ? 'up' : 'down'} from the ${line.zero.zeroYards}-yard zero`;
+    return `${Math.abs(up)} minutes of angle ${up >= 0 ? 'up' : 'down'} from the middle (no zero saved)`;
   }
 
   // --- the cold-bore record -----------------------------------------------------------------
@@ -315,28 +343,87 @@ window.RD = (function () {
     }
     return out;
   }
-  // Checks a parsed file and adds what is missing. Throws an Error with the reason for a file that is not a copy.
+  // The shape every line of a copy must have: field name to the kind of value.
+  const SHAPES = {
+    zeros: { rifle: 'string', sight: 'string', load: 'string', zeroYards: 'number', elevationClicks: 'number', windageClicks: 'number' },
+    book: { rifle: 'string', sight: 'string', load: 'string', id: 'string', day: 'string', on: 'string', course: 'string', yards: 'number', elevationClicks: 'number', windageClicks: 'number', elevationMoa: 'number', windageMoa: 'number', leaf: 'number|null', zero: 'object|null', heldUpMoa: 'number', heldRightMoa: 'number', tempF: 'number', windCall: 'object|null', upIn: 'number', rightIn: 'number', struck: 'boolean', note: 'string' },
+    cold_bore: { rifle: 'string', load: 'string', id: 'string', day: 'string', on: 'string', course: 'string', sight: 'string', yards: 'number', elevationClicks: 'number', windageClicks: 'number', leaf: 'number|null', windCall: 'object|null', tempF: 'number', hit: 'boolean', upIn: 'number|null', rightIn: 'number|null' },
+    days: { id: 'string', startedAt: 'string', date: 'string', course: 'string', rifle: 'string', load: 'string', month: 'number', timeOfDay: 'string', shots: 'array', box: 'object', weather: 'object' },
+  };
+  // Inside a day: the box, the weather (with its three stretches of wind) and every shot.
+  const DAY_SHAPES = {
+    box: { size: 'number', left: 'number' },
+    weather: { tempF: 'number', humidity: 'number', altitudeFt: 'number', pressureInHg: 'number', wind: 'array' },
+    windStretch: { fromYards: 'number', toYards: 'number', speedMph: 'number', fromDegrees: 'number' },
+    zero: { zeroYards: 'number', elevationClicks: 'number', windageClicks: 'number' }, // a book line's saved zero
+    windCall: { from: 'string', mph: 'number' }, // a stated call; null is "not called"
+    shot: { n: 'number', place: 'string', yards: 'number', elevationClicks: 'number', windageClicks: 'number', reached: 'boolean', upIn: 'number|null', rightIn: 'number|null' },
+    lineShot: { hit: 'boolean', heldUpMoa: 'number', heldRightMoa: 'number' }, // a shot at steel has these too; a bench shot has no hit
+  };
+  const PLACES = ['bench', 'line'];
+  const COPY_VERSIONS = [1];
+  // Checks a whole copy before anything is written: throws an Error naming
+  // the faulty field and what it must be, so a bad file loads nothing.
+  function checkCopy(obj) {
+    const notACopy = (why) => new Error(`This is not a Range Day copy: ${why}`);
+    const isOne = (v, kind) => (kind === 'null' ? v === null : kind === 'array' ? Array.isArray(v) : kind === 'object' ? Boolean(v && typeof v === 'object' && !Array.isArray(v)) : (typeof v === kind && !(kind === 'number' && Number.isNaN(v))));
+    const isKind = (v, kind) => kind.split('|').some((k) => isOne(v, k));
+    const kindName = (kind) => kind.split('|').map((k) => (k === 'array' ? 'a list' : k === 'object' ? 'an object' : k === 'null' ? 'null' : `a ${k}`)).join(' or ');
+    // Checks one record against a shape; `at` is its path in the file, for the message.
+    const checkRecord = (rec, shape, at) => {
+      if (!isKind(rec, 'object')) throw notACopy(`${at} is not a record (an object with ${Object.keys(shape).join(', ')}). Nothing was loaded.`);
+      for (const [field, kind] of Object.entries(shape)) {
+        const v = rec[field];
+        if (!isKind(v, kind)) throw notACopy(`${at}.${field} is ${v === undefined ? 'missing' : JSON.stringify(v)}; it must be ${kindName(kind)}. Nothing was loaded.`);
+      }
+    };
+    if (!obj || typeof obj !== 'object' || Array.isArray(obj)) throw notACopy('the file does not hold a record (an object with "kind", "version", "zeros", "book", "cold_bore" and "days").');
+    if (obj.kind !== COPY_KIND) throw notACopy(`its "kind" is ${JSON.stringify(obj.kind)}, not "${COPY_KIND}".`);
+    if (!COPY_VERSIONS.includes(obj.version)) throw notACopy(`its "version" is ${JSON.stringify(obj.version)}; this app reads version ${COPY_VERSIONS.join(', ')}.`);
+    for (const k of ['zeros', 'book', 'cold_bore', 'days']) if (!Array.isArray(obj[k])) throw notACopy(`"${k}" is missing or not a list.`);
+    for (const [list, shape] of Object.entries(SHAPES)) obj[list].forEach((rec, i) => checkRecord(rec, shape, `${list}[${i}]`));
+    // Inside a book line: its saved zero and its wind call, where not null; inside a cold-bore line, its wind call.
+    obj.book.forEach((l, i) => { if (l.zero) checkRecord(l.zero, DAY_SHAPES.zero, `book[${i}].zero`); if (l.windCall) checkRecord(l.windCall, DAY_SHAPES.windCall, `book[${i}].windCall`); });
+    obj.cold_bore.forEach((l, i) => { if (l.windCall) checkRecord(l.windCall, DAY_SHAPES.windCall, `cold_bore[${i}].windCall`); });
+    // A day's inside: the box, the weather and its wind, every shot.
+    obj.days.forEach((day, i) => {
+      const at = `days[${i}]`;
+      checkRecord(day.box, DAY_SHAPES.box, `${at}.box`);
+      checkRecord(day.weather, DAY_SHAPES.weather, `${at}.weather`);
+      if (day.weather.wind.length !== 3) throw notACopy(`${at}.weather.wind has ${day.weather.wind.length} stretches; it must have 3. Nothing was loaded.`);
+      day.weather.wind.forEach((w, j) => checkRecord(w, DAY_SHAPES.windStretch, `${at}.weather.wind[${j}]`));
+      if (!TIMES.includes(day.timeOfDay)) throw notACopy(`${at}.timeOfDay is ${JSON.stringify(day.timeOfDay)}; it must be one of ${TIMES.join(', ')}. Nothing was loaded.`);
+      if (!(day.month >= 1 && day.month <= 12)) throw notACopy(`${at}.month is ${JSON.stringify(day.month)}; it must be 1 to 12. Nothing was loaded.`);
+      day.shots.forEach((s, j) => {
+        checkRecord(s, DAY_SHAPES.shot, `${at}.shots[${j}]`);
+        if (!PLACES.includes(s.place)) throw notACopy(`${at}.shots[${j}].place is ${JSON.stringify(s.place)}; it must be one of ${PLACES.join(', ')}. Nothing was loaded.`);
+        if (s.place === 'line') checkRecord(s, DAY_SHAPES.lineShot, `${at}.shots[${j}]`);
+        // Where it landed: a shot that reached has both coordinates in inches; one that went into the ground has null for both.
+        for (const f of ['upIn', 'rightIn']) {
+          if (s.reached && typeof s[f] !== 'number') throw notACopy(`${at}.shots[${j}].${f} is ${JSON.stringify(s[f])}; a shot that reached must have it as a number. Nothing was loaded.`);
+          if (!s.reached && s[f] !== null) throw notACopy(`${at}.shots[${j}].${f} is ${JSON.stringify(s[f])}; a shot that did not reach must have it as null. Nothing was loaded.`);
+        }
+      });
+    });
+    return true;
+  }
+  // Checks a parsed file whole, then adds what is missing. Throws an Error with the reason for a file that is not a copy; then nothing was written.
   function loadCopy(obj) {
-    if (!obj || typeof obj !== 'object' || Array.isArray(obj)) throw new Error('This is not a Range Day copy: the file does not hold a record (an object with "kind", "zeros", "book", "cold_bore" and "days").');
-    if (obj.kind !== COPY_KIND) throw new Error(`This is not a Range Day copy: its "kind" is ${JSON.stringify(obj.kind)}, not "${COPY_KIND}".`);
-    for (const k of ['zeros', 'book', 'cold_bore', 'days']) if (!Array.isArray(obj[k])) throw new Error(`This is not a complete Range Day copy: "${k}" is missing or not a list.`);
+    checkCopy(obj);
     const added = { zeros: 0, book: 0, cold_bore: 0, days: 0 };
     let failed = false;
     for (const z of obj.zeros) {
-      if (!z.rifle || !z.sight || !z.load || typeof z.elevationClicks !== 'number') continue;
       if (ok(getZero(z.rifle, z.sight, z.load))) continue; // never replace a zero already here
       const rec = { elevationClicks: z.elevationClicks, windageClicks: z.windageClicks || 0, zeroYards: z.zeroYards, sight: z.sight, savedAt: z.saved_on || new Date().toISOString() };
       if (z.leafIx != null) rec.leafIx = z.leafIx;
       if (setZero(z.rifle, z.sight, z.load, rec)) added.zeros++; else failed = true;
     }
     for (const l of obj.book) {
-      if (!l.rifle || !l.sight || !l.load || !l.id || typeof l.yards !== 'number') continue;
       const { rifle, sight, load, ...line } = l;
       if (getBook(rifle, sight, load).some((x) => x.id === line.id)) continue;
       if (addBookLine(rifle, sight, load, line)) added.book++; else failed = true;
     }
     for (const l of obj.cold_bore) {
-      if (!l.rifle || !l.load || !l.id) continue;
       const { rifle, load, ...line } = l;
       if (getColdBore(rifle, load).some((x) => x.id === line.id)) continue;
       if (addColdBore(rifle, load, line)) added.cold_bore++; else failed = true;
@@ -345,7 +432,6 @@ window.RD = (function () {
     const open = openDay();
     let changed = false;
     for (const d of obj.days) {
-      if (!d || !d.id || !Array.isArray(d.shots)) continue;
       if (days.some((x) => x.id === d.id) || (open && open.id === d.id)) continue;
       days.push(d); added.days++; changed = true;
     }
@@ -581,5 +667,5 @@ window.RD = (function () {
     setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
   }
 
-  return { E, data, rifleIds, store, getSight, sightReadFailed, setSight, getZero, setZero, getLog, setLog, zeroCount, getLast, setLast, getLastFor, setLastFor, getWhen, setWhen, thisMonth, TIMES, MONTHS, getWindCall, setWindCall, windCallText, wireWindCall, chooseFrom, params, remember, leafOf, holdRepeat, wireKnobs, settingLine, roundsText, leafText, showConditions, setShowConditions, drawDay, conditionsOf, dayWords, localDate, openDay, dayReadFailed, hasShots, finishedDays, dayById, startDay, enterDay, takeRounds, recordShot, finishDay, packUp, packedDayId, restorePacked, bookKey, getBook, bookReadFailed, addBookLine, changeBookLine, bookAt, bookNeighbours, comeUpText, getColdBore, addColdBore, makeCopy, loadCopy, COPY_KIND, audio, shotSound, ringSound, thudSound, clickSound, qs, esc, sign, moaOf, clicksText, whereText, heldText, dateText, windWord, crosswindMph, fovMoa, fitCanvas, hash, download };
+  return { E, data, rifleIds, store, getSight, sightReadFailed, setSight, getZero, setZero, getLog, setLog, zeroCount, getLast, setLast, getLastFor, setLastFor, getWhen, setWhen, thisMonth, TIMES, MONTHS, getWindCall, setWindCall, windCallText, wireWindCall, chooseFrom, params, remember, leafOf, holdRepeat, wireKnobs, settingLine, roundsText, leafText, showConditions, setShowConditions, drawDay, conditionsOf, dayWords, localDate, openDay, dayReadFailed, hasShots, finishedDays, dayById, startDay, enterDay, takeRounds, recordShot, finishDay, packUp, packedDayId, restorePacked, bookKey, getBook, bookReadFailed, addBookLine, changeBookLine, bookAt, bookNeighbours, newestFirst, comeUpMoa, comeUpText, getColdBore, addColdBore, makeCopy, checkCopy, loadCopy, COPY_KIND, audio, shotSound, ringSound, thudSound, clickSound, qs, esc, sign, moaOf, clicksText, whereText, heldText, dateText, windWord, crosswindMph, fovMoa, fitCanvas, hash, download };
 }());

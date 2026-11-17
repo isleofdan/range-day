@@ -100,16 +100,22 @@ day is started.
 ### The data book: `book:<rifle>:<sight>:<load>`
 
 One line per hit on steel, written when the bullet landed, with the
-field names of the gun record's `measured.book` section. `zero` is the
-saved zero the sight was counted from at the shot, or `null`; `leaf` is
-the rear leaf's setting in meters, or `null`; `windCall` is the call as
+field names of the gun record's `measured.book` section. `n` is the
+shot's number in its day and `at` the moment it landed (lists are
+ordered newest first by `at`, then `n`, as numbers); `elevationMoa` is
+the shot's whole elevation in minutes of angle (the clicks and, on a
+sight with a sliding leaf, the leaf's own angle); `zero` is the saved
+zero the sight was counted from at the shot (its clicks, the leaf
+setting it was saved with, and its own `elevationMoa`), or `null`; `leaf`
+is the rear leaf's setting in meters, or `null`; `windCall` is the call as
 stated before the shot, or `null`; `struck` and `note` are the player's
-own, changed on the book page. `id` is `<day id>:<shot number>`.
+own, changed on the book page. `id` is `<day id>:<shot number>`. The
+come-up the book shows is `elevationMoa − zero.elevationMoa`.
 
 ```json
-[{ "id": "2026-11-17-mwkoc3x1:6", "day": "2026-11-17-mwkoc3x1", "on": "2026-11-17", "course": "angeles-sylmar", "yards": 300,
+[{ "id": "2026-11-17-mwkoc3x1:6", "day": "2026-11-17-mwkoc3x1", "n": 6, "at": "2026-11-17T09:20:03.100Z", "on": "2026-11-17", "course": "angeles-sylmar", "yards": 300,
    "elevationClicks": 4, "windageClicks": -1, "elevationMoa": 7, "windageMoa": -1.75, "leaf": null,
-   "zero": { "zeroYards": 100, "elevationClicks": 3, "windageClicks": -1 },
+   "zero": { "zeroYards": 100, "elevationClicks": 3, "windageClicks": -1, "leafIx": null, "leaf": null, "elevationMoa": 5.25 },
    "heldUpMoa": 0.5, "heldRightMoa": -1.2, "tempF": 52, "windCall": { "from": "left", "mph": 6 },
    "upIn": 2.08, "rightIn": 0.83, "struck": false, "note": "" }]
 ```
@@ -121,7 +127,7 @@ bench, and not with the conditions shown), hit or miss, with the field
 names of the gun record's `measured.cold_bore` section.
 
 ```json
-[{ "id": "2026-11-17-mwkoc3x1:1", "day": "2026-11-17-mwkoc3x1", "on": "2026-11-17", "course": "angeles-sylmar", "sight": "ar-irons", "load": "imi-m193",
+[{ "id": "2026-11-17-mwkoc3x1:1", "day": "2026-11-17-mwkoc3x1", "n": 1, "at": "2026-11-17T09:14:02.400Z", "on": "2026-11-17", "course": "angeles-sylmar", "sight": "ar-irons", "load": "imi-m193",
    "yards": 300, "elevationClicks": 4, "windageClicks": -1, "leaf": null, "windCall": { "from": "left", "mph": 6 }, "tempF": 52,
    "hit": false, "upIn": -9.4, "rightIn": 2.1 }]
 ```
@@ -143,8 +149,16 @@ every book page, the cold-bore records, the finished days and the saved
 zeros on the device, each line carrying its rifle, sight and load.
 "Load a copy" reads such a file and adds what the device lacks (by `id`
 for lines and days, by rifle, sight and load for zeros); it never
-replaces or removes anything already there, and refuses a file whose
-`kind` is not `"range-day copy"`, saying why. The book, cold-bore and
+replaces or removes anything already there. The whole file is checked
+before anything is written: a file whose `kind` is not
+`"range-day copy"`, whose `version` is not 1, whose lists are missing, or
+any of whose records lacks a required field or has one of the wrong kind
+(for example `book[3].yards` not a number), including a day's box,
+weather, three stretches of wind and every shot (for example
+`days[0].shots[1]` not a record; a shot that reached must carry where it
+landed, `upIn` and `rightIn`, as numbers, and one that went into the
+ground must carry null for both), is refused with that field named, and
+nothing is loaded. The book, cold-bore and
 zero lines use the field names of the gun record's `measured` section,
 so the file can be taken as it is by the build that keeps records
 elsewhere.

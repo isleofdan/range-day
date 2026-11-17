@@ -101,8 +101,9 @@ test('verify 5: the box: a new day shows the load\'s full box; five on the bench
   const before = await page.evaluate(() => RangeDayZero.holes.length);
   await page.click('#fire1', { force: true }).catch(() => {});
   assert.equal(await page.evaluate(() => RangeDayZero.holes.length), before, 'no more holes');
-  // The day's page lists every shot: 5 + 12 + 3 = 20.
-  await page.goto(`${base}/day?id=${encodeURIComponent(day.id)}`); await page.waitForSelector('#shots tbody tr');
+  // The day's page is shown when the day ends, and lists every shot: 5 + 12 + 3 = 20.
+  await page.waitForURL(/\/day\?id=/, { timeout: 10000 }); await page.waitForSelector('#shots tbody tr');
+  assert.equal(new URL(page.url()).searchParams.get('id'), day.id, 'the page of the day that just ended');
   assert.equal(await page.$$eval('#shots tbody tr', (r) => r.length), 20);
   assert.match(await page.textContent('#facts'), /a box of 20, 20 fired, 0 left; ended when the box was empty/);
   console.log(`  box of 20: 5 at the bench, 12 at steel, then "Fire five" fired 3; the day's page lists ${await page.$$eval('#shots tbody tr', (r) => r.length)} shots`);
@@ -118,6 +119,8 @@ test('verify 5: the box: a new day shows the load\'s full box; five on the bench
   await wait(300);
   assert.equal(await page.evaluate(() => RangeDayLine.log.length + RangeDayLine.pending), logBefore, 'nothing fired');
   assert.match(await page.textContent('#result'), /The day is over: the box of 20 is empty/);
+  await page.waitForURL(/\/day\?id=/, { timeout: 10000 }); await page.waitForSelector('#facts');
+  assert.match(await page.textContent('#facts'), /ended when the box was empty/, 'the line too ends on the day\'s page');
   assert.deepEqual(errors, []);
   await context.close();
 });
@@ -150,15 +153,45 @@ test('verify 6: a day stays open across a reload with the same rounds and weathe
   await line(page2, 'course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt');
   assert.equal((await page2.evaluate(() => RangeDayLine.day)).rifle, 'molot-vepr-54r', 'another choice simply replaces the shotless day');
   assert.equal(await page2.evaluate(() => RD.finishedDays().length), daysBefore, 'no record was kept');
-  // Pack up early, then back to the range.
+  // An address naming another rifle (and a sight the open rifle does not carry) opens the open day, with a sight the open rifle carries, and says so.
   await seededShot(page2, 7);
+  await line(page2, 'course=angeles-sylmar&rifle=iwi-tavor-sar&sight=pa-md25&load=imi-m193');
+  const redirected = await page2.evaluate(() => RangeDayLine.day);
+  assert.equal(redirected.rifle, 'molot-vepr-54r', 'the open day wins over the address');
+  assert.match(await page2.textContent('#intro'), /Molot Vepr.*UTG AccuShot/, 'with a sight the Vepr carries, not the Tavor\'s dot');
+  assert.match(await page2.textContent('#day-line'), /A day is already open with the Molot Vepr/);
+  assert.ok(await page2.isHidden('#magrow'), 'no magnifier control: the Vepr has none');
+  const given = await page2.evaluate(async () => { RangeDayLine.setHold(0, 0); RangeDayLine.fire(8); await new Promise((r) => setTimeout(r, 1500)); return RangeDayLine.lastShotInput; });
+  assert.equal(given.sightHeightIn, flat.rifles['molot-vepr-54r'].sightHeightIn['utg-2-7x44'], 'the engine is given the open rifle\'s own sight height');
+  // Two bullets in the air at once keep the order they were fired in: the far plate's bullet (nearly two seconds) is fired first, the near plate's lands first.
+  await line(page2, 'course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt');
+  const nBefore = (await page2.evaluate(() => RangeDayLine.day)).shots.length;
+  await page2.evaluate(async () => { RangeDayLine.setHold(0, 0); document.getElementById('plate').value = '8'; document.getElementById('plate').dispatchEvent(new Event('change')); RangeDayLine.fire(31); document.getElementById('plate').value = '0'; document.getElementById('plate').dispatchEvent(new Event('change')); RangeDayLine.fire(32); });
+  for (let i = 0; i < 60; i++) { await wait(100); if ((await page2.evaluate(() => RangeDayLine.pending)) === 0) break; }
+  const ordered = (await page2.evaluate(() => RangeDayLine.day)).shots.slice(nBefore);
+  assert.deepEqual(ordered.map((s) => s.yards), [1000, 200], 'the day keeps the firing order, not the landing order');
+  assert.deepEqual(ordered.map((s) => s.n), [nBefore + 1, nBefore + 2]);
+  // A shot still in the air when Pack up is pressed is kept, with its result: the far plate's flight is nearly two seconds.
+  await line(page2, 'course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt');
+  await page2.selectOption('#plate', '8');
+  const shotsBefore = (await page2.evaluate(() => RangeDayLine.day)).shots.length;
+  await page2.evaluate(() => { RangeDayLine.setHold(0, 0); RangeDayLine.fire(9); });
+  assert.equal(await page2.evaluate(() => RangeDayLine.pending), 1, 'the bullet is in the air');
+  await page2.click('#pack-up'); await page2.waitForURL(/\/day\?id=/); await page2.waitForSelector('#back');
+  const packedEarly = await page2.evaluate(() => RD.finishedDays()[0]);
+  assert.equal(packedEarly.shots.length, shotsBefore + 1, 'the shot in flight is in the finished day');
+  const lastShot = packedEarly.shots[packedEarly.shots.length - 1];
+  assert.equal(lastShot.yards, 1000); assert.equal(typeof lastShot.hit, 'boolean'); assert.equal(typeof lastShot.reached, 'boolean');
+  assert.match(await page2.textContent('#shots tbody'), /1000/);
+  await page2.click('#back'); await page2.waitForSelector('#fire');
+  // Pack up early, then back to the range.
   const packedDay = await page2.evaluate(() => RangeDayLine.day);
   await page2.click('#pack-up'); await page2.waitForURL(/\/day\?id=/); await page2.waitForSelector('#back');
   assert.match(await page2.textContent('#facts'), /packed up early/);
   assert.equal(await page2.evaluate(() => RD.openDay()), null);
   await page2.click('#back'); await page2.waitForSelector('#fire');
   const restored = await page2.evaluate(() => RangeDayLine.day);
-  assert.equal(restored.id, packedDay.id); assert.equal(restored.box.left, 19); assert.equal(restored.endedAt, null);
+  assert.equal(restored.id, packedDay.id); assert.equal(restored.box.left, 15); assert.equal(restored.endedAt, null);
   assert.equal(await page2.evaluate(() => RD.finishedDays().some((x) => x.id === RangeDayLine.day.id)), false, 'it is open again, not finished');
   assert.deepEqual(errors, []);
   await context.close();
@@ -319,6 +352,7 @@ test('verify 10: nothing on the phone is lost: a zero, a sight setting and a log
   await page.selectOption('#plate', '0');
   for (let i = 0; i < 20; i++) await seededShot(page, 40 + i);
   assert.match(await page.textContent('#rounds'), /the day is over/);
+  await page.waitForURL(/\/day\?id=/, { timeout: 10000 });
   const after = await page.evaluate((keys) => Object.fromEntries(keys.map((k) => [k, JSON.parse(localStorage.getItem(k))])), Object.keys(before));
   assert.deepStrictEqual(after['range-day:zero:bcm-ar15:ar-irons:imi-m193'], before['range-day:zero:bcm-ar15:ar-irons:imi-m193'], 'the zero is untouched');
   assert.deepStrictEqual(after['range-day:sight:bcm-ar15:ar-irons'], before['range-day:sight:bcm-ar15:ar-irons'], 'the sight setting is untouched');
@@ -332,14 +366,16 @@ test('verify 10: nothing on the phone is lost: a zero, a sight setting and a log
 
 test('verify 11: "Save a copy" after a day with hits, then "Load a copy" on an empty device gives the same book, cold-bore record, day and zero; loading it twice adds nothing; a file that is not a copy is refused with its reason', { skip }, async () => {
   const { page, context, errors } = await signedIn();
-  // A zero at the bench (one day), then a day with hits at steel (its first shot at a plate: a cold-bore line).
+  // A zero at the bench (one day), then a day with hits at steel (its first shot at a plate: a cold-bore line) that also fires a bench group afterwards.
   await bench(page, AR);
   await page.click('#fire1'); await page.click('#save');
   await noDay(page);
   await line(page, AR);
   await page.selectOption('#plate', '0');
   await seededHit(page, 51); await seededHit(page, 52);
+  await page.click('#to-zero'); await page.waitForSelector('#fire5'); await page.click('#fire5'); // bench shots in the same day: no hit flag on them
   await page.click('#pack-up'); await page.waitForURL(/\/day\?id=/);
+  assert.equal(await page.evaluate(() => RD.finishedDays()[0].shots.filter((s) => s.place === 'bench').length), 5, 'the day holds five bench shots');
   await page.goto(`${base}/book?${AR}`); await page.waitForSelector('.entry');
   const bookText = await page.textContent('#pages'), coldText = await page.textContent('#cold');
   const copy = await page.evaluate(() => RangeDayBook.copy);
@@ -367,13 +403,22 @@ test('verify 11: "Save a copy" after a day with hits, then "Load a copy" on an e
   assert.match(await page.textContent('#saved'), /Saved zero for IMI M193.*100 yards/, 'the zero came back');
   // Not a copy.
   const reasons = [];
-  for (const bad of ['{"hello": 1}', '{"kind": "range-day copy", "zeros": []}', '[1, 2]']) {
+  const malformed = JSON.parse(text); malformed.book[0].yards = 'far';
+  const nested = JSON.parse(text); nested.days[0].shots[1] = null;
+  const landing = JSON.parse(text); const reachedShot = landing.days[0].shots.find((s) => s.reached); reachedShot.upIn = 'high';
+  const keysBefore = await page.evaluate(() => Object.keys(localStorage).sort().join(' '));
+  for (const bad of ['{"hello": 1}', '{"kind": "range-day copy", "version": 1, "zeros": []}', '[1, 2]', '{"kind": "range-day copy", "version": 2, "zeros": [], "book": [], "cold_bore": [], "days": []}', JSON.stringify(malformed), JSON.stringify(nested), JSON.stringify(landing)]) {
     reasons.push(await page.evaluate((t) => { try { RD.loadCopy(JSON.parse(t)); return 'accepted'; } catch (e) { return e.message; } }, bad));
   }
   console.log('  refused: ' + reasons.join('\n  refused: '));
   assert.match(reasons[0], /not a Range Day copy: its "kind" is undefined/);
-  assert.match(reasons[1], /not a complete Range Day copy: "book" is missing or not a list/);
+  assert.match(reasons[1], /not a Range Day copy: "book" is missing or not a list/);
   assert.match(reasons[2], /not a Range Day copy: the file does not hold a record/);
+  assert.match(reasons[3], /not a Range Day copy: its "version" is 2; this app reads version 1/);
+  assert.match(reasons[4], /not a Range Day copy: book\[0\]\.yards is "far"; it must be a number\. Nothing was loaded\./);
+  assert.match(reasons[5], /not a Range Day copy: days\[0\]\.shots\[1\] is not a record \(an object with n, place, yards, elevationClicks, windageClicks, reached, upIn, rightIn\)\. Nothing was loaded\./);
+  assert.match(reasons[6], /not a Range Day copy: days\[0\]\.shots\[\d+\]\.upIn is "high"; it must be a number or null\. Nothing was loaded\./);
+  assert.equal(await page.evaluate(() => Object.keys(localStorage).sort().join(' ')), keysBefore, 'a refused file wrote nothing');
   assert.deepEqual(errors, []);
   await context.close();
 });
@@ -402,7 +447,12 @@ test('verify 13: the phone: home with no day open shows the picks, When and both
     assert.equal(r.scrollY, 0);
     for (const b of r.boxes) assert.ok(b.ok, `${id}: ${b.sel} at ${b.top.toFixed(0)}-${b.bottom.toFixed(0)} inside 915`);
     lines.push(`${id}: When bottom ${r.boxes[4].bottom.toFixed(0)}, zero line bottom ${r.boxes[5].bottom.toFixed(0)}, doors bottom ${r.boxes[7].bottom.toFixed(0)} of 915`);
+    assert.match(await page.getAttribute('#go-book', 'href'), new RegExp(`rifle=${id}&`), 'the book link follows the rifle picked');
   }
+  // The book link follows the sight and the load too.
+  await page.click('.rifle[data-rifle="iwi-tavor-sar"]'); await page.waitForSelector('.rifle.picked[data-rifle="iwi-tavor-sar"]');
+  await page.selectOption('#sight', 'pa-md25'); await page.selectOption('#load', 'federal-gmm-69');
+  assert.match(await page.getAttribute('#go-book', 'href'), /rifle=iwi-tavor-sar&sight=pa-md25&load=federal-gmm-69/);
   // A day open: home shows the day, its sight pick and its doors.
   await line(page, AR); await page.selectOption('#plate', '0'); await seededShot(page, 61);
   const r1 = await inside(['#view', '#rounds', '#setting-line', '#book-line']);

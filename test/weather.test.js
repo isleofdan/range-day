@@ -43,6 +43,13 @@ test('each course has twelve months with a low under its high, a humidity, a win
   assert.ok(W.timesOfDay.morning.windFactor < W.timesOfDay.midday.windFactor && W.timesOfDay.midday.windFactor < W.timesOfDay.afternoon.windFactor, 'mornings calmer, afternoons windier');
   assert.ok(W.timesOfDay.morning.tempAt < W.timesOfDay.afternoon.tempAt);
   assert.ok(W.santaAna.windMph.low >= 15 && W.santaAna.humidity.high <= 0.2);
+  assert.ok(W.humiditySpread > 0 && W.humidityBounds.low > 0 && W.humidityBounds.high < 1 && W.stretchDirectionWobbleDegrees > 0, 'the humidity scatter, its bounds and the stretch wobble live in the data');
+  // No number of the draw's own is typed into the code: every literal in drawDay is a structural 0, 1, 2, 3, 10, 100, 100000, 0.5 or 6.28, not a weather figure.
+  const src = fs.readFileSync(path.join(__dirname, '..', 'public', 'game.js'), 'utf8');
+  const body = src.slice(src.indexOf('function drawDay('), src.indexOf('const conditionsOf'));
+  const literals = [...body.matchAll(/(?<![\w.])(\d+(?:\.\d+)?)(?![\w])/g)].map((m) => m[1]);
+  const allowed = new Set(['0', '1', '2', '3', '10', '100', '100000', '0.5', '0.6', '0.8', '1.0', '6.28']);
+  assert.deepEqual(literals.filter((l) => !allowed.has(l)), [], `drawDay types no weather figure of its own: ${literals.join(' ')}`);
   // Every month's temperature and wind figure carries its page.
   for (const id of ['angeles-sylmar', 'cta-piru']) for (const m of raw.weather.courses[id].months) {
     assert.match(m.lowF.source.url, /^https:\/\//); assert.match(m.highF.source.url, /^https:\/\//); assert.match(m.windMph.source.url, /^https:\/\/weatherspark\.com\//);
@@ -126,6 +133,55 @@ test('verify 2 and 3: what the coldest and the hottest day do to a bullet, throu
   assert.equal(E.muzzleSpeed(m193, E.air({ tempF: 40 }), undefined), m193.muzzleFps, 'without a powder figure the speed is the load\'s');
   assert.match(raw.physics.powderTemperature.fpsPerDegreeF.estimate, /precisionrifleblog|americanhunter/);
   console.log('  ' + lines.join('\n  '));
+});
+
+test('the book\'s order and come-up: lines sort newest first by the moment and the shot number, not as text; the come-up counts the leaf; a bad copy is refused whole', () => {
+  const lines = [9, 10, 2, 11].map((n) => ({ id: `d:${n}`, n, day: 'd', on: '2026-11-17', at: `2026-11-17T10:00:${String(n).padStart(2, '0')}.000Z` }));
+  assert.deepEqual(lines.slice().sort(RD.newestFirst).map((l) => l.n), [11, 10, 9, 2]);
+  const old = [9, 10].map((n) => ({ id: `d:${n}`, on: '2026-11-16' })); // lines from an older copy: no `at`, no `n`
+  assert.deepEqual([...old, lines[2]].sort(RD.newestFirst).map((l) => l.id), ['d:2', 'd:10', 'd:9']);
+  // The AK's irons: 2 MOA clicks; the leaf at 3 is 7.04 MOA above the leaf at 1. Zeroed at 100 with the leaf at 1 and +2 clicks; the hit at 300 with the leaf at 3 and the same clicks.
+  const leaf = flat.sights['ak-irons'].leaf;
+  const zero = { zeroYards: 100, elevationClicks: 2, windageClicks: 0, leafIx: 0, leaf: 100, elevationMoa: 2 * 2 + leaf.moaAbove100[0].moaAbove100 };
+  const line = { elevationClicks: 2, windageClicks: 0, leaf: 300, elevationMoa: 2 * 2 + leaf.moaAbove100[2].moaAbove100, zero };
+  assert.equal(RD.comeUpMoa(line, 2), Math.round(leaf.moaAbove100[2].moaAbove100 * 100) / 100, 'the leaf\'s angle is the come-up when the clicks are the same');
+  assert.match(RD.comeUpText(line, 2), /minutes of angle up from the 100-yard zero$/);
+  assert.equal(RD.comeUpMoa({ elevationClicks: 3, elevationMoa: 6, zero: { zeroYards: 100, elevationClicks: 1 } }, 2), 4, 'a zero from an older copy without elevationMoa counts clicks');
+  assert.equal(RD.comeUpMoa({ elevationClicks: -1, elevationMoa: -2, zero: null }, 2), -2, 'no zero: from the middle');
+  const bookLine = { rifle: 'a', sight: 'b', load: 'c', id: 'd:1', day: 'd', on: '2026-11-17', course: 'x', yards: 100, elevationClicks: 2, windageClicks: 0, elevationMoa: 4, windageMoa: 0, leaf: null, zero: { zeroYards: 100, elevationClicks: 1, windageClicks: 0 }, heldUpMoa: 0.5, heldRightMoa: 0, tempF: 52, windCall: { from: 'left', mph: 6 }, upIn: 1.2, rightIn: -0.4, struck: false, note: '' };
+  const coldLine = { rifle: 'a', load: 'c', id: 'd:1', day: 'd', on: '2026-11-17', course: 'x', sight: 'b', yards: 300, elevationClicks: 2, windageClicks: 0, leaf: null, windCall: null, tempF: 52, hit: false, upIn: null, rightIn: null };
+  const good = { kind: 'range-day copy', version: 1, zeros: [], book: [bookLine], cold_bore: [coldLine], days: [] };
+  assert.equal(RD.checkCopy(good), true, 'a complete book line (with a zero and a call) and a cold-bore line (into the ground, not called) pass');
+  assert.throws(() => RD.checkCopy({ ...good, book: [{ ...bookLine, tempF: undefined }] }), /book\[0\]\.tempF is missing; it must be a number/);
+  assert.throws(() => RD.checkCopy({ ...good, book: [{ ...bookLine, windCall: 'left' }] }), /book\[0\]\.windCall is "left"; it must be an object or null/);
+  assert.throws(() => RD.checkCopy({ ...good, book: [{ ...bookLine, zero: { zeroYards: 100 } }] }), /book\[0\]\.zero\.elevationClicks is missing/);
+  assert.throws(() => RD.checkCopy({ ...good, book: [{ ...bookLine, heldUpMoa: null }] }), /book\[0\]\.heldUpMoa is null; it must be a number/);
+  assert.throws(() => RD.checkCopy({ ...good, cold_bore: [{ ...coldLine, hit: 'yes' }] }), /cold_bore\[0\]\.hit is "yes"; it must be a boolean/);
+  assert.throws(() => RD.checkCopy({ ...good, cold_bore: [{ ...coldLine, windCall: { from: 'left' } }] }), /cold_bore\[0\]\.windCall\.mph is missing/);
+  assert.throws(() => RD.checkCopy({ ...good, version: 3 }), /its "version" is 3; this app reads version 1/);
+  assert.throws(() => RD.checkCopy({ ...good, book: [{ ...bookLine, yards: undefined }] }), /book\[0\]\.yards is missing; it must be a number\. Nothing was loaded\./);
+  assert.throws(() => RD.checkCopy({ ...good, days: [5] }), /days\[0\] is not a record/);
+  // A day's inside is checked too: the box, the weather with its three stretches of wind, every shot.
+  const day = RD.startDay({ courses: flat.courses, weather: W, loads: flat.loads }, { courseId: 'cta-piru', rifleId: 'molot-vepr-54r', loadId: 'sb-174-hpbt', sightId: 'utg-2-7x44' }, 7, 'afternoon', E.seeded(3)).day;
+  day.shots.push({ n: 1, place: 'bench', yards: 100, sight: 'utg-2-7x44', elevationClicks: 0, windageClicks: 0, leaf: null, reached: true, upIn: -7.9, rightIn: 1.2 }); // a bench shot: no hit, no hold
+  day.shots.push({ n: 2, place: 'line', yards: 600, elevationClicks: 20, windageClicks: 0, hit: false, reached: true, upIn: -14.3, rightIn: 2.1, heldUpMoa: 0, heldRightMoa: 0 });
+  assert.equal(RD.checkCopy({ ...good, days: [day] }), true, 'a real day with a bench shot and a shot at steel passes');
+  const with_ = (change) => { const d = JSON.parse(JSON.stringify(day)); change(d); return { ...good, days: [d] }; };
+  assert.throws(() => RD.checkCopy(with_((d) => { d.shots = [null]; })), /days\[0\]\.shots\[0\] is not a record/);
+  assert.throws(() => RD.checkCopy(with_((d) => { d.box = {}; })), /days\[0\]\.box\.size is missing; it must be a number\. Nothing was loaded\./);
+  assert.throws(() => RD.checkCopy(with_((d) => { d.weather = {}; })), /days\[0\]\.weather\.tempF is missing; it must be a number/);
+  assert.throws(() => RD.checkCopy(with_((d) => { d.weather.wind = [d.weather.wind[0]]; })), /weather\.wind has 1 stretches; it must have 3/);
+  assert.throws(() => RD.checkCopy(with_((d) => { d.weather.wind[1].speedMph = 'fresh'; })), /weather\.wind\[1\]\.speedMph is "fresh"; it must be a number/);
+  assert.throws(() => RD.checkCopy(with_((d) => { d.shots[0].place = 'car park'; })), /shots\[0\]\.place is "car park"; it must be one of bench, line/);
+  assert.throws(() => RD.checkCopy(with_((d) => { d.shots[1].yards = '600'; })), /shots\[1\]\.yards is "600"; it must be a number/);
+  assert.throws(() => RD.checkCopy(with_((d) => { delete d.shots[1].hit; })), /shots\[1\]\.hit is missing; it must be a boolean/);
+  // Where a shot landed: a shot that reached carries both coordinates as numbers; one into the ground carries null for both.
+  assert.throws(() => RD.checkCopy(with_((d) => { delete d.shots[0].upIn; })), /shots\[0\]\.upIn is missing; it must be a number or null/);
+  assert.throws(() => RD.checkCopy(with_((d) => { d.shots[1].rightIn = 'left'; })), /shots\[1\]\.rightIn is "left"; it must be a number or null/);
+  assert.throws(() => RD.checkCopy(with_((d) => { d.shots[1].upIn = null; })), /shots\[1\]\.upIn is null; a shot that reached must have it as a number/);
+  assert.throws(() => RD.checkCopy(with_((d) => { d.shots[0].reached = false; })), /shots\[0\]\.upIn is -7\.9; a shot that did not reach must have it as null/);
+  assert.ok(RD.checkCopy(with_((d) => { d.shots[0].reached = false; d.shots[0].upIn = null; d.shots[0].rightIn = null; })), 'a shot into the ground, with null coordinates, passes');
+  assert.throws(() => RD.checkCopy(with_((d) => { d.timeOfDay = 'night'; })), /timeOfDay is "night"; it must be one of morning, midday, afternoon/);
 });
 
 test('a shot through shoot() with the powder figure starts at the day\'s speed and reports it', () => {

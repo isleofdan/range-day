@@ -1,5 +1,5 @@
 {
- "_about": "The weather a day at the range is drawn from, by course, by month and by time of day (morning, midday, afternoon). Each course has twelve months, each with the mean daily low and high (F), the mean relative humidity, the mean wind (mph) and the chance of a Santa Ana day. A time of day puts the temperature between the low and the high (tempAt), scales the wind (windFactor) and shifts the humidity; dayToDaySpreadF is the day-to-day scatter around the month's figure. The wind is drawn in three stretches of the path that differ from one another, each with a gust, and always has some crosswind. A Santa Ana day replaces the wind, the humidity and part of the temperature.",
+ "_about": "The weather a day at the range is drawn from, by course, by month and by time of day (morning, midday, afternoon). Each course has twelve months, each with the mean daily low and high (F), the mean relative humidity, the mean wind (mph) and the chance of a Santa Ana day. A time of day puts the temperature between the low and the high (tempAt), scales the wind (windFactor) and shifts the humidity; dayToDaySpreadF is the day-to-day scatter around the month's figure. The wind is drawn in three stretches of the path that differ from one another, each with a gust, and always has some crosswind. A Santa Ana day replaces the wind, the humidity and part of the temperature. humiditySpread and humidityBounds are the humidity's day-to-day scatter and its floor and ceiling; stretchDirectionWobbleDegrees is how far each stretch's wind direction may differ from the day's.",
  "timesOfDay": {
   "morning": {
    "name": "morning",
@@ -50,6 +50,24 @@
  "dayToDaySpreadF": {
   "value": 6,
   "estimate": "a day at the range is not the month's average day: the temperature is drawn within plus or minus 6 F of the month's figure for that time of day (uniformly). The day-to-day standard deviation of daily highs in Southern California runs about 5 to 7 F; not computed from these sites' records"
+ },
+ "humiditySpread": {
+  "value": 0.05,
+  "estimate": "the day-to-day scatter of the relative humidity around the month's figure for that time of day: plus or minus 5 points, drawn uniformly; the same kind of estimate as dayToDaySpreadF, not computed from these sites' records"
+ },
+ "humidityBounds": {
+  "low": {
+   "value": 0.03,
+   "estimate": "the lowest relative humidity a day can have, as a fraction: the driest Santa Ana afternoons reach single digits, so 3 percent is the floor"
+  },
+  "high": {
+   "value": 0.98,
+   "estimate": "the highest: air that is nearly saturated, as on a foggy morning; 98 percent is the ceiling"
+  }
+ },
+ "stretchDirectionWobbleDegrees": {
+  "value": 25,
+  "estimate": "each of the three stretches of the path has its own wind direction, within plus or minus 25 degrees of the day's, because the canyon walls and the slope bend the wind along the path; an estimate, not measured at these ranges"
  },
  "windSpread": {
   "low": {
