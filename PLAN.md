@@ -94,7 +94,7 @@
   following the day's temperature (one figure in `data/physics.json`,
   applied in one place in the engine); the gun-record seam (`lib/guns.js`:
   `fromRecords`, `fromFiles`, `load`, `GUN_RECORDS_FILE`); no screen names
-  a rifle by its id. 84 tests, 36 screenshot states at both sizes, Checks
+  a rifle by its id. 85 tests, 36 screenshot states at both sizes, Checks
   green. `docs/RECORDS.md` lists every record the app keeps.
 - **Decided:** one load per day, so the bench and the line have no load
   select (the load is named in the day block); a finished day is
