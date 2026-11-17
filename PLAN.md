@@ -76,6 +76,29 @@
 
 (Each session appends its own, in order.)
 
+### range-day-one — 17 Nov 2026 (cloud session, from the Wall card `range-day`)
+
+- **Stands:** the app made from the kit, merged into `main` by pull
+  request #1 on Dan's typed line: the sourced data file (7 rifles, 16
+  loads, 10 sights, two courses, weather, the G1 and G7 tables), one
+  physics engine checked against Sellier & Bellot's and Federal's
+  published tables, the home, zero bench and firing line screens, 45
+  tests and the screenshot run at both sizes. The Deploy workflow was
+  run once and stopped at "Create the app if it does not exist": Fly
+  answered 401 Unauthorized to the stored `FLY_API_TOKEN`. Nothing is
+  deployed; production rendering is unverified.
+- **Decided:** see "Decisions (range-day-one)" above: one engine, every
+  figure sourced or an estimate, G7 for the S&B match load, the Vepr at
+  20.5 in, a fixed offset per rifle, two courses and two pairings, the
+  home page keeps "This is Range Day". From the result checks: a load
+  change never moves the sight (a button restores a saved zero); a
+  refused storage read or write says "not saved on this device"; one aim
+  state is drawn and fired.
+- **Next session needs:** a valid `FLY_API_TOKEN` (an org token for the
+  personal org) in the repository's secrets, then one Deploy run on
+  `main` and the look at the deployed app; the rest is in
+  `docs/reports/range-day-one-report.md`, "What the next session needs".
+
 ### starting-kit-one — 2 Oct 2026
 
 - **Stands:** the kit, built and proven on a computer in a cloud session:
