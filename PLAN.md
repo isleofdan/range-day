@@ -76,6 +76,34 @@
 
 (Each session appends its own, in order.)
 
+### range-day-four — 17 Nov 2026 (the same cloud session, on Dan's words in it)
+
+- **Stands:** the box no longer ends the day, pull request #8 (branch
+  `claude/range-day-card-brief-g7vyih`, restarted from `main`): when the
+  box at the steel empties the firing line stays and offers "Open another
+  box", which adds a box to the same day (`box.opened` counts them; the
+  day's page says "2 boxes of 20 for the steel"); the zero bench fires
+  from its own zeroing supply per rifle and load
+  (`supply:<rifle>:<load>`), kept from one day to the next, with its own
+  "Open another box"; a day ends by Pack up, or by itself when the app is
+  next opened on a later date (`endedBy: "left"`). Nothing moves the
+  player off a screen on a timer. 85 tests, 37 screenshot states, Checks
+  green. Merged as `44945f8` on Dan's typed line after one result check
+  (PASS, job 20261117-145803-5234aa) and deployed by Deploy run
+  44112027183 (green, 59 s). Production rendering is unverified from the
+  session (its proxy refuses the address, "CONNECT tunnel failed,
+  response 403"); the Deploy run's alive check passed. Report:
+  `docs/reports/range-day-four-report.md`.
+- **Decided:** Dan's rule replaces range-day-three's "when the last round
+  is fired the day is over" ("I seem to keep getting thrown out of zero
+  bench in the middle of working there"; "give me a separate supply for
+  zeroing, since one doesn't typically need to do an entirely new zeroing
+  each visit to the range"); the supply starts as one box of the load and
+  is not in the copy file; "Open another box" sits under the message that
+  the box is empty, on both screens.
+- **Next session needs:** unchanged from range-day-three; the supply is
+  one more record for the gun-record build.
+
 ### range-day-three — 17 Nov 2026 (cloud session, from the Wall card `range-day`)
 
 - **Stands:** the day and the book, pull request #6 (branch
