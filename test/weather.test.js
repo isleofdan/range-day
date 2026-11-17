@@ -43,6 +43,13 @@ test('each course has twelve months with a low under its high, a humidity, a win
   assert.ok(W.timesOfDay.morning.windFactor < W.timesOfDay.midday.windFactor && W.timesOfDay.midday.windFactor < W.timesOfDay.afternoon.windFactor, 'mornings calmer, afternoons windier');
   assert.ok(W.timesOfDay.morning.tempAt < W.timesOfDay.afternoon.tempAt);
   assert.ok(W.santaAna.windMph.low >= 15 && W.santaAna.humidity.high <= 0.2);
+  assert.ok(W.humiditySpread > 0 && W.humidityBounds.low > 0 && W.humidityBounds.high < 1 && W.stretchDirectionWobbleDegrees > 0, 'the humidity scatter, its bounds and the stretch wobble live in the data');
+  // No number of the draw's own is typed into the code: every literal in drawDay is a structural 0, 1, 2, 3, 10, 100, 100000, 0.5 or 6.28, not a weather figure.
+  const src = fs.readFileSync(path.join(__dirname, '..', 'public', 'game.js'), 'utf8');
+  const body = src.slice(src.indexOf('function drawDay('), src.indexOf('const conditionsOf'));
+  const literals = [...body.matchAll(/(?<![\w.])(\d+(?:\.\d+)?)(?![\w])/g)].map((m) => m[1]);
+  const allowed = new Set(['0', '1', '2', '3', '10', '100', '100000', '0.5', '0.6', '0.8', '1.0', '6.28']);
+  assert.deepEqual(literals.filter((l) => !allowed.has(l)), [], `drawDay types no weather figure of its own: ${literals.join(' ')}`);
   // Every month's temperature and wind figure carries its page.
   for (const id of ['angeles-sylmar', 'cta-piru']) for (const m of raw.weather.courses[id].months) {
     assert.match(m.lowF.source.url, /^https:\/\//); assert.match(m.highF.source.url, /^https:\/\//); assert.match(m.windMph.source.url, /^https:\/\/weatherspark\.com\//);

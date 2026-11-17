@@ -114,7 +114,7 @@ window.RD = (function () {
     let tempF = m.lowF + tod.tempAt * (m.highF - m.lowF) + between(-weather.dayToDaySpreadF, weather.dayToDaySpreadF);
     if (santaAna) tempF += sa.tempAboveNormalF;
     tempF = Math.round(tempF);
-    const humidity = Math.round((santaAna ? between(sa.humidity.low, sa.humidity.high) : Math.max(0.03, Math.min(0.98, m.humidity + tod.humidityShift + between(-0.05, 0.05)))) * 100) / 100;
+    const humidity = Math.round((santaAna ? between(sa.humidity.low, sa.humidity.high) : Math.max(weather.humidityBounds.low, Math.min(weather.humidityBounds.high, m.humidity + tod.humidityShift + between(-weather.humiditySpread, weather.humiditySpread)))) * 100) / 100;
     const speedMph = Math.round((santaAna ? between(sa.windMph.low, sa.windMph.high) * sa.windFactorByTime[tod.name] : m.windMph * tod.windFactor * between(weather.windSpread.low, weather.windSpread.high)) * 10) / 10;
     const [a, b, c, d] = weather.windFromDegrees;
     const fromDegrees = Math.round(r() < 0.5 ? between(a, b) : between(c, d));
@@ -123,7 +123,7 @@ window.RD = (function () {
       const speed = Math.round(speedMph * (1 + factor * between(-v, v)) * 10) / 10;
       return {
         fromYards: from, toYards: to, speedMph: speed,
-        fromDegrees: Math.round(fromDegrees + between(-25, 25)),
+        fromDegrees: Math.round(fromDegrees + between(-weather.stretchDirectionWobbleDegrees, weather.stretchDirectionWobbleDegrees)),
         gustMph: Math.round((santaAna ? between(sa.gustMph.low, sa.gustMph.high) : speed * between(weather.gustShare.low, weather.gustShare.high)) * 10) / 10,
         periodS: Math.round(between(weather.gustPeriodS.low, weather.gustPeriodS.high)),
         phase: between(0, 6.28),
