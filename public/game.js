@@ -182,9 +182,10 @@ window.RD = (function () {
   }
 
   // --- what the address asks for -----------------------------------------------------------
-  // course, rifle, sight and load from the address; a missing or unknown
-  // piece falls back to the last used on this device, then to the rifle's
-  // own default (an address without a sight opens the sight the rifle had
+  // course, rifle, sight and load from the address (or from a pick on home,
+  // with remembered: true); a missing or unknown piece falls back to the
+  // last used with that rifle on this device, then to the rifle's own
+  // default (an address without a sight opens the sight the rifle had
   // before every sight could be chosen, so old links still work).
   function chooseFrom(d, q) {
     const last = getLast();
@@ -192,7 +193,11 @@ window.RD = (function () {
     const rifle = d.rifles[rifleId];
     const lastFor = getLastFor(rifleId) || {};
     const playableSights = rifle.sights.filter((s) => d.sights[s].kind !== 'magnifier');
-    const sightId = playableSights.includes(q.sight) ? q.sight : (q.rifle && !q.sight ? rifle.defaultSight : (playableSights.includes(lastFor.sight) ? lastFor.sight : rifle.defaultSight));
+    // An address naming a rifle but no sight (an old link, a bookmark) opens the rifle's default sight;
+    // a pick on home (q.remembered) opens the sight last used with that rifle on this device.
+    const sightId = playableSights.includes(q.sight) ? q.sight
+      : (q.rifle && !q.sight && !q.remembered) ? rifle.defaultSight
+      : (playableSights.includes(lastFor.sight) ? lastFor.sight : rifle.defaultSight);
     const loadId = rifle.loads.includes(q.load) ? q.load : (rifle.loads.includes(lastFor.load) ? lastFor.load : rifle.loads[0]);
     const firstCourse = rifleId === 'molot-vepr-54r' ? 'cta-piru' : 'angeles-sylmar';
     const courseId = d.courses[q.course] ? q.course : (d.courses[lastFor.course] ? lastFor.course : firstCourse);

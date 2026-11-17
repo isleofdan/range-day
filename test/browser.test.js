@@ -272,6 +272,40 @@ test('verify 7: the old addresses without a sight open the Vepr with its scope o
   await context.close();
 });
 
+test('home remembers each rifle\'s sight: pick the Tavor SAR, choose its irons, pick another rifle, pick the SAR again, the irons are still chosen', { skip }, async () => {
+  const { page, context, errors } = await signedIn();
+  await page.goto(`${base}/`); await page.waitForSelector('.rifle');
+  await page.click('.rifle[data-rifle="iwi-tavor-sar"]'); await page.waitForSelector('.rifle.picked[data-rifle="iwi-tavor-sar"]');
+  await page.selectOption('#sight', 'tavor-irons');
+  await page.selectOption('#load', 'federal-gmm-69');
+  await page.click('.rifle[data-rifle="molot-vepr-54r"]'); await page.waitForSelector('.rifle.picked[data-rifle="molot-vepr-54r"]');
+  assert.equal(await page.inputValue('#sight'), 'utg-2-7x44', 'the Vepr opens with its own last sight (its default on a new device)');
+  await page.click('.rifle[data-rifle="iwi-tavor-sar"]'); await page.waitForSelector('.rifle.picked[data-rifle="iwi-tavor-sar"]');
+  assert.equal(await page.inputValue('#sight'), 'tavor-irons', 'the SAR comes back with the irons it was left with');
+  assert.equal(await page.inputValue('#load'), 'federal-gmm-69', 'and its load');
+  assert.match(await page.getAttribute('#go-line', 'href'), /sight=tavor-irons/);
+  // A reload keeps it too; an old-style address for the same rifle still opens its default sight.
+  await page.reload(); await page.waitForSelector('.rifle.picked[data-rifle="iwi-tavor-sar"]');
+  assert.equal(await page.inputValue('#sight'), 'tavor-irons');
+  await page.goto(`${base}/line?course=angeles-sylmar&rifle=iwi-tavor-sar&load=imi-m193`); await page.waitForSelector('#fire');
+  assert.match(await page.textContent('#intro'), /Tavor folding iron sights/);
+  assert.deepEqual(errors, []);
+  await context.close();
+});
+
+test('on a wide screen the Steady and Fire bar stands beside the view and covers none of it', { skip }, async () => {
+  const { page, context, errors } = await signedIn({ width: 1280, height: 800 });
+  await page.goto(`${base}/line?course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt`); await page.waitForSelector('#fire');
+  const r = await page.evaluate(() => { const b = (s) => document.querySelector(s).getBoundingClientRect().toJSON(); return { view: b('#view'), bar: b('.firebar'), fire: b('#fire'), w: window.innerWidth, h: window.innerHeight }; });
+  const overlap = !(r.bar.left >= r.view.right || r.bar.right <= r.view.left || r.bar.top >= r.view.bottom || r.bar.bottom <= r.view.top);
+  console.log(`  1280x800: view ${r.view.left.toFixed(0)}-${r.view.right.toFixed(0)} x ${r.view.top.toFixed(0)}-${r.view.bottom.toFixed(0)}; bar ${r.bar.left.toFixed(0)}-${r.bar.right.toFixed(0)} x ${r.bar.top.toFixed(0)}-${r.bar.bottom.toFixed(0)}`);
+  assert.equal(overlap, false, 'the bar does not cover the view');
+  assert.ok(r.bar.right <= r.w && r.fire.bottom <= r.h, 'the bar is inside the screen');
+  assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), 'no sideways scroll');
+  assert.deepEqual(errors, []);
+  await context.close();
+});
+
 test('verify 11: home at 412x915, each of the seven rifles chosen in turn: both doors and the zero line are inside the screen without scrolling', { skip }, async () => {
   const { page, context, errors } = await signedIn({ width: 412, height: 915 });
   await page.goto(`${base}/`); await page.waitForSelector('.rifle');

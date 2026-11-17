@@ -31,7 +31,7 @@
       const mark = failed ? 'storage refused' : n ? `zeroed (${n} saved)` : 'no zero saved';
       return `<button type="button" class="rifle${id === c.rifleId ? ' picked' : ''}" data-rifle="${id}"><span class="rname">${RD.esc(r.name)}</span><span class="rmark ${n ? 'yes' : 'no'}">${mark}</span></button>`;
     }).join('');
-    for (const b of $('rifles').querySelectorAll('button')) b.addEventListener('click', () => { c = RD.chooseFrom(d, { rifle: b.dataset.rifle }); renderPicks(); renderRifles(); });
+    for (const b of $('rifles').querySelectorAll('button')) b.addEventListener('click', () => { c = RD.chooseFrom(d, { rifle: b.dataset.rifle, remembered: true }); renderPicks(); renderRifles(); });
   }
   function renderPicks() {
     const r = d.rifles[c.rifleId];
