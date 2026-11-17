@@ -138,12 +138,14 @@
   // --- drawing -------------------------------------------------------------------------
   const ridge = Array.from({ length: 64 }, () => terrainRand());
   const far = Array.from({ length: 40 }, () => terrainRand());
+  // The real sizes of the berms, boards and brush (data/physics.json, scenery).
+  const S = d.physics.scenery;
   // Brush: each bush stands at its own distance on the ground, a few feet
   // tall, so it shrinks with distance by the same scale as the plates.
   const farYards = plates[plates.length - 1].yards;
   const brush = Array.from({ length: 220 }, () => {
-    const yards = 140 + Math.sqrt(terrainRand()) * (farYards + 300);
-    return { yards, sideMoa: (terrainRand() - 0.5) * 2 * toMoa(Math.atan2(40 + yards * 0.25, yards)), ft: 1.5 + terrainRand() * 2.5, ph: terrainRand() * 6.3, lift: terrainRand() * 0.6 };
+    const yards = S.brushNearestYd + Math.sqrt(terrainRand()) * (farYards + 300);
+    return { yards, sideMoa: (terrainRand() - 0.5) * 2 * toMoa(Math.atan2(40 + yards * 0.25, yards)), ft: S.brushHeightFt.low + terrainRand() * (S.brushHeightFt.high - S.brushHeightFt.low), ph: terrainRand() * 6.3, lift: terrainRand() * 0.6 };
   }).sort((a, b) => b.yards - a.yards);
   const profile = (arr, azMoa, amp, wavelength) => { const i = (azMoa / wavelength) % arr.length; const a = Math.floor(((i % arr.length) + arr.length) % arr.length), b = (a + 1) % arr.length; const f = ((i % 1) + 1) % 1; return (arr[a] * (1 - f) + arr[b] * f) * amp; };
   const crossMph = () => RD.crosswindMph(day.wind[Math.min(2, Math.floor((plate().yards / course.steelTo) * 3))]);
@@ -171,7 +173,7 @@
     for (let y = farYards * 1.6; y >= 40; y -= y > 400 ? 50 : 25) bands.push(y);
     for (const y of bands) {
       const up = groundUpMoa(y);
-      const amp = (2.5 * 12) / inchPerMoa(y); // a couple of feet of unevenness, at that distance
+      const amp = (S.groundRoughnessFt * 12) / inchPerMoa(y); // the ground's unevenness, at that distance
       const base = y > 150 ? [176, 138, 90] : [150, 114, 70];
       g.fillStyle = mix(base, HAZE, hazeOf(y));
       g.beginPath(); g.moveTo(0, size);
@@ -182,8 +184,8 @@
     // each plate's bare dirt berm, behind the plate, at its own distance
     plates.forEach((p) => {
       const at = plateAt(p), ipm = inchPerMoa(p.yards), m = plateMoa(p);
-      const bermW = (14 * 12) / ipm, bermH = (5 * 12) / ipm; // a mound 14 ft wide, 5 ft high
-      const foot = at.up - m.h / 2 - m.h * 0.9; // the post's foot: the plate stands 0.9 of its height above the ground
+      const bermW = (S.bermWidthFt * 12) / ipm, bermH = (S.bermHeightFt * 12) / ipm;
+      const foot = at.up - m.h / 2 - m.h * S.postHeightShareOfPlate; // the post's foot, where the plate's ground is
       const [x, y] = toScreen(at.right, foot);
       g.fillStyle = mix([128, 96, 62], HAZE, hazeOf(p.yards));
       g.beginPath(); g.ellipse(x, y + bermH * k * 0.15, Math.max(2, (bermW / 2) * k), Math.max(1, bermH * k), 0, Math.PI, 0); g.fill();
@@ -202,12 +204,12 @@
       const at = plateAt(p), m = plateMoa(p), ipm = inchPerMoa(p.yards), haze = hazeOf(p.yards);
       const [x, y] = toScreen(at.right, at.up);
       const w = Math.max(1, m.w * k), h = Math.max(1, m.h * k);
-      g.fillStyle = mix([90, 74, 58], HAZE, haze); g.fillRect(x - Math.max(0.5, w * 0.06), y + h / 2, Math.max(1, w * 0.12), h * 0.9);
+      g.fillStyle = mix([90, 74, 58], HAZE, haze); g.fillRect(x - Math.max(0.5, w * 0.06), y + h / 2, Math.max(1, w * 0.12), h * S.postHeightShareOfPlate);
       g.fillStyle = mix(i === plateIx ? [217, 214, 207] : [185, 181, 173], HAZE, haze); g.fillRect(x - w / 2, y - h / 2, w, h);
       g.strokeStyle = mix([58, 58, 58], HAZE, haze); g.lineWidth = Math.min(1.5, w * 0.05); g.strokeRect(x - w / 2, y - h / 2, w, h);
-      // the yardage board: 2 ft by 1 ft, a foot off the ground, to the right of the plate
-      const bw = (24 / ipm) * k, bh = (12 / ipm) * k;
-      const [bx, by] = toScreen(at.right + m.w / 2 + 30 / ipm, at.up - m.h / 2 - (m.h * 0.9) + (12 + 6) / ipm);
+      // the yardage board, at its real size, beside the plate
+      const bw = (S.boardWidthIn / ipm) * k, bh = (S.boardHeightIn / ipm) * k;
+      const [bx, by] = toScreen(at.right + m.w / 2 + S.boardRightOfPlateIn / ipm, at.up - m.h / 2 - m.h * S.postHeightShareOfPlate + (S.boardAboveGroundIn + S.boardHeightIn / 2) / ipm);
       g.fillStyle = mix([245, 242, 232], HAZE, haze); g.fillRect(bx, by - bh / 2, bw, bh);
       g.strokeStyle = mix([40, 40, 40], HAZE, haze); g.lineWidth = Math.min(1, bw * 0.03); g.strokeRect(bx, by - bh / 2, bw, bh);
       if (bh >= 7) { g.fillStyle = mix([20, 20, 20], HAZE, haze); g.font = `bold ${bh * 0.72}px system-ui, sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(String(p.yards), bx + bw / 2, by + bh * 0.04); }

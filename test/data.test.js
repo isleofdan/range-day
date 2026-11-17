@@ -116,6 +116,13 @@ test('the Tavor dot sits 3.89 in over the bore on both Tavors, the height in the
   assert.match(raw.rifles['iwi-x95'].sightHeightIn['pa-md25'].estimate, /remembered zero/);
 });
 
+test('the scenery the firing line draws has its sizes in the data: berm, post, yardage board, brush, ground', () => {
+  const S = flat.physics.scenery;
+  for (const k of ['bermWidthFt', 'bermHeightFt', 'postHeightShareOfPlate', 'boardWidthIn', 'boardHeightIn', 'boardAboveGroundIn', 'boardRightOfPlateIn', 'brushNearestYd', 'groundRoughnessFt']) assert.ok(typeof S[k] === 'number' && S[k] > 0, k);
+  assert.ok(S.brushHeightFt.low > 0 && S.brushHeightFt.high > S.brushHeightFt.low);
+  assert.match(raw.physics.scenery.bermWidthFt.estimate, /neither range publishes/);
+});
+
 test('the raw data keeps the page address and the date read beside every sourced figure', () => {
   const s = raw.loads['sb-174-hpbt'].makerFps.source;
   assert.match(s.url, /^https:\/\/www\.sellierbellot\.us\//);
