@@ -76,6 +76,45 @@
 
 (Each session appends its own, in order.)
 
+### range-day-two — 17 Nov 2026 (cloud session, from the Wall card `range-day`)
+
+- **Stands:** all seven rifles playable and every sight drawn, merged into
+  `main` by pull request #3 on Dan's typed line (squash commit 880454e)
+  and deployed by Deploy run 44047985012 (green, 66 s): a zero and a shot
+  log per rifle, sight and load, with records in the old per-rifle form
+  read forward and left in place; home picking rifle, sight, load and
+  course on their own, remembering the last choice per rifle; the red
+  dot, the magnifier that flips in behind it, the 3x drop reticle, the
+  notch sights with their sliding leaf, the .22's open sights and the
+  Tavor's folding sights, each drawn from the data's angles; knobs that
+  repeat when held, with a coarse whole-minute pair and the setting
+  always under the view; the dust at its real size; each plate on its own
+  berm at its own height, placed by angle, with a yardage board, hazier
+  with distance. 63 tests, 23 screenshot states at both sizes, five
+  makers' tables matched. Production rendering is unverified from the
+  session (its proxy refuses the address); the Deploy run and the Checks
+  run on GitHub are the evidence.
+- **Decided:** the Tavor dot sits 3.89 in over the bore (the top of the
+  sources' band, the height that puts the 50-yard zero's second crossing
+  with M193 at 299 yd, nearest Dan's remembered zero); each rear leaf's
+  angles are derived by the engine from the military ball load its scale
+  was cut for (M43, 7N6, LPS) and marked derived; the transonic and
+  subsonic spread factors apply only to a bullet that left the barrel
+  above Mach 1.2; every size a drawing needs (the dust, the berms, the
+  yardage boards, the brush, the notch and reticle widths) lives in the
+  data as an estimate with its basis, because the result checks held the
+  brief's rule to the drawing too; each rifle has a `defaultSight` (the
+  Vepr's scope, the others' irons) that an address without a sight still
+  opens; one value for the whole slope (`farPlateRiseFt`) is replaced by a
+  height per plate, the 1,000-yard plate staying 200 ft up; on a screen
+  1,100 px or wider the Steady/Fire bar stands beside the view.
+- **Next session needs:** the look at the deployed app from a session
+  that can open range-day-dan.fly.dev; the re-read of every maker page
+  from a session that can fetch pages; photographs of the two ranges to
+  set each plate's height and place; crash reporting from the Linux
+  machine (unchanged). Report:
+  `docs/reports/range-day-two-report.md`.
+
 ### range-day-one — 17 Nov 2026 (cloud session, from the Wall card `range-day`)
 
 - **Stands:** the app made from the kit, merged into `main` by pull
