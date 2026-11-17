@@ -95,7 +95,13 @@
   applied in one place in the engine); the gun-record seam (`lib/guns.js`:
   `fromRecords`, `fromFiles`, `load`, `GUN_RECORDS_FILE`); no screen names
   a rifle by its id. 85 tests, 36 screenshot states at both sizes, Checks
-  green. `docs/RECORDS.md` lists every record the app keeps.
+  green. `docs/RECORDS.md` lists every record the app keeps. Merged as
+  `e0848d7` on Dan's typed line after nine result checks (eight rounds of
+  findings, each fixed; the ninth PASS, job 20261117-141137-618b20) and
+  deployed by Deploy run 44102133656 (green, 102 s). Production rendering
+  is unverified from the session (its proxy refuses the address with
+  "CONNECT tunnel failed, response 403"); the Deploy run's alive check and
+  the Checks run are the proof until Dan's phone is.
 - **Decided:** one load per day, so the bench and the line have no load
   select (the load is named in the day block); a finished day is
   finished: the line opened again starts a new day with the same picks;

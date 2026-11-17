@@ -199,6 +199,10 @@ Names as built, word for word, in `lib/guns.js`:
 5. **The IMI 69 gr Razor Core's box of 20** is an estimate (no 20-round listing was found; its 77 gr sibling is sold in 20s). Recommended: keep it.
 6. **Crash reporting** is still off (the Sentry token is on the Linux machine only; `PLAN.md`, range-day-one). Recommended: unchanged.
 
+## After Dan's line (added at the close-out)
+
+Dan typed `yes, merge and deploy range-day-three, then merge its notes`. Pull request #6 merged as `e0848d7` (merge commit, head `2478d1f`); the Deploy workflow ran once on `main`, run 44102133656, green in 102 s (https://github.com/isleofdan/range-day/actions/runs/44102133656): checks, the passphrase set from the repository secret, the deploy, the alive line. One attempt to open https://range-day-dan.fly.dev/alive from this session was refused by its proxy ("CONNECT tunnel failed, response 403"), so production rendering is unverified from here; the Deploy run's own alive check passed. The notes pull request carries this report and the `PLAN.md` note.
+
 ## What the next session needs
 
 - The gun-record build (step 2 of the direction): the names above; the open questions on the card's design note (the Spine route, who fills `story` and `library`, sights and loads of their own) are the planning chat's.
