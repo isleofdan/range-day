@@ -61,7 +61,7 @@ test('verify 4: zero the Vepr at 100 yards, reload, the zero is still there; cha
   await page.goto(`${base}/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`);
   await page.waitForSelector('#fire5');
   // Walk the group onto the center: the readout says where it is, the clicks are 0.25 MOA. Three groups of five
-  // and a final five: the whole box of 20 (a day is one box; the bench refuses to fire when it is empty).
+  // and a final five: the whole box of 20 of the zeroing supply (the bench's own rounds; the day's box is for the steel).
   for (let round = 0; round < 3; round++) {
     await page.click('#fresh'); await page.click('#fire5');
     const c = await groupCenter(page);
@@ -81,6 +81,7 @@ test('verify 4: zero the Vepr at 100 yards, reload, the zero is still there; cha
   await page.reload(); await page.waitForSelector('#fire5');
   assert.equal(await page.textContent('#el-text'), el, 'the sight setting survives a reload');
   assert.match(await page.textContent('#saved'), /Saved zero for Sellier & Bellot 174 gr.*100 yards/);
+  await noDay(page); // home shows the picks and the zero line when no day is open (the day stays open now that the box does not end it)
   await page.goto(`${base}/?rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('.rifle');
   assert.match(await page.textContent('#zero'), /Zeroed at 100 yards/);
   // Change the load (a day is one load, so the other load is a new day from home): the sight stays, and each group lands where the engine puts its load in its day's air.
@@ -89,6 +90,8 @@ test('verify 4: zero the Vepr at 100 yards, reload, the zero is still there; cha
   assert.match(await page.textContent('#intro'), /Sellier & Bellot 174 gr/, 'the load is the day\'s: named, not chosen, while the day is open');
   assert.equal(await page.$('#load'), null, 'no load select on the bench: one box, one load');
   await page.selectOption('#distance', '200');
+  await page.click('#another-box'); // the supply's first box went on the zero; the bench stays and another box is opened
+  assert.match(await page.textContent('#rounds'), /zeroing supply: 20 of 20 left \(box 2\)/);
   await page.click('#fresh'); await page.click('#fire5');
   const same = await groupCenter(page);
   const day1 = await page.evaluate(() => RangeDayZero.day.weather);

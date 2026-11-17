@@ -75,52 +75,75 @@ test.before(async () => {
 });
 test.after(async () => { if (browser) await browser.close(); if (server) server.kill(); });
 
-test('verify 5: the box: a new day shows the load\'s full box; five on the bench and one at steel leave six fewer; with three left "Fire five" fires three; at none the bench and the line refuse and say the day is over; the day\'s page lists every shot', { skip }, async () => {
+test('verify 5: the box and the zeroing supply: the bench fires from its own supply, kept across days; the day\'s box is for the steel; when either is empty the screen stays and "Open another box" goes on with the same day; the day\'s page counts the boxes; a day left open is closed on the next date', { skip }, async () => {
   const { page, context, errors } = await signedIn();
   await bench(page, AR);
-  assert.equal(await page.textContent('#rounds'), '20 of 20 rounds left', 'IMI M193 comes in a box of 20');
+  assert.equal(await page.textContent('#rounds'), 'zeroing supply: 20 of 20 left', 'the bench starts with one box of IMI M193 for zeroing');
   assert.match(await page.textContent('#day-line'), /^A (cold|cool|mild|warm|hot)(, dry)? \w+ (morning|midday|afternoon), \d+ F\.$/);
   await page.click('#fire5');
-  assert.equal(await page.textContent('#rounds'), '15 of 20 rounds left');
+  assert.equal(await page.textContent('#rounds'), 'zeroing supply: 15 of 20 left');
   await page.click('#to-line'); await page.waitForSelector('#fire');
-  assert.equal(await page.textContent('#rounds'), '15 of 20 rounds left', 'the line continues the same day');
+  assert.equal(await page.textContent('#rounds'), '20 of 20 rounds left', 'the day\'s box is untouched by the bench');
   await page.selectOption('#plate', '0');
-  await seededShot(page, 1);
-  assert.equal(await page.textContent('#rounds'), '14 of 20 rounds left', 'six fewer');
-  for (let i = 0; i < 11; i++) await seededShot(page, 2 + i);
-  assert.equal(await page.textContent('#rounds'), '3 of 20 rounds left');
+  for (let i = 0; i < 20; i++) await seededShot(page, 1 + i);
+  assert.equal(await page.textContent('#rounds'), 'the box of 20 is empty');
+  assert.match(await page.textContent('#result'), /The box of 20 is empty: open another box to go on, or pack up/);
   const day = await page.evaluate(() => RangeDayLine.day);
-  await page.goto(`${base}/zero?${AR}`); await page.waitForSelector('#fire5');
-  assert.equal(await page.textContent('#rounds'), '3 of 20 rounds left');
-  await page.click('#fire5');
-  const holes = await page.evaluate(() => RangeDayZero.holes.length);
-  assert.equal(holes, 3, '"Fire five" with three left fires three');
-  assert.match(await page.textContent('#rounds'), /the box of 20 is empty: the day is over/);
-  assert.match(await page.textContent('#group'), /last round.*the day is over/);
-  assert.ok(await page.isDisabled('#fire5') && await page.isDisabled('#fire1'), 'the bench stops firing');
-  const before = await page.evaluate(() => RangeDayZero.holes.length);
-  await page.click('#fire1', { force: true }).catch(() => {});
-  assert.equal(await page.evaluate(() => RangeDayZero.holes.length), before, 'no more holes');
-  // The day's page is shown when the day ends, and lists every shot: 5 + 12 + 3 = 20.
-  await page.waitForURL(/\/day\?id=/, { timeout: 10000 }); await page.waitForSelector('#shots tbody tr');
-  assert.equal(new URL(page.url()).searchParams.get('id'), day.id, 'the page of the day that just ended');
-  assert.equal(await page.$$eval('#shots tbody tr', (r) => r.length), 20);
-  assert.match(await page.textContent('#facts'), /a box of 20, 20 fired, 0 left; ended when the box was empty/);
-  console.log(`  box of 20: 5 at the bench, 12 at steel, then "Fire five" fired 3; the day's page lists ${await page.$$eval('#shots tbody tr', (r) => r.length)} shots`);
-  // The line refuses too, on a day that ends at steel (a finished day is finished: the line opened again is a new day, so the box empties here).
-  await line(page, AR);
-  assert.equal(await page.textContent('#rounds'), '20 of 20 rounds left', 'a new day: the finished one is kept on its page');
-  await page.selectOption('#plate', '0');
-  for (let i = 0; i < 20; i++) await seededShot(page, 100 + i);
-  assert.match(await page.textContent('#rounds'), /the box of 20 is empty: the day is over/);
-  assert.match(await page.textContent('#result'), /The box of 20 is empty: the day is over/);
+  assert.equal(day.endedAt, null, 'the empty box does not end the day');
   const logBefore = await page.evaluate(() => RangeDayLine.log.length + RangeDayLine.pending);
-  await page.evaluate(() => RangeDayLine.fire(3));
-  await wait(300);
-  assert.equal(await page.evaluate(() => RangeDayLine.log.length + RangeDayLine.pending), logBefore, 'nothing fired');
-  assert.match(await page.textContent('#result'), /The day is over: the box of 20 is empty/);
-  await page.waitForURL(/\/day\?id=/, { timeout: 10000 }); await page.waitForSelector('#facts');
-  assert.match(await page.textContent('#facts'), /ended when the box was empty/, 'the line too ends on the day\'s page');
+  await page.evaluate(() => RangeDayLine.fire(3)); await wait(300);
+  assert.equal(await page.evaluate(() => RangeDayLine.log.length + RangeDayLine.pending), logBefore, 'nothing fired from an empty box');
+  assert.match(await page.textContent('#result'), /The box of 20 is empty\. Open another box to go on, or pack up/);
+  assert.equal(page.url().includes('/day'), false, 'the line stays where it is');
+  assert.ok(await page.isVisible('#another-box'), '"Open another box" is offered');
+  await page.click('#another-box');
+  assert.equal(await page.textContent('#rounds'), '20 of 20 rounds left (box 2)');
+  assert.match(await page.textContent('#result'), /Box 2 of IMI M193 .* opened: 20 rounds\. The day goes on\./);
+  assert.ok(await page.isHidden('#another-box'));
+  await seededShot(page, 50);
+  assert.equal(await page.textContent('#rounds'), '19 of 20 rounds left (box 2)');
+  assert.equal((await page.evaluate(() => RangeDayLine.day)).id, day.id, 'the same day');
+  // The bench: the supply empties, the bench stays, another box for zeroing.
+  await page.goto(`${base}/zero?${AR}`); await page.waitForSelector('#fire5');
+  assert.equal(await page.textContent('#rounds'), 'zeroing supply: 15 of 20 left', 'the supply is where the bench left it');
+  for (let i = 0; i < 3; i++) await page.click('#fire5');
+  const holes = await page.evaluate(() => RangeDayZero.holes.length);
+  assert.equal(holes, 15, 'three groups: the last "Fire five" fired the five that were left');
+  assert.equal(await page.textContent('#rounds'), 'zeroing supply: the box of 20 is empty');
+  assert.match(await page.textContent('#group'), /last round of the zeroing supply.*the day is not over/);
+  assert.ok(await page.isDisabled('#fire5') && await page.isDisabled('#fire1'), 'the bench stops firing');
+  await page.click('#fire1', { force: true }).catch(() => {});
+  assert.equal(await page.evaluate(() => RangeDayZero.holes.length), holes, 'no more holes');
+  assert.equal(page.url().includes('/day'), false, 'the bench stays where it is');
+  assert.ok(await page.isVisible('#another-box'));
+  await page.click('#another-box');
+  assert.equal(await page.textContent('#rounds'), 'zeroing supply: 20 of 20 left (box 2)');
+  await page.click('#fire1');
+  assert.equal(await page.textContent('#rounds'), 'zeroing supply: 19 of 20 left (box 2)');
+  await page.reload(); await page.waitForSelector('#fire5');
+  assert.equal(await page.textContent('#rounds'), 'zeroing supply: 19 of 20 left (box 2)', 'the supply survives a reload');
+  // The day's page counts the boxes; Pack up ends the day there.
+  await page.click('#to-day'); await page.waitForSelector('#shots tbody tr');
+  assert.match(await page.textContent('#facts'), /2 boxes of 20 for the steel, 21 fired, 19 left; still open\. 21 shots at the bench \(from the zeroing supply\), 21 at steel/);
+  assert.equal(await page.$$eval('#shots tbody tr', (r) => r.length), 42);
+  await page.click('#pack-up'); await page.waitForSelector('#back');
+  assert.match(await page.textContent('#facts'), /packed up early/);
+  console.log(`  the day: ${await page.textContent('#facts')}`);
+  // A new day on the bench: the supply is still 19 (box 2); the new day's box is full.
+  await bench(page, AR);
+  assert.equal(await page.textContent('#rounds'), 'zeroing supply: 19 of 20 left (box 2)', 'the zeroing supply is kept from one day to the next');
+  await page.click('#fire1');
+  await line(page, AR);
+  assert.equal(await page.textContent('#rounds'), '20 of 20 rounds left');
+  // A day left open from an earlier date is closed when the app is next opened.
+  await page.evaluate(() => { const d = JSON.parse(localStorage.getItem('range-day:day:open')); d.date = '2026-11-16'; localStorage.setItem('range-day:day:open', JSON.stringify(d)); });
+  const daysBefore = await page.evaluate(() => JSON.parse(localStorage.getItem('range-day:days') || '[]').length);
+  await page.goto(`${base}/`); await page.waitForSelector('.rifle');
+  assert.ok(await page.isHidden('#open-day'), 'home shows the picks, not the old day');
+  const days = await page.evaluate(() => JSON.parse(localStorage.getItem('range-day:days') || '[]'));
+  assert.equal(days.length, daysBefore + 1); assert.equal(days[0].endedBy, 'left'); assert.equal(days[0].date, '2026-11-16');
+  await page.goto(`${base}/day?id=${encodeURIComponent(days[0].id)}`); await page.waitForSelector('#facts');
+  assert.match(await page.textContent('#facts'), /left open; closed on the next visit/);
   assert.deepEqual(errors, []);
   await context.close();
 });
@@ -147,7 +170,7 @@ test('verify 6: a day stays open across a reload with the same rounds and weathe
   await noDay(page2);
   const daysBefore = await page2.evaluate(() => RD.finishedDays().length);
   await bench(page2, AR);
-  assert.equal(await page2.textContent('#rounds'), '20 of 20 rounds left');
+  assert.equal(await page2.textContent('#rounds'), 'zeroing supply: 20 of 20 left');
   await page2.goto(`${base}/`); await page2.waitForSelector('.rifle');
   assert.ok(await page2.isHidden('#open-day'), 'home shows the picks: a day with no shot is nothing yet');
   await line(page2, 'course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt');
@@ -348,11 +371,11 @@ test('verify 10: nothing on the phone is lost: a zero, a sight setting and a log
   await line(page, AR);
   assert.match(await page.textContent('#el-text'), /\+3 clicks/);
   assert.match(await page.textContent('#log tbody'), /hit \(level, centered/);
-  // A whole day: 20 shots at steel, then the day is over.
+  // A whole box: 20 shots at steel, then Pack up.
   await page.selectOption('#plate', '0');
   for (let i = 0; i < 20; i++) await seededShot(page, 40 + i);
-  assert.match(await page.textContent('#rounds'), /the day is over/);
-  await page.waitForURL(/\/day\?id=/, { timeout: 10000 });
+  assert.match(await page.textContent('#rounds'), /the box of 20 is empty/);
+  await page.click('#pack-up'); await page.waitForURL(/\/day\?id=/, { timeout: 10000 });
   const after = await page.evaluate((keys) => Object.fromEntries(keys.map((k) => [k, JSON.parse(localStorage.getItem(k))])), Object.keys(before));
   assert.deepStrictEqual(after['range-day:zero:bcm-ar15:ar-irons:imi-m193'], before['range-day:zero:bcm-ar15:ar-irons:imi-m193'], 'the zero is untouched');
   assert.deepStrictEqual(after['range-day:sight:bcm-ar15:ar-irons'], before['range-day:sight:bcm-ar15:ar-irons'], 'the sight setting is untouched');

@@ -169,6 +169,9 @@ test('the book\'s order and come-up: lines sort newest first by the moment and t
   const with_ = (change) => { const d = JSON.parse(JSON.stringify(day)); change(d); return { ...good, days: [d] }; };
   assert.throws(() => RD.checkCopy(with_((d) => { d.shots = [null]; })), /days\[0\]\.shots\[0\] is not a record/);
   assert.throws(() => RD.checkCopy(with_((d) => { d.box = {}; })), /days\[0\]\.box\.size is missing; it must be a number\. Nothing was loaded\./);
+  assert.throws(() => RD.checkCopy(with_((d) => { d.box.opened = 'two'; })), /days\[0\]\.box\.opened is "two"; it must be a number \(the boxes opened\) or absent/);
+  assert.ok(RD.checkCopy(with_((d) => { d.box.opened = 2; d.box.left = 7; })), 'a day with a second box opened passes');
+  assert.ok(RD.checkCopy(with_((d) => { delete d.box.opened; })), 'a day from before boxes could be reopened (no count) passes');
   assert.throws(() => RD.checkCopy(with_((d) => { d.weather = {}; })), /days\[0\]\.weather\.tempF is missing; it must be a number/);
   assert.throws(() => RD.checkCopy(with_((d) => { d.weather.wind = [d.weather.wind[0]]; })), /weather\.wind has 1 stretches; it must have 3/);
   assert.throws(() => RD.checkCopy(with_((d) => { d.weather.wind[1].speedMph = 'fresh'; })), /weather\.wind\[1\]\.speedMph is "fresh"; it must be a number/);

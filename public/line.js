@@ -403,13 +403,12 @@
   // breathing, no recoil) and a seeded draw, so two shots can be compared;
   // the bullet still flies through the engine exactly as the player's does
   // (the gusts are read at the clock's zero, so the wind is the same too).
-  // The box and the day's end. When the last round has landed the screen says so, then shows the day's page.
-  const DAY_PAGE_AFTER_MS = 3000;
-  const rounds = () => { $('rounds').textContent = RD.roundsText(day); $('fire').classList.toggle('spent', Boolean(day.endedAt) || day.box.left <= 0); };
-  const dayOver = () => Boolean(day.endedAt) || day.box.left <= 0;
+  // The box. When it is empty the screen says so and stays: "Open another box" goes on with the same day; nothing moves by itself.
+  const boxEmpty = () => Boolean(day.endedAt) || day.box.left <= 0;
+  const rounds = () => { $('rounds').textContent = RD.roundsText(day); $('fire').classList.toggle('spent', boxEmpty()); $('another-box-row').hidden = !boxEmpty(); };
   function fire(seed) {
     if (pending.length > 2) return;
-    if (dayOver()) { $('result').textContent = `The day is over: the box of ${day.box.size} is empty. The day's page has every shot; a new day starts from home.`; return; }
+    if (boxEmpty()) { $('result').textContent = `The box of ${day.box.size} is empty. Open another box to go on, or pack up; the day's page has every shot.`; return; }
     if (!RD.takeRounds(day, 1)) { rounds(); return; }
     rounds();
     const p = plate(), load = d.loads[loadId];
@@ -473,9 +472,9 @@
       notes.push(shot.coldBore ? 'The day\'s first shot: in the cold-bore record.' : 'Not in the cold-bore record: the browser refused its storage.');
     } else if (shot.first) notes.push('The day\'s first shot, but the conditions were shown: not in the cold-bore record.');
     delete shot.first;
-    const rec = RD.recordShot(day, shot, pending.length > 0);
+    const rec = RD.recordShot(day, shot);
     if (!rec.saved) notes.push('The day is not saved on this device (the browser refused its storage).');
-    if (rec.ended) { notes.push(`The box of ${day.box.size} is empty: the day is over. The day's page follows.`); setTimeout(() => { location.href = `/day?id=${encodeURIComponent(day.id)}`; }, DAY_PAGE_AFTER_MS); }
+    if (day.box.left <= 0 && !pending.length) notes.push(`The box of ${day.box.size} is empty: open another box to go on, or pack up.`);
     rounds(); bookLine();
     const sub = s.mach != null && s.mach < 1.2 ? ` The bullet arrived at Mach ${s.mach.toFixed(2)}${s.mach < 1 ? ', below the speed of sound' : ', nearly down to the speed of sound'}.` : '';
     $('result').innerHTML = (s.hit ? `<strong>Hit</strong> at ${s.dist} yards, ${RD.esc(RD.whereText(s.upIn, s.rightIn))} of center. The ring comes back ${soundBack.toFixed(1)} s later.${sub}` : `<strong>Miss</strong> at ${s.dist} yards: ${RD.esc(s.entry.where.replace('miss: ', ''))}. Watch the dust.${sub}`) + (notes.length ? ` ${RD.esc(notes.join(' '))}` : '');
@@ -569,6 +568,10 @@
   }, (text) => { $('result').textContent = text; });
   $('plate').addEventListener('change', (e) => { plateIx = Number(e.target.value); hold.up = 0; hold.right = 0; conditions(); bookLine(); });
   $('pack-up').addEventListener('click', () => { landAll(); const packed = RD.packUp(); location.href = packed ? `/day?id=${encodeURIComponent(packed.id)}` : '/'; });
+  $('another-box').addEventListener('click', () => {
+    if (!RD.openAnotherBox(day)) { $('result').textContent = 'The box could not be saved on this device (the browser refused its storage).'; return; }
+    rounds(); $('result').textContent = `Box ${RD.boxesOpened(day)} of ${d.loads[loadId].name} opened: ${day.box.left} rounds. The day goes on.`;
+  });
   $('use-zero').addEventListener('click', () => { const z = RD.getZero(rifleId, sightId, loadId); if (!z || z === RD.store.FAILED) return; setting = { ...setting, elevationClicks: z.elevationClicks, windageClicks: z.windageClicks, ...(leaf && z.leafIx != null ? { leafIx: z.leafIx } : {}) }; RD.clickSound(); showSetting(); zeroNote(); if (!RD.setSight(rifleId, sightId, setting)) $('zero-note').textContent = 'Sight setting not saved on this device: the browser refused to store it. It holds while this page is open.'; });
   $('zoom').addEventListener('input', (e) => { mag = Number(e.target.value); zoomText(); });
   $('show-conditions').addEventListener('change', (e) => { RD.setShowConditions(e.target.checked); conditions(); coldLine(); });
