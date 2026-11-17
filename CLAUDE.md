@@ -212,6 +212,23 @@ These bind every session on this app, on top of the kit's rules above.
   once as "minute of angle (about 1 inch at 100 yards)".
 - **Drawings and sounds are made in code.** No downloaded images, sounds
   or fonts.
-- **The zero and the shot log live on the device** (`localStorage`), every
-  read and write wrapped so a refusal shows "not saved on this device"
-  instead of breaking a screen. No server-side records.
+- **Everything the player makes lives on the device** (`localStorage`):
+  the sight settings, the saved zeros, the shot log, the open day and the
+  finished days, the data book, the cold-bore record, the wind call and
+  the one setting, each key and shape in `docs/RECORDS.md`; every read and
+  write wrapped so a refusal shows "not saved on this device" instead of
+  breaking a screen. No server-side records. Nothing stored before is
+  deleted or renamed; an old record is read forward and left in place.
+- **The game never gives the drop.** Nothing shows a figure the engine
+  worked out for a shot not yet fired: no suggested setting, no predicted
+  come-up, no filled-in book line. The data book holds only the player's
+  own hits. The one exception is the setting "Show the conditions".
+- **The game takes each rifle from a gun record** (`lib/guns.js`): the
+  `game` section of a record is one entry of `data/rifles.json`; the
+  server reads records from the file `GUN_RECORDS_FILE` names, else from
+  that file. No screen names a rifle by its id (a test reads
+  `public/*.js` for them); what differs per rifle lives in its record.
+- **Pull-only, and no game mechanics**: no points, scores, levels,
+  unlocks, streaks, badges, reminders, or praise. A hit is a hit; a
+  record is a plain record; the day's page shows no totals dressed as a
+  score.

@@ -13,14 +13,52 @@ clicks, then works out the drop and the wind for each distance himself.
 
 ## The screens
 
+- **A day at the range** is one course, one rifle, one load and one box
+  of that load (the box the maker sells it in, `boxCount` in
+  `data/loads.json`), on a day drawn for a month and a time of day
+  (morning, midday, afternoon) from `data/weather.json`: cool calm
+  mornings, hot gusty afternoons, the seasons, and now and then a Santa
+  Ana day in the cooler months. Going through either door on home starts
+  the day; the weather is drawn once and kept for the whole day; every
+  shot at the bench and at steel comes out of the box; when the last round
+  is fired the day is over, or **Pack up** ends it early (reversible from
+  the day's page until another day starts). The open day is kept on the
+  device, so closing the app and coming back resumes it. The day is told
+  in words and one number ("A cool November morning, 52 F"), never the
+  wind. The finished day is kept with every shot and shown on **the day's
+  page** (`/day`).
+- **The data book** (`/book`): one page per rifle, sight and load, built
+  only from the player's own hits on steel. Each hit writes one line by
+  itself when the bullet lands: the date, the course, the distance, the
+  sight's setting (clicks and minutes of angle, the leaf, the saved zero
+  it was counted from), the hold, the day's temperature, the wind call
+  and where on the plate it hit. A miss writes nothing; a shot fired with
+  "Show the conditions" on writes nothing. Lines are grouped by distance,
+  newest first, the come-up shown as minutes of angle from the saved
+  zero; a line can be struck out and restored, and takes a note; one line
+  per distance counts the span of his own unstruck settings and
+  temperatures. On the firing line, one line under the sight setting
+  shows the book for the plate chosen. "Save a copy" and "Load a copy"
+  move the book, the cold-bore records, the days and the zeros between
+  the phone and the computer as one file. The game still never gives the
+  drop.
+- **The cold-bore record**: the first shot of a day, when fired at a
+  plate, is kept apart as a running record for that rifle and load, hit
+  or miss; it sits at the top of the book page.
+- **The wind call**: on the firing line the player states the wind as he
+  reads it (left, right, none, or not called, and miles an hour) before
+  he fires; the call is written into the shot's row and never changed.
+  The game does not grade it.
 - **Home** (`/`): pick the rifle (seven: an AR-15, a Tavor SAR, a Tavor
   X95, an AK-pattern rifle in 7.62x39, one in 5.45x39, a Molot Vepr in
   7.62x54R and a bolt-action .22), then the sight among the ones that
   rifle carries, the load and the course, each on its own. The rifle
   list says which rifles have a zero saved on this device; the zero line
   says where this rifle, sight and load stand ("not zeroed yet" sends
-  you to the bench). The last choice on this device is picked when the
-  page opens. Two courses: the canyon course (steel every 100 yards from
+  you to the bench); **When** is the time of day and the month. The last
+  choice on this device is picked when the page opens. While a day with
+  shots is open, home shows that day first, with the doors back into it:
+  the rifle, load and course are fixed, the sight can be changed. Two courses: the canyon course (steel every 100 yards from
   200 to 1,000, up the slope) and the rifle line (100 to 600, up a
   gentle rise).
 - **Zero bench** (`/zero`): a 36-inch paper with a 1-inch grid at 25, 50,
@@ -54,12 +92,15 @@ yards; sights click in MOA.
 
 ## Where the numbers come from
 
-`data/` holds every figure the game uses: each load's speed, drag figure
-and drag model, each rifle's barrel length and sight height, each sight's
+`data/` holds every figure the game uses: each load's speed, drag figure,
+drag model and box, each rifle's barrel length and sight height, each sight's
 click value, dot size, reticle marks or leaf settings (each setting's
 angle derived with the engine from the service load the leaf was cut
 for), each course's plates (distance, size, height above the firing line
-and place across the view), the dust's size, and the weather ranges. Every figure carries the maker's page address and the
+and place across the view), the dust's size, the weather by course, month
+and time of day, and how muzzle speed follows the temperature (one
+figure, an estimate from the published rules of thumb, applied in one
+place in the engine). Every figure carries the maker's page address and the
 date it was read, or the word "estimate" and its basis. `lib/data.js`
 refuses a bare number, and `npm test` runs that check over the whole
 folder. The engine is `public/engine.js`; `test/engine.test.js` checks
@@ -70,6 +111,16 @@ CCI in .22 LR).
 Nothing in this repository says whose rifles these are; the rifle set is
 described as a set of rifles, and the ranges appear as the public
 businesses they are.
+
+## Gun records
+
+The game takes each rifle from a gun record (`lib/guns.js`): the `game`
+section of a record is, field for field, one entry of `data/rifles.json`.
+The server builds the rifle set from that file, or, when the environment
+variable `GUN_RECORDS_FILE` names a JSON file of records, from that file;
+a bad record is refused by name with the fault and the valid values.
+Every record the app keeps on the device, the copy file and the gun
+record's shape: `docs/RECORDS.md`.
 
 ## Status page
 
