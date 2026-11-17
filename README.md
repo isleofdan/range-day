@@ -13,17 +13,22 @@ clicks, then works out the drop and the wind for each distance himself.
 
 ## The screens
 
-- **A day at the range** is one course, one rifle, one load and one box
-  of that load (the box the maker sells it in, `boxCount` in
+- **A day at the range** is one course, one rifle, one load and a box
+  of that load for the steel (the box the maker sells it in, `boxCount` in
   `data/loads.json`), on a day drawn for a month and a time of day
   (morning, midday, afternoon) from `data/weather.json`: cool calm
   mornings, hot gusty afternoons, the seasons, and now and then a Santa
   Ana day in the cooler months. Going through either door on home starts
   the day; the weather is drawn once and kept for the whole day; every
-  shot at the bench and at steel comes out of the box; when the last round
-  is fired the day is over, or **Pack up** ends it early (reversible from
-  the day's page until another day starts). The open day is kept on the
-  device, so closing the app and coming back resumes it. The day is told
+  shot at steel comes out of the box, and when it is empty the screen
+  stays and offers **Open another box**, which goes on with the same day;
+  **Pack up** ends the day (reversible from the day's page until another
+  day starts). The zero bench fires from its own **zeroing supply** per
+  rifle and load, kept from one day to the next, with its own "Open
+  another box"; nothing moves you off a screen by itself. The open day is
+  kept on the device, so closing the app and coming back resumes it; a day
+  left open is closed by itself when the app is next opened on a later
+  date. The day is told
   in words and one number ("A cool November morning, 52 F"), never the
   wind. The finished day is kept with every shot and shown on **the day's
   page** (`/day`).

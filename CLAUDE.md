@@ -214,7 +214,7 @@ These bind every session on this app, on top of the kit's rules above.
   or fonts.
 - **Everything the player makes lives on the device** (`localStorage`):
   the sight settings, the saved zeros, the shot log, the open day and the
-  finished days, the data book, the cold-bore record, the wind call and
+  finished days, the zeroing supply, the data book, the cold-bore record, the wind call and
   the one setting, each key and shape in `docs/RECORDS.md`; every read and
   write wrapped so a refusal shows "not saved on this device" instead of
   breaking a screen. No server-side records. Nothing stored before is

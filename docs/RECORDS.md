@@ -62,15 +62,20 @@ clears only this record.
 
 ### The open day: `day:open`
 
-The one day that is open now: one course, one rifle, one load and one
-box, on a day drawn from `data/weather.json` for a month (1 to 12) and a
-time of day (`morning`, `midday`, `afternoon`). `weather` is the draw:
-the temperature, the humidity, the altitude, the pressure, the wind in
-three stretches of the path (each with a gust), and whether it is a
-Santa Ana day. `box.left` counts down as shots are fired. `shots` is
-every shot of the day in order, at the bench (`place: "bench"`) or at
-steel (`place: "line"`); `firstShotPlace` says where the day's first shot
-was fired. A day with no shot is dropped freely.
+The one day that is open now: one course, one rifle, one load and a box
+of that load for the steel, on a day drawn from `data/weather.json` for a
+month (1 to 12) and a time of day (`morning`, `midday`, `afternoon`).
+`weather` is the draw: the temperature, the humidity, the altitude, the
+pressure, the wind in three stretches of the path (each with a gust), and
+whether it is a Santa Ana day. `box.left` counts down as shots are fired
+at steel; `box.opened` counts the boxes opened in the day ("Open another
+box" adds a box when one is empty; a record without the count is one
+box). Shots at the bench come from the zeroing supply below, not from
+the box. `shots` is every shot of the day in order, at the bench
+(`place: "bench"`) or at steel (`place: "line"`); `firstShotPlace` says
+where the day's first shot was fired. A day with no shot is dropped
+freely. A day left open from an earlier date is finished by itself
+(`endedBy: "left"`) when the app is next opened.
 
 ```json
 { "id": "2026-11-17-mwkoc3x1", "startedAt": "2026-11-17T09:12:01.000Z", "date": "2026-11-17",
@@ -78,7 +83,7 @@ was fired. A day with no shot is dropped freely.
   "weather": { "course": "angeles-sylmar", "month": 11, "timeOfDay": "morning", "santaAna": false,
                "tempF": 52, "humidity": 0.62, "altitudeFt": 1500, "pressureInHg": 28.33, "speedMph": 4.1, "fromDegrees": 290,
                "wind": [{ "fromYards": 0, "toYards": 200, "speedMph": 3.9, "fromDegrees": 275, "gustMph": 1.2, "periodS": 9, "phase": 2.1 }, { "...": "two more stretches" }] },
-  "box": { "size": 20, "left": 14 },
+  "box": { "size": 20, "left": 14, "opened": 1 },
   "shots": [
     { "n": 1, "at": "2026-11-17T09:13:40.000Z", "place": "bench", "yards": 100, "sight": "ar-irons", "elevationClicks": 0, "windageClicks": 0, "leaf": null, "reached": true, "upIn": -7.9, "rightIn": 1.2 },
     { "n": 6, "at": "2026-11-17T09:20:02.000Z", "place": "line", "yards": 300, "sight": "ar-irons", "elevationClicks": 4, "windageClicks": -1,
@@ -92,10 +97,24 @@ was fired. A day with no shot is dropped freely.
 ### The finished days: `days`
 
 A list of day records in the shape above, newest first, each with
-`endedAt` set and `endedBy` either `"empty"` (the box ran out) or
-`"packed"` (Pack up). `day:packed` holds the id of the last packed-up
-day, which "Back to the range" on the day's page reopens until another
-day is started.
+`endedAt` set and `endedBy` `"packed"` (Pack up), `"left"` (left open
+past its date, closed on the next visit) or, in records from before a
+box could be reopened, `"empty"` (the box ran out). `day:packed` holds
+the id of the last packed-up day, which "Back to the range" on the day's
+page reopens until another day is started.
+
+### The zeroing supply: `supply:<rifle>:<load>`
+
+The bench's own rounds for a rifle and load, kept from one day to the
+next (a zero is not shot afresh on every visit). It starts as one box of
+the load (`size` is the load's `boxCount`); `left` counts down with each
+shot at the bench; `opened` counts the boxes opened ("Open another box"
+on the bench adds one when it is empty). It is not part of any day's box
+and is not in the copy file.
+
+```json
+{ "size": 20, "left": 7, "opened": 2 }
+```
 
 ### The data book: `book:<rifle>:<sight>:<load>`
 
@@ -153,7 +172,8 @@ replaces or removes anything already there. The whole file is checked
 before anything is written: a file whose `kind` is not
 `"range-day copy"`, whose `version` is not 1, whose lists are missing, or
 any of whose records lacks a required field or has one of the wrong kind
-(for example `book[3].yards` not a number), including a day's box,
+(for example `book[3].yards` not a number), including a day's box
+(its `opened` count, when present, a number),
 weather, three stretches of wind and every shot (for example
 `days[0].shots[1]` not a record; a shot that reached must carry where it
 landed, `upIn` and `rightIn`, as numbers, and one that went into the

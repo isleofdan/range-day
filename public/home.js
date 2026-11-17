@@ -5,7 +5,7 @@
 // opens; the rifle list says which rifles have a zero saved on this device;
 // the zero line says where this rifle, sight and load stand; the two doors
 // carry the whole choice in their addresses. Going through a door starts a
-// day (one box of the load; the weather drawn once). While a day with shots
+// day (a box of the load for the steel; the weather drawn once). While a day with shots
 // is open, home shows that day first, with the doors back into it: the
 // rifle, load and course are fixed, the sight can be changed.
 (async function () {
@@ -83,7 +83,7 @@
     $('go-line').href = `/line${p}`;
     if ($('go-book')) $('go-book').href = `/book${RD.params(c)}`;
     $('course-blurb').textContent = `${d.courses[c.courseId].name}: ${d.courses[c.courseId].blurb || ''}`;
-    $('box-blurb').textContent = `A day at the range is one box of ${d.loads[c.loadId].boxCount} rounds of this load; the day ends when the box is empty.`;
+    $('box-blurb').textContent = `A day at the range opens a box of ${d.loads[c.loadId].boxCount} rounds of this load for the steel; another box can be opened when it is empty, and the zero bench has its own supply. Pack up ends the day.`;
     RD.remember(c);
   }
   function renderNoDay() {
