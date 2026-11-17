@@ -412,17 +412,11 @@
     $('magrow').hidden = false;
     $('magnifier').addEventListener('click', () => { setting = { ...setting, magnifier: !magnifierIn() }; RD.clickSound(); showSetting(); storeSetting(); });
   }
-  function turn(which, delta) {
-    const next = setting[which] + delta;
-    if (Math.abs(next) > sight.clicks) { $('result').textContent = `That knob is at the end of its travel (${sight.clicks} clicks).`; return; }
+  // The knobs: a press is one click, holding repeats, the coarse pair moves a whole MOA; the limits stop them.
+  RD.wireKnobs(document, sight, () => setting, (which, next) => {
     setting = { ...setting, [which]: next };
-    RD.clickSound(); showSetting(); zeroNote();
-    if (!RD.setSight(rifleId, sightId, setting)) $('zero-note').textContent = 'Sight setting not saved on this device: the browser refused to store it. It holds while this page is open.';
-  }
-  $('el-up').addEventListener('click', () => turn('elevationClicks', 1));
-  $('el-down').addEventListener('click', () => turn('elevationClicks', -1));
-  $('wd-right').addEventListener('click', () => turn('windageClicks', 1));
-  $('wd-left').addEventListener('click', () => turn('windageClicks', -1));
+    RD.clickSound(); showSetting(); zeroNote(); storeSetting();
+  }, (text) => { $('result').textContent = text; });
   $('plate').addEventListener('change', (e) => { plateIx = Number(e.target.value); hold.up = 0; hold.right = 0; conditions(); });
   // Changing the load keeps the sight where it is (the brief's rule); restoring
   // that load's saved zero is the player's own press on the button below.

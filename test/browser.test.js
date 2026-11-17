@@ -293,3 +293,43 @@ test('verify 11: home at 412x915, each of the seven rifles chosen in turn: both 
   assert.deepEqual(errors, []);
   await context.close();
 });
+
+test('verify 10: turning the Vepr\'s scope 40 MOA: the coarse buttons in 40 presses, a held fine button in seconds; the limit stops it and the screen says so', { skip }, async () => {
+  const { page, context, errors } = await signedIn();
+  await page.goto(`${base}/line?course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt`); await page.waitForSelector('#fire');
+  await page.evaluate(() => { localStorage.removeItem('range-day:sight:molot-vepr-54r:utg-2-7x44'); localStorage.removeItem('range-day:zero:molot-vepr-54r:utg-2-7x44:sb-174-hpbt'); localStorage.removeItem('range-day:zero:molot-vepr-54r:sb-174-hpbt'); });
+  await page.reload(); await page.waitForSelector('#fire');
+  const clicks = async () => page.evaluate(() => RangeDayLine.setting.elevationClicks);
+  assert.equal(await clicks(), 0);
+  // The coarse pair: one whole MOA a press (4 clicks on this scope).
+  let presses = 0;
+  while ((await clicks()) < 160) { await page.click('#el-up-moa'); presses++; if (presses > 200) break; }
+  assert.equal(presses, 40, '40 MOA in 40 presses of the coarse button');
+  assert.equal(await clicks(), 160, 'the data\'s limit: 160 clicks each way');
+  assert.match(await page.textContent('#result'), /end of its travel/);
+  await page.click('#el-up-moa');
+  assert.equal(await clicks(), 160, 'the limit stops the knob');
+  assert.match(await page.textContent('#result'), /end of its travel \(160 clicks/);
+  assert.match(await page.textContent('#setting-line'), /Elevation \+160 clicks \(40 MOA up\)/);
+  // Back to the middle, then hold the fine button and time it.
+  await page.evaluate(() => { localStorage.removeItem('range-day:sight:molot-vepr-54r:utg-2-7x44'); });
+  await page.reload(); await page.waitForSelector('#fire');
+  assert.equal(await clicks(), 0);
+  const box = await page.locator('#el-up').boundingBox();
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+  const t0 = Date.now();
+  await page.mouse.down();
+  let held = 0;
+  for (let i = 0; i < 300; i++) { await wait(50); if ((await clicks()) >= 160) { held = (Date.now() - t0) / 1000; break; } }
+  await page.mouse.up();
+  const after = await clicks();
+  console.log(`  Vepr scope, 40 MOA up: ${presses} presses of the 1-MOA button; a held click button reached 160 clicks in ${held.toFixed(1)} s`);
+  assert.equal(after, 160, 'the held button ran to the limit and stopped there');
+  assert.ok(held > 2 && held < 15, `held ${held} s`);
+  assert.match(await page.textContent('#result'), /end of its travel/);
+  // A single tap is one click, never two.
+  await page.click('#el-down');
+  assert.equal(await clicks(), 159);
+  assert.deepEqual(errors, []);
+  await context.close();
+});

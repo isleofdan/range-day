@@ -102,20 +102,27 @@
   function showSetting() {
     $('el-text').textContent = RD.clicksText(setting.elevationClicks, sight.clickMoa, 'up', 'down');
     $('wd-text').textContent = RD.clicksText(setting.windageClicks, sight.windageClickMoa, 'right', 'left');
+    $('setting-line').textContent = RD.settingLine(setting, sight, leaf ? `Leaf ${RD.leafText(leaf, setting.leafIx || 0)}` : '');
+    if (leaf) $('leaf-text').textContent = RD.leafText(leaf, setting.leafIx || 0);
   }
-  function turn(which, delta) {
-    const limit = sight.clicks;
-    const next = setting[which] + delta;
-    if (Math.abs(next) > limit) { $('saved').textContent = `The ${which === 'elevationClicks' ? 'elevation' : 'windage'} is at the end of its travel (${limit} clicks).`; return; }
+  // The knobs: a press is one click, holding repeats, the coarse pair moves a whole MOA; the limits stop them.
+  RD.wireKnobs(document, sight, () => setting, (which, next) => {
     setting = { ...setting, [which]: next };
     RD.clickSound();
     if (!RD.setSight(rifleId, sightId, setting)) $('saved').textContent = 'Sight setting not saved on this device (storage is off); it holds for this page only.';
     showSetting();
+  }, (text) => { $('saved').textContent = text; });
+  if (leaf) {
+    $('leafrow').hidden = false;
+    const moveLeaf = (delta) => {
+      const ix = (setting.leafIx || 0) + delta;
+      if (ix < 0 || ix >= leaf.settingsMeters.length) { $('saved').textContent = `The leaf is at the end of its slide (${leaf.settingsMeters[ix < 0 ? 0 : leaf.settingsMeters.length - 1]} m).`; return; }
+      setting = { ...setting, leafIx: ix }; RD.clickSound(); showSetting();
+      if (!RD.setSight(rifleId, sightId, setting)) $('saved').textContent = 'Sight setting not saved on this device (storage is off); it holds for this page only.';
+    };
+    $('leaf-up').addEventListener('click', () => moveLeaf(1));
+    $('leaf-down').addEventListener('click', () => moveLeaf(-1));
   }
-  $('el-up').addEventListener('click', () => turn('elevationClicks', 1));
-  $('el-down').addEventListener('click', () => turn('elevationClicks', -1));
-  $('wd-right').addEventListener('click', () => turn('windageClicks', 1));
-  $('wd-left').addEventListener('click', () => turn('windageClicks', -1));
   $('fire1').addEventListener('click', () => fire(1));
   $('fire5').addEventListener('click', () => fire(5));
   $('fresh').addEventListener('click', () => { holes = []; draw(); readout(); });

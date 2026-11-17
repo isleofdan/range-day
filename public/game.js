@@ -205,15 +205,47 @@ window.RD = (function () {
   // --- a knob: press for one step; press and hold to repeat, speeding up -------------------------------
   // The first step comes on the press (never on the click, so a tap is one
   // step, not two); from 400 ms on it repeats, each repeat a little faster,
-  // down to about 20 steps a second. Enter or the space bar step once.
+  // down to about 30 steps a second. Enter or the space bar step once.
   function holdRepeat(button, step) {
     let timer = null;
     const stop = () => { if (timer) { clearTimeout(timer); timer = null; } };
-    const go = (delay) => { timer = setTimeout(() => { step(); go(Math.max(50, delay * 0.8)); }, delay); };
+    const go = (delay) => { timer = setTimeout(() => { step(); go(Math.max(30, delay * 0.75)); }, delay); };
     button.addEventListener('pointerdown', (e) => { if (e.button !== 0) return; e.preventDefault(); stop(); step(); go(400); try { button.setPointerCapture(e.pointerId); } catch {} });
     for (const ev of ['pointerup', 'pointercancel', 'lostpointercapture']) button.addEventListener(ev, stop);
     button.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); step(); } });
     button.addEventListener('contextmenu', (e) => e.preventDefault());
+  }
+
+  // Wires the two knobs of a screen: a press moves one click; press and hold
+  // repeats; a second, coarser pair moves one whole MOA where the click is
+  // finer than that (hidden otherwise). The limits in the data stop the knob,
+  // and `say` is given the sentence when it is at its stop. `apply(which,
+  // nextClicks)` is the screen's own setter.
+  function wireKnobs(doc, sight, getSetting, apply, say) {
+    const $ = (id) => doc.getElementById(id);
+    const limit = sight.clicks;
+    const perMoa = (which) => Math.round(1 / (which === 'elevationClicks' ? sight.clickMoa : sight.windageClickMoa));
+    const coarse = sight.clickMoa < 1 || sight.windageClickMoa < 1;
+    for (const el of doc.querySelectorAll('.pair.coarse')) el.hidden = !coarse;
+    const turn = (which, delta) => {
+      const cur = getSetting()[which] || 0;
+      let next = Math.max(-limit, Math.min(limit, cur + delta));
+      const name = which === 'elevationClicks' ? 'elevation' : 'windage';
+      if (next === cur) { say(`The ${name} knob is at the end of its travel (${limit} clicks, ${moaOf(limit, which === 'elevationClicks' ? sight.clickMoa : sight.windageClickMoa)} MOA from the middle).`); return; }
+      apply(which, next);
+      if (Math.abs(next) === limit) say(`The ${name} knob is now at the end of its travel (${limit} clicks).`);
+    };
+    holdRepeat($('el-up'), () => turn('elevationClicks', 1));
+    holdRepeat($('el-down'), () => turn('elevationClicks', -1));
+    holdRepeat($('wd-right'), () => turn('windageClicks', 1));
+    holdRepeat($('wd-left'), () => turn('windageClicks', -1));
+    if (coarse) {
+      holdRepeat($('el-up-moa'), () => turn('elevationClicks', perMoa('elevationClicks')));
+      holdRepeat($('el-down-moa'), () => turn('elevationClicks', -perMoa('elevationClicks')));
+      holdRepeat($('wd-right-moa'), () => turn('windageClicks', perMoa('windageClicks')));
+      holdRepeat($('wd-left-moa'), () => turn('windageClicks', -perMoa('windageClicks')));
+    }
+    return turn;
   }
 
   // --- helpers -------------------------------------------------------------------------
@@ -275,5 +307,5 @@ window.RD = (function () {
   // A small seeded random for the drawn terrain, so a course looks the same each visit.
   function hash(str) { let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
 
-  return { E, data, store, getSight, sightReadFailed, setSight, getZero, setZero, getLog, setLog, zeroCount, getLast, setLast, getLastFor, setLastFor, chooseFrom, params, remember, holdRepeat, settingLine, leafText, showConditions, setShowConditions, drawDay, day, newDay, conditionsOf, audio, shotSound, ringSound, thudSound, clickSound, qs, esc, sign, moaOf, clicksText, whereText, windWord, crosswindMph, fovMoa, fitCanvas, hash };
+  return { E, data, store, getSight, sightReadFailed, setSight, getZero, setZero, getLog, setLog, zeroCount, getLast, setLast, getLastFor, setLastFor, chooseFrom, params, remember, holdRepeat, wireKnobs, settingLine, leafText, showConditions, setShowConditions, drawDay, day, newDay, conditionsOf, audio, shotSound, ringSound, thudSound, clickSound, qs, esc, sign, moaOf, clicksText, whereText, windWord, crosswindMph, fovMoa, fitCanvas, hash };
 }());
