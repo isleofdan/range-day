@@ -103,7 +103,9 @@ test('every sliding leaf names its settings, its service load and a derived angl
     assert.ok(leaf.serviceLoad.muzzleMps > 600 && leaf.serviceLoad.bc > 0.2, `${sightId}.${leafKey}: service load`);
     assert.match(raw.sights[sightId][leafKey].moaAbove100.estimate, /derived by this app's engine/);
   }
-  for (const id of ['ak-irons', 'vepr-irons', 'rem-irons']) assert.ok(flat.sights[id].notchMoa > 10 && flat.sights[id].apertureMoa === 0, `${id}: a notch, no ring`);
+  for (const id of ['ak-irons', 'vepr-irons', 'rem-irons']) assert.ok(flat.sights[id].notchMoa > 10 && flat.sights[id].notchDepthMoa > 0 && flat.sights[id].apertureMoa === 0, `${id}: a notch with a depth, no ring`);
+  assert.ok(flat.sights['rem-irons'].stemWidthMoa > 0 && flat.sights['rem-irons'].stemWidthMoa < flat.sights['rem-irons'].frontPostMoa, 'the bead stands on a thinner stem');
+  assert.ok(flat.sights['pa-3x-acss'].reticle.chevronHalfWidthMoa > 0 && flat.sights['pa-3x-acss'].reticle.markHalfWidthMoa > 0, 'the drop reticle has its drawn widths in the data');
   assert.equal(flat.sights['ak-irons'].battleSettingMeters, undefined);
   assert.equal(flat.sights['ak-irons'].leaf.battleSettingMeters, 300);
   assert.equal(flat.sights['ak-irons'].leaf545.battleSettingMeters, 400);

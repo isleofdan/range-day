@@ -1,5 +1,5 @@
 {
- "_about": "The sights. clickMoa is what one click of elevation moves the strike, windageClickMoa one click of windage, in minutes of angle; clicks is the travel each way from the middle. zoom is the magnification range; fovFtAt100 the field of view in feet at 100 yards at the lowest and highest zoom. frontPostMoa is the front post's width over the sight radius (how wide it looks against the target); apertureMoa the rear ring's lit circle and notchMoa the rear notch's width as the eye sees them; dotMoa a red dot's size. leaf is a sliding rear leaf: its marked settings, the service load it was cut for, and each setting's angle above the 100 m setting, derived with the engine (leaf545: the same leaf on the 5.45x39 rifle, cut for its own load).",
+ "_about": "The sights. clickMoa is what one click of elevation moves the strike, windageClickMoa one click of windage, in minutes of angle; clicks is the travel each way from the middle. zoom is the magnification range; fovFtAt100 the field of view in feet at 100 yards at the lowest and highest zoom. frontPostMoa is the front post's width over the sight radius (how wide it looks against the target); apertureMoa the rear ring's lit circle and notchMoa the rear notch's width as the eye sees them; dotMoa a red dot's size. leaf is a sliding rear leaf: its marked settings, the service load it was cut for, and each setting's angle above the 100 m setting, derived with the engine (leaf545: the same leaf on the 5.45x39 rifle, cut for its own load). notchDepthMoa is the rear notch's depth as the eye sees it; stemWidthMoa a bead's stem; a drop reticle's chevronHalfWidthMoa and markHalfWidthMoa are its drawn widths.",
  "ar-irons": {
   "name": "AR-15 iron sights (front post, rear aperture)",
   "kind": "iron",
@@ -348,6 +348,10 @@
   "notchMoa": {
    "value": 24,
    "estimate": "the rear notch is about 2.5 mm wide and sits about 14 in (355 mm) from the eye on an AK: 2.5 / 355 radians = 24 MOA across as the eye sees it; the front post (frontPostMoa) is measured over the sight radius, against the target"
+  },
+  "notchDepthMoa": {
+   "value": 22,
+   "estimate": "how deep the rear notch is cut, as the eye sees it, in minutes of angle: a little less than it is wide (the notch is about square); the same basis as notchMoa"
   }
  },
  "vepr-irons": {
@@ -491,6 +495,10 @@
   "notchMoa": {
    "value": 24,
    "estimate": "as the AK notch: about 2.5 mm wide, about 14 in from the eye"
+  },
+  "notchDepthMoa": {
+   "value": 22,
+   "estimate": "how deep the rear notch is cut, as the eye sees it, in minutes of angle: a little less than it is wide (the notch is about square); the same basis as notchMoa"
   }
  },
  "rem-irons": {
@@ -539,6 +547,14 @@
   "notchMoa": {
    "value": 22,
    "estimate": "a rimfire sporter's rear notch is about 2 mm wide and sits about 12 in (305 mm) from the eye: 2 / 305 radians = 22 MOA across as the eye sees it"
+  },
+  "notchDepthMoa": {
+   "value": 20,
+   "estimate": "how deep the rear notch is cut, as the eye sees it, in minutes of angle: a little less than it is wide (the notch is about square); the same basis as notchMoa"
+  },
+  "stemWidthMoa": {
+   "value": 3,
+   "estimate": "the thin stem the bead stands on, seen over the sight radius: about a third of the bead's width; not a maker figure"
   }
  },
  "pa-md25": {
@@ -782,6 +798,14 @@
      }
     ],
     "estimate": "derived by this app's engine, not published by Primary Arms: the hold-under of the manual's calibration load (124 gr at 2,330 fps, G1 0.294, 50-yard zero, sight 3.0 in over the bore, standard sea-level air) at each marked distance, in MOA below the zero line: 200 yd 1.41, 250 yd 3.4, 300 yd 5.72, 400 yd 11.31, 500 yd 18.29, 600 yd 26.84"
+   },
+   "chevronHalfWidthMoa": {
+    "value": 1.5,
+    "estimate": "how far each leg of the chevron reaches sideways at its base, in minutes of angle: the manual's picture shows a chevron about as wide at the base as it is tall (the base, the 200-yard hold, sits 1.41 MOA below the tip), so about 1.5 MOA each side; Primary Arms publishes no reticle dimensions"
+   },
+   "markHalfWidthMoa": {
+    "value": 1.2,
+    "estimate": "how far each hold mark reaches either side of the center line, in minutes of angle: short marks a little narrower than the chevron's base; not a maker figure"
    }
   }
  },

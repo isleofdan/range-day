@@ -276,13 +276,14 @@
   // Open sights: the rear notch, soft because it is near the eye, its top
   // edge level with the center; the front post standing in the notch with
   // its top at the center, light either side of it. A bead-fronted sight
-  // (the .22) has a round bead on a thinner stem. The notch's width and the
-  // post's width are the data's minutes of angle at the view's scale. The
+  // (the .22) has a round bead on a thinner stem. The notch's width and
+  // depth, the post's width and the stem's width are the data's minutes of
+  // angle at the view's scale. The
   // leaf behind the notch is not drawn: raising it raises the whole rear
   // sight, and the shooter re-aligns post and notch, so the picture is the
   // same and only the bore's angle changes (through the engine).
   function drawNotchAndPost(g, size, k, cx, cy) {
-    const notchW = sight.notchMoa * k, depth = notchW * 0.9;
+    const notchW = sight.notchMoa * k, depth = sight.notchDepthMoa * k;
     const postW = sight.frontPostMoa * k;
     const bead = sightId === 'rem-irons';
     // the rear sight blade: everything below the center line, except the notch, is its dark face
@@ -302,7 +303,8 @@
     if ('filter' in g) g.filter = 'blur(0.6px)';
     g.fillStyle = '#101010';
     if (bead) {
-      g.fillRect(cx - postW * 0.25, cy + postW * 0.45, postW * 0.5, size);
+      const stemW = sight.stemWidthMoa * k;
+      g.fillRect(cx - stemW / 2, cy + postW * 0.45, stemW, size);
       g.beginPath(); g.arc(cx, cy + postW / 2, postW / 2, 0, Math.PI * 2); g.fill();
     } else {
       g.fillRect(cx - postW / 2, cy, postW, size);
@@ -343,7 +345,7 @@
   // and only what the manual's text supports: a chevron whose tip is the
   // zero point (50 yards), its base the 200-yard hold, then a hold mark at
   // each distance the manual names, each at its derived angle below the
-  // tip. Left out, because the text does not describe them: the ranging
+  // tip; the chevron's and the marks' widths are the data's figures too. Left out, because the text does not describe them: the ranging
   // ladder, wind holds, numbers beside the marks, the outer crosshair and
   // the illumination. The marks are angles for the manual's load; with the
   // loads in the set the bullet lands where the engine says.
@@ -351,11 +353,11 @@
     const marks = sight.reticle.marksMoaBelowZero;
     const base = marks.find((m) => m.yards === sight.reticle.marksYards[0]) || marks[0];
     const baseY = cy + base.moaBelowZero * k;
-    const halfW = Math.max(3, 1.5 * k); // the chevron's half-width at its base: a drawing choice, not a manual figure
+    const halfW = sight.reticle.chevronHalfWidthMoa * k; // the chevron's half-width at its base (data/sights.json)
     g.strokeStyle = '#111'; g.lineWidth = Math.max(1.2, 0.25 * k); g.lineJoin = 'miter';
     g.beginPath(); g.moveTo(cx - halfW, baseY); g.lineTo(cx, cy); g.lineTo(cx + halfW, baseY); g.stroke();
     // the hold marks below the chevron
-    const tick = Math.max(3, 1.2 * k);
+    const tick = sight.reticle.markHalfWidthMoa * k;
     for (const m of marks) {
       if (m === base) continue;
       const y = cy + m.moaBelowZero * k;
