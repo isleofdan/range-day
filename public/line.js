@@ -164,17 +164,28 @@
       g.strokeStyle = '#3a3a3a'; g.lineWidth = Math.min(1.5, w * 0.05); g.strokeRect(x - w / 2, y - h / 2, w, h);
       for (const mk of marks) if (mk.plateIx === i) { const [mx, my] = toScreen(at.right + mk.rightIn / inchPerMoa(p.yards), at.up + mk.upIn / inchPerMoa(p.yards)); g.fillStyle = '#f3f1ea'; g.beginPath(); g.arc(mx, my, Math.max(1, 0.5 * k / 1.047), 0, 7); g.fill(); }
     });
-    // dust from misses: rises, drifts with the wind, fades
+    // dust from misses: a puff of the data's size in feet (data/physics.json,
+    // dust), drawn through the same scale as the plate at this distance, so
+    // it is the same puff at every zoom and through every sight: it grows
+    // from startFt to endFt across over lifeS seconds, rises riseFt, drifts
+    // with the wind and thins away.
+    const D = d.physics.dust;
     for (const p of dust) {
       const age = now - p.bornAt;
-      if (age > 3) continue;
-      const scale = 36 / inchPerMoa(p.yards); // a 3-foot puff
-      for (let j = 0; j < 7; j++) {
-        const jr = ((j * 37) % 11) / 11 - 0.5, ju = ((j * 53) % 7) / 7;
-        const drift = (wind * 1.4667 * age) / (p.yards * 3) * 3438; // ft/s × s over the distance, in MOA
-        const [x, y] = toScreen(p.rightMoa + jr * scale * (1 + age) + drift, p.upMoa + ju * scale * (0.5 + age * 0.8));
-        g.fillStyle = `rgba(222, 200, 160, ${Math.max(0, 0.9 - age / 3.2)})`;
-        g.beginPath(); g.arc(x, y, Math.max(2, scale * k * 0.5 * (0.6 + age)), 0, Math.PI * 2); g.fill();
+      if (age > D.lifeS) continue;
+      const f = age / D.lifeS;
+      const ipm = inchPerMoa(p.yards);
+      const widthMoa = ((D.startFt + (D.endFt - D.startFt) * f) * 12) / ipm;
+      const riseMoa = (D.riseFt * 12 * f) / ipm;
+      const drift = (D.driftFraction * wind * 1.4667 * age) / (p.yards * 3) * 3438; // ft/s × s over the distance, in MOA
+      const alpha = Math.max(0, 0.85 * (1 - f) * (1 - f * 0.3));
+      for (let j = 0; j < 9; j++) {
+        const jr = (((j * 37) % 11) / 11 - 0.5) * (0.5 + 0.5 * f), ju = (((j * 53) % 7) / 7) * 0.6 - 0.15;
+        const [x, y] = toScreen(p.rightMoa + jr * widthMoa + drift, p.upMoa + riseMoa + ju * widthMoa * 0.7);
+        const r = Math.max(1.5, widthMoa * k * (0.18 + 0.08 * ((j * 29) % 5) / 5));
+        const puff = g.createRadialGradient(x, y, 0, x, y, r);
+        puff.addColorStop(0, `rgba(222, 200, 160, ${alpha})`); puff.addColorStop(1, 'rgba(222, 200, 160, 0)');
+        g.fillStyle = puff; g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.fill();
       }
     }
     // heat shimmer leaning with the wind (seen through magnification)
@@ -444,7 +455,7 @@
     stepWander(dt);
     flash = Math.max(0, flash - dt * 4);
     for (let i = pending.length - 1; i >= 0; i--) if (now >= pending[i].at) land(pending.splice(i, 1)[0]);
-    for (let i = dust.length - 1; i >= 0; i--) if (now - dust[i].bornAt > 3) dust.splice(i, 1);
+    for (let i = dust.length - 1; i >= 0; i--) if (now - dust[i].bornAt > d.physics.dust.lifeS) dust.splice(i, 1);
     draw();
     requestAnimationFrame(frame);
   }

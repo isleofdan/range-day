@@ -732,6 +732,10 @@
   "riseFt": {
    "value": 4,
    "estimate": "the puff's center rises about 4 ft over its life"
+  },
+  "driftFraction": {
+   "value": 0.5,
+   "estimate": "the puff drifts at about half the wind speed given for its stretch: the wind is slower within a few feet of the ground than the wind the bullet flies through, and the dust starts from rest; not measured"
   }
  }
 }
