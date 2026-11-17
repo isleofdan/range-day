@@ -320,11 +320,9 @@
     g.strokeStyle = 'rgba(0,0,0,0.9)'; g.lineWidth = magnifierIn() ? 3 : 6; g.beginPath(); g.arc(cx, cy, r, 0, Math.PI * 2); g.stroke();
     // a faint tint on the glass
     g.fillStyle = 'rgba(120, 150, 255, 0.05)'; g.beginPath(); g.arc(cx, cy, r, 0, Math.PI * 2); g.fill();
-    const dot = Math.max(2, sight.dotMoa * k);
-    const glow = g.createRadialGradient(cx, cy, 0, cx, cy, dot);
-    glow.addColorStop(0, 'rgba(255, 40, 30, 1)'); glow.addColorStop(0.5, 'rgba(255, 40, 30, 0.95)'); glow.addColorStop(1, 'rgba(255, 60, 40, 0)');
-    g.fillStyle = glow; g.beginPath(); g.arc(cx, cy, dot, 0, Math.PI * 2); g.fill();
-    g.fillStyle = 'rgba(255, 36, 28, 0.9)'; g.beginPath(); g.arc(cx, cy, dot / 2, 0, Math.PI * 2); g.fill();
+    const dot = sight.dotMoa * k; // the dot's width: the data's MOA at the view's scale, however small
+    g.fillStyle = 'rgba(255, 60, 40, 0.35)'; g.beginPath(); g.arc(cx, cy, dot / 2 + 1.2, 0, Math.PI * 2); g.fill(); // a thin bloom, as a bright dot has
+    g.fillStyle = 'rgb(255, 36, 28)'; g.beginPath(); g.arc(cx, cy, Math.max(0.6, dot / 2), 0, Math.PI * 2); g.fill();
   }
 
   // The mil-dot reticle: fine crosshair, dots every 3.44 MOA, heavy posts outside.
@@ -361,9 +359,6 @@
       const y = cy + m.moaBelowZero * k;
       g.beginPath(); g.moveTo(cx - tick, y); g.lineTo(cx + tick, y); g.stroke();
     }
-    // a fine stem joining the marks, as the manual's picture has them on one line
-    g.lineWidth = Math.max(0.8, 0.12 * k);
-    g.beginPath(); g.moveTo(cx, baseY); g.lineTo(cx, cy + marks[marks.length - 1].moaBelowZero * k); g.stroke();
   }
 
   // Iron sights with a ring: the rear aperture's circle, dark and soft around it; the front post rising to the center.
@@ -381,17 +376,23 @@
   }
 
   // --- the shot -----------------------------------------------------------------------------
-  function fire() {
+  // fire(): the player's shot, from where the reticle points now. The tests'
+  // door, fire(seed), takes the aim from the hold alone (no wander, no
+  // breathing, no recoil) and a seeded draw, so two shots can be compared;
+  // the bullet still flies through the engine exactly as the player's does
+  // (the gusts are read at the clock's zero, so the wind is the same too).
+  function fire(seed) {
     if (pending.length > 2) return;
     const p = plate(), load = d.loads[loadId];
     // Where the reticle points, in MOA from the plate's center, at the trigger pull.
-    const aim = center();
+    const aim = seed == null ? center() : { up: hold.up, right: hold.right };
     const aimUp = aim.up, aimRight = aim.right;
     const r = E.shoot({
+      rand: seed == null ? undefined : E.seeded(seed),
       load, drag: d.physics.dragTables,
       rifle: { sightHeightIn: rifle.sightHeightIn[sightId], boreOffsetMoa: { up: rifle.boreOffsetMoa.up + leafMoa(), right: rifle.boreOffsetMoa.right } },
       sight: { clickMoa: sight.clickMoa, windageClickMoa: sight.windageClickMoa, elevationClicks: setting.elevationClicks, windageClicks: setting.windageClicks },
-      targetYards: p.yards, targetRiseFt: riseOf(p), conditions: RD.conditionsOf(day), wind: day.wind, t0: now,
+      targetYards: p.yards, targetRiseFt: riseOf(p), conditions: RD.conditionsOf(day), wind: day.wind, t0: seed == null ? now : 0,
     });
     lastShotInput = { targetYards: p.yards, targetRiseFt: riseOf(p) };
     RD.shotSound(1);
@@ -516,5 +517,12 @@
     // Each plate's angle from the firing line (sideways and upward, in MOA) and the height the drawing uses; the last shot's inputs to the engine.
     get plateAngles() { return plates.map((p) => ({ yards: p.yards, riseFt: riseOf(p), lateralYd: p.lateralYd, upMoa: toMoa(losAngle(p)), rightMoa: toMoa(sideAngle(p)) })); },
     get lastShotInput() { return lastShotInput; },
-    get fovMoa() { return fovMoa(); } };
+    get fovMoa() { return fovMoa(); },
+    // The drawn geometry, in pixels at the view's scale: what the tests compare with the data's angles.
+    get geometry() {
+      const k = pxPerMoa();
+      return { pxPerMoa: k, viewPx: view.size, dotPx: sight.kind === 'dot' ? sight.dotMoa * k : null,
+        marksPx: sight.reticle && sight.reticle.marksMoaBelowZero ? sight.reticle.marksMoaBelowZero.map((m) => ({ yards: m.yards, px: m.moaBelowZero * k })) : null,
+        leafMoa: leaf ? leafMoa() : null, magnifierIn: magnifierIn() };
+    } };
 }());

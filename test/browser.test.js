@@ -333,3 +333,182 @@ test('verify 10: turning the Vepr\'s scope 40 MOA: the coarse buttons in 40 pres
   assert.deepEqual(errors, []);
   await context.close();
 });
+
+// A seeded shot through the page's own door, landed: the last log row.
+async function seededShot(page, seed) {
+  const before = await page.evaluate(() => RangeDayLine.log.length);
+  await page.evaluate((s) => RangeDayLine.fire(s), seed);
+  for (let i = 0; i < 150; i++) { await wait(100); if ((await page.evaluate(() => RangeDayLine.log.length)) > before) break; }
+  const log = await page.evaluate(() => RangeDayLine.log);
+  return log[log.length - 1];
+}
+
+test('verify 5: zero the Tavor SAR with the dot at 50 yd; its irons are not zeroed; the dot is; the magnifier keeps the zero and lands the same seeded shot', { skip }, async () => {
+  const { page, context, errors } = await signedIn();
+  const SAR = 'course=angeles-sylmar&rifle=iwi-tavor-sar&load=imi-m193';
+  await page.goto(`${base}/zero?${SAR}&sight=pa-md25`); await page.waitForSelector('#fire5');
+  await page.evaluate(() => localStorage.clear());
+  await page.reload(); await page.waitForSelector('#fire5');
+  await page.selectOption('#distance', '50');
+  for (let round = 0; round < 4; round++) {
+    await page.click('#fresh'); await page.click('#fire5');
+    const c = await groupCenter(page);
+    const elClicks = Math.round(-c.up / (0.5 * E.inchesPerMoa(50)));
+    const wdClicks = Math.round(-c.right / (0.5 * E.inchesPerMoa(50)));
+    for (let i = 0; i < Math.abs(elClicks); i++) await page.click(elClicks > 0 ? '#el-up' : '#el-down');
+    for (let i = 0; i < Math.abs(wdClicks); i++) await page.click(wdClicks > 0 ? '#wd-right' : '#wd-left');
+  }
+  await page.click('#save');
+  assert.match(await page.textContent('#saved'), /Saved zero for IMI M193.*50 yards/);
+  const el = await page.textContent('#el-text');
+  // The iron sights on the same rifle: not zeroed.
+  await page.goto(`${base}/?rifle=iwi-tavor-sar&sight=tavor-irons&load=imi-m193`); await page.waitForSelector('.rifle');
+  assert.match(await page.textContent('#zero'), /Not zeroed yet with the Tavor folding iron sights/);
+  await page.goto(`${base}/line?${SAR}&sight=tavor-irons`); await page.waitForSelector('#fire');
+  assert.match(await page.textContent('#zero-note'), /No zero saved/);
+  // The dot again: the zero is there, on home and on the line.
+  await page.goto(`${base}/?rifle=iwi-tavor-sar&sight=pa-md25&load=imi-m193`); await page.waitForSelector('.rifle');
+  assert.match(await page.textContent('#zero'), /Zeroed at 50 yards with the Primary Arms SLx MD-25 red dot/);
+  await page.goto(`${base}/line?${SAR}&sight=pa-md25`); await page.waitForSelector('#fire');
+  assert.equal(await page.textContent('#el-text'), el, 'the line opens the dot at its saved zero');
+  assert.match(await page.textContent('#zero-note'), /Sight at the saved 50-yard zero/);
+  await page.selectOption('#plate', '2');
+  await page.evaluate(() => RangeDayLine.setHold(0, 0));
+  const out = await seededShot(page, 42);
+  // Flip the magnifier in: the same zero, the same clicks; the same seeded shot lands in the same place.
+  await page.click('#magnifier');
+  assert.match(await page.textContent('#setting-line'), /Magnifier in \(3×\)/);
+  assert.equal(await page.textContent('#el-text'), el, 'the magnifier uses the dot\'s setting');
+  assert.match(await page.textContent('#zero-note'), /Sight at the saved 50-yard zero/);
+  const geomIn = await page.evaluate(() => RangeDayLine.geometry);
+  assert.equal(geomIn.magnifierIn, true);
+  const inn = await seededShot(page, 42);
+  console.log(`  Tavor SAR, dot zeroed at 50 yd (${el}); 300 yd seeded shot: magnifier out ${out.upIn.toFixed(2)} / ${out.rightIn.toFixed(2)} in, in ${inn.upIn.toFixed(2)} / ${inn.rightIn.toFixed(2)} in`);
+  assert.ok(Math.abs(out.upIn - inn.upIn) < 1e-6 && Math.abs(out.rightIn - inn.rightIn) < 1e-6, 'the bullet lands in the same place flipped in or out');
+  await page.click('#magnifier');
+  assert.match(await page.textContent('#setting-line'), /Magnifier out \(1×\)/);
+  assert.deepEqual(errors, []);
+  await context.close();
+});
+
+// Reads the view's own pixels: a run of pixels meeting `test` along a row (axis 'x') or a column (axis 'y').
+async function pixelRuns(page, axis, from, to, at, test) {
+  return page.evaluate(([axis, from, to, at, src]) => {
+    const canvas = document.getElementById('view'), g = canvas.getContext('2d');
+    const test = new Function('r', 'g', 'b', 'a', `return ${src};`);
+    const runs = []; let run = null;
+    for (let i = from; i <= to; i++) {
+      const [x, y] = axis === 'x' ? [i, at] : [at, i];
+      const [r, gg, b, a] = g.getImageData(x, y, 1, 1).data;
+      const on = test(r, gg, b, a);
+      if (on && !run) run = { start: i, end: i }; else if (on) run.end = i; else if (run) { runs.push(run); run = null; }
+    }
+    if (run) runs.push(run);
+    return runs;
+  }, [axis, from, to, at, test]);
+}
+
+test('verify 8: drawn angles are true: the dot\'s width, each drop-reticle mark\'s place below the tip, and the move of the aim with the leaf, each the data\'s MOA times the view\'s scale within one pixel', { skip }, async () => {
+  // At device scale 2 the canvas has twice the pixels, so a pixel of the proof is half a screen pixel.
+  const context = await browser.newContext({ viewport: { width: 412, height: 915 }, deviceScaleFactor: 2 });
+  const page = await context.newPage();
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  await page.goto(`${base}/login`); await page.fill('#passphrase', PASS); await page.click('button[type=submit]'); await page.waitForURL(`${base}/`);
+  const lines = [];
+  // 1. The dot, with the magnifier out and in: red pixels across the center row.
+  await page.goto(`${base}/line?course=angeles-sylmar&rifle=iwi-tavor-sar&sight=pa-md25&load=imi-m193`); await page.waitForSelector('#fire');
+  await page.evaluate(() => RangeDayLine.setHold(0, 0));
+  for (const flip of [false, true]) {
+    if (flip) await page.click('#magnifier');
+    await wait(150);
+    const geom = await page.evaluate(() => RangeDayLine.geometry);
+    const dpr = await page.evaluate(() => Math.min(window.devicePixelRatio, 2));
+    const size = await page.evaluate(() => document.getElementById('view').width);
+    const runs = await pixelRuns(page, 'x', 0, size - 1, Math.round(size / 2), 'r > 200 && g < 110 && b < 110');
+    const dot = runs.find((r) => r.start <= size / 2 && r.end >= size / 2 - 1);
+    assert.ok(dot, `a red run across the center: ${JSON.stringify(runs)}`);
+    const widthPx = dot.end - dot.start + 1;
+    const expected = flat.sights['pa-md25'].dotMoa * geom.pxPerMoa * dpr;
+    lines.push(`dot ${flip ? 'through the magnifier' : 'alone'}: drawn ${widthPx} canvas px across, data ${expected.toFixed(1)} (${flat.sights['pa-md25'].dotMoa} MOA at ${(geom.pxPerMoa * dpr).toFixed(2)} px/MOA)`);
+    assert.ok(Math.abs(widthPx - expected) <= 1.5, lines[lines.length - 1]);
+  }
+  // 2. The drop reticle: dark runs down the center column below the tip, one per mark.
+  await page.goto(`${base}/line?course=angeles-sylmar&rifle=ak-762&sight=pa-3x-acss&load=silver-bear-123`); await page.waitForSelector('#fire');
+  await page.evaluate(() => RangeDayLine.setHold(0, 0));
+  await page.selectOption('#plate', '1');
+  await wait(200);
+  {
+    const geom = await page.evaluate(() => RangeDayLine.geometry);
+    const dpr = await page.evaluate(() => Math.min(window.devicePixelRatio, 2));
+    const size = await page.evaluate(() => document.getElementById('view').width);
+    const cy = size / 2;
+    const runs = await pixelRuns(page, 'y', Math.round(cy + 2), Math.round(cy + 80), Math.round(size / 2), 'r + g + b < 180');
+    const marks = flat.sights['pa-3x-acss'].reticle.marksMoaBelowZero.filter((m) => m.yards !== 200); // the 200 hold is the open base of the chevron, not a drawn mark
+    assert.equal(runs.length, marks.length, `one dark run per mark: ${JSON.stringify(runs)}`);
+    marks.forEach((m, i) => {
+      const center = (runs[i].start + runs[i].end) / 2 - cy;
+      const expected = m.moaBelowZero * geom.pxPerMoa * dpr;
+      lines.push(`mark ${m.yards} yd: drawn ${center.toFixed(1)} canvas px below the tip, data ${expected.toFixed(1)} (${m.moaBelowZero} MOA)`);
+      assert.ok(Math.abs(center - expected) <= 1.5, lines[lines.length - 1]);
+    });
+  }
+  // 3. The leaf: the same seeded shot with the leaf at 1 and at 2 moves by the setting's angle, at the view's scale.
+  await page.goto(`${base}/line?course=angeles-sylmar&rifle=ak-762&sight=ak-irons&load=silver-bear-123`); await page.waitForSelector('#fire');
+  await page.evaluate(() => { localStorage.removeItem('range-day:sight:ak-762:ak-irons'); });
+  await page.reload(); await page.waitForSelector('#fire');
+  await page.selectOption('#plate', '1');
+  await page.evaluate(() => RangeDayLine.setHold(0, 0));
+  const a = await seededShot(page, 9);
+  await page.click('#leaf-up');
+  assert.match(await page.textContent('#setting-line'), /Leaf 2 \(200 m\)/);
+  const geom = await page.evaluate(() => RangeDayLine.geometry);
+  const b = await seededShot(page, 9);
+  const movedMoa = (b.upIn - a.upIn) / E.inchesPerMoa(a.yards);
+  const leafMoa = flat.sights['ak-irons'].leaf.moaAbove100[1].moaAbove100;
+  lines.push(`leaf 1 to 2 at ${a.yards} yd: the strike moved ${(b.upIn - a.upIn).toFixed(1)} in, ${movedMoa.toFixed(2)} MOA, ${(movedMoa * geom.pxPerMoa).toFixed(2)} px at the view's scale; data ${leafMoa} MOA, ${(leafMoa * geom.pxPerMoa).toFixed(2)} px`);
+  assert.equal(geom.leafMoa, leafMoa);
+  assert.ok(Math.abs(movedMoa - leafMoa) * geom.pxPerMoa <= 1, lines[lines.length - 1]);
+  assert.equal(b.leaf, 200, 'the log row records the leaf');
+  console.log('  ' + lines.join('\n  '));
+  assert.deepEqual(errors, []);
+  await context.close();
+});
+
+test('verify 12: on both courses the plates stand apart and in order through the widest view, and the engine is given the height the drawing uses', { skip }, async () => {
+  const { page, context, errors } = await signedIn();
+  const lines = [];
+  for (const [path, rifle] of [['/line?course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt', 'Vepr, scope at 2x'], ['/line?course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193', 'AR-15, iron sights']]) {
+    await page.goto(`${base}${path}`); await page.waitForSelector('#fire');
+    await page.evaluate(() => { if (document.getElementById('zoom').min) RangeDayLine.setZoom(Number(document.getElementById('zoom').min)); });
+    const angles = await page.evaluate(() => RangeDayLine.plateAngles);
+    const fov = await page.evaluate(() => RangeDayLine.fovMoa);
+    const courseId = /course=([^&]+)/.exec(path)[1];
+    const data = flat.courses[courseId].plates;
+    lines.push(`${flat.courses[courseId].name} (${rifle}, ${fov.toFixed(0)} MOA across the view):`);
+    for (let i = 0; i < angles.length; i++) {
+      const a = angles[i];
+      assert.equal(a.riseFt, data[i].riseFt, `${a.yards} yd: the drawing's height is the data's`);
+      lines.push(`  ${a.yards} yd: ${a.rightMoa >= 0 ? '+' : ''}${a.rightMoa.toFixed(1)} MOA sideways, ${a.upMoa.toFixed(1)} MOA up, ${a.riseFt} ft high`);
+      for (let j = 0; j < i; j++) {
+        const sep = Math.hypot(a.upMoa - angles[j].upMoa, a.rightMoa - angles[j].rightMoa);
+        assert.ok(sep >= 30, `${angles[j].yards} and ${a.yards} yd are ${sep.toFixed(1)} MOA apart`);
+      }
+      if (i) {
+        assert.ok(a.upMoa - angles[i - 1].upMoa >= 10, `${a.yards} yd sits ${(a.upMoa - angles[i - 1].upMoa).toFixed(1)} MOA above ${angles[i - 1].yards} yd`);
+        assert.equal(Math.sign(a.rightMoa - angles[i - 1].rightMoa), Math.sign(angles[1].rightMoa - angles[0].rightMoa), 'the sideways order runs one way');
+      }
+    }
+    // The engine's height for a plate equals the drawing's: fire at the 4th plate and read what the engine was given.
+    await page.selectOption('#plate', '3');
+    await page.evaluate(() => RangeDayLine.setHold(0, 0));
+    await seededShot(page, 3);
+    const given = await page.evaluate(() => RangeDayLine.lastShotInput);
+    assert.equal(given.targetRiseFt, angles[3].riseFt);
+    assert.equal(given.targetRiseFt, data[3].riseFt);
+    assert.equal(given.targetYards, data[3].yards);
+  }
+  console.log('  ' + lines.join('\n  '));
+  assert.deepEqual(errors, []);
+  await context.close();
+});
