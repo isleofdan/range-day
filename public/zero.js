@@ -86,7 +86,7 @@
   const supplyEmpty = () => supply.left <= 0;
   const rounds = () => {
     $('rounds').textContent = RD.supplyText(supply) + (RD.supplyReadFailed(rifleId, loadId) ? ' (not saved on this device)' : '');
-    $('fire1').disabled = supplyEmpty(); $('fire5').disabled = supplyEmpty(); $('another-box').hidden = !supplyEmpty();
+    $('fire1').disabled = supplyEmpty(); $('fire5').disabled = supplyEmpty(); $('another-box-row').hidden = !supplyEmpty();
   };
   function fire(n) {
     if (supplyEmpty()) { $('group').textContent = `The zeroing supply is empty: the box of ${supply.size} is used up. Open another box to go on.`; return; }

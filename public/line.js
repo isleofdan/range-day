@@ -405,7 +405,7 @@
   // (the gusts are read at the clock's zero, so the wind is the same too).
   // The box. When it is empty the screen says so and stays: "Open another box" goes on with the same day; nothing moves by itself.
   const boxEmpty = () => Boolean(day.endedAt) || day.box.left <= 0;
-  const rounds = () => { $('rounds').textContent = RD.roundsText(day); $('fire').classList.toggle('spent', boxEmpty()); $('another-box').hidden = !boxEmpty(); };
+  const rounds = () => { $('rounds').textContent = RD.roundsText(day); $('fire').classList.toggle('spent', boxEmpty()); $('another-box-row').hidden = !boxEmpty(); };
   function fire(seed) {
     if (pending.length > 2) return;
     if (boxEmpty()) { $('result').textContent = `The box of ${day.box.size} is empty. Open another box to go on, or pack up; the day's page has every shot.`; return; }

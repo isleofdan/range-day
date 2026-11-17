@@ -23,6 +23,7 @@
   <div class="viewwrap"><canvas id="view" width="400" height="400"></canvas></div>
   <p class="setting mono"><span id="setting-line"></span> · <span id="rounds"></span></p>
   <p id="group" class="readout">No shots yet. Fire a group, read where it lands against the center, then turn the sight.</p>
+  <div id="another-box-row" class="row" hidden><button id="another-box" type="button" class="btn inline">Open another box</button></div>
   <div class="controls one">
     <div class="field"><label for="distance">Paper at</label><select id="distance"></select></div>
   </div>
@@ -61,7 +62,6 @@
   <p class="muted small">Shots here come out of the zeroing supply for this rifle and load, kept from one day to the next; the day's box is for the steel. A day that begins at the bench has no cold-bore line.</p>
   <div class="row">
     <a id="to-day" class="btn inline secondary" href="/day">The day so far</a>
-    <button id="another-box" type="button" class="btn inline" hidden>Open another box</button>
     <button id="pack-up" type="button" class="btn inline secondary">Pack up</button>
   </div>
 </main>
