@@ -81,11 +81,19 @@
     }
   }
 
-  // The box: how many are left, and whether the day is over.
-  const rounds = () => { $('rounds').textContent = RD.roundsText(day); const over = Boolean(day.endedAt) || day.box.left <= 0; $('fire1').disabled = over; $('fire5').disabled = over; };
+  // The zeroing supply: the bench's own rounds, kept across days for this rifle and load; the day's box is for the steel.
+  let supply = RD.getSupply(d, rifleId, loadId);
+  const supplyEmpty = () => supply.left <= 0;
+  const rounds = () => {
+    $('rounds').textContent = RD.supplyText(supply) + (RD.supplyReadFailed(rifleId, loadId) ? ' (not saved on this device)' : '');
+    $('fire1').disabled = supplyEmpty(); $('fire5').disabled = supplyEmpty(); $('another-box').hidden = !supplyEmpty();
+  };
   function fire(n) {
-    if (day.endedAt || day.box.left <= 0) { $('group').textContent = `The day is over: the box of ${day.box.size} is empty. Pack up is done for you; the day's page has every shot.`; return; }
-    const out = RD.takeRounds(day, n);
+    if (supplyEmpty()) { $('group').textContent = `The zeroing supply is empty: the box of ${supply.size} is used up. Open another box to go on.`; return; }
+    const took = RD.takeSupply(d, rifleId, loadId, n);
+    supply = took.supply;
+    const out = took.out;
+    if (!took.saved) $('saved').textContent = 'The zeroing supply is not saved on this device (the browser refused its storage); it holds while this page is open.';
     if (!out) { rounds(); return; }
     const load = d.loads[loadId];
     RD.shotSound(0.5);
@@ -98,11 +106,11 @@
       });
       if (r.reached) holes.push({ upIn: r.hit.upIn, rightIn: r.hit.rightIn, loadId });
       const shot = { place: 'bench', yards: distance, sight: sightId, elevationClicks: setting.elevationClicks, windageClicks: setting.windageClicks, leaf: leaf ? leaf.settingsMeters[setting.leafIx || 0] : null, reached: r.reached, upIn: r.reached ? Math.round(r.hit.upIn * 100) / 100 : null, rightIn: r.reached ? Math.round(r.hit.rightIn * 100) / 100 : null };
-      const rec = RD.recordShot(day, shot, i < out - 1);
+      const rec = RD.recordShot(day, shot);
       if (!rec.saved) $('saved').textContent = 'The day is not saved on this device (the browser refused its storage); it holds while this page is open.';
     }
     draw(); readout(); rounds();
-    if (day.endedAt) { $('group').textContent += ` That was the last round: the box of ${day.box.size} is empty and the day is over. The day's page follows.`; setTimeout(() => { location.href = `/day?id=${encodeURIComponent(day.id)}`; }, 3000); }
+    if (supplyEmpty()) $('group').textContent += ` That was the last round of the zeroing supply's box of ${supply.size}. Open another box to go on; the day is not over.`;
   }
   function readout() {
     const mine = holes.filter((h) => h.loadId === loadId);
@@ -152,6 +160,11 @@
   $('pack-up').addEventListener('click', () => {
     const packed = RD.packUp();
     location.href = packed ? `/day?id=${encodeURIComponent(packed.id)}` : '/';
+  });
+  $('another-box').addEventListener('click', () => {
+    const opened = RD.openSupplyBox(d, rifleId, loadId);
+    supply = opened.supply; rounds();
+    $('group').textContent = opened.saved ? `Box ${supply.opened} of ${d.loads[loadId].name} opened for zeroing: ${supply.left} rounds.` : 'The box could not be saved on this device (the browser refused its storage); it holds while this page is open.';
   });
   function showSaved() {
     const z = RD.getZero(rifleId, sightId, loadId);

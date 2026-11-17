@@ -149,13 +149,24 @@ window.RD = (function () {
   }
 
   // --- a day at the range ---------------------------------------------------------------
-  // One day is one course, one rifle, one load and one box of that load, on
-  // a day drawn above. The open day is kept on the device (day:open), so
-  // closing the app and coming back resumes it. A day in which no shot was
-  // fired leaves no record. When the last round is fired, or on "Pack up",
-  // the day is finished and kept (days), with every shot.
+  // One day is one course, one rifle and one load, with a box of that load
+  // for the steel (another box can be opened when it is empty), on a day
+  // drawn above. The open day is kept on the device (day:open), so closing
+  // the app and coming back resumes it. A day in which no shot was fired
+  // leaves no record. "Pack up" finishes the day and keeps it (days), with
+  // every shot; a day left open is finished by itself when the app is next
+  // opened on a later date. The bench fires from the zeroing supply, not
+  // from the day's box (see below).
   const localDate = (d) => { const x = d || new Date(); return `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, '0')}-${String(x.getDate()).padStart(2, '0')}`; };
-  const openDay = () => { const v = store.get('day:open'); return ok(v) ? v : null; };
+  const openDay = () => {
+    const v = store.get('day:open');
+    if (!ok(v)) return null;
+    if (v.date && v.date !== localDate()) { // a day left open from an earlier date: a new date is a new visit
+      if (v.shots && v.shots.length) finishDay(v, 'left'); else store.remove('day:open');
+      return null;
+    }
+    return v;
+  };
   const dayReadFailed = () => store.get('day:open') === FAILED;
   const saveOpenDay = (day) => store.set('day:open', day);
   const hasShots = (day) => Boolean(day && day.shots && day.shots.length);
@@ -170,7 +181,7 @@ window.RD = (function () {
       course: c.courseId, rifle: c.rifleId, load: c.loadId,
       month: month || thisMonth(), timeOfDay: TIMES.includes(timeOfDay) ? timeOfDay : 'morning',
       weather: drawDay(course, d.weather, month || thisMonth(), timeOfDay, rand),
-      box: { size: d.loads[c.loadId].boxCount, left: d.loads[c.loadId].boxCount },
+      box: { size: d.loads[c.loadId].boxCount, left: d.loads[c.loadId].boxCount, opened: 1 },
       shots: [], firstShotPlace: null, endedAt: null, endedBy: null,
     };
     store.remove('day:packed');
@@ -203,7 +214,7 @@ window.RD = (function () {
     const { day, saved } = startDay(d, c, month, timeOfDay);
     return { day, c, redirected: false, saved, fresh: true };
   }
-  // Takes up to n rounds out of the box; answers how many came out (0 when the day is over).
+  // Takes up to n rounds out of the day's box (the steel's); answers how many came out (0 when it is empty).
   function takeRounds(day, n) {
     if (!day || day.endedAt) return 0;
     const out = Math.max(0, Math.min(n, day.box.left));
@@ -211,8 +222,41 @@ window.RD = (function () {
     saveOpenDay(day);
     return out;
   }
-  // Writes one shot into the day (place 'bench' or 'line'); ends the day when the box is empty and nothing is still in the air.
-  function recordShot(day, shot, inFlight) {
+  // Opens another box of the load for the steel: the day goes on. An old record without a count is one box.
+  function openAnotherBox(day) {
+    if (!day || day.endedAt) return false;
+    day.box.opened = (day.box.opened || 1) + 1;
+    day.box.left += day.box.size;
+    return saveOpenDay(day);
+  }
+  const boxesOpened = (day) => (day.box.opened || 1);
+  const roundsFired = (day) => boxesOpened(day) * day.box.size - day.box.left;
+  // The zeroing supply: the bench's own rounds, per rifle and load, kept on
+  // the device across days (zeroing is not done afresh on every visit). It
+  // starts as one box of the load; another box can be opened when it is
+  // empty. It is not part of the day's box and not in a copy.
+  const supplyKey = (rifle, load) => `supply:${rifle}:${load}`;
+  function getSupply(d, rifle, load) {
+    const v = store.get(supplyKey(rifle, load));
+    if (ok(v) && typeof v.left === 'number') return v;
+    return { size: d.loads[load].boxCount, left: d.loads[load].boxCount, opened: 1 };
+  }
+  const supplyReadFailed = (rifle, load) => store.get(supplyKey(rifle, load)) === FAILED;
+  // Takes up to n rounds out of the supply; answers { out, saved }.
+  function takeSupply(d, rifle, load, n) {
+    const s = getSupply(d, rifle, load);
+    const out = Math.max(0, Math.min(n, s.left));
+    s.left -= out;
+    return { out, saved: store.set(supplyKey(rifle, load), s), supply: s };
+  }
+  function openSupplyBox(d, rifle, load) {
+    const s = getSupply(d, rifle, load);
+    s.opened = (s.opened || 1) + 1; s.left += s.size;
+    return { saved: store.set(supplyKey(rifle, load), s), supply: s };
+  }
+  const supplyText = (s) => (s.left > 0 ? `zeroing supply: ${s.left} of ${s.size} left${(s.opened || 1) > 1 ? ` (box ${s.opened})` : ''}` : `zeroing supply: the box of ${s.size} is empty`);
+  // Writes one shot into the day (place 'bench' or 'line'). The box emptying no longer ends the day: another box can be opened.
+  function recordShot(day, shot) {
     if (!day) return { saved: false };
     // The number is the shot's place in the day's firing order: given at the trigger pull by the
     // firing line (a bench shot has none in flight, so it is simply the next); the list stays in that order.
@@ -221,11 +265,10 @@ window.RD = (function () {
     if (!day.firstShotPlace || shot.n === 1) day.firstShotPlace = shot.place;
     day.shots.push(shot);
     day.shots.sort((a, b) => a.n - b.n);
-    let ended = false;
-    if (day.box.left <= 0 && !inFlight) { finishDay(day, 'empty'); ended = true; } else saveOpenDay(day);
-    return { saved: true, ended };
+    return { saved: saveOpenDay(day), ended: false };
   }
-  // Moves the open day to the finished days. by: 'empty' (the box) or 'packed' (Pack up, which "Back to the range" can undo).
+  // Moves the open day to the finished days. by: 'packed' (Pack up, which "Back to the range" can undo), 'left' (left open past
+  // its date, closed on the next visit) or, in records from before boxes could be reopened, 'empty' (the box ran out).
   function finishDay(day, by) {
     day.endedAt = new Date().toISOString(); day.endedBy = by;
     const days = finishedDays().filter((x) => x.id !== day.id);
@@ -389,6 +432,7 @@ window.RD = (function () {
     obj.days.forEach((day, i) => {
       const at = `days[${i}]`;
       checkRecord(day.box, DAY_SHAPES.box, `${at}.box`);
+      if (day.box.opened !== undefined && !isKind(day.box.opened, 'number')) throw notACopy(`${at}.box.opened is ${JSON.stringify(day.box.opened)}; it must be a number (the boxes opened) or absent. Nothing was loaded.`);
       checkRecord(day.weather, DAY_SHAPES.weather, `${at}.weather`);
       if (day.weather.wind.length !== 3) throw notACopy(`${at}.weather.wind has ${day.weather.wind.length} stretches; it must have 3. Nothing was loaded.`);
       day.weather.wind.forEach((w, j) => checkRecord(w, DAY_SHAPES.windStretch, `${at}.weather.wind[${j}]`));
@@ -612,7 +656,8 @@ window.RD = (function () {
     return parts.join(' · ');
   }
   // "14 of 20 rounds left", "the box is empty: the day is over"
-  const roundsText = (day) => (!day ? '' : day.box.left > 0 ? `${day.box.left} of ${day.box.size} rounds left` : `the box of ${day.box.size} is empty: the day is over`);
+  const roundsText = (day) => (!day ? '' : day.box.left > 0 ? `${day.box.left} of ${day.box.size} rounds left${boxesOpened(day) > 1 ? ` (box ${boxesOpened(day)})` : ''}` : `the box of ${day.box.size} is empty`);
+  const boxesText = (day) => (boxesOpened(day) > 1 ? `${boxesOpened(day)} boxes of ${day.box.size}` : `a box of ${day.box.size}`);
   // A leaf setting's name: "3 (300 m)", or "П (300 m, the battle setting)".
   function leafText(leaf, ix) {
     const m = leaf.settingsMeters[ix];
@@ -667,5 +712,5 @@ window.RD = (function () {
     setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
   }
 
-  return { E, data, rifleIds, store, getSight, sightReadFailed, setSight, getZero, setZero, getLog, setLog, zeroCount, getLast, setLast, getLastFor, setLastFor, getWhen, setWhen, thisMonth, TIMES, MONTHS, getWindCall, setWindCall, windCallText, wireWindCall, chooseFrom, params, remember, leafOf, holdRepeat, wireKnobs, settingLine, roundsText, leafText, showConditions, setShowConditions, drawDay, conditionsOf, dayWords, localDate, openDay, dayReadFailed, hasShots, finishedDays, dayById, startDay, enterDay, takeRounds, recordShot, finishDay, packUp, packedDayId, restorePacked, bookKey, getBook, bookReadFailed, addBookLine, changeBookLine, bookAt, bookNeighbours, newestFirst, comeUpMoa, comeUpText, getColdBore, addColdBore, makeCopy, checkCopy, loadCopy, COPY_KIND, audio, shotSound, ringSound, thudSound, clickSound, qs, esc, sign, moaOf, clicksText, whereText, heldText, dateText, windWord, crosswindMph, fovMoa, fitCanvas, hash, download };
+  return { E, data, rifleIds, store, getSight, sightReadFailed, setSight, getZero, setZero, getLog, setLog, zeroCount, getLast, setLast, getLastFor, setLastFor, getWhen, setWhen, thisMonth, TIMES, MONTHS, getWindCall, setWindCall, windCallText, wireWindCall, chooseFrom, params, remember, leafOf, holdRepeat, wireKnobs, settingLine, roundsText, leafText, showConditions, setShowConditions, drawDay, conditionsOf, dayWords, localDate, openDay, dayReadFailed, hasShots, finishedDays, dayById, startDay, enterDay, takeRounds, openAnotherBox, boxesOpened, roundsFired, boxesText, getSupply, supplyReadFailed, takeSupply, openSupplyBox, supplyText, recordShot, finishDay, packUp, packedDayId, restorePacked, bookKey, getBook, bookReadFailed, addBookLine, changeBookLine, bookAt, bookNeighbours, newestFirst, comeUpMoa, comeUpText, getColdBore, addColdBore, makeCopy, checkCopy, loadCopy, COPY_KIND, audio, shotSound, ringSound, thudSound, clickSound, qs, esc, sign, moaOf, clicksText, whereText, heldText, dateText, windWord, crosswindMph, fovMoa, fitCanvas, hash, download };
 }());

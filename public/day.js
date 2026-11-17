@@ -34,11 +34,11 @@
       return;
     }
     const rifle = d.rifles[day.rifle], load = d.loads[day.load], course = d.courses[day.course];
-    const overBy = !day.endedAt ? 'still open' : day.endedBy === 'empty' ? 'ended when the box was empty' : 'packed up early';
+    const overBy = !day.endedAt ? 'still open' : day.endedBy === 'empty' ? 'ended when the box was empty' : day.endedBy === 'left' ? 'left open; closed on the next visit' : 'packed up early';
     $('title').textContent = `${RD.dateText(day.date)}: ${rifle ? rifle.name : day.rifle}`;
     const atSteel = day.shots.filter((s) => s.place === 'line'), bench = day.shots.filter((s) => s.place === 'bench');
     const hits = atSteel.filter((s) => s.hit).length;
-    $('facts').innerHTML = `${RD.esc(RD.dayWords(day.weather, d.weather))} <strong>${RD.esc(course ? short(course.name) : day.course)}</strong>, ${RD.esc(rifle ? rifle.name : day.rifle)}, ${RD.esc(load ? load.name : day.load)}: a box of ${day.box.size}, ${day.box.size - day.box.left} fired, ${day.box.left} left; ${overBy}. ${bench.length} shot${bench.length === 1 ? '' : 's'} at the bench, ${atSteel.length} at steel${atSteel.length ? ` (${hits} hit)` : ''}.`;
+    $('facts').innerHTML = `${RD.esc(RD.dayWords(day.weather, d.weather))} <strong>${RD.esc(course ? short(course.name) : day.course)}</strong>, ${RD.esc(rifle ? rifle.name : day.rifle)}, ${RD.esc(load ? load.name : day.load)}: ${RD.boxesText(day)} for the steel, ${RD.roundsFired(day)} fired, ${day.box.left} left; ${overBy}. ${bench.length} shot${bench.length === 1 ? '' : 's'} at the bench (from the zeroing supply), ${atSteel.length} at steel${atSteel.length ? ` (${hits} hit)` : ''}.`;
     const sightUsed = [...new Set(day.shots.map((s) => s.sight).filter(Boolean))];
     const bookHref = `/book?course=${day.course}&rifle=${day.rifle}&sight=${sightUsed[sightUsed.length - 1] || (rifle ? rifle.defaultSight : '')}&load=${day.load}`;
     let acts = `<a class="btn inline secondary" href="${bookHref}">The book</a>`;
