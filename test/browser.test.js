@@ -546,3 +546,40 @@ test('verify 12: on both courses the plates stand apart and in order through the
   assert.deepEqual(errors, []);
   await context.close();
 });
+
+test('on a phone, Fire works from a second finger while the first holds Steady, and holding Steady selects no text', { skip }, async () => {
+  const context = await browser.newContext({ viewport: { width: 412, height: 915 }, isMobile: true, hasTouch: true });
+  const page = await context.newPage();
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  await page.goto(`${base}/login`); await page.fill('#passphrase', PASS); await page.click('button[type=submit]'); await page.waitForURL(`${base}/`);
+  await page.goto(`${base}/line?course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193`); await page.waitForSelector('#fire');
+  await page.evaluate(() => { localStorage.removeItem('range-day:log:bcm-ar15:ar-irons:imi-m193'); });
+  await page.reload(); await page.waitForSelector('#fire');
+  // Finger one lands on Steady and stays; finger two taps Fire. A phone gives the second finger pointer events but no click.
+  const result = await page.evaluate(async () => {
+    const steady = document.getElementById('steady'), fire = document.getElementById('fire');
+    const ev = (type, target, id, primary) => target.dispatchEvent(new PointerEvent(type, { bubbles: true, cancelable: true, pointerId: id, pointerType: 'touch', isPrimary: primary, button: 0, buttons: 1 }));
+    ev('pointerdown', steady, 1, true);
+    const held = steady.classList.contains('on');
+    const before = RangeDayLine.log.length + RangeDayLine.pending;
+    ev('pointerdown', fire, 2, false); ev('pointerup', fire, 2, false);
+    const firedWhileHeld = (RangeDayLine.log.length + RangeDayLine.pending) > before;
+    const stillHeld = steady.classList.contains('on');
+    ev('pointerup', steady, 1, true);
+    const released = !steady.classList.contains('on');
+    const sel = getComputedStyle(steady).userSelect || getComputedStyle(steady).webkitUserSelect;
+    return { held, firedWhileHeld, stillHeld, released, sel, touchAction: getComputedStyle(fire).touchAction };
+  });
+  console.log(`  phone: Steady held ${result.held}, Fire from a second finger ${result.firedWhileHeld}, Steady still held after it ${result.stillHeld}, released on lift ${result.released}; user-select ${result.sel}, touch-action ${result.touchAction}`);
+  assert.equal(result.held, true); assert.equal(result.firedWhileHeld, true, 'Fire works while Steady is held'); assert.equal(result.stillHeld, true); assert.equal(result.released, true);
+  assert.equal(result.sel, 'none', 'the Steady label cannot be selected'); assert.equal(result.touchAction, 'none');
+  // A real tap on Fire (Playwright's touch tap) still fires exactly once.
+  const before = await page.evaluate(() => RangeDayLine.log.length + RangeDayLine.pending);
+  await page.tap('#fire');
+  await wait(300);
+  const after = await page.evaluate(() => RangeDayLine.log.length + RangeDayLine.pending);
+  assert.equal(after - before, 1, 'one tap, one shot');
+  assert.deepEqual(errors, []);
+  await context.close();
+});
