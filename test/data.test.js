@@ -70,9 +70,27 @@ test('each course has plates every 100 yards to its published steel distance, wi
     assert.equal(last, c.steelTo, id);
     for (let i = 1; i < c.plates.length; i++) assert.equal(c.plates[i].yards - c.plates[i - 1].yards, 100, id);
     assert.deepEqual(c.zeroYards, [25, 50, 100, 200], id);
-    assert.ok(typeof c.farPlateRiseFt === 'number' && typeof c.altitudeFt === 'number', id);
+    assert.ok(typeof c.altitudeFt === 'number', id);
+    for (const p of c.plates) assert.ok(typeof p.riseFt === 'number' && typeof p.lateralYd === 'number', `${id}: ${p.yards} yd has its own height and sideways place`);
   }
-  assert.equal(flat.courses['cta-piru'].farPlateRiseFt, 200);
+  assert.equal(flat.courses['cta-piru'].plates[flat.courses['cta-piru'].plates.length - 1].riseFt, 200, 'the 1,000-yard plate stays 200 ft up');
+});
+
+test('the plates stand apart and in order: no two centers within 30 MOA, each farther plate at least 10 MOA higher, the sideways order one way', () => {
+  const MOA = Math.PI / (180 * 60);
+  for (const [id, c] of Object.entries(flat.courses)) {
+    if (id.startsWith('_')) continue;
+    const ang = c.plates.map((p) => ({ yards: p.yards, up: Math.atan2(p.riseFt, p.yards * 3) / MOA, right: Math.atan2(p.lateralYd, p.yards) / MOA }));
+    for (let i = 0; i < ang.length; i++) for (let j = i + 1; j < ang.length; j++) {
+      const sep = Math.hypot(ang[i].up - ang[j].up, ang[i].right - ang[j].right);
+      assert.ok(sep >= 30, `${id}: ${ang[i].yards} and ${ang[j].yards} yd are ${sep.toFixed(1)} MOA apart`);
+    }
+    const dir = Math.sign(ang[1].right - ang[0].right);
+    for (let i = 1; i < ang.length; i++) {
+      assert.ok(ang[i].up - ang[i - 1].up >= 10, `${id}: ${ang[i].yards} yd is ${(ang[i].up - ang[i - 1].up).toFixed(1)} MOA above ${ang[i - 1].yards} yd`);
+      assert.ok(Math.sign(ang[i].right - ang[i - 1].right) === dir, `${id}: the sideways order runs one way`);
+    }
+  }
 });
 
 test('every sliding leaf names its settings, its service load and a derived angle per setting; every notch sight has a notch width', () => {

@@ -55,7 +55,7 @@
     btn.hidden = at;
   }
 
-  $('intro').textContent = `${course.name}. ${rifle.name} with ${sight.name}. Steel ${plates[0].yards} to ${plates[plates.length - 1].yards} yards${course.farPlateRiseFt ? ', the far plates up the slope' : ''}.`;
+  $('intro').textContent = `${course.name}. ${rifle.name} with ${sight.name}. Steel ${plates[0].yards} to ${plates[plates.length - 1].yards} yards${plates[plates.length - 1].riseFt >= 50 ? ', the far plates up the slope' : ', up a gentle rise'}.`;
   $('plate').innerHTML = plates.map((p, i) => `<option value="${i}">${p.yards} yards (${p.widthIn} × ${p.heightIn} in steel)</option>`).join('');
   $('load').innerHTML = rifle.loads.map((l) => `<option value="${l}"${l === loadId ? ' selected' : ''}>${RD.esc(d.loads[l].name)}</option>`).join('');
   const zeroHref = () => `/zero${RD.params({ ...c, loadId })}`;
@@ -75,23 +75,41 @@
   const marks = [];                        // {plateIx, rightIn, upIn, at} paint splashes on plates
   let log = RD.getLog(rifleId, sightId, loadId);
   let flash = 0;
+  let lastShotInput = null;
 
   const canvas = $('view');
   let view = RD.fitCanvas(canvas, 640);
   window.addEventListener('resize', () => { view = RD.fitCanvas(canvas, 640); });
   const plate = () => plates[plateIx];
   const inchPerMoa = (y) => E.inchesPerMoa(y);
-  const riseOf = (p) => course.farPlateRiseFt * (p.yards / course.steelTo);
+  // Each plate's own height above the firing line (data/courses.json, riseFt):
+  // the engine is given it (targetRiseFt) and the drawing uses the same figure.
+  const riseOf = (p) => p.riseFt;
   const losAngle = (p) => Math.atan2(riseOf(p), p.yards * 3);
+  const sideAngle = (p) => Math.atan2(p.lateralYd, p.yards);
+  const toMoa = (rad) => (rad * 180 * 60) / Math.PI;
   // The plate's rectangle in MOA.
   const plateMoa = (p) => ({ w: p.widthIn / inchPerMoa(p.yards), h: p.heightIn / inchPerMoa(p.yards) });
-  // Where a plate sits, in MOA relative to the aimed plate's center.
+  // Where a plate sits, in MOA relative to the aimed plate's center: by its
+  // angle as seen from the firing line, sideways and upward.
   function plateAt(p) {
     const a = plate();
-    const up = ((losAngle(p) - losAngle(a)) * 180 * 60) / Math.PI;
-    const right = ((p.lateralYd / p.yards - a.lateralYd / a.yards) * 180 * 60) / Math.PI;
-    return { up, right };
+    return { up: toMoa(losAngle(p) - losAngle(a)), right: toMoa(sideAngle(p) - sideAngle(a)) };
   }
+  // The ground: the plates stand on it, so between plates it runs straight
+  // from one plate's height to the next (from the firing line's own level at
+  // 0 yards, and on past the last plate at the last stretch's slope).
+  function groundRiseFt(yards) {
+    const pts = [{ yards: 0, riseFt: 0 }, ...plates];
+    for (let i = 1; i < pts.length; i++) if (yards <= pts[i].yards) { const a = pts[i - 1], b = pts[i]; return a.riseFt + ((b.riseFt - a.riseFt) * (yards - a.yards)) / (b.yards - a.yards); }
+    const a = pts[pts.length - 2], b = pts[pts.length - 1];
+    return b.riseFt + ((b.riseFt - a.riseFt) * (yards - b.yards)) / (b.yards - a.yards);
+  }
+  const groundUpMoa = (yards) => toMoa(Math.atan2(groundRiseFt(yards), yards * 3) - losAngle(plate()));
+  // Haze: things pale toward the sky's colour with distance.
+  const hazeOf = (yards) => Math.max(0, Math.min(0.62, 0.05 + 0.5 * (yards / 1000)));
+  const mix = (a, b, f) => `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * f)).join(',')})`;
+  const HAZE = [205, 200, 190];
   // The field of view across the drawn view, in MOA: the sight's at this zoom; the magnifier's when it is flipped in.
   const fovMoa = () => (magnifierIn() ? (magnifier.fovFtAt100.high * 12) / E.inchesPerMoa(100) : RD.fovMoa(sight, mag));
   const viewMag = () => (magnifierIn() ? magnifier.magnification : mag);
@@ -119,10 +137,18 @@
 
   // --- drawing -------------------------------------------------------------------------
   const ridge = Array.from({ length: 64 }, () => terrainRand());
-  const brush = Array.from({ length: 160 }, () => ({ az: (terrainRand() - 0.5) * 700, up: -4 - terrainRand() * terrainRand() * 260, s: 0.6 + terrainRand() * 1.2, ph: terrainRand() * 6.3 }));
   const far = Array.from({ length: 40 }, () => terrainRand());
+  // Brush: each bush stands at its own distance on the ground, a few feet
+  // tall, so it shrinks with distance by the same scale as the plates.
+  const farYards = plates[plates.length - 1].yards;
+  const brush = Array.from({ length: 220 }, () => {
+    const yards = 140 + Math.sqrt(terrainRand()) * (farYards + 300);
+    return { yards, sideMoa: (terrainRand() - 0.5) * 2 * toMoa(Math.atan2(40 + yards * 0.25, yards)), ft: 1.5 + terrainRand() * 2.5, ph: terrainRand() * 6.3, lift: terrainRand() * 0.6 };
+  }).sort((a, b) => b.yards - a.yards);
   const profile = (arr, azMoa, amp, wavelength) => { const i = (azMoa / wavelength) % arr.length; const a = Math.floor(((i % arr.length) + arr.length) % arr.length), b = (a + 1) % arr.length; const f = ((i % 1) + 1) % 1; return (arr[a] * (1 - f) + arr[b] * f) * amp; };
   const crossMph = () => RD.crosswindMph(day.wind[Math.min(2, Math.floor((plate().yards / course.steelTo) * 3))]);
+  // The sideways angle of the aimed plate, so the scene's own azimuths (from straight downrange) line up with the view.
+  const azOf = (sideMoa) => sideMoa - toMoa(sideAngle(plate()));
 
   function draw() {
     const { g, size } = view;
@@ -133,36 +159,59 @@
     const sky = g.createLinearGradient(0, 0, 0, size);
     sky.addColorStop(0, '#9fc2e6'); sky.addColorStop(1, '#e7e3d2');
     g.fillStyle = sky; g.fillRect(0, 0, size, size);
-    // far hills: a blue-grey ridge well above the plates
-    g.fillStyle = '#9e9276';
+    // far hills: a pale ridge well above the last plates
+    const farTop = groundUpMoa(farYards * 1.6);
+    g.fillStyle = mix([158, 146, 118], HAZE, 0.55);
     g.beginPath(); g.moveTo(0, size);
-    for (let x = 0; x <= size; x += 8) { const az = c.right + (x - size / 2) / k; const up = 60 + profile(far, az + 4000, 120, 90); g.lineTo(x, size / 2 - (up - c.up) * k); }
+    for (let x = 0; x <= size; x += 8) { const az = c.right + (x - size / 2) / k; const up = farTop + 40 + profile(far, az + 4000, 110, 90); g.lineTo(x, size / 2 - (up - c.up) * k); }
     g.lineTo(size, size); g.closePath(); g.fill();
-    // the main slope: dry brown, its top edge a little above the plates' line
-    const slope = g.createLinearGradient(0, 0, 0, size);
-    slope.addColorStop(0, '#b08a5a'); slope.addColorStop(1, '#8a6a42');
-    g.fillStyle = slope;
-    g.beginPath(); g.moveTo(0, size);
-    for (let x = 0; x <= size; x += 6) { const az = c.right + (x - size / 2) / k; const up = 9 + profile(ridge, az, 22, 55); g.lineTo(x, size / 2 - (up - c.up) * k); }
-    g.lineTo(size, size); g.closePath(); g.fill();
-    // brush: dark dabs that sway with the wind
-    const wind = crossMph();
-    for (const b of brush) {
-      const sway = Math.sin(now * (1.5 + b.s) + b.ph) * wind * 0.12 * b.s;
-      const [x, y] = toScreen(b.az + sway, b.up);
-      if (x < -20 || x > size + 20 || y < -20 || y > size + 20) continue;
-      const r = Math.max(1.5, 5 * b.s * k / 7);
-      g.fillStyle = '#4f5a2f'; g.beginPath(); g.ellipse(x, y, r, r * 0.7, 0, 0, 7); g.fill();
+    // the ground, in bands from far to near: each band's top edge is the
+    // ground's angle at that distance, paler and hazier the farther it is
+    const bands = [];
+    for (let y = farYards * 1.6; y >= 40; y -= y > 400 ? 50 : 25) bands.push(y);
+    for (const y of bands) {
+      const up = groundUpMoa(y);
+      const amp = (2.5 * 12) / inchPerMoa(y); // a couple of feet of unevenness, at that distance
+      const base = y > 150 ? [176, 138, 90] : [150, 114, 70];
+      g.fillStyle = mix(base, HAZE, hazeOf(y));
+      g.beginPath(); g.moveTo(0, size);
+      for (let x = 0; x <= size; x += 6) { const az = c.right + (x - size / 2) / k; g.lineTo(x, size / 2 - (up + profile(ridge, az * (y / 300) + y, amp, 40) - c.up) * k); }
+      g.lineTo(size, size); g.closePath(); g.fill();
     }
-    // the plates on their posts, each at its real angular size
+    const wind = crossMph();
+    // each plate's bare dirt berm, behind the plate, at its own distance
+    plates.forEach((p) => {
+      const at = plateAt(p), ipm = inchPerMoa(p.yards), m = plateMoa(p);
+      const bermW = (14 * 12) / ipm, bermH = (5 * 12) / ipm; // a mound 14 ft wide, 5 ft high
+      const foot = at.up - m.h / 2 - m.h * 0.9; // the post's foot: the plate stands 0.9 of its height above the ground
+      const [x, y] = toScreen(at.right, foot);
+      g.fillStyle = mix([128, 96, 62], HAZE, hazeOf(p.yards));
+      g.beginPath(); g.ellipse(x, y + bermH * k * 0.15, Math.max(2, (bermW / 2) * k), Math.max(1, bermH * k), 0, Math.PI, 0); g.fill();
+    });
+    // brush: dark dabs standing on the ground at their distance, swaying with the wind
+    for (const b of brush) {
+      const sway = Math.sin(now * (1.5 + b.ft * 0.3) + b.ph) * wind * 0.004 * (300 / b.yards);
+      const hMoa = (b.ft * 12) / inchPerMoa(b.yards);
+      const [x, y] = toScreen(azOf(b.sideMoa) + sway, groundUpMoa(b.yards) + hMoa * (0.5 + b.lift));
+      if (x < -20 || x > size + 20 || y < -20 || y > size + 20) continue;
+      const r = Math.max(0.6, hMoa * k * 0.5);
+      g.fillStyle = mix([79, 90, 47], HAZE, hazeOf(b.yards)); g.beginPath(); g.ellipse(x, y, r * 1.1, r * 0.8, 0, 0, 7); g.fill();
+    }
+    // the plates on their posts, each at its real angular size, with a yardage board beside each
     plates.forEach((p, i) => {
-      const at = plateAt(p), m = plateMoa(p);
+      const at = plateAt(p), m = plateMoa(p), ipm = inchPerMoa(p.yards), haze = hazeOf(p.yards);
       const [x, y] = toScreen(at.right, at.up);
       const w = Math.max(1, m.w * k), h = Math.max(1, m.h * k);
-      g.fillStyle = '#5a4a3a'; g.fillRect(x - Math.max(0.5, w * 0.06), y + h / 2, Math.max(1, w * 0.12), h * 0.9);
-      g.fillStyle = i === plateIx ? '#d9d6cf' : '#b9b5ad'; g.fillRect(x - w / 2, y - h / 2, w, h);
-      g.strokeStyle = '#3a3a3a'; g.lineWidth = Math.min(1.5, w * 0.05); g.strokeRect(x - w / 2, y - h / 2, w, h);
-      for (const mk of marks) if (mk.plateIx === i) { const [mx, my] = toScreen(at.right + mk.rightIn / inchPerMoa(p.yards), at.up + mk.upIn / inchPerMoa(p.yards)); g.fillStyle = '#f3f1ea'; g.beginPath(); g.arc(mx, my, Math.max(1, 0.5 * k / 1.047), 0, 7); g.fill(); }
+      g.fillStyle = mix([90, 74, 58], HAZE, haze); g.fillRect(x - Math.max(0.5, w * 0.06), y + h / 2, Math.max(1, w * 0.12), h * 0.9);
+      g.fillStyle = mix(i === plateIx ? [217, 214, 207] : [185, 181, 173], HAZE, haze); g.fillRect(x - w / 2, y - h / 2, w, h);
+      g.strokeStyle = mix([58, 58, 58], HAZE, haze); g.lineWidth = Math.min(1.5, w * 0.05); g.strokeRect(x - w / 2, y - h / 2, w, h);
+      // the yardage board: 2 ft by 1 ft, a foot off the ground, to the right of the plate
+      const bw = (24 / ipm) * k, bh = (12 / ipm) * k;
+      const [bx, by] = toScreen(at.right + m.w / 2 + 30 / ipm, at.up - m.h / 2 - (m.h * 0.9) + (12 + 6) / ipm);
+      g.fillStyle = mix([245, 242, 232], HAZE, haze); g.fillRect(bx, by - bh / 2, bw, bh);
+      g.strokeStyle = mix([40, 40, 40], HAZE, haze); g.lineWidth = Math.min(1, bw * 0.03); g.strokeRect(bx, by - bh / 2, bw, bh);
+      if (bh >= 7) { g.fillStyle = mix([20, 20, 20], HAZE, haze); g.font = `bold ${bh * 0.72}px system-ui, sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(String(p.yards), bx + bw / 2, by + bh * 0.04); }
+      for (const mk of marks) if (mk.plateIx === i) { const [mx, my] = toScreen(at.right + mk.rightIn / ipm, at.up + mk.upIn / ipm); g.fillStyle = '#f3f1ea'; g.beginPath(); g.arc(mx, my, Math.max(1, 0.5 * k / 1.047), 0, 7); g.fill(); }
     });
     // dust from misses: a puff of the data's size in feet (data/physics.json,
     // dust), drawn through the same scale as the plate at this distance, so
@@ -344,6 +393,7 @@
       sight: { clickMoa: sight.clickMoa, windageClickMoa: sight.windageClickMoa, elevationClicks: setting.elevationClicks, windageClicks: setting.windageClicks },
       targetYards: p.yards, targetRiseFt: riseOf(p), conditions: RD.conditionsOf(day), wind: day.wind, t0: now,
     });
+    lastShotInput = { targetYards: p.yards, targetRiseFt: riseOf(p) };
     RD.shotSound(1);
     flash = 0.9;
     recoil.up += 14 * rifle.recoilFactor * (0.8 + Math.random() * 0.4); recoil.right += 4 * rifle.recoilFactor * (0.5 + Math.random());
@@ -462,5 +512,9 @@
   applyZero(); renderLog(); conditions();
   requestAnimationFrame(frame);
   // For the screenshot run and tests: a way to read the state without guessing.
-  window.RangeDayLine = { fire, get log() { return log; }, get pending() { return pending.length; }, get setting() { return setting; }, setHold(up, right) { hold.up = up; hold.right = right; }, setZoom(m) { mag = m; $('zoom').value = m; zoomText(); }, get plate() { return plate(); }, get day() { return day; } };
+  window.RangeDayLine = { fire, get log() { return log; }, get pending() { return pending.length; }, get setting() { return setting; }, setHold(up, right) { hold.up = up; hold.right = right; }, setZoom(m) { mag = m; $('zoom').value = m; zoomText(); }, get plate() { return plate(); }, get day() { return day; },
+    // Each plate's angle from the firing line (sideways and upward, in MOA) and the height the drawing uses; the last shot's inputs to the engine.
+    get plateAngles() { return plates.map((p) => ({ yards: p.yards, riseFt: riseOf(p), lateralYd: p.lateralYd, upMoa: toMoa(losAngle(p)), rightMoa: toMoa(sideAngle(p)) })); },
+    get lastShotInput() { return lastShotInput; },
+    get fovMoa() { return fovMoa(); } };
 }());
