@@ -491,11 +491,19 @@
   $('zoom').addEventListener('input', (e) => { mag = Number(e.target.value); zoomText(); });
   $('show-conditions').addEventListener('change', (e) => { RD.setShowConditions(e.target.checked); conditions(); });
   $('clear-log').addEventListener('click', () => { log = []; RD.setLog(rifleId, sightId, loadId, log); renderLog(); });
+  // Steady is held with one finger while another presses Fire. On a phone
+  // the second finger gets no "click" (the browser gives clicks to the first
+  // finger only), so both buttons work from the press itself; the keyboard
+  // still fires with Enter or the space bar. Neither press selects text or
+  // opens a menu.
   const steadyOn = () => { steady = true; $('steady').classList.add('on'); };
   const steadyOff = () => { steady = false; $('steady').classList.remove('on'); };
-  $('steady').addEventListener('pointerdown', (e) => { e.preventDefault(); steadyOn(); });
-  for (const ev of ['pointerup', 'pointercancel', 'pointerleave']) $('steady').addEventListener(ev, steadyOff);
-  $('fire').addEventListener('click', () => { RD.audio(); fire(); });
+  let steadyPointer = null;
+  $('steady').addEventListener('pointerdown', (e) => { e.preventDefault(); steadyPointer = e.pointerId; steadyOn(); try { $('steady').setPointerCapture(e.pointerId); } catch {} });
+  for (const ev of ['pointerup', 'pointercancel', 'lostpointercapture']) $('steady').addEventListener(ev, (e) => { if (steadyPointer == null || e.pointerId === steadyPointer) { steadyPointer = null; steadyOff(); } });
+  $('fire').addEventListener('pointerdown', (e) => { if (e.button !== 0 && e.pointerType === 'mouse') return; e.preventDefault(); RD.audio(); fire(); });
+  $('fire').addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); RD.audio(); fire(); } });
+  for (const id of ['steady', 'fire']) $(id).addEventListener('contextmenu', (e) => e.preventDefault());
   // Dragging the view moves the hold.
   let drag = null;
   canvas.addEventListener('pointerdown', (e) => { drag = { x: e.clientX, y: e.clientY, up: hold.up, right: hold.right }; canvas.setPointerCapture(e.pointerId); });
