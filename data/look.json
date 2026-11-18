@@ -1,0 +1,143 @@
+{
+ "_about": "What the firing line's picture needs beyond the courses and the physics: the eye's height, the clock hour of each time of day, the colours of each season measured from photographs taken at the two ranges in 2016 and 2017 (docs/LOOK.md; a phone camera took them, so each is within about 15 percent of the truth), the haze, and the sizes of the things on the range. Colours are hex strings; every figure is an estimate with its basis. The picture never changes a shot.",
+ "eyeHeightFt": { "value": 4, "estimate": "the eye of a shooter seated at a bench, about 4 ft above the shelter's concrete floor (a 30-inch bench top and the head about 18 in above it)" },
+ "clockHour": {
+  "morning": { "value": 9, "estimate": "the clock hour the morning's light is computed for, Pacific standard time (daylight saving ignored): soon after the range opens, the same basis as the weather's tempAt for the morning" },
+  "midday": { "value": 12.5, "estimate": "half past twelve, Pacific standard time, the middle of the day's shooting" },
+  "afternoon": { "value": 15.5, "estimate": "half past three, Pacific standard time, the late-afternoon light of the September and October photographs (15:00 to 16:10 by their file names)" }
+ },
+ "monthDay": { "value": 15, "estimate": "the sun is computed for the middle day of the day's month" },
+ "greenByMonth": {
+  "_about": "How green the ground cover is in each month, 1 the February-to-April green, 0 the June-to-November straw: from the photographs' dates (vivid green on 12 February and 25 March 2017; straw and tan on 11 September 2016; dry gold on 21 October 2017; drying by 8 April 2017 at the rifle line) and the winter rains that green these hills from December.",
+  "1": { "value": 0.6, "estimate": "January: greening after the first rains" },
+  "2": { "value": 1, "estimate": "February: the vivid green of the 12 February photographs" },
+  "3": { "value": 1, "estimate": "March: still vivid green on 25 March" },
+  "4": { "value": 0.85, "estimate": "April: green at the canyon, already drying on the rifle line's slopes by 8 April" },
+  "5": { "value": 0.45, "estimate": "May: turning" },
+  "6": { "value": 0.1, "estimate": "June: straw, the 17 June photographs" },
+  "7": { "value": 0, "estimate": "July: dry, the hottest month" },
+  "8": { "value": 0, "estimate": "August: dry, the same" },
+  "9": { "value": 0, "estimate": "September: straw and tan, the 11 September photographs" },
+  "10": { "value": 0, "estimate": "October: dry gold, the 21 October photographs" },
+  "11": { "value": 0.1, "estimate": "November: dry, the first rain some years" },
+  "12": { "value": 0.4, "estimate": "December: greening" }
+ },
+ "palette": {
+  "_about": "Measured colours, medians of small patches of the photographs, by range and season (docs/LOOK.md). The canyon course's figures stand for the rifle line too where it has none of its own.",
+  "cta-piru": {
+   "green": {
+    "sky": { "value": "#51a4e6", "estimate": "winter sky, 12 February 2017 at 12:58 (the March photographs give #4391d9)" },
+    "sunlitSlope": { "value": "#83965f", "estimate": "sunlit grass slope, February and March 2017" },
+    "scrub": { "value": "#435044", "estimate": "scrub, or a shaded green slope" },
+    "shadedSlope": { "value": "#4b5e3f", "estimate": "grass under cloud shade" },
+    "rockSun": { "value": "#959990", "estimate": "bare rock in sun" },
+    "floor": { "value": "#bdb3a7", "estimate": "the dirt floor, February (to #afa190 in March)" },
+    "weeds": { "value": "#86896c", "estimate": "weeds on the floor" }
+   },
+   "dry": {
+    "sky": { "value": "#429ae4", "estimate": "late-summer sky, 11 September 2016 at 15:43" },
+    "sunlitSlope": { "value": "#988161", "estimate": "sunlit dry slope, September" },
+    "scrub": { "value": "#4a4f33", "estimate": "the dark olive of the scrub in late summer; not measured, the green scrub's figure darkened and warmed" },
+    "shadedSlope": { "value": "#5e5440", "estimate": "a dry slope in shade; not measured, the sunlit dry slope at the ratio the green pair shows" },
+    "rockShade": { "value": "#444045", "estimate": "rock in shade, September" },
+    "floor": { "value": "#c9bda1", "estimate": "the dirt floor, paler and dustier, September" }
+   },
+   "lastLight": {
+    "sky": { "value": "#9ac6e9", "estimate": "the canyon road, 19 November 2016 at 16:26" },
+    "sunlitHills": { "value": "#d1933b", "estimate": "sunlit dry hills at last light" },
+    "shadowHills": { "value": "#373432", "estimate": "hills in shadow at last light" }
+   },
+   "paintRedInSun": { "value": "#af787b", "estimate": "red paint in strong sun, seen through the spotting scope: the red washes toward pink" },
+   "paintRed": { "value": "#c65c5c", "estimate": "the plates' red paint as painted; not measured, a plate red that the sun and the glass wash to the measured pink" },
+   "strikeMark": { "value": "#d9d5cc", "estimate": "the pale grey-white where bullets have chipped the paint" },
+   "boardWhite": { "value": "#f4f2ea", "estimate": "the white boards, which strong sun bleaches to pure white through the scope" },
+   "boardNumberBlue": { "value": "#2a4fa8", "estimate": "the blue stencilled numbers at the boards' feet" },
+   "moundDirt": { "value": "#8a6a4a", "estimate": "the fresh brown dirt mound each plate stands in front of" },
+   "benchGreen": { "value": "#4b6b45", "estimate": "the green-painted steel benches" }
+  },
+  "angeles-sylmar": {
+   "dry": {
+    "skyHigh": { "value": "#265bc1", "estimate": "sky high up, 21 October 2017 at 16:09" },
+    "sky": { "value": "#4e93e0", "estimate": "sky near the ridge, 21 October 2017" },
+    "sunlitSlope": { "value": "#b59b6d", "estimate": "sunlit dry slope, October" },
+    "berm": { "value": "#d1c2ac", "estimate": "the berm's sand, October" },
+    "floor": { "value": "#a38867", "estimate": "turned dirt in low sun, October" }
+   },
+   "green": {
+    "sky": { "value": "#77b4e8", "estimate": "sky, 8 April 2017 at 16:11" },
+    "sunlitSlope": { "value": "#a09681", "estimate": "the slope, already drying, 8 April" },
+    "berm": { "value": "#cac2b7", "estimate": "the berm, April" },
+    "floor": { "value": "#d1c7b7", "estimate": "the floor, April" }
+   },
+   "earlySummer": {
+    "sky": { "value": "#8fc5f3", "estimate": "sky, 17 June 2017 at 17:25" },
+    "sunlitSlope": { "value": "#998d77", "estimate": "the slope, June" },
+    "floor": { "value": "#c5b69f", "estimate": "the floor, June" }
+   }
+  }
+ },
+ "haze": {
+  "turbidityClear": { "value": 2.5, "estimate": "the sky model's turbidity on a dry day (Preetham's scale: 2 is very clear, 10 is hazy)" },
+  "turbidityHumid": { "value": 7, "estimate": "the turbidity on the most humid day the weather draws (humidity near 0.9): a pale, milky sky" },
+  "visibilityDryMi": { "value": 45, "estimate": "the distance at which things fade into the haze on a dry, hard-lit day (a Santa Ana day): the far hills stay sharp" },
+  "visibilityHumidMi": { "value": 12, "estimate": "the same on the most humid day: the 1,000-yard plate pales and the ridge beyond goes soft" }
+ },
+ "light": {
+  "sunIntensity": { "value": 5.5, "estimate": "the sun's strength in the scene (three's units, where a Lambert surface reflects its albedo divided by pi), chosen so a sunlit slope at midday matches the measured colours within the tolerance docs/LOOK.md gives" },
+  "skyIntensity": { "value": 4.0, "estimate": "the sky's fill light from above, the same basis" },
+  "groundBounce": { "value": 1.6, "estimate": "light bounced up from the pale floor, the same basis" },
+  "exposure": { "value": 0.85, "estimate": "the picture's exposure (the tone curve's scale), the same basis" },
+  "skyScale": { "value": 0.33, "estimate": "the sky model's brightness against the ground's: the model's own units, scaled so the sky high up matches the measured blue" }
+ },
+ "glass": {
+  "rimShare": { "value": 0.06, "estimate": "the soft warm rim at the edge of the scope's picture is a few percent of the radius wide: six percent" },
+  "rimColor": { "value": "#8a5a2a", "estimate": "the rim's brown-orange, from the spotting-scope photographs" },
+  "softness": { "value": 0.6, "estimate": "how much softer than the naked eye the picture is through glass, 0 none to 1 strong" },
+  "contrast": { "value": 0.92, "estimate": "the picture's contrast through glass against the naked eye's 1" },
+  "bleach": { "value": 0.15, "estimate": "how far strong highlights wash toward white through glass (the boards bleach to pure white)" },
+  "wash": { "value": 0.35, "estimate": "how far strong colours wash toward the light through glass: the red paint measured through the spotting scope in strong sun is a washed pink (#af787b)" }
+ },
+ "shimmer": {
+  "startF": { "value": 55, "estimate": "the temperature above which heat shimmer begins to show through magnification" },
+  "fullF": { "value": 95, "estimate": "the temperature at which it is strongest" },
+  "amplitudeMoa": { "value": 0.6, "estimate": "the distortion at its strongest at 1,000 yards, in minutes of angle: about a plate's width wobble at that distance through a high-power scope" }
+ },
+ "things": {
+  "boardWidthIn": { "value": 24, "estimate": "the white target boards in their rows are about 2 ft wide" },
+  "boardHeightIn": { "value": 36, "estimate": "and about 3 ft tall, standing on a short frame" },
+  "boardGapIn": { "value": 6, "estimate": "the gap between boards in a row" },
+  "boardsPerRow": { "value": 30, "estimate": "about thirty boards side by side in each row (numbers 01 to 30 at the first line)" },
+  "boardRowsYards": [ { "value": 100, "estimate": "the first target line, numbers 01 to 30: a board's number appears to begin with its hundreds of yards" }, { "value": 200, "estimate": "the second row, numbers 2·01 to 2·30" }, { "value": 400, "estimate": "the third row, numbers in the 400s" } ],
+  "nearGroupBoards": { "value": 4, "estimate": "two groups of four boards (01 to 04 at the left, 05 to 08 at the right) stand nearer, on low mounds" },
+  "nearGroupYards": { "value": 50, "estimate": "about 50 yards out" },
+  "notchDepthFt": { "value": 6, "estimate": "the first target line is a notch cut into a low terrace about a man's height deep" },
+  "moundWidthFt": { "value": 8, "estimate": "the mound of fresh dirt behind each plate, about 8 ft across" },
+  "moundHeightFt": { "value": 3.5, "estimate": "and about 3.5 ft high" },
+  "plateThicknessIn": { "value": 0.5, "estimate": "half-inch steel" },
+  "postWidthIn": { "value": 2, "estimate": "a 2-inch post under each plate" },
+  "shelterWidthFt": { "value": 60, "estimate": "the open-sided shelter is long: 60 ft of it is drawn" },
+  "shelterDepthFt": { "value": 14, "estimate": "about 14 ft deep, bench to drip line" },
+  "shelterRoofFt": { "value": 9, "estimate": "the corrugated roof about 9 ft above the concrete floor" },
+  "benchAheadFt": { "value": 1.5, "estimate": "the bench top begins about 1.5 ft ahead of the eye" },
+  "benchHeightFt": { "value": 2.6, "estimate": "a bench top about 31 in high" },
+  "brushCountFull": { "value": 4000, "estimate": "how many bushes the Full picture stands on the slopes, placed where the photograph is dark with scrub" },
+  "brushCountLight": { "value": 1200, "estimate": "the Light picture's count" },
+  "brushFarYards": { "value": 1500, "estimate": "bushes are stood out to about 1,500 yards; beyond that the photograph alone carries the scrub" },
+  "treeHeightFt": { "value": 25, "estimate": "the lone trees on the ridge and the cluster by the wash, about 25 ft" }
+ },
+ "mesh": {
+  "nearSpacingM": { "value": 1, "estimate": "the ground mesh's spacing at the firing line, the survey's own 1 m" },
+  "growth": { "value": 1.012, "estimate": "each row of the mesh is this much farther apart than the one before, so the mesh is finest along the first hundreds of yards" },
+  "halfAngleDeg": { "value": 70, "estimate": "the mesh fans 70 degrees either side of the line of fire: everything a hold-off or a look around can bring into the view" },
+  "columnsFull": { "value": 320, "estimate": "columns across the fan in the Full picture, finer near the line of fire" },
+  "columnsLight": { "value": 160, "estimate": "the Light picture's columns" },
+  "rowsFull": { "value": 520, "estimate": "rows out to the far square's edge in the Full picture" },
+  "rowsLight": { "value": 260, "estimate": "the Light picture's rows" },
+  "detailTileM": { "value": 3, "estimate": "the close-up surface detail made in code repeats every 3 m: clods, crumbs and dry stems" },
+  "detailFadeYards": { "value": 300, "estimate": "the detail fades out by 300 yards, where the photograph's own pixels are finer than the view" }
+ },
+ "firstVisit": {
+  "measureS": { "value": 2, "estimate": "the first visit draws the Full picture for two seconds and counts the frames" },
+  "minFps": { "value": 28, "estimate": "fewer frames a second than this over those two seconds picks the Light picture for the device" }
+ }
+}

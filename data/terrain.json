@@ -1,0 +1,803 @@
+{
+ "_about": "The surveyed ground and the aerial photograph of each range, fetched by scripts/terrain/fetch.mjs on GitHub's runner (the Terrain workflow) from two US government services, public domain. Each file is named with its content hash and served under /terrain/ with a one-year cache header. Heights are 16-bit PNGs: metres above sea level = pixel × stepM + offsetM, the top-left pixel's centre at (originE + spacingM/2, originN − spacingM/2) in NAD83 / UTM zone 11N (EPSG 26911), rows running south. The photograph covers the same square as the near heights. Every figure here is a reading of the service's own answer on the date given.",
+ "cta-piru": {
+  "name": "canyon course",
+  "center": {
+   "lat": {
+    "value": 34.4395947,
+    "source": {
+     "url": "https://www.google.com/maps/search/?api=1&query=34.4395947%2C-118.7355103",
+     "read": "2026-11-18",
+     "note": "the range's public map position (Google Places, read 19 Nov 2026 by the chat that wrote the brief)"
+    }
+   },
+   "lon": {
+    "value": -118.7355103,
+    "source": {
+     "url": "https://www.google.com/maps/search/?api=1&query=34.4395947%2C-118.7355103",
+     "read": "2026-11-18",
+     "note": "the same"
+    }
+   },
+   "easting": {
+    "value": 340550.8,
+    "source": {
+     "url": "https://pubs.usgs.gov/pp/1395/report.pdf",
+     "read": "2026-11-18",
+     "note": "NAD83 / UTM zone 11N easting of the map position, by Snyder's series (scripts/terrain/lib.mjs, toUtm)"
+    }
+   },
+   "northing": {
+    "value": 3812265.1,
+    "source": {
+     "url": "https://pubs.usgs.gov/pp/1395/report.pdf",
+     "read": "2026-11-18",
+     "note": "the same, northing"
+    }
+   },
+   "zone": {
+    "value": 11,
+    "estimate": "UTM zone 11, which holds both ranges (longitudes 114 to 120 W)"
+   },
+   "wkid": {
+    "value": 26911,
+    "estimate": "EPSG 26911, NAD83 / UTM zone 11N, the services' coordinate system for these files"
+   }
+  },
+  "heights": {
+   "file": "terrain/cta-piru-heights-348e2072.png",
+   "service": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer",
+   "request": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+   "requests": {
+    "value": 25,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "how many 500-pixel tiles the square was fetched in; the request shown is the first"
+    }
+   },
+   "fetched": "2026-11-18",
+   "dataset": "USGS 1 Meter 11 x34y382 CA_LosAngeles_B23",
+   "datasetName": "CA_LosAngeles_B23",
+   "catalogRequest": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/query?f=json&geometry=%7B%22xmin%22%3A339300.8328685842%2C%22ymin%22%3A3811015.071294408%2C%22xmax%22%3A341800.8328685842%2C%22ymax%22%3A3813515.071294408%2C%22spatialReference%22%3A%7B%22wkid%22%3A26911%7D%7D&geometryType=esriGeometryEnvelope&inSR=26911&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=false",
+   "captureDate": "2024-07-01",
+   "publishedDate": "20250811",
+   "verticalDatum": "North American Vertical Datum of 1988 (NAVD 88)",
+   "license": "US government work, public domain (USGS 3DEP and USDA NAIP, distributed by The National Map without restriction)",
+   "width": {
+    "value": 2500,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "pixels across"
+    }
+   },
+   "height": {
+    "value": 2500,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "pixels down"
+    }
+   },
+   "spacingM": {
+    "value": 1,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/query?f=json&geometry=%7B%22xmin%22%3A339300.8328685842%2C%22ymin%22%3A3811015.071294408%2C%22xmax%22%3A341800.8328685842%2C%22ymax%22%3A3813515.071294408%2C%22spatialReference%22%3A%7B%22wkid%22%3A26911%7D%7D&geometryType=esriGeometryEnvelope&inSR=26911&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=false",
+     "read": "2026-11-18",
+     "note": "the service's LowPS for this dataset, the finest it holds over the square (1 m)"
+    }
+   },
+   "originE": {
+    "value": 339300.8328685842,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "the TIFF's ModelTiepoint: the top-left corner of the square, easting"
+    }
+   },
+   "originN": {
+    "value": 3813515.071294408,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "the same, northing"
+    }
+   },
+   "stepM": {
+    "value": 0.02,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "metres per pixel count in the PNG (chosen so the span fits 16 bits with 2 cm steps)"
+    }
+   },
+   "offsetM": {
+    "value": 268,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "metres added to pixel × stepM: one below the lowest height in the square"
+    }
+   },
+   "minM": {
+    "value": 269.76,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "the lowest height in the square"
+    }
+   },
+   "maxM": {
+    "value": 592.85,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "the highest"
+    }
+   },
+   "holes": {
+    "value": 0,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "pixels the service marked as no data, filled with the lowest height"
+    }
+   },
+   "bytes": {
+    "value": 4396799,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "the PNG's size"
+    }
+   }
+  },
+  "heightsFar": {
+   "file": "terrain/cta-piru-heights-far-f9e0f24a.png",
+   "service": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer",
+   "request": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+   "requests": {
+    "value": 4,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "how many 500-pixel tiles the square was fetched in; the request shown is the first"
+    }
+   },
+   "fetched": "2026-11-18",
+   "dataset": "the service's own mosaic (its default \"Best\" ordering over every dataset it holds here)",
+   "license": "US government work, public domain (USGS 3DEP and USDA NAIP, distributed by The National Map without restriction)",
+   "width": {
+    "value": 1000,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "pixels across"
+    }
+   },
+   "height": {
+    "value": 1000,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "pixels down"
+    }
+   },
+   "spacingM": {
+    "value": 10,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "the requested spacing: 10 km across 1,000 pixels"
+    }
+   },
+   "originE": {
+    "value": 335550.8328685842,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "the top-left corner, easting"
+    }
+   },
+   "originN": {
+    "value": 3817265.071294408,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "the same, northing"
+    }
+   },
+   "stepM": {
+    "value": 0.1,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "metres per pixel count"
+    }
+   },
+   "offsetM": {
+    "value": 190,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "metres added to pixel × stepM"
+    }
+   },
+   "minM": {
+    "value": 191.86,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "the lowest height"
+    }
+   },
+   "maxM": {
+    "value": 973.25,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "the highest"
+    }
+   },
+   "holes": {
+    "value": 0,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "no-data pixels, filled with the lowest height"
+    }
+   },
+   "bytes": {
+    "value": 932481,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "the PNG's size"
+    }
+   }
+  },
+  "photo": {
+   "file": "terrain/cta-piru-photo-749e5d91.jpg",
+   "service": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer",
+   "request": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+   "fetched": "2026-11-18",
+   "tiles": [
+    "m_3411834_ne_11_060_20220513",
+    "m_3411834_se_11_060_20220513",
+    "m_3411835_nw_11_060_20220504",
+    "m_3411835_sw_11_060_20220504"
+   ],
+   "captureDate": "2022-05-13, 2022-05-04",
+   "catalogRequest": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/query?f=json&geometry=%7B%22xmin%22%3A339300.8328685842%2C%22ymin%22%3A3811015.071294408%2C%22xmax%22%3A341800.8328685842%2C%22ymax%22%3A3813515.071294408%2C%22spatialReference%22%3A%7B%22wkid%22%3A26911%7D%7D&geometryType=esriGeometryEnvelope&inSR=26911&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=false",
+   "license": "US government work, public domain (USGS 3DEP and USDA NAIP, distributed by The National Map without restriction)",
+   "width": {
+    "value": 4000,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+     "read": "2026-11-18",
+     "note": "pixels across"
+    }
+   },
+   "height": {
+    "value": 4000,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+     "read": "2026-11-18",
+     "note": "pixels down"
+    }
+   },
+   "spacingM": {
+    "value": 0.625,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+     "read": "2026-11-18",
+     "note": "the square's 2,500 m across the service's largest answer, 4000 pixels (its native spacing is 0.6 METER; maxImageWidth is 4000)"
+    }
+   },
+   "nativeSpacingM": {
+    "value": 0.6,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/query?f=json&geometry=%7B%22xmin%22%3A339300.8328685842%2C%22ymin%22%3A3811015.071294408%2C%22xmax%22%3A341800.8328685842%2C%22ymax%22%3A3813515.071294408%2C%22spatialReference%22%3A%7B%22wkid%22%3A26911%7D%7D&geometryType=esriGeometryEnvelope&inSR=26911&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=false",
+     "read": "2026-11-18",
+     "note": "resolution_value of the tiles, as the catalog reports it"
+    }
+   },
+   "originE": {
+    "value": 339300.8328685842,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+     "read": "2026-11-18",
+     "note": "the top-left corner, easting (the requested bbox)"
+    }
+   },
+   "originN": {
+    "value": 3813515.071294408,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+     "read": "2026-11-18",
+     "note": "the same, northing"
+    }
+   },
+   "bytes": {
+    "value": 2867223,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+     "read": "2026-11-18",
+     "note": "the JPEG's size"
+    }
+   }
+  },
+  "photoLight": {
+   "file": "terrain/cta-piru-photo-light-7cc547bf.jpg",
+   "service": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer",
+   "request": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+   "fetched": "2026-11-18",
+   "tiles": [
+    "m_3411834_ne_11_060_20220513",
+    "m_3411834_se_11_060_20220513",
+    "m_3411835_nw_11_060_20220504",
+    "m_3411835_sw_11_060_20220504"
+   ],
+   "captureDate": "2022-05-13, 2022-05-04",
+   "catalogRequest": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/query?f=json&geometry=%7B%22xmin%22%3A339300.8328685842%2C%22ymin%22%3A3811015.071294408%2C%22xmax%22%3A341800.8328685842%2C%22ymax%22%3A3813515.071294408%2C%22spatialReference%22%3A%7B%22wkid%22%3A26911%7D%7D&geometryType=esriGeometryEnvelope&inSR=26911&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=false",
+   "license": "US government work, public domain (USGS 3DEP and USDA NAIP, distributed by The National Map without restriction)",
+   "width": {
+    "value": 1024,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+     "read": "2026-11-18",
+     "note": "pixels across"
+    }
+   },
+   "height": {
+    "value": 1024,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+     "read": "2026-11-18",
+     "note": "pixels down"
+    }
+   },
+   "spacingM": {
+    "value": 2.44140625,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+     "read": "2026-11-18",
+     "note": "a small copy for the Light picture"
+    }
+   },
+   "nativeSpacingM": {
+    "value": 0.6,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/query?f=json&geometry=%7B%22xmin%22%3A339300.8328685842%2C%22ymin%22%3A3811015.071294408%2C%22xmax%22%3A341800.8328685842%2C%22ymax%22%3A3813515.071294408%2C%22spatialReference%22%3A%7B%22wkid%22%3A26911%7D%7D&geometryType=esriGeometryEnvelope&inSR=26911&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=false",
+     "read": "2026-11-18",
+     "note": "resolution_value of the tiles, as the catalog reports it"
+    }
+   },
+   "originE": {
+    "value": 339300.8328685842,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+     "read": "2026-11-18",
+     "note": "the top-left corner, easting (the requested bbox)"
+    }
+   },
+   "originN": {
+    "value": 3813515.071294408,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+     "read": "2026-11-18",
+     "note": "the same, northing"
+    }
+   },
+   "bytes": {
+    "value": 204193,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+     "read": "2026-11-18",
+     "note": "the JPEG's size"
+    }
+   }
+  }
+ },
+ "angeles-sylmar": {
+  "name": "rifle line",
+  "center": {
+   "lat": {
+    "value": 34.3072886,
+    "source": {
+     "url": "https://www.google.com/maps/search/?api=1&query=34.3072886%2C-118.3632613",
+     "read": "2026-11-18",
+     "note": "the range's public map position (Google Places, read 19 Nov 2026 by the chat that wrote the brief)"
+    }
+   },
+   "lon": {
+    "value": -118.3632613,
+    "source": {
+     "url": "https://www.google.com/maps/search/?api=1&query=34.3072886%2C-118.3632613",
+     "read": "2026-11-18",
+     "note": "the same"
+    }
+   },
+   "easting": {
+    "value": 374556.6,
+    "source": {
+     "url": "https://pubs.usgs.gov/pp/1395/report.pdf",
+     "read": "2026-11-18",
+     "note": "NAD83 / UTM zone 11N easting of the map position, by Snyder's series (scripts/terrain/lib.mjs, toUtm)"
+    }
+   },
+   "northing": {
+    "value": 3797069.6,
+    "source": {
+     "url": "https://pubs.usgs.gov/pp/1395/report.pdf",
+     "read": "2026-11-18",
+     "note": "the same, northing"
+    }
+   },
+   "zone": {
+    "value": 11,
+    "estimate": "UTM zone 11, which holds both ranges (longitudes 114 to 120 W)"
+   },
+   "wkid": {
+    "value": 26911,
+    "estimate": "EPSG 26911, NAD83 / UTM zone 11N, the services' coordinate system for these files"
+   }
+  },
+  "heights": {
+   "file": "terrain/angeles-sylmar-heights-e2edd0d3.png",
+   "service": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer",
+   "request": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
+   "requests": {
+    "value": 25,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
+     "read": "2026-11-18",
+     "note": "how many 500-pixel tiles the square was fetched in; the request shown is the first"
+    }
+   },
+   "fetched": "2026-11-18",
+   "dataset": "USGS 1 Meter 11 x37y380 CA_LosAngeles_B23",
+   "datasetName": "CA_LosAngeles_B23",
+   "catalogRequest": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/query?f=json&geometry=%7B%22xmin%22%3A373306.5586924935%2C%22ymin%22%3A3795819.6187626147%2C%22xmax%22%3A375806.5586924935%2C%22ymax%22%3A3798319.6187626147%2C%22spatialReference%22%3A%7B%22wkid%22%3A26911%7D%7D&geometryType=esriGeometryEnvelope&inSR=26911&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=false",
+   "captureDate": "2024-07-01",
+   "publishedDate": "20250811",
+   "verticalDatum": "North American Vertical Datum of 1988 (NAVD 88)",
+   "license": "US government work, public domain (USGS 3DEP and USDA NAIP, distributed by The National Map without restriction)",
+   "width": {
+    "value": 2500,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
+     "read": "2026-11-18",
+     "note": "pixels across"
+    }
+   },
+   "height": {
+    "value": 2500,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
+     "read": "2026-11-18",
+     "note": "pixels down"
+    }
+   },
+   "spacingM": {
+    "value": 1,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/query?f=json&geometry=%7B%22xmin%22%3A373306.5586924935%2C%22ymin%22%3A3795819.6187626147%2C%22xmax%22%3A375806.5586924935%2C%22ymax%22%3A3798319.6187626147%2C%22spatialReference%22%3A%7B%22wkid%22%3A26911%7D%7D&geometryType=esriGeometryEnvelope&inSR=26911&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=false",
+     "read": "2026-11-18",
+     "note": "the service's LowPS for this dataset, the finest it holds over the square (1 m)"
+    }
+   },
+   "originE": {
+    "value": 373306.5586924935,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
+     "read": "2026-11-18",
+     "note": "the TIFF's ModelTiepoint: the top-left corner of the square, easting"
+    }
+   },
+   "originN": {
+    "value": 3798319.6187626147,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
+     "read": "2026-11-18",
+     "note": "the same, northing"
+    }
+   },
+   "stepM": {
+    "value": 0.02,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
+     "read": "2026-11-18",
+     "note": "metres per pixel count in the PNG (chosen so the span fits 16 bits with 2 cm steps)"
+    }
+   },
+   "offsetM": {
+    "value": 396,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
+     "read": "2026-11-18",
+     "note": "metres added to pixel × stepM: one below the lowest height in the square"
+    }
+   },
+   "minM": {
+    "value": 397.49,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
+     "read": "2026-11-18",
+     "note": "the lowest height in the square"
+    }
+   },
+   "maxM": {
+    "value": 910.93,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
+     "read": "2026-11-18",
+     "note": "the highest"
+    }
+   },
+   "holes": {
+    "value": 0,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
+     "read": "2026-11-18",
+     "note": "pixels the service marked as no data, filled with the lowest height"
+    }
+   },
+   "bytes": {
+    "value": 4418896,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
+     "read": "2026-11-18",
+     "note": "the PNG's size"
+    }
+   }
+  },
+  "heightsFar": {
+   "file": "terrain/angeles-sylmar-heights-far-f368e76d.png",
+   "service": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer",
+   "request": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+   "requests": {
+    "value": 4,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "how many 500-pixel tiles the square was fetched in; the request shown is the first"
+    }
+   },
+   "fetched": "2026-11-18",
+   "dataset": "the service's own mosaic (its default \"Best\" ordering over every dataset it holds here)",
+   "license": "US government work, public domain (USGS 3DEP and USDA NAIP, distributed by The National Map without restriction)",
+   "width": {
+    "value": 1000,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "pixels across"
+    }
+   },
+   "height": {
+    "value": 1000,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "pixels down"
+    }
+   },
+   "spacingM": {
+    "value": 10,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "the requested spacing: 10 km across 1,000 pixels"
+    }
+   },
+   "originE": {
+    "value": 369556.5586924935,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "the top-left corner, easting"
+    }
+   },
+   "originN": {
+    "value": 3802069.6187626147,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "the same, northing"
+    }
+   },
+   "stepM": {
+    "value": 0.1,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "metres per pixel count"
+    }
+   },
+   "offsetM": {
+    "value": 295,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "metres added to pixel × stepM"
+    }
+   },
+   "minM": {
+    "value": 296.55,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "the lowest height"
+    }
+   },
+   "maxM": {
+    "value": 1413.71,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "the highest"
+    }
+   },
+   "holes": {
+    "value": 0,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "no-data pixels, filled with the lowest height"
+    }
+   },
+   "bytes": {
+    "value": 945523,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "the PNG's size"
+    }
+   }
+  },
+  "photo": {
+   "file": "terrain/angeles-sylmar-photo-5aea9f68.jpg",
+   "service": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer",
+   "request": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+   "fetched": "2026-11-18",
+   "tiles": [
+    "m_3411845_ne_11_060_20220504",
+    "m_3411845_se_11_060_20220504",
+    "m_3411846_nw_11_060_20220504",
+    "m_3411846_sw_11_060_20220504"
+   ],
+   "captureDate": "2022-05-04",
+   "catalogRequest": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/query?f=json&geometry=%7B%22xmin%22%3A373306.5586924935%2C%22ymin%22%3A3795819.6187626147%2C%22xmax%22%3A375806.5586924935%2C%22ymax%22%3A3798319.6187626147%2C%22spatialReference%22%3A%7B%22wkid%22%3A26911%7D%7D&geometryType=esriGeometryEnvelope&inSR=26911&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=false",
+   "license": "US government work, public domain (USGS 3DEP and USDA NAIP, distributed by The National Map without restriction)",
+   "width": {
+    "value": 4000,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+     "read": "2026-11-18",
+     "note": "pixels across"
+    }
+   },
+   "height": {
+    "value": 4000,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+     "read": "2026-11-18",
+     "note": "pixels down"
+    }
+   },
+   "spacingM": {
+    "value": 0.625,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+     "read": "2026-11-18",
+     "note": "the square's 2,500 m across the service's largest answer, 4000 pixels (its native spacing is 0.6 METER; maxImageWidth is 4000)"
+    }
+   },
+   "nativeSpacingM": {
+    "value": 0.6,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/query?f=json&geometry=%7B%22xmin%22%3A373306.5586924935%2C%22ymin%22%3A3795819.6187626147%2C%22xmax%22%3A375806.5586924935%2C%22ymax%22%3A3798319.6187626147%2C%22spatialReference%22%3A%7B%22wkid%22%3A26911%7D%7D&geometryType=esriGeometryEnvelope&inSR=26911&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=false",
+     "read": "2026-11-18",
+     "note": "resolution_value of the tiles, as the catalog reports it"
+    }
+   },
+   "originE": {
+    "value": 373306.5586924935,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+     "read": "2026-11-18",
+     "note": "the top-left corner, easting (the requested bbox)"
+    }
+   },
+   "originN": {
+    "value": 3798319.6187626147,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+     "read": "2026-11-18",
+     "note": "the same, northing"
+    }
+   },
+   "bytes": {
+    "value": 3203777,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+     "read": "2026-11-18",
+     "note": "the JPEG's size"
+    }
+   }
+  },
+  "photoLight": {
+   "file": "terrain/angeles-sylmar-photo-light-0dd86fcc.jpg",
+   "service": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer",
+   "request": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+   "fetched": "2026-11-18",
+   "tiles": [
+    "m_3411845_ne_11_060_20220504",
+    "m_3411845_se_11_060_20220504",
+    "m_3411846_nw_11_060_20220504",
+    "m_3411846_sw_11_060_20220504"
+   ],
+   "captureDate": "2022-05-04",
+   "catalogRequest": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/query?f=json&geometry=%7B%22xmin%22%3A373306.5586924935%2C%22ymin%22%3A3795819.6187626147%2C%22xmax%22%3A375806.5586924935%2C%22ymax%22%3A3798319.6187626147%2C%22spatialReference%22%3A%7B%22wkid%22%3A26911%7D%7D&geometryType=esriGeometryEnvelope&inSR=26911&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=false",
+   "license": "US government work, public domain (USGS 3DEP and USDA NAIP, distributed by The National Map without restriction)",
+   "width": {
+    "value": 1024,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+     "read": "2026-11-18",
+     "note": "pixels across"
+    }
+   },
+   "height": {
+    "value": 1024,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+     "read": "2026-11-18",
+     "note": "pixels down"
+    }
+   },
+   "spacingM": {
+    "value": 2.44140625,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+     "read": "2026-11-18",
+     "note": "a small copy for the Light picture"
+    }
+   },
+   "nativeSpacingM": {
+    "value": 0.6,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/query?f=json&geometry=%7B%22xmin%22%3A373306.5586924935%2C%22ymin%22%3A3795819.6187626147%2C%22xmax%22%3A375806.5586924935%2C%22ymax%22%3A3798319.6187626147%2C%22spatialReference%22%3A%7B%22wkid%22%3A26911%7D%7D&geometryType=esriGeometryEnvelope&inSR=26911&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=false",
+     "read": "2026-11-18",
+     "note": "resolution_value of the tiles, as the catalog reports it"
+    }
+   },
+   "originE": {
+    "value": 373306.5586924935,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+     "read": "2026-11-18",
+     "note": "the top-left corner, easting (the requested bbox)"
+    }
+   },
+   "originN": {
+    "value": 3798319.6187626147,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+     "read": "2026-11-18",
+     "note": "the same, northing"
+    }
+   },
+   "bytes": {
+    "value": 240503,
+    "source": {
+     "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
+     "read": "2026-11-18",
+     "note": "the JPEG's size"
+    }
+   }
+  }
+ }
+}

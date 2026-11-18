@@ -23,7 +23,8 @@
   <div class="controls one">
     <div class="field"><label for="plate">Plate</label><select id="plate"></select></div>
   </div>
-  <div class="viewwrap"><canvas id="view" width="400" height="400"></canvas></div>
+  <div class="viewwrap"><canvas id="scene" width="400" height="400" hidden></canvas><canvas id="view" width="400" height="400"></canvas></div>
+  <p id="picture-note" class="muted small" hidden></p>
   <p class="setting mono"><span id="setting-line"></span> · <span id="rounds"></span></p>
   <p id="book-line" class="bookline small"></p>
   <p id="cold-line" class="coldline small" hidden></p>
@@ -75,6 +76,8 @@
   <h2>Setting</h2>
   <label class="check"><input id="show-conditions" type="checkbox"> Show the conditions (the true wind, temperature, and the engine's drop, for learning; a shot fired with this on goes in the log but not in the book)</label>
   <pre id="conditions" class="mono small conditions"></pre>
+  <div class="field picture"><label for="picture">Picture</label><select id="picture"><option value="full">Full (the surveyed ground, the real sun, every bush)</option><option value="light">Light (the same ground, fewer bushes, a smaller photograph)</option><option value="plain">Plain (flat shapes, as before)</option></select></div>
+  <p class="muted small">The ground, the sun and the plates' places are the same under every picture; a shot lands the same way. The first visit picks Full or Light by how fast this device draws.</p>
 </main>
 <div class="firebar">
   <button id="steady" type="button" class="btn">Steady (hold)</button>

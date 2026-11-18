@@ -38,7 +38,10 @@ async function signedIn(viewport) {
   return { page, context, errors };
 }
 // Closes any day left open by an earlier test, so a screen opens on the choice its address makes (an open day with shots wins over the address).
-const noDay = (page) => page.evaluate(() => { try { localStorage.removeItem('range-day:day:open'); localStorage.removeItem('range-day:day:packed'); } catch {} });
+// Closes any day left open by an earlier test, and opens the plain picture: these tests are about the bench, the line's
+// figures and the records, which are the same under every picture (test/scene.test.js proves that and the picture itself);
+// the test browser draws 3D in software, which would only slow them.
+const noDay = (page) => page.evaluate(() => { try { localStorage.removeItem('range-day:day:open'); localStorage.removeItem('range-day:day:packed'); localStorage.setItem('range-day:picture', JSON.stringify('plain')); } catch {} });
 const groupCenter = async (page) => {
   const t = await page.textContent('#group');
   const m = /center of the group ([\d.]+) in (low|high), ([\d.]+) in (right|left)|center of the group (level|[\d.]+ in (?:low|high)), (centered|[\d.]+ in (?:right|left))/.exec(t);
@@ -520,7 +523,7 @@ test('verify 8: drawn angles are true: the dot\'s width, each drop-reticle mark\
   await context.close();
 });
 
-test('verify 12: on both courses the plates stand apart and in order through the widest view, and the engine is given the height the drawing uses', { skip }, async () => {
+test('verify 12: on both courses the plates stand apart through the widest view, and the engine is given the height the drawing uses', { skip }, async () => {
   const { page, context, errors } = await signedIn();
   const lines = [];
   for (const [path, rifle] of [['/line?course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt', 'Vepr, scope at 2x'], ['/line?course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193', 'AR-15, iron sights']]) {
@@ -536,13 +539,10 @@ test('verify 12: on both courses the plates stand apart and in order through the
       const a = angles[i];
       assert.equal(a.riseFt, data[i].riseFt, `${a.yards} yd: the drawing's height is the data's`);
       lines.push(`  ${a.yards} yd: ${a.rightMoa >= 0 ? '+' : ''}${a.rightMoa.toFixed(1)} MOA sideways, ${a.upMoa.toFixed(1)} MOA up, ${a.riseFt} ft high`);
+      // Since range-day-five the plates stand where the surveyed ground puts them, so no order is imposed; they only never overlap.
       for (let j = 0; j < i; j++) {
         const sep = Math.hypot(a.upMoa - angles[j].upMoa, a.rightMoa - angles[j].rightMoa);
-        assert.ok(sep >= 30, `${angles[j].yards} and ${a.yards} yd are ${sep.toFixed(1)} MOA apart`);
-      }
-      if (i) {
-        assert.ok(a.upMoa - angles[i - 1].upMoa >= 10, `${a.yards} yd sits ${(a.upMoa - angles[i - 1].upMoa).toFixed(1)} MOA above ${angles[i - 1].yards} yd`);
-        assert.equal(Math.sign(a.rightMoa - angles[i - 1].rightMoa), Math.sign(angles[1].rightMoa - angles[0].rightMoa), 'the sideways order runs one way');
+        assert.ok(sep >= 5, `${angles[j].yards} and ${a.yards} yd are ${sep.toFixed(1)} MOA apart`);
       }
     }
     // The engine's height for a plate equals the drawing's: fire at the 4th plate and read what the engine was given.

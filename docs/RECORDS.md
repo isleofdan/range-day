@@ -160,6 +160,7 @@ names of the gun record's `measured.cold_bore` section.
 | `when` | `{ "timeOfDay": "morning" }` | the time of day last used (the month is the device's calendar month unless changed on home) |
 | `wind-call` | `{ "from": "left", "mph": 6 }` | the last wind call (`from` is `"left"`, `"right"`, `"none"` or `null` for not called) |
 | `show-conditions` | `true` or `false` | the setting "Show the conditions" |
+| `picture` | `"full"`, `"light"` or `"plain"` | the picture on the firing line (range-day-five): Full and Light are the 3D scene on the surveyed ground, Plain the flat drawing; absent until the first visit to the firing line has chosen Full or Light by counting frames, or the player has chosen |
 
 ## The copy file
 

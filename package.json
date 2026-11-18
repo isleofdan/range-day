@@ -10,14 +10,16 @@
   "scripts": {
     "start": "node server.js",
     "dev": "COOKIE_INSECURE=1 node server.js",
-    "test": "node --test test/*.test.js",
+    "test": "node --test --test-concurrency=1 test/*.test.js",
     "screenshots": "node scripts/screenshots.mjs",
     "check": "node scripts/check.mjs",
-    "build": "node scripts/build-sentry.mjs"
+    "build": "node scripts/build-sentry.mjs",
+    "build:scene": "node scripts/build-scene.mjs"
   },
   "devDependencies": {
     "esbuild": "^0.28.2",
-    "playwright": "1.56.1"
+    "playwright": "1.56.1",
+    "three": "^0.187.0"
   },
   "dependencies": {
     "@sentry/browser": "^11.9.0",

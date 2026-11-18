@@ -210,12 +210,11 @@ These bind every session on this app, on top of the kit's rules above.
   ownership only.
 - **Plain words on every screen:** yards, inches, clicks; MOA spelled out
   once as "minute of angle (about 1 inch at 100 yards)".
-- **Drawings and sounds are made in code.** No downloaded images, sounds
-  or fonts.
+- **Drawings and sounds are made in code, on top of surveyed ground.** The ground's shape and its aerial photograph come from US government public-domain survey data, and close-up surface detail may come from material scans published under CC0; each such file is listed in `data/terrain.json` with its source, its date and its license. No other downloaded images, no sounds, no fonts, no photographs of people, and no private photographs (Dan, 19 Nov 2026: "push as far towards photorealism as possible").
 - **Everything the player makes lives on the device** (`localStorage`):
   the sight settings, the saved zeros, the shot log, the open day and the
-  finished days, the zeroing supply, the data book, the cold-bore record, the wind call and
-  the one setting, each key and shape in `docs/RECORDS.md`; every read and
+  finished days, the zeroing supply, the data book, the cold-bore record, the wind call,
+  the one setting and the picture setting, each key and shape in `docs/RECORDS.md`; every read and
   write wrapped so a refusal shows "not saved on this device" instead of
   breaking a screen. No server-side records. Nothing stored before is
   deleted or renamed; an old record is read forward and left in place.
