@@ -55,7 +55,8 @@ async function exportHeights(u, half, spacing, extra = {}) {
   const px = Math.round((2 * half) / spacing);
   const p = new URLSearchParams({ f: 'image', bbox: `${u.e - half},${u.n - half},${u.e + half},${u.n + half}`, bboxSR: String(SERVICES.heights.wkid), imageSR: String(SERVICES.heights.wkid), size: `${px},${px}`, ...SERVICES.heights.exportParams, ...extra });
   const url = `${SERVICES.heights.url}/exportImage?${p}`;
-  const { bytes } = await get(url);
+  const { bytes, headers } = await get(url);
+  console.log(`  heights export: ${bytes.length} bytes, ${headers.get('content-type')}`);
   const t = readTiff(bytes);
   if (t.width !== px || t.height !== px) throw new Error(`heights came back ${t.width}×${t.height}, asked ${px}×${px}`);
   return { ...t, url, spacing, originE: t.tie ? t.tie[3] : u.e - half, originN: t.tie ? t.tie[4] : u.n + half, tiffBytes: bytes.length };

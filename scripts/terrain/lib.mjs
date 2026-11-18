@@ -36,13 +36,16 @@ export function toUtm(lat, lon, zone = Math.floor((lon + 180) / 6) + 1) {
   return { e, n, zone };
 }
 
-export async function get(url, tries = 3) {
+export async function get(url, tries = 4) {
   let last;
   for (let i = 0; i < tries; i++) {
     try {
       const res = await fetch(url, { signal: AbortSignal.timeout(180000) });
       const bytes = new Uint8Array(await res.arrayBuffer());
       if (!res.ok) throw new Error(`HTTP ${res.status}: ${Buffer.from(bytes).toString('utf8').slice(0, 300)}`);
+      const expected = Number(res.headers.get('content-length'));
+      if (expected && bytes.length !== expected) throw new Error(`short answer: ${bytes.length} of ${expected} bytes`);
+      if ((res.headers.get('content-type') || '').includes('json') && url.includes('f=image')) throw new Error(`the service answered JSON instead of an image: ${Buffer.from(bytes).toString('utf8').slice(0, 300)}`);
       return { bytes, headers: res.headers };
     } catch (e) { last = e; console.log(`  retry ${i + 1}: ${e.message}`); await new Promise((r) => setTimeout(r, 3000 * (i + 1))); }
   }

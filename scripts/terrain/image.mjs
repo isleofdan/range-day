@@ -57,6 +57,8 @@ export function readTiff(b) {
     const tw = tags[322][0], th = tags[323][0];
     const across = Math.ceil(width / tw);
     tags[324].forEach((off, t) => {
+      if (off + tags[325][t] > b.length) throw new Error(`tile ${t} of ${tags[324].length} at ${off} + ${tags[325][t]} bytes lies past the file's end (${b.length} bytes): the download is short`);
+      if (tags[325][t] < tw * th * bytesPer && compression === 1) throw new Error(`tile ${t} holds ${tags[325][t]} bytes, fewer than ${tw}×${th}×${bytesPer}`);
       const raw = b.subarray(off, off + tags[325][t]);
       const data = decode(raw, tw * bytesPer, th);
       const tx = (t % across) * tw, ty = Math.floor(t / across) * th;
@@ -65,6 +67,7 @@ export function readTiff(b) {
   } else {
     const rps = tags[278] ? tags[278][0] : height;
     tags[273].forEach((off, s) => {
+      if (off + tags[279][s] > b.length) throw new Error(`strip ${s} lies past the file's end (${b.length} bytes): the download is short`);
       const rows = Math.min(rps, height - s * rps);
       const raw = b.subarray(off, off + tags[279][s]);
       const data = decode(raw, width * bytesPer, rows);
