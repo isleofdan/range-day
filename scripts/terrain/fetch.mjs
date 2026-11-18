@@ -50,16 +50,42 @@ async function catalog(service, u, half) {
 }
 const dateOf = (ms) => (ms == null ? null : new Date(ms).toISOString().slice(0, 10));
 
-// Heights over a square: one export, parsed, as Float32 with the grid's map origin.
+// Heights over a square, fetched in tiles of at most TILE_PX pixels (one
+// request for the whole square answered 502 from the service and then an
+// empty image, 18 Nov 2026), parsed and stitched into one Float32 grid with
+// the grid's map origin. A dataset locked by id that answers an empty
+// image is asked again as the service's own mosaic.
+const TILE_PX = 500;
 async function exportHeights(u, half, spacing, extra = {}) {
   const px = Math.round((2 * half) / spacing);
-  const p = new URLSearchParams({ f: 'image', bbox: `${u.e - half},${u.n - half},${u.e + half},${u.n + half}`, bboxSR: String(SERVICES.heights.wkid), imageSR: String(SERVICES.heights.wkid), size: `${px},${px}`, ...SERVICES.heights.exportParams, ...extra });
-  const url = `${SERVICES.heights.url}/exportImage?${p}`;
-  const { bytes, headers } = await get(url);
-  console.log(`  heights export: ${bytes.length} bytes, ${headers.get('content-type')}`);
-  const t = readTiff(bytes);
-  if (t.width !== px || t.height !== px) throw new Error(`heights came back ${t.width}×${t.height}, asked ${px}×${px}`);
-  return { ...t, url, spacing, originE: t.tie ? t.tie[3] : u.e - half, originN: t.tie ? t.tie[4] : u.n + half, tiffBytes: bytes.length };
+  const tilesAcross = Math.ceil(px / TILE_PX);
+  const data = new Float32Array(px * px);
+  let noData = null, tie = null, lastUrl = '', bytesTotal = 0;
+  const urls = [];
+  for (let ty = 0; ty < tilesAcross; ty++) for (let tx = 0; tx < tilesAcross; tx++) {
+    const x0 = tx * TILE_PX, y0 = ty * TILE_PX, w = Math.min(TILE_PX, px - x0), h = Math.min(TILE_PX, px - y0);
+    const xmin = u.e - half + x0 * spacing, ymax = u.n + half - y0 * spacing;
+    const bbox = `${xmin},${ymax - h * spacing},${xmin + w * spacing},${ymax}`;
+    let t = null;
+    for (const params of [extra, {}]) {
+      const p = new URLSearchParams({ f: 'image', bbox, bboxSR: String(SERVICES.heights.wkid), imageSR: String(SERVICES.heights.wkid), size: `${w},${h}`, ...SERVICES.heights.exportParams, ...params });
+      const url = `${SERVICES.heights.url}/exportImage?${p}`;
+      const { bytes } = await get(url);
+      bytesTotal += bytes.length;
+      t = readTiff(bytes);
+      lastUrl = url;
+      if (!t.empty) { urls.push(url); break; }
+      console.log(`  tile ${tx},${ty}: empty answer${Object.keys(params).length ? ', asking again as the service\'s own mosaic' : ''}`);
+    }
+    if (t.empty) throw new Error(`tile ${tx},${ty} came back empty twice`);
+    if (t.width !== w || t.height !== h) throw new Error(`tile came back ${t.width}×${t.height}, asked ${w}×${h}`);
+    if (noData == null) noData = t.noData;
+    if (tx === 0 && ty === 0) tie = t.tie;
+    for (let y = 0; y < h; y++) data.set(t.data.subarray(y * w, (y + 1) * w), (y0 + y) * px + x0);
+    await new Promise((r) => setTimeout(r, 500));
+  }
+  console.log(`  heights: ${tilesAcross * tilesAcross} tile(s), ${bytesTotal} bytes of TIFF`);
+  return { width: px, height: px, data, noData, tie, url: urls[0] || lastUrl, requests: urls.length, spacing, originE: tie ? tie[3] : u.e - half, originN: tie ? tie[4] : u.n + half, tiffBytes: bytesTotal };
 }
 
 // A Float32 grid as a 16-bit PNG: value = round((h - offset) / step).
@@ -99,10 +125,10 @@ for (const r of RANGES) {
   const spacing = Math.max(NEAR_SPACING_M, finest);
   const near = await exportHeights(u, half, spacing, { mosaicRule: JSON.stringify({ mosaicMethod: 'esriMosaicLockRaster', lockRasterIds: ids, ascending: true, mosaicOperation: 'MT_FIRST' }) });
   const enc = encodeHeights(near, 0.02);
-  console.log(`  heights: ${near.width}×${near.height} at ${spacing} m, ${near.tiffBytes} bytes of TIFF, ${enc.min.toFixed(1)}..${enc.max.toFixed(1)} m, ${enc.holes} holes, PNG ${enc.buf.length} bytes, origin E ${near.originE} N ${near.originN}`);
+  console.log(`  heights: ${near.width}×${near.height} at ${spacing} m, ${near.requests} requests, ${enc.min.toFixed(1)}..${enc.max.toFixed(1)} m, ${enc.holes} holes, PNG ${enc.buf.length} bytes, origin E ${near.originE} N ${near.originN}`);
   const nearName = writeNamed(`${r.id}-heights`, 'png', enc.buf);
   rec.heights = {
-    file: `terrain/${nearName}`, service: SERVICES.heights.url, request: near.url, fetched: today, dataset: chosen[0].title || chosen[0].Name, datasetName: chosen[0].Name, catalogRequest: cat.url, captureDate: dateOf(chosen[0].AcquisitionDate), publishedDate: chosen[0].pubdate ? String(chosen[0].pubdate) : null, verticalDatum: chosen[0].VerticalDatum, license: LICENSE,
+    file: `terrain/${nearName}`, service: SERVICES.heights.url, request: near.url, requests: near.requests, fetched: today, dataset: chosen[0].title || chosen[0].Name, datasetName: chosen[0].Name, catalogRequest: cat.url, captureDate: dateOf(chosen[0].AcquisitionDate), publishedDate: chosen[0].pubdate ? String(chosen[0].pubdate) : null, verticalDatum: chosen[0].VerticalDatum, license: LICENSE,
     width: fig(near.width, near.url, 'pixels across'), height: fig(near.height, near.url, 'pixels down'), spacingM: fig(spacing, cat.url, `the service's LowPS for this dataset, the finest it holds over the square (${finest} m)`),
     originE: fig(near.originE, near.url, 'the TIFF\'s ModelTiepoint: the top-left corner of the square, easting'), originN: fig(near.originN, near.url, 'the same, northing'),
     stepM: fig(enc.step, near.url, 'metres per pixel count in the PNG (chosen so the span fits 16 bits with 2 cm steps)'), offsetM: fig(enc.offset, near.url, 'metres added to pixel × stepM: one below the lowest height in the square'),
@@ -116,7 +142,7 @@ for (const r of RANGES) {
   console.log(`  far heights: ${far.width}×${far.height} at ${FAR_SPACING_M} m, ${encFar.min.toFixed(1)}..${encFar.max.toFixed(1)} m, ${encFar.holes} holes, PNG ${encFar.buf.length} bytes`);
   const farName = writeNamed(`${r.id}-heights-far`, 'png', encFar.buf);
   rec.heightsFar = {
-    file: `terrain/${farName}`, service: SERVICES.heights.url, request: far.url, fetched: today, dataset: 'the service\'s own mosaic (its default "Best" ordering over every dataset it holds here)', license: LICENSE,
+    file: `terrain/${farName}`, service: SERVICES.heights.url, request: far.url, requests: far.requests, fetched: today, dataset: 'the service\'s own mosaic (its default "Best" ordering over every dataset it holds here)', license: LICENSE,
     width: fig(far.width, far.url, 'pixels across'), height: fig(far.height, far.url, 'pixels down'), spacingM: fig(FAR_SPACING_M, far.url, 'the requested spacing: 10 km across 1,000 pixels'),
     originE: fig(far.originE, far.url, 'the top-left corner, easting'), originN: fig(far.originN, far.url, 'the same, northing'),
     stepM: fig(encFar.step, far.url, 'metres per pixel count'), offsetM: fig(encFar.offset, far.url, 'metres added to pixel × stepM'),

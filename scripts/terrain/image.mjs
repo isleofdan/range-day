@@ -53,6 +53,8 @@ export function readTiff(b) {
     if (predictor === 3) throw new Error('floating-point predictor is not handled');
     return data;
   };
+  const empty = tags[322] ? tags[325].every((n) => n === 0) : tags[279].every((n) => n === 0);
+  if (empty) return { width, height, data: out, noData: null, scale: null, tie: null, compression, predictor, bits, format, empty: true };
   if (tags[322]) { // tiles
     const tw = tags[322][0], th = tags[323][0];
     const across = Math.ceil(width / tw);
