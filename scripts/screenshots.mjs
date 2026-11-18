@@ -99,7 +99,7 @@ const SCREENS = [
   { name: 'line-sep-afternoon-irons', path: `${PIRU}&sight=vepr-irons&month=9&time=afternoon`, expect: 'September afternoon', act: (page) => plate(page, 4) },
   // A hit with its strike mark on the plate, at 7x.
   // (the 200-yard plate, unzeroed: the hold that lands the seed on the centre keeps the plate inside the 7x view, 14 MOA up)
-  { name: 'line-hit-strike', path: `${PIRU}&sight=utg-2-7x44&month=9&time=midday`, expect: 'Hit', act: async (page) => { await plate(page, 0); await page.evaluate(() => RangeDayLine.setZoom(7)); await seededHit(page, 21); await settle(page, 900); } },
+  { name: 'line-hit-strike', path: `${PIRU}&sight=utg-2-7x44&month=9&time=midday`, expect: 'Hit', act: async (page) => { await plate(page, 0); await page.evaluate(() => RangeDayLine.setZoom(7)); await seededHit(page, 21); await settle(page, 3500); } },
   // The Light picture beside the Full one (the same view as line-sep-afternoon-2x).
   { name: 'line-light-2x', path: `${PIRU}&sight=utg-2-7x44&month=9&time=afternoon`, expect: 'September afternoon', act: async (page) => { await picture(page, 'light'); await page.reload(); await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(2)); await settle(page, 400); } },
   // The Plain fallback: a browser without 3D shows the plain picture and the one line (its own browser context, with 3D switched off).
