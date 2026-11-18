@@ -136,7 +136,11 @@ main.game h1 { margin: 2px 0 4px; font-size: 22px; }
 .controls.one select { padding: 9px 8px; }
 body.line .viewwrap { margin: 6px 0; }
 .viewwrap { margin: 8px 0; }
+.viewwrap { position: relative; }
 .viewwrap canvas { display: block; margin: 0 auto; border-radius: 10px; touch-action: none; background: #222; }
+.viewwrap canvas#scene { position: absolute; left: 50%; top: 0; transform: translateX(-50%); z-index: 0; }
+.viewwrap canvas#view { position: relative; z-index: 1; }
+.viewwrap.scene-on canvas#view { background: transparent; }
 .readout { min-height: 1.5em; padding: 10px 12px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; }
 .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .field label { margin-top: 8px; }

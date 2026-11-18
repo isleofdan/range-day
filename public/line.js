@@ -97,7 +97,7 @@
 
   const canvas = $('view');
   let view = RD.fitCanvas(canvas, 640);
-  window.addEventListener('resize', () => { view = RD.fitCanvas(canvas, 640); });
+  window.addEventListener('resize', () => { view = RD.fitCanvas(canvas, 640); if (typeof fitScene === 'function') fitScene(); });
   const plate = () => plates[plateIx];
   const inchPerMoa = (y) => E.inchesPerMoa(y);
   // Each plate's own height above the firing line (data/courses.json, riseFt):
@@ -170,11 +170,91 @@
   // The sideways angle of the aimed plate, so the scene's own azimuths (from straight downrange) line up with the view.
   const azOf = (sideMoa) => sideMoa - toMoa(sideAngle(plate()));
 
+  // --- the picture: Full, Light or Plain ---------------------------------------------------------
+  // Full and Light are the 3D scene (public/scene.min.js) on the surveyed
+  // ground, drawn in the canvas under this one at exactly this view's
+  // angular scale; Plain is the drawing below. The setting lives on the
+  // device; the first visit picks Full or Light by counting frames; a
+  // browser that cannot draw 3D, or a scene that fails, shows Plain and
+  // says so. Under every picture the same plate data goes to the engine.
+  const sceneCanvas = $('scene');
+  let scene = null, picture = RD.getPicture(), sceneLoading = false, measuring = null, sceneFailed = false;
+  const sceneOn = () => Boolean(scene);
+  const pictureNote = (text) => { $('picture-note').textContent = text; $('picture-note').hidden = !text; };
+  const canScene = Boolean(d.terrain && d.terrain[courseId] && course.firing && course.pictureReady === true && d.look);
+  function fitScene() { const dpr = Math.min(window.devicePixelRatio || 1, 2); sceneCanvas.style.width = `${view.size}px`; sceneCanvas.style.height = `${view.size}px`; if (scene) scene.resize(view.size, dpr); }
+  const loadSceneScript = () => new Promise((resolve, reject) => { if (window.RangeDayScene) return resolve(); const el = document.createElement('script'); el.src = '/scene.min.js'; el.onload = resolve; el.onerror = () => reject(new Error('the picture\'s script did not load')); document.head.appendChild(el); });
+  async function startScene(quality) {
+    if (!canScene) { showPlain('This course has no full picture yet; showing the plain one.'); return; }
+    sceneLoading = true;
+    try {
+      await loadSceneScript();
+      if (!window.RangeDayScene.canDraw()) throw new Error('no 3D context');
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const next = await window.RangeDayScene.create({ canvas: sceneCanvas, size: view.size, dpr, course, terrain: d.terrain[courseId], look: d.look, physics: d.physics, weather, month: day.month, timeOfDay: day.timeOfDay, quality });
+      if (scene) scene.dispose();
+      scene = next;
+      sceneCanvas.hidden = false; canvas.parentElement.classList.add('scene-on');
+      pictureNote('');
+    } catch (e) {
+      sceneFailed = true;
+      showPlain('This device could not draw the full picture; showing the plain one.');
+      if (window.Sentry && window.Sentry.captureException) try { window.Sentry.captureException(e); } catch {}
+    }
+    sceneLoading = false;
+  }
+  function showPlain(note) {
+    if (scene) { scene.dispose(); scene = null; }
+    sceneCanvas.hidden = true; canvas.parentElement.classList.remove('scene-on');
+    pictureNote(note || '');
+  }
+  // The first visit: draw Full for two seconds, count the frames, keep Full or fall back to Light; the choice is kept on the device.
+  function choosePicture() {
+    const F = d.look && d.look.firstVisit;
+    if (picture === 'plain' || !canScene) { showPlain(''); $('picture').value = picture || 'plain'; return; }
+    if (picture) { $('picture').value = picture; startScene(picture); return; }
+    $('picture').value = 'full';
+    startScene('full').then(() => { if (scene) measuring = { until: now + F.measureS, frames: 0, start: now }; });
+  }
+  function measured() {
+    const F = d.look.firstVisit;
+    const fps = measuring.frames / Math.max(0.5, now - measuring.start);
+    measuring = null;
+    picture = fps < F.minFps ? 'light' : 'full';
+    if (!RD.setPicture(picture)) pictureNote('The picture setting is not saved on this device (the browser refused its storage).');
+    $('picture').value = picture;
+    if (picture === 'light') startScene('light');
+  }
+  $('picture').addEventListener('change', (e) => {
+    picture = e.target.value; measuring = null;
+    if (!RD.setPicture(picture)) pictureNote('The picture setting is not saved on this device (the browser refused its storage).');
+    if (picture === 'plain') showPlain(''); else startScene(picture);
+  });
+  if (RD.pictureReadFailed()) pictureNote('The picture setting could not be read on this device (the browser refused its storage); the plain picture is shown.');
+  // The 3D view: the sight's own aim, as absolute angles from the line of fire.
+  function syncScene() {
+    if (!scene) return;
+    const c = center(), a = plate();
+    scene.setView({ yawDeg: (toMoa(sideAngle(a)) + c.right) / 60, pitchDeg: (toMoa(losAngle(a)) + c.up) / 60, fovDeg: fovMoa() / 60, glass: sight.kind === 'scope' || magnifierIn(), windMph: crossMph() });
+  }
+
   function draw() {
     const { g, size } = view;
     const k = pxPerMoa();
     const c = center();
     g.save();
+    if (sceneOn()) {
+      // The scene below draws the ground, the sky, the plates and the brush at this same scale; this canvas draws only what moves on top of it.
+      g.clearRect(0, 0, size, size);
+      syncScene();
+      scene.render(now);
+      if (measuring) { measuring.frames++; if (now >= measuring.until) measured(); }
+      drawDust(g, size, k);
+      if (flash > 0) { g.fillStyle = `rgba(255, 230, 180, ${flash})`; g.fillRect(0, 0, size, size); }
+      g.restore();
+      drawSight(g, size, k);
+      return;
+    }
     // sky
     const sky = g.createLinearGradient(0, 0, 0, size);
     sky.addColorStop(0, '#9fc2e6'); sky.addColorStop(1, '#e7e3d2');
@@ -233,12 +313,31 @@
       if (bh >= 7) { g.fillStyle = mix([20, 20, 20], HAZE, haze); g.font = `bold ${bh * 0.72}px system-ui, sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(String(p.yards), bx + bw / 2, by + bh * 0.04); }
       for (const mk of marks) if (mk.plateIx === i) { const [mx, my] = toScreen(at.right + mk.rightIn / ipm, at.up + mk.upIn / ipm); g.fillStyle = '#f3f1ea'; g.beginPath(); g.arc(mx, my, Math.max(1, 0.5 * k / 1.047), 0, 7); g.fill(); }
     });
+    drawDust(g, size, k);
+    // heat shimmer leaning with the wind (seen through magnification)
+    if (viewMag() >= 2.5) {
+      g.strokeStyle = 'rgba(255,255,255,0.10)'; g.lineWidth = 1.2;
+      for (let i = 0; i < 14; i++) {
+        const y0 = size * 0.45 + i * (size * 0.04);
+        g.beginPath();
+        for (let x = 0; x <= size; x += 10) { const yy = y0 + Math.sin(x / 18 + now * 6 + i) * 2.2 + (x - size / 2) * (-wind * 0.006); g.lineTo(x, yy); }
+        g.stroke();
+      }
+    }
+    // muzzle flash and blur right after a shot
+    if (flash > 0) { g.fillStyle = `rgba(255, 230, 180, ${flash})`; g.fillRect(0, 0, size, size); }
+    g.restore();
+    drawSight(g, size, k);
+  }
+
+  function drawDust(g, size, k) {
     // dust from misses: a puff of the data's size in feet (data/physics.json,
     // dust), drawn through the same scale as the plate at this distance, so
     // it is the same puff at every zoom and through every sight: it grows
     // from startFt to endFt across over lifeS seconds, rises riseFt, drifts
     // with the wind and thins away.
     const D = d.physics.dust;
+    const wind = crossMph();
     for (const p of dust) {
       const age = now - p.bornAt;
       if (age > D.lifeS) continue;
@@ -257,20 +356,6 @@
         g.fillStyle = puff; g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.fill();
       }
     }
-    // heat shimmer leaning with the wind (seen through magnification)
-    if (viewMag() >= 2.5) {
-      g.strokeStyle = 'rgba(255,255,255,0.10)'; g.lineWidth = 1.2;
-      for (let i = 0; i < 14; i++) {
-        const y0 = size * 0.45 + i * (size * 0.04);
-        g.beginPath();
-        for (let x = 0; x <= size; x += 10) { const yy = y0 + Math.sin(x / 18 + now * 6 + i) * 2.2 + (x - size / 2) * (-wind * 0.006); g.lineTo(x, yy); }
-        g.stroke();
-      }
-    }
-    // muzzle flash and blur right after a shot
-    if (flash > 0) { g.fillStyle = `rgba(255, 230, 180, ${flash})`; g.fillRect(0, 0, size, size); }
-    g.restore();
-    drawSight(g, size, k);
   }
 
   // Every sight picture is a drawing of angles: a mark, a dot or a post is
@@ -453,7 +538,7 @@
   }
   function land(s) {
     const soundBack = (s.dist * 3) / E.speedOfSound(weather.tempF);
-    if (s.hit) { marks.push({ plateIx, rightIn: s.rightIn, upIn: s.upIn, at: now }); RD.ringSound(soundBack, Math.max(0.15, 1 - s.dist / 1300)); }
+    if (s.hit) { marks.push({ plateIx, rightIn: s.rightIn, upIn: s.upIn, at: now }); if (scene) scene.strike(plateIx, s.upIn, s.rightIn); RD.ringSound(soundBack, Math.max(0.15, 1 - s.dist / 1300)); }
     else { dust.push({ rightMoa: s.rightMoa, upMoa: s.upMoa, bornAt: now, yards: s.yards }); RD.thudSound(soundBack, Math.max(0.05, 0.5 - s.dist / 2500)); }
     log.push(s.entry);
     if (!RD.setLog(rifleId, sightId, loadId, log)) $('zero-note').textContent = 'Shot log not saved on this device (storage is off); it holds for this page only.';
@@ -608,6 +693,7 @@
     requestAnimationFrame(frame);
   }
   applyZero(); renderLog(); conditions(); rounds(); bookLine(); coldLine();
+  fitScene(); choosePicture();
   requestAnimationFrame(frame);
   // For the screenshot run and tests: a way to read the state without guessing.
   window.RangeDayLine = { fire, landAll, get log() { return log; }, get pending() { return pending.length; }, get setting() { return setting; }, setHold(up, right) { hold.up = up; hold.right = right; }, setZoom(m) { mag = m; $('zoom').value = m; zoomText(); }, get plate() { return plate(); }, get day() { return day; }, get weather() { return weather; }, get windCall() { return windCall(); },
@@ -615,6 +701,10 @@
     get plateAngles() { return plates.map((p) => ({ yards: p.yards, riseFt: riseOf(p), lateralYd: p.lateralYd, upMoa: toMoa(losAngle(p)), rightMoa: toMoa(sideAngle(p)) })); },
     get lastShotInput() { return lastShotInput; },
     get fovMoa() { return fovMoa(); },
+    // The picture in force, the scene (or null), and for a plate: where the plain drawing puts its centre and where the scene does, from the same aim at the same instant.
+    get picture() { return scene ? scene.quality : 'plain'; }, get scene() { return scene; }, get sceneLoading() { return sceneLoading; }, get sceneFailed() { return sceneFailed; },
+    plateOnScreen(ix) { const p = plates[ix], at = plateAt(p); const plain = toScreen(at.right, at.up); if (!scene) return { plain, scene: null }; syncScene(); const w = scene.plateWorld(ix); return { plain, scene: scene.project(w.x, w.y, w.z) }; },
+    setPicture(v) { picture = v; measuring = null; if (v === 'plain') showPlain(''); else return startScene(v); },
     // The drawn geometry, in pixels at the view's scale: what the tests compare with the data's angles.
     get geometry() {
       const k = pxPerMoa();
