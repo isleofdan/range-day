@@ -34,6 +34,8 @@ const fresh = (page, rifle, sight) => page.evaluate(([r, s]) => { for (const k o
 // Closes the open day, so a screen opens on the choice its address makes (an open day with shots wins over the address). Every screen starts that way unless it says keepDay.
 const noDay = (page) => page.evaluate(() => { localStorage.removeItem('range-day:day:open'); localStorage.removeItem('range-day:day:packed'); for (const k of Object.keys(localStorage)) if (k.startsWith('range-day:supply:')) localStorage.removeItem(k); localStorage.setItem('range-day:picture', JSON.stringify('full')); }); // a fresh day, a full zeroing supply and the Full picture before each state (a state that wants another picture sets it)
 const picture = (page, v) => page.evaluate((p) => localStorage.setItem('range-day:picture', JSON.stringify(p)), v);
+// The shot just fired has landed (the picture's clock runs slower than the wall's where frames are slow, so the flight is waited out, not timed).
+const landed = (page) => page.waitForFunction(() => RangeDayLine.pending === 0, null, { timeout: 30000 });
 // A seeded shot through the page's own door, landed.
 async function seededShot(page, seed) {
   const before = await page.evaluate(() => RangeDayLine.log.length);
@@ -96,7 +98,8 @@ const SCREENS = [
   { name: 'line-sep-afternoon-7x', path: `${PIRU}&sight=utg-2-7x44&month=9&time=afternoon`, expect: 'September afternoon', act: async (page) => { await plate(page, 8); await page.evaluate(() => RangeDayLine.setZoom(7)); await settle(page, 400); } },
   { name: 'line-sep-afternoon-irons', path: `${PIRU}&sight=vepr-irons&month=9&time=afternoon`, expect: 'September afternoon', act: (page) => plate(page, 4) },
   // A hit with its strike mark on the plate, at 7x.
-  { name: 'line-hit-strike', path: `${PIRU}&sight=utg-2-7x44&month=9&time=midday`, expect: 'Hit', act: async (page) => { await plate(page, 1); await page.evaluate(() => RangeDayLine.setZoom(7)); await seededHit(page, 21); await settle(page, 600); } },
+  // (the 200-yard plate, unzeroed: the hold that lands the seed on the centre keeps the plate inside the 7x view, 14 MOA up)
+  { name: 'line-hit-strike', path: `${PIRU}&sight=utg-2-7x44&month=9&time=midday`, expect: 'Hit', act: async (page) => { await plate(page, 0); await page.evaluate(() => RangeDayLine.setZoom(7)); await seededHit(page, 21); await settle(page, 900); } },
   // The Light picture beside the Full one (the same view as line-sep-afternoon-2x).
   { name: 'line-light-2x', path: `${PIRU}&sight=utg-2-7x44&month=9&time=afternoon`, expect: 'September afternoon', act: async (page) => { await picture(page, 'light'); await page.reload(); await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(2)); await settle(page, 400); } },
   // The Plain fallback: a browser without 3D shows the plain picture and the one line (its own browser context, with 3D switched off).
@@ -142,11 +145,11 @@ const SCREENS = [
   // Unzeroed, the first shot at 200 yards lands well low: a miss, with its dust, at 2x and at 7x.
   { name: 'line-miss-dust-2x', path: PIRU, expect: 'Miss', act: async (page) => {
     await ready(page); await fresh(page, 'molot-vepr-54r', 'utg-2-7x44');
-    await page.reload(); await ready(page); await page.evaluate(() => RangeDayLine.setZoom(2)); await page.click('#fire'); await settle(page, 1100);
+    await page.reload(); await ready(page); await page.evaluate(() => RangeDayLine.setZoom(2)); await page.click('#fire'); await landed(page); await settle(page, 300);
   } },
   { name: 'line-miss-dust', path: PIRU, expect: 'Miss', act: async (page) => {
     await ready(page); await fresh(page, 'molot-vepr-54r', 'utg-2-7x44');
-    await page.reload(); await ready(page); await page.evaluate(() => RangeDayLine.setZoom(7)); await page.click('#fire'); await settle(page, 1100);
+    await page.reload(); await ready(page); await page.evaluate(() => RangeDayLine.setZoom(7)); await page.click('#fire'); await landed(page); await settle(page, 300);
   } },
   { name: 'line-shot-log', path: PIRU, expect: 'miss:', act: async (page) => { await ready(page); await page.evaluate(() => document.getElementById('log').scrollIntoView()); await settle(page, 200); } },
   { name: 'line-conditions-on', path: PIRU, expect: 'Wind, near stretch', act: async (page) => { await ready(page); await page.check('#show-conditions'); await page.evaluate(() => document.getElementById('conditions').scrollIntoView()); await settle(page, 200); } },
