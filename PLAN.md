@@ -100,7 +100,7 @@
   plate 591 ft above the eye, was 200; rifle line 1,680 ft, was 1,500),
   from a firing position and bearing of fire read off the photograph.
   The rifle line keeps the Plain picture (`pictureReady` false: its own
-  things are not drawn yet). 97 tests, 46 screenshot states.
+  things are not drawn yet). 97 tests, 46 screenshot states. Merged as `b62d299` on Dan's typed line after three result checks (two rounds of findings, each fixed; the third PASS, job 20261118-200109-4d71ee) and deployed by Deploy run 44414949499 (green, 86 s). Production rendering is unverified from the session (its proxy refuses the address); the Deploy run's alive check and sign-in passed.
 - **Decided:** the heights are fetched in 500-pixel tiles (one request
   for the whole square answered 502 and then an empty image); the plates
   at 500, 700 and 800 yards on the canyon course and 300, 500 and 600 on
@@ -120,7 +120,9 @@
   untouched (the two older browser test files open the plain picture, since
   the test browser's software 3D starved a held knob's clock); the session
   went on after one auto-mode refusal of a compound command by doing its
-  allowed parts one at a time, and says so in the report.
+  allowed parts one at a time, and says so in the report. Dan, after the
+  report: the rifle line's picture is its own build; the colours stay as
+  they are; the drawings rule keeps the brief's exact wording.
 - **Next session needs:** the rifle line's own things (the long sand
   berm, the lane signs, the pipe target frames) before its `pictureReady`
   turns on; the gun-record build, planned by a Personal Shipyard chat; the look at the deployed picture on
