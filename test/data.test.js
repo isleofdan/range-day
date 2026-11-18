@@ -73,22 +73,24 @@ test('each course has plates every 100 yards to its published steel distance, wi
     assert.ok(typeof c.altitudeFt === 'number', id);
     for (const p of c.plates) assert.ok(typeof p.riseFt === 'number' && typeof p.lateralYd === 'number', `${id}: ${p.yards} yd has its own height and sideways place`);
   }
-  assert.equal(flat.courses['cta-piru'].plates[flat.courses['cta-piru'].plates.length - 1].riseFt, 200, 'the 1,000-yard plate stays 200 ft up');
+  // Since range-day-five the heights are surveyed: each plate's riseFt is sourced to the terrain record, and each course's
+  // altitudeFt is the surveyed ground at the firing position (test/terrain.test.js checks the figures against the heights themselves).
+  for (const [id, c] of Object.entries(raw.courses)) {
+    if (id.startsWith('_')) continue;
+    assert.match(c.altitudeFt.source.note, /surveyed/, `${id}: altitudeFt is surveyed`);
+    assert.ok(c.firing && typeof c.firing.bearingDeg.value === 'number' && typeof c.firing.easting.value === 'number', `${id}: a firing position and a bearing of fire`);
+    for (const p of c.plates) { assert.match(p.riseFt.source.note, /surveyed ground/, `${id}: ${p.yards.value} yd riseFt is surveyed`); assert.match(p.lateralYd.estimate, /line of sight/, `${id}: ${p.yards.value} yd lateralYd says why it stands there`); }
+  }
 });
 
-test('the plates stand apart and in order: no two centers within 30 MOA, each farther plate at least 10 MOA higher, the sideways order one way', () => {
+test('the plates stand apart: no two centers within 5 MOA of each other as seen from the firing line (the surveyed ground decides their order)', () => {
   const MOA = Math.PI / (180 * 60);
   for (const [id, c] of Object.entries(flat.courses)) {
     if (id.startsWith('_')) continue;
     const ang = c.plates.map((p) => ({ yards: p.yards, up: Math.atan2(p.riseFt, p.yards * 3) / MOA, right: Math.atan2(p.lateralYd, p.yards) / MOA }));
     for (let i = 0; i < ang.length; i++) for (let j = i + 1; j < ang.length; j++) {
       const sep = Math.hypot(ang[i].up - ang[j].up, ang[i].right - ang[j].right);
-      assert.ok(sep >= 30, `${id}: ${ang[i].yards} and ${ang[j].yards} yd are ${sep.toFixed(1)} MOA apart`);
-    }
-    const dir = Math.sign(ang[1].right - ang[0].right);
-    for (let i = 1; i < ang.length; i++) {
-      assert.ok(ang[i].up - ang[i - 1].up >= 10, `${id}: ${ang[i].yards} yd is ${(ang[i].up - ang[i - 1].up).toFixed(1)} MOA above ${ang[i - 1].yards} yd`);
-      assert.ok(Math.sign(ang[i].right - ang[i - 1].right) === dir, `${id}: the sideways order runs one way`);
+      assert.ok(sep >= 5, `${id}: ${ang[i].yards} and ${ang[j].yards} yd are ${sep.toFixed(1)} MOA apart`);
     }
   }
 });
