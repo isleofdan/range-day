@@ -64,7 +64,11 @@
    {
     "lateralYd": {
      "value": 0,
-     "estimate": "where the plate stands sideways, in yards, from the line straight downrange (right positive): on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 2.1 ft, at 196 yards); the range publishes no layout. Replaces the angle-spread estimate of -6.3 (range-day-five)"
+     "source": {
+      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+      "read": "2026-11-18",
+      "note": "where the plate stands sideways, in yards, from the line straight downrange (right positive): the plate's position above against the firing position and the bearing of fire, on the surveyed ground of data/terrain.json cta-piru.heights (USGS 1 Meter 11 x34y382 CA_LosAngeles_B23, captured 2024-07-01); on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 2.1 ft, at 196 yards); the range publishes no layout. Replaces the angle-spread estimate of -6.3 (range-day-five)"
+     }
     },
     "yards": {
      "value": 200,
@@ -89,12 +93,27 @@
       "read": "2026-11-18",
       "note": "how high the plate's centre stands above the eye at the firing position (4 ft above the ground there, data/look.json eyeHeightFt), in feet: the surveyed ground at the plate's place is 35 ft above the ground at the firing position (data/terrain.json cta-piru.heights, USGS 1 Meter 11 x34y382 CA_LosAngeles_B23, captured 2024-07-01), plus the plate's centre above its own ground (the post at 18 × 0.9 in and half the plate, data/physics.json postHeightShareOfPlate), less the eye's 4 ft. The engine and every picture use this one figure. Replaces the slope estimate of 15 ft (range-day-five)"
      }
+    },
+    "position": {
+     "_about": "Where the plate stands on the ground, NAD83 / UTM zone 11N metres: at its stated distance from the firing position, on ground the firing position can see.",
+     "easting": {
+      "value": 340502.7,
+      "estimate": "read off the NAIP photograph of 2022-05-13, 2022-05-04 (data/terrain.json cta-piru.photo) and the surveyed heights: 200 yards from the firing position along the bearing of fire, on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 2.1 ft, at 196 yards)"
+     },
+     "northing": {
+      "value": 3812439.2,
+      "estimate": "the same basis, northing"
+     }
     }
    },
    {
     "lateralYd": {
      "value": 0,
-     "estimate": "where the plate stands sideways, in yards, from the line straight downrange (right positive): on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 2.5 ft, at 3 yards); the range publishes no layout. Replaces the angle-spread estimate of -7.1 (range-day-five)"
+     "source": {
+      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+      "read": "2026-11-18",
+      "note": "where the plate stands sideways, in yards, from the line straight downrange (right positive): the plate's position above against the firing position and the bearing of fire, on the surveyed ground of data/terrain.json cta-piru.heights (USGS 1 Meter 11 x34y382 CA_LosAngeles_B23, captured 2024-07-01); on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 2.5 ft, at 3 yards); the range publishes no layout. Replaces the angle-spread estimate of -7.1 (range-day-five)"
+     }
     },
     "yards": {
      "value": 300,
@@ -119,12 +138,27 @@
       "read": "2026-11-18",
       "note": "how high the plate's centre stands above the eye at the firing position (4 ft above the ground there, data/look.json eyeHeightFt), in feet: the surveyed ground at the plate's place is 67 ft above the ground at the firing position (data/terrain.json cta-piru.heights, USGS 1 Meter 11 x34y382 CA_LosAngeles_B23, captured 2024-07-01), plus the plate's centre above its own ground (the post at 18 × 0.9 in and half the plate, data/physics.json postHeightShareOfPlate), less the eye's 4 ft. The engine and every picture use this one figure. Replaces the slope estimate of 29 ft (range-day-five)"
      }
+    },
+    "position": {
+     "_about": "Where the plate stands on the ground, NAD83 / UTM zone 11N metres: at its stated distance from the firing position, on ground the firing position can see.",
+     "easting": {
+      "value": 340482.1,
+      "estimate": "read off the NAIP photograph of 2022-05-13, 2022-05-04 (data/terrain.json cta-piru.photo) and the surveyed heights: 300 yards from the firing position along the bearing of fire, on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 2.5 ft, at 3 yards)"
+     },
+     "northing": {
+      "value": 3812528.3,
+      "estimate": "the same basis, northing"
+     }
     }
    },
    {
     "lateralYd": {
      "value": 0,
-     "estimate": "where the plate stands sideways, in yards, from the line straight downrange (right positive): on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 2.4 ft, at 397 yards); the range publishes no layout. Replaces the angle-spread estimate of -6.3 (range-day-five)"
+     "source": {
+      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+      "read": "2026-11-18",
+      "note": "where the plate stands sideways, in yards, from the line straight downrange (right positive): the plate's position above against the firing position and the bearing of fire, on the surveyed ground of data/terrain.json cta-piru.heights (USGS 1 Meter 11 x34y382 CA_LosAngeles_B23, captured 2024-07-01); on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 2.4 ft, at 397 yards); the range publishes no layout. Replaces the angle-spread estimate of -6.3 (range-day-five)"
+     }
     },
     "yards": {
      "value": 400,
@@ -149,12 +183,27 @@
       "read": "2026-11-18",
       "note": "how high the plate's centre stands above the eye at the firing position (4 ft above the ground there, data/look.json eyeHeightFt), in feet: the surveyed ground at the plate's place is 155 ft above the ground at the firing position (data/terrain.json cta-piru.heights, USGS 1 Meter 11 x34y382 CA_LosAngeles_B23, captured 2024-07-01), plus the plate's centre above its own ground (the post at 18 × 0.9 in and half the plate, data/physics.json postHeightShareOfPlate), less the eye's 4 ft. The engine and every picture use this one figure. Replaces the slope estimate of 46 ft (range-day-five)"
      }
+    },
+    "position": {
+     "_about": "Where the plate stands on the ground, NAD83 / UTM zone 11N metres: at its stated distance from the firing position, on ground the firing position can see.",
+     "easting": {
+      "value": 340461.5,
+      "estimate": "read off the NAIP photograph of 2022-05-13, 2022-05-04 (data/terrain.json cta-piru.photo) and the surveyed heights: 400 yards from the firing position along the bearing of fire, on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 2.4 ft, at 397 yards)"
+     },
+     "northing": {
+      "value": 3812617.4,
+      "estimate": "the same basis, northing"
+     }
     }
    },
    {
     "lateralYd": {
      "value": 20,
-     "estimate": "where the plate stands sideways, in yards, from the line straight downrange (right positive): placed on the nearest ground the firing position can see at its true distance, 20 yards right of the line of fire (on the line the surveyed ground hides it; the least clearance of the line of sight here is 1.8 ft, at 425 yards); the range publishes no layout. Replaces the angle-spread estimate of -3.9 (range-day-five)"
+     "source": {
+      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+      "read": "2026-11-18",
+      "note": "where the plate stands sideways, in yards, from the line straight downrange (right positive): the plate's position above against the firing position and the bearing of fire, on the surveyed ground of data/terrain.json cta-piru.heights (USGS 1 Meter 11 x34y382 CA_LosAngeles_B23, captured 2024-07-01); placed on the nearest ground the firing position can see at its true distance, 20 yards right of the line of fire (on the line the surveyed ground hides it; the least clearance of the line of sight here is 1.8 ft, at 425 yards); the range publishes no layout. Replaces the angle-spread estimate of -3.9 (range-day-five)"
+     }
     },
     "yards": {
      "value": 500,
@@ -179,12 +228,27 @@
       "read": "2026-11-18",
       "note": "how high the plate's centre stands above the eye at the firing position (4 ft above the ground there, data/look.json eyeHeightFt), in feet: the surveyed ground at the plate's place is 211 ft above the ground at the firing position (data/terrain.json cta-piru.heights, USGS 1 Meter 11 x34y382 CA_LosAngeles_B23, captured 2024-07-01), plus the plate's centre above its own ground (the post at 18 × 0.9 in and half the plate, data/physics.json postHeightShareOfPlate), less the eye's 4 ft. The engine and every picture use this one figure. Replaces the slope estimate of 66 ft (range-day-five)"
      }
+    },
+    "position": {
+     "_about": "Where the plate stands on the ground, NAD83 / UTM zone 11N metres: at its stated distance from the firing position, on ground the firing position can see.",
+     "easting": {
+      "value": 340458.8,
+      "estimate": "read off the NAIP photograph of 2022-05-13, 2022-05-04 (data/terrain.json cta-piru.photo) and the surveyed heights: 500 yards from the firing position along the bearing of fire, placed on the nearest ground the firing position can see at its true distance, 20 yards right of the line of fire (on the line the surveyed ground hides it; the least clearance of the line of sight here is 1.8 ft, at 425 yards)"
+     },
+     "northing": {
+      "value": 3812710.6,
+      "estimate": "the same basis, northing"
+     }
     }
    },
    {
     "lateralYd": {
      "value": 0,
-     "estimate": "where the plate stands sideways, in yards, from the line straight downrange (right positive): on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 3.4 ft, at 3 yards); the range publishes no layout. Replaces the angle-spread estimate of 0 (range-day-five)"
+     "source": {
+      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+      "read": "2026-11-18",
+      "note": "where the plate stands sideways, in yards, from the line straight downrange (right positive): the plate's position above against the firing position and the bearing of fire, on the surveyed ground of data/terrain.json cta-piru.heights (USGS 1 Meter 11 x34y382 CA_LosAngeles_B23, captured 2024-07-01); on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 3.4 ft, at 3 yards); the range publishes no layout. Replaces the angle-spread estimate of 0 (range-day-five)"
+     }
     },
     "yards": {
      "value": 600,
@@ -209,12 +273,27 @@
       "read": "2026-11-18",
       "note": "how high the plate's centre stands above the eye at the firing position (4 ft above the ground there, data/look.json eyeHeightFt), in feet: the surveyed ground at the plate's place is 300 ft above the ground at the firing position (data/terrain.json cta-piru.heights, USGS 1 Meter 11 x34y382 CA_LosAngeles_B23, captured 2024-07-01), plus the plate's centre above its own ground (the post at 24 × 0.9 in and half the plate, data/physics.json postHeightShareOfPlate), less the eye's 4 ft. The engine and every picture use this one figure. Replaces the slope estimate of 88 ft (range-day-five)"
      }
+    },
+    "position": {
+     "_about": "Where the plate stands on the ground, NAD83 / UTM zone 11N metres: at its stated distance from the firing position, on ground the firing position can see.",
+     "easting": {
+      "value": 340420.4,
+      "estimate": "read off the NAIP photograph of 2022-05-13, 2022-05-04 (data/terrain.json cta-piru.photo) and the surveyed heights: 600 yards from the firing position along the bearing of fire, on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 3.4 ft, at 3 yards)"
+     },
+     "northing": {
+      "value": 3812795.6,
+      "estimate": "the same basis, northing"
+     }
     }
    },
    {
     "lateralYd": {
      "value": 80,
-     "estimate": "where the plate stands sideways, in yards, from the line straight downrange (right positive): placed on the nearest ground the firing position can see at its true distance, 80 yards right of the line of fire (on the line the surveyed ground hides it; the least clearance of the line of sight here is 1.5 ft, at 689 yards); the range publishes no layout. Replaces the angle-spread estimate of 5.5 (range-day-five)"
+     "source": {
+      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+      "read": "2026-11-18",
+      "note": "where the plate stands sideways, in yards, from the line straight downrange (right positive): the plate's position above against the firing position and the bearing of fire, on the surveyed ground of data/terrain.json cta-piru.heights (USGS 1 Meter 11 x34y382 CA_LosAngeles_B23, captured 2024-07-01); placed on the nearest ground the firing position can see at its true distance, 80 yards right of the line of fire (on the line the surveyed ground hides it; the least clearance of the line of sight here is 1.5 ft, at 689 yards); the range publishes no layout. Replaces the angle-spread estimate of 5.5 (range-day-five)"
+     }
     },
     "yards": {
      "value": 700,
@@ -239,12 +318,27 @@
       "read": "2026-11-18",
       "note": "how high the plate's centre stands above the eye at the firing position (4 ft above the ground there, data/look.json eyeHeightFt), in feet: the surveyed ground at the plate's place is 448 ft above the ground at the firing position (data/terrain.json cta-piru.heights, USGS 1 Meter 11 x34y382 CA_LosAngeles_B23, captured 2024-07-01), plus the plate's centre above its own ground (the post at 24 × 0.9 in and half the plate, data/physics.json postHeightShareOfPlate), less the eye's 4 ft. The engine and every picture use this one figure. Replaces the slope estimate of 113 ft (range-day-five)"
      }
+    },
+    "position": {
+     "_about": "Where the plate stands on the ground, NAD83 / UTM zone 11N metres: at its stated distance from the firing position, on ground the firing position can see.",
+     "easting": {
+      "value": 340471.1,
+      "estimate": "read off the NAIP photograph of 2022-05-13, 2022-05-04 (data/terrain.json cta-piru.photo) and the surveyed heights: 700 yards from the firing position along the bearing of fire, placed on the nearest ground the firing position can see at its true distance, 80 yards right of the line of fire (on the line the surveyed ground hides it; the least clearance of the line of sight here is 1.5 ft, at 689 yards)"
+     },
+     "northing": {
+      "value": 3812901.1,
+      "estimate": "the same basis, northing"
+     }
     }
    },
    {
     "lateralYd": {
      "value": -72.5,
-     "estimate": "where the plate stands sideways, in yards, from the line straight downrange (right positive): placed on the nearest ground the firing position can see at its true distance, 72.5 yards left of the line of fire (on the line the surveyed ground hides it; the least clearance of the line of sight here is 2.9 ft, at 557 yards); the range publishes no layout. Replaces the angle-spread estimate of 12.6 (range-day-five)"
+     "source": {
+      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+      "read": "2026-11-18",
+      "note": "where the plate stands sideways, in yards, from the line straight downrange (right positive): the plate's position above against the firing position and the bearing of fire, on the surveyed ground of data/terrain.json cta-piru.heights (USGS 1 Meter 11 x34y382 CA_LosAngeles_B23, captured 2024-07-01); placed on the nearest ground the firing position can see at its true distance, 72.5 yards left of the line of fire (on the line the surveyed ground hides it; the least clearance of the line of sight here is 2.9 ft, at 557 yards); the range publishes no layout. Replaces the angle-spread estimate of 12.6 (range-day-five)"
+     }
     },
     "yards": {
      "value": 800,
@@ -269,12 +363,27 @@
       "read": "2026-11-18",
       "note": "how high the plate's centre stands above the eye at the firing position (4 ft above the ground there, data/look.json eyeHeightFt), in feet: the surveyed ground at the plate's place is 272 ft above the ground at the firing position (data/terrain.json cta-piru.heights, USGS 1 Meter 11 x34y382 CA_LosAngeles_B23, captured 2024-07-01), plus the plate's centre above its own ground (the post at 24 × 0.9 in and half the plate, data/physics.json postHeightShareOfPlate), less the eye's 4 ft. The engine and every picture use this one figure. Replaces the slope estimate of 140 ft (range-day-five)"
      }
+    },
+    "position": {
+     "_about": "Where the plate stands on the ground, NAD83 / UTM zone 11N metres: at its stated distance from the firing position, on ground the firing position can see.",
+     "easting": {
+      "value": 340314.6,
+      "estimate": "read off the NAIP photograph of 2022-05-13, 2022-05-04 (data/terrain.json cta-piru.photo) and the surveyed heights: 800 yards from the firing position along the bearing of fire, placed on the nearest ground the firing position can see at its true distance, 72.5 yards left of the line of fire (on the line the surveyed ground hides it; the least clearance of the line of sight here is 2.9 ft, at 557 yards)"
+     },
+     "northing": {
+      "value": 3812958.9,
+      "estimate": "the same basis, northing"
+     }
     }
    },
    {
     "lateralYd": {
      "value": 0,
-     "estimate": "where the plate stands sideways, in yards, from the line straight downrange (right positive): on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 3.4 ft, at 896 yards); the range publishes no layout. Replaces the angle-spread estimate of 21.2 (range-day-five)"
+     "source": {
+      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+      "read": "2026-11-18",
+      "note": "where the plate stands sideways, in yards, from the line straight downrange (right positive): the plate's position above against the firing position and the bearing of fire, on the surveyed ground of data/terrain.json cta-piru.heights (USGS 1 Meter 11 x34y382 CA_LosAngeles_B23, captured 2024-07-01); on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 3.4 ft, at 896 yards); the range publishes no layout. Replaces the angle-spread estimate of 21.2 (range-day-five)"
+     }
     },
     "yards": {
      "value": 900,
@@ -299,12 +408,27 @@
       "read": "2026-11-18",
       "note": "how high the plate's centre stands above the eye at the firing position (4 ft above the ground there, data/look.json eyeHeightFt), in feet: the surveyed ground at the plate's place is 489 ft above the ground at the firing position (data/terrain.json cta-piru.heights, USGS 1 Meter 11 x34y382 CA_LosAngeles_B23, captured 2024-07-01), plus the plate's centre above its own ground (the post at 36 × 0.9 in and half the plate, data/physics.json postHeightShareOfPlate), less the eye's 4 ft. The engine and every picture use this one figure. Replaces the slope estimate of 169 ft (range-day-five)"
      }
+    },
+    "position": {
+     "_about": "Where the plate stands on the ground, NAD83 / UTM zone 11N metres: at its stated distance from the firing position, on ground the firing position can see.",
+     "easting": {
+      "value": 340358.7,
+      "estimate": "read off the NAIP photograph of 2022-05-13, 2022-05-04 (data/terrain.json cta-piru.photo) and the surveyed heights: 900 yards from the firing position along the bearing of fire, on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 3.4 ft, at 896 yards)"
+     },
+     "northing": {
+      "value": 3813062.9,
+      "estimate": "the same basis, northing"
+     }
     }
    },
    {
     "lateralYd": {
      "value": 0,
-     "estimate": "where the plate stands sideways, in yards, from the line straight downrange (right positive): on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 3.7 ft, at 3 yards); the range publishes no layout. Replaces the angle-spread estimate of 31.4 (range-day-five)"
+     "source": {
+      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+      "read": "2026-11-18",
+      "note": "where the plate stands sideways, in yards, from the line straight downrange (right positive): the plate's position above against the firing position and the bearing of fire, on the surveyed ground of data/terrain.json cta-piru.heights (USGS 1 Meter 11 x34y382 CA_LosAngeles_B23, captured 2024-07-01); on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 3.7 ft, at 3 yards); the range publishes no layout. Replaces the angle-spread estimate of 31.4 (range-day-five)"
+     }
     },
     "yards": {
      "value": 1000,
@@ -328,6 +452,17 @@
       "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
       "read": "2026-11-18",
       "note": "how high the plate's centre stands above the eye at the firing position (4 ft above the ground there, data/look.json eyeHeightFt), in feet: the surveyed ground at the plate's place is 591 ft above the ground at the firing position (data/terrain.json cta-piru.heights, USGS 1 Meter 11 x34y382 CA_LosAngeles_B23, captured 2024-07-01), plus the plate's centre above its own ground (the post at 36 × 0.9 in and half the plate, data/physics.json postHeightShareOfPlate), less the eye's 4 ft. The engine and every picture use this one figure. Replaces the slope estimate of 200 ft (range-day-five)"
+     }
+    },
+    "position": {
+     "_about": "Where the plate stands on the ground, NAD83 / UTM zone 11N metres: at its stated distance from the firing position, on ground the firing position can see.",
+     "easting": {
+      "value": 340338.1,
+      "estimate": "read off the NAIP photograph of 2022-05-13, 2022-05-04 (data/terrain.json cta-piru.photo) and the surveyed heights: 1000 yards from the firing position along the bearing of fire, on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 3.7 ft, at 3 yards)"
+     },
+     "northing": {
+      "value": 3813152,
+      "estimate": "the same basis, northing"
      }
     }
    }
@@ -433,7 +568,11 @@
    {
     "lateralYd": {
      "value": 0,
-     "estimate": "where the plate stands sideways, in yards, from the line straight downrange (right positive): on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 1.1 ft, at 93 yards); the range publishes no layout. Replaces the angle-spread estimate of 2.2 (range-day-five)"
+     "source": {
+      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
+      "read": "2026-11-18",
+      "note": "where the plate stands sideways, in yards, from the line straight downrange (right positive): the plate's position above against the firing position and the bearing of fire, on the surveyed ground of data/terrain.json angeles-sylmar.heights (USGS 1 Meter 11 x37y380 CA_LosAngeles_B23, captured 2024-07-01); on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 1.1 ft, at 93 yards); the range publishes no layout. Replaces the angle-spread estimate of 2.2 (range-day-five)"
+     }
     },
     "yards": {
      "value": 100,
@@ -458,12 +597,27 @@
       "read": "2026-11-18",
       "note": "how high the plate's centre stands above the eye at the firing position (4 ft above the ground there, data/look.json eyeHeightFt), in feet: the surveyed ground at the plate's place is 18 ft above the ground at the firing position (data/terrain.json angeles-sylmar.heights, USGS 1 Meter 11 x37y380 CA_LosAngeles_B23, captured 2024-07-01), plus the plate's centre above its own ground (the post at 18 × 0.9 in and half the plate, data/physics.json postHeightShareOfPlate), less the eye's 4 ft. The engine and every picture use this one figure. Replaces the slope estimate of 1 ft (range-day-five)"
      }
+    },
+    "position": {
+     "_about": "Where the plate stands on the ground, NAD83 / UTM zone 11N metres: at its stated distance from the firing position, on ground the firing position can see.",
+     "easting": {
+      "value": 374471.2,
+      "estimate": "read off the NAIP photograph of 2022-05-04 (data/terrain.json angeles-sylmar.photo) and the surveyed heights: 100 yards from the firing position along the bearing of fire, on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 1.1 ft, at 93 yards)"
+     },
+     "northing": {
+      "value": 3797227.3,
+      "estimate": "the same basis, northing"
+     }
     }
    },
    {
     "lateralYd": {
      "value": 0,
-     "estimate": "where the plate stands sideways, in yards, from the line straight downrange (right positive): on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 1.4 ft, at 178 yards); the range publishes no layout. Replaces the angle-spread estimate of 2.6 (range-day-five)"
+     "source": {
+      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
+      "read": "2026-11-18",
+      "note": "where the plate stands sideways, in yards, from the line straight downrange (right positive): the plate's position above against the firing position and the bearing of fire, on the surveyed ground of data/terrain.json angeles-sylmar.heights (USGS 1 Meter 11 x37y380 CA_LosAngeles_B23, captured 2024-07-01); on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 1.4 ft, at 178 yards); the range publishes no layout. Replaces the angle-spread estimate of 2.6 (range-day-five)"
+     }
     },
     "yards": {
      "value": 200,
@@ -488,12 +642,27 @@
       "read": "2026-11-18",
       "note": "how high the plate's centre stands above the eye at the firing position (4 ft above the ground there, data/look.json eyeHeightFt), in feet: the surveyed ground at the plate's place is 48 ft above the ground at the firing position (data/terrain.json angeles-sylmar.heights, USGS 1 Meter 11 x37y380 CA_LosAngeles_B23, captured 2024-07-01), plus the plate's centre above its own ground (the post at 18 × 0.9 in and half the plate, data/physics.json postHeightShareOfPlate), less the eye's 4 ft. The engine and every picture use this one figure. Replaces the slope estimate of 4 ft (range-day-five)"
      }
+    },
+    "position": {
+     "_about": "Where the plate stands on the ground, NAD83 / UTM zone 11N metres: at its stated distance from the firing position, on ground the firing position can see.",
+     "easting": {
+      "value": 374466.4,
+      "estimate": "read off the NAIP photograph of 2022-05-04 (data/terrain.json angeles-sylmar.photo) and the surveyed heights: 200 yards from the firing position along the bearing of fire, on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 1.4 ft, at 178 yards)"
+     },
+     "northing": {
+      "value": 3797318.6,
+      "estimate": "the same basis, northing"
+     }
     }
    },
    {
     "lateralYd": {
      "value": -7.5,
-     "estimate": "where the plate stands sideways, in yards, from the line straight downrange (right positive): placed on the nearest ground the firing position can see at its true distance, 7.5 yards left of the line of fire (on the line the surveyed ground hides it; the least clearance of the line of sight here is 2.7 ft, at 299 yards); the range publishes no layout. Replaces the angle-spread estimate of 1.3 (range-day-five)"
+     "source": {
+      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
+      "read": "2026-11-18",
+      "note": "where the plate stands sideways, in yards, from the line straight downrange (right positive): the plate's position above against the firing position and the bearing of fire, on the surveyed ground of data/terrain.json angeles-sylmar.heights (USGS 1 Meter 11 x37y380 CA_LosAngeles_B23, captured 2024-07-01); placed on the nearest ground the firing position can see at its true distance, 7.5 yards left of the line of fire (on the line the surveyed ground hides it; the least clearance of the line of sight here is 2.7 ft, at 299 yards); the range publishes no layout. Replaces the angle-spread estimate of 1.3 (range-day-five)"
+     }
     },
     "yards": {
      "value": 300,
@@ -518,12 +687,27 @@
       "read": "2026-11-18",
       "note": "how high the plate's centre stands above the eye at the firing position (4 ft above the ground there, data/look.json eyeHeightFt), in feet: the surveyed ground at the plate's place is 82 ft above the ground at the firing position (data/terrain.json angeles-sylmar.heights, USGS 1 Meter 11 x37y380 CA_LosAngeles_B23, captured 2024-07-01), plus the plate's centre above its own ground (the post at 18 × 0.9 in and half the plate, data/physics.json postHeightShareOfPlate), less the eye's 4 ft. The engine and every picture use this one figure. Replaces the slope estimate of 9 ft (range-day-five)"
      }
+    },
+    "position": {
+     "_about": "Where the plate stands on the ground, NAD83 / UTM zone 11N metres: at its stated distance from the firing position, on ground the firing position can see.",
+     "easting": {
+      "value": 374454.8,
+      "estimate": "read off the NAIP photograph of 2022-05-04 (data/terrain.json angeles-sylmar.photo) and the surveyed heights: 300 yards from the firing position along the bearing of fire, placed on the nearest ground the firing position can see at its true distance, 7.5 yards left of the line of fire (on the line the surveyed ground hides it; the least clearance of the line of sight here is 2.7 ft, at 299 yards)"
+     },
+     "northing": {
+      "value": 3797409.6,
+      "estimate": "the same basis, northing"
+     }
     }
    },
    {
     "lateralYd": {
      "value": 0,
-     "estimate": "where the plate stands sideways, in yards, from the line straight downrange (right positive): on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 2.5 ft, at 398 yards); the range publishes no layout. Replaces the angle-spread estimate of -1.7 (range-day-five)"
+     "source": {
+      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
+      "read": "2026-11-18",
+      "note": "where the plate stands sideways, in yards, from the line straight downrange (right positive): the plate's position above against the firing position and the bearing of fire, on the surveyed ground of data/terrain.json angeles-sylmar.heights (USGS 1 Meter 11 x37y380 CA_LosAngeles_B23, captured 2024-07-01); on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 2.5 ft, at 398 yards); the range publishes no layout. Replaces the angle-spread estimate of -1.7 (range-day-five)"
+     }
     },
     "yards": {
      "value": 400,
@@ -548,12 +732,27 @@
       "read": "2026-11-18",
       "note": "how high the plate's centre stands above the eye at the firing position (4 ft above the ground there, data/look.json eyeHeightFt), in feet: the surveyed ground at the plate's place is 123 ft above the ground at the firing position (data/terrain.json angeles-sylmar.heights, USGS 1 Meter 11 x37y380 CA_LosAngeles_B23, captured 2024-07-01), plus the plate's centre above its own ground (the post at 24 × 0.9 in and half the plate, data/physics.json postHeightShareOfPlate), less the eye's 4 ft. The engine and every picture use this one figure. Replaces the slope estimate of 16 ft (range-day-five)"
      }
+    },
+    "position": {
+     "_about": "Where the plate stands on the ground, NAD83 / UTM zone 11N metres: at its stated distance from the firing position, on ground the firing position can see.",
+     "easting": {
+      "value": 374456.9,
+      "estimate": "read off the NAIP photograph of 2022-05-04 (data/terrain.json angeles-sylmar.photo) and the surveyed heights: 400 yards from the firing position along the bearing of fire, on the line of fire, where the surveyed ground gives a clear line of sight (least clearance 2.5 ft, at 398 yards)"
+     },
+     "northing": {
+      "value": 3797501.3,
+      "estimate": "the same basis, northing"
+     }
     }
    },
    {
     "lateralYd": {
      "value": 12.5,
-     "estimate": "where the plate stands sideways, in yards, from the line straight downrange (right positive): placed on the nearest ground the firing position can see at its true distance, 12.5 yards right of the line of fire (on the line the surveyed ground hides it; the least clearance of the line of sight here is 2.5 ft, at 493 yards); the range publishes no layout. Replaces the angle-spread estimate of -6.5 (range-day-five)"
+     "source": {
+      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
+      "read": "2026-11-18",
+      "note": "where the plate stands sideways, in yards, from the line straight downrange (right positive): the plate's position above against the firing position and the bearing of fire, on the surveyed ground of data/terrain.json angeles-sylmar.heights (USGS 1 Meter 11 x37y380 CA_LosAngeles_B23, captured 2024-07-01); placed on the nearest ground the firing position can see at its true distance, 12.5 yards right of the line of fire (on the line the surveyed ground hides it; the least clearance of the line of sight here is 2.5 ft, at 493 yards); the range publishes no layout. Replaces the angle-spread estimate of -6.5 (range-day-five)"
+     }
     },
     "yards": {
      "value": 500,
@@ -578,12 +777,27 @@
       "read": "2026-11-18",
       "note": "how high the plate's centre stands above the eye at the firing position (4 ft above the ground there, data/look.json eyeHeightFt), in feet: the surveyed ground at the plate's place is 162 ft above the ground at the firing position (data/terrain.json angeles-sylmar.heights, USGS 1 Meter 11 x37y380 CA_LosAngeles_B23, captured 2024-07-01), plus the plate's centre above its own ground (the post at 24 × 0.9 in and half the plate, data/physics.json postHeightShareOfPlate), less the eye's 4 ft. The engine and every picture use this one figure. Replaces the slope estimate of 25 ft (range-day-five)"
      }
+    },
+    "position": {
+     "_about": "Where the plate stands on the ground, NAD83 / UTM zone 11N metres: at its stated distance from the firing position, on ground the firing position can see.",
+     "easting": {
+      "value": 374463.5,
+      "estimate": "read off the NAIP photograph of 2022-05-04 (data/terrain.json angeles-sylmar.photo) and the surveyed heights: 500 yards from the firing position along the bearing of fire, placed on the nearest ground the firing position can see at its true distance, 12.5 yards right of the line of fire (on the line the surveyed ground hides it; the least clearance of the line of sight here is 2.5 ft, at 493 yards)"
+     },
+     "northing": {
+      "value": 3797593.2,
+      "estimate": "the same basis, northing"
+     }
     }
    },
    {
     "lateralYd": {
      "value": 12.5,
-     "estimate": "where the plate stands sideways, in yards, from the line straight downrange (right positive): placed on the nearest ground the firing position can see at its true distance, 12.5 yards right of the line of fire (on the line the surveyed ground hides it; the least clearance of the line of sight here is 1 ft, at 580 yards); the range publishes no layout. Replaces the angle-spread estimate of -13.1 (range-day-five)"
+     "source": {
+      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
+      "read": "2026-11-18",
+      "note": "where the plate stands sideways, in yards, from the line straight downrange (right positive): the plate's position above against the firing position and the bearing of fire, on the surveyed ground of data/terrain.json angeles-sylmar.heights (USGS 1 Meter 11 x37y380 CA_LosAngeles_B23, captured 2024-07-01); placed on the nearest ground the firing position can see at its true distance, 12.5 yards right of the line of fire (on the line the surveyed ground hides it; the least clearance of the line of sight here is 1 ft, at 580 yards); the range publishes no layout. Replaces the angle-spread estimate of -13.1 (range-day-five)"
+     }
     },
     "yards": {
      "value": 600,
@@ -607,6 +821,17 @@
       "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
       "read": "2026-11-18",
       "note": "how high the plate's centre stands above the eye at the firing position (4 ft above the ground there, data/look.json eyeHeightFt), in feet: the surveyed ground at the plate's place is 206 ft above the ground at the firing position (data/terrain.json angeles-sylmar.heights, USGS 1 Meter 11 x37y380 CA_LosAngeles_B23, captured 2024-07-01), plus the plate's centre above its own ground (the post at 24 × 0.9 in and half the plate, data/physics.json postHeightShareOfPlate), less the eye's 4 ft. The engine and every picture use this one figure. Replaces the slope estimate of 36 ft (range-day-five)"
+     }
+    },
+    "position": {
+     "_about": "Where the plate stands on the ground, NAD83 / UTM zone 11N metres: at its stated distance from the firing position, on ground the firing position can see.",
+     "easting": {
+      "value": 374458.7,
+      "estimate": "read off the NAIP photograph of 2022-05-04 (data/terrain.json angeles-sylmar.photo) and the surveyed heights: 600 yards from the firing position along the bearing of fire, placed on the nearest ground the firing position can see at its true distance, 12.5 yards right of the line of fire (on the line the surveyed ground hides it; the least clearance of the line of sight here is 1 ft, at 580 yards)"
+     },
+     "northing": {
+      "value": 3797684.5,
+      "estimate": "the same basis, northing"
      }
     }
    }
