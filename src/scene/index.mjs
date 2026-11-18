@@ -124,8 +124,10 @@ async function create(opts) {
   const view = { yawDeg: 0, pitchDeg: 0, fovDeg: 5, glass: false, windMph: 0 };
   const dir = new THREE.Vector3();
   function aim() {
+    // The plain drawing's angles are independent: right = atan(sideways / downrange), up = atan(rise / downrange). The camera looks
+    // along (tan right, tan up, -1), so the aimed point sits exactly at the view's centre under both pictures.
     const y = (view.yawDeg * Math.PI) / 180, p = (view.pitchDeg * Math.PI) / 180;
-    dir.set(Math.sin(y) * Math.cos(p), Math.sin(p), -Math.cos(y) * Math.cos(p));
+    dir.set(Math.tan(y), Math.tan(p), -1);
     camera.lookAt(dir.clone().add(camera.position));
     camera.fov = view.fovDeg; camera.updateProjectionMatrix();
   }

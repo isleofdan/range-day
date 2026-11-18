@@ -26,12 +26,14 @@ const PIRU = '/line?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt';
 const ZERO = '/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt';
 const SYLMAR = '/line?course=angeles-sylmar';
 const settle = (page, ms) => page.waitForTimeout(ms);
-const ready = (page) => page.waitForSelector('#fire');
+// The firing line is ready when its picture is: the scene built (Full or Light), or Plain shown.
+const ready = async (page) => { await page.waitForSelector('#fire'); await page.waitForFunction(() => window.RangeDayLine && (RangeDayLine.scene || RangeDayLine.sceneFailed || (!RangeDayLine.sceneLoading && RangeDayLine.picture === 'plain')), null, { timeout: 90000 }); await settle(page, 400); };
 const plate = async (page, ix) => { await ready(page); await page.selectOption('#plate', String(ix)); await settle(page, 400); };
 // Clears what this device keeps for a rifle and sight, so a state starts from the middle.
 const fresh = (page, rifle, sight) => page.evaluate(([r, s]) => { for (const k of Object.keys(localStorage)) if (k.startsWith(`range-day:sight:${r}:${s}`) || k.startsWith(`range-day:zero:${r}:`) || k.startsWith(`range-day:log:${r}:`)) localStorage.removeItem(k); }, [rifle, sight]);
 // Closes the open day, so a screen opens on the choice its address makes (an open day with shots wins over the address). Every screen starts that way unless it says keepDay.
-const noDay = (page) => page.evaluate(() => { localStorage.removeItem('range-day:day:open'); localStorage.removeItem('range-day:day:packed'); for (const k of Object.keys(localStorage)) if (k.startsWith('range-day:supply:')) localStorage.removeItem(k); }); // a fresh day and a full zeroing supply before each state
+const noDay = (page) => page.evaluate(() => { localStorage.removeItem('range-day:day:open'); localStorage.removeItem('range-day:day:packed'); for (const k of Object.keys(localStorage)) if (k.startsWith('range-day:supply:')) localStorage.removeItem(k); localStorage.setItem('range-day:picture', JSON.stringify('full')); }); // a fresh day, a full zeroing supply and the Full picture before each state (a state that wants another picture sets it)
+const picture = (page, v) => page.evaluate((p) => localStorage.setItem('range-day:picture', JSON.stringify(p)), v);
 // A seeded shot through the page's own door, landed.
 async function seededShot(page, seed) {
   const before = await page.evaluate(() => RangeDayLine.log.length);
@@ -86,6 +88,21 @@ const SCREENS = [
   // A January morning and a July afternoon on the canyon course through the Vepr's scope.
   { name: 'line-january-morning', path: `${PIRU}&sight=utg-2-7x44&month=1&time=morning`, expect: 'January morning', act: (page) => plate(page, 4) },
   { name: 'line-july-afternoon', path: `${PIRU}&sight=utg-2-7x44&month=7&time=afternoon`, expect: 'July afternoon', act: (page) => plate(page, 4) },
+  // The canyon course's picture (range-day-five): through the Vepr's scope at 2x and 7x and through its irons at 1x, in February at midday and in September in the afternoon.
+  { name: 'line-feb-midday-2x', path: `${PIRU}&sight=utg-2-7x44&month=2&time=midday`, expect: 'February midday', act: async (page) => { await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(2)); await settle(page, 400); } },
+  { name: 'line-feb-midday-7x', path: `${PIRU}&sight=utg-2-7x44&month=2&time=midday`, expect: 'February midday', act: async (page) => { await plate(page, 8); await page.evaluate(() => RangeDayLine.setZoom(7)); await settle(page, 400); } },
+  { name: 'line-feb-midday-irons', path: `${PIRU}&sight=vepr-irons&month=2&time=midday`, expect: 'February midday', act: (page) => plate(page, 4) },
+  { name: 'line-sep-afternoon-2x', path: `${PIRU}&sight=utg-2-7x44&month=9&time=afternoon`, expect: 'September afternoon', act: async (page) => { await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(2)); await settle(page, 400); } },
+  { name: 'line-sep-afternoon-7x', path: `${PIRU}&sight=utg-2-7x44&month=9&time=afternoon`, expect: 'September afternoon', act: async (page) => { await plate(page, 8); await page.evaluate(() => RangeDayLine.setZoom(7)); await settle(page, 400); } },
+  { name: 'line-sep-afternoon-irons', path: `${PIRU}&sight=vepr-irons&month=9&time=afternoon`, expect: 'September afternoon', act: (page) => plate(page, 4) },
+  // A hit with its strike mark on the plate, at 7x.
+  { name: 'line-hit-strike', path: `${PIRU}&sight=utg-2-7x44&month=9&time=midday`, expect: 'Hit', act: async (page) => { await plate(page, 1); await page.evaluate(() => RangeDayLine.setZoom(7)); await seededHit(page, 21); await settle(page, 600); } },
+  // The Light picture beside the Full one (the same view as line-sep-afternoon-2x).
+  { name: 'line-light-2x', path: `${PIRU}&sight=utg-2-7x44&month=9&time=afternoon`, expect: 'September afternoon', act: async (page) => { await picture(page, 'light'); await page.reload(); await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(2)); await settle(page, 400); } },
+  // The Plain fallback: a browser without 3D shows the plain picture and the one line (its own browser context, with 3D switched off).
+  { name: 'line-plain-fallback', path: `${PIRU}&sight=utg-2-7x44&month=9&time=afternoon`, expect: 'could not draw the full picture', no3d: true, act: async (page) => { await page.evaluate(() => localStorage.removeItem('range-day:picture')); await page.reload(); await plate(page, 4); } },
+  // The setting: Picture, with the conditions switch.
+  { name: 'line-picture-setting', path: `${PIRU}&sight=utg-2-7x44`, expect: 'Picture', act: async (page) => { await ready(page); await page.evaluate(() => document.getElementById('picture').scrollIntoView()); await settle(page, 200); } },
   { name: 'status', path: '/status', expect: 'alive since ' },
   { name: 'zero-before', path: ZERO, expect: 'center of the group', act: async (page) => { await page.waitForSelector('#fire5'); await page.click('#fire5'); await settle(page, 200); } },
   { name: 'zero-after', path: ZERO, expect: 'Saved zero', act: async (page) => {
@@ -169,13 +186,22 @@ for (const [size, viewport] of Object.entries(SIZES)) {
   check(`${size}: the passphrase typed into the form signs in`, true);
 
   for (const s of SCREENS) {
-    if (!s.keepDay) await noDay(page);
-    await page.goto(`${base}${s.path}`);
-    if (s.act) await s.act(page);
-    const text = await page.textContent('body');
+    let p = page, ctx = null;
+    if (s.no3d) {
+      // a browser that cannot draw 3D: its own context, signed in through the form, with the 3D contexts refused
+      ctx = await browser.newContext({ viewport, deviceScaleFactor: 1, isMobile: size === 'phone', hasTouch: size === 'phone' });
+      await ctx.addInitScript(() => { const orig = HTMLCanvasElement.prototype.getContext; HTMLCanvasElement.prototype.getContext = function (type, ...rest) { if (type === 'webgl2' || type === 'webgl') return null; return orig.call(this, type, ...rest); }; });
+      p = await ctx.newPage();
+      await p.goto(`${base}/login`); await p.fill('#passphrase', PASS); await p.click('button[type=submit]'); await p.waitForURL(`${base}/`);
+    }
+    if (!s.keepDay) await noDay(p);
+    await p.goto(`${base}${s.path}`);
+    if (s.act) await s.act(p);
+    const text = await p.textContent('body');
     check(`${size}: ${s.name} shows "${s.expect.trim()}"`, text.includes(s.expect));
-    check(`${size}: ${s.name} fits the width`, await noSideways(page));
-    await page.screenshot({ path: join(out, `${s.name}-${size}.png`) });
+    check(`${size}: ${s.name} fits the width`, await noSideways(p));
+    await p.screenshot({ path: join(out, `${s.name}-${size}.png`) });
+    if (ctx) await ctx.close();
   }
   await context.close();
 }

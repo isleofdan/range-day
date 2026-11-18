@@ -73,7 +73,9 @@ clicks, then works out the drop and the wind for each distance himself.
   sights), fire again, press **Save this zero**. The zero is saved on the
   device for that rifle, sight and load. Changing the load keeps the
   sight where it is, so the group moves as it would in life.
-- **Firing line** (`/line`): the view through the sight. A scope zooms
+- **Firing line** (`/line`): the view through the sight. On the canyon
+  course the view is a 3D picture of the real place (below, "The
+  picture"); on the rifle line it is still the flat drawing. A scope zooms
   across its real range with its mil-dot reticle; the 3x prism sight
   shows its drop reticle (chevron and hold marks, drawn from the data);
   the red dot is an unmagnified window with a 2 MOA dot, and on the Tavor
@@ -95,14 +97,65 @@ clicks, then works out the drop and the wind for each distance himself.
 One MOA is a minute of angle, 1/60 of a degree, about 1 inch at 100
 yards; sights click in MOA.
 
+## The picture
+
+Since range-day-five the canyon course's firing line is drawn as a 3D
+scene of the real range (`public/scene.min.js`, built from `src/scene/`
+with the three library by `scripts/build-scene.mjs`): the ground is the
+US Geological Survey's 1 m lidar survey of the place, coloured from the
+USGS aerial photograph of May 2022 and re-tinted to the season's measured
+colours (green from February to April, straw and tan from June to
+November); the hills beyond come from the survey at 10 m; the sun stands
+where NOAA's formula puts it for the middle day of the day's month at the
+morning, midday or afternoon clock hour, the ground throws its own
+shadows, and the sky is a physical model that goes hazy with the day's
+humidity; the red plates stand at their surveyed places in front of dirt
+mounds, chipped where they are hit and swinging on a hit; the white
+numbered boards stand in their rows; brush stands where the photograph is
+dark with scrub and sways with the wind; through a scope the picture is
+round, with a soft warm rim, a little softness and bleached highlights;
+heat shimmer grows with distance, temperature and magnification and leans
+with the wind. `docs/LOOK.md` is what photographs of the two ranges
+show, as words and measured colours; `data/look.json` holds the picture's
+figures, each with its basis.
+
+Three pictures, one setting (under "Setting" on the firing line, kept on
+the device): **Full**, **Light** (the same ground, fewer bushes, a
+smaller photograph, for a slower phone) and **Plain** (the flat drawing).
+The first visit draws Full for two seconds and keeps Full or Light by how
+fast the device drew it; a browser that cannot draw 3D shows Plain and
+says so in one line. Under every picture the same course data goes to the
+engine and a shot lands the same way; the scene draws each plate where
+the flat drawing does, at the same angular scale, so the sight's marks
+mean the same thing.
+
+Where the ground comes from: `data/terrain.json` records, for each range,
+the heights (USGS 3D Elevation Program, 1 m, the 2024 "CA_LosAngeles_B23"
+lidar), the hills beyond (10 m), and the photograph (USGS NAIP, 0.6 m,
+captured 4 May 2022), each with the exact request, the date fetched, the
+data's own spacing and capture date, the license (US government work,
+public domain) and the bytes; the files sit in `public/terrain/` under
+names carrying their content hash and are served with a one-year cache
+header, so a second visit downloads none of them. They are fetched by the
+Terrain workflow (`.github/workflows/terrain.yml`, `scripts/terrain/`) on
+GitHub's own runner, because a cloud session's network refuses the two
+services; the workflow commits what it fetches to the branch that pushed.
+Each course's firing position and bearing of fire were read off the
+photograph (the long roofed shelter); each plate's height and sideways
+place follow from the surveyed ground, on the line of fire where the
+ground gives a clear line of sight, else on the nearest visible ground
+sideways at its true distance (`data/courses.json` says which, and why).
+
 ## Where the numbers come from
 
 `data/` holds every figure the game uses: each load's speed, drag figure,
 drag model and box, each rifle's barrel length and sight height, each sight's
 click value, dot size, reticle marks or leaf settings (each setting's
 angle derived with the engine from the service load the leaf was cut
-for), each course's plates (distance, size, height above the firing line
-and place across the view), the dust's size, the weather by course, month
+for), each course's firing position, bearing of fire and plates (distance,
+size, surveyed height above the eye and surveyed place across the view),
+the dust's size, the picture's figures (`data/look.json`), the surveyed
+ground's records (`data/terrain.json`), the weather by course, month
 and time of day, and how muzzle speed follows the temperature (one
 figure, an estimate from the published rules of thumb, applied in one
 place in the engine). Every figure carries the maker's page address and the
@@ -139,6 +192,9 @@ the app it called. The app calls nothing outside itself.
     APP_PASSWORD=try-me COOKIE_SECRET=any-long-text npm run dev
 
 Then open http://localhost:8080 and sign in with `try-me`.
+`npm run build:scene` rebuilds `public/scene.min.js` from `src/scene/`
+after a change there (the test suite fails when the committed file
+differs from a fresh build).
 `npm run check` runs every check (`npm test`, then `npm run screenshots`,
 which saves the screens at both sizes into `docs/reports/screenshots/`).
 They also run by themselves after every edit an agent makes and on every
