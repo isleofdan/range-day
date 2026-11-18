@@ -109,7 +109,7 @@ const SCREENS = [
     for (let i = 0; i < Math.round((Math.abs(el) % 1) / 0.25); i++) await page.click(el > 0 ? '#el-up' : '#el-down');
     for (let i = 0; i < Math.floor(Math.abs(wd)); i++) await page.click(wd > 0 ? '#wd-right-moa' : '#wd-left-moa');
     for (let i = 0; i < Math.round((Math.abs(wd) % 1) / 0.25); i++) await page.click(wd > 0 ? '#wd-right' : '#wd-left');
-    await seededShot(page, 21); await settle(page, 3500);
+    await seededShot(page, 21); await page.evaluate(() => window.scrollTo(0, 0)); await settle(page, 3500);
   } },
   // The Light picture beside the Full one (the same view as line-sep-afternoon-2x).
   { name: 'line-light-2x', path: `${PIRU}&sight=utg-2-7x44&month=9&time=afternoon`, expect: 'September afternoon', act: async (page) => { await picture(page, 'light'); await page.reload(); await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(2)); await settle(page, 400); } },
