@@ -41,7 +41,7 @@
    },
    "wkid": {
     "value": 26911,
-    "estimate": "EPSG 26911, NAD83 / UTM zone 11N, the services coordinate system for these files"
+    "estimate": "EPSG 26911, NAD83 / UTM zone 11N, the services' coordinate system for these files"
    }
   },
   "heights": {
@@ -441,7 +441,7 @@
    },
    "wkid": {
     "value": 26911,
-    "estimate": "EPSG 26911, NAD83 / UTM zone 11N, the services coordinate system for these files"
+    "estimate": "EPSG 26911, NAD83 / UTM zone 11N, the services' coordinate system for these files"
    }
   },
   "heights": {
