@@ -38,7 +38,10 @@ async function signedIn(viewport) {
   return { page, context, errors };
 }
 // Closes any day left open by an earlier test, so a screen opens on the choice its address makes (an open day with shots wins over the address).
-const noDay = (page) => page.evaluate(() => { try { localStorage.removeItem('range-day:day:open'); localStorage.removeItem('range-day:day:packed'); } catch {} });
+// Closes any day left open by an earlier test, and opens the plain picture: these tests are about the bench, the line's
+// figures and the records, which are the same under every picture (test/scene.test.js proves that and the picture itself);
+// the test browser draws 3D in software, which would only slow them.
+const noDay = (page) => page.evaluate(() => { try { localStorage.removeItem('range-day:day:open'); localStorage.removeItem('range-day:day:packed'); localStorage.setItem('range-day:picture', JSON.stringify('plain')); } catch {} });
 const groupCenter = async (page) => {
   const t = await page.textContent('#group');
   const m = /center of the group ([\d.]+) in (low|high), ([\d.]+) in (right|left)|center of the group (level|[\d.]+ in (?:low|high)), (centered|[\d.]+ in (?:right|left))/.exec(t);

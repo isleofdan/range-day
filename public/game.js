@@ -584,10 +584,8 @@ window.RD = (function () {
   function holdRepeat(button, step) {
     let timer = null;
     const stop = () => { if (timer) { clearTimeout(timer); timer = null; } };
-    // The repeat keeps clock time: when a frame runs long (a slow device drawing the picture), the steps that fell due meanwhile are taken together, so a hold of so many seconds turns the knob the same amount everywhere.
-    let delay = 400, due = 0;
-    const go = () => { timer = setTimeout(() => { const now = performance.now(); let n = 0; while (due <= now && n < 50) { step(); n++; delay = Math.max(30, delay * 0.75); due += delay; } if (due < now) due = now; go(); }, Math.max(10, due - performance.now())); };
-    button.addEventListener('pointerdown', (e) => { if (e.button !== 0) return; e.preventDefault(); stop(); step(); delay = 400; due = performance.now() + delay; go(); try { button.setPointerCapture(e.pointerId); } catch {} });
+    const go = (delay) => { timer = setTimeout(() => { step(); go(Math.max(30, delay * 0.75)); }, delay); };
+    button.addEventListener('pointerdown', (e) => { if (e.button !== 0) return; e.preventDefault(); stop(); step(); go(400); try { button.setPointerCapture(e.pointerId); } catch {} });
     for (const ev of ['pointerup', 'pointercancel', 'lostpointercapture']) button.addEventListener(ev, stop);
     button.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); step(); } });
     button.addEventListener('contextmenu', (e) => e.preventDefault());

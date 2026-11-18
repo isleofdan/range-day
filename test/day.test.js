@@ -40,7 +40,9 @@ async function signedIn(viewport, b) {
   await page.evaluate(() => localStorage.clear());
   return { page, context, errors };
 }
-const noDay = (page) => page.evaluate(() => { localStorage.removeItem('range-day:day:open'); localStorage.removeItem('range-day:day:packed'); });
+// Closes any day left open by an earlier test, and opens the plain picture: these tests are about the day's records, which are
+// the same under every picture (test/scene.test.js proves that and the picture itself); the test browser draws 3D in software.
+const noDay = (page) => page.evaluate(() => { localStorage.removeItem('range-day:day:open'); localStorage.removeItem('range-day:day:packed'); localStorage.setItem('range-day:picture', JSON.stringify('plain')); });
 const AR = 'course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193';
 const line = async (page, q, b) => { await page.goto(`${b || base}/line?${q}`); await page.waitForSelector('#fire'); };
 const bench = async (page, q) => { await page.goto(`${base}/zero?${q}`); await page.waitForSelector('#fire5'); };
