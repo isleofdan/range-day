@@ -45,6 +45,7 @@ jobs:
         run: |
           git config user.name "terrain workflow"
           git config user.email "terrain-workflow@users.noreply.github.com"
+          mkdir -p public/terrain
           git add -A public/terrain data/terrain.json
           if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
           git commit -m "Terrain: surveyed heights and aerial photographs fetched by the Terrain workflow (run ${{ github.run_id }})"
