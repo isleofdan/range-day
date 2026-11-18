@@ -116,10 +116,14 @@
   `CLAUDE.md`'s drawings rule is amended as the brief ordered, with the
   quoted instruction's attribution kept as the brief's exact text (the
   brief check's third finding; `CLAUDE.md` already names the same person in
-  its other rules, and the ownership rule is untouched).
+  its other rules, and the ownership rule is untouched); the knobs are
+  untouched (the two older browser test files open the plain picture, since
+  the test browser's software 3D starved a held knob's clock); the session
+  went on after one auto-mode refusal of a compound command by doing its
+  allowed parts one at a time, and says so in the report.
 - **Next session needs:** the rifle line's own things (the long sand
   berm, the lane signs, the pipe target frames) before its `pictureReady`
-  turns on, then the gun-record build; the look at the deployed picture on
+  turns on; the gun-record build, planned by a Personal Shipyard chat; the look at the deployed picture on
   Dan's phone (production rendering is unverified from the cloud session);
   the Sentry DSN from the Linux machine (unchanged). Report:
   `docs/reports/range-day-five-report.md`.
