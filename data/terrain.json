@@ -35,14 +35,27 @@
      "note": "the same, northing"
     }
    },
-   "zone": 11,
-   "wkid": 26911
+   "zone": {
+    "value": 11,
+    "estimate": "UTM zone 11, which holds both ranges (longitudes 114 to 120 W)"
+   },
+   "wkid": {
+    "value": 26911,
+    "estimate": "EPSG 26911, NAD83 / UTM zone 11N, the services coordinate system for these files"
+   }
   },
   "heights": {
    "file": "terrain/cta-piru-heights-348e2072.png",
    "service": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer",
    "request": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-   "requests": 25,
+   "requests": {
+    "value": 25,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "how many 500-pixel tiles the square was fetched in; the request shown is the first"
+    }
+   },
    "fetched": "2026-11-18",
    "dataset": "USGS 1 Meter 11 x34y382 CA_LosAngeles_B23",
    "datasetName": "CA_LosAngeles_B23",
@@ -144,7 +157,14 @@
    "file": "terrain/cta-piru-heights-far-f9e0f24a.png",
    "service": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer",
    "request": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-   "requests": 4,
+   "requests": {
+    "value": 4,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "how many 500-pixel tiles the square was fetched in; the request shown is the first"
+    }
+   },
    "fetched": "2026-11-18",
    "dataset": "the service's own mosaic (its default \"Best\" ordering over every dataset it holds here)",
    "license": "US government work, public domain (USGS 3DEP and USDA NAIP, distributed by The National Map without restriction)",
@@ -415,14 +435,27 @@
      "note": "the same, northing"
     }
    },
-   "zone": 11,
-   "wkid": 26911
+   "zone": {
+    "value": 11,
+    "estimate": "UTM zone 11, which holds both ranges (longitudes 114 to 120 W)"
+   },
+   "wkid": {
+    "value": 26911,
+    "estimate": "EPSG 26911, NAD83 / UTM zone 11N, the services coordinate system for these files"
+   }
   },
   "heights": {
    "file": "terrain/angeles-sylmar-heights-e2edd0d3.png",
    "service": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer",
    "request": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
-   "requests": 25,
+   "requests": {
+    "value": 25,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
+     "read": "2026-11-18",
+     "note": "how many 500-pixel tiles the square was fetched in; the request shown is the first"
+    }
+   },
    "fetched": "2026-11-18",
    "dataset": "USGS 1 Meter 11 x37y380 CA_LosAngeles_B23",
    "datasetName": "CA_LosAngeles_B23",
@@ -524,7 +557,14 @@
    "file": "terrain/angeles-sylmar-heights-far-f368e76d.png",
    "service": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer",
    "request": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-   "requests": 4,
+   "requests": {
+    "value": 4,
+    "source": {
+     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
+     "read": "2026-11-18",
+     "note": "how many 500-pixel tiles the square was fetched in; the request shown is the first"
+    }
+   },
    "fetched": "2026-11-18",
    "dataset": "the service's own mosaic (its default \"Best\" ordering over every dataset it holds here)",
    "license": "US government work, public domain (USGS 3DEP and USDA NAIP, distributed by The National Map without restriction)",

@@ -110,7 +110,7 @@ for (const r of RANGES) {
   console.log(`\n=== ${r.id} (${r.name})`);
   const u = toUtm(r.lat, r.lon);
   const half = SIDE_M / 2;
-  const rec = { name: r.name, center: { lat: fig(r.lat, 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(r.lat + ',' + r.lon), 'the range\'s public map position (Google Places, read 19 Nov 2026 by the chat that wrote the brief)'), lon: fig(r.lon, 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(r.lat + ',' + r.lon), 'the same'), easting: fig(Math.round(u.e * 10) / 10, 'https://pubs.usgs.gov/pp/1395/report.pdf', 'NAD83 / UTM zone 11N easting of the map position, by Snyder\'s series (scripts/terrain/lib.mjs, toUtm)'), northing: fig(Math.round(u.n * 10) / 10, 'https://pubs.usgs.gov/pp/1395/report.pdf', 'the same, northing'), zone: 11, wkid: 26911 } };
+  const rec = { name: r.name, center: { lat: fig(r.lat, 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(r.lat + ',' + r.lon), 'the range\'s public map position (Google Places, read 19 Nov 2026 by the chat that wrote the brief)'), lon: fig(r.lon, 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(r.lat + ',' + r.lon), 'the same'), easting: fig(Math.round(u.e * 10) / 10, 'https://pubs.usgs.gov/pp/1395/report.pdf', 'NAD83 / UTM zone 11N easting of the map position, by Snyder\'s series (scripts/terrain/lib.mjs, toUtm)'), northing: fig(Math.round(u.n * 10) / 10, 'https://pubs.usgs.gov/pp/1395/report.pdf', 'the same, northing'), zone: { value: 11, estimate: 'UTM zone 11, which holds both ranges (longitudes 114 to 120 W)' }, wkid: { value: 26911, estimate: 'EPSG 26911, NAD83 / UTM zone 11N, the services\' coordinate system for these files' } } };
 
   // --- the near heights: the finest dataset the catalog holds over the square ---
   const cat = await catalog(SERVICES.heights, u, half);
@@ -128,7 +128,7 @@ for (const r of RANGES) {
   console.log(`  heights: ${near.width}×${near.height} at ${spacing} m, ${near.requests} requests, ${enc.min.toFixed(1)}..${enc.max.toFixed(1)} m, ${enc.holes} holes, PNG ${enc.buf.length} bytes, origin E ${near.originE} N ${near.originN}`);
   const nearName = writeNamed(`${r.id}-heights`, 'png', enc.buf);
   rec.heights = {
-    file: `terrain/${nearName}`, service: SERVICES.heights.url, request: near.url, requests: near.requests, fetched: today, dataset: chosen[0].title || chosen[0].Name, datasetName: chosen[0].Name, catalogRequest: cat.url, captureDate: dateOf(chosen[0].AcquisitionDate), publishedDate: chosen[0].pubdate ? String(chosen[0].pubdate) : null, verticalDatum: chosen[0].VerticalDatum, license: LICENSE,
+    file: `terrain/${nearName}`, service: SERVICES.heights.url, request: near.url, requests: fig(near.requests, near.url, 'how many 500-pixel tiles the square was fetched in; the request shown is the first'), fetched: today, dataset: chosen[0].title || chosen[0].Name, datasetName: chosen[0].Name, catalogRequest: cat.url, captureDate: dateOf(chosen[0].AcquisitionDate), publishedDate: chosen[0].pubdate ? String(chosen[0].pubdate) : null, verticalDatum: chosen[0].VerticalDatum, license: LICENSE,
     width: fig(near.width, near.url, 'pixels across'), height: fig(near.height, near.url, 'pixels down'), spacingM: fig(spacing, cat.url, `the service's LowPS for this dataset, the finest it holds over the square (${finest} m)`),
     originE: fig(near.originE, near.url, 'the TIFF\'s ModelTiepoint: the top-left corner of the square, easting'), originN: fig(near.originN, near.url, 'the same, northing'),
     stepM: fig(enc.step, near.url, 'metres per pixel count in the PNG (chosen so the span fits 16 bits with 2 cm steps)'), offsetM: fig(enc.offset, near.url, 'metres added to pixel × stepM: one below the lowest height in the square'),
@@ -142,7 +142,7 @@ for (const r of RANGES) {
   console.log(`  far heights: ${far.width}×${far.height} at ${FAR_SPACING_M} m, ${encFar.min.toFixed(1)}..${encFar.max.toFixed(1)} m, ${encFar.holes} holes, PNG ${encFar.buf.length} bytes`);
   const farName = writeNamed(`${r.id}-heights-far`, 'png', encFar.buf);
   rec.heightsFar = {
-    file: `terrain/${farName}`, service: SERVICES.heights.url, request: far.url, requests: far.requests, fetched: today, dataset: 'the service\'s own mosaic (its default "Best" ordering over every dataset it holds here)', license: LICENSE,
+    file: `terrain/${farName}`, service: SERVICES.heights.url, request: far.url, requests: fig(far.requests, far.url, 'how many 500-pixel tiles the square was fetched in; the request shown is the first'), fetched: today, dataset: 'the service\'s own mosaic (its default "Best" ordering over every dataset it holds here)', license: LICENSE,
     width: fig(far.width, far.url, 'pixels across'), height: fig(far.height, far.url, 'pixels down'), spacingM: fig(FAR_SPACING_M, far.url, 'the requested spacing: 10 km across 1,000 pixels'),
     originE: fig(far.originE, far.url, 'the top-left corner, easting'), originN: fig(far.originN, far.url, 'the same, northing'),
     stepM: fig(encFar.step, far.url, 'metres per pixel count'), offsetM: fig(encFar.offset, far.url, 'metres added to pixel × stepM'),
