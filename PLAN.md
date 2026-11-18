@@ -76,6 +76,54 @@
 
 (Each session appends its own, in order.)
 
+### range-day-five — 18 Nov 2026 (cloud session, from the Wall card `range-day`)
+
+- **Stands:** the canyon course's firing line is a 3D picture of the real
+  place, pull request #10 (branch `ccr-f981108b-yg0v0x`): the ground
+  from the USGS 1 m lidar survey (the 2024 "CA_LosAngeles_B23" dataset)
+  and the hills beyond at 10 m, coloured from the USGS aerial photograph
+  of 4 May 2022 re-tinted to the season's measured palette, fetched by the
+  new Terrain workflow on GitHub's runner (`scripts/terrain/`, recorded
+  file by file in `data/terrain.json`, 17.1 MB in `public/terrain/`, each
+  name carrying its content hash, served with a one-year cache header);
+  the sun from NOAA's formula for the day's month and time, the ground's
+  own shadows from the heights, a shadow map for the boards, plates and
+  roof; a physical sky hazier on a humid day; the red plates at their
+  surveyed places on dirt mounds, chipped where hit; the numbered boards
+  in their rows; the shelter's roof; brush where the photograph is dark
+  with scrub, swaying with the wind; heat shimmer and the scope's glass.
+  Three pictures, one setting (`picture`, on the device): Full, Light,
+  Plain; the first visit counts frames for two seconds; a browser without
+  3D shows Plain and says so. The one change to what a shot does: each
+  course's `altitudeFt` and every plate's `riseFt` and `lateralYd` are
+  surveyed now (canyon firing position 1,040 ft, was 850; the 1,000-yard
+  plate 591 ft above the eye, was 200; rifle line 1,680 ft, was 1,500),
+  from a firing position and bearing of fire read off the photograph.
+  The rifle line keeps the Plain picture (`pictureReady` false: its own
+  things are not drawn yet). 97 tests, 46 screenshot states.
+- **Decided:** the heights are fetched in 500-pixel tiles (one request
+  for the whole square answered 502 and then an empty image); the plates
+  at 500, 700 and 800 yards on the canyon course and 300, 500 and 600 on
+  the rifle line stand sideways of the line of fire, on the nearest ground
+  the firing position can see at their true distance, because the
+  surveyed ground hides the line to them; the 10 km far square of heights
+  was added beyond the brief's 2.5 km so the ridges behind the far plates
+  are drawn; close-up detail is made in code (no CC0 scan source was
+  reached through npm or the runner); the camera looks along (tan right,
+  tan up, −1) so a plate sits where the plain drawing puts it to within
+  0.07 px; the palette colours are albedo and the light's strength is a
+  figure of the data, measured against the photographs' colours;
+  `CLAUDE.md`'s drawings rule is amended as the brief ordered, with the
+  quoted instruction's attribution kept as the brief's exact text (the
+  brief check's third finding; `CLAUDE.md` already names the same person in
+  its other rules, and the ownership rule is untouched).
+- **Next session needs:** the rifle line's own things (the long sand
+  berm, the lane signs, the pipe target frames) before its `pictureReady`
+  turns on, then the gun-record build; the look at the deployed picture on
+  Dan's phone (production rendering is unverified from the cloud session);
+  the Sentry DSN from the Linux machine (unchanged). Report:
+  `docs/reports/range-day-five-report.md`.
+
 ### range-day-four — 17 Nov 2026 (the same cloud session, on Dan's words in it)
 
 - **Stands:** the box no longer ends the day, pull request #8 (branch
