@@ -245,15 +245,22 @@
     g.save();
     if (sceneOn()) {
       // The scene below draws the ground, the sky, the plates and the brush at this same scale; this canvas draws only what moves on top of it.
-      g.clearRect(0, 0, size, size);
-      syncScene();
-      scene.render(now);
-      if (measuring) { measuring.frames++; if (now >= measuring.until) measured(); }
-      drawDust(g, size, k);
-      if (flash > 0) { g.fillStyle = `rgba(255, 230, 180, ${flash})`; g.fillRect(0, 0, size, size); }
-      g.restore();
-      drawSight(g, size, k);
-      return;
+      // A scene that fails in a frame (a lost 3D context, a thrown shader) falls to the plain picture, with the one line, and this frame draws plain.
+      let drawn = false;
+      try { syncScene(); scene.render(now); drawn = true; } catch (e) {
+        sceneFailed = true; measuring = null;
+        showPlain('This device could not draw the full picture; showing the plain one.');
+        if (window.Sentry && window.Sentry.captureException) try { window.Sentry.captureException(e); } catch {}
+      }
+      if (drawn) {
+        g.clearRect(0, 0, size, size);
+        if (measuring) { measuring.frames++; if (now >= measuring.until) measured(); }
+        drawDust(g, size, k);
+        if (flash > 0) { g.fillStyle = `rgba(255, 230, 180, ${flash})`; g.fillRect(0, 0, size, size); }
+        g.restore();
+        drawSight(g, size, k);
+        return;
+      }
     }
     // sky
     const sky = g.createLinearGradient(0, 0, 0, size);

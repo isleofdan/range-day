@@ -79,7 +79,7 @@ test('each course has plates every 100 yards to its published steel distance, wi
     if (id.startsWith('_')) continue;
     assert.match(c.altitudeFt.source.note, /surveyed/, `${id}: altitudeFt is surveyed`);
     assert.ok(c.firing && typeof c.firing.bearingDeg.value === 'number' && typeof c.firing.easting.value === 'number', `${id}: a firing position and a bearing of fire`);
-    for (const p of c.plates) { assert.match(p.riseFt.source.note, /surveyed ground/, `${id}: ${p.yards.value} yd riseFt is surveyed`); assert.match(p.lateralYd.estimate, /line of sight/, `${id}: ${p.yards.value} yd lateralYd says why it stands there`); }
+    for (const p of c.plates) { assert.match(p.riseFt.source.note, /surveyed ground/, `${id}: ${p.yards.value} yd riseFt is surveyed`); assert.match(p.lateralYd.source.note, /line of sight/, `${id}: ${p.yards.value} yd lateralYd is surveyed and says why it stands there`); assert.match(p.position.easting.estimate, /NAIP photograph of 20\d\d-\d\d-\d\d/, `${id}: ${p.yards.value} yd position cites the photograph`); }
   }
 });
 
