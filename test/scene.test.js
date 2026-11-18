@@ -111,19 +111,20 @@ test('verify 6: the look: the rendered sky, a sunlit hillside, the dirt floor in
   const STATES = [
     ['February midday', `${PIRU}&sight=utg-2-7x44&month=2&time=midday`, [
       ['sky, as high as the roof lets the view go (18 degrees up)', { yaw: 0, pitch: 18, fov: 4 }, P.green.sky, true],
-      ['sunlit hillside (the headwall, 700 m, facing the noon sun)', { aim: [0, -700], fov: 1.2 }, P.green.sunlitSlope, true],
-      ['dirt floor in sun (60 m out)', { aim: [3, -60], fov: 1.5 }, P.green.floor, true],
-      ['scrub on the left wall (450 m)', { aim: [-140, -450], fov: 0.8 }, P.green.scrub, false, 'the measured scrub is a grey-green; the drawn scrub keeps more of the photograph\'s warmth, so its blue channel runs darker'],
+      ['sunlit hillside (the headwall, 700 m, facing the noon sun; a 50 m patch)', { aim: [0, -700], fov: 4 }, P.green.sunlitSlope, true],
+      ['dirt floor in sun (60 m out)', { aim: [3, -60], fov: 6 }, P.green.floor, true],
+      ['scrub on the left wall (450 m)', { aim: [-140, -450], fov: 2.5 }, P.green.scrub, false, 'the measured scrub is a grey-green; the drawn scrub keeps more of the photograph\'s warmth, so its blue channel runs darker'],
       ['the 600-yard plate\'s red paint through the scope at 7x', { plate: 4, fov: 45.8 / 60, glass: true }, P.paintRedInSun, true]]],
     ['September afternoon', `${PIRU}&sight=utg-2-7x44&month=9&time=afternoon`, [
       ['sky, as high as the roof lets the view go (18 degrees up)', { yaw: 0, pitch: 18, fov: 4 }, P.dry.sky, true],
-      ['sunlit dry slope (the right wall, 600 m, facing the afternoon sun)', { aim: [150, -600], fov: 1.2 }, P.dry.sunlitSlope, true],
-      ['dirt floor in sun (60 m out)', { aim: [3, -60], fov: 1.5 }, P.dry.floor, false, 'at half past three the floor is lit at a low angle; the photograph it was measured from was taken at 15:43 with the floor in fuller sun'],
+      ['sunlit dry slope (the right wall, 600 m, facing the afternoon sun; a 40 m patch)', { aim: [150, -600], fov: 4 }, P.dry.sunlitSlope, true],
+      ['dirt floor in sun (60 m out)', { aim: [3, -60], fov: 6 }, P.dry.floor, false, 'at half past three the floor is lit at a low angle; the photograph it was measured from was taken at 15:43 with the floor in fuller sun'],
       ['the 600-yard plate\'s red paint through the scope at 7x', { plate: 4, fov: 45.8 / 60, glass: true }, P.paintRedInSun, false, 'the plate faces the shooter and the afternoon sun stands almost beside it, so it is side-lit, not in strong sun as the measured paint was']]],
   ];
   const { page, context } = await signedIn({ width: 1280, height: 800 });
   await setPicture(page, 'full');
   for (const [day, path, samples] of STATES) {
+    await page.evaluate(() => localStorage.removeItem('range-day:day:open')); // a new day for the new month and time (a day with no shot stays open otherwise)
     await page.goto(`${base}${path}`); await page.waitForSelector('#fire'); await sceneReady(page);
     assert.ok(await page.evaluate(() => Boolean(RangeDayLine.scene)), `${day}: the scene is up`);
     await page.evaluate(() => { window.requestAnimationFrame = () => 0; }); await wait(300);
@@ -132,11 +133,11 @@ test('verify 6: the look: the rendered sky, a sunlit hillside, the dirt floor in
       const rgb = await page.evaluate(([v]) => {
         const s = RangeDayLine.scene, eye = 4 * 0.3048;
         let yaw = v.yaw || 0, pitch = v.pitch || 0;
-        if (v.aim) { const g = s.groundAt(v.aim[0], v.aim[1]); yaw = (Math.atan2(v.aim[0], -v.aim[1]) * 180) / Math.PI; pitch = (Math.atan2(g - eye, Math.hypot(v.aim[0], v.aim[1])) * 180) / Math.PI; }
-        if (v.plate != null) { const w = s.plateWorld(v.plate); yaw = (Math.atan2(w.x, -w.z) * 180) / Math.PI; pitch = (Math.atan2(w.y - eye, Math.hypot(w.x, w.z)) * 180) / Math.PI; }
+        if (v.aim) { const g = s.groundAt(v.aim[0], v.aim[1]); yaw = (Math.atan2(v.aim[0], -v.aim[1]) * 180) / Math.PI; pitch = (Math.atan2(g - eye, -v.aim[1]) * 180) / Math.PI; }
+        if (v.plate != null) { const w = s.plateWorld(v.plate); yaw = (Math.atan2(w.x, -w.z) * 180) / Math.PI; pitch = (Math.atan2(w.y - eye, -w.z) * 180) / Math.PI; }
         s.setView({ yawDeg: yaw, pitchDeg: pitch, fovDeg: v.fov, glass: Boolean(v.glass), windMph: 0 }); s.render(3);
         const sc = document.getElementById('scene'); const c = document.createElement('canvas'); c.width = sc.width; c.height = sc.height; const g = c.getContext('2d'); g.drawImage(sc, 0, 0);
-        const n = 16, cx = sc.width / 2, cy = sc.height / 2; const d = g.getImageData(cx - n / 2, cy - n / 2, n, n).data; const ch = [[], [], []];
+        const n = v.plate != null ? 10 : Math.round(sc.width * 0.25), cx = sc.width / 2, cy = sc.height / 2; const d = g.getImageData(cx - n / 2, cy - n / 2, n, n).data; const ch = [[], [], []];
         for (let i = 0; i < d.length; i += 4) { ch[0].push(d[i]); ch[1].push(d[i + 1]); ch[2].push(d[i + 2]); }
         return ch.map((a) => a.sort((x, y) => x - y)[a.length >> 1]);
       }, [v]);
