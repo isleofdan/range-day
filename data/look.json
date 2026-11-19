@@ -1,143 +1,669 @@
 {
  "_about": "What the firing line's picture needs beyond the courses and the physics: the eye's height, the clock hour of each time of day, the colours of each season measured from photographs taken at the two ranges in 2016 and 2017 (docs/LOOK.md; a phone camera took them, so each is within about 15 percent of the truth), the haze, and the sizes of the things on the range. Colours are hex strings; every figure is an estimate with its basis. The picture never changes a shot.",
- "eyeHeightFt": { "value": 4, "estimate": "the eye of a shooter seated at a bench, about 4 ft above the shelter's concrete floor (a 30-inch bench top and the head about 18 in above it)" },
- "clockHour": {
-  "morning": { "value": 9, "estimate": "the clock hour the morning's light is computed for, Pacific standard time (daylight saving ignored): soon after the range opens, the same basis as the weather's tempAt for the morning" },
-  "midday": { "value": 12.5, "estimate": "half past twelve, Pacific standard time, the middle of the day's shooting" },
-  "afternoon": { "value": 15.5, "estimate": "half past three, Pacific standard time, the late-afternoon light of the September and October photographs (15:00 to 16:10 by their file names)" }
+ "eyeHeightFt": {
+  "value": 4,
+  "estimate": "the eye of a shooter seated at a bench, about 4 ft above the shelter's concrete floor (a 30-inch bench top and the head about 18 in above it)"
  },
- "monthDay": { "value": 15, "estimate": "the sun is computed for the middle day of the day's month" },
+ "clockHour": {
+  "morning": {
+   "value": 9,
+   "estimate": "the clock hour the morning's light is computed for, Pacific standard time (daylight saving ignored): soon after the range opens, the same basis as the weather's tempAt for the morning"
+  },
+  "midday": {
+   "value": 12.5,
+   "estimate": "half past twelve, Pacific standard time, the middle of the day's shooting"
+  },
+  "afternoon": {
+   "value": 15.5,
+   "estimate": "half past three, Pacific standard time, the late-afternoon light of the September and October photographs (15:00 to 16:10 by their file names)"
+  }
+ },
+ "monthDay": {
+  "value": 15,
+  "estimate": "the sun is computed for the middle day of the day's month"
+ },
  "greenByMonth": {
   "_about": "How green the ground cover is in each month, 1 the February-to-April green, 0 the June-to-November straw: from the photographs' dates (vivid green on 12 February and 25 March 2017; straw and tan on 11 September 2016; dry gold on 21 October 2017; drying by 8 April 2017 at the rifle line) and the winter rains that green these hills from December.",
-  "1": { "value": 0.6, "estimate": "January: greening after the first rains" },
-  "2": { "value": 1, "estimate": "February: the vivid green of the 12 February photographs" },
-  "3": { "value": 1, "estimate": "March: still vivid green on 25 March" },
-  "4": { "value": 0.85, "estimate": "April: green at the canyon, already drying on the rifle line's slopes by 8 April" },
-  "5": { "value": 0.45, "estimate": "May: turning" },
-  "6": { "value": 0.1, "estimate": "June: straw, the 17 June photographs" },
-  "7": { "value": 0, "estimate": "July: dry, the hottest month" },
-  "8": { "value": 0, "estimate": "August: dry, the same" },
-  "9": { "value": 0, "estimate": "September: straw and tan, the 11 September photographs" },
-  "10": { "value": 0, "estimate": "October: dry gold, the 21 October photographs" },
-  "11": { "value": 0.1, "estimate": "November: dry, the first rain some years" },
-  "12": { "value": 0.4, "estimate": "December: greening" }
+  "1": {
+   "value": 0.6,
+   "estimate": "January: greening after the first rains"
+  },
+  "2": {
+   "value": 1,
+   "estimate": "February: the vivid green of the 12 February photographs"
+  },
+  "3": {
+   "value": 1,
+   "estimate": "March: still vivid green on 25 March"
+  },
+  "4": {
+   "value": 0.85,
+   "estimate": "April: green at the canyon, already drying on the rifle line's slopes by 8 April"
+  },
+  "5": {
+   "value": 0.45,
+   "estimate": "May: turning"
+  },
+  "6": {
+   "value": 0.1,
+   "estimate": "June: straw, the 17 June photographs"
+  },
+  "7": {
+   "value": 0,
+   "estimate": "July: dry, the hottest month"
+  },
+  "8": {
+   "value": 0,
+   "estimate": "August: dry, the same"
+  },
+  "9": {
+   "value": 0,
+   "estimate": "September: straw and tan, the 11 September photographs"
+  },
+  "10": {
+   "value": 0,
+   "estimate": "October: dry gold, the 21 October photographs"
+  },
+  "11": {
+   "value": 0.1,
+   "estimate": "November: dry, the first rain some years"
+  },
+  "12": {
+   "value": 0.4,
+   "estimate": "December: greening"
+  }
  },
  "palette": {
   "_about": "Measured colours, medians of small patches of the photographs, by range and season (docs/LOOK.md). The canyon course's figures stand for the rifle line too where it has none of its own.",
   "cta-piru": {
    "green": {
-    "sky": { "value": "#51a4e6", "estimate": "winter sky, 12 February 2017 at 12:58 (the March photographs give #4391d9)" },
-    "sunlitSlope": { "value": "#83965f", "estimate": "sunlit grass slope, February and March 2017" },
-    "scrub": { "value": "#435044", "estimate": "scrub, or a shaded green slope" },
-    "shadedSlope": { "value": "#4b5e3f", "estimate": "grass under cloud shade" },
-    "rockSun": { "value": "#959990", "estimate": "bare rock in sun" },
-    "floor": { "value": "#bdb3a7", "estimate": "the dirt floor, February (to #afa190 in March)" },
-    "weeds": { "value": "#86896c", "estimate": "weeds on the floor" }
+    "sky": {
+     "value": "#51a4e6",
+     "estimate": "winter sky, 12 February 2017 at 12:58 (the March photographs give #4391d9)"
+    },
+    "sunlitSlope": {
+     "value": "#83965f",
+     "estimate": "sunlit grass slope, February and March 2017"
+    },
+    "scrub": {
+     "value": "#435044",
+     "estimate": "scrub, or a shaded green slope"
+    },
+    "shadedSlope": {
+     "value": "#4b5e3f",
+     "estimate": "grass under cloud shade"
+    },
+    "rockSun": {
+     "value": "#959990",
+     "estimate": "bare rock in sun"
+    },
+    "floor": {
+     "value": "#bdb3a7",
+     "estimate": "the dirt floor, February (to #afa190 in March)"
+    },
+    "weeds": {
+     "value": "#86896c",
+     "estimate": "weeds on the floor"
+    }
    },
    "dry": {
-    "sky": { "value": "#429ae4", "estimate": "late-summer sky, 11 September 2016 at 15:43" },
-    "sunlitSlope": { "value": "#988161", "estimate": "sunlit dry slope, September" },
-    "scrub": { "value": "#4a4f33", "estimate": "the dark olive of the scrub in late summer; not measured, the green scrub's figure darkened and warmed" },
-    "shadedSlope": { "value": "#5e5440", "estimate": "a dry slope in shade; not measured, the sunlit dry slope at the ratio the green pair shows" },
-    "rockShade": { "value": "#444045", "estimate": "rock in shade, September" },
-    "floor": { "value": "#c9bda1", "estimate": "the dirt floor, paler and dustier, September" }
+    "sky": {
+     "value": "#429ae4",
+     "estimate": "late-summer sky, 11 September 2016 at 15:43"
+    },
+    "sunlitSlope": {
+     "value": "#988161",
+     "estimate": "sunlit dry slope, September"
+    },
+    "scrub": {
+     "value": "#4a4f33",
+     "estimate": "the dark olive of the scrub in late summer; not measured, the green scrub's figure darkened and warmed"
+    },
+    "shadedSlope": {
+     "value": "#5e5440",
+     "estimate": "a dry slope in shade; not measured, the sunlit dry slope at the ratio the green pair shows"
+    },
+    "rockShade": {
+     "value": "#444045",
+     "estimate": "rock in shade, September"
+    },
+    "floor": {
+     "value": "#c9bda1",
+     "estimate": "the dirt floor, paler and dustier, September"
+    }
    },
    "lastLight": {
-    "sky": { "value": "#9ac6e9", "estimate": "the canyon road, 19 November 2016 at 16:26" },
-    "sunlitHills": { "value": "#d1933b", "estimate": "sunlit dry hills at last light" },
-    "shadowHills": { "value": "#373432", "estimate": "hills in shadow at last light" }
+    "sky": {
+     "value": "#9ac6e9",
+     "estimate": "the canyon road, 19 November 2016 at 16:26"
+    },
+    "sunlitHills": {
+     "value": "#d1933b",
+     "estimate": "sunlit dry hills at last light"
+    },
+    "shadowHills": {
+     "value": "#373432",
+     "estimate": "hills in shadow at last light"
+    }
    },
-   "paintRedInSun": { "value": "#af787b", "estimate": "red paint in strong sun, seen through the spotting scope: the red washes toward pink" },
-   "paintRed": { "value": "#c65c5c", "estimate": "the plates' red paint as painted; not measured, a plate red that the sun and the glass wash to the measured pink" },
-   "strikeMark": { "value": "#d9d5cc", "estimate": "the pale grey-white where bullets have chipped the paint" },
-   "boardWhite": { "value": "#f4f2ea", "estimate": "the white boards, which strong sun bleaches to pure white through the scope" },
-   "boardNumberBlue": { "value": "#2a4fa8", "estimate": "the blue stencilled numbers at the boards' feet" },
-   "moundDirt": { "value": "#8a6a4a", "estimate": "the fresh brown dirt mound each plate stands in front of" },
-   "benchGreen": { "value": "#4b6b45", "estimate": "the green-painted steel benches" }
+   "paintRedInSun": {
+    "value": "#af787b",
+    "estimate": "red paint in strong sun, seen through the spotting scope: the red washes toward pink"
+   },
+   "paintRed": {
+    "value": "#c86a68",
+    "estimate": "the plates' red paint as painted and faded by the sun; not measured, a red that the sun and the glass wash to the measured pink (#af787b)"
+   },
+   "strikeMark": {
+    "value": "#d9d5cc",
+    "estimate": "the pale grey-white where bullets have chipped the paint"
+   },
+   "boardWhite": {
+    "value": "#f4f2ea",
+    "estimate": "the white boards, which strong sun bleaches to pure white through the scope"
+   },
+   "boardNumberBlue": {
+    "value": "#2a4fa8",
+    "estimate": "the blue stencilled numbers at the boards' feet"
+   },
+   "moundDirt": {
+    "value": "#8a6a4a",
+    "estimate": "the fresh brown dirt mound each plate stands in front of"
+   },
+   "benchGreen": {
+    "value": "#4b6b45",
+    "estimate": "the green-painted steel benches"
+   }
   },
   "angeles-sylmar": {
    "dry": {
-    "skyHigh": { "value": "#265bc1", "estimate": "sky high up, 21 October 2017 at 16:09" },
-    "sky": { "value": "#4e93e0", "estimate": "sky near the ridge, 21 October 2017" },
-    "sunlitSlope": { "value": "#b59b6d", "estimate": "sunlit dry slope, October" },
-    "berm": { "value": "#d1c2ac", "estimate": "the berm's sand, October" },
-    "floor": { "value": "#a38867", "estimate": "turned dirt in low sun, October" }
+    "skyHigh": {
+     "value": "#265bc1",
+     "estimate": "sky high up, 21 October 2017 at 16:09"
+    },
+    "sky": {
+     "value": "#4e93e0",
+     "estimate": "sky near the ridge, 21 October 2017"
+    },
+    "sunlitSlope": {
+     "value": "#b59b6d",
+     "estimate": "sunlit dry slope, October"
+    },
+    "berm": {
+     "value": "#d1c2ac",
+     "estimate": "the berm's sand, October"
+    },
+    "floor": {
+     "value": "#a38867",
+     "estimate": "turned dirt in low sun, October"
+    }
    },
    "green": {
-    "sky": { "value": "#77b4e8", "estimate": "sky, 8 April 2017 at 16:11" },
-    "sunlitSlope": { "value": "#a09681", "estimate": "the slope, already drying, 8 April" },
-    "berm": { "value": "#cac2b7", "estimate": "the berm, April" },
-    "floor": { "value": "#d1c7b7", "estimate": "the floor, April" }
+    "sky": {
+     "value": "#77b4e8",
+     "estimate": "sky, 8 April 2017 at 16:11"
+    },
+    "sunlitSlope": {
+     "value": "#a09681",
+     "estimate": "the slope, already drying, 8 April"
+    },
+    "berm": {
+     "value": "#cac2b7",
+     "estimate": "the berm, April"
+    },
+    "floor": {
+     "value": "#d1c7b7",
+     "estimate": "the floor, April"
+    }
    },
    "earlySummer": {
-    "sky": { "value": "#8fc5f3", "estimate": "sky, 17 June 2017 at 17:25" },
-    "sunlitSlope": { "value": "#998d77", "estimate": "the slope, June" },
-    "floor": { "value": "#c5b69f", "estimate": "the floor, June" }
+    "sky": {
+     "value": "#8fc5f3",
+     "estimate": "sky, 17 June 2017 at 17:25"
+    },
+    "sunlitSlope": {
+     "value": "#998d77",
+     "estimate": "the slope, June"
+    },
+    "floor": {
+     "value": "#c5b69f",
+     "estimate": "the floor, June"
+    }
    }
   }
  },
  "haze": {
-  "turbidityClear": { "value": 2.5, "estimate": "the sky model's turbidity on a dry day (Preetham's scale: 2 is very clear, 10 is hazy)" },
-  "turbidityHumid": { "value": 7, "estimate": "the turbidity on the most humid day the weather draws (humidity near 0.9): a pale, milky sky" },
-  "visibilityDryMi": { "value": 45, "estimate": "the distance at which things fade into the haze on a dry, hard-lit day (a Santa Ana day): the far hills stay sharp" },
-  "visibilityHumidMi": { "value": 12, "estimate": "the same on the most humid day: the 1,000-yard plate pales and the ridge beyond goes soft" }
+  "turbidityClear": {
+   "value": 2.0,
+   "estimate": "the sky model's turbidity on a dry day (Preetham's scale: 2 is very clear, 10 is hazy)"
+  },
+  "turbidityHumid": {
+   "value": 7,
+   "estimate": "the turbidity on the most humid day the weather draws (humidity near 0.9): a pale, milky sky"
+  },
+  "visibilityDryMi": {
+   "value": 45,
+   "estimate": "the distance at which things fade into the haze on a dry, hard-lit day (a Santa Ana day): the far hills stay sharp"
+  },
+  "visibilityHumidMi": {
+   "value": 12,
+   "estimate": "the same on the most humid day: the 1,000-yard plate pales and the ridge beyond goes soft"
+  },
+  "rayleigh": {
+   "value": 3.0,
+   "estimate": "the sky model's Rayleigh scattering (three's Sky default is 2): a little more, so the sky away from the sun is the saturated blue the February and September photographs show"
+  },
+  "mieClear": {
+   "value": 0.002,
+   "estimate": "the sky model's Mie (haze) scattering on a dry day: low, a clear sky"
+  },
+  "mieHumid": {
+   "value": 0.009,
+   "estimate": "the same on the most humid day: a bright ring around the sun and a pale horizon"
+  }
  },
  "light": {
-  "sunIntensity": { "value": 5.5, "estimate": "the sun's strength in the scene (three's units, where a Lambert surface reflects its albedo divided by pi), chosen so a sunlit slope at midday matches the measured colours within the tolerance docs/LOOK.md gives" },
-  "skyIntensity": { "value": 4.0, "estimate": "the sky's fill light from above, the same basis" },
-  "groundBounce": { "value": 1.6, "estimate": "light bounced up from the pale floor, the same basis" },
-  "exposure": { "value": 0.85, "estimate": "the picture's exposure (the tone curve's scale), the same basis" },
-  "skyScale": { "value": 0.33, "estimate": "the sky model's brightness against the ground's: the model's own units, scaled so the sky high up matches the measured blue" }
+  "sunIntensity": {
+   "value": 5.5,
+   "estimate": "the sun's strength in the scene (three's units, where a Lambert surface reflects its albedo divided by pi), chosen so a sunlit slope at midday matches the measured colours within the tolerance docs/LOOK.md gives"
+  },
+  "skyIntensity": {
+   "value": 4.0,
+   "estimate": "the sky's fill light from above, the same basis"
+  },
+  "groundBounce": {
+   "value": 1.6,
+   "estimate": "light bounced up from the pale floor, the same basis"
+  },
+  "exposure": {
+   "value": 0.45,
+   "estimate": "the picture's exposure (the tone curve's scale, ACES filmic, applied in the last pass to the scene drawn in linear light), chosen so a sunlit slope at midday and the dirt floor match the measured colours within the tolerance docs/LOOK.md gives (range-day-six; was 0.85 when the scene was drawn clipped into an 8-bit texture with no tone curve)"
+  },
+  "skyScale": {
+   "value": 0.28,
+   "estimate": "the sky model's brightness against the ground's: the model's own units, scaled so the sky high up matches the measured blue"
+  },
+  "skyTintShare": {
+   "value": 0.75,
+   "estimate": "how far the sky's hue is pulled from the physical model's toward the season's measured sky colour (0 the model alone, 1 the measured hue with the model's light): the model, lit by a white sun, draws a paler, greyer blue at 18 degrees up than the photographs show"
+  }
  },
  "glass": {
-  "rimShare": { "value": 0.06, "estimate": "the soft warm rim at the edge of the scope's picture is a few percent of the radius wide: six percent" },
-  "rimColor": { "value": "#8a5a2a", "estimate": "the rim's brown-orange, from the spotting-scope photographs" },
-  "softness": { "value": 0.6, "estimate": "how much softer than the naked eye the picture is through glass, 0 none to 1 strong" },
-  "contrast": { "value": 0.92, "estimate": "the picture's contrast through glass against the naked eye's 1" },
-  "bleach": { "value": 0.15, "estimate": "how far strong highlights wash toward white through glass (the boards bleach to pure white)" },
-  "wash": { "value": 0.35, "estimate": "how far strong colours wash toward the light through glass: the red paint measured through the spotting scope in strong sun is a washed pink (#af787b)" }
+  "rimShare": {
+   "value": 0.06,
+   "estimate": "the soft warm rim at the edge of the scope's picture is a few percent of the radius wide: six percent"
+  },
+  "rimColor": {
+   "value": "#8a5a2a",
+   "estimate": "the rim's brown-orange, from the spotting-scope photographs"
+  },
+  "softness": {
+   "value": 0.5,
+   "estimate": "how much softer than the naked eye the picture is toward the edge of the glass, 0 none to 1 strong; the middle is left sharp (range-day-six: a good scope shows more, not less)"
+  },
+  "contrast": {
+   "value": 0.96,
+   "estimate": "the picture's colour contrast through glass against the naked eye's 1 (range-day-six: nearly all kept)"
+  },
+  "bleach": {
+   "value": 0.12,
+   "estimate": "how far strong highlights wash toward white through glass (the boards bleach to pure white)"
+  },
+  "wash": {
+   "value": 0.3,
+   "estimate": "how far strong colours wash toward the light through glass: the red paint measured through the spotting scope in strong sun is a washed pink (#af787b)"
+  },
+  "fringe": {
+   "value": 0.35,
+   "estimate": "a touch of colour fringe (lateral chromatic aberration) toward the edge of the scope's picture, 0 none to 1 strong"
+  }
  },
  "shimmer": {
-  "startF": { "value": 55, "estimate": "the temperature above which heat shimmer begins to show through magnification" },
-  "fullF": { "value": 95, "estimate": "the temperature at which it is strongest" },
-  "amplitudeMoa": { "value": 0.6, "estimate": "the distortion at its strongest at 1,000 yards, in minutes of angle: about a plate's width wobble at that distance through a high-power scope" }
+  "startF": {
+   "value": 55,
+   "estimate": "the temperature above which heat shimmer begins to show through magnification"
+  },
+  "fullF": {
+   "value": 95,
+   "estimate": "the temperature at which it is strongest"
+  },
+  "amplitudeMoa": {
+   "value": 0.6,
+   "estimate": "the distortion at its strongest at 1,000 yards, in minutes of angle: about a plate's width wobble at that distance through a high-power scope"
+  }
  },
  "things": {
-  "boardWidthIn": { "value": 24, "estimate": "the white target boards in their rows are about 2 ft wide" },
-  "boardHeightIn": { "value": 36, "estimate": "and about 3 ft tall, standing on a short frame" },
-  "boardGapIn": { "value": 6, "estimate": "the gap between boards in a row" },
-  "boardsPerRow": { "value": 30, "estimate": "about thirty boards side by side in each row (numbers 01 to 30 at the first line)" },
-  "boardRowsYards": [ { "value": 100, "estimate": "the first target line, numbers 01 to 30: a board's number appears to begin with its hundreds of yards" }, { "value": 200, "estimate": "the second row, numbers 2·01 to 2·30" }, { "value": 400, "estimate": "the third row, numbers in the 400s" } ],
-  "nearGroupBoards": { "value": 4, "estimate": "two groups of four boards (01 to 04 at the left, 05 to 08 at the right) stand nearer, on low mounds" },
-  "nearGroupYards": { "value": 50, "estimate": "about 50 yards out" },
-  "notchDepthFt": { "value": 6, "estimate": "the first target line is a notch cut into a low terrace about a man's height deep" },
-  "moundWidthFt": { "value": 8, "estimate": "the mound of fresh dirt behind each plate, about 8 ft across" },
-  "moundHeightFt": { "value": 3.5, "estimate": "and about 3.5 ft high" },
-  "plateThicknessIn": { "value": 0.5, "estimate": "half-inch steel" },
-  "postWidthIn": { "value": 2, "estimate": "a 2-inch post under each plate" },
-  "shelterWidthFt": { "value": 60, "estimate": "the open-sided shelter is long: 60 ft of it is drawn" },
-  "shelterDepthFt": { "value": 14, "estimate": "about 14 ft deep, bench to drip line" },
-  "shelterRoofFt": { "value": 9, "estimate": "the corrugated roof about 9 ft above the concrete floor" },
-  "benchAheadFt": { "value": 1.5, "estimate": "the bench top begins about 1.5 ft ahead of the eye" },
-  "benchHeightFt": { "value": 2.6, "estimate": "a bench top about 31 in high" },
-  "brushCountFull": { "value": 4000, "estimate": "how many bushes the Full picture stands on the slopes, placed where the photograph is dark with scrub" },
-  "brushCountLight": { "value": 1200, "estimate": "the Light picture's count" },
-  "brushFarYards": { "value": 1500, "estimate": "bushes are stood out to about 1,500 yards; beyond that the photograph alone carries the scrub" },
-  "treeHeightFt": { "value": 25, "estimate": "the lone trees on the ridge and the cluster by the wash, about 25 ft" }
+  "boardWidthIn": {
+   "value": 24,
+   "estimate": "the white target boards in their rows are about 2 ft wide"
+  },
+  "boardHeightIn": {
+   "value": 36,
+   "estimate": "and about 3 ft tall, standing on a short frame"
+  },
+  "boardGapIn": {
+   "value": 6,
+   "estimate": "the gap between boards in a row"
+  },
+  "boardsPerRow": {
+   "value": 30,
+   "estimate": "about thirty boards side by side in each row (numbers 01 to 30 at the first line)"
+  },
+  "boardRowsYards": [
+   {
+    "value": 100,
+    "estimate": "the first target line, numbers 01 to 30: a board's number appears to begin with its hundreds of yards"
+   },
+   {
+    "value": 200,
+    "estimate": "the second row, numbers 2·01 to 2·30"
+   },
+   {
+    "value": 400,
+    "estimate": "the third row, numbers in the 400s"
+   }
+  ],
+  "nearGroupBoards": {
+   "value": 4,
+   "estimate": "two groups of four boards (01 to 04 at the left, 05 to 08 at the right) stand nearer, on low mounds"
+  },
+  "nearGroupYards": {
+   "value": 50,
+   "estimate": "about 50 yards out"
+  },
+  "notchDepthFt": {
+   "value": 6,
+   "estimate": "the first target line is a notch cut into a low terrace about a man's height deep"
+  },
+  "moundWidthFt": {
+   "value": 8,
+   "estimate": "the mound of fresh dirt behind each plate, about 8 ft across"
+  },
+  "moundHeightFt": {
+   "value": 3.5,
+   "estimate": "and about 3.5 ft high"
+  },
+  "plateThicknessIn": {
+   "value": 0.5,
+   "estimate": "half-inch steel"
+  },
+  "postWidthIn": {
+   "value": 2,
+   "estimate": "a 2-inch post under each plate"
+  },
+  "shelterWidthFt": {
+   "value": 60,
+   "estimate": "the open-sided shelter is long: 60 ft of it is drawn"
+  },
+  "shelterDepthFt": {
+   "value": 14,
+   "estimate": "about 14 ft deep, bench to drip line"
+  },
+  "shelterRoofFt": {
+   "value": 9,
+   "estimate": "the corrugated roof about 9 ft above the concrete floor"
+  },
+  "benchAheadFt": {
+   "value": 1.5,
+   "estimate": "the bench top begins about 1.5 ft ahead of the eye"
+  },
+  "benchHeightFt": {
+   "value": 2.6,
+   "estimate": "a bench top about 31 in high"
+  },
+  "brushCountFull": {
+   "value": 4000,
+   "estimate": "how many bushes the Full picture stands on the slopes, placed where the photograph is dark with scrub"
+  },
+  "brushCountLight": {
+   "value": 1200,
+   "estimate": "the Light picture's count"
+  },
+  "brushFarYards": {
+   "value": 1500,
+   "estimate": "bushes are stood out to about 1,500 yards; beyond that the photograph alone carries the scrub"
+  },
+  "treeHeightFt": {
+   "value": 25,
+   "estimate": "the lone trees on the ridge and the cluster by the wash, about 25 ft"
+  }
  },
  "mesh": {
-  "nearSpacingM": { "value": 1, "estimate": "the ground mesh's spacing at the firing line, the survey's own 1 m" },
-  "growth": { "value": 1.012, "estimate": "each row of the mesh is this much farther apart than the one before, so the mesh is finest along the first hundreds of yards" },
-  "halfAngleDeg": { "value": 70, "estimate": "the mesh fans 70 degrees either side of the line of fire: everything a hold-off or a look around can bring into the view" },
-  "columnsFull": { "value": 320, "estimate": "columns across the fan in the Full picture, finer near the line of fire" },
-  "columnsLight": { "value": 160, "estimate": "the Light picture's columns" },
-  "rowsFull": { "value": 520, "estimate": "rows out to the far square's edge in the Full picture" },
-  "rowsLight": { "value": 260, "estimate": "the Light picture's rows" },
-  "detailTileM": { "value": 3, "estimate": "the close-up surface detail made in code repeats every 3 m: clods, crumbs and dry stems" },
-  "detailFadeYards": { "value": 300, "estimate": "the detail fades out by 300 yards, where the photograph's own pixels are finer than the view" }
+  "nearSpacingM": {
+   "value": 1,
+   "estimate": "the ground mesh's spacing at the firing line, the survey's own 1 m"
+  },
+  "growth": {
+   "value": 1.012,
+   "estimate": "each row of the mesh is this much farther apart than the one before, so the mesh is finest along the first hundreds of yards"
+  },
+  "halfAngleDeg": {
+   "value": 70,
+   "estimate": "the mesh fans 70 degrees either side of the line of fire: everything a hold-off or a look around can bring into the view"
+  },
+  "columnsFull": {
+   "value": 320,
+   "estimate": "columns across the fan in the Full picture, finer near the line of fire"
+  },
+  "columnsLight": {
+   "value": 160,
+   "estimate": "the Light picture's columns"
+  },
+  "rowsFull": {
+   "value": 520,
+   "estimate": "rows out to the far square's edge in the Full picture"
+  },
+  "rowsLight": {
+   "value": 260,
+   "estimate": "the Light picture's rows"
+  },
+  "detailTileM": {
+   "value": 3,
+   "estimate": "the close-up surface detail made in code repeats every 3 m: clods, crumbs and dry stems"
+  },
+  "detailFadeYards": {
+   "value": 300,
+   "estimate": "the detail fades out by 300 yards, where the photograph's own pixels are finer than the view"
+  }
  },
  "firstVisit": {
-  "measureS": { "value": 2, "estimate": "the first visit draws the Full picture for two seconds and counts the frames" },
-  "minFps": { "value": 28, "estimate": "fewer frames a second than this over those two seconds picks the Light picture for the device" }
+  "measureS": {
+   "value": 2,
+   "estimate": "the first visit draws the Full picture for two seconds and counts the frames"
+  },
+  "minFps": {
+   "value": 28,
+   "estimate": "fewer frames a second than this over those two seconds picks the Light picture for the device"
+  }
+ },
+ "ground": {
+  "_about": "The ground's surface (range-day-six): how the picture sorts each pixel into dirt, grass, scrub, rock and scree, the scales of the detail made in code, and the small relief. Every figure is an estimate with its basis.",
+  "detailTilesM": [
+   {
+    "value": 24,
+    "estimate": "the coarse detail (clumps, rills, patches of stones) repeats every 24 m: features of a few centimetres to a metre or so"
+   },
+   {
+    "value": 3,
+    "estimate": "the middle detail repeats every 3 m: clods, crumbs and stones of a centimetre to a few tens of centimetres, what the spotting-scope photographs show as 'clods and crumbs with hard small shadows'"
+   },
+   {
+    "value": 0.4,
+    "estimate": "the fine detail repeats every 0.4 m: gravel and grains, seen only on the floor inside a hundred yards or through a strong glass"
+   }
+  ],
+  "detailAlbedo": {
+   "value": 0.45,
+   "estimate": "how much the detail lightens and darkens the ground's colour at each scale, 0 none to 1 the full picture"
+  },
+  "bump": {
+   "floor": {
+    "value": 0.6,
+    "estimate": "the small relief of the packed dirt floor: low clods and tracks"
+   },
+   "grass": {
+    "value": 0.5,
+    "estimate": "the small relief under grass and scrub: slight"
+   },
+   "rock": {
+    "value": 1.3,
+    "estimate": "the small relief of bare rock and scree: blocks and loose stones, the strongest"
+   }
+  },
+  "steepDeg": {
+   "value": 45,
+   "estimate": "a face steeper than about 45 degrees holds no soil and reads as bare rock or scree; the canyon's grassy walls stand at 30 to 40 degrees, its headwall and the cut banks steeper"
+  },
+  "hollowM": {
+   "value": 2,
+   "estimate": "a cell 2 m below the mean of its neighbours 4 m away counts as fully in a crease: the picture darkens creases and gullies up to this depth"
+  },
+  "hollowDarkening": {
+   "value": 0.45,
+   "estimate": "how much the sky's light is cut in a full crease, 0 none to 1 black"
+  },
+  "clearanceM": {
+   "value": 4,
+   "estimate": "the sun-and-shade picture records how far the sun's ray clears the ground, clamped at 4 m either way, so the edge between sun and shade falls where the clearance crosses zero"
+  },
+  "sheenRock": {
+   "value": 0.12,
+   "estimate": "the slight sheen of bare rock and stones toward the sun, 0 none"
+  },
+  "tracks": {
+   "lanesM": [
+    {
+     "value": 3.5,
+     "estimate": "tire tracks on the floor run on lanes about 3.5 m either side of the line of fire"
+    },
+    {
+     "value": 9,
+     "estimate": "and about 9 m either side"
+    }
+   ],
+   "gaugeM": {
+    "value": 1.6,
+    "estimate": "the two ruts of a lane are a pickup's track width apart, about 1.6 m"
+   },
+   "darkening": {
+    "value": 0.14,
+    "estimate": "a rut is about 14 percent darker than the floor beside it"
+   },
+   "reachYd": {
+    "value": 90,
+    "estimate": "the tracks fade out by the first boards, about 90 yards out"
+   }
+  },
+  "photoFinestPx": {
+   "value": 3,
+   "estimate": "the photograph is never shown finer than 3 of its own pixels (about 2 m): magnified past that its compression shows as blocks; the survey's relief and the detail carry the finer structure. The ground's sorting into dirt, grass, scrub and rock reads it twice as coarse again"
+  },
+  "detailFadeTexels": {
+   "value": 12,
+   "estimate": "a detail scale fades out once one screen pixel covers about 12 of its texels across (it is gone by 24): squeezed that far, a picture carries only aliasing; the next coarser scale, the survey's relief and the photograph carry what is left"
+  },
+  "clumpShadowM": {
+   "value": 0.5,
+   "estimate": "a grass clump or low bush in the coarse detail throws a shadow about 0.5 m long with the sun 45 degrees up, longer as the sun drops (to three times that)"
+  },
+  "clumpShadowDark": {
+   "value": 0.4,
+   "estimate": "how dark that shadow is, 0 none to 1 black"
+  }
+ },
+ "air": {
+  "_about": "The air between the eye and the ground (range-day-six): things pale toward the sky's colour with distance and brighten toward the sun; the distance comes from the day's humidity (haze.visibilityDryMi and visibilityHumidMi).",
+  "brightness": {
+   "value": 0.42,
+   "estimate": "the brightness of the air's own light against a white surface in the sun (the far hills pale toward this), on a clear day"
+  },
+  "brightnessHumid": {
+   "value": 0.7,
+   "estimate": "the same on the most humid day: a milky, bright haze"
+  },
+  "sunGlow": {
+   "value": 0.9,
+   "estimate": "how much brighter the air is when looking toward the sun (forward scattering), as a share of its brightness"
+  },
+  "sunGlowWidth": {
+   "value": 6,
+   "estimate": "how narrowly the glow sits around the sun's direction (the exponent of the cosine): 6 is a wide, soft glow"
+  },
+  "blueShare": {
+   "value": 0.7,
+   "estimate": "how much of the air's colour is the sky's blue (the rest is the pale haze colour); the far hills go blue before they go pale"
+  }
+ },
+ "brush": {
+  "_about": "What grows on the range (range-day-six): the kinds of plant the picture stands where the photograph is dark with scrub, their share of the count, their brightness within the measured scrub colour, the grass clumps, the tufts and stones on the floor, and the shadow under a bush. Every figure is an estimate with its basis.",
+  "share": {
+   "sage": {
+    "value": 0.45,
+    "estimate": "low rounded sage makes up about 45 percent of the bushes stood: the grey-green scrub that covers the left slope"
+   },
+   "chamise": {
+    "value": 0.3,
+    "estimate": "taller, more open chamise-like shrubs about 30 percent"
+   },
+   "grass": {
+    "value": 0.25,
+    "estimate": "dry grass clumps about 25 percent, on the grassy slopes and sparsely on the floor"
+   }
+  },
+  "sageBrightness": {
+   "value": 1.15,
+   "estimate": "sage is a little paler than the measured scrub colour (grey-green leaves): 1.15 times it"
+  },
+  "chamiseBrightness": {
+   "value": 0.85,
+   "estimate": "chamise is darker and more olive: 0.85 times the measured scrub colour"
+  },
+  "grassClumpFt": {
+   "low": {
+    "value": 0.8,
+    "estimate": "a grass clump stands about 0.8 ft"
+   },
+   "high": {
+    "value": 2,
+    "estimate": "to 2 ft, seed heads up"
+   }
+  },
+  "grassFarYd": {
+   "value": 600,
+   "estimate": "grass clumps are stood out to 600 yards; beyond that they are smaller than a pixel through any sight and the ground's own grass texture carries them"
+  },
+  "floorTuftShare": {
+   "value": 0.12,
+   "estimate": "about 12 percent of the grass clumps are sparse weeds on the floor between the line and the first boards (docs/LOOK.md: 'sparse weeds, green in winter and straw in summer')"
+  },
+  "floorReachYd": {
+   "value": 150,
+   "estimate": "tufts and stones are stood on the floor inside 150 yards"
+  },
+  "stones": {
+   "value": 500,
+   "estimate": "about five hundred stones on the floor inside that reach, on the Full picture (a third on Light)"
+  },
+  "stoneSizeIn": {
+   "low": {
+    "value": 2,
+    "estimate": "a stone on the floor is 2 in across"
+   },
+   "high": {
+    "value": 10,
+    "estimate": "to 10 in, the big ones rare"
+   }
+  },
+  "shadowDarkness": {
+   "value": 0.45,
+   "estimate": "the ground right under a bush is darkened by 45 percent at the middle of its shadow, fading to nothing at the edge"
+  }
+ },
+ "picture": {
+  "_about": "How the picture is drawn to the screen (range-day-six).",
+  "samplesFull": {
+   "value": 4,
+   "estimate": "the Full picture smooths edges by drawing each pixel from four samples (multisampling); Light draws one"
+  }
  }
 }
