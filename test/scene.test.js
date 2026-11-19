@@ -364,3 +364,98 @@ test('verify 5 (range-day-six): sharpness through the scope at 7x on the 600- an
     await context.close();
   }
 });
+
+// --- range-day-seven -----------------------------------------------------------------------------
+
+// One depth step at a distance z (metres) for the picture's depth buffer: z² × (1/near − 1/far) / (2^bits − 1).
+const depthStep = (z, D) => (z * z * (1 / D.cameraNearM - 1 / D.cameraFarM)) / (2 ** D.bits - 1);
+
+// The boards' sheets and posts and the plates and their posts, from the scene's own geometry: for each board the sheet's z
+// and its two posts' nearest face; for each plate the back of the plate and its post's nearest face (metres, z toward the
+// shooter, so "behind" is smaller z).
+const postsBehind = (page) => page.evaluate(() => {
+  const s = RangeDayLine.scene, out = { boards: [], plates: [], near: s.camera.near, far: s.camera.far };
+  let sheets = null, posts = null;
+  s.scene.traverse((o) => { if (o.name === 'boards') sheets = o; if (o.name === 'board-posts') posts = o; });
+  const pa = sheets.geometry.attributes.position, pz = [];
+  const half = posts.geometry.parameters.depth / 2, a = posts.instanceMatrix.array;
+  for (let i = 0; i < posts.count; i++) pz.push({ x: a[i * 16 + 12], z: a[i * 16 + 14] + half });
+  for (let b = 0; b < pa.count / 4; b++) {
+    const x0 = pa.getX(b * 4), x1 = pa.getX(b * 4 + 1), z = pa.getZ(b * 4), y0 = pa.getY(b * 4), y1 = pa.getY(b * 4 + 2);
+    const mine = pz.filter((p) => p.x > Math.min(x0, x1) && p.x < Math.max(x0, x1) && Math.abs(p.z - z) < 1);
+    out.boards.push({ x: (x0 + x1) / 2, z, y0, y1, w: Math.abs(x1 - x0), behind: mine.map((p) => z - p.z) });
+  }
+  s.scene.traverse((o) => { if (/^plate-post-\d+$/.test(o.name)) { const i = Number(o.name.split('-')[2]); let plate = null; s.scene.traverse((q) => { if (q.name === `plate-${i}`) plate = q; }); const back = new (plate.position.constructor)(); plate.getWorldPosition(back); const t = plate.geometry.parameters.depth; out.plates.push({ i, behind: (back.z - t / 2) - (o.position.z + o.geometry.parameters.depth / 2) }); } });
+  return out;
+});
+
+test('verify 7 (range-day-seven): every board\'s two posts and every plate\'s post stand behind what they hold by at least the data\'s stand-off, which is at least stepsApart depth steps at the farthest row and the farthest plate for the camera\'s own near and far', { skip }, async () => {
+  const D = flat.look.depth, T = flat.look.things;
+  const { page, context } = await signedIn({ width: 412, height: 915 });
+  await setPicture(page, 'full');
+  await page.goto(`${base}${PIRU}&sight=utg-2-7x44`); await page.waitForSelector('#fire'); await sceneReady(page);
+  const g = await postsBehind(page);
+  assert.equal(g.near, D.cameraNearM, 'the camera\'s near plane is the data\'s'); assert.equal(g.far, D.cameraFarM, 'the camera\'s far plane is the data\'s');
+  const farRowM = Math.max(...T.boardRowsYards) * 0.9144, farPlateM = Math.max(...flat.courses['cta-piru'].plates.map((p) => p.yards)) * 0.9144;
+  const stepRow = depthStep(farRowM, D), stepPlate = depthStep(farPlateM, D);
+  console.log(`  one depth step (${D.bits} bits, near ${D.cameraNearM} m, far ${D.cameraFarM} m): ${(stepRow * 100).toFixed(2)} cm at the farthest board row (${farRowM.toFixed(1)} m), ${(stepPlate * 100).toFixed(1)} cm at the farthest plate (${farPlateM.toFixed(1)} m); ${D.stepsApart} steps: ${(D.stepsApart * stepRow * 100).toFixed(1)} cm and ${(D.stepsApart * stepPlate * 100).toFixed(1)} cm; the data's stand-offs ${D.boardPostStandOffM * 100} cm and ${D.platePostStandOffM * 100} cm`);
+  assert.ok(D.boardPostStandOffM >= D.stepsApart * stepRow, `the boards' stand-off ${D.boardPostStandOffM} is under ${D.stepsApart} steps (${(D.stepsApart * stepRow).toFixed(4)})`);
+  assert.ok(D.platePostStandOffM >= D.stepsApart * stepPlate, `the plates' stand-off ${D.platePostStandOffM} is under ${D.stepsApart} steps (${(D.stepsApart * stepPlate).toFixed(4)})`);
+  assert.ok(g.boards.length >= 90, `${g.boards.length} boards`);
+  let least = Infinity;
+  for (const b of g.boards) { assert.equal(b.behind.length, 2, `a board at x ${b.x.toFixed(2)} z ${b.z.toFixed(1)} has ${b.behind.length} posts`); for (const d of b.behind) least = Math.min(least, d); }
+  assert.ok(least >= D.boardPostStandOffM - 1e-4, `a board's post's nearest face is ${(least * 100).toFixed(2)} cm behind its sheet, under the data's ${D.boardPostStandOffM * 100} cm`);
+  assert.equal(g.plates.length, flat.courses['cta-piru'].plates.length);
+  const leastPlate = Math.min(...g.plates.map((p) => p.behind));
+  assert.ok(leastPlate >= D.platePostStandOffM - 1e-4, `a plate's post's nearest face is ${(leastPlate * 100).toFixed(2)} cm behind the plate's back, under the data's ${D.platePostStandOffM * 100} cm`);
+  console.log(`  ${g.boards.length} boards, each with two posts, the nearest face at least ${(least * 100).toFixed(2)} cm behind its sheet (was 0.5 cm); ${g.plates.length} plates, the post's nearest face at least ${(leastPlate * 100).toFixed(1)} cm behind the plate's back (was 0.14 cm behind its front face, inside the steel)`);
+  await context.close();
+});
+
+// The share of dark pixels down a column inside each board's face of a row, read off the scene canvas: the column where the
+// right post stands (0.35 of the board's width right of its middle), from a fifth of the board's height to four fifths,
+// clear of the paper target, the number and the foot. A post showing through the sheet puts dark pixels here.
+async function darkInBoards(page, rowYd, frames) {
+  return page.evaluate(([rowYd, frames]) => {
+    const s = RangeDayLine.scene, eye = 4 * 0.3048;
+    let sheets = null; s.scene.traverse((o) => { if (o.name === 'boards') sheets = o; });
+    const pa = sheets.geometry.attributes.position, boards = [];
+    for (let b = 0; b < pa.count / 4; b++) { const z = pa.getZ(b * 4); if (Math.abs(-z - rowYd * 0.9144) < 1) boards.push({ x: (pa.getX(b * 4) + pa.getX(b * 4 + 1)) / 2, w: Math.abs(pa.getX(b * 4 + 1) - pa.getX(b * 4)), y0: pa.getY(b * 4), y1: pa.getY(b * 4 + 2), z }); }
+    boards.sort((p, q) => p.x - q.x);
+    const mid = boards[Math.floor(boards.length / 2)];
+    const yaw0 = (Math.atan2(mid.x, -mid.z) * 180) / Math.PI, pitch0 = (Math.atan2((mid.y0 + mid.y1) / 2 - eye, -mid.z) * 180) / Math.PI;
+    const fov = RangeDayLine.fovMoa / 60;
+    const sc = document.getElementById('scene'), c = document.createElement('canvas'); c.width = sc.width; c.height = sc.height; const g = c.getContext('2d');
+    let dark = 0, all = 0, worst = 0; const perBoard = [];
+    for (let f = 0; f < frames; f++) {
+      // the aim wanders a little, as a held rifle does: a fraction of a minute of angle each frame
+      s.setView({ yawDeg: yaw0 + 0.4 * Math.sin(f * 1.7) / 60, pitchDeg: pitch0 + 0.3 * Math.cos(f * 2.3) / 60, fovDeg: fov, glass: true, windMph: 0 }); s.render(f * 0.05 + 1);
+      g.drawImage(sc, 0, 0);
+      const d = g.getImageData(0, 0, c.width, c.height).data, k = c.width / s.size;
+      for (const b of boards) {
+        const [sx, syTop] = s.project(b.x + 0.35 * b.w, b.y0 + 0.8 * (b.y1 - b.y0), b.z), [, syBot] = s.project(b.x + 0.35 * b.w, b.y0 + 0.2 * (b.y1 - b.y0), b.z);
+        if (sx < 8 || sx > s.size - 8 || syTop < 8 || syBot > s.size - 8) continue;
+        let bd = 0, ba = 0;
+        for (let y = Math.ceil(syTop * k); y <= Math.floor(syBot * k); y++) { const i = (y * c.width + Math.round(sx * k)) * 4; const l = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]; ba++; if (l < 110) bd++; }
+        dark += bd; all += ba; if (ba) worst = Math.max(worst, bd / ba); perBoard.push(ba);
+      }
+    }
+    return { dark, all, worst, boards: perBoard.length / frames, frames, pxPerBoard: perBoard.length ? Math.round(perBoard.reduce((a, b) => a + b, 0) / perBoard.length) : 0 };
+  }, [rowYd, frames]);
+}
+
+test('verify 8 (range-day-seven): through the Vepr\'s scope at 7x on the 200-yard row, over twelve frames with the aim wandering, on Full and on Light at both sizes, no dark column shows inside a board\'s face where its post stands', { skip }, async () => {
+  for (const picture of ['full', 'light']) for (const [sizeName, viewport] of [['phone', { width: 412, height: 915 }], ['computer', { width: 1280, height: 800 }]]) {
+    const { page, context } = await signedIn(viewport);
+    await setPicture(page, picture);
+    await page.goto(`${base}${PIRU}&sight=utg-2-7x44&month=9&time=midday`); await page.waitForSelector('#fire'); await sceneReady(page);
+    assert.equal(await page.evaluate(() => RangeDayLine.picture), picture);
+    await page.evaluate(() => { window.requestAnimationFrame = () => 0; RangeDayLine.setZoom(7); }); await wait(300);
+    const r = await darkInBoards(page, 200, 12);
+    const share = r.all ? r.dark / r.all : 0;
+    console.log(`  ${picture}, ${sizeName}: ${r.boards.toFixed(0)} boards of the 200-yard row in the view, ${r.pxPerBoard} px read down each post's column, ${r.frames} frames: ${(share * 100).toFixed(2)} percent dark (worst board and frame ${(r.worst * 100).toFixed(1)} percent)`);
+    assert.ok(r.all > 0, 'boards in the view');
+    assert.ok(share < 0.02 && r.worst < 0.1, `${picture}, ${sizeName}: ${(share * 100).toFixed(2)} percent of the pixels down the posts' columns are dark (worst ${(r.worst * 100).toFixed(1)} percent): a post shows through a board`);
+    await context.close();
+  }
+});
