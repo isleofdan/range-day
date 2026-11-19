@@ -1,15 +1,26 @@
 # Runs every check (npm run check: syntax, tests, screenshots) on every
-# push and every pull request, so the result shows on the pull request
-# before Dan is asked to merge. It never deploys and never touches Fly.
-# A failure shows here and on the pull request, nowhere else.
+# pull request and every push to main, so the result shows on the pull
+# request before Dan is asked to merge. It never deploys and never touches
+# Fly. A failure shows here and on the pull request, nowhere else.
+#
+# Since range-day-seven the check is cut into pieces that run at once, each
+# as its own job on its own runner (scripts/check.mjs: a group of tests,
+# or a shard of the screenshot states), because one job running everything
+# one file after another took an hour on the runner (range-day-six, 19 Nov
+# 2026). Nothing is dropped: every test is in exactly one group and
+# every screenshot state in exactly one shard; every job runs the syntax
+# check too. The picture file public/scene.min.js is built in each job from
+# src/scene/, not stored in the repository.
 name: Checks
 
 # A push or pull request that touches only notes (field reports, PLAN.md,
 # any other Markdown, the screenshots the reports show) runs no check: the
-# code it would prove is unchanged, and on this app the full check takes an
-# hour on the runner (range-day-six, 19 Nov 2026).
+# code it would prove is unchanged. A push to a branch runs no check of its
+# own: the pull request's run checks the same commit once, instead of twice
+# (push and pull request both ran before range-day-seven).
 on:
   push:
+    branches: [main]
     paths-ignore:
       - '**.md'
       - 'docs/reports/**'
@@ -26,23 +37,70 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  checks:
+  # One test group per job (scripts/check.mjs, TEST_GROUPS): the three files
+  # that drive a browser through the 3D picture each alone (the slowest of
+  # them, test/scene.test.js, in three pieces by test name), the rest together.
+  tests:
+    name: tests (${{ matrix.group }})
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        group: [scene-shots, scene-scale, scene-rest, day, browser, rest]
     steps:
       - uses: actions/checkout@v5
 
       - uses: actions/setup-node@v5
         with:
           node-version: 22
+          cache: npm
 
-      # No --with-deps: the runner image already has what Chromium needs,
-      # and --with-deps fetched ~32 MB of extra fonts from Ubuntu's package
-      # mirror, which on some runners crawled for 5 to 10 minutes.
+      # The browser is kept between runs by Playwright's version, so a job
+      # downloads it only when the version changes. No --with-deps: the runner
+      # image already has what Chromium needs.
+      - name: Keep Playwright's browser between runs
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
       - name: Install
         run: |
           npm ci --no-audit --no-fund
           npx playwright install chromium
 
-      - name: Run every check
-        run: npm run check
+      - name: Syntax and the test group
+        run: node scripts/check.mjs --only tests --group ${{ matrix.group }}
+
+  # One shard of the screenshot states per job (scripts/screenshots.mjs
+  # --shard i/4): the four together are every state once, at both sizes.
+  screenshots:
+    name: screenshots (shard ${{ matrix.shard }} of 4)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Keep Playwright's browser between runs
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Install
+        run: |
+          npm ci --no-audit --no-fund
+          npx playwright install chromium
+
+      - name: Syntax and the screenshot shard
+        run: node scripts/check.mjs --only screenshots --shard ${{ matrix.shard }}/4

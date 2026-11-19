@@ -4,7 +4,14 @@
 // the passphrase (with a space after it, as a phone keyboard adds) into the
 // form. Never pre-supplied credentials. Along the way it checks no screen
 // scrolls sideways.
-//   npm run screenshots
+//   npm run screenshots                 every state, both sizes
+//   npm run screenshots -- --shard 2/4  the states whose index leaves 1 when
+//       divided by 4 (every fourth state from the second), both sizes: the
+//       four shards together are every state once; scripts/check.mjs and the
+//       Checks workflow run the shards side by side
+//   --port 8923                         the server's port (one per shard
+//       running at once); --list prints the state names and stops
+// Every state's seconds are printed, so the slow ones can be seen.
 // An app adds its own screens to SCREENS.
 import { chromium } from 'playwright';
 import { spawn } from 'node:child_process';
@@ -16,7 +23,10 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const out = join(root, 'docs', 'reports', 'screenshots');
 mkdirSync(out, { recursive: true });
 
-const PORT = 8921;
+const arg = (name, fallback) => { const i = process.argv.indexOf(name); return i > 0 && process.argv[i + 1] ? process.argv[i + 1] : fallback; };
+const [shardIx, shardOf] = arg('--shard', '1/1').split('/').map(Number);
+if (!(shardIx >= 1 && shardOf >= 1 && shardIx <= shardOf)) { console.error(`--shard wants i/n with 1 <= i <= n, not ${arg('--shard')}`); process.exit(2); }
+export const PORT = Number(arg('--port', 8921));
 const PASS = 'open sesame';
 const base = `http://127.0.0.1:${PORT}`;
 const SIZES = { phone: { width: 412, height: 915 }, computer: { width: 1280, height: 800 } };
@@ -172,6 +182,9 @@ const SCREENS = [
   { name: 'line-conditions-on', path: PIRU, expect: 'Wind, near stretch', act: async (page) => { await ready(page); await page.check('#show-conditions'); await page.evaluate(() => document.getElementById('conditions').scrollIntoView()); await settle(page, 200); } },
 ];
 
+const SHARD = SCREENS.filter((_, i) => i % shardOf === shardIx - 1);
+if (process.argv.includes('--list')) { for (const s of SHARD) console.log(s.name); process.exit(0); }
+
 const server = spawn('node', ['server.js'], {
   cwd: root,
   env: { ...process.env, PORT: String(PORT), APP_PASSWORD: PASS, COOKIE_SECRET: 'x'.repeat(64), COOKIE_INSECURE: '1' },
@@ -205,7 +218,8 @@ for (const [size, viewport] of Object.entries(SIZES)) {
   await page.waitForURL(`${base}/`);
   check(`${size}: the passphrase typed into the form signs in`, true);
 
-  for (const s of SCREENS) {
+  for (const s of SHARD) {
+    const started = Date.now();
     let p = page, ctx = null;
     if (s.no3d) {
       // a browser that cannot draw 3D: its own context, signed in through the form, with the 3D contexts refused
@@ -222,9 +236,10 @@ for (const [size, viewport] of Object.entries(SIZES)) {
     check(`${size}: ${s.name} fits the width`, await noSideways(p));
     await p.screenshot({ path: join(out, `${s.name}-${size}.png`) });
     if (ctx) await ctx.close();
+    console.log(`time ${size}: ${s.name} ${((Date.now() - started) / 1000).toFixed(1)} s`);
   }
   await context.close();
 }
 await browser.close();
-console.log(failed ? `${failed} check(s) failed` : `all checks passed; screenshots in ${out}`);
+console.log(failed ? `${failed} check(s) failed` : `all checks passed (${SHARD.length} of ${SCREENS.length} states${shardOf > 1 ? `, shard ${shardIx}/${shardOf}` : ''}); screenshots in ${out}`);
 process.exit(failed ? 1 : 0);
