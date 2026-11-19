@@ -2,6 +2,7 @@ node_modules
 var
 docs
 test
-scripts
+scripts/*
+!scripts/build-scene.mjs
 .git
 .github

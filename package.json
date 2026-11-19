@@ -9,8 +9,10 @@
   },
   "scripts": {
     "start": "node server.js",
-    "dev": "COOKIE_INSECURE=1 node server.js",
+    "dev": "node scripts/build-scene.mjs && COOKIE_INSECURE=1 node server.js",
+    "pretest": "node scripts/build-scene.mjs",
     "test": "node --test --test-concurrency=1 test/*.test.js",
+    "prescreenshots": "node scripts/build-scene.mjs",
     "screenshots": "node scripts/screenshots.mjs",
     "check": "node scripts/check.mjs",
     "build": "node scripts/build-sentry.mjs",

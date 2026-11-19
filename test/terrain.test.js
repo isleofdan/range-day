@@ -5,7 +5,8 @@
 // themselves (verify 4); the line of sight to every plate is clear; the sun's
 // noon height follows 90 − latitude + declination (verify 5); the engine's
 // elevation for the far plates on the old and the new figures; and the
-// committed picture bundle is a fresh build of its source.
+// picture bundle is built from its source (a stored copy equals a fresh
+// build; with none stored, the build is served).
 //   npm test
 const test = require('node:test');
 const assert = require('node:assert');
@@ -116,10 +117,35 @@ test('verify 5: at the canyon course the computed noon elevation for the middle 
   assert.ok(Math.abs(solstice.declination - 23.44) < 0.02, `declination at the solstice ${solstice.declination.toFixed(3)}`);
 });
 
-test('the committed picture bundle public/scene.min.js is a fresh build of src/scene (run npm run build:scene and commit when it differs)', async () => {
-  const { sceneBundle } = await import('../scripts/build-scene.mjs');
-  const committed = fs.readFileSync(path.join(root, 'public', 'scene.min.js'), 'utf8');
+test('the picture bundle public/scene.min.js is built, not stored: a copy stored in the repository equals a fresh build; with none stored, a build produces the file and the server serves it behind the cookie (200, more than 300,000 bytes)', async () => {
+  const { sceneBundle, OUT } = await import('../scripts/build-scene.mjs');
   const fresh = await sceneBundle();
-  assert.ok(committed === fresh, 'public/scene.min.js differs from a fresh build');
-  assert.ok(committed.length < 1048576, `the bundle is ${committed.length} bytes`);
+  assert.ok(fresh.length > 300000 && fresh.length < 1048576, `the bundle is ${fresh.length} bytes`);
+  const git = require('node:child_process').spawnSync('git', ['ls-files', '--error-unmatch', 'public/scene.min.js'], { cwd: root, encoding: 'utf8' });
+  const stored = git.status === 0;
+  if (stored) {
+    assert.equal(fs.readFileSync(OUT, 'utf8'), fresh, 'the stored public/scene.min.js differs from a fresh build (npm run build:scene and commit)');
+    console.log(`  a stored copy of public/scene.min.js is in the repository and equals a fresh build (${fresh.length} bytes)`);
+    return;
+  }
+  // nothing stored: a build produces the file (what npm test's pretest and the image's first stage do), and the server serves it
+  await sceneBundle({ write: true });
+  assert.equal(fs.readFileSync(OUT, 'utf8'), fresh, 'the built file is the build');
+  const { spawn } = require('node:child_process');
+  const port = 8981, base = `http://127.0.0.1:${port}`;
+  const server = spawn('node', ['server.js'], { cwd: root, env: { ...process.env, PORT: String(port), APP_PASSWORD: 'open sesame', COOKIE_SECRET: 'x'.repeat(64), COOKIE_INSECURE: '1', SENTRY_DSN: '' }, stdio: ['ignore', 'ignore', 'inherit'] });
+  try {
+    for (let i = 0; ; i++) { try { await fetch(`${base}/alive`); break; } catch { if (i > 100) throw new Error('server never answered'); await new Promise((r) => setTimeout(r, 50)); } }
+    const stranger = await fetch(`${base}/scene.min.js`, { redirect: 'manual' });
+    assert.equal(stranger.status, 303, 'a stranger is sent to sign in');
+    const login = await fetch(`${base}/login`, { method: 'POST', redirect: 'manual', headers: { 'content-type': 'application/x-www-form-urlencoded' }, body: 'passphrase=open+sesame&next=%2F' });
+    const cookie = (login.headers.get('set-cookie') || '').split(';')[0];
+    const r = await fetch(`${base}/scene.min.js`, { headers: { cookie } });
+    const body = await r.text();
+    assert.equal(r.status, 200);
+    assert.match(r.headers.get('content-type') || '', /javascript/);
+    assert.ok(body.length > 300000, `served ${body.length} bytes`);
+    assert.equal(body, fresh, 'the server serves the build');
+    console.log(`  no stored copy: built public/scene.min.js (${fresh.length} bytes) and the server serves it signed in (${r.status}, ${body.length} bytes; a stranger gets ${stranger.status})`);
+  } finally { server.kill(); }
 });
