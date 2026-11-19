@@ -287,6 +287,21 @@ test('verify 4 (range-day-six): the sights\' angles are unchanged: for the Vepr\
   const dot = S['utg-2-7x44'].reticle.dotSpacingMoa;
   console.log(`  Vepr scope at 7x: first mil-dot ${r.first.toFixed(1)} px right and ${r.firstLeft.toFixed(1)} px left of the centre, the next ${r.spacing && r.spacing.toFixed(1)} px on (data ${dot} MOA × ${r.k.toFixed(3)} = ${(dot * r.k).toFixed(1)} px)`);
   assert.ok(Math.abs(r.first - dot * r.k) <= 1.5 && Math.abs(r.firstLeft - dot * r.k) <= 1.5, `mil-dot spacing ${r.first}/${r.firstLeft} vs ${(dot * r.k).toFixed(1)}`);
+  // the Tavor's iron sights (ring and post) on the rifle line: the post's width at the row just under the centre
+  await page.goto(`${base}/line?course=angeles-sylmar&rifle=iwi-tavor-sar&sight=tavor-irons&load=imi-m193`); await page.waitForSelector('#fire'); await sceneReady(page);
+  await page.evaluate(() => { window.requestAnimationFrame = () => 0; RangeDayLine.setHold(0, 0); }); await wait(300);
+  r = await page.evaluate(() => {
+    const c = document.getElementById('view'), g = c.getContext('2d'), size = RangeDayLine.geometry.viewPx, cx = size / 2, cy = size / 2;
+    const lum = (d, x) => 0.299 * d[x * 4] + 0.587 * d[x * 4 + 1] + 0.114 * d[x * 4 + 2];
+    const d = g.getImageData(0, cy + 8, size, 1).data; const L = []; for (let x = 0; x < size; x++) L.push(lum(d, x));
+    const lightest = (L[Math.round(cx - 30)] + L[Math.round(cx + 30)]) / 2; // the ground beside the post on this row
+    let steel = 1e9; for (let x = cx - 8; x < cx + 8; x++) steel = Math.min(steel, L[x]);
+    const thr = (lightest + steel) / 2;
+    const cross = (from, step) => { let x = from; while (x > 0 && x < size - 1 && L[x] < thr) x += step; const a = L[x - step], b = L[x]; return x - step + step * ((thr - a) / (b - a)); };
+    return { k: RangeDayLine.geometry.pxPerMoa, post: cross(cx, 1) - cross(cx, -1) };
+  });
+  console.log(`  Tavor irons: drawn post ${r.post.toFixed(1)} px (data ${S['tavor-irons'].frontPostMoa} MOA × ${r.k.toFixed(3)} = ${(S['tavor-irons'].frontPostMoa * r.k).toFixed(1)} px)`);
+  assert.ok(Math.abs(r.post - S['tavor-irons'].frontPostMoa * r.k) <= 1.5, `Tavor post ${r.post.toFixed(1)} vs ${(S['tavor-irons'].frontPostMoa * r.k).toFixed(1)}`);
   // the Tavor's red dot at 300 yards on the rifle line
   await page.goto(`${base}/line?course=angeles-sylmar&rifle=iwi-tavor-sar&sight=pa-md25&load=imi-m193`); await page.waitForSelector('#fire'); await sceneReady(page);
   await page.evaluate(() => { window.requestAnimationFrame = () => 0; RangeDayLine.setHold(0, 0); }); await wait(300);
