@@ -49,23 +49,27 @@ The Deploy workflow proves the same on the live app after the sign-in
 proof: `/scene.min.js` answers 200 with more than 300,000 bytes, or the run
 fails saying the picture file is missing from the image.
 
-The check runs **in pieces, side by side**; nothing is dropped. The test
-files are in four groups (`scripts/check.mjs`, `TEST_GROUPS`): the three
-files that drive a browser through the 3D picture each alone (`scene`,
-`day`, `browser`, each starting its own server on its own port) and every
-other test file together (`rest`; a new file lands there). The screenshot
-states are in four shards (`scripts/screenshots.mjs --shard i/4`: every
-fourth state, at both sizes; the four together are every state once). By
-hand, `npm run check` runs the pieces two at a time (`--jobs`), because
-three browsers drawing 3D in software at once starve each other's clocks;
-`node scripts/check.mjs --only tests --group scene` or
+The check runs **in pieces, side by side**; nothing is dropped. The tests
+are in six groups (`scripts/check.mjs`, `TEST_GROUPS`): `test/scene.test.js`
+in three pieces by test name (`scene-shots`, its verify 3; `scene-scale`,
+its verify 2; `scene-rest`, every other test in the file, by Node's skip
+pattern, so a new test there is never left out; each piece's server on its
+own port, `TEST_PORT`), `test/day.test.js` (`day`) and
+`test/browser.test.js` (`browser`) each alone, and every other test file
+together (`rest`; a new file lands there). The screenshot states are in
+four shards (`scripts/screenshots.mjs --shard i/4`: every fourth state, at
+both sizes; the four together are every state once). By hand, `npm run
+check` runs the pieces two at a time (`--jobs`), because three browsers
+drawing 3D in software at once starve each other's clocks;
+`node scripts/check.mjs --only tests --group scene-rest` (or `scene-shots`,
+`scene-scale`, `day`, `browser`, `rest`) or
 `--only screenshots --shard 2/4` runs one piece, with the syntax check.
 Every state's seconds are printed. In the Checks workflow each piece is its
-own job on its own runner (a matrix of four test groups and four screenshot
-shards), so the run's time is the slowest piece's, not the sum; the
-workflow runs on pull requests and on pushes to `main` (a push to a branch
-no longer runs a second copy of the pull request's check). The runner keeps
-Playwright's browser between runs by the package lock's hash.
+own job on its own runner (a matrix of six test groups and four screenshot
+shards, ten jobs), so the run's time is the slowest piece's, not the sum;
+the workflow runs on pull requests and on pushes to `main` (a push to a
+branch no longer runs a second copy of the pull request's check). The
+runner keeps Playwright's browser between runs by the package lock's hash.
 
 Times (19 Nov 2026): in the cloud session, `npm run check` one piece after
 another on `main` took 40 min 34 s (tests 770 s, screenshots
