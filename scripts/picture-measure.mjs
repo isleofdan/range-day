@@ -111,7 +111,9 @@ for (const [width, viewport] of WIDTHS) for (const picture of ['full', 'light'])
           if (v.brush) {
             // the bushes: every instanced mesh in the scene, its instances' places
             const spots = [];
-            s.scene.traverse((o) => { if (o.isInstancedMesh && o.count > 10) { const a = o.instanceMatrix.array; for (let i = 0; i < o.count; i++) { const x = a[i * 16 + 12], y = a[i * 16 + 13], z = a[i * 16 + 14], sy = Math.hypot(a[i * 16 + 4], a[i * 16 + 5], a[i * 16 + 6]); const d = Math.hypot(x, z); if (d > 250 && d < 350 && Math.abs(x) < 120) spots.push([x, y + sy * 0.45, z, Math.abs(x)]); } } });
+            // the bushes proper (named brush-sage and brush-chamise since range-day-six; before, the one unnamed instanced mesh), never the shadow discs, the tufts or the stones
+            const named = []; s.scene.traverse((o) => { if (o.isInstancedMesh && /^brush-(sage|chamise)$/.test(o.name)) named.push(o); });
+            s.scene.traverse((o) => { if (o.isInstancedMesh && o.count > 10 && (named.length ? named.includes(o) : true)) { const a = o.instanceMatrix.array; for (let i = 0; i < o.count; i++) { const x = a[i * 16 + 12], y = a[i * 16 + 13], z = a[i * 16 + 14], sy = Math.hypot(a[i * 16 + 4], a[i * 16 + 5], a[i * 16 + 6]); const d = Math.hypot(x, z); if (d > 250 && d < 350 && Math.abs(x) < 120) spots.push([x, y + sy * 0.45, z, Math.abs(x)]); } } });
             spots.sort((p, q) => p[3] - q[3]);
             const all = [[], [], []];
             for (const w of spots.slice(0, 3)) { aim({ world: w, fov: v.fov }); s.render(3); const { g, w: W, h: H } = read(); const mm = median(g, W / 2, H / 2, Math.round(W * 0.25)); mm.forEach((c, i) => all[i].push(c)); }
