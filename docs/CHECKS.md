@@ -41,7 +41,7 @@ committed is not a result.
 Only checks that finish in a few seconds run after every edit; the
 screenshots start a browser and run on push and pull request only.
 
-On this app the browser tests make `npm test` take about 14 s in a cloud session (16 Nov 2026); the hook's limit is 30 s. Since range-day-five the scene tests draw 3D in the test browser, which in a cloud session has no GPU: `npm test` takes several minutes there and `npm run check` about a quarter of an hour; the Checks workflow's limit is 25 minutes. An app whose `npm test` takes more than 20 seconds puts a fast subset in
+On this app the browser tests make `npm test` take about 14 s in a cloud session (16 Nov 2026); the hook's limit is 30 s. Since range-day-five the scene tests draw 3D in the test browser, which in a cloud session has no GPU: `npm test` takes several minutes there and `npm run check` about a quarter of an hour; the Checks workflow's limit was 25 minutes; it is 60 since range-day-six, because the second pass of the picture (multisampling, a half-float texture, the survey's normal map and three detail scales, all drawn in software on the runner) took `npm run check` from 18.6 to 34.5 minutes in the cloud session, and the runner's run of that branch was cut off at 25 minutes (run 44471604325, 19 Nov 2026). An app whose `npm test` takes more than 20 seconds puts a fast subset in
 `npm run test:fast` and points the hook at it; the full set runs in the
 Checks workflow. The hook's limit is 30 seconds.
 
