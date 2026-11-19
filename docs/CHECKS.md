@@ -35,9 +35,10 @@ committed is not a result.
 The picture file `public/scene.min.js` is **built, not stored**: it is not
 in the repository. `scripts/build-scene.mjs` bundles `src/scene/` with the
 three library (0.2 s) and writes the file whole, renaming it into place.
-Every path that serves or tests the app builds it first: `npm test` and
-`npm run screenshots` through `package.json`'s `pretest` and
-`prescreenshots`; `npm run check` once, before the tests and the
+Every path that serves or tests the app builds it first: `npm start`, `npm test` and
+`npm run screenshots` through `package.json`'s `prestart`, `pretest` and
+`prescreenshots` (the image's own command is `node server.js`, with the
+file already built into it); `npm run check` once, before the tests and the
 screenshots; `npm run dev`; the Deploy workflow through its `npm test`; the
 image in the `Dockerfile`'s first stage (which has the development
 packages; the second stage installs the runtime packages only and copies

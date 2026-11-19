@@ -237,7 +237,7 @@ the app it called. The app calls nothing outside itself.
     APP_PASSWORD=try-me COOKIE_SECRET=any-long-text npm run dev
 
 Then open http://localhost:8080 and sign in with `try-me`.
-`npm run dev`, `npm test` and `npm run screenshots` each build
+`npm start`, `npm run dev`, `npm test` and `npm run screenshots` each build
 `public/scene.min.js` from `src/scene/` first (it is not stored in the
 repository; `npm run build:scene` builds it by itself).
 `npm run check` runs every check (the test files in four groups and the
