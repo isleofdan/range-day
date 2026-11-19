@@ -119,9 +119,46 @@ with the wind. `docs/LOOK.md` is what photographs of the two ranges
 show, as words and measured colours; `data/look.json` holds the picture's
 figures, each with its basis.
 
+Since range-day-six the picture is drawn to read as a photograph of the
+place as far as a phone browser can: every pixel of a hillside is lit from
+the survey's own slopes (a normal map built from the 1 m heights, and
+from the 10 m heights beyond), so gullies, ribs and terraces show in the
+light and in shadow; the ground is sorted, pixel by pixel, into packed
+dirt, grass, scrub, bare rock and loose scree by the slope's steepness,
+the photograph's colour and the season, each with its own colour,
+roughness and small relief; surface detail made in code (clumps, stones,
+rills, clods, grains, blades) is laid over the ground at three scales
+fixed to the ground, so the 1,000-yard hillside through 7x shows texture
+instead of blur and the floor at 50 yards shows gravel and tire tracks,
+and a stronger glass later still finds detail; the photograph itself is
+never magnified past its own pixels (its compression would show as
+blocks). Where the sun's ray clears the ground is recorded in metres, so
+the edge between sun and shade is clean; creases are darker; the air
+pales and blues things with their true distance and brightens toward the
+sun. The brush is chaparral of three kinds (low sage, taller chamise-like
+shrubs, dry grass clumps), lit on the sun's side and shaded on the other,
+each with its soft shadow on the ground, merging into the hillside's
+texture at a distance; grass tufts and stones stand on the floor inside
+150 yards. The plates are steel with worn edges and old chips, on heaped
+dirt mounds; the boards are weathered, on frames, with paper targets and
+holes; the shelter has its corrugated roof, posts, bench and slab. The
+scene is drawn in linear light to a half-float texture (where the
+browser has it) with edges smoothed by multisampling on Full, and the
+last pass applies the camera's exposure and tone curve; through the
+scope the middle of the picture keeps its contrast and colour, with
+softness and a touch of colour fringe only toward the edge; the iron
+sights are painted as out-of-focus dark steel with a sheen from the sky,
+the front post sharper with a sunlit and a shaded face, their angles
+unchanged. `scripts/picture-measure.mjs` measures the picture
+(sharpness, the colours of named patches, the frame time) in a real
+browser; `docs/reports/picture-before.txt` and `picture-after.txt` are
+its readings before and after range-day-six.
+
 Three pictures, one setting (under "Setting" on the firing line, kept on
-the device): **Full**, **Light** (the same ground, fewer bushes, a
-smaller photograph, for a slower phone) and **Plain** (the flat drawing).
+the device): **Full**, **Light** (the same ground at half the relief's
+fineness, two detail scales instead of three, fewer bushes, a smaller
+photograph, no multisampling and no shadow map, for a slower phone) and
+**Plain** (the flat drawing).
 The first visit draws Full for two seconds and keeps Full or Light by how
 fast the device drew it; a browser that cannot draw 3D shows Plain and
 says so in one line. Under every picture the same course data goes to the

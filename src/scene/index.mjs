@@ -13,7 +13,7 @@ import { buildTerrain, frameOf, YD, FT } from './terrain.mjs';
 import { buildPlates, buildBoards, buildShelter, buildBrush } from './things.mjs';
 import { makePost } from './post.mjs';
 
-const VERSION = 1;
+const VERSION = 2;
 
 // Whether this browser can draw the picture at all: WebGL2 and the stream inflater the heights need.
 function canDraw() {
@@ -48,7 +48,9 @@ async function create(opts) {
   const sv = sunVector(sun); // east, up, south
   const sunDir = frame.dir(sv.x, -sv.z, sv.y).normalize();
 
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: full, alpha: false, powerPreference: 'high-performance', preserveDrawingBuffer: true });
+  // The scene is drawn to a texture in linear light and brought to the screen by the last pass (post.mjs), which smooths edges on Full by multisampling that texture.
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, powerPreference: 'high-performance', preserveDrawingBuffer: true });
+  const halfFloat = renderer.extensions.has('EXT_color_buffer_float') || renderer.extensions.has('EXT_color_buffer_half_float');
   renderer.setPixelRatio(dpr);
   renderer.setSize(size, size, false);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -67,9 +69,8 @@ async function create(opts) {
   const green = look.greenByMonth[String(month)];
   const skyBase = hex(P.green.sky).lerp(hex(P.dry.sky), 1 - green);
   const humid = Math.max(0, Math.min(1, (weather.humidity - 0.2) / 0.7));
-  const hazeCol = skyBase.clone().lerp(new THREE.Color(0xe8e4da), 0.35 + 0.45 * humid);
+  const hazeCol = skyBase.clone().lerp(new THREE.Color(0xe8e4da), 1 - look.air.blueShare + 0.3 * humid);
   const visM = (look.haze.visibilityDryMi + (look.haze.visibilityHumidMi - look.haze.visibilityDryMi) * humid) * 1609.34 * (weather.santaAna ? 1.5 : 1);
-  scene.fog = new THREE.Fog(hazeCol, visM * 0.04, visM);
 
   // Light: the sun and the sky's fill. Low sun is redder and weaker, as the last-light photographs show.
   const lowness = Math.max(0, Math.min(1, 1 - sun.elevation / 25));
@@ -86,7 +87,8 @@ async function create(opts) {
   }
   const hemi = new THREE.HemisphereLight(skyBase.clone().lerp(new THREE.Color(0xffffff), 0.35), hex(P.dry.floor).lerp(hex(P.green.floor), green), look.light.skyIntensity);
   scene.add(hemi);
-  scene.add(new THREE.AmbientLight(0xffffff, look.light.groundBounce * 0.5));
+  const bounce = new THREE.AmbientLight(0xffffff, look.light.groundBounce * 0.5);
+  scene.add(bounce);
 
   // The sky: a physical model (Preetham et al. 1999, "A Practical Analytic Model for Daylight", as three's Sky), hazier on a humid day.
   const sky = new Sky();
@@ -94,12 +96,17 @@ async function create(opts) {
   const su = sky.material.uniforms;
   su.turbidity.value = look.haze.turbidityClear + (look.haze.turbidityHumid - look.haze.turbidityClear) * humid * (weather.santaAna ? 0.4 : 1);
   su.rayleigh.value = look.haze.rayleigh ?? 2.2;
-  su.mieCoefficient.value = 0.004 + 0.006 * humid;
+  su.mieCoefficient.value = look.haze.mieClear + (look.haze.mieHumid - look.haze.mieClear) * humid;
   su.mieDirectionalG.value = 0.8;
   su.sunPosition.value.copy(sunDir);
   // the sky model's brightness against the ground's, a figure of the data (the model is in its own units)
   sky.material.uniforms.skyScale = { value: look.light.skyScale ?? 0.4 };
-  sky.material.fragmentShader = sky.material.fragmentShader.replace('uniform float mieDirectionalG;', 'uniform float mieDirectionalG; uniform float skyScale;').replace('gl_FragColor = vec4( texColor, 1.0 );', 'gl_FragColor = vec4( texColor * skyScale, 1.0 );');
+  // the model gives the sky's light (its gradient, its glow around the sun, its haze); its hue is pulled toward the season's measured sky colour, which a physical model lit by a white sun does not reach (the photographs' sky is a deeper blue than the model's)
+  sky.material.uniforms.skyTint = { value: skyBase.clone() };
+  sky.material.uniforms.skyTintShare = { value: look.light.skyTintShare ?? 0 };
+  sky.material.fragmentShader = sky.material.fragmentShader
+    .replace('uniform float mieDirectionalG;', 'uniform float mieDirectionalG; uniform float skyScale, skyTintShare; uniform vec3 skyTint;')
+    .replace('gl_FragColor = vec4( texColor, 1.0 );', 'vec3 skyCol = texColor * skyScale; float skyLum = dot(skyCol, vec3(0.2126, 0.7152, 0.0722)); vec3 tinted = skyTint * (skyLum / max(dot(skyTint, vec3(0.2126, 0.7152, 0.0722)), 0.001)); gl_FragColor = vec4( mix(skyCol, tinted, skyTintShare), 1.0 );');
   scene.add(sky);
 
   // The ground.
@@ -115,11 +122,17 @@ async function create(opts) {
   scene.add(platesBuilt.group);
   scene.add(buildBoards({ look, groundAt, full }));
   scene.add(buildShelter({ look, full }));
-  const brush = buildBrush({ look, physics, photoImage, photo: photoRec, frame, groundAt, month, full });
+  const brush = buildBrush({ look, physics, photoImage, photo: photoRec, frame, groundAt, month, full, sunDir });
   scene.add(brush.mesh);
 
-  const post = makePost({ renderer, size: Math.round(size * dpr), look });
+  const post = makePost({ renderer, size: Math.round(size * dpr), look, samples: full ? (look.picture?.samplesFull ?? 4) : 0, halfFloat });
   post.uniforms.near.value = camera.near; post.uniforms.far.value = camera.far;
+  // the air: things pale toward the sky's colour with distance (the day's visibility) and brighten toward the sun
+  post.uniforms.airCol.value.copy(hazeCol);
+  post.uniforms.airBright.value = look.air.brightness + (look.air.brightnessHumid - look.air.brightness) * humid;
+  post.uniforms.airDist.value = visM;
+  post.uniforms.sunGlow.value = look.air.sunGlow; post.uniforms.sunGlowWidth.value = look.air.sunGlowWidth;
+  post.uniforms.sunDir.value.copy(sunDir);
 
   const view = { yawDeg: 0, pitchDeg: 0, fovDeg: 5, glass: false, windMph: 0 };
   const dir = new THREE.Vector3();
@@ -135,7 +148,7 @@ async function create(opts) {
   const tempFactor = Math.max(0, Math.min(1, (weather.tempF - look.shimmer.startF) / (look.shimmer.fullF - look.shimmer.startF)));
   let last = 0;
   const bytes = rec.heights.bytes + rec.heightsFar.bytes + photoRec.bytes;
-  const built = { ms: Math.round(performance.now() - t0), brush: brush.placed, rows: terrainBuilt.dists.length };
+  const built = { ms: Math.round(performance.now() - t0), brush: brush.placed, rows: terrainBuilt.dists.length, halfFloat, samples: post.target.samples };
 
   const api = {
     version: VERSION, sun, noonElevation: noonElevation({ lat: course.firing.lat, month, day: look.monthDay }), bytes, built, quality, camera, scene,
@@ -146,9 +159,10 @@ async function create(opts) {
       brush.uniforms.time.value = now; brush.uniforms.wind.value = Math.abs(view.windMph);
       // shimmer: an angular wobble (minutes of angle at full distance) as a share of the view, so it grows with magnification
       post.uniforms.time.value = now;
-      post.uniforms.shimmer.value = view.fovDeg > 3.5 ? 0 : ((look.shimmer.amplitudeMoa * tempFactor) / (view.fovDeg * 60)) * 0.5;
+      post.uniforms.shimmer.value = (view.fovDeg > 3.5 || window.RD_SCENE_DEBUG === 'noshimmer') ? 0 : ((look.shimmer.amplitudeMoa * tempFactor) / (view.fovDeg * 60)) * 0.5;
       post.uniforms.lean.value = Math.max(-1, Math.min(1, view.windMph / 15));
       post.uniforms.glass.value = view.glass ? 1 : 0;
+      post.setCamera(camera);
       renderer.setRenderTarget(post.target);
       renderer.render(scene, camera);
       post.draw();
@@ -157,7 +171,18 @@ async function create(opts) {
     // Where a world point lands on the canvas, in CSS pixels.
     project(x, y, z) { const v = new THREE.Vector3(x, y, z).project(camera); return [((v.x + 1) / 2) * size, ((1 - v.y) / 2) * size]; },
     plateWorld(ix) { const p = course.plates[ix]; return { x: p.lateralYd * YD, y: eyeM + p.riseFt * FT, z: -p.yards * YD }; },
-    groundAt,
+    groundAt, detailTextures: { dirt: terrainBuilt.dirt, grass: terrainBuilt.grass, patch: terrainBuilt.patch },
+    // The light's figures, changeable while the picture is up: how the figures in data/look.json were measured against the photographs' colours (scripts/picture-measure.mjs and the tests read the picture; nothing on a screen calls this).
+    tune({ exposure, sun: sunK, sky: skyK, bounce: bounceK, airBright, airDist, skyScale } = {}) {
+      if (exposure != null) renderer.toneMappingExposure = exposure;
+      if (sunK != null) sunLight.intensity = sunK * Math.max(0.05, Math.sin((Math.max(2, sun.elevation) * Math.PI) / 180) ** 0.35);
+      if (skyK != null) hemi.intensity = skyK;
+      if (bounceK != null) bounce.intensity = bounceK * 0.5;
+      if (airBright != null) post.uniforms.airBright.value = airBright;
+      if (airDist != null) post.uniforms.airDist.value = airDist;
+      if (skyScale != null) sky.material.uniforms.skyScale.value = skyScale;
+      for (const k of ['turbidity', 'rayleigh', 'mieCoefficient', 'mieDirectionalG', 'skyTintShare']) if (arguments[0][k] != null) su[k].value = arguments[0][k];
+    },
     resize(px, ratio = dpr) { renderer.setPixelRatio(ratio); renderer.setSize(px, px, false); post.resize(Math.round(px * ratio)); api.size = px; },
     size,
     dispose() { renderer.dispose(); post.dispose(); },

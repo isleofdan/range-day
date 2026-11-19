@@ -374,6 +374,9 @@
     if (sight.kind === 'scope') {
       // the tube: black outside the circle
       g.save(); g.beginPath(); g.rect(0, 0, size, size); g.arc(cx, cy, cx - 4, 0, Math.PI * 2, true); g.fillStyle = '#050505'; g.fill('evenodd'); g.restore();
+      const tube = g.createRadialGradient(cx, cy, (cx - 4) * 0.93, cx, cy, cx - 4);
+      tube.addColorStop(0, 'rgba(0,0,0,0)'); tube.addColorStop(1, 'rgba(0,0,0,0.6)');
+      g.fillStyle = tube; g.beginPath(); g.arc(cx, cy, cx - 4, 0, Math.PI * 2); g.fill();
       g.strokeStyle = 'rgba(0,0,0,0.85)'; g.lineWidth = 2; g.beginPath(); g.arc(cx, cy, cx - 4, 0, Math.PI * 2); g.stroke();
       if (sight.reticle && sight.reticle.kind === 'mil-dot') return drawMilDot(g, size, k, cx, cy);
       if (sight.reticle && sight.reticle.marksMoaBelowZero) return drawDropReticle(g, size, k, cx, cy);
@@ -392,32 +395,43 @@
   // leaf behind the notch is not drawn: raising it raises the whole rear
   // sight, and the shooter re-aligns post and notch, so the picture is the
   // same and only the bore's angle changes (through the engine).
+  // Which side of the front post the sun lights: the sun's side of the line of fire when the picture knows the sun; else the left.
+  const sunOnRight = () => { if (!scene || !scene.sun || !course.firing) return false; const rel = ((scene.sun.azimuth - course.firing.bearingDeg) % 360 + 360) % 360; return rel < 180; };
+  // Dark steel close to the eye, out of focus: a soft sheen from the sky down its face.
+  const steelFace = (g, x0, y0, x1, y1) => { const gr = g.createLinearGradient(0, y0, 0, y1); gr.addColorStop(0, '#2c2e30'); gr.addColorStop(0.35, '#1b1a17'); gr.addColorStop(1, '#100f0c'); g.fillStyle = gr; g.fillRect(x0, y0, x1 - x0, y1 - y0); };
   function drawNotchAndPost(g, size, k, cx, cy) {
     const notchW = sight.notchMoa * k, depth = sight.notchDepthMoa * k;
     const postW = sight.frontPostMoa * k;
     const bead = Boolean(sight.frontBead);
-    // the rear sight blade: everything below the center line, except the notch, is its dark face
+    const blur = size * 0.009; // the rear sight is a hand's length from the eye: well out of focus
+    // the rear sight blade: everything below the center line, except the notch, is its dark face; blurred, so the notch's corners round and the edges soften, its angles unchanged
     g.save();
-    if ('filter' in g) g.filter = 'blur(2.5px)';
-    g.fillStyle = '#17150f';
-    g.beginPath();
-    g.rect(0, cy, cx - notchW / 2, size); g.rect(cx + notchW / 2, cy, cx - notchW / 2, size); g.rect(cx - notchW / 2, cy + depth, notchW, size);
-    g.fill();
+    if ('filter' in g) g.filter = `blur(${blur.toFixed(1)}px)`;
+    steelFace(g, -blur * 2, cy, cx - notchW / 2, size + blur * 2);
+    steelFace(g, cx + notchW / 2, cy, size + blur * 2, size + blur * 2);
+    steelFace(g, cx - notchW / 2, cy + depth, cx + notchW / 2, size + blur * 2);
+    // the blade's top edge catches the sky: a thin paler line along it
+    g.fillStyle = 'rgba(120,128,136,0.35)';
+    g.fillRect(-blur * 2, cy, cx - notchW / 2 + blur * 2, blur * 0.6); g.fillRect(cx + notchW / 2, cy, cx, blur * 0.6);
+    g.restore();
     // the blade's shoulders fade upward a little: nearness to the eye
     const haze = g.createLinearGradient(0, cy - notchW * 0.25, 0, cy);
-    haze.addColorStop(0, 'rgba(23,21,15,0)'); haze.addColorStop(1, 'rgba(23,21,15,0.35)');
+    haze.addColorStop(0, 'rgba(23,21,15,0)'); haze.addColorStop(1, 'rgba(23,21,15,0.3)');
     g.fillStyle = haze; g.fillRect(0, cy - notchW * 0.25, size, notchW * 0.25);
-    g.restore();
-    // the front post (or bead and stem), sharper, its top at the center
+    // the front post (or bead and stem), sharper, its top at the center, one face in the sun and one in shade
     g.save();
-    if ('filter' in g) g.filter = 'blur(0.6px)';
-    g.fillStyle = '#101010';
+    if ('filter' in g) g.filter = `blur(${(size * 0.0016).toFixed(2)}px)`;
+    const lit = sunOnRight();
+    const faces = (x, w, y0) => { const gr = g.createLinearGradient(x, 0, x + w, 0); gr.addColorStop(0, lit ? '#0b0b0b' : '#30302d'); gr.addColorStop(0.5, '#141413'); gr.addColorStop(1, lit ? '#30302d' : '#0b0b0b'); g.fillStyle = gr; g.fillRect(x, y0, w, size); };
     if (bead) {
       const stemW = sight.stemWidthMoa * k;
-      g.fillRect(cx - stemW / 2, cy + postW * 0.45, stemW, size);
-      g.beginPath(); g.arc(cx, cy + postW / 2, postW / 2, 0, Math.PI * 2); g.fill();
+      faces(cx - stemW / 2, stemW, cy + postW * 0.45);
+      const bg = g.createRadialGradient(cx - postW * 0.2 * (lit ? -1 : 1), cy + postW * 0.4, 0, cx, cy + postW / 2, postW / 2);
+      bg.addColorStop(0, '#3a3a36'); bg.addColorStop(1, '#0d0d0d');
+      g.fillStyle = bg; g.beginPath(); g.arc(cx, cy + postW / 2, postW / 2, 0, Math.PI * 2); g.fill();
     } else {
-      g.fillRect(cx - postW / 2, cy, postW, size);
+      faces(cx - postW / 2, postW, cy);
+      g.fillStyle = 'rgba(150,150,145,0.5)'; g.fillRect(cx - postW / 2, cy, postW, Math.max(0.6, size * 0.0015));
     }
     g.restore();
   }
@@ -426,14 +440,22 @@
   // the data's minutes of angle at every distance. No crosshair, no marks.
   // Outside the window the world is still there (the other eye sees it),
   // dimmed by the sight's body; with the magnifier flipped in, the view is
-  // a tube: black outside, the window and the dot both magnified.
+  // a tube: black outside, the window and the dot both magnified. The glass
+  // carries a faint tint and the housing's edge a darker rim.
   function drawDot(g, size, k, cx, cy) {
     const r = cx - 4;
     g.save(); g.beginPath(); g.rect(0, 0, size, size); g.arc(cx, cy, r, 0, Math.PI * 2, true);
     g.fillStyle = magnifierIn() ? '#050505' : 'rgba(30, 26, 22, 0.82)'; g.fill('evenodd'); g.restore();
+    // the housing's edge: a dark rim shading inward, with a thin paler line where the metal catches the light
+    const rim = g.createRadialGradient(cx, cy, r * 0.9, cx, cy, r);
+    rim.addColorStop(0, 'rgba(0,0,0,0)'); rim.addColorStop(0.7, 'rgba(0,0,0,0.25)'); rim.addColorStop(1, 'rgba(0,0,0,0.85)');
+    g.fillStyle = rim; g.beginPath(); g.arc(cx, cy, r, 0, Math.PI * 2); g.fill();
     g.strokeStyle = 'rgba(0,0,0,0.9)'; g.lineWidth = magnifierIn() ? 3 : 6; g.beginPath(); g.arc(cx, cy, r, 0, Math.PI * 2); g.stroke();
-    // a faint tint on the glass
-    g.fillStyle = 'rgba(120, 150, 255, 0.05)'; g.beginPath(); g.arc(cx, cy, r, 0, Math.PI * 2); g.fill();
+    g.strokeStyle = 'rgba(110,112,115,0.35)'; g.lineWidth = 1; g.beginPath(); g.arc(cx, cy, r - (magnifierIn() ? 1.5 : 3), 0, Math.PI * 2); g.stroke();
+    // a faint tint on the glass, a touch bluer and a little brighter toward the top where it reflects the sky
+    const tint = g.createLinearGradient(0, cy - r, 0, cy + r);
+    tint.addColorStop(0, 'rgba(140, 170, 255, 0.09)'); tint.addColorStop(1, 'rgba(120, 150, 255, 0.04)');
+    g.fillStyle = tint; g.beginPath(); g.arc(cx, cy, r, 0, Math.PI * 2); g.fill();
     const dot = sight.dotMoa * k; // the dot's width: the data's MOA at the view's scale, however small
     g.fillStyle = 'rgba(255, 60, 40, 0.35)'; g.beginPath(); g.arc(cx, cy, dot / 2 + 1.2, 0, Math.PI * 2); g.fill(); // a thin bloom, as a bright dot has
     g.fillStyle = 'rgb(255, 36, 28)'; g.beginPath(); g.arc(cx, cy, Math.max(0.6, dot / 2), 0, Math.PI * 2); g.fill();
@@ -478,15 +500,24 @@
   // Iron sights with a ring: the rear aperture's circle, dark and soft around it; the front post rising to the center.
   function drawRingAndPost(g, size, k, cx, cy) {
     const r = (sight.apertureMoa * k) / 2;
+    // the aperture's disc: the ring is right at the eye, so its edge is a soft dark fade, its inner edge faintly paler where the sky reaches the metal
     const ring = g.createRadialGradient(cx, cy, r * 0.9, cx, cy, r * 1.25);
-    ring.addColorStop(0, 'rgba(0,0,0,0)'); ring.addColorStop(1, 'rgba(0,0,0,0.97)');
+    ring.addColorStop(0, 'rgba(0,0,0,0)'); ring.addColorStop(0.3, 'rgba(25,26,28,0.55)'); ring.addColorStop(1, 'rgba(8,8,8,0.97)');
     g.fillStyle = ring; g.fillRect(0, 0, size, size);
     const w = sight.frontPostMoa * k;
-    g.fillStyle = '#141414';
-    g.fillRect(cx - w / 2, cy, w, size);
+    const lit = sunOnRight();
+    g.save();
+    if ('filter' in g) g.filter = `blur(${(size * 0.0016).toFixed(2)}px)`;
+    const gr = g.createLinearGradient(cx - w / 2, 0, cx + w / 2, 0); gr.addColorStop(0, lit ? '#0b0b0b' : '#30302d'); gr.addColorStop(0.5, '#141413'); gr.addColorStop(1, lit ? '#30302d' : '#0b0b0b');
+    g.fillStyle = gr; g.fillRect(cx - w / 2, cy, w, size);
+    g.fillStyle = 'rgba(150,150,145,0.5)'; g.fillRect(cx - w / 2, cy, w, Math.max(0.6, size * 0.0015));
+    g.restore();
     // the post's protective wings, blurred by nearness to the eye
-    g.fillStyle = 'rgba(20,20,20,0.35)';
+    g.save();
+    if ('filter' in g) g.filter = `blur(${(size * 0.008).toFixed(1)}px)`;
+    g.fillStyle = 'rgba(20,20,20,0.4)';
     g.fillRect(cx - w * 2.6, cy - w * 0.4, w * 0.5, size); g.fillRect(cx + w * 2.1, cy - w * 0.4, w * 0.5, size);
+    g.restore();
   }
 
   // --- the shot -----------------------------------------------------------------------------
@@ -715,7 +746,7 @@
     // The drawn geometry, in pixels at the view's scale: what the tests compare with the data's angles.
     get geometry() {
       const k = pxPerMoa();
-      return { pxPerMoa: k, viewPx: view.size, dotPx: sight.kind === 'dot' ? sight.dotMoa * k : null,
+      return { pxPerMoa: k, viewPx: view.size, dotPx: sight.kind === 'dot' ? sight.dotMoa * k : null, notchDepthPx: sight.notchDepthMoa ? sight.notchDepthMoa * k : null,
         marksPx: sight.reticle && sight.reticle.marksMoaBelowZero ? sight.reticle.marksMoaBelowZero.map((m) => ({ yards: m.yards, px: m.moaBelowZero * k })) : null,
         leafMoa: leaf ? leafMoa() : null, magnifierIn: magnifierIn() };
     } };

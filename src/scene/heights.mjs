@@ -1,7 +1,9 @@
 // The surveyed ground in the browser: reads a 16-bit grayscale PNG of
 // heights (written by scripts/terrain/fetch.mjs; metres = pixel × stepM +
 // offsetM) with the browser's own inflater, so no height is rounded through
-// an 8-bit canvas; samples it; and works out which cells the sun reaches.
+// an 8-bit canvas; samples it; builds the picture of its slopes (a normal
+// per cell, for lighting every pixel of a hillside from the survey itself)
+// and works out how far the sun's ray clears the ground at each cell.
 
 // --- a 16-bit PNG, decoded exactly -------------------------------------------------------------
 export async function loadHeights(url, rec) {
@@ -47,40 +49,69 @@ export class Grid {
     const x0 = Math.floor(fx), y0 = Math.floor(fy), tx = fx - x0, ty = fy - y0;
     return (this.at(x0, y0) * (1 - tx) + this.at(x0 + 1, y0) * tx) * (1 - ty) + (this.at(x0, y0 + 1) * (1 - tx) + this.at(x0 + 1, y0 + 1) * tx) * ty;
   }
+  // The highest cell, found once.
+  get maxM() { if (this._max == null) { let m = 0; for (let i = 0; i < this.pixels.length; i++) if (this.pixels[i] > m) m = this.pixels[i]; this._max = m * this.stepM + this.offsetM; } return this._max; }
 }
 
-// Which cells the sun reaches: for each cell of a coarser copy of the grid,
-// a walk toward the sun along the ground; shaded where the ground rises
-// above the ray. Answers a Uint8Array (255 lit, 0 shaded, soft at the edge)
-// over the grid at `every` cells per sample, for a sun at elevation and
-// azimuth in degrees (azimuth from north through east).
-export function sunMask(grid, { elevation, azimuth }, every = 4) {
+// The slopes of the ground as a picture, one cell in `every`: for each
+// cell a unit normal (east, up, north) from the heights either side, and
+// how hollow the ground is there (the mean of the four neighbours `reach`
+// cells away, less the cell: positive in a gully or a crease, negative on
+// a rib). Packed as RGBA bytes: R = east, G = up, B = north (each 0 to 255
+// for −1 to 1; up is never negative), A = hollowness, 128 flat, clamped at
+// ±hollowM metres. Used by the terrain's shader to light each pixel from the
+// survey instead of from the mesh's corners.
+export function normalMap(grid, every = 1, reach = 4, hollowM = 2) {
+  const w = Math.floor(grid.width / every), h = Math.floor(grid.height / every);
+  const out = new Uint8Array(w * h * 4);
+  const sp = grid.spacingM * every;
+  const at = (x, y) => grid.at(x * every + (every >> 1), y * every + (every >> 1));
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const hc = at(x, y);
+    const dzdx = (at(x + 1, y) - at(x - 1, y)) / (2 * sp);
+    const dzdn = (at(x, y - 1) - at(x, y + 1)) / (2 * sp); // rows run south: the row above is north
+    const l = Math.hypot(dzdx, 1, dzdn);
+    const nx = -dzdx / l, ny = 1 / l, nz = -dzdn / l;
+    const hollow = (at(x - reach, y) + at(x + reach, y) + at(x, y - reach) + at(x, y + reach)) / 4 - hc;
+    const k = (y * w + x) * 4;
+    out[k] = Math.round((nx * 0.5 + 0.5) * 255); out[k + 1] = Math.round(ny * 255); out[k + 2] = Math.round((nz * 0.5 + 0.5) * 255);
+    out[k + 3] = Math.round(Math.max(0, Math.min(255, 128 + (hollow / hollowM) * 127)));
+  }
+  return { width: w, height: h, data: out };
+}
+
+// How far the sun's ray clears the ground, cell by cell, for a sun at
+// elevation and azimuth in degrees (azimuth from north through east): from
+// each cell of a coarser copy of the grid (one in `every`), a walk toward
+// the sun along the ground; the least gap between the ray and the ground
+// along the walk, in metres, is the cell's clearance (negative where the
+// ground rises above the ray: shaded). The walk ends once the ray is above
+// the highest ground in the grid. Packed as bytes, 128 at zero clearance,
+// clamped at ±clampM, so the shader can draw a clean edge between sun and
+// shade by where the clearance crosses zero.
+export function sunMask(grid, { elevation, azimuth }, every = 4, clampM = 4) {
   const w = Math.floor(grid.width / every), h = Math.floor(grid.height / every);
   const out = new Uint8Array(w * h);
   if (elevation <= 0.5) return { width: w, height: h, data: out };
   const az = (azimuth * Math.PI) / 180, el = (elevation * Math.PI) / 180;
   const dx = Math.sin(az), dy = -Math.cos(az); // toward the sun, in grid steps: columns run east, rows run south
-  const rise = Math.tan(el);
   const step = grid.spacingM * every;
+  const rise = Math.tan(el) * step;
+  const top = grid.maxM;
   const maxSteps = Math.ceil(Math.max(w, h) * 1.5);
   const hAt = (x, y) => grid.at(Math.round(x * every + every / 2), Math.round(y * every + every / 2));
   for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
     const h0 = hAt(x, y);
-    let lit = 1;
+    let least = clampM;
     for (let s = 1; s < maxSteps; s++) {
       const sx = x + dx * s, sy = y + dy * s;
       if (sx < 0 || sy < 0 || sx >= w || sy >= h) break;
-      const ground = hAt(sx, sy), ray = h0 + rise * step * s;
-      if (ground > ray + 0.3) { lit = 0; break; }
+      const ray = h0 + rise * s;
+      if (ray > top) break;
+      const gap = ray - hAt(sx, sy);
+      if (gap < least) { least = gap; if (least <= -clampM) break; }
     }
-    out[y * w + x] = lit ? 255 : 0;
+    out[y * w + x] = Math.round(128 + (Math.max(-clampM, Math.min(clampM, least)) / clampM) * 127);
   }
-  // a little softening, so the edge of a shadow is not a staircase
-  const soft = new Uint8Array(out.length);
-  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
-    let sum = 0, n = 0;
-    for (let j = -1; j <= 1; j++) for (let i = -1; i <= 1; i++) { const xx = x + i, yy = y + j; if (xx >= 0 && yy >= 0 && xx < w && yy < h) { sum += out[yy * w + xx]; n++; } }
-    soft[y * w + x] = Math.round(sum / n);
-  }
-  return { width: w, height: h, data: soft };
+  return { width: w, height: h, data: out };
 }
