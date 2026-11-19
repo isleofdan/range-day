@@ -1,6 +1,6 @@
 # FIELD REPORT — range-day-seven — 2026-11-19
 
-Nothing on Dan's screen has changed yet: the three changes are on branches, in pull requests #16 (change A, into `main`), #17 (change B, into A) and #18 (change C, into B); the merge and the Deploy run will show the boards around the 200-yard plate without their dotted lines. Everything else this session built is in how the app is checked and packaged, which no screen shows.
+Nothing on Dan's screen has changed yet: the three changes are on branches, in pull requests #16 (change A, into `main`), #17 (change B, into A) and #18 (change C, into B), each with a PASS from the result checker (under "Result checks"); the merge and the Deploy run will show the boards around the 200-yard plate without their dotted lines. Everything else this session built is in how the app is checked and packaged, which no screen shows.
 
 ## What stands
 
@@ -82,7 +82,7 @@ Seventh round, the same views with those two changes: #17 (change B), job 202611
 
 Eighth round, the same views after those fixes and after the runner's runs on the 17-minute commit showed the slowest job at 10 min 47 s (so the limit is 22, recorded under verify 2): #16 (change A), job 20261119-180721-d027b7: **PASS**. #17 (change B), job 20261119-180722-b363b5: **PASS**. #18 (change C), job 20261119-180721-9af191: FINDINGS (1): the eighth round's own verdicts were not yet in the text it read: recorded here.
 
-Ninth round, change C only, on this text: its verdict is the checker's event on the card after this filing, copied here before any merge; nothing is merged before Dan's typed line.
+Ninth round, change C only, on the same text: #18 (change C), job 20261119-181122-787c94: **PASS**. So the three pull requests stand at PASS: #16 (job 20261119-180721-d027b7), #17 (job 20261119-180722-b363b5), #18 (job 20261119-181122-787c94). Nothing is merged before Dan's typed line.
 
 ## Asks
 
