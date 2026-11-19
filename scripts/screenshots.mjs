@@ -61,6 +61,10 @@ async function seededHit(page, seed) {
   await page.evaluate(([u, r]) => RangeDayLine.setHold(u, r), [-probe.upIn / ipm, -probe.rightIn / ipm]);
   return seededShot(page, seed);
 }
+// n presses of a knob button, as its pointerdown handler takes them (game.js, holdRepeat: a press moves one click), dispatched
+// from inside the page: a Playwright click waits for two steady frames before each press, and under the Full picture drawn
+// in software a frame takes seconds (41 presses took 10 minutes on the runner, range-day-seven).
+const press = (page, sel, n) => page.evaluate(([sel, n]) => { const b = document.querySelector(sel); for (let i = 0; i < n; i++) { b.dispatchEvent(new PointerEvent('pointerdown', { button: 0, pointerId: 1, bubbles: true })); b.dispatchEvent(new PointerEvent('pointerup', { button: 0, pointerId: 1, bubbles: true })); } }, [sel, n]);
 const AR = '/line?course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193';
 const SCREENS = [
   { name: 'home', path: '/?rifle=iwi-x95', expect: 'When: time of day', act: (page) => page.waitForSelector('.rifle.picked[data-rifle="iwi-x95"]') },
@@ -121,10 +125,10 @@ const SCREENS = [
     const probe = await seededShot(page, 21);
     const ipm = 200 * 36 * (Math.PI / (180 * 60));
     const el = -probe.upIn / ipm, wd = -probe.rightIn / ipm; // minutes of angle to dial
-    for (let i = 0; i < Math.floor(Math.abs(el)); i++) await page.click(el > 0 ? '#el-up-moa' : '#el-down-moa');
-    for (let i = 0; i < Math.round((Math.abs(el) % 1) / 0.25); i++) await page.click(el > 0 ? '#el-up' : '#el-down');
-    for (let i = 0; i < Math.floor(Math.abs(wd)); i++) await page.click(wd > 0 ? '#wd-right-moa' : '#wd-left-moa');
-    for (let i = 0; i < Math.round((Math.abs(wd) % 1) / 0.25); i++) await page.click(wd > 0 ? '#wd-right' : '#wd-left');
+    await press(page, el > 0 ? '#el-up-moa' : '#el-down-moa', Math.floor(Math.abs(el)));
+    await press(page, el > 0 ? '#el-up' : '#el-down', Math.round((Math.abs(el) % 1) / 0.25));
+    await press(page, wd > 0 ? '#wd-right-moa' : '#wd-left-moa', Math.floor(Math.abs(wd)));
+    await press(page, wd > 0 ? '#wd-right' : '#wd-left', Math.round((Math.abs(wd) % 1) / 0.25));
     await seededShot(page, 21); await page.evaluate(() => window.scrollTo(0, 0)); await settle(page, 3500);
   } },
   // The Light picture beside the Full one (the same view as line-sep-afternoon-2x).
@@ -163,7 +167,7 @@ const SCREENS = [
   { name: 'line-vepr-irons-600', path: '/line?course=cta-piru&rifle=molot-vepr-54r&sight=vepr-irons&load=sb-174-hpbt', expect: 'Vepr iron sights', act: (page) => plate(page, 4) },
   { name: 'line-tavor-irons-200', path: `${SYLMAR}&rifle=iwi-x95&sight=tavor-irons&load=imi-m193`, expect: 'Tavor folding iron sights', act: (page) => plate(page, 1) },
   { name: 'line-22-100', path: `${SYLMAR}&rifle=remington-22&sight=rem-irons&load=cci-sv-40`, expect: 'Open rimfire sights', act: (page) => plate(page, 0) },
-  { name: 'line-knob-stop', path: `${PIRU}&sight=utg-2-7x44`, expect: 'end of its travel', act: async (page) => { await ready(page); await fresh(page, 'molot-vepr-54r', 'utg-2-7x44'); await page.reload(); await ready(page); for (let i = 0; i < 41; i++) await page.click('#el-up-moa'); await settle(page, 200); } },
+  { name: 'line-knob-stop', path: `${PIRU}&sight=utg-2-7x44`, expect: 'end of its travel', act: async (page) => { await ready(page); await fresh(page, 'molot-vepr-54r', 'utg-2-7x44'); await page.reload(); await ready(page); await press(page, '#el-up-moa', 41); await settle(page, 200); } },
   { name: 'line-scope-2x', path: PIRU, expect: 'Firing line', act: async (page) => { await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(2)); await settle(page, 400); } },
   { name: 'line-scope-7x', path: PIRU, expect: 'Zoom 7', act: async (page) => { await ready(page); await page.evaluate(() => RangeDayLine.setZoom(7)); await settle(page, 400); } },
   { name: 'line-canyon-irons', path: '/line?course=cta-piru&rifle=molot-vepr-54r&sight=vepr-irons&load=sb-174-hpbt', expect: 'Canyon course', act: (page) => plate(page, 4) },
@@ -178,7 +182,8 @@ const SCREENS = [
     await ready(page); await fresh(page, 'molot-vepr-54r', 'utg-2-7x44');
     await page.reload(); await ready(page); await page.evaluate(() => RangeDayLine.setZoom(7)); await page.click('#fire'); await landed(page); await settle(page, 300);
   } },
-  { name: 'line-shot-log', path: PIRU, expect: 'miss:', act: async (page) => { await ready(page); await page.evaluate(() => document.getElementById('log').scrollIntoView()); await settle(page, 200); } },
+  // The shot log with a miss in it: the state fires its own unzeroed shot (it used to show the miss an earlier state had left in the rifle's log, which a shard running alone has not).
+  { name: 'line-shot-log', path: PIRU, expect: 'miss:', act: async (page) => { await ready(page); await fresh(page, 'molot-vepr-54r', 'utg-2-7x44'); await page.reload(); await ready(page); await seededShot(page, 31); await page.evaluate(() => document.getElementById('log').scrollIntoView()); await settle(page, 200); } },
   { name: 'line-conditions-on', path: PIRU, expect: 'Wind, near stretch', act: async (page) => { await ready(page); await page.check('#show-conditions'); await page.evaluate(() => document.getElementById('conditions').scrollIntoView()); await settle(page, 200); } },
 ];
 
