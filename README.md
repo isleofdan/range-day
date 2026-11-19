@@ -240,7 +240,7 @@ Then open http://localhost:8080 and sign in with `try-me`.
 `npm start`, `npm run dev`, `npm test` and `npm run screenshots` each build
 `public/scene.min.js` from `src/scene/` first (it is not stored in the
 repository; `npm run build:scene` builds it by itself).
-`npm run check` runs every check (the test files in four groups and the
+`npm run check` runs every check (the tests in six groups and the
 screenshot states in four shards, two pieces at a time; the screenshots are
 saved at both sizes into `docs/reports/screenshots/`).
 They also run by themselves after every edit an agent makes and on every
