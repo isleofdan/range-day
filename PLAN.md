@@ -76,6 +76,62 @@
 
 (Each session appends its own, in order.)
 
+### range-day-six — 19 Nov 2026 (cloud session, from the Wall card `range-day`)
+
+- **Stands:** the canyon course's picture reads closer to a photograph of
+  the place, pull request #12 (branch `range-day-six`): every pixel of
+  a hillside is lit from the survey's own slopes (a normal map built from
+  the 1 m heights, and from the 10 m heights beyond), so gullies, ribs and
+  terraces show in the light and in shadow; the ground is sorted, pixel by
+  pixel, into packed dirt, grass, scrub, bare rock and loose scree by the
+  slope's steepness, the photograph's colour and the season; surface
+  detail made in code (clumps, stones, rills, clods, grains, blades) is
+  laid over the ground at three scales fixed to the ground, each scale
+  fading out once a screen pixel covers many of its texels, so a stronger
+  glass later still finds detail; the photograph is never magnified past
+  its own pixels; where the sun's ray clears the ground is recorded in
+  metres, so the edge of shade is clean; creases are darker; the air pales
+  and blues things by their true distance and brightens toward the sun
+  (in the last pass, from the depth); the brush is chaparral of three
+  kinds, lit on one side and shaded on the other, each with its soft
+  shadow, with grass tufts and stones on the floor inside 150 yards; the
+  plates are worn steel on heaped mounds, the boards weathered on frames,
+  the shelter has its corrugated roof and slab. The scene is drawn in
+  linear light to a half-float texture with multisampled edges on Full,
+  and the last pass applies the camera's exposure and ACES tone curve (the
+  scene used to be drawn clipped into an 8-bit texture with no tone curve,
+  which was most of the washed, flat look); through the scope the middle
+  keeps its contrast and colour; the iron sights are out-of-focus dark
+  steel with a sheen, the post's faces lit and shaded; the dot has its
+  housing edge and tint. Every sight's angles are unchanged (verify 4
+  measures them off the canvas). `scripts/picture-measure.mjs` reads the
+  picture's sharpness, patch colours and frame time in a real browser;
+  `docs/reports/picture-before.txt` and `picture-after.txt` are its
+  readings. 99 tests, 51 screenshot states. The result check could not pass: the checker reads the pull request's diff cut at 400,000 bytes, and the committed 600 KB picture bundle fills it before the source files; stopping committing the bundle is a small build of its own. The Checks job's limit was raised to 60 minutes in pull request #13 on Dan's yes, after the runner cut #12's run at 25; the repeated run passed in 59 minutes, so the check must be made lighter before the next picture session.
+- **Decided:** the sky's hue is pulled toward the season's measured sky
+  colour (`skyTintShare` in `data/look.json`), because the physical sky
+  model lit by a white sun draws a paler, greyer blue at 18 degrees up
+  than the photographs show, and the Look check holds the sky to the
+  measured colour; a face steeper than 45 degrees reads as rock or scree
+  (38 made the grassy canyon walls rock); the photograph is sampled no
+  finer than 3 of its pixels and the ground's sorting no finer than 6
+  (its compression showed as blocks through 7x); a detail scale fades out
+  past 12 texels a pixel; the ground mesh's rows always reach the far
+  square's edge (on Light the old row count stopped the ground short of
+  the 1,000-yard plate, which hung in the sky); no CC0 material scan was
+  used: the detail is made in code, as the brief allows, because finding
+  one needs a run of the Terrain workflow on GitHub's runner, which a
+  session starts only on Dan's yes and the brief forbade routing to him;
+  the Light picture keeps the same ground at half the relief's fineness,
+  two detail scales, 1,200 bushes, no multisampling and no shadow map.
+- **Next session needs:** the rifle line's own picture at the same
+  quality (its berm, lane signs, pipe frames and beams, then
+  `pictureReady`); the near targets with shootable paper together with the
+  spotting scope; recording and playback; each planned by a Personal
+  Shipyard chat. The look at the deployed picture on Dan's phone
+  (production rendering is unverified from the cloud session). Report:
+  `docs/reports/range-day-six-report.md`.
+
 ### range-day-five — 18 Nov 2026 (cloud session, from the Wall card `range-day`)
 
 - **Stands:** the canyon course's firing line is a 3D picture of the real
