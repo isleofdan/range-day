@@ -124,7 +124,9 @@ test('the picture bundle public/scene.min.js is built, not stored: a copy stored
   const git = require('node:child_process').spawnSync('git', ['ls-files', '--error-unmatch', 'public/scene.min.js'], { cwd: root, encoding: 'utf8' });
   const stored = git.status === 0;
   if (stored) {
-    assert.equal(fs.readFileSync(OUT, 'utf8'), fresh, 'the stored public/scene.min.js differs from a fresh build (npm run build:scene and commit)');
+    // the committed text, not the file on disk: npm test's pretest has already rebuilt the file by now, so the disk copy is always fresh
+    const committed = require('node:child_process').spawnSync('git', ['show', 'HEAD:public/scene.min.js'], { cwd: root, encoding: 'utf8', maxBuffer: 16 * 1048576 }).stdout;
+    assert.equal(committed, fresh, 'the stored public/scene.min.js differs from a fresh build (npm run build:scene and commit)');
     console.log(`  a stored copy of public/scene.min.js is in the repository and equals a fresh build (${fresh.length} bytes)`);
     return;
   }
