@@ -403,7 +403,7 @@
     const notchW = sight.notchMoa * k, depth = sight.notchDepthMoa * k;
     const postW = sight.frontPostMoa * k;
     const bead = Boolean(sight.frontBead);
-    const blur = size * 0.012; // the rear sight is a hand's length from the eye: well out of focus
+    const blur = size * 0.009; // the rear sight is a hand's length from the eye: well out of focus
     // the rear sight blade: everything below the center line, except the notch, is its dark face; blurred, so the notch's corners round and the edges soften, its angles unchanged
     g.save();
     if ('filter' in g) g.filter = `blur(${blur.toFixed(1)}px)`;
@@ -746,7 +746,7 @@
     // The drawn geometry, in pixels at the view's scale: what the tests compare with the data's angles.
     get geometry() {
       const k = pxPerMoa();
-      return { pxPerMoa: k, viewPx: view.size, dotPx: sight.kind === 'dot' ? sight.dotMoa * k : null,
+      return { pxPerMoa: k, viewPx: view.size, dotPx: sight.kind === 'dot' ? sight.dotMoa * k : null, notchDepthPx: sight.notchDepthMoa ? sight.notchDepthMoa * k : null,
         marksPx: sight.reticle && sight.reticle.marksMoaBelowZero ? sight.reticle.marksMoaBelowZero.map((m) => ({ yards: m.yards, px: m.moaBelowZero * k })) : null,
         leafMoa: leaf ? leafMoa() : null, magnifierIn: magnifierIn() };
     } };

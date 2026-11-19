@@ -97,6 +97,12 @@ const SCREENS = [
   { name: 'line-sep-afternoon-2x', path: `${PIRU}&sight=utg-2-7x44&month=9&time=afternoon`, expect: 'September afternoon', act: async (page) => { await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(2)); await settle(page, 400); } },
   { name: 'line-sep-afternoon-7x', path: `${PIRU}&sight=utg-2-7x44&month=9&time=afternoon`, expect: 'September afternoon', act: async (page) => { await plate(page, 8); await page.evaluate(() => RangeDayLine.setZoom(7)); await settle(page, 400); } },
   { name: 'line-sep-afternoon-irons', path: `${PIRU}&sight=vepr-irons&month=9&time=afternoon`, expect: 'September afternoon', act: (page) => plate(page, 4) },
+  // range-day-six: the other two of each day's measured states (2x on the 1,000-yard plate, 7x on the 600-yard plate), and the 200-yard plate among the numbered boards at 4x.
+  { name: 'line-feb-midday-2x-1000', path: `${PIRU}&sight=utg-2-7x44&month=2&time=midday`, expect: 'February midday', act: async (page) => { await plate(page, 8); await page.evaluate(() => RangeDayLine.setZoom(2)); await settle(page, 400); } },
+  { name: 'line-feb-midday-7x-600', path: `${PIRU}&sight=utg-2-7x44&month=2&time=midday`, expect: 'February midday', act: async (page) => { await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(7)); await settle(page, 400); } },
+  { name: 'line-sep-afternoon-2x-1000', path: `${PIRU}&sight=utg-2-7x44&month=9&time=afternoon`, expect: 'September afternoon', act: async (page) => { await plate(page, 8); await page.evaluate(() => RangeDayLine.setZoom(2)); await settle(page, 400); } },
+  { name: 'line-sep-afternoon-7x-600', path: `${PIRU}&sight=utg-2-7x44&month=9&time=afternoon`, expect: 'September afternoon', act: async (page) => { await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(7)); await settle(page, 400); } },
+  { name: 'line-sep-boards-200', path: `${PIRU}&sight=utg-2-7x44&month=9&time=midday`, expect: 'September midday', act: async (page) => { await plate(page, 0); await page.evaluate(() => RangeDayLine.setZoom(4)); await settle(page, 400); } },
   // A hit with its strike mark on the plate, at 7x.
   // (the sight is dialled onto the probe shot with the knobs, as a shooter would, so the plate stays at the reticle when the second shot chips it)
   { name: 'line-hit-strike', path: `${PIRU}&sight=utg-2-7x44&month=9&time=midday`, expect: 'Hit', act: async (page) => {

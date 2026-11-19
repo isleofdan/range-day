@@ -114,11 +114,13 @@ test('verify 6: the look: the rendered sky, a sunlit hillside, the dirt floor in
       ['sunlit hillside (the headwall, 700 m, facing the noon sun; a 50 m patch)', { aim: [0, -700], fov: 4 }, P.green.sunlitSlope, true],
       ['dirt floor in sun (60 m out)', { aim: [3, -60], fov: 6 }, P.green.floor, true],
       ['scrub on the left wall (450 m)', { aim: [-140, -450], fov: 2.5 }, P.green.scrub, false, 'the measured scrub is a grey-green; the drawn scrub keeps more of the photograph\'s warmth, so its blue channel runs darker'],
+      ['sunlit brush (the three bushes nearest the line of fire, 250 to 350 m out, each at 0.3 degrees)', { brush: true, fov: 0.3 }, P.green.scrub, false, 'a bush is lit on one side and shaded on the other; the measured scrub colour is a whole hillside\'s'],
       ['the 600-yard plate\'s red paint through the scope at 7x', { plate: 4, fov: 45.8 / 60, glass: true }, P.paintRedInSun, true]]],
     ['September afternoon', `${PIRU}&sight=utg-2-7x44&month=9&time=afternoon`, [
       ['sky, as high as the roof lets the view go (18 degrees up)', { yaw: 0, pitch: 18, fov: 4 }, P.dry.sky, true],
       ['sunlit dry slope (the right wall, 600 m, facing the afternoon sun; a 40 m patch)', { aim: [150, -600], fov: 4 }, P.dry.sunlitSlope, true],
       ['dirt floor in sun (60 m out)', { aim: [3, -60], fov: 6 }, P.dry.floor, false, 'at half past three the floor is lit at a low angle; the photograph it was measured from was taken at 15:43 with the floor in fuller sun'],
+      ['sunlit brush (the three bushes nearest the line of fire, 250 to 350 m out, each at 0.3 degrees)', { brush: true, fov: 0.3 }, P.dry.scrub, false, 'a bush is lit on one side and shaded on the other; the dry scrub colour is itself an estimate'],
       ['the 600-yard plate\'s red paint through the scope at 7x', { plate: 4, fov: 45.8 / 60, glass: true }, P.paintRedInSun, false, 'the plate faces the shooter and the afternoon sun stands almost beside it, so it is side-lit, not in strong sun as the measured paint was']]],
   ];
   const { page, context } = await signedIn({ width: 1280, height: 800 });
@@ -132,19 +134,31 @@ test('verify 6: the look: the rendered sky, a sunlit hillside, the dirt floor in
     for (const [name, v, target, must, why] of samples) {
       const rgb = await page.evaluate(([v]) => {
         const s = RangeDayLine.scene, eye = 4 * 0.3048;
+        const median = (g, cx, cy, n) => { const d = g.getImageData(Math.round(cx - n / 2), Math.round(cy - n / 2), n, n).data; const ch = [[], [], []]; for (let i = 0; i < d.length; i += 4) { ch[0].push(d[i]); ch[1].push(d[i + 1]); ch[2].push(d[i + 2]); } return ch.map((a) => a.sort((x, y) => x - y)[a.length >> 1]); };
+        const read = () => { const sc = document.getElementById('scene'); const c = document.createElement('canvas'); c.width = sc.width; c.height = sc.height; const g = c.getContext('2d'); g.drawImage(sc, 0, 0); return { g, w: sc.width, h: sc.height }; };
+        const aimAt = (yaw, pitch, fov, glass) => { s.setView({ yawDeg: yaw, pitchDeg: pitch, fovDeg: fov, glass: Boolean(glass), windMph: 0 }); s.render(3); };
+        if (v.brush) {
+          // the bushes: the instanced meshes of the scene, their instances' places; the three nearest the line of fire between 250 and 350 m
+          const spots = [];
+          s.scene.traverse((o) => { if (o.isInstancedMesh && /^brush-(sage|chamise)/.test(o.name)) { const a = o.instanceMatrix.array; for (let i = 0; i < o.count; i++) { const x = a[i * 16 + 12], y = a[i * 16 + 13], z = a[i * 16 + 14], sy = Math.hypot(a[i * 16 + 4], a[i * 16 + 5], a[i * 16 + 6]); const d = Math.hypot(x, z); if (d > 250 && d < 350 && Math.abs(x) < 120) spots.push([x, y + sy * 0.45, z, Math.abs(x)]); } } });
+          spots.sort((p, q) => p[3] - q[3]);
+          const all = [[], [], []];
+          for (const w of spots.slice(0, 3)) { aimAt((Math.atan2(w[0], -w[2]) * 180) / Math.PI, (Math.atan2(w[1] - eye, -w[2]) * 180) / Math.PI, v.fov, false); const { g, w: W, h: H } = read(); median(g, W / 2, H / 2, Math.round(W * 0.25)).forEach((c, i) => all[i].push(c)); }
+          return spots.length ? all.map((a) => a.sort((x, y) => x - y)[a.length >> 1]) : null;
+        }
         let yaw = v.yaw || 0, pitch = v.pitch || 0;
         if (v.aim) { const g = s.groundAt(v.aim[0], v.aim[1]); yaw = (Math.atan2(v.aim[0], -v.aim[1]) * 180) / Math.PI; pitch = (Math.atan2(g - eye, -v.aim[1]) * 180) / Math.PI; }
         if (v.plate != null) { const w = s.plateWorld(v.plate); yaw = (Math.atan2(w.x, -w.z) * 180) / Math.PI; pitch = (Math.atan2(w.y - eye, -w.z) * 180) / Math.PI; }
-        s.setView({ yawDeg: yaw, pitchDeg: pitch, fovDeg: v.fov, glass: Boolean(v.glass), windMph: 0 }); s.render(3);
-        const sc = document.getElementById('scene'); const c = document.createElement('canvas'); c.width = sc.width; c.height = sc.height; const g = c.getContext('2d'); g.drawImage(sc, 0, 0);
-        const n = v.plate != null ? 10 : Math.round(sc.width * 0.25), cx = sc.width / 2, cy = sc.height / 2; const d = g.getImageData(cx - n / 2, cy - n / 2, n, n).data; const ch = [[], [], []];
-        for (let i = 0; i < d.length; i += 4) { ch[0].push(d[i]); ch[1].push(d[i + 1]); ch[2].push(d[i + 2]); }
-        return ch.map((a) => a.sort((x, y) => x - y)[a.length >> 1]);
+        aimAt(yaw, pitch, v.fov, v.glass);
+        const { g, w, h } = read();
+        return median(g, w / 2, h / 2, v.plate != null ? 10 : Math.round(w * 0.25));
       }, [v]);
+      if (!rgb) { console.log(`    ${name}: no bush found`); continue; }
       const t = hex(target), diff = rgb.map((c, i) => c - t[i]);
       const within = diff.every((x) => Math.abs(x) <= 40);
       console.log(`    ${name}: rendered ${rgb.join(',')}, measured ${target} = ${t.join(',')}, difference ${diff.map((x) => (x >= 0 ? '+' : '') + x).join(',')}${within ? '' : ` — not within 40: ${why}`}`);
       if (must) assert.ok(within, `${day}, ${name}: ${diff.join(',')}`);
+      if (v.brush) { const lum = (c) => 0.299 * c[0] + 0.587 * c[1] + 0.114 * c[2]; assert.ok(lum(rgb) >= lum(t) / 2, `${day}, ${name}: brightness ${lum(rgb).toFixed(0)} is under half the measured scrub's ${lum(t).toFixed(0)}`); }
     }
   }
   await context.close();
@@ -212,4 +226,125 @@ test('the first visit: with no picture chosen yet the line draws Full, counts fr
   assert.equal(await page.$eval('#picture', (el) => el.value), chosen);
   console.log(`  the first visit chose ${chosen} on this machine (${chosen === 'light' ? 'fewer' : 'at least'} ${flat.look.firstVisit.minFps} frames a second over ${flat.look.firstVisit.measureS} s in the test browser's software 3D)`);
   await context.close();
+});
+
+// --- range-day-six -------------------------------------------------------------------------------
+
+// A sight's drawn widths, in pixels, read off the sight's own canvas at the centre row: the dark runs (steel) against the light picture under them.
+async function drawnWidths(page) {
+  return page.evaluate(() => {
+    const c = document.getElementById('view'), g = c.getContext('2d'), size = RangeDayLine.geometry.viewPx, cx = size / 2, cy = size / 2;
+    const row = (y) => { const d = g.getImageData(0, Math.round(y), size, 1).data; const out = []; for (let x = 0; x < size; x++) out.push({ l: 0.299 * d[x * 4] + 0.587 * d[x * 4 + 1] + 0.114 * d[x * 4 + 2], r: d[x * 4], g: d[x * 4 + 1], b: d[x * 4 + 2] }); return out; };
+    // runs of dark pixels along a row, by a threshold halfway between the picture above the blade and the steel
+    const runs = (y, thr) => { const r = row(y); const out = []; let start = -1; for (let x = 0; x <= size; x++) { const dark = x < size && r[x].l < thr; if (dark && start < 0) start = x; if (!dark && start >= 0) { out.push([start, x]); start = -1; } } return out; };
+    return { size, pxPerMoa: RangeDayLine.geometry.pxPerMoa, row, runs: (y, thr) => runs(y, thr), lightAbove: row(cy - 30).reduce((s, p) => s + p.l, 0) / size, steel: row(size - 4).slice(2, 12).reduce((s, p) => s + p.l, 0) / 10 };
+  });
+}
+
+test('verify 4 (range-day-six): the sights\' angles are unchanged: for the Vepr\'s irons and scope and the Tavor\'s red dot, the drawn notch, post, reticle spacing and dot in pixels equal the data\'s minutes of angle times the view\'s pixels per minute, within 1.5 px (the blurred notch within 2.5)', { skip }, async () => {
+  const { page, context } = await signedIn({ width: 1280, height: 800 });
+  await setPicture(page, 'plain'); // the plain drawing under the sight: a light picture to read the dark steel against
+  const S = flat.sights;
+  // the Vepr's iron sights: notch and post
+  await page.goto(`${base}${PIRU}&sight=vepr-irons`); await page.waitForSelector('#fire'); await sceneReady(page);
+  await page.evaluate(() => { window.requestAnimationFrame = () => 0; }); await wait(300);
+  await page.evaluate(() => RangeDayLine.setHold(0, 0));
+  let r = await page.evaluate(() => {
+    const c = document.getElementById('view'), g = c.getContext('2d'), size = RangeDayLine.geometry.viewPx, cx = size / 2, cy = size / 2;
+    const lum = (d, x) => 0.299 * d[x * 4] + 0.587 * d[x * 4 + 1] + 0.114 * d[x * 4 + 2];
+    const above = g.getImageData(0, cy - 40, size, 1).data, steel = g.getImageData(4, size - 6, 10, 1).data;
+    let la = 0; for (let x = 0; x < size; x++) la += lum(above, x) / size; let ls = 0; for (let x = 0; x < 10; x++) ls += lum(steel, x) / 10;
+    const thr = (la + ls) / 2;
+    // the row halfway down the notch (clear of the blade's blurred top edge); the threshold halfway between the notch's lightest pixel and the steel
+    const depth = RangeDayLine.geometry.notchDepthPx || 0;
+    const d = g.getImageData(0, Math.round(cy + depth * 0.5), size, 1).data;
+    let lightest = 0; for (let x = cx - 40; x < cx + 40; x++) lightest = Math.max(lightest, lum(d, x));
+    let steelRow = 0; for (let x = 10; x < 30; x++) steelRow += lum(d, x) / 20; // the blade's face on this same row, well away from the notch (its sheen varies down the blade)
+    const thr2 = (lightest + steelRow) / 2;
+    const L = []; for (let x = 0; x < size; x++) L.push(lum(d, x));
+    // from the centre outward: the post (dark), the notch's light gap, the blade (dark); each edge where the brightness crosses the threshold, to a fraction of a pixel
+    const cross = (from, step, wantDark) => { let x = from; while (x > 0 && x < size - 1 && (L[x] < thr2) !== wantDark) x += step; const a = L[x - step], b = L[x]; return x - step + step * ((thr2 - a) / (b - a)); };
+    const postRight = cross(cx, 1, false), notchRight = cross(Math.ceil(postRight) + 1, 1, true);
+    const postLeft = cross(cx, -1, false), notchLeft = cross(Math.floor(postLeft) - 1, -1, true);
+    return { k: RangeDayLine.geometry.pxPerMoa, post: postRight - postLeft, notch: notchRight - notchLeft, thr: thr2.toFixed(0), la: lightest.toFixed(0), ls: steelRow.toFixed(0) };
+  });
+  const v = S['vepr-irons'];
+  console.log(`  Vepr irons: drawn notch ${r.notch.toFixed(1)} px (data ${v.notchMoa} MOA × ${r.k.toFixed(3)} px/MOA = ${(v.notchMoa * r.k).toFixed(1)} px), drawn post ${r.post.toFixed(1)} px (data ${v.frontPostMoa} MOA = ${(v.frontPostMoa * r.k).toFixed(1)} px); threshold ${r.thr} between the notch's lightest ${r.la} and the steel ${r.ls}`);
+  assert.ok(Math.abs(r.notch - v.notchMoa * r.k) <= 2.5, `notch ${r.notch.toFixed(1)} vs ${(v.notchMoa * r.k).toFixed(1)}`);
+  assert.ok(Math.abs(r.post - v.frontPostMoa * r.k) <= 1.5, `post ${r.post.toFixed(1)} vs ${(v.frontPostMoa * r.k).toFixed(1)}`);
+  // the Vepr's scope at 7x: the mil-dot reticle's dot spacing
+  await page.goto(`${base}${PIRU}&sight=utg-2-7x44`); await page.waitForSelector('#fire'); await sceneReady(page);
+  await page.evaluate(() => { window.requestAnimationFrame = () => 0; RangeDayLine.setZoom(7); RangeDayLine.setHold(0, 0); }); await wait(300);
+  r = await page.evaluate(() => {
+    const c = document.getElementById('view'), g = c.getContext('2d'), size = RangeDayLine.geometry.viewPx, cx = size / 2, cy = size / 2;
+    const lum = (d, x) => 0.299 * d[x * 4] + 0.587 * d[x * 4 + 1] + 0.114 * d[x * 4 + 2];
+    const d = g.getImageData(0, cy + 2, size, 1).data; // just under the crosshair: the dots' lower halves
+    const dots = []; let start = -1; for (let x = 0; x <= size; x++) { const dark = x < size && lum(d, x) < 70; if (dark && start < 0) start = x; if (!dark && start >= 0) { dots.push((start + x - 1) / 2); start = -1; } }
+    const right = dots.filter((x) => x > cx + 2 && x < cx + size * 0.4), left = dots.filter((x) => x < cx - 2 && x > cx - size * 0.4);
+    return { k: RangeDayLine.geometry.pxPerMoa, first: right[0] - cx, firstLeft: cx - left[left.length - 1], spacing: right.length > 1 ? right[1] - right[0] : null };
+  });
+  const dot = S['utg-2-7x44'].reticle.dotSpacingMoa;
+  console.log(`  Vepr scope at 7x: first mil-dot ${r.first.toFixed(1)} px right and ${r.firstLeft.toFixed(1)} px left of the centre, the next ${r.spacing && r.spacing.toFixed(1)} px on (data ${dot} MOA × ${r.k.toFixed(3)} = ${(dot * r.k).toFixed(1)} px)`);
+  assert.ok(Math.abs(r.first - dot * r.k) <= 1.5 && Math.abs(r.firstLeft - dot * r.k) <= 1.5, `mil-dot spacing ${r.first}/${r.firstLeft} vs ${(dot * r.k).toFixed(1)}`);
+  // the Tavor's red dot at 300 yards on the rifle line
+  await page.goto(`${base}/line?course=angeles-sylmar&rifle=iwi-tavor-sar&sight=pa-md25&load=imi-m193`); await page.waitForSelector('#fire'); await sceneReady(page);
+  await page.evaluate(() => { window.requestAnimationFrame = () => 0; RangeDayLine.setHold(0, 0); }); await wait(300);
+  r = await page.evaluate(() => {
+    const c = document.getElementById('view'), g = c.getContext('2d'), size = RangeDayLine.geometry.viewPx, cx = size / 2, cy = size / 2;
+    const d = g.getImageData(0, cy, size, 1).data;
+    let l = cx, rr = cx; const red = (x) => d[x * 4] > 200 && d[x * 4 + 1] < 110 && d[x * 4 + 2] < 110;
+    while (l > 0 && red(l - 1)) l--; while (rr < size - 1 && red(rr + 1)) rr++;
+    return { k: RangeDayLine.geometry.pxPerMoa, dot: rr - l + 1, dotPx: RangeDayLine.geometry.dotPx };
+  });
+  console.log(`  Tavor red dot: drawn ${r.dot} px across (data ${S['pa-md25'].dotMoa} MOA × ${r.k.toFixed(3)} = ${r.dotPx.toFixed(1)} px; the dot's thin bloom adds up to 2.4 px)`);
+  assert.ok(r.dot >= r.dotPx - 1.5 && r.dot <= r.dotPx + 3, `dot ${r.dot} vs ${r.dotPx.toFixed(1)}`);
+  await context.close();
+});
+
+// Sharpness: the mean absolute difference in brightness between neighbouring pixels over the middle 40 percent of the scene canvas, the same figure scripts/picture-measure.mjs prints.
+async function sharpness(page, plateIx, zoom) {
+  await page.selectOption('#plate', String(plateIx));
+  await page.evaluate((z) => RangeDayLine.setZoom(z), zoom);
+  return page.evaluate(() => {
+    const s = RangeDayLine.scene, eye = 4 * 0.3048, w = s.plateWorld(Number(document.getElementById('plate').value));
+    s.setView({ yawDeg: (Math.atan2(w.x, -w.z) * 180) / Math.PI, pitchDeg: (Math.atan2(w.y - eye, -w.z) * 180) / Math.PI, fovDeg: RangeDayLine.fovMoa / 60, glass: true, windMph: 0 }); s.render(3);
+    const sc = document.getElementById('scene'); const c = document.createElement('canvas'); c.width = sc.width; c.height = sc.height; const g = c.getContext('2d'); g.drawImage(sc, 0, 0);
+    const x0 = Math.round(sc.width * 0.3), y0 = Math.round(sc.height * 0.3), n = Math.round(sc.width * 0.4), m = Math.round(sc.height * 0.4);
+    const d = g.getImageData(x0, y0, n, m).data; const L = (i) => 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+    let sum = 0, cnt = 0;
+    for (let y = 0; y < m; y++) for (let x = 0; x < n; x++) { const i = (y * n + x) * 4; if (x + 1 < n) { sum += Math.abs(L(i) - L(i + 4)); cnt++; } if (y + 1 < m) { sum += Math.abs(L(i) - L(i + n * 4)); cnt++; } }
+    return sum / cnt;
+  });
+}
+
+test('verify 5 (range-day-six): sharpness through the scope at 7x on the 600- and 1,000-yard plates, Full, both widths, against docs/reports/picture-before.txt: no state lower than it started (the aim of at least double is printed, met or missed); and the gain is ground, not grain: with the aim moved 2 minutes of angle the same patch of hillside, re-found by its ground position, differs by less than 8 of 255 in median brightness', { skip }, async () => {
+  const before = require('node:fs').readFileSync(path.join(root, 'docs', 'reports', 'picture-before.txt'), 'utf8');
+  const was = (width, day, state) => { const m = new RegExp(`^${width} px, full, ${day}, ${state}: sharpness ([\\d.]+)`, 'm').exec(before); return m ? Number(m[1]) : null; };
+  for (const [width, viewport] of [[412, { width: 412, height: 915 }], [1280, { width: 1280, height: 800 }]]) {
+    const { page, context } = await signedIn(viewport);
+    await setPicture(page, 'full');
+    for (const [day, q] of [['February midday', 'month=2&time=midday'], ['September afternoon', 'month=9&time=afternoon']]) {
+      await page.evaluate(() => localStorage.removeItem('range-day:day:open'));
+      await page.goto(`${base}${PIRU}&sight=utg-2-7x44&${q}`); await page.waitForSelector('#fire'); await sceneReady(page);
+      assert.equal(await page.evaluate(() => RangeDayLine.picture), 'full');
+      await page.evaluate(() => { window.requestAnimationFrame = () => 0; }); await wait(300);
+      for (const [name, ix] of [['scope 7x, 600 yd', 4], ['scope 7x, 1000 yd', 8]]) {
+        const now = await sharpness(page, ix, 7), old = was(width, day, name);
+        console.log(`  ${width} px, ${day}, ${name}: sharpness ${now.toFixed(2)}, was ${old === null ? 'unmeasured' : old.toFixed(2)}${old === null ? '' : now >= 2 * old ? ' (at least double: the aim met)' : ` (${(now / old).toFixed(2)} times: the aim of double missed)`}`);
+        if (old !== null) assert.ok(now >= old, `${width} px, ${day}, ${name}: ${now.toFixed(2)} is lower than it started (${old.toFixed(2)})`);
+      }
+      // ground, not grain: the hillside patch under the 1,000-yard plate's view, then the aim moved 2 MOA right and the same patch re-found 2 MOA left of the centre
+      const r = await page.evaluate(() => {
+        const s = RangeDayLine.scene, eye = 4 * 0.3048, w = s.plateWorld(8);
+        const yaw = (Math.atan2(w.x, -w.z) * 180) / Math.PI, pitch = (Math.atan2(w.y - eye, -w.z) * 180) / Math.PI - 0.15, fov = RangeDayLine.fovMoa / 60;
+        const sc = document.getElementById('scene'), k = sc.width / (fov * 60);
+        const median = (dx) => { s.setView({ yawDeg: yaw + dx / 60, pitchDeg: pitch, fovDeg: fov, glass: false, windMph: 0 }); s.render(3); const c = document.createElement('canvas'); c.width = sc.width; c.height = sc.height; const g = c.getContext('2d'); g.drawImage(sc, 0, 0); const n = 20, d = g.getImageData(Math.round(sc.width / 2 - dx * k - n / 2), Math.round(sc.height / 2 - n / 2), n, n).data; const a = []; for (let i = 0; i < d.length; i += 4) a.push(0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]); return a.sort((x, y) => x - y)[a.length >> 1]; };
+        const a = median(0), b = median(2);
+        return { a, b, k };
+      });
+      console.log(`  ${width} px, ${day}: the hillside patch below the 1,000-yard plate: median brightness ${r.a.toFixed(1)} at the centre, ${r.b.toFixed(1)} re-found ${(2 * r.k).toFixed(0)} px left after moving the aim 2 MOA right (difference ${Math.abs(r.a - r.b).toFixed(1)})`);
+      assert.ok(Math.abs(r.a - r.b) < 8, `${width} px, ${day}: the patch moved by ${Math.abs(r.a - r.b).toFixed(1)}`);
+    }
+    await context.close();
+  }
 });
