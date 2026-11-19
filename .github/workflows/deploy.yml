@@ -3,8 +3,9 @@
 # from the repository secret every time, makes COOKIE_SECRET once and keeps
 # it on Fly, deploys, then proves the result: the alive line answers, and
 # signing in through the sign-in form, as a person would, reaches the
-# sample screen; then POST /crash-test answers 500 (a warning, never a
-# failure, when it does not).
+# sample screen; the picture file built into the image answers with its
+# bytes; then POST /crash-test answers 500 (a warning, never a failure,
+# when it does not).
 #
 # Repository secrets it needs: FLY_API_TOKEN (a Fly org token for Dan's
 # personal org, which can create apps; a deploy token cannot) and
@@ -31,6 +32,7 @@ jobs:
         with:
           node-version: 22
 
+      # npm test builds public/scene.min.js first (package.json, pretest).
       - name: Run the checks
         run: |
           npm ci --no-audit --no-fund
@@ -139,6 +141,27 @@ jobs:
             exit 1
           fi
           echo "Live at $base"
+
+      # The picture file is built in the image (Dockerfile, first stage), not
+      # stored in the repository: signed in the same way, /scene.min.js must
+      # answer 200 with more than 300,000 bytes, or the image was built
+      # without it and the firing line would fall to the plain picture.
+      - name: Check the picture file is in the image
+        env:
+          APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
+        run: |
+          base="https://$APP.fly.dev"
+          jar=$(mktemp)
+          trap 'rm -f "$jar" /tmp/scene.min.js' EXIT
+          login=$(curl -s -o /dev/null -w "%{http_code}" -c "$jar" --max-time 30 \
+            --data-urlencode "passphrase=$APP_PASSWORD" --data-urlencode "next=/" "$base/login") || login="${login:-000}"
+          code=$(curl -s -b "$jar" -o /tmp/scene.min.js -w "%{http_code}" --max-time 60 "$base/scene.min.js") || code="${code:-000}"
+          bytes=$(stat -c %s /tmp/scene.min.js 2>/dev/null || echo 0)
+          echo "picture file: /scene.min.js answered $code with $bytes bytes (sign-in $login)"
+          if [ "$code" != "200" ] || [ "$bytes" -le 300000 ]; then
+            echo "::error::The picture file is missing from the image: /scene.min.js answered $code with $bytes bytes (more than 300,000 expected)."
+            exit 1
+          fi
 
       # The crash chain end to end: signed in the same way, POST /crash-test
       # throws, the server reports it to Sentry (when fly.toml carries a DSN)
