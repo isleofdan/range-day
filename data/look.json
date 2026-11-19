@@ -428,6 +428,33 @@
    "estimate": "the lone trees on the ridge and the cluster by the wash, about 25 ft"
   }
  },
+ "depth": {
+  "_about": "How finely the picture tells a surface from another behind it. The scene asks for a 24-bit depth buffer (DEPTH_COMPONENT24 in src/scene/post.mjs, on Full and on Light), the finest WebGL2 guarantees and the coarsest the scene may get since it asks for no other; the camera's near and far planes spread those steps over the distance. At a distance z (metres) one step is z² × (1/near − 1/far) / (2^24 − 1). A surface less than a step behind another at the same place on screen shows through it in broken, shifting dots (depth fighting): Dan saw them on the white boards at 200 yards through the scope on his phone, 19 Nov 2026, where the boards' posts stood half a centimetre behind the sheets. Every post stands at least stepsApart steps behind what it holds, worked out at the farthest it stands.",
+  "cameraNearM": {
+   "value": 0.5,
+   "estimate": "the camera's near plane, half a metre: the bench top begins 1.5 ft ahead of the eye and is the nearest thing drawn"
+  },
+  "cameraFarM": {
+   "value": 20000,
+   "estimate": "the far plane, 20 km: the hills beyond the far square and the sky dome"
+  },
+  "bits": {
+   "value": 24,
+   "estimate": "the depth buffer's bits: the scene asks for DEPTH_COMPONENT24 (src/scene/post.mjs), which WebGL2 guarantees; a coarser one is never given"
+  },
+  "stepsApart": {
+   "value": 4,
+   "estimate": "two steps so that the two surfaces can never round to the same depth whichever way each rounds, and two more for the depth interpolated across a pixel's samples and a frame's wobble"
+  },
+  "boardPostStandOffM": {
+   "value": 0.065,
+   "estimate": "the nearest face of a board's post stands this far behind the board's sheet: 4 steps at the farthest board row, 400 yards (365.76 m), where a step is 365.76² × (1/0.5 − 1/20000) / (2^24 − 1) = 0.01595 m; 4 × 0.01595 = 0.0638, rounded up to 0.065 (before range-day-seven: 0.005)"
+  },
+  "platePostStandOffM": {
+   "value": 0.4,
+   "estimate": "the nearest face of a plate's post stands this far behind the plate's back: 4 steps at the farthest plate, 1,000 yards (914.4 m), where a step is 914.4² × (1/0.5 − 1/20000) / (2^24 − 1) = 0.0997 m; 4 × 0.0997 = 0.399, rounded up to 0.4 (before range-day-seven the post's face sat inside the plate's thickness, 0.14 cm behind its front face)"
+  }
+ },
  "mesh": {
   "nearSpacingM": {
    "value": 1,

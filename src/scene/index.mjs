@@ -60,7 +60,8 @@ async function create(opts) {
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(5, 1, 0.5, 20000);
+  // near and far from the data (data/look.json, depth): the posts' stand-off behind the boards and plates is worked out from them
+  const camera = new THREE.PerspectiveCamera(5, 1, look.depth.cameraNearM, look.depth.cameraFarM);
   camera.position.set(0, eyeM, 0);
   scene.add(camera);
 
