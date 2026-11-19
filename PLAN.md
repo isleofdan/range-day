@@ -76,6 +76,52 @@
 
 (Each session appends its own, in order.)
 
+### range-day-seven — 19 Nov 2026 (cloud session, from the Wall card `range-day`)
+
+- **Stands:** three stacked pull requests. Change A (#16, into `main`): the
+  picture file `public/scene.min.js` is built from `src/scene/` wherever it
+  is needed (`npm test`, `npm run screenshots`, `npm run check`, `npm run
+  dev`, the Deploy workflow, the `Dockerfile`'s first stage, whose second
+  stage copies it in and fails if it is missing), written whole and renamed
+  into place; the check runs in pieces side by side, nothing dropped
+  (`scripts/check.mjs`: six test groups, `test/scene.test.js` in three by
+  test name, and four screenshot shards, `scripts/screenshots.mjs --shard`),
+  each piece its own job on GitHub's runner, which keeps Playwright's
+  browser between runs; the whole run took 6 min 50 s on the runner against
+  31 to 60 minutes before, so the job limit is 14 minutes; the deploy proves
+  `/scene.min.js` answers signed in with more than 300,000 bytes. Change B
+  (#17, into A): the stored picture file leaves the repository and joins
+  `.gitignore`. Change C (#18, into B): every board's two posts and every
+  plate's post stand clear behind what they hold by a figure in
+  `data/look.json` (`depth`: the camera's near and far, now read from the
+  data; 24 bits; four depth steps at the farthest row, 6.5 cm, and the
+  farthest plate, 40 cm), so the dark posts no longer show through the white
+  boards in flickering dots (Dan's phone, 19 Nov 2026); proven by a
+  geometry test that fails on `main`, a dark-column test through the scope
+  over twelve frames (47 percent of a column dark before, 0.00 after), and
+  one new screenshot state (the boards at 7x). 101 tests, 52 screenshot
+  states. Report: `docs/reports/range-day-seven-report.md`.
+- **Decided:** the Checks workflow runs on pull requests and pushes to
+  `main`, not on every branch push (the pull request's run checked the same
+  commit a second time before); two screenshot states press their knobs
+  from inside the page (a Playwright click waited for two steady frames,
+  seconds each under the software-drawn picture: 41 presses took 10 minutes
+  on the runner) and `line-shot-log` fires its own shot (it leaned on a miss
+  an earlier state had left, which a shard running alone has not); the
+  sideways-scroll test waits for the firing line's script before reading the
+  width; `test/scene.test.js` is cut by test name, not into files; the
+  camera's near and far planes live in `data/look.json` because the posts'
+  stand-off is worked out from them; the stand-off is four depth steps (two
+  so the surfaces never round together, two for a pixel's samples).
+- **Next session needs:** the ground redone with photographed surfaces;
+  the firing line's text and controls; the iron sights; each planned by a
+  Personal Shipyard chat. The after-every-edit hook cannot run this app's
+  tests in 30 s (`npm run test:fast`, a small build). The firing line's
+  canvas is 400 px wide until its script fits it (a CSS cap would end the
+  moment of sideways scroll on a slow phone). For the starting kit: the
+  notes-only skip, the pieces-side-by-side check and the browser cache
+  belong in its workflow too. The look at the deployed boards on Dan's phone.
+
 ### range-day-six — 19 Nov 2026 (cloud session, from the Wall card `range-day`)
 
 - **Stands:** the canyon course's picture reads closer to a photograph of
