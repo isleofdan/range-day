@@ -79,8 +79,9 @@ tests scene-shots 396 s, scene-scale 228 s, scene-rest 118 s, day 73 s,
 browser 55 s, rest 3 s; screenshot shards 265 s, 323 s, 356 s and 210 s. On
 GitHub's runner the one job took 31 to 60 minutes across the six runs of
 19 Nov 2026 (runs 44478788151 at 60 min, 44486790550 at 38, 44487064556 at 53, 44492956485 at 32, 44492979855 at 48 and 44493011946 at 48, each one job); the pieces took 6 min 50 s from the push to the last job's end, the slowest job 6 min 47 s (tests, scene-shots), then screenshots shard 2 at 5 min 10 s, shard 3 at 4 min 35 s, shard 1 at 3 min 51 s, tests scene-scale at 3 min 27 s, shard 4 at 3 min 19 s, scene-rest at 2 min 9 s, browser at 1 min 14 s, day at 1 min 13 s, rest at 21 s, each with its install (run
-44559608576), so the job limit is 17 minutes (twice the slowest job of the
-newest runs, 8 min 11 s on 19 Nov 2026 at 17:19 UTC).
+44559608576), so the job limit is 22 minutes: twice the slowest job seen, which
+varies run to run on the runner (the tests scene-shots job took 6 min 47 s,
+8 min 11 s and 10 min 47 s on three runs of the same code, 19 Nov 2026).
 
 ## What runs when
 
