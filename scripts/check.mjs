@@ -51,10 +51,12 @@ export const SHARDS = Number(arg('--shards', 4));
 // shots flown under three pictures) took 396 s and its verify 2 (every plate at every zoom, both sizes) 228 s of the
 // file's 728 s in the cloud session (range-day-seven); the third piece is every other test in the file (Node's
 // --test-skip-pattern with the first two's pattern), so a new test there lands in it and no test is left out.
+// The three pieces of one file each start that file's server, so each is given its own port (TEST_PORT; the file's
+// default otherwise), or two running at once would fight over it.
 export const TEST_GROUPS = {
-  'scene-shots': { files: ['test/scene.test.js'], pattern: '^verify 3:' },
-  'scene-scale': { files: ['test/scene.test.js'], pattern: '^verify 2:' },
-  'scene-rest': { files: ['test/scene.test.js'], skip: '^verify [23]:' },
+  'scene-shots': { files: ['test/scene.test.js'], pattern: '^verify 3:', env: { TEST_PORT: '8961' } },
+  'scene-scale': { files: ['test/scene.test.js'], pattern: '^verify 2:', env: { TEST_PORT: '8963' } },
+  'scene-rest': { files: ['test/scene.test.js'], skip: '^verify [23]:', env: { TEST_PORT: '8965' } },
   day: { files: ['test/day.test.js'] },
   browser: { files: ['test/browser.test.js'] },
 };
@@ -74,9 +76,9 @@ if (hook) {
 const say = (line) => (hook ? process.stderr : process.stdout).write(line + '\n');
 const run = (cmd, args) => spawnSync(cmd, args, { cwd: root, encoding: 'utf8', env: process.env });
 // A piece run in its own process, its output kept, its seconds counted.
-const piece = (name, args) => new Promise((resolve) => {
+const piece = (name, args, env = {}) => new Promise((resolve) => {
   const started = Date.now();
-  const kid = spawn(process.execPath, args, { cwd: root, env: process.env });
+  const kid = spawn(process.execPath, args, { cwd: root, env: { ...process.env, ...env } });
   let output = '';
   kid.stdout.on('data', (d) => { output += d; }); kid.stderr.on('data', (d) => { output += d; });
   kid.on('close', (status) => resolve({ name, status, output, seconds: (Date.now() - started) / 1000 }));
@@ -84,7 +86,7 @@ const piece = (name, args) => new Promise((resolve) => {
 // Pieces run at most JOBS at a time, in the order given, every one to its end.
 async function pieces(list) {
   const results = []; let next = 0;
-  await Promise.all(Array.from({ length: Math.min(JOBS, list.length) }, async () => { while (next < list.length) { const p = list[next++]; results.push(await piece(p.name, p.args)); } }));
+  await Promise.all(Array.from({ length: Math.min(JOBS, list.length) }, async () => { while (next < list.length) { const p = list[next++]; results.push(await piece(p.name, p.args, p.env)); } }));
   return results;
 }
 const nodeTest = ({ files, pattern, skip }) => ['--test', '--test-concurrency=1', ...(pattern ? [`--test-name-pattern=${pattern}`] : []), ...(skip ? [`--test-skip-pattern=${skip}`] : []), ...files];
@@ -132,7 +134,7 @@ const checks = [
       const built = buildScene(); if (!built.ok) return built;
       const names = group ? [group] : Object.keys(TEST_GROUPS);
       if (group && !TEST_GROUPS[group]) return { ok: false, output: '', detail: `no test group "${group}" (${Object.keys(TEST_GROUPS).join(', ')})` };
-      const results = await pieces(names.map((n) => ({ name: n, args: nodeTest(TEST_GROUPS[n]) })));
+      const results = await pieces(names.map((n) => ({ name: n, args: nodeTest(TEST_GROUPS[n]), env: TEST_GROUPS[n].env })));
       for (const r of results) if (!hook) say(`  ${r.status === 0 ? 'ok  ' : 'FAIL'} tests: ${r.name} (${TEST_GROUPS[r.name].files.join(', ')}${TEST_GROUPS[r.name].pattern ? `, tests matching /${TEST_GROUPS[r.name].pattern}/` : ''}${TEST_GROUPS[r.name].skip ? `, tests not matching /${TEST_GROUPS[r.name].skip}/` : ''}) ${r.seconds.toFixed(1)} s`);
       const bad = results.filter((r) => r.status !== 0);
       if (!bad.length) return { ok: true };
