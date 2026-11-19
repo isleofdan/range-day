@@ -30,12 +30,58 @@ names its file next to the count it produced ("25 checks,
 `scripts/review-check-test.mjs`"). A count from a check that was not
 committed is not a result.
 
+## How the check runs since range-day-seven (19 Nov 2026)
+
+The picture file `public/scene.min.js` is **built, not stored**: it is not
+in the repository. `scripts/build-scene.mjs` bundles `src/scene/` with the
+three library (0.2 s) and writes the file whole, renaming it into place.
+Every path that serves or tests the app builds it first: `npm test` and
+`npm run screenshots` through `package.json`'s `pretest` and
+`prescreenshots`; `npm run check` once, before the tests and the
+screenshots; `npm run dev`; the Deploy workflow through its `npm test`; the
+image in the `Dockerfile`'s first stage (which has the development
+packages; the second stage installs the runtime packages only and copies
+the built file in, and the image build fails if it is missing or empty).
+`test/terrain.test.js` proves it: a copy stored in the repository would
+have to equal a fresh build; with none stored, a build produces the file
+and the server serves it behind the cookie with more than 300,000 bytes.
+The Deploy workflow proves the same on the live app after the sign-in
+proof: `/scene.min.js` answers 200 with more than 300,000 bytes, or the run
+fails saying the picture file is missing from the image.
+
+The check runs **in pieces, side by side**; nothing is dropped. The test
+files are in four groups (`scripts/check.mjs`, `TEST_GROUPS`): the three
+files that drive a browser through the 3D picture each alone (`scene`,
+`day`, `browser`, each starting its own server on its own port) and every
+other test file together (`rest`; a new file lands there). The screenshot
+states are in four shards (`scripts/screenshots.mjs --shard i/4`: every
+fourth state, at both sizes; the four together are every state once). By
+hand, `npm run check` runs the pieces two at a time (`--jobs`), because
+three browsers drawing 3D in software at once starve each other's clocks;
+`node scripts/check.mjs --only tests --group scene` or
+`--only screenshots --shard 2/4` runs one piece, with the syntax check.
+Every state's seconds are printed. In the Checks workflow each piece is its
+own job on its own runner (a matrix of four test groups and four screenshot
+shards), so the run's time is the slowest piece's, not the sum; the
+workflow runs on pull requests and on pushes to `main` (a push to a branch
+no longer runs a second copy of the pull request's check). The runner keeps
+Playwright's browser between runs by the package lock's hash.
+
+Times (19 Nov 2026): in the cloud session, `npm run check` one piece after
+another on `main` took 40 min 34 s (tests 770 s, screenshots
+1,662 s); in pieces two at a time about 20 minutes, each piece on its own:
+tests scene-shots 396 s, scene-scale 228 s, scene-rest 118 s, day 73 s,
+browser 55 s, rest 3 s; screenshot shards 265 s, 323 s, 356 s and 210 s. On
+GitHub's runner the one job took 31 to 60 minutes across the six runs of
+19 Nov 2026 (runs 44478788151 at 60 min, 44486790550 at 38, 44487064556 at 53, 44492956485 at 32, 44492979855 at 48 and 44493011946 at 48, each one job); the pieces took 6 min 50 s from the push to the last job's end, the slowest job 6 min 47 s (tests, scene-shots), then screenshots shard 2 at 5 min 10 s, shard 3 at 4 min 35 s, shard 1 at 3 min 51 s, tests scene-scale at 3 min 27 s, shard 4 at 3 min 19 s, scene-rest at 2 min 9 s, browser at 1 min 14 s, day at 1 min 13 s, rest at 21 s, each with its install (run
+44559608576), so the job limit is 14 (twice the slowest job) minutes.
+
 ## What runs when
 
 | When | What runs | Where it is set |
 | - | - | - |
 | After every edit or new file an agent makes in Claude Code | syntax, tests | `.claude/settings.json`: a `PostToolUse` hook on `Edit\|Write` running `node scripts/check.mjs --hook`, timeout 30 s |
-| On every push and every pull request that touches anything but notes (Markdown files and `docs/reports/`) | syntax, tests, screenshots | `.github/workflows/checks.yml` ("Checks"); a notes-only push or pull request runs nothing, since the code it would prove is unchanged |
+| On every pull request, and every push to `main`, that touches anything but notes (Markdown files and `docs/reports/`) | syntax, tests, screenshots, in eight jobs at once | `.github/workflows/checks.yml` ("Checks"); a notes-only push or pull request runs nothing, since the code it would prove is unchanged; a push to a branch runs nothing of its own, its pull request's run checks the commit |
 | By hand | any of them | `npm run check`, `npm test`, `npm run screenshots` |
 
 Only checks that finish in a few seconds run after every edit; the
@@ -68,8 +114,9 @@ On the rented Linux machine (`agent-machine-dan`, Node 24.21.0), 2 Oct
   session next to the edit (the edit itself has already happened). Fix the
   cause; the next edit runs the checks again. Two edits at once never run
   the checks side by side: the second skips while the first runs.
-- **On a pull request:** the "Checks" mark is green or red. Open it, then
-  the step "Run every check"; its last line is the verdict.
+- **On a pull request:** the "Checks" marks are green or red, one per
+  piece (`tests (scene)`, `screenshots (shard 2 of 4)`, …). Open a red one,
+  then its last step; its last line is the verdict and names the piece.
 - **Where screenshots cannot run:** on a machine without Playwright's
   browser, `npm run check` skips them and says so in its verdict; in
   GitHub Actions a missing browser is a failure.

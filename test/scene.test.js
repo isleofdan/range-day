@@ -17,7 +17,7 @@ const path = require('node:path');
 const { flat } = require('../lib/data').load();
 
 const root = path.join(__dirname, '..');
-const PORT = 8961;
+const PORT = Number(process.env.TEST_PORT) || 8961; // scripts/check.mjs gives each piece of this file its own port
 const PASS = 'open sesame';
 const base = `http://127.0.0.1:${PORT}`;
 let browser = null, server = null, chromium = null;

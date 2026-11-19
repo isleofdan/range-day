@@ -154,6 +154,14 @@ unchanged. `scripts/picture-measure.mjs` measures the picture
 browser; `docs/reports/picture-before.txt` and `picture-after.txt` are
 its readings before and after range-day-six.
 
+Since range-day-seven the picture's script is built, not stored: the
+repository holds `src/scene/` only, and `public/scene.min.js` is bundled
+from it (0.2 s) by every path that serves or tests the app: `npm test`,
+`npm run screenshots`, `npm run check`, `npm run dev`, the Deploy workflow
+and the first stage of the `Dockerfile`, whose second stage copies the
+built file into the image and fails if it is missing. The checks run in
+pieces side by side, each its own job on GitHub's runner (`docs/CHECKS.md`).
+
 Three pictures, one setting (under "Setting" on the firing line, kept on
 the device): **Full**, **Light** (the same ground at half the relief's
 fineness, two detail scales instead of three, fewer bushes, a smaller
@@ -229,11 +237,12 @@ the app it called. The app calls nothing outside itself.
     APP_PASSWORD=try-me COOKIE_SECRET=any-long-text npm run dev
 
 Then open http://localhost:8080 and sign in with `try-me`.
-`npm run build:scene` rebuilds `public/scene.min.js` from `src/scene/`
-after a change there (the test suite fails when the committed file
-differs from a fresh build).
-`npm run check` runs every check (`npm test`, then `npm run screenshots`,
-which saves the screens at both sizes into `docs/reports/screenshots/`).
+`npm run dev`, `npm test` and `npm run screenshots` each build
+`public/scene.min.js` from `src/scene/` first (it is not stored in the
+repository; `npm run build:scene` builds it by itself).
+`npm run check` runs every check (the test files in four groups and the
+screenshot states in four shards, two pieces at a time; the screenshots are
+saved at both sizes into `docs/reports/screenshots/`).
 They also run by themselves after every edit an agent makes and on every
 push and pull request: `docs/CHECKS.md`. What an agent may and may not
 touch: `CLAUDE.md`. What the shop is for: `SIGN.md`.
