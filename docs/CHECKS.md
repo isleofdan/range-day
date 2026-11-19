@@ -35,7 +35,7 @@ committed is not a result.
 | When | What runs | Where it is set |
 | - | - | - |
 | After every edit or new file an agent makes in Claude Code | syntax, tests | `.claude/settings.json`: a `PostToolUse` hook on `Edit\|Write` running `node scripts/check.mjs --hook`, timeout 30 s |
-| On every push and every pull request | syntax, tests, screenshots | `.github/workflows/checks.yml` ("Checks") |
+| On every push and every pull request that touches anything but notes (Markdown files and `docs/reports/`) | syntax, tests, screenshots | `.github/workflows/checks.yml` ("Checks"); a notes-only push or pull request runs nothing, since the code it would prove is unchanged |
 | By hand | any of them | `npm run check`, `npm test`, `npm run screenshots` |
 
 Only checks that finish in a few seconds run after every edit; the

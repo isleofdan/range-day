@@ -4,9 +4,19 @@
 # A failure shows here and on the pull request, nowhere else.
 name: Checks
 
+# A push or pull request that touches only notes (field reports, PLAN.md,
+# any other Markdown, the screenshots the reports show) runs no check: the
+# code it would prove is unchanged, and on this app the full check takes an
+# hour on the runner (range-day-six, 19 Nov 2026).
 on:
   push:
+    paths-ignore:
+      - '**.md'
+      - 'docs/reports/**'
   pull_request:
+    paths-ignore:
+      - '**.md'
+      - 'docs/reports/**'
 
 permissions:
   contents: read
