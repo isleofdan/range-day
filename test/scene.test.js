@@ -120,6 +120,7 @@ test('verify 6: the look: the rendered sky, a sunlit hillside, the dirt floor in
       ['sky, as high as the roof lets the view go (18 degrees up)', { yaw: 0, pitch: 18, fov: 4 }, P.dry.sky, true],
       ['sunlit dry slope (the right wall, 600 m, facing the afternoon sun; a 40 m patch)', { aim: [150, -600], fov: 4 }, P.dry.sunlitSlope, true],
       ['dirt floor in sun (60 m out)', { aim: [3, -60], fov: 6 }, P.dry.floor, false, 'at half past three the floor is lit at a low angle; the photograph it was measured from was taken at 15:43 with the floor in fuller sun'],
+      ['scrub on the left wall (450 m)', { aim: [-140, -450], fov: 2.5 }, P.dry.scrub, false, 'the dry scrub colour is an estimate, not a measurement; the left wall is in the afternoon sun\'s shade'],
       ['sunlit brush (the three bushes nearest the line of fire, 250 to 350 m out, each at 0.3 degrees)', { brush: true, fov: 0.3 }, P.dry.scrub, false, 'a bush is lit on one side and shaded on the other; the dry scrub colour is itself an estimate'],
       ['the 600-yard plate\'s red paint through the scope at 7x', { plate: 4, fov: 45.8 / 60, glass: true }, P.paintRedInSun, false, 'the plate faces the shooter and the afternoon sun stands almost beside it, so it is side-lit, not in strong sun as the measured paint was']]],
   ];
