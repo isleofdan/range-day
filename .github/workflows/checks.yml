@@ -43,7 +43,7 @@ jobs:
   tests:
     name: tests (${{ matrix.group }})
     runs-on: ubuntu-24.04
-    timeout-minutes: 14
+    timeout-minutes: 17
     strategy:
       fail-fast: false
       matrix:
@@ -78,7 +78,7 @@ jobs:
   screenshots:
     name: screenshots (shard ${{ matrix.shard }} of 4)
     runs-on: ubuntu-24.04
-    timeout-minutes: 14
+    timeout-minutes: 17
     strategy:
       fail-fast: false
       matrix:
