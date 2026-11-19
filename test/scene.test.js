@@ -413,12 +413,16 @@ test('verify 7 (range-day-seven): every board\'s two posts and every plate\'s po
 });
 
 // The share of dark pixels down a column inside each board's face of a row, read off the scene canvas: the column where the
-// right post stands (0.35 of the board's width right of its middle), from a fifth of the board's height to four fifths,
-// clear of the paper target, the number and the foot. A post showing through the sheet puts dark pixels here.
+// right post stands (0.35 of the board's width right of its middle), from 30 to 85 percent of the board's height, the
+// stretch of the post that lies behind the sheet above the blue number (its top row is 27 percent up) and below the
+// post's top (89 percent up); the paper target's rings and holes end short of this column. A post showing through the
+// sheet puts dark pixels here. Each frame is drawn twice, with the posts and with them hidden, and a pixel counts only when
+// it is dark with the posts and light without them: what the first row's notch hides of a board, or a bullet hole on its
+// paper, is the same in both and is not counted.
 async function darkInBoards(page, rowYd, frames) {
   return page.evaluate(([rowYd, frames]) => {
     const s = RangeDayLine.scene, eye = 4 * 0.3048;
-    let sheets = null; s.scene.traverse((o) => { if (o.name === 'boards') sheets = o; });
+    let sheets = null, posts = null; s.scene.traverse((o) => { if (o.name === 'boards') sheets = o; if (o.name === 'board-posts') posts = o; });
     const pa = sheets.geometry.attributes.position, boards = [];
     for (let b = 0; b < pa.count / 4; b++) { const z = pa.getZ(b * 4); if (Math.abs(-z - rowYd * 0.9144) < 1) boards.push({ x: (pa.getX(b * 4) + pa.getX(b * 4 + 1)) / 2, w: Math.abs(pa.getX(b * 4 + 1) - pa.getX(b * 4)), y0: pa.getY(b * 4), y1: pa.getY(b * 4 + 2), z }); }
     boards.sort((p, q) => p.x - q.x);
@@ -427,35 +431,41 @@ async function darkInBoards(page, rowYd, frames) {
     const fov = RangeDayLine.fovMoa / 60;
     const sc = document.getElementById('scene'), c = document.createElement('canvas'); c.width = sc.width; c.height = sc.height; const g = c.getContext('2d');
     let dark = 0, all = 0, worst = 0; const perBoard = [];
+    const grab = (f, withPosts) => { posts.visible = withPosts; s.render(f * 0.05 + 1); g.drawImage(sc, 0, 0); return g.getImageData(0, 0, c.width, c.height).data; };
     for (let f = 0; f < frames; f++) {
       // the aim wanders a little, as a held rifle does: a fraction of a minute of angle each frame
-      s.setView({ yawDeg: yaw0 + 0.4 * Math.sin(f * 1.7) / 60, pitchDeg: pitch0 + 0.3 * Math.cos(f * 2.3) / 60, fovDeg: fov, glass: true, windMph: 0 }); s.render(f * 0.05 + 1);
-      g.drawImage(sc, 0, 0);
-      const d = g.getImageData(0, 0, c.width, c.height).data, k = c.width / s.size;
+      s.setView({ yawDeg: yaw0 + 0.4 * Math.sin(f * 1.7) / 60, pitchDeg: pitch0 + 0.3 * Math.cos(f * 2.3) / 60, fovDeg: fov, glass: true, windMph: 0 });
+      const withP = grab(f, true), without = grab(f, false), k = c.width / s.size;
+      const lum = (d, i) => 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
       for (const b of boards) {
-        const [sx, syTop] = s.project(b.x + 0.35 * b.w, b.y0 + 0.8 * (b.y1 - b.y0), b.z), [, syBot] = s.project(b.x + 0.35 * b.w, b.y0 + 0.2 * (b.y1 - b.y0), b.z);
+        const [sx, syTop] = s.project(b.x + 0.35 * b.w, b.y0 + 0.85 * (b.y1 - b.y0), b.z), [, syBot] = s.project(b.x + 0.35 * b.w, b.y0 + 0.3 * (b.y1 - b.y0), b.z);
         if (sx < 8 || sx > s.size - 8 || syTop < 8 || syBot > s.size - 8) continue;
         let bd = 0, ba = 0;
-        for (let y = Math.ceil(syTop * k); y <= Math.floor(syBot * k); y++) { const i = (y * c.width + Math.round(sx * k)) * 4; const l = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]; ba++; if (l < 110) bd++; }
+        for (let y = Math.ceil(syTop * k); y <= Math.floor(syBot * k); y++) { const i = (y * c.width + Math.round(sx * k)) * 4; ba++; if (lum(withP, i) < 110 && lum(without, i) >= 110) bd++; }
         dark += bd; all += ba; if (ba) worst = Math.max(worst, bd / ba); perBoard.push(ba);
       }
     }
+    posts.visible = true;
     return { dark, all, worst, boards: perBoard.length / frames, frames, pxPerBoard: perBoard.length ? Math.round(perBoard.reduce((a, b) => a + b, 0) / perBoard.length) : 0 };
   }, [rowYd, frames]);
 }
 
-test('verify 8 (range-day-seven): through the Vepr\'s scope at 7x on the 200-yard row, over twelve frames with the aim wandering, on Full and on Light at both sizes, no dark column shows inside a board\'s face where its post stands', { skip }, async () => {
+test('verify 8 (range-day-seven): through the Vepr\'s scope at 7x on each board row (100, 200 and 400 yards), over twelve frames with the aim wandering, on Full and on Light at both sizes, no dark column shows inside a board\'s face where its post stands', { skip }, async () => {
+  const bad = [];
   for (const picture of ['full', 'light']) for (const [sizeName, viewport] of [['phone', { width: 412, height: 915 }], ['computer', { width: 1280, height: 800 }]]) {
     const { page, context } = await signedIn(viewport);
     await setPicture(page, picture);
     await page.goto(`${base}${PIRU}&sight=utg-2-7x44&month=9&time=midday`); await page.waitForSelector('#fire'); await sceneReady(page);
     assert.equal(await page.evaluate(() => RangeDayLine.picture), picture);
     await page.evaluate(() => { window.requestAnimationFrame = () => 0; RangeDayLine.setZoom(7); }); await wait(300);
-    const r = await darkInBoards(page, 200, 12);
-    const share = r.all ? r.dark / r.all : 0;
-    console.log(`  ${picture}, ${sizeName}: ${r.boards.toFixed(0)} boards of the 200-yard row in the view, ${r.pxPerBoard} px read down each post's column, ${r.frames} frames: ${(share * 100).toFixed(2)} percent dark (worst board and frame ${(r.worst * 100).toFixed(1)} percent)`);
-    assert.ok(r.all > 0, 'boards in the view');
-    assert.ok(share < 0.02 && r.worst < 0.1, `${picture}, ${sizeName}: ${(share * 100).toFixed(2)} percent of the pixels down the posts' columns are dark (worst ${(r.worst * 100).toFixed(1)} percent): a post shows through a board`);
+    for (const rowYd of flat.look.things.boardRowsYards) {
+      const r = await darkInBoards(page, rowYd, 12);
+      const share = r.all ? r.dark / r.all : 0;
+      console.log(`  ${picture}, ${sizeName}, ${rowYd}-yard row: ${r.boards.toFixed(0)} boards in the view, ${r.pxPerBoard} px read down each post's column, ${r.frames} frames: ${(share * 100).toFixed(2)} percent dark only with the posts (worst board and frame ${(r.worst * 100).toFixed(1)} percent)`);
+      if (!(r.all > 0)) bad.push(`${picture}, ${sizeName}, ${rowYd} yd: no board in the view`);
+      else if (!(share < 0.02 && r.worst < 0.1)) bad.push(`${picture}, ${sizeName}, ${rowYd} yd: ${(share * 100).toFixed(2)} percent of the pixels down the posts' columns are dark only with the posts drawn (worst ${(r.worst * 100).toFixed(1)} percent): a post shows through a board`);
+    }
     await context.close();
   }
+  assert.deepEqual(bad, [], bad.join('; '));
 });
