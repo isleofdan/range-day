@@ -98,7 +98,8 @@
   farthest plate, 40 cm), so the dark posts no longer show through the white
   boards in flickering dots (Dan's phone, 19 Nov 2026); proven by a
   geometry test that fails on `main`, a dark-column test through the scope
-  over twelve frames (47 percent of a column dark before, 0.00 after), and
+  over twelve frames on every board row (whole columns dark at 400 yards
+  before, none after), and
   one new screenshot state (the boards at 7x). 101 tests, 52 screenshot
   states. Report: `docs/reports/range-day-seven-report.md`.
 - **Decided:** the Checks workflow runs on pull requests and pushes to
