@@ -84,17 +84,15 @@ Screenshots (`docs/reports/screenshots/`, both sizes): `line-top-first-shot` (be
    - **The same places at 1280×800** after the same steps (the result fit in two lines there, so it had no fold to open). Each time: moved 0, 0, 0; scrolled 0.
 4. **Touch size at 412×915** (after-measure): plate 44, zoom 44, magnifier 44, leaf-down 44, leaf-up 44, el-down 44, el-up 44, wd-left 44, wd-right 44, the four 1 MOA buttons 44, the summary line 44, steady 56, fire 56. None is under 44. Before: plate 41 and the four 1 MOA buttons 40.
 5. **Screenshots:** the five new states at both sizes (`docs/reports/screenshots/line-top-*.png`), "all checks passed (5 of 73 states)": each fits the width (no sideways scroll), and the tests found no console error (`assert.deepEqual(errors, [])` in both new tests).
-6. **The check:** the pull request's Checks run is [44776316081](https://github.com/isleofdan/range-day/actions/runs/44776316081) on commit 752c7d4. Nine of its ten jobs passed: tests rest 23 s, tests browser 1 min 10 s, tests day 2 min 14 s, tests scene-scale 4 min 3 s, tests scene-shots 10 min 54 s, screenshots shard 1 5 min 58 s, shard 2 6 min 59 s, shard 3 6 min 48 s, shard 4 9 min 4 s. **Tests scene-rest failed** after 22 min 49 s, with 2 of its 12 tests failing:
-   - "the first visit" ran out of time: `page.waitForFunction: Timeout 30000ms exceeded` while the picture counted its frames.
-   - verify 4 (range-day-six) read the scope's reticle and found no dots at all ("mil-dot spacing NaN/NaN vs 48.0").
+6. **The check:** the pull request's latest Checks run is [44781816992](https://github.com/isleofdan/range-day/actions/runs/44781816992) on commit 875a99d, and it is **green: all ten jobs passed**. Times:
+   - tests: rest 27 s, browser 1 min 23 s, day 1 min 22 s, scene-scale 4 min 29 s, scene-shots 8 min 22 s, scene-rest 8 min 46 s.
+   - screenshots: shard 1 6 min 5 s, shard 2 6 min 55 s, shard 3 10 min 15 s, shard 4 7 min 6 s.
 
-   Why this points to a slow machine, not the change:
-   - The job ran on a slower runner (Azure eastus) than `main`'s last run of the same job (run 44762215589, AWS us-west-2), and the whole group took 1,352 s against `main`'s 502 s (`main`'s log gives only the group's total, so test-by-test times cannot be compared).
-   - Both failures are timing failures. One is the 30-second wait. The other reads the canvas 300 ms after the page loads and finds nothing drawn, which happens when the first frame has not come yet.
-   - The same group on this same code passed in this session's container: `node scripts/check.mjs --only tests --group scene-rest`, "ok tests: scene-rest … 519.2 s", all 12.
-   - Neither test touches the arranged parts: the view's size, the picture and its drawing code are unchanged (verify 2).
+   The run before it, [44776316081](https://github.com/isleofdan/range-day/actions/runs/44776316081) on commit 752c7d4, failed one job: tests scene-rest, 22 min 49 s, 2 of 12 tests. "The first visit" hit `page.waitForFunction: Timeout 30000ms exceeded`, and verify 4 (range-day-six) found no reticle dots: "mil-dot spacing NaN/NaN vs 48.0". Both are timing failures on a slower machine (Azure eastus, 1,352 s for the group, against 502 s on `main`'s last run, 44762215589, on AWS us-west-2). The same group passed:
+   - in this session, at 519.2 s;
+   - in the green run above, at 8 min 46 s, after a change that touched only another test's printed output (commit 875a99d, `test/day.test.js`).
 
-   Later: the test change for result-check finding 2 (commit 875a99d) started a new Checks run on the pull request by itself; its result is in the newest report on the card. Re-running the old job counts as starting a workflow, which needs Dan's yes (`CLAUDE.md`, "What an agent may and may not touch"), so it is in Ask 1. If it fails again on a re-run, the merge stops there and the next session looks into it.
+   Nothing was re-run by hand.
 
    Counts: tests 109 before and 111 after (counted as `test(` lines in `test/*.test.js` on `origin/main` and on `range-day-nine`); screenshot states 68 before and 73 after (`node scripts/screenshots.mjs --list`). Changed tests and why:
    - verify 7 in `test/day.test.js`: the book line now shows the newest line only, as the brief's task item 2 asks.
@@ -108,7 +106,7 @@ What this cannot prove: the session cannot open the live app or hold a phone. Da
 
 ## Asks
 
-1. **Re-run the one failed check job, then, if it passes, merge and deploy range-day-nine?** Recommended: yes. Nine of the ten check jobs passed. The tenth failed on two timing waits on a machine 2.7 times slower than the last run of `main`, and it passed on this same code in the session (verify 6). The picture and the shots are unchanged, and one revert undoes the change. Type `yes, re-run the failed check, then merge and deploy range-day-nine, then merge its notes`. If the re-run fails, nothing is merged and I tell you which test failed and why.
+1. **Merge and deploy range-day-nine?** Recommended: yes. All ten check jobs pass on the pull request (run 44781816992), the picture and the shots are unchanged (verify 2), and one revert undoes the change. Type `yes, merge and deploy range-day-nine, then merge its notes`.
 
 ## What the next session needs
 
@@ -129,7 +127,7 @@ Nothing on your screen has changed yet: the new firing line is ready in [pull re
 
 What it does: on your phone, everything you use between shots now fits on one screen without scrolling. From the top: a one-line summary of the rifle, load, course and day (tap it for the full description); the plate picker with the zoom, magnifier or rear leaf beside it; the view, the same size as before; where your last shot went, right under the view; the elevation and windage buttons with their settings and the rounds left; your newest book line for that distance; and Steady and Fire at the bottom. The wind call, notes, the day's links, the shot log and the settings are a short scroll below. Nothing jumps when a shot lands or a note appears. The picture and how the bullets fly are unchanged.
 
-One automatic check failed. It is a timing failure on a slow test machine, not a fault in the change: the same tests passed on this code in my session, and the other nine checks passed.
+All the automatic checks pass.
 
 Needed from you
-1. Type: `yes, re-run the failed check, then merge and deploy range-day-nine, then merge its notes`. If the re-run fails, nothing is merged and I tell you why.
+1. Type: `yes, merge and deploy range-day-nine, then merge its notes`.
