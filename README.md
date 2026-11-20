@@ -87,12 +87,39 @@ clicks, then works out the drop and the wind for each distance himself.
   to hold off, hold **Steady**, press **Fire**. The bullet takes its real
   flight time; a miss throws a puff of dust of real size where it landed,
   a hit rings late by the flight time plus the sound's trip back. Recoil
-  knocks the view off for a moment. One line under the view always states
-  the sight's setting. No drop or wind figure is given: the wind shows
-  only as heat shimmer leaning, brush moving and the dust's drift. A shot
-  log lists each shot's distance, sight setting, leaf, hold and where it
-  landed. One setting, off by default, **Show the conditions**, prints the
-  true wind, temperature and the engine's drop, for learning.
+  knocks the view off for a moment. No drop or wind figure is given: the
+  wind shows only as heat shimmer leaning, brush moving and the dust's
+  drift. A shot log lists each shot's distance, sight setting, leaf, hold
+  and where it landed. One setting, off by default, **Show the
+  conditions**, prints the true wind, temperature and the engine's drop,
+  for learning.
+
+  **How the firing line is arranged** (range-day-nine). What a shooter
+  needs between shots is within reach without scrolling; what is set
+  before a shot, or read after a string, is a short scroll below. On a
+  phone, from the top: one short line (the rifle, the load's weight, the
+  course and the day, temperature first; a tap opens the full description
+  over the page, a second tap closes it); the plate picker with the
+  sight's own glass beside it (the zoom, the magnifier, or the rear leaf);
+  the view, the same size as before; **where the last shot went**, held to
+  two lines (a longer one is marked ▾ and opens over the page on a tap;
+  "Open another box" stands beside it when the box is empty); **the sight
+  strip**: elevation and windage, each with its setting, its two one-click
+  buttons and its two 1 MOA buttons, every button at least 44 pixels tall,
+  with the rounds left under it; the book's newest line for this distance
+  (the rest are in the book, one tap on its link); then **Steady** and
+  **Fire**, fixed at the bottom, the lowest and largest controls. Below,
+  in this order: the wind call, the cold-bore note, the zero note and "Set
+  the sight to this load's saved zero", "The day" (the book, the day so
+  far, Pack up), the shot log with "Clear the log", and the settings
+  (Show the conditions, Picture). On a computer (1,100 pixels wide and
+  over) the same list stands in a column beside the view, with Steady and
+  Fire at the column's foot covering nothing. Nothing that opens or
+  changes (a shot's result, the cold-bore note going, "Open another box",
+  a folded part opened) moves the view, the strip or Steady and Fire, and
+  the page never scrolls by itself. The setting's full sentence
+  ("Elevation … · Windage …", with the leaf or the magnifier) is still in
+  the page for screen readers, shown on screen by the strip's own figures.
 
 One MOA is a minute of angle, 1/60 of a degree, about 1 inch at 100
 yards; sights click in MOA.
