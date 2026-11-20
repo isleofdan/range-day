@@ -42,7 +42,8 @@ async function signedIn(viewport, init) {
   return { page, context, errors };
 }
 const setPicture = (page, v) => page.evaluate((p) => localStorage.setItem('range-day:picture', JSON.stringify(p)), v);
-const sceneReady = (page) => page.waitForFunction(() => RangeDayLine.scene || RangeDayLine.sceneFailed || (!RangeDayLine.sceneLoading && RangeDayLine.picture === 'plain'), null, { timeout: 90000 });
+// ready: the scene built and its photographed ground surfaces settled (range-day-eight), or the scene failed, or Plain shown
+const sceneReady = async (page) => { await page.waitForFunction(() => RangeDayLine.scene || RangeDayLine.sceneFailed || (!RangeDayLine.sceneLoading && RangeDayLine.picture === 'plain'), null, { timeout: 90000 }); await page.waitForFunction(() => !RangeDayLine.scene || !RangeDayLine.scene.materials || RangeDayLine.scene.materials.settled, null, { timeout: 90000 }); };
 async function seededShot(page, seed) {
   const before = await page.evaluate(() => RangeDayLine.log.length);
   await page.evaluate((s) => RangeDayLine.fire(s), seed);
@@ -468,4 +469,76 @@ test('verify 8 (range-day-seven): through the Vepr\'s scope at 7x on each board 
     await context.close();
   }
   assert.deepEqual(bad, [], bad.join('; '));
+});
+
+// --- range-day-eight: the photographed ground ----------------------------------------------------------------------
+
+const GM = require('../scripts/ground-measure.cjs');
+const inPage = (body) => `(${body})`;
+
+test('verify 8 (range-day-eight): a material that fails to load: with the floor\'s colour picture answering 404, the scene still draws, the floor is drawn with its plain palette colour (the other five materials loaded), and no console error is thrown but that request\'s', { skip }, async () => {
+  const { page, context, errors } = await signedIn({ width: 412, height: 915 });
+  const floorFile = `/${flat.terrain.surfaces.floor.light.color.file}`;
+  await page.route(`**${floorFile}`, (r) => r.fulfill({ status: 404, contentType: 'application/json', body: '{"error":"not found"}' }));
+  await setPicture(page, 'light');
+  await page.goto(`${base}${PIRU}&sight=utg-2-7x44&month=9&time=afternoon`); await page.waitForSelector('#fire'); await sceneReady(page);
+  assert.equal(await page.evaluate(() => RangeDayLine.picture), 'light', 'the scene drew');
+  const m = await page.evaluate(() => RangeDayLine.scene.materials);
+  console.log(`  materials: loaded ${m.loaded.join(', ')}; failed ${m.failed.join('; ')}`);
+  assert.deepEqual(m.loaded.slice().sort(), ['dry-grass', 'green-grass', 'rock', 'scree', 'scrub-litter']);
+  assert.equal(m.failed.length, 1); assert.match(m.failed[0], /^floor: /);
+  await page.selectOption('#plate', '0'); await wait(500);
+  const others = errors.filter((e) => !/404|Failed to load resource/.test(e));
+  console.log(`  console errors: ${errors.length ? errors.join(' | ') : 'none'}`);
+  assert.deepEqual(others, [], 'no error but the failed request\'s');
+  await context.close();
+});
+
+test('verify 5 (range-day-eight): no visible repeat: on the floor and on a hillside at 7x the picture matches itself shifted by one material width hardly more than at other shifts, as laid; laid in a plain grid it matches clearly more (the measure fails a plain grid); both copies of each material, each at its own width', { skip }, async () => {
+  const { page, context } = await signedIn({ width: 1280, height: 800 });
+  await setPicture(page, 'full');
+  for (const [day, q, grass] of [['February midday', 'month=2&time=midday', 'green-grass'], ['September afternoon', 'month=9&time=afternoon', 'dry-grass']]) {
+    await page.evaluate(() => localStorage.removeItem('range-day:day:open'));
+    await page.goto(`${base}${PIRU}&sight=utg-2-7x44&${q}`); await page.waitForSelector('#fire'); await sceneReady(page);
+    await page.evaluate(() => { window.requestAnimationFrame = () => 0; window.RD_SCENE_DEBUG = 'noshimmer'; RangeDayLine.setZoom(7); }); await wait(300);
+    const fov7 = await page.evaluate(() => RangeDayLine.fovMoa / 60);
+    const beside = await page.evaluate(() => { const w = RangeDayLine.scene.plateWorld(4); return [w.x + 20, w.z]; });
+    // each material is laid twice, at its own size and at macroScale times it: each copy is slid by its own width while the other stays put (sliding both at once, the one not at its own width diluted the plain grid's match: 0.29 and 0.45 on the runner)
+    const M = flat.look.ground.materials, K = flat.look.ground.macroScale;
+    for (const [name, aimAt, fov, sizeM, big] of [['the floor, 40 m out at 1x', [2, -40], 6.68, M.floor.sizeM, false], ['the floor, 40 m out at 1x, the larger copy', [2, -40], 6.68, M.floor.sizeM * K, true], ['the hillside beside the 600-yard plate at 7x', beside, fov7, M[grass].sizeM, false], ['the hillside beside the 600-yard plate at 7x, the larger copy', beside, fov7, M[grass].sizeM * K, true]]) {
+      const r = {};
+      for (const plain of [true, false]) r[plain ? 'plain' : 'laid'] = await page.evaluate(([src, P, f, size, pl, bg]) => { const repeat = eval(src); const s = RangeDayLine.scene; s.setPlainGrid(pl); const out = repeat(P, size, f, f < 3, bg); s.setPlainGrid(false); return out; }, [inPage(GM.repeat.toString()), aimAt, fov, sizeM, plain, big]);
+      // the share of the material's own fine texture that comes back at one width: the boards, the light and the survey's relief do not slide with the materials and match at every step, so the score is the rise at one width over what the other steps leave
+      const score = (x) => (x.at1 - x.others) / Math.max(1e-6, 1 - x.others);
+      console.log(`  ${day}, ${name}: plain grid ${score(r.plain).toFixed(3)} (${r.plain.at1.toFixed(3)} at one width, ${r.plain.others.toFixed(3)} elsewhere); as laid ${score(r.laid).toFixed(3)} (${r.laid.at1.toFixed(3)}, ${r.laid.others.toFixed(3)})`);
+      assert.ok(score(r.plain) > 0.5, `${day}, ${name}: the measure sees the plain grid's repeat (${score(r.plain).toFixed(3)})`);
+      assert.ok(score(r.laid) < 0.5 * score(r.plain), `${day}, ${name}: as laid, the repeat is under half the plain grid's (${score(r.laid).toFixed(3)} against ${score(r.plain).toFixed(3)})`);
+    }
+  }
+  await context.close();
+});
+
+test('verify 6 (range-day-eight): detail on the ground: the local contrast on the floor at 1x and on a hillside at 7x and at 21x, Full and Light, both days, at both widths, against docs/reports/ground-before.txt: none lower than before', { skip }, async () => {
+  const before = require('node:fs').readFileSync(path.join(root, 'docs', 'reports', 'ground-before.txt'), 'utf8');
+  const was = (width, picture, day, name) => { const m = new RegExp(`^${width} px, ${picture}, ${day}, detail ${name.replace(/[()']/g, '.')}: local contrast ([\\d.]+)`, 'm').exec(before); return m ? Number(m[1]) : null; };
+  for (const [width, viewport] of [[412, { width: 412, height: 915 }], [1280, { width: 1280, height: 800 }]]) for (const picture of ['full', 'light']) {
+    const { page, context } = await signedIn(viewport);
+    await setPicture(page, picture);
+    for (const [day, q] of [['February midday', 'month=2&time=midday'], ['September afternoon', 'month=9&time=afternoon']]) {
+      await page.evaluate(() => localStorage.removeItem('range-day:day:open'));
+      await page.goto(`${base}${PIRU}&sight=utg-2-7x44&${q}`); await page.waitForSelector('#fire'); await sceneReady(page);
+      await page.evaluate(() => { window.requestAnimationFrame = () => 0; window.RD_SCENE_DEBUG = 'noshimmer'; }); await wait(300);
+      const fovAt = (z) => page.evaluate((m) => { RangeDayLine.setZoom(m); return RangeDayLine.fovMoa / 60; }, z);
+      const fov7 = await fovAt(7), fov21 = await fovAt(21);
+      const beside = await page.evaluate(() => { const w = RangeDayLine.scene.plateWorld(4); return [w.x + 20, w.z]; });
+      for (const [name, P, fov] of [['floor at 1x, 25 m out (the irons\' field)', [2, -25], 6.68], ['hillside 20 m right of the 600-yard plate at 7x', beside, fov7], ['the same hillside at 21x (the test view)', beside, fov21]]) {
+        const now = await page.evaluate(([src, P, f]) => { const contrast = eval(src); const s = RangeDayLine.scene, eye = 4 * 0.3048, g = s.groundAt(P[0], P[1]); s.setView({ yawDeg: (Math.atan2(P[0], -P[1]) * 180) / Math.PI, pitchDeg: (Math.atan2(g - eye, -P[1]) * 180) / Math.PI, fovDeg: f, glass: f < 3, windMph: 0 }); s.render(3); return contrast(); }, [inPage(GM.contrast.toString()), P, fov]);
+        const old = was(width, picture, day, name);
+        console.log(`  ${width} px, ${picture}, ${day}, ${name}: local contrast ${now.toFixed(2)}, was ${old === null ? 'unmeasured' : old.toFixed(2)}`);
+        assert.notEqual(old, null, `${name}: measured before`);
+        assert.ok(now >= old, `${width} px, ${picture}, ${day}, ${name}: ${now.toFixed(2)} is lower than before (${old.toFixed(2)})`);
+      }
+    }
+    await context.close();
+  }
 });

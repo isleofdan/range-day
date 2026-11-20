@@ -1,0 +1,56 @@
+# Fetches candidate photographed ground surfaces (CC0 material scans from
+# Poly Haven and ambientCG) on GitHub's own runner, because a cloud
+# session's network refuses both libraries, and commits them, in
+# ground-fetch/, to the scratch branch that pushed, never to any other.
+# It deploys nothing and spends nothing. It runs only on a push to a
+# branch named …-fetch that touches scripts/ground/ (range-day-eight's one
+# download run, on Dan's yes of 19 Nov 2026: one run, no standing
+# permission). The survey's Terrain workflow and its files are not touched.
+name: Ground
+
+on:
+  push:
+    branches:
+      - '*-fetch'
+    paths:
+      - 'scripts/ground/**'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ground-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  ground:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.ref_name }}
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: The image tools (ImageMagick, unzip)
+        run: |
+          command -v convert >/dev/null && command -v unzip >/dev/null || (sudo apt-get update -qq && sudo apt-get install -y -qq imagemagick unzip)
+          convert -version | head -1
+
+      - name: Fetch the candidates
+        run: node scripts/ground/fetch.mjs
+
+      - name: Commit the candidates to this scratch branch
+        if: always()
+        run: |
+          git config user.name "ground workflow"
+          git config user.email "ground-workflow@users.noreply.github.com"
+          [ -d ground-fetch ] || { echo "nothing written"; exit 0; }
+          git add -A ground-fetch
+          if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
+          git commit -q -m "Ground: candidate surfaces fetched by the Ground workflow (run ${{ github.run_id }})"
+          git push origin HEAD:${{ github.ref_name }}
+          du -sh ground-fetch

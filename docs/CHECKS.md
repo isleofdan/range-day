@@ -83,6 +83,51 @@ GitHub's runner the one job took 31 to 60 minutes across the six runs of
 varies run to run on the runner (the tests scene-shots job took 6 min 47 s,
 8 min 11 s and 10 min 47 s on three runs of the same code, 19 Nov 2026).
 
+## The ground's surfaces (range-day-eight, 20 Nov 2026)
+
+What the checks hold the photographed ground to, and where its files come
+from:
+
+- **The files and their records** (`test/terrain.test.js`, "the ground
+  surfaces"): six materials, each with the library's own CC0 sentence, its
+  license page, its own page, the download run, the date, the candidates
+  and why this one; every shipped file's bytes and content hash match its
+  record; each has a ground size in `data/look.json`; together they stay
+  within 5,000,000 bytes on Full and 1,500,000 on Light
+  (`look.picture.groundBytesFull`, `groundBytesLight`).
+- **The fetch itself** (`test/ground-fetch.test.js`, 4 tests): the
+  download script `scripts/ground/fetch.mjs` run end to end on saved
+  answers shaped like the libraries' own (Poly Haven's published API
+  description; ambientCG's read generically): the license read, the
+  choosing, the naming, the checksums, the record, a library that does not
+  answer, no library answering.
+- **No visible repeat** (`test/scene.test.js`, verify 5 of range-day-eight):
+  the materials slid along the ground by exactly one copy's width match
+  themselves almost not at all as laid, and nearly perfectly in a plain
+  grid; the measure is `scripts/ground-measure.cjs`, `repeat`.
+- **Detail** (verify 6 of range-day-eight): the local contrast on the floor
+  at 1x and on a hillside at 7x and at 21x, Full and Light, both days, both
+  widths, never lower than `docs/reports/ground-before.txt`.
+- **A failed material** (verify 8 of range-day-eight): with one picture
+  answering 404 the scene still draws, that kind of ground takes its plain
+  colour, and no other console error appears.
+- **The pictures**: 16 screenshot states named `ground-…` (Full and Light,
+  February midday and September afternoon; the floor through the irons at
+  1x, the 600- and 1,000-yard hillsides at 7x, the 600-yard hillside at
+  21x, a test view through the page's zoom door, not a sight in the game).
+
+The download ran once, on GitHub's runner, by the Ground workflow
+(`.github/workflows/ground.yml`): it runs only on a push to a branch named
+`…-fetch` that touches `scripts/ground/`, so neither a pull request nor
+`main` ever starts it, and it commits only to that scratch branch. A new
+download needs Dan's yes first.
+
+The jobs' limit is 28 minutes since range-day-eight: on its pull request's
+run of 20 Nov 2026 (44739943613) the slowest job, tests scene-shots, took
+13 min 52 s (the same piece took 8 min 21 s on the run before, 44737304008:
+the runner varies), over the 11 minutes at which the limit is set to twice
+the slowest job seen.
+
 ## What runs when
 
 | When | What runs | Where it is set |

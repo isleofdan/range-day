@@ -126,8 +126,8 @@ from the 10 m heights beyond), so gullies, ribs and terraces show in the
 light and in shadow; the ground is sorted, pixel by pixel, into packed
 dirt, grass, scrub, bare rock and loose scree by the slope's steepness,
 the photograph's colour and the season, each with its own colour,
-roughness and small relief; surface detail made in code (clumps, stones,
-rills, clods, grains, blades) is laid over the ground at three scales
+roughness and small relief; surface detail (made in code until
+range-day-eight, photographed since: see below) is laid over the ground
 fixed to the ground, so the 1,000-yard hillside through 7x shows texture
 instead of blur and the floor at 50 yards shows gravel and tire tracks,
 and a stronger glass later still finds detail; the photograph itself is
@@ -154,6 +154,26 @@ unchanged. `scripts/picture-measure.mjs` measures the picture
 browser; `docs/reports/picture-before.txt` and `picture-after.txt` are
 its readings before and after range-day-six.
 
+Since range-day-eight the ground's close-up surface is photographed, not
+drawn: each kind of ground (packed dirt on the floor, dry straw grass and
+short green grass on the slopes, the bare soil and litter under the sage
+scrub, the pale eroded rock of the headwall, the loose scree below it)
+takes its colour pattern and its small relief from a material scan, a
+photograph of a few metres of real ground with its bumps measured. Each
+scan is laid so that no repeat shows (the ground is cut into small
+triangles, each corner shifting the picture by its own random amount, the
+three blended and leaning to the higher picture, so dirt shows between
+tufts and stones stand out of grit), keeps the season's measured colour
+(its own average colour is taken out and the palette's put in), and has
+its bumps lit by the day's sun, with small hard shadows on Full. The
+pictures load beside the first frames; until they arrive, or if one
+fails, that kind of ground is drawn in its plain measured colour. The
+ground is now placed from the firing position in metres instead of by its
+full map coordinates, whose northing (about 3.8 million metres) a
+graphics card holds only to a quarter of a metre: anything finer laid by
+those coordinates was cut into quarter-metre steps north to south and
+smeared into streaks.
+
 Since range-day-seven the picture's script is built, not stored: the
 repository holds `src/scene/` only, and `public/scene.min.js` is bundled
 from it (0.2 s) by every path that serves or tests the app: `npm test`,
@@ -164,7 +184,8 @@ pieces side by side, each its own job on GitHub's runner (`docs/CHECKS.md`).
 
 Three pictures, one setting (under "Setting" on the firing line, kept on
 the device): **Full**, **Light** (the same ground at half the relief's
-fineness, two detail scales instead of three, fewer bushes, a smaller
+fineness, the ground's photographed surfaces at half their size and
+without their small shadows, fewer bushes, a smaller
 photograph, no multisampling and no shadow map, for a slower phone) and
 **Plain** (the flat drawing).
 The first visit draws Full for two seconds and keeps Full or Light by how
@@ -190,6 +211,21 @@ photograph (the long roofed shelter); each plate's height and sideways
 place follow from the surveyed ground, on the line of fire where the
 ground gives a clear line of sight, else on the nearest visible ground
 sideways at its true distance (`data/courses.json` says which, and why).
+
+Where the ground's surfaces come from: `data/terrain.json`, `surfaces`,
+records the six material scans, each released under CC0 (a public-domain
+dedication) by its library, Poly Haven or ambientCG, with the library's
+license sentence as fetched, the scan's own page, the address and
+checksum of every map downloaded, the date, the download run, every
+candidate considered and why this one was chosen. They were fetched once,
+by the Ground workflow (`.github/workflows/ground.yml`,
+`scripts/ground/`) on GitHub's runner, which runs only on a push to a
+scratch branch named `…-fetch` and commits what it fetches there
+(`range-day-eight-fetch` keeps every candidate); the chosen ones were
+resized and saved in the session as a colour picture and a relief picture
+each, 1,024 pixels for Full and 512 for Light, in `public/terrain/` under
+names carrying their content hash. Each scan's ground size is in
+`data/look.json`, `ground.materials`.
 
 ## Where the numbers come from
 

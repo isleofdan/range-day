@@ -504,37 +504,19 @@
   }
  },
  "ground": {
-  "_about": "The ground's surface (range-day-six): how the picture sorts each pixel into dirt, grass, scrub, rock and scree, the scales of the detail made in code, and the small relief. Every figure is an estimate with its basis.",
-  "detailTilesM": [
-   {
-    "value": 24,
-    "estimate": "the coarse detail (clumps, rills, patches of stones) repeats every 24 m: features of a few centimetres to a metre or so"
-   },
-   {
-    "value": 3,
-    "estimate": "the middle detail repeats every 3 m: clods, crumbs and stones of a centimetre to a few tens of centimetres, what the spotting-scope photographs show as 'clods and crumbs with hard small shadows'"
-   },
-   {
-    "value": 0.4,
-    "estimate": "the fine detail repeats every 0.4 m: gravel and grains, seen only on the floor inside a hundred yards or through a strong glass"
-   }
-  ],
-  "detailAlbedo": {
-   "value": 0.45,
-   "estimate": "how much the detail lightens and darkens the ground's colour at each scale, 0 none to 1 the full picture"
-  },
+  "_about": "The ground's surface (range-day-six; its surfaces photographed since range-day-eight): how the picture sorts each pixel into dirt, grass, scrub, rock and scree, how each class's photographed material is laid, and the small relief. Every figure is an estimate with its basis or a reading of the material's library.",
   "bump": {
    "floor": {
-    "value": 0.6,
-    "estimate": "the small relief of the packed dirt floor: low clods and tracks"
+    "value": 1.0,
+    "estimate": "the small relief of the packed dirt floor, as a share of its scan's own measured slopes: 1, the scan's relief as measured (range-day-eight; it was 0.6 of the code-made clods)"
    },
    "grass": {
-    "value": 0.5,
-    "estimate": "the small relief under grass and scrub: slight"
+    "value": 1.0,
+    "estimate": "the small relief under grass and scrub, as a share of the scans' measured slopes: 1, as measured (range-day-eight; it was 0.5 of the code-made clumps)"
    },
    "rock": {
-    "value": 1.3,
-    "estimate": "the small relief of bare rock and scree: blocks and loose stones, the strongest"
+    "value": 1.0,
+    "estimate": "the small relief of bare rock and scree, as a share of the scans' measured slopes: 1, as measured (range-day-eight; it was 1.3 of the code-made stones)"
    }
   },
   "steepDeg": {
@@ -585,17 +567,149 @@
    "value": 3,
    "estimate": "the photograph is never shown finer than 3 of its own pixels (about 2 m): magnified past that its compression shows as blocks; the survey's relief and the detail carry the finer structure. The ground's sorting into dirt, grass, scrub and rock reads it twice as coarse again"
   },
-  "detailFadeTexels": {
-   "value": 12,
-   "estimate": "a detail scale fades out once one screen pixel covers about 12 of its texels across (it is gone by 24): squeezed that far, a picture carries only aliasing; the next coarser scale, the survey's relief and the photograph carry what is left"
+  "materials": {
+   "_about": "Each class's photographed material (data/terrain.json, surfaces): how much ground one copy of its picture covers.",
+   "floor": {
+    "sizeM": {
+     "value": 4.0,
+     "source": {
+      "url": "https://api.polyhaven.com/assets?type=textures&category=ground-terrain%2Fsoil-mud%2Fcompacted-soil",
+      "read": "2026-11-20",
+      "note": "the scan's ground size, 4000 mm across, as Poly Haven's listing gives it (dimensions) for dry_ground_rocks; the listing as the Ground workflow fetched it is on the scratch branch range-day-eight-fetch, ground-fetch/raw/"
+     }
+    }
+   },
+   "dry-grass": {
+    "sizeM": {
+     "value": 2.0,
+     "source": {
+      "url": "https://api.polyhaven.com/assets?type=textures&category=ground-terrain%2Fgrass-vegetation%2Fdry-sparse-grass",
+      "read": "2026-11-20",
+      "note": "the scan's ground size, 2000 mm across, as Poly Haven's listing gives it (dimensions) for withered_grass; the listing as the Ground workflow fetched it is on the scratch branch range-day-eight-fetch, ground-fetch/raw/"
+     }
+    }
+   },
+   "green-grass": {
+    "sizeM": {
+     "value": 1.4,
+     "source": {
+      "url": "https://ambientcg.com/api/v2/full_json?type=Material&q=Grass&include=downloadData,tagData,dimensionsData&limit=30&sort=Popular",
+      "read": "2026-11-20",
+      "note": "ambientCG's listing gives Grass001 dimensionX 140 and dimensionY 140 with no unit; read as centimetres, a 1.4 m patch (as Ground106's 250 is read as 2.5 m)"
+     }
+    }
+   },
+   "scrub-litter": {
+    "sizeM": {
+     "value": 2.5,
+     "source": {
+      "url": "https://ambientcg.com/api/v2/full_json?type=Material&q=Ground%20leaves&include=downloadData,tagData,dimensionsData&limit=30&sort=Popular",
+      "read": "2026-11-20",
+      "note": "ambientCG's listing gives Ground106 dimensionX 250 and dimensionY 250 with no unit; read as centimetres, a 2.5 m patch, the size of the library's other photographed ground patches"
+     }
+    }
+   },
+   "rock": {
+    "sizeM": {
+     "value": 2.7,
+     "source": {
+      "url": "https://api.polyhaven.com/assets?type=textures&category=stone%2Frock-cliffs%2Frough-rock-faces",
+      "read": "2026-11-20",
+      "note": "the scan's ground size, 2700 mm across, as Poly Haven's listing gives it (dimensions) for rock_face_03; the listing as the Ground workflow fetched it is on the scratch branch range-day-eight-fetch, ground-fetch/raw/"
+     }
+    }
+   },
+   "scree": {
+    "sizeM": {
+     "value": 3.0,
+     "source": {
+      "url": "https://api.polyhaven.com/assets?type=textures&category=ground-terrain%2Frocky-ground%2Fscree",
+      "read": "2026-11-20",
+      "note": "the scan's ground size, 3000 mm across, as Poly Haven's listing gives it (dimensions) for gravel_ground_01; the listing as the Ground workflow fetched it is on the scratch branch range-day-eight-fetch, ground-fetch/raw/"
+     }
+    }
+   }
   },
-  "clumpShadowM": {
+  "materialAlbedo": {
+   "value": 1.0,
+   "estimate": "how much of a material's own brightness and colour pattern shows over the palette's colour, 0 none to 1 as photographed: as photographed, since a lower figure measured as less detail than the code-made ground it replaced (range-day-eight, verify 6)"
+  },
+  "hexTiles": {
    "value": 0.5,
-   "estimate": "a grass clump or low bush in the coarse detail throws a shadow about 0.5 m long with the sun 45 degrees up, longer as the sun drops (to three times that)"
+   "estimate": "the triangles each material is shifted by are about half a copy of its picture across (2 m on the 4 m dirt): smaller than one copy, so no two neighbouring copies can match, and large enough that each copy still shows whole clods and tufts"
   },
-  "clumpShadowDark": {
-   "value": 0.4,
-   "estimate": "how dark that shadow is, 0 none to 1 black"
+  "hexSharpness": {
+   "value": 6,
+   "estimate": "how sharply each point leans to its triangle's nearest corner (a power on the three blend weights, as Mikkelsen's hex-tiling paper does): at 6 most of the ground shows one copy unblended, so the material keeps its contrast; the seams lean to the higher picture"
+  },
+  "macroScale": {
+   "value": 5,
+   "estimate": "each material is laid a second time at five times its size (7 to 20 m across): the clumps and patches a hillside shows through a scope at 600 yards, which a scan of a few metres does not hold, and detail farther out where the fine copy has faded"
+  },
+  "macroShare": {
+   "value": 0.7,
+   "estimate": "how strongly that second, larger copy shows over the fine one, 0 none to 1 as photographed: a little under 1, so the magnified pattern reads as patches and not as giant blades"
+  },
+  "macroShareLight": {
+   "value": 1,
+   "estimate": "on Light the larger copy shows as photographed: Light's 512-pixel pictures are softer and its fine copy is drawn only close in, so the larger copy carries the hillside's detail through the scope"
+  },
+  "lightFineFade": [
+   {
+    "value": 128,
+    "estimate": "on Light (512-pixel pictures) the fine copy of a material is drawn only where a screen pixel covers less than a 128th of it, fading out by a 32nd (on Full a 32nd to an 8th): farther, its blades and crumbs are below a pixel and the larger copy carries the ground, for half the picture reads"
+   },
+   {
+    "value": 32,
+    "estimate": "the same, the far end of the fade"
+   }
+  ],
+  "heightBlend": {
+   "value": 0.35,
+   "estimate": "how far a material's own height (0 to 1) pushes its class's weight where two classes meet: at 0.35 the higher picture wins over about a third of the blend, so dirt shows between tufts and stones stand out of grit instead of a soft smear"
+  },
+  "varyM": {
+   "value": 120,
+   "estimate": "the slow variation that decides where rock is bare and grass thin repeats over about 120 m (the code-made detail's coarse tile times five, as before range-day-eight), now made from a smooth noise instead of a picture"
+  },
+  "reliefShadowM": {
+   "value": 0.02,
+   "estimate": "a material's relief throws a shadow about 2 cm long with the sun 45 degrees up (to three times that as the sun drops): the 'clods and crumbs with hard small shadows' of the spotting-scope photographs"
+  },
+  "reliefShadowDepth": {
+   "value": 0.08,
+   "estimate": "the height difference, as a share of the material's whole relief, that makes a full shadow"
+  },
+  "reliefShadowDark": {
+   "value": 0.55,
+   "estimate": "how much of the sun a relief shadow cuts, 0 none to 1 all; the sky still lights it. Full only"
+  },
+  "sunCut": {
+   "_about": "Seen from afar, rough ground returns less sun than a flat surface lit the same way, because its own bumps, blades and twigs shade one another. Where the scans' small shadows are too small to draw (beyond a few metres, and everywhere on Light), each kind of ground cuts this share of the direct sun instead. Estimates: the code-made ground before range-day-eight darkened grass and scrub by 5 to 12 percent through its drawn clumps, which is what brought the February slopes near their measured colours (switching that detail off on the old ground gives exactly the colour the photographed ground gives).",
+   "floor": {
+    "value": 0.03,
+    "estimate": "packed dirt: clods and crumbs a few millimetres high, little self-shade"
+   },
+   "dry-grass": {
+    "value": 0.04,
+    "estimate": "dry straw lying flat on the soil: little self-shade"
+   },
+   "green-grass": {
+    "value": 0.2,
+    "estimate": "dense standing green grass: the blades shade the lower blades and the soil, about a fifth of the sun lost at the midday angles of the winter photographs"
+   },
+   "scrub-litter": {
+    "value": 0.2,
+    "estimate": "ground classed as scrub is, from afar, dense brush over litter: about a fifth of the sun lost in its own shade"
+   },
+   "rock": {
+    "value": 0.05,
+    "estimate": "eroded rock faces: flakes and cracks, little self-shade"
+   },
+   "scree": {
+    "value": 0.08,
+    "estimate": "loose stones: each stone's shadow on its neighbours"
+   }
   }
  },
  "air": {
@@ -691,6 +805,14 @@
   "samplesFull": {
    "value": 4,
    "estimate": "the Full picture smooths edges by drawing each pixel from four samples (multisampling); Light draws one"
+  },
+  "groundBytesFull": {
+   "value": 5000000,
+   "estimate": "the most the photographed ground surfaces may add to the canyon course on Full: the range-day-eight brief's limit, on top of the 11,670,196 bytes the course weighed before"
+  },
+  "groundBytesLight": {
+   "value": 1500000,
+   "estimate": "the same on Light, on top of 6,344,136 bytes"
   }
  }
 }
