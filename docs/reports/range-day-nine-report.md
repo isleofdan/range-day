@@ -2,6 +2,8 @@
 
 Nothing on Dan's screen has changed yet. The new firing-line layout is in pull request [#22](https://github.com/isleofdan/range-day/pull/22), which is not merged or deployed. Merging and deploying it will put the new layout on the live app.
 
+(Second filing: corrected for result check 20261120-171610-ecf799, findings 1–4, and carrying the green Checks run. Findings and fixes: 1, the 412×800 figure now says the 1 MOA buttons for the scope and dot fall under the bar; 2, verify 3 now gives the three boxes' places before and after, printed by the test (commit 875a99d); 3, the close-out order is stated as the repository's fixed sequence; 4, the picture work's pause is stated as Dan's word of 21 Nov 2026.)
+
 ## What stands
 
 How this session ran: a Claude Code cloud session on `isleofdan/range-day`. The container has no `/data/home/dan/FACTS.md`, so it is the cloud and not the Linux machine. Permission mode: auto (from the session's own record, `permission_mode: auto`; this session changed no permission setting). Builder model: `claude-opus-5-5` (the session's record, `session_context.model` and `last_served_model`). Independent checker: the Codex result checker, through Spine's `check_result`.
@@ -17,7 +19,7 @@ How this session ran: a Claude Code cloud session on `isleofdan/range-day`. The 
   - Steady and Fire, fixed at the bottom.
 
   Below, a short scroll away: the wind call, the cold-bore note, the zero note and its button, "The day" (the book, the day so far, Pack up), the shot log with "Clear the log", and then the settings. On a computer the same list stands in a column beside the view, and Steady and Fire sit at the foot of that column. `docs/reports/line-layout-after.txt`: "every held sight-and-size pair within reach".
-- **Nothing shifts under the thumb.** The test "the firing line: nothing shifts under the thumb" in `test/day.test.js` printed, at both sizes: "view 0, strip 0, bar 0 px moved; scrolled 0". That held after a miss (with the cold-bore note going), with the result opened, after a hit that wrote a book line, with the full description opened, with the box empty, and after another box was opened.
+- **Nothing shifts under the thumb.** The test "the firing line: nothing shifts under the thumb" in `test/day.test.js` printed, at both sizes: "moved view 0, strip 0, bar 0 px; scrolled 0". That held after a miss (with the cold-bore note going), with the result opened, after a hit that wrote a book line, with the full description opened, with the box empty, and after another box was opened.
 - **Same shots, same picture:** `git diff origin/main -- public/engine.js data src/scene | wc -c` gives `0`. The view is 380×380 pixels at 412×915 and 640×640 at 1280×800, as before (both measure files).
 - **No new stored record.** The folds are not remembered; nothing in `docs/RECORDS.md` changes.
 
@@ -120,6 +122,11 @@ Branches and the close-out order: the change is on `range-day-nine` (pull reques
 1. Merge pull request #22.
 2. The Deploy run.
 3. A notes-only pull request from `range-day-nine-notes`, which then differs from `main` only by this report and the `PLAN.md` note, merged.
+
+## Result check rounds
+
+1. Job 20261120-171610-ecf799 (report event 2883): FINDINGS, 4 findings, all on the report; each is fixed as listed at the top of this filing.
+2. Job 20261120-173010-dc4b73 (report event 2885): PASS.
 
 ## Closing message to Dan
 
