@@ -75,8 +75,11 @@ export function buildPlates({ plates, eyeM, look, physics, groundAt, full }) {
     group.add(pivot);
     const ground = groundAt(x, z);
     const postTop = y - h / 2;
-    const post = new THREE.Mesh(new THREE.BoxGeometry(T.postWidthIn * IN, Math.max(0.05, postTop - ground), T.postWidthIn * IN), steel);
-    post.position.set(x, (postTop + ground) / 2, z + 0.03);
+    // the post stands behind the plate by the data's stand-off (data/look.json, depth: so the picture tells the two apart at the farthest plate), its nearest face that far behind the plate's back
+    const postW = T.postWidthIn * IN;
+    const post = new THREE.Mesh(new THREE.BoxGeometry(postW, Math.max(0.05, postTop - ground), postW), steel);
+    post.position.set(x, (postTop + ground) / 2, z - (T.plateThicknessIn * IN) / 2 - look.depth.platePostStandOffM - postW / 2);
+    post.name = `plate-post-${i}`; plate.name = `plate-${i}`;
     post.castShadow = full;
     group.add(post);
     // the mound of heaped dirt behind the plate: a hemisphere with a broken outline, in the floor's dirt
@@ -150,6 +153,7 @@ export function buildBoards({ look, groundAt, full }) {
   const bw = T.boardWidthIn * IN, bh = T.boardHeightIn * IN, gap = T.boardGapIn * IN;
   const pos = [], uv = [], nrm = [], idx = [];
   const frames = [];
+  const POST_W = 0.05; // a board's frame post, 5 cm square
   let k = 0, label = 0;
   const addBoard = (x, z, dropM) => {
     const ground = groundAt(x, z) - dropM;
@@ -161,7 +165,9 @@ export function buildBoards({ look, groundAt, full }) {
     for (const q of quad) { pos.push(...q); nrm.push(0, 0, 1); }
     uv.push(u0, v0, u1, v0, u1, v1, u0, v1);
     idx.push(k, k + 1, k + 2, k, k + 2, k + 3); k += 4;
-    frames.push([x - bw * 0.35, ground, z - 0.03, y1 - 0.1 - ground], [x + bw * 0.35, ground, z - 0.03, y1 - 0.1 - ground]);
+    // the two posts stand behind the sheet by the data's stand-off (data/look.json, depth), their nearest face that far behind it, so the picture tells post from sheet at the farthest row (half a centimetre behind, they showed through the white in flickering dots)
+    const pz = z - look.depth.boardPostStandOffM - POST_W / 2;
+    frames.push([x - bw * 0.35, ground, pz, y1 - 0.1 - ground], [x + bw * 0.35, ground, pz, y1 - 0.1 - ground]);
   };
   for (const yd of rows) {
     const z = -yd * YD, drop = 0; // the first line sits in its notch (the terrace is in the ground); the others stand on the ground
@@ -177,15 +183,15 @@ export function buildBoards({ look, groundAt, full }) {
   geo.setIndex(idx);
   const mesh = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ map: tex, side: THREE.DoubleSide }));
   mesh.castShadow = full;
-  mesh.frustumCulled = false;
+  mesh.frustumCulled = false; mesh.name = 'boards';
   const group = new THREE.Group();
   group.add(mesh);
   // the frames: two dark posts under each board
-  const postGeo = new THREE.BoxGeometry(0.05, 1, 0.05); postGeo.translate(0, 0.5, 0);
+  const postGeo = new THREE.BoxGeometry(POST_W, 1, POST_W); postGeo.translate(0, 0.5, 0);
   const posts = new THREE.InstancedMesh(postGeo, new THREE.MeshLambertMaterial({ color: 0x4a3f36 }), frames.length);
   const m = new THREE.Matrix4();
   frames.forEach(([x, y, z, hgt], i) => { m.makeScale(1, hgt, 1); m.setPosition(x, y, z); posts.setMatrixAt(i, m); });
-  posts.castShadow = full; posts.frustumCulled = false;
+  posts.castShadow = full; posts.frustumCulled = false; posts.name = 'board-posts';
   group.add(posts);
   return group;
 }

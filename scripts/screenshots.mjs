@@ -117,6 +117,8 @@ const SCREENS = [
   { name: 'line-sep-afternoon-2x-1000', path: `${PIRU}&sight=utg-2-7x44&month=9&time=afternoon`, expect: 'September afternoon', act: async (page) => { await plate(page, 8); await page.evaluate(() => RangeDayLine.setZoom(2)); await settle(page, 400); } },
   { name: 'line-sep-afternoon-7x-600', path: `${PIRU}&sight=utg-2-7x44&month=9&time=afternoon`, expect: 'September afternoon', act: async (page) => { await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(7)); await settle(page, 400); } },
   { name: 'line-sep-boards-200', path: `${PIRU}&sight=utg-2-7x44&month=9&time=midday`, expect: 'September midday', act: async (page) => { await plate(page, 0); await page.evaluate(() => RangeDayLine.setZoom(4)); await settle(page, 400); } },
+  // range-day-seven: the same boards through the scope at its highest power, where the posts' dotted lines showed on Dan's phone.
+  { name: 'line-sep-boards-200-7x', path: `${PIRU}&sight=utg-2-7x44&month=9&time=midday`, expect: 'September midday', act: async (page) => { await plate(page, 0); await page.evaluate(() => RangeDayLine.setZoom(7)); await settle(page, 400); } },
   // A hit with its strike mark on the plate, at 7x.
   // (the sight is dialled onto the probe shot with the knobs, as a shooter would, so the plate stays at the reticle when the second shot chips it)
   { name: 'line-hit-strike', path: `${PIRU}&sight=utg-2-7x44&month=9&time=midday`, expect: 'Hit', act: async (page) => {
