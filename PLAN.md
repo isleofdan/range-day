@@ -506,3 +506,27 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
   Light path for its frame time; the firing line's text and controls; the
   iron sights; the rifle line's picture. Report:
   `docs/reports/range-day-eight-report.md`.
+
+### range-day-nine — 20 Nov 2026 (cloud session, from the Wall card `range-day`)
+
+- **Stands:** pull request #22: the firing line arranged for shooting.
+  On a phone, within reach without scrolling: a one-line summary (a tap
+  opens the full description over the page), the plate with the sight's
+  glass beside it, the view at its old size, where the last shot went in
+  two lines (opens on a tap; "Open another box" beside it), the sight
+  strip with every button 44 px or more and the rounds left, the book's
+  newest line, then Steady and Fire. The wind call, notes, the day's links,
+  the log and the settings are a scroll below. On a computer, a column
+  beside the view. Nothing that opens or changes moves the view, the
+  strip or the bar (measured 0 px). The picture and the shots are
+  unchanged.
+- **Decided:** the measure lives in `test/line-reach.js` and
+  `scripts/line-layout.mjs`; `#setting-line` stays in the page, hidden on
+  screen, for screen readers and the tests; the book's line shows the
+  newest line only; the column beside the view starts at 1,100 px.
+- **Next session needs:** Dan's look on his phone (is the book line above
+  the bar on his screen?); "level, centered of center" in the result's
+  words; then, each planned by a Personal Shipyard chat: the near targets
+  with paper and the spotting scope; the sights Dan fitted; recording.
+  The picture work stays paused on Dan's word. Report:
+  `docs/reports/range-day-nine-report.md`.
