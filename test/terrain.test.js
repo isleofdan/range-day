@@ -151,3 +151,36 @@ test('the picture bundle public/scene.min.js is built, not stored: a copy stored
     console.log(`  no stored copy: built public/scene.min.js (${fresh.length} bytes) and the server serves it signed in (${r.status}, ${body.length} bytes; a stranger gets ${stranger.status})`);
   } finally { server.kill(); }
 });
+
+// --- range-day-eight: the photographed ground surfaces --------------------------------------------------------------
+
+test('the ground surfaces (range-day-eight): six CC0 material scans, each file what data/terrain.json says it is, its content hash in its name, its source, license, date and run recorded; each with its ground size in data/look.json; together within the byte limits on Full and on Light', () => {
+  const S = flat.terrain.surfaces, R = raw.terrain.surfaces;
+  const layers = ['floor', 'dry-grass', 'green-grass', 'scrub-litter', 'rock', 'scree'];
+  assert.deepEqual(Object.keys(S).filter((k) => k !== '_about'), layers);
+  const total = { full: 0, light: 0 };
+  for (const id of layers) {
+    const r = S[id];
+    assert.match(r.license, /\bCC0\b/, `${id}: the library's own words state CC0`);
+    assert.match(r.licensePage, /^https:\/\/(polyhaven\.com\/license|docs\.ambientcg\.com\/license\/)$/, `${id}: the library's license page`);
+    assert.match(r.page, /^https:\/\/(polyhaven\.com\/a\/|ambientcg\.com\/view\?id=)/, `${id}: the material's own page`);
+    assert.match(r.fetched, /^\d{4}-\d{2}-\d{2}$/, `${id}: the date fetched`);
+    assert.match(r.run, /^https:\/\/github\.com\/isleofdan\/range-day\/actions\/runs\/\d+$/, `${id}: the download run`);
+    assert.ok(r.why.length > 40 && r.candidates.length >= 3, `${id}: why this one, and from what`);
+    for (const k of ['color', 'normal', 'height']) assert.match(r.sources[k].url, /^https:\/\//, `${id}: the ${k} map's address`);
+    for (const set of ['full', 'light']) for (const kind of ['color', 'relief']) {
+      const f = r[set][kind], bytes = fs.readFileSync(path.join(root, 'public', f.file));
+      assert.equal(bytes.length, f.bytes, `${id} ${set} ${kind}: bytes`);
+      assert.ok(R[id][set][kind].bytes.source.read, `${id} ${set} ${kind}: the bytes are a reading`);
+      const hash = createHash('sha1').update(bytes).digest('hex').slice(0, 8);
+      assert.ok(f.file.endsWith(`-${hash}.jpg`), `${id} ${set} ${kind}: the name carries the content hash (${f.file})`);
+      assert.match(f.file, /^terrain\/[a-z0-9-]+-[0-9a-f]{8}\.jpg$/, `${id}: served by the /terrain/ route`);
+      total[set] += bytes.length;
+    }
+    const size = flat.look.ground.materials[id].sizeM;
+    assert.ok(size > 0.5 && size < 10, `${id}: a ground size of ${size} m`);
+  }
+  console.log(`  the ground surfaces add ${total.full} bytes on Full (limit ${flat.look.picture.groundBytesFull}) and ${total.light} on Light (limit ${flat.look.picture.groundBytesLight})`);
+  assert.ok(total.full <= flat.look.picture.groundBytesFull, 'Full within its limit');
+  assert.ok(total.light <= flat.look.picture.groundBytesLight, 'Light within its limit');
+});
