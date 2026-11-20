@@ -19,7 +19,7 @@ function arrayTexture(data, px, srgb, full) {
   t.format = THREE.RGBAFormat; t.type = THREE.UnsignedByteType;
   t.wrapS = t.wrapT = THREE.RepeatWrapping;
   t.minFilter = THREE.LinearMipmapLinearFilter; t.magFilter = THREE.LinearFilter;
-  t.generateMipmaps = true; t.anisotropy = full ? 8 : 2;
+  t.generateMipmaps = true; t.anisotropy = 1; // trilinear only: anisotropic filtering doubled the ground's cost in the test browser (range-day-eight, item 7)
   t.colorSpace = srgb ? THREE.SRGBColorSpace : THREE.NoColorSpace;
   t.needsUpdate = true;
   return t;
@@ -35,6 +35,7 @@ export function materialSlots(full, look) {
     relief: { value: arrayTexture(neutral(1), 1, false, full) },
     mean: { value: LAYERS.map(() => new THREE.Vector3(n, n, n)) },
     sizeM: { value: sizes },
+    px: { value: 1 },
     state: { loaded: [], failed: [], bytes: 0, settled: false },
   };
 }
@@ -80,6 +81,7 @@ export async function loadMaterials(slots, surfaces, full) {
     const oldC = slots.color.value, oldR = slots.relief.value;
     slots.color.value = arrayTexture(col, px, true, full);
     slots.relief.value = arrayTexture(rel, px, false, full);
+    slots.px.value = px;
     oldC.dispose(); oldR.dispose();
   }
   state.settled = true;

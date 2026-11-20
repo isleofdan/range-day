@@ -983,12 +983,11 @@
   },
   "green-grass": {
    "words": "short green grass on a slope",
-   "library": "Poly Haven",
-   "asset": "grass_ground",
-   "page": "https://polyhaven.com/a/grass_ground",
-   "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
-   "licensePage": "https://polyhaven.com/license",
-   "apiTerms": "https://raw.githubusercontent.com/Poly-Haven/Public-API/master/ToS.md",
+   "library": "ambientCG",
+   "asset": "Grass001",
+   "page": "https://ambientcg.com/view?id=Grass001",
+   "license": "Creative Commons CC0 1.0 Universal License . The Creative Commons CC0 license gives you near limitless freedom to use the materials, models and other assets: Creative Commons CC0 License licensed under the Creative Commons CC0 1.0 Universal License.",
+   "licensePage": "https://docs.ambientcg.com/license/",
    "fetched": "2026-11-20",
    "run": "https://github.com/isleofdan/range-day/actions/runs/44711714459",
    "scratchBranch": "range-day-eight-fetch",
@@ -1000,45 +999,42 @@
     "ambientcg Grass001",
     "ambientcg Ground037"
    ],
-   "why": "Short thin green grass with soil showing between, evenly lit: the winter and spring slopes' 'vivid green grass' at the scale of a few metres. Not chosen: leafy_grass (broad leaves), sparse_grass and withered_grass (dead grass), Grass001 (a dense lawn), Ground037 (moss).",
+   "why": "Dense short green grass, evenly lit: the winter and spring slopes' 'vivid green grass', and the strongest pattern of the green candidates (its brightness varies about twice as much, against its mean, as grass_ground's, which was tried first and measured as less detail on the February hillside than the code-made ground it replaced). Not chosen: grass_ground (soft, low contrast), leafy_grass (broad leaves), sparse_grass and withered_grass (dead grass), Ground037 (moss).",
    "sources": {
     "color": {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/grass_ground/grass_ground_diff_2k.jpg",
-     "md5": "fd97f2402677e6686b2d9159fc3a4256",
-     "md5MatchesListing": true,
-     "resolution": "2k"
+     "url": "https://ambientcg.com/get?file=Grass001_2K-JPG.zip",
+     "inZip": "Grass001_2K-JPG_Color.jpg",
+     "zipMd5": "e80ac9bf7cc4e81ee1802ed68d03a8a5"
     },
     "normal": {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/grass_ground/grass_ground_nor_gl_2k.jpg",
-     "md5": "c8b2dd95f09868c4aacb91f62c673344",
-     "md5MatchesListing": true,
-     "resolution": "2k"
+     "url": "https://ambientcg.com/get?file=Grass001_2K-JPG.zip",
+     "inZip": "Grass001_2K-JPG_NormalGL.jpg",
+     "zipMd5": "e80ac9bf7cc4e81ee1802ed68d03a8a5"
     },
     "height": {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/grass_ground/grass_ground_disp_2k.jpg",
-     "md5": "4e924088734d7e63ad0badeb821b184d",
-     "md5MatchesListing": true,
-     "resolution": "2k"
+     "url": "https://ambientcg.com/get?file=Grass001_2K-JPG.zip",
+     "inZip": "Grass001_2K-JPG_Displacement.jpg",
+     "zipMd5": "e80ac9bf7cc4e81ee1802ed68d03a8a5"
     }
    },
    "full": {
     "color": {
-     "file": "terrain/ground-green-grass-color-3a3d8184.jpg",
+     "file": "terrain/ground-green-grass-color-d0ac1bdd.jpg",
      "bytes": {
-      "value": 176872,
+      "value": 233469,
       "source": {
-       "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/grass_ground/grass_ground_diff_2k.jpg",
+       "url": "https://ambientcg.com/get?file=Grass001_2K-JPG.zip",
        "read": "2026-11-20",
        "note": "the shipped JPEG's size: 1024 pixels, quality 80, made in the session from the scan's colour map"
       }
      }
     },
     "relief": {
-     "file": "terrain/ground-green-grass-relief-1655c370.jpg",
+     "file": "terrain/ground-green-grass-relief-48c2cfdd.jpg",
      "bytes": {
-      "value": 456196,
+      "value": 663268,
       "source": {
-       "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/grass_ground/grass_ground_diff_2k.jpg",
+       "url": "https://ambientcg.com/get?file=Grass001_2K-JPG.zip",
        "read": "2026-11-20",
        "note": "the shipped JPEG's size: 1024 pixels, quality 80, made in the session from the scan's normal and height maps"
       }
@@ -1047,22 +1043,22 @@
    },
    "light": {
     "color": {
-     "file": "terrain/ground-green-grass-color-light-d96b1b98.jpg",
+     "file": "terrain/ground-green-grass-color-light-81becd09.jpg",
      "bytes": {
-      "value": 51799,
+      "value": 71574,
       "source": {
-       "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/grass_ground/grass_ground_diff_2k.jpg",
+       "url": "https://ambientcg.com/get?file=Grass001_2K-JPG.zip",
        "read": "2026-11-20",
        "note": "the shipped JPEG's size: 512 pixels, quality 85, made in the session from the scan's colour map"
       }
      }
     },
     "relief": {
-     "file": "terrain/ground-green-grass-relief-light-9ebb42d8.jpg",
+     "file": "terrain/ground-green-grass-relief-light-b9a54e36.jpg",
      "bytes": {
-      "value": 106075,
+      "value": 190282,
       "source": {
-       "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/grass_ground/grass_ground_diff_2k.jpg",
+       "url": "https://ambientcg.com/get?file=Grass001_2K-JPG.zip",
        "read": "2026-11-20",
        "note": "the shipped JPEG's size: 512 pixels, quality 85, made in the session from the scan's normal and height maps"
       }

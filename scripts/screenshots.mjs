@@ -9,6 +9,8 @@
 //       divided by 4 (every fourth state from the second), both sizes: the
 //       four shards together are every state once; scripts/check.mjs and the
 //       Checks workflow run the shards side by side
+//   --grep '^ground-'                   only the states whose names match (a
+//       before-and-after pair by hand; the check runs every state)
 //   --port 8923                         the server's port (one per shard
 //       running at once); --list prints the state names and stops
 // Every state's seconds are printed, so the slow ones can be seen.

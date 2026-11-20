@@ -81,7 +81,9 @@ const fn = (body) => new Function('...args', `${Object.entries(inPage).map(([k, 
 
 console.log(`picture-measure: ${new Date().toISOString().slice(0, 10)}, test browser (software 3D), scene canvas only`);
 const browser = await chromium.launch();
-for (const [width, viewport] of WIDTHS) for (const picture of ['full', 'light']) for (const day of DAYS) {
+// PM_WIDTHS=412 and PM_PICTURES=full measure part of the set (for trying a change; the files in docs/reports are the whole set)
+const only = (env, v) => !process.env[env] || process.env[env].split(',').includes(String(v));
+for (const [width, viewport] of WIDTHS.filter(([w]) => only('PM_WIDTHS', w))) for (const picture of ['full', 'light'].filter((p) => only('PM_PICTURES', p))) for (const day of DAYS) {
   const context = await browser.newContext({ viewport, deviceScaleFactor: 1 });
   const page = await context.newPage();
   const fetched = new Map();
