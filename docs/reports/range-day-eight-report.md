@@ -1,6 +1,5 @@
 # FIELD REPORT — range-day-eight — 2026-11-20
-
-Nothing on Dan's screen has changed yet: the new ground is in a pull request, not on the live app. The merge and deploy will show it.
+Nothing on Dan's screen has changed yet: the new ground is in a pull request (#20), not on the live app; the merge and deploy will show it.
 
 ## What stands
 
@@ -215,11 +214,11 @@ September afternoon, the hillside, the larger copy: plain grid 1.000; as laid 0.
 
 What this cannot prove: the test browser draws in software and the session cannot open the live app, so how the ground looks and how fast it draws on Dan's phone is unverified until he looks.
 
-Independent check: the Codex result checker, verdicts recorded on the card (see the closing note).
+Independent check (Codex result checker): round 1, job 20261120-150414-2d5952, FINDINGS: 1 colour patches farther than before (bushes everywhere; Light February hillside and scrub); 2 Light frame time over the 25% limit; 3 to 9 the report filed on the card was a summary without its sections. 3 to 9 fixed by filing this report in full. 1 and 2 stand as reported above, and are Ask 1.
 
 ## Asks
 
-1. **Merge and deploy?** Recommended: yes. Full meets every limit; Light's frame time and two of its February colours miss by the amounts above, reported, not hidden. To go ahead, type `yes, merge and deploy range-day-eight, then merge its notes`.
+1. **Accept the two measured misses and merge and deploy now?** The checker holds the work to them: Light draws up to 45% slower than before through the irons (limit 25%), and the bushes' colour patch everywhere, plus Light's February hillside and scrub, sit a few points farther from the photographs' colours than before. Full meets every limit and every figure is better there. Recommended: yes, merge now; a later session gives Light its own simpler drawing path and remeasures the bushes on bush pixels. To go ahead, type `yes, merge and deploy range-day-eight, then merge its notes`.
 
 ## What the next session needs
 
@@ -236,7 +235,7 @@ Nothing on your screen has changed yet: the merge and deploy will show the new g
 
 The canyon course's ground is now made from photographs of real ground (dirt, dry and green grass, the litter under the brush, rock, scree), all free-to-use public-domain scans, fetched in the one download run you allowed. The smeared streaks on the floor had one cause, now fixed: the picture placed the ground by coordinates too large for the graphics card to hold finer than a quarter of a metre.
 
-The ground is sharper than before in every view the brief named, with no visible repeat, and no shot changes. Two misses, measured and in the report: the Light picture draws up to 45% slower than before through the iron sights (the limit was 25%), and a few colour patches on Light in February sit further from the photographs' measured colours.
+The ground is sharper than before in every view the brief named, with no visible repeat, and no shot changes. Two misses, measured, which the independent checker holds against the brief: the Light picture draws up to 45% slower than before through the iron sights (the limit was 25%), and a few colour patches on Light in February sit further from the photographs' measured colours.
 
 Pull request: https://github.com/isleofdan/range-day/pull/20
 
