@@ -1,0 +1,1 @@
+This scratch branch holds the one download run of range-day-eight (Dan's yes, 19 Nov 2026). Its commit starts the Ground workflow; the workflow commits ground-fetch/ here. Never merged.
