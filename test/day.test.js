@@ -567,10 +567,12 @@ test('the firing line: nothing shifts under the thumb: the view, the sight strip
     await page.evaluate(() => window.scrollTo(0, 0));
     const places = () => page.evaluate(() => { const b = (s) => { const r = document.querySelector(s).getBoundingClientRect(); return [r.left, r.top, r.width, r.height].map((v) => Math.round(v * 10) / 10); }; return { view: b('#view'), strip: b('.strip'), bar: b('.firebar'), scrollY: window.scrollY }; });
     const start = await places();
+    lines.push(`${w}x${h} before (left, top, width, height): view [${start.view.join(', ')}], strip [${start.strip.join(', ')}], bar [${start.bar.join(', ')}]`);
     const same = async (what) => {
       const now = await places();
       const d = ['view', 'strip', 'bar'].map((k) => now[k].map((v, i) => Math.abs(v - start[k][i])).reduce((a, b) => Math.max(a, b), 0));
-      lines.push(`${w}x${h} ${what}: view ${d[0]}, strip ${d[1]}, bar ${d[2]} px moved; scrolled ${now.scrollY}`);
+      const at = (k) => `${k} [${now[k].join(', ')}]`; // left, top, width, height in pixels
+      lines.push(`${w}x${h} ${what}: ${at('view')}, ${at('strip')}, ${at('bar')}; moved view ${d[0]}, strip ${d[1]}, bar ${d[2]} px; scrolled ${now.scrollY}`);
       assert.deepEqual(d, [0, 0, 0], `${w}x${h} ${what}: ${JSON.stringify(now)} against ${JSON.stringify(start)}`);
       assert.equal(now.scrollY, 0, `${w}x${h} ${what}: the page did not scroll`);
     };
