@@ -76,7 +76,23 @@ Screenshots (`docs/reports/screenshots/`, both sizes): `line-top-first-shot` (be
 3. **Nothing shifts** (`test/day.test.js`, printed): at 412×915 and 1280×800, after a seeded miss, with the result opened (phone; on the computer the result fit in two lines and was not long), after a seeded hit that wrote a book line, with the description opened, with the box empty, and after another box was opened: "view 0, strip 0, bar 0 px moved; scrolled 0" every time.
 4. **Touch size at 412×915** (after-measure): plate 44, zoom 44, magnifier 44, leaf-down 44, leaf-up 44, el-down 44, el-up 44, wd-left 44, wd-right 44, the four 1 MOA buttons 44, the summary line 44, steady 56, fire 56. None is under 44. Before: plate 41 and the four 1 MOA buttons 40.
 5. **Screenshots:** the five new states at both sizes (`docs/reports/screenshots/line-top-*.png`), "all checks passed (5 of 73 states)": each fits the width (no sideways scroll), and the tests found no console error (`assert.deepEqual(errors, [])` in both new tests).
-6. **The check:** CHECKS_RUN_PLACEHOLDER
+6. **The check:** the pull request's Checks run is [44776316081](https://github.com/isleofdan/range-day/actions/runs/44776316081) on commit 752c7d4. Nine of its ten jobs passed: tests rest 23 s, tests browser 1 min 10 s, tests day 2 min 14 s, tests scene-scale 4 min 3 s, tests scene-shots 10 min 54 s, screenshots shard 1 5 min 58 s, shard 2 6 min 59 s, shard 3 6 min 48 s, shard 4 9 min 4 s. **Tests scene-rest failed** after 22 min 49 s, with 2 of its 12 tests failing:
+   - "the first visit" ran out of time: `page.waitForFunction: Timeout 30000ms exceeded` while the picture counted its frames.
+   - verify 4 (range-day-six) read the scope's reticle and found no dots at all ("mil-dot spacing NaN/NaN vs 48.0").
+
+   Why this points to a slow machine, not the change:
+   - The job ran on a slower runner (Azure eastus) than `main`'s last run of the same job (run 44762215589, AWS us-west-2), and took 1,352 s against `main`'s 502 s, with every test slower.
+   - Both failures are timing failures. One is the 30-second wait. The other reads the canvas 300 ms after the page loads and finds nothing drawn, which happens when the first frame has not come yet.
+   - The same group on this same code passed in this session's container: `node scripts/check.mjs --only tests --group scene-rest`, "ok tests: scene-rest … 519.2 s", all 12.
+   - Neither test touches the arranged parts: the view's size, the picture and its drawing code are unchanged (verify 2).
+
+   Re-running that one job counts as starting a workflow, which needs Dan's yes (`CLAUDE.md`, "What an agent may and may not touch"), so it is in Ask 1. If it fails again on a re-run, the merge stops there and the next session looks into it.
+
+   Counts: tests 109 before and 111 after (counted as `test(` lines in `test/*.test.js` on `origin/main` and on `range-day-nine`); screenshot states 68 before and 73 after (`node scripts/screenshots.mjs --list`). Changed tests and why:
+   - verify 7 in `test/day.test.js`: the book line now shows the newest line only, as the brief's task item 2 asks.
+   - verify 13 in `test/day.test.js`: it checks the strip's figures and buttons, the result and the book line above the bar, in place of the hidden setting line (task item 6: "brought up to the new arrangement, not weakened").
+
+   Run in the session, one piece at a time: `--group browser` passed, `--group day` passed (12 tests), `--group rest` passed, `--group scene-rest` passed (519.2 s), and `npm run screenshots -- --grep '^line-top-'` passed ("all checks passed (5 of 73 states)").
 7. **Size for the result checker:** `git diff origin/main...range-day-nine | wc -c` gives 90,225 bytes, under 400,000.
 8. **The deploy result:** filed on the card after the deploy, in the note of close-out item 5.
 
@@ -84,7 +100,7 @@ What this cannot prove: the session cannot open the live app or hold a phone. Da
 
 ## Asks
 
-1. **Merge and deploy range-day-nine?** Recommended: yes. The Checks run is green on the pull request, the picture and the shots are unchanged, and the change is undone by one revert. Type `yes, merge and deploy range-day-nine, then merge its notes`.
+1. **Re-run the one failed check job, then, if it passes, merge and deploy range-day-nine?** Recommended: yes. Nine of the ten check jobs passed. The tenth failed on two timing waits on a machine 2.7 times slower than the last run of `main`, and it passed on this same code in the session (verify 6). The picture and the shots are unchanged, and one revert undoes the change. Type `yes, re-run the failed check, then merge and deploy range-day-nine, then merge its notes`. If the re-run fails, nothing is merged and I tell you which test failed and why.
 
 ## What the next session needs
 
@@ -98,4 +114,11 @@ Branches: the change is on `range-day-nine` (pull request #22). This report and 
 
 ## Closing message to Dan
 
-CLOSING_PLACEHOLDER
+Nothing on your screen has changed yet: the new firing line is ready in [pull request #22](https://github.com/isleofdan/range-day/pull/22), and merging and deploying it will put it on the live app.
+
+What it does: on your phone, everything you use between shots now fits on one screen without scrolling. From the top: a one-line summary of the rifle, load, course and day (tap it for the full description); the plate picker with the zoom, magnifier or rear leaf beside it; the view, the same size as before; where your last shot went, right under the view; the elevation and windage buttons with their settings and the rounds left; your newest book line for that distance; and Steady and Fire at the bottom. The wind call, notes, the day's links, the shot log and the settings are a short scroll below. Nothing jumps when a shot lands or a note appears. The picture and how the bullets fly are unchanged.
+
+One automatic check failed. It is a timing failure on a slow test machine, not a fault in the change: the same tests passed on this code in my session, and the other nine checks passed.
+
+Needed from you
+1. Type: `yes, re-run the failed check, then merge and deploy range-day-nine, then merge its notes`. If the re-run fails, nothing is merged and I tell you why.
