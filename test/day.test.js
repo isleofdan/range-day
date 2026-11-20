@@ -250,14 +250,18 @@ test('verify 7: the book: a seeded hit writes one line with every field; a miss 
   assert.match(await page.textContent('#log tbody tr'), /\(conditions shown\)/);
   assert.match(await page.textContent('#result'), /Not in the book: the conditions were shown/);
   await page.uncheck('#show-conditions');
-  // Two more hits, so the line under the setting shows the two newest.
+  // Two more hits; the line under the view shows the newest one only (range-day-nine: the rest stay in the book, a tap away).
   const more = [await seededHit(page, 13), await seededHit(page, 14)];
   written += more.reduce((n, m) => n + (m.probe.hit ? 1 : 0) + 1, 0);
   lines = await book(page, 'bcm-ar15', 'ar-irons', 'imi-m193');
   assert.equal(lines.length, written);
   const under = await page.textContent('#book-line');
-  assert.match(under, /^Book, 100 yards: .*clicks.*held.*wind.*F, \d+ \w{3} \d{4} · .*clicks/);
-  assert.equal(under.split(' · ').length, 2, 'two lines, no more');
+  assert.match(under, /^Book, 100 yards: .*clicks.*held.*wind.*F, \d+ \w{3} \d{4}$/);
+  assert.equal(under.split(' · ').length, 1, 'one line: the newest');
+  const newest = await page.evaluate(() => RD.bookAt('bcm-ar15', 'ar-irons', 'imi-m193', 100)[0]);
+  const sign = (n) => (n > 0 ? `+${n}` : String(n));
+  assert.ok(under.includes(`${sign(newest.elevationClicks)}/${sign(newest.windageClicks)} clicks`), `the newest line (${newest.id}): ${under}`);
+  assert.ok(under.includes(`${newest.tempF} F`));
   await page.selectOption('#plate', '5');
   assert.match(await page.textContent('#book-line'), /nothing in the book at 600 yards yet; the nearest lines are at 100 yards below\.$/);
   // Strike and restore on the book page, surviving a reload.
@@ -480,10 +484,13 @@ test('verify 13: the phone: home with no day open shows the picks, When and both
   assert.match(await page.getAttribute('#go-book', 'href'), /rifle=iwi-tavor-sar&sight=pa-md25&load=federal-gmm-69/);
   // A day open: home shows the day, its sight pick and its doors.
   await line(page, AR); await page.selectOption('#plate', '0'); await seededShot(page, 61);
-  const r1 = await inside(['#view', '#rounds', '#setting-line', '#book-line']);
+  // range-day-nine: the setting shows in the strip's own figures (#el-text, #wd-text) beside its buttons, with the rounds, the result and the book line, all above the bar.
+  await page.evaluate(() => window.scrollTo(0, 0));
+  const r1 = await inside(['#view', '#rounds', '#el-text', '#wd-text', '#el-up', '#wd-right', '#result', '#book-line']);
   const barTop = await page.evaluate(() => document.querySelector('.firebar').getBoundingClientRect().top);
   for (const b of r1.boxes) assert.ok(b.ok && b.bottom <= barTop, `firing line: ${b.sel} at ${b.top.toFixed(0)}-${b.bottom.toFixed(0)} above the Steady/Fire bar at ${barTop.toFixed(0)}`);
-  lines.push(`firing line: view ${r1.boxes[0].top.toFixed(0)}-${r1.boxes[0].bottom.toFixed(0)}, rounds and setting bottom ${r1.boxes[2].bottom.toFixed(0)}, book line bottom ${r1.boxes[3].bottom.toFixed(0)}, the Steady/Fire bar from ${barTop.toFixed(0)}, of 915`);
+  assert.match(await page.textContent('#el-text'), /clicks/); assert.match(await page.textContent('#setting-line'), /^Elevation .* · Windage /);
+  lines.push(`firing line: view ${r1.boxes[0].top.toFixed(0)}-${r1.boxes[0].bottom.toFixed(0)}, result bottom ${r1.boxes[6].bottom.toFixed(0)}, setting and buttons bottom ${r1.boxes[5].bottom.toFixed(0)}, rounds bottom ${r1.boxes[1].bottom.toFixed(0)}, book line bottom ${r1.boxes[7].bottom.toFixed(0)}, the Steady/Fire bar from ${barTop.toFixed(0)}, of 915`);
   await page.goto(`${base}/`); await page.waitForSelector('#day-card');
   const r2 = await inside(['#day-card', '#day-sight', '#day-zero', '#day-line', '#pack-up']);
   for (const b of r2.boxes) assert.ok(b.ok, `home with a day: ${b.sel} inside 915`);
@@ -521,4 +528,96 @@ test('verify 4 (browser): with GUN_RECORDS_FILE naming a file with an eighth gun
     assert.deepEqual(errors, []);
     await context.close();
   } finally { second.kill(); rmSync(dir, { recursive: true, force: true }); }
+});
+
+// range-day-nine: the firing line arranged for shooting (brief range-day-nine, task items 2, 4 and 5).
+const { SIGHTS, measure: measureReach, meets } = require('./line-reach');
+test('the firing line within reach: for the Vepr\'s scope, the Tavor SAR\'s dot and the AK\'s irons, at 412x915 every item of the within-reach list is inside the screen above the Steady and Fire bar, and at 1280x800 inside the screen with the bar beside the view; the view keeps its size', { skip }, async () => {
+  const lines = [];
+  for (const [w, h, viewPx] of [[412, 915, 380], [1280, 800, 640]]) {
+    const { page, context, errors } = await signedIn({ width: w, height: h });
+    for (const s of SIGHTS) {
+      await noDay(page);
+      await line(page, s.q);
+      await page.evaluate(() => window.scrollTo(0, 0));
+      const m = await page.evaluate(measureReach, s.glass);
+      const bad = meets(m);
+      lines.push(`${w}x${h} ${s.name}: view ${m.view.width}x${m.view.height}; ${m.items.filter((i) => i.shown).length} items; ${bad.length ? bad.join('; ') : 'all within reach'}`);
+      assert.deepEqual(bad, [], `${w}x${h}, ${s.name}`);
+      assert.equal(m.items.find((i) => i.name === 'sight\'s glass control').shown, true, `${s.name}: its glass control is shown`);
+      assert.equal(m.view.width, viewPx); assert.equal(m.view.height, viewPx);
+      assert.equal(m.scrollY, 0);
+      if (w === 412) for (const t of m.touch) assert.ok(t.height >= 44, `${s.name}: #${t.id} is ${t.height} px tall, under 44`);
+      // The coarse buttons, where the sight has them, are in the strip, within reach too.
+      if (m.coarse.length) assert.equal(m.coarseInStrip, true, `${s.name}: the 1 MOA buttons within reach`);
+      assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), 'no sideways scroll');
+    }
+    assert.deepEqual(errors, []);
+    await context.close();
+  }
+  console.log('  ' + lines.join('\n  '));
+});
+
+test('the firing line: nothing shifts under the thumb: the view, the sight strip and the Steady and Fire bar keep their places through a seeded miss, a seeded hit that writes a book line, the cold-bore note going, the box running empty and another opened, and each folded part opened; the page never scrolls by itself', { skip }, async () => {
+  const lines = [];
+  for (const [w, h] of [[412, 915], [1280, 800]]) {
+    const { page, context, errors } = await signedIn({ width: w, height: h });
+    await noDay(page);
+    await line(page, SIGHTS[0].q);
+    await page.evaluate(() => window.scrollTo(0, 0));
+    const places = () => page.evaluate(() => { const b = (s) => { const r = document.querySelector(s).getBoundingClientRect(); return [r.left, r.top, r.width, r.height].map((v) => Math.round(v * 10) / 10); }; return { view: b('#view'), strip: b('.strip'), bar: b('.firebar'), scrollY: window.scrollY }; });
+    const start = await places();
+    lines.push(`${w}x${h} before (left, top, width, height): view [${start.view.join(', ')}], strip [${start.strip.join(', ')}], bar [${start.bar.join(', ')}]`);
+    const same = async (what) => {
+      const now = await places();
+      const d = ['view', 'strip', 'bar'].map((k) => now[k].map((v, i) => Math.abs(v - start[k][i])).reduce((a, b) => Math.max(a, b), 0));
+      const at = (k) => `${k} [${now[k].join(', ')}]`; // left, top, width, height in pixels
+      lines.push(`${w}x${h} ${what}: ${at('view')}, ${at('strip')}, ${at('bar')}; moved view ${d[0]}, strip ${d[1]}, bar ${d[2]} px; scrolled ${now.scrollY}`);
+      assert.deepEqual(d, [0, 0, 0], `${w}x${h} ${what}: ${JSON.stringify(now)} against ${JSON.stringify(start)}`);
+      assert.equal(now.scrollY, 0, `${w}x${h} ${what}: the page did not scroll`);
+    };
+    assert.ok(await page.isVisible('#cold-line'), 'the cold-bore note shows before the first shot');
+    // A seeded miss, the day's first shot: the cold-bore note goes, the result arrives.
+    await page.evaluate(() => RangeDayLine.setHold(0, 60));
+    const miss = await seededShot(page, 81);
+    assert.equal(miss.hit, false);
+    assert.ok(await page.isHidden('#cold-line'));
+    await same('after a seeded miss (the cold-bore note gone)');
+    // The result's fold opened (a longer result than two lines opens over what is below it) and closed. On the phone the first
+    // shot's result (where it landed, "Watch the dust", the cold-bore note) is longer than two lines; wider, it may fit.
+    const long = await page.evaluate(() => document.getElementById('result').classList.contains('long'));
+    if (w === 412) assert.equal(long, true, 'the first shot\'s result is longer than two lines and is marked');
+    if (long) {
+      await page.click('#result');
+      assert.equal(await page.evaluate(() => document.getElementById('result').classList.contains('open')), true);
+      await same('with the result opened');
+      await page.click('#result');
+      assert.equal(await page.evaluate(() => document.getElementById('result').classList.contains('open')), false);
+    }
+    // A seeded hit that writes a book line.
+    const before = (await book(page, 'molot-vepr-54r', 'utg-2-7x44', 'sb-174-hpbt')).length;
+    await seededHit(page, 82);
+    assert.ok((await book(page, 'molot-vepr-54r', 'utg-2-7x44', 'sb-174-hpbt')).length > before, 'a book line was written');
+    assert.match(await page.textContent('#book-line'), /^Book, 200 yards: /);
+    await same('after a seeded hit that wrote a book line');
+    // The short line opened, then closed.
+    await page.click('#line-head');
+    assert.ok(await page.isVisible('#line-full')); assert.match(await page.textContent('#line-full'), /Molot Vepr, 7.62x54R with UTG AccuShot/);
+    await same('with the full description opened');
+    await page.click('#line-head');
+    assert.ok(await page.isHidden('#line-full'));
+    // The box runs empty: "Open another box" shows beside the result; opened, it goes.
+    await page.evaluate(() => RD.takeRounds(RangeDayLine.day, RangeDayLine.day.box.left - 1));
+    await seededShot(page, 83);
+    assert.ok(await page.isVisible('#another-box'), '"Open another box" is offered');
+    const ab = await page.evaluate(() => { const r = document.getElementById('another-box').getBoundingClientRect(), f = document.querySelector('.firebar').getBoundingClientRect(); return { bottom: r.bottom, barTop: f.top, h: window.innerHeight }; });
+    assert.ok(ab.bottom <= ab.h && (w > 1000 || ab.bottom <= ab.barTop), `"Open another box" within reach: ${JSON.stringify(ab)}`);
+    await same('with the box empty and "Open another box" shown');
+    await page.click('#another-box');
+    assert.ok(await page.isHidden('#another-box'));
+    await same('after another box was opened');
+    assert.deepEqual(errors, []);
+    await context.close();
+  }
+  console.log('  ' + lines.join('\n  '));
 });

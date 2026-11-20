@@ -189,6 +189,13 @@ const SCREENS = [
   // The shot log with a miss in it: the state fires its own unzeroed shot (it used to show the miss an earlier state had left in the rifle's log, which a shard running alone has not).
   { name: 'line-shot-log', path: PIRU, expect: 'miss:', act: async (page) => { await ready(page); await fresh(page, 'molot-vepr-54r', 'utg-2-7x44'); await page.reload(); await ready(page); await seededShot(page, 31); await page.evaluate(() => document.getElementById('log').scrollIntoView()); await settle(page, 200); } },
   { name: 'line-conditions-on', path: PIRU, expect: 'Wind, near stretch', act: async (page) => { await ready(page); await page.check('#show-conditions'); await page.evaluate(() => document.getElementById('conditions').scrollIntoView()); await settle(page, 200); } },
+  // range-day-nine: the firing line arranged for shooting, with the page at its top: before the first shot, after a miss, after a
+  // hit, with the short line opened over the page, and scrolled down to the wind call.
+  { name: 'line-top-first-shot', path: AR, expect: 'Drag the view to hold off the plate', act: async (page) => { await plate(page, 0); await page.evaluate(() => window.scrollTo(0, 0)); await settle(page, 200); } },
+  { name: 'line-top-after-miss', path: AR, expect: 'Miss', act: async (page) => { await plate(page, 0); await page.evaluate(() => RangeDayLine.setHold(0, 60)); await seededShot(page, 41); await page.evaluate(() => window.scrollTo(0, 0)); await settle(page, 300); } },
+  { name: 'line-top-after-hit', path: AR, expect: 'Written in the book', act: async (page) => { await plate(page, 0); await seededHit(page, 42); await page.evaluate(() => window.scrollTo(0, 0)); await settle(page, 300); } },
+  { name: 'line-top-short-opened', path: AR, expect: 'BCM AR-15 carbine, 5.56 with', act: async (page) => { await plate(page, 0); await page.evaluate(() => window.scrollTo(0, 0)); await page.click('#line-head'); await page.waitForSelector('#line-full:not([hidden])'); await settle(page, 200); } },
+  { name: 'line-top-scrolled-wind', path: AR, expect: 'Wind as you read it', act: async (page) => { await plate(page, 0); await page.evaluate(() => document.getElementById('windcall').scrollIntoView({ block: 'center' })); await settle(page, 300); } },
 ];
 // range-day-eight: the ground, on Full and on Light, February midday and September afternoon: the floor through the
 // Vepr's irons at 1x aimed at the 200-yard plate; the 600- and 1,000-yard plates' hillsides through its scope at 7x; and

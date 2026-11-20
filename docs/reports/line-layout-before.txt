@@ -1,0 +1,177 @@
+Firing line layout, page at its top, Plain picture. Commit 4f4ebc8.
+
+== phone 412x915 — Vepr with its scope (zoom)
+view: 380 x 380 px, top at 309; page scrolled 0
+  short line: 124-256; inside the screen yes; above the bar yes
+  plate picker: 262-303; inside the screen yes; above the bar yes
+  sight's glass control: 1042-1124; inside the screen no; above the bar no
+  view: 309-689; inside the screen yes; above the bar yes
+  where the last shot went: 860.5-933.5; inside the screen no; above the bar no
+  elevation setting: 1268.5-1291; inside the screen no; above the bar no
+  elevation down: 1170.5-1216.5; inside the screen no; above the bar no
+  elevation up: 1170.5-1216.5; inside the screen no; above the bar no
+  windage setting: 1268.5-1291; inside the screen no; above the bar no
+  windage left: 1170.5-1216.5; inside the screen no; above the bar no
+  windage right: 1170.5-1216.5; inside the screen no; above the bar no
+  rounds left: 725-741; inside the screen yes; above the bar yes
+  book line: 757-791.5; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 1222.5-1262.5, el-up-moa 1222.5-1262.5, wd-left-moa 1222.5-1262.5, wd-right-moa 1222.5-1262.5; within reach no
+  Steady and Fire bar: from 838 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 41, zoom 44, el-down 46, el-up 46, wd-left 46, wd-right 46, el-down-moa 40, el-up-moa 40, wd-left-moa 40, wd-right-moa 40, steady 56, fire 56; under 44: plate, el-down-moa, el-up-moa, wd-left-moa, wd-right-moa
+  verdict: NOT within reach — sight's glass control not inside the screen (1042-1124 of 915); sight's glass control under the Steady and Fire bar (bottom 1124, bar from 838); where the last shot went not inside the screen (860.5-933.5 of 915); where the last shot went under the Steady and Fire bar (bottom 933.5, bar from 838); elevation setting not inside the screen (1268.5-1291 of 915); elevation setting under the Steady and Fire bar (bottom 1291, bar from 838); elevation down not inside the screen (1170.5-1216.5 of 915); elevation down under the Steady and Fire bar (bottom 1216.5, bar from 838); elevation up not inside the screen (1170.5-1216.5 of 915); elevation up under the Steady and Fire bar (bottom 1216.5, bar from 838); windage setting not inside the screen (1268.5-1291 of 915); windage setting under the Steady and Fire bar (bottom 1291, bar from 838); windage left not inside the screen (1170.5-1216.5 of 915); windage left under the Steady and Fire bar (bottom 1216.5, bar from 838); windage right not inside the screen (1170.5-1216.5 of 915); windage right under the Steady and Fire bar (bottom 1216.5, bar from 838)
+
+== phone 412x915 — Tavor SAR with its dot (magnifier)
+view: 380 x 380 px, top at 285; page scrolled 0
+  short line: 124-232; inside the screen yes; above the bar yes
+  plate picker: 238-279; inside the screen yes; above the bar yes
+  sight's glass control: 1045-1099; inside the screen no; above the bar no
+  view: 285-665; inside the screen yes; above the bar yes
+  where the last shot went: 857.5-930.5; inside the screen no; above the bar no
+  elevation setting: 1255.5-1278; inside the screen no; above the bar no
+  elevation down: 1157.5-1203.5; inside the screen no; above the bar no
+  elevation up: 1157.5-1203.5; inside the screen no; above the bar no
+  windage setting: 1255.5-1278; inside the screen no; above the bar no
+  windage left: 1157.5-1203.5; inside the screen no; above the bar no
+  windage right: 1157.5-1203.5; inside the screen no; above the bar no
+  rounds left: 701-738; inside the screen yes; above the bar yes
+  book line: 754-788.5; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 1209.5-1249.5, el-up-moa 1209.5-1249.5, wd-left-moa 1209.5-1249.5, wd-right-moa 1209.5-1249.5; within reach no
+  Steady and Fire bar: from 838 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 41, magnifier 54, el-down 46, el-up 46, wd-left 46, wd-right 46, el-down-moa 40, el-up-moa 40, wd-left-moa 40, wd-right-moa 40, steady 56, fire 56; under 44: plate, el-down-moa, el-up-moa, wd-left-moa, wd-right-moa
+  verdict: NOT within reach — sight's glass control not inside the screen (1045-1099 of 915); sight's glass control under the Steady and Fire bar (bottom 1099, bar from 838); where the last shot went not inside the screen (857.5-930.5 of 915); where the last shot went under the Steady and Fire bar (bottom 930.5, bar from 838); elevation setting not inside the screen (1255.5-1278 of 915); elevation setting under the Steady and Fire bar (bottom 1278, bar from 838); elevation down not inside the screen (1157.5-1203.5 of 915); elevation down under the Steady and Fire bar (bottom 1203.5, bar from 838); elevation up not inside the screen (1157.5-1203.5 of 915); elevation up under the Steady and Fire bar (bottom 1203.5, bar from 838); windage setting not inside the screen (1255.5-1278 of 915); windage setting under the Steady and Fire bar (bottom 1278, bar from 838); windage left not inside the screen (1157.5-1203.5 of 915); windage left under the Steady and Fire bar (bottom 1203.5, bar from 838); windage right not inside the screen (1157.5-1203.5 of 915); windage right under the Steady and Fire bar (bottom 1203.5, bar from 838)
+
+== phone 412x915 — AK with its irons (rear leaf)
+view: 380 x 380 px, top at 285; page scrolled 0
+  short line: 124-232; inside the screen yes; above the bar yes
+  plate picker: 238-279; inside the screen yes; above the bar yes
+  sight's glass control: 1039-1192.5; inside the screen no; above the bar no
+  view: 285-665; inside the screen yes; above the bar yes
+  where the last shot went: 857.5-930.5; inside the screen no; above the bar no
+  elevation setting: 1291-1313.5; inside the screen no; above the bar no
+  elevation down: 1239-1285; inside the screen no; above the bar no
+  elevation up: 1239-1285; inside the screen no; above the bar no
+  windage setting: 1291-1313.5; inside the screen no; above the bar no
+  windage left: 1239-1285; inside the screen no; above the bar no
+  windage right: 1239-1285; inside the screen no; above the bar no
+  rounds left: 701-738; inside the screen yes; above the bar yes
+  book line: 754-788.5; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: from 838 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 41, leaf-down 46, leaf-up 46, el-down 46, el-up 46, wd-left 46, wd-right 46, steady 56, fire 56; under 44: plate
+  verdict: NOT within reach — sight's glass control not inside the screen (1039-1192.5 of 915); sight's glass control under the Steady and Fire bar (bottom 1192.5, bar from 838); where the last shot went not inside the screen (857.5-930.5 of 915); where the last shot went under the Steady and Fire bar (bottom 930.5, bar from 838); elevation setting not inside the screen (1291-1313.5 of 915); elevation setting under the Steady and Fire bar (bottom 1313.5, bar from 838); elevation down not inside the screen (1239-1285 of 915); elevation down under the Steady and Fire bar (bottom 1285, bar from 838); elevation up not inside the screen (1239-1285 of 915); elevation up under the Steady and Fire bar (bottom 1285, bar from 838); windage setting not inside the screen (1291-1313.5 of 915); windage setting under the Steady and Fire bar (bottom 1313.5, bar from 838); windage left not inside the screen (1239-1285 of 915); windage left under the Steady and Fire bar (bottom 1285, bar from 838); windage right not inside the screen (1239-1285 of 915); windage right under the Steady and Fire bar (bottom 1285, bar from 838)
+
+== computer 1280x800 — Vepr with its scope (zoom)
+view: 640 x 640 px, top at 277; page scrolled 0
+  short line: 140-224; inside the screen yes
+  plate picker: 230-271; inside the screen yes
+  sight's glass control: 1222-1304; inside the screen no
+  view: 277-917; inside the screen no
+  where the last shot went: 1066-1113.5; inside the screen no
+  elevation setting: 1448.5-1471; inside the screen no
+  elevation down: 1350.5-1396.5; inside the screen no
+  elevation up: 1350.5-1396.5; inside the screen no
+  windage setting: 1448.5-1471; inside the screen no
+  windage left: 1350.5-1396.5; inside the screen no
+  windage right: 1350.5-1396.5; inside the screen no
+  rounds left: 932-969; inside the screen no
+  book line: 985-1019.5; inside the screen no
+  coarse buttons (1 MOA): el-down-moa 1402.5-1442.5, el-up-moa 1402.5-1442.5, wd-left-moa 1402.5-1442.5, wd-right-moa 1402.5-1442.5; within reach no
+  Steady and Fire bar: 990-1190 x 628-776; beside the view covering none of it yes; inside the screen yes
+  verdict: NOT within reach — sight's glass control not inside the screen (1222-1304 of 800); view not inside the screen (277-917 of 800); where the last shot went not inside the screen (1066-1113.5 of 800); elevation setting not inside the screen (1448.5-1471 of 800); elevation down not inside the screen (1350.5-1396.5 of 800); elevation up not inside the screen (1350.5-1396.5 of 800); windage setting not inside the screen (1448.5-1471 of 800); windage left not inside the screen (1350.5-1396.5 of 800); windage right not inside the screen (1350.5-1396.5 of 800); rounds left not inside the screen (932-969 of 800); book line not inside the screen (985-1019.5 of 800)
+
+== computer 1280x800 — Tavor SAR with its dot (magnifier)
+view: 640 x 640 px, top at 277; page scrolled 0
+  short line: 140-224; inside the screen yes
+  plate picker: 230-271; inside the screen yes
+  sight's glass control: 1228-1282; inside the screen no
+  view: 277-917; inside the screen no
+  where the last shot went: 1066-1113.5; inside the screen no
+  elevation setting: 1438.5-1461; inside the screen no
+  elevation down: 1340.5-1386.5; inside the screen no
+  elevation up: 1340.5-1386.5; inside the screen no
+  windage setting: 1438.5-1461; inside the screen no
+  windage left: 1340.5-1386.5; inside the screen no
+  windage right: 1340.5-1386.5; inside the screen no
+  rounds left: 953-969; inside the screen no
+  book line: 985-1019.5; inside the screen no
+  coarse buttons (1 MOA): el-down-moa 1392.5-1432.5, el-up-moa 1392.5-1432.5, wd-left-moa 1392.5-1432.5, wd-right-moa 1392.5-1432.5; within reach no
+  Steady and Fire bar: 990-1190 x 628-776; beside the view covering none of it yes; inside the screen yes
+  verdict: NOT within reach — sight's glass control not inside the screen (1228-1282 of 800); view not inside the screen (277-917 of 800); where the last shot went not inside the screen (1066-1113.5 of 800); elevation setting not inside the screen (1438.5-1461 of 800); elevation down not inside the screen (1340.5-1386.5 of 800); elevation up not inside the screen (1340.5-1386.5 of 800); windage setting not inside the screen (1438.5-1461 of 800); windage left not inside the screen (1340.5-1386.5 of 800); windage right not inside the screen (1340.5-1386.5 of 800); rounds left not inside the screen (953-969 of 800); book line not inside the screen (985-1019.5 of 800)
+
+== computer 1280x800 — AK with its irons (rear leaf)
+view: 640 x 640 px, top at 253; page scrolled 0
+  short line: 140-200; inside the screen yes
+  plate picker: 206-247; inside the screen yes
+  sight's glass control: 1198-1326; inside the screen no
+  view: 253-893; inside the screen no
+  where the last shot went: 1042-1089.5; inside the screen no
+  elevation setting: 1424.5-1447; inside the screen no
+  elevation down: 1372.5-1418.5; inside the screen no
+  elevation up: 1372.5-1418.5; inside the screen no
+  windage setting: 1424.5-1447; inside the screen no
+  windage left: 1372.5-1418.5; inside the screen no
+  windage right: 1372.5-1418.5; inside the screen no
+  rounds left: 929-945; inside the screen no
+  book line: 961-995.5; inside the screen no
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: 990-1190 x 628-776; beside the view covering none of it yes; inside the screen yes
+  verdict: NOT within reach — sight's glass control not inside the screen (1198-1326 of 800); view not inside the screen (253-893 of 800); where the last shot went not inside the screen (1042-1089.5 of 800); elevation setting not inside the screen (1424.5-1447 of 800); elevation down not inside the screen (1372.5-1418.5 of 800); elevation up not inside the screen (1372.5-1418.5 of 800); windage setting not inside the screen (1424.5-1447 of 800); windage left not inside the screen (1372.5-1418.5 of 800); windage right not inside the screen (1372.5-1418.5 of 800); rounds left not inside the screen (929-945 of 800); book line not inside the screen (961-995.5 of 800)
+
+== short phone (figure only) 412x800 — Vepr with its scope (zoom)
+view: 380 x 380 px, top at 309; page scrolled 0
+  short line: 124-256; inside the screen yes; above the bar yes
+  plate picker: 262-303; inside the screen yes; above the bar yes
+  sight's glass control: 1042-1124; inside the screen no; above the bar no
+  view: 309-689; inside the screen yes; above the bar yes
+  where the last shot went: 860.5-933.5; inside the screen no; above the bar no
+  elevation setting: 1268.5-1291; inside the screen no; above the bar no
+  elevation down: 1170.5-1216.5; inside the screen no; above the bar no
+  elevation up: 1170.5-1216.5; inside the screen no; above the bar no
+  windage setting: 1268.5-1291; inside the screen no; above the bar no
+  windage left: 1170.5-1216.5; inside the screen no; above the bar no
+  windage right: 1170.5-1216.5; inside the screen no; above the bar no
+  rounds left: 725-741; inside the screen yes; above the bar no
+  book line: 757-791.5; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 1222.5-1262.5, el-up-moa 1222.5-1262.5, wd-left-moa 1222.5-1262.5, wd-right-moa 1222.5-1262.5; within reach no
+  Steady and Fire bar: from 723 to 800; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — sight's glass control not inside the screen (1042-1124 of 800); sight's glass control under the Steady and Fire bar (bottom 1124, bar from 723); where the last shot went not inside the screen (860.5-933.5 of 800); where the last shot went under the Steady and Fire bar (bottom 933.5, bar from 723); elevation setting not inside the screen (1268.5-1291 of 800); elevation setting under the Steady and Fire bar (bottom 1291, bar from 723); elevation down not inside the screen (1170.5-1216.5 of 800); elevation down under the Steady and Fire bar (bottom 1216.5, bar from 723); elevation up not inside the screen (1170.5-1216.5 of 800); elevation up under the Steady and Fire bar (bottom 1216.5, bar from 723); windage setting not inside the screen (1268.5-1291 of 800); windage setting under the Steady and Fire bar (bottom 1291, bar from 723); windage left not inside the screen (1170.5-1216.5 of 800); windage left under the Steady and Fire bar (bottom 1216.5, bar from 723); windage right not inside the screen (1170.5-1216.5 of 800); windage right under the Steady and Fire bar (bottom 1216.5, bar from 723); rounds left under the Steady and Fire bar (bottom 741, bar from 723); book line under the Steady and Fire bar (bottom 791.5, bar from 723) (figure only)
+
+== short phone (figure only) 412x800 — Tavor SAR with its dot (magnifier)
+view: 380 x 380 px, top at 285; page scrolled 0
+  short line: 124-232; inside the screen yes; above the bar yes
+  plate picker: 238-279; inside the screen yes; above the bar yes
+  sight's glass control: 1045-1099; inside the screen no; above the bar no
+  view: 285-665; inside the screen yes; above the bar yes
+  where the last shot went: 857.5-930.5; inside the screen no; above the bar no
+  elevation setting: 1255.5-1278; inside the screen no; above the bar no
+  elevation down: 1157.5-1203.5; inside the screen no; above the bar no
+  elevation up: 1157.5-1203.5; inside the screen no; above the bar no
+  windage setting: 1255.5-1278; inside the screen no; above the bar no
+  windage left: 1157.5-1203.5; inside the screen no; above the bar no
+  windage right: 1157.5-1203.5; inside the screen no; above the bar no
+  rounds left: 701-738; inside the screen yes; above the bar no
+  book line: 754-788.5; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 1209.5-1249.5, el-up-moa 1209.5-1249.5, wd-left-moa 1209.5-1249.5, wd-right-moa 1209.5-1249.5; within reach no
+  Steady and Fire bar: from 723 to 800; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — sight's glass control not inside the screen (1045-1099 of 800); sight's glass control under the Steady and Fire bar (bottom 1099, bar from 723); where the last shot went not inside the screen (857.5-930.5 of 800); where the last shot went under the Steady and Fire bar (bottom 930.5, bar from 723); elevation setting not inside the screen (1255.5-1278 of 800); elevation setting under the Steady and Fire bar (bottom 1278, bar from 723); elevation down not inside the screen (1157.5-1203.5 of 800); elevation down under the Steady and Fire bar (bottom 1203.5, bar from 723); elevation up not inside the screen (1157.5-1203.5 of 800); elevation up under the Steady and Fire bar (bottom 1203.5, bar from 723); windage setting not inside the screen (1255.5-1278 of 800); windage setting under the Steady and Fire bar (bottom 1278, bar from 723); windage left not inside the screen (1157.5-1203.5 of 800); windage left under the Steady and Fire bar (bottom 1203.5, bar from 723); windage right not inside the screen (1157.5-1203.5 of 800); windage right under the Steady and Fire bar (bottom 1203.5, bar from 723); rounds left under the Steady and Fire bar (bottom 738, bar from 723); book line under the Steady and Fire bar (bottom 788.5, bar from 723) (figure only)
+
+== short phone (figure only) 412x800 — AK with its irons (rear leaf)
+view: 380 x 380 px, top at 285; page scrolled 0
+  short line: 124-232; inside the screen yes; above the bar yes
+  plate picker: 238-279; inside the screen yes; above the bar yes
+  sight's glass control: 1039-1192.5; inside the screen no; above the bar no
+  view: 285-665; inside the screen yes; above the bar yes
+  where the last shot went: 857.5-930.5; inside the screen no; above the bar no
+  elevation setting: 1291-1313.5; inside the screen no; above the bar no
+  elevation down: 1239-1285; inside the screen no; above the bar no
+  elevation up: 1239-1285; inside the screen no; above the bar no
+  windage setting: 1291-1313.5; inside the screen no; above the bar no
+  windage left: 1239-1285; inside the screen no; above the bar no
+  windage right: 1239-1285; inside the screen no; above the bar no
+  rounds left: 701-738; inside the screen yes; above the bar no
+  book line: 754-788.5; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: from 723 to 800; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — sight's glass control not inside the screen (1039-1192.5 of 800); sight's glass control under the Steady and Fire bar (bottom 1192.5, bar from 723); where the last shot went not inside the screen (857.5-930.5 of 800); where the last shot went under the Steady and Fire bar (bottom 930.5, bar from 723); elevation setting not inside the screen (1291-1313.5 of 800); elevation setting under the Steady and Fire bar (bottom 1313.5, bar from 723); elevation down not inside the screen (1239-1285 of 800); elevation down under the Steady and Fire bar (bottom 1285, bar from 723); elevation up not inside the screen (1239-1285 of 800); elevation up under the Steady and Fire bar (bottom 1285, bar from 723); windage setting not inside the screen (1291-1313.5 of 800); windage setting under the Steady and Fire bar (bottom 1313.5, bar from 723); windage left not inside the screen (1239-1285 of 800); windage left under the Steady and Fire bar (bottom 1285, bar from 723); windage right not inside the screen (1239-1285 of 800); windage right under the Steady and Fire bar (bottom 1285, bar from 723); rounds left under the Steady and Fire bar (bottom 738, bar from 723); book line under the Steady and Fire bar (bottom 788.5, bar from 723) (figure only)
+
+6 sight-and-size pair(s) not within reach

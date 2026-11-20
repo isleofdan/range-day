@@ -83,6 +83,44 @@ GitHub's runner the one job took 31 to 60 minutes across the six runs of
 varies run to run on the runner (the tests scene-shots job took 6 min 47 s,
 8 min 11 s and 10 min 47 s on three runs of the same code, 19 Nov 2026).
 
+## The firing line's arrangement (range-day-nine, 20 Nov 2026)
+
+What a shooter needs between shots is held within reach by measure, not by
+eye. `test/line-reach.js` (not a test file itself) holds the within-reach
+list and the one function that measures it in the page: the short line,
+the plate picker, the sight's glass control (zoom, magnifier or rear
+leaf), the view, where the last shot went, elevation and windage with
+their settings and one-click buttons, the rounds left and the book's line;
+for each, whether its whole box is inside the screen and, on a phone,
+above the Steady and Fire bar; for the bar, on a phone whether it is fixed
+at the bottom inside the screen and on a computer whether it stands
+beside the view covering none of it; the view's size; and every button's
+touch height. Two tests in `test/day.test.js` hold it:
+
+- **"the firing line within reach"**: for the Vepr with its scope, the
+  Tavor SAR with its dot and the AK with its irons, at 412×915 and
+  1280×800, page at its top: every item within reach, the 1 MOA buttons
+  too where the sight has them, every button at least 44 pixels tall on
+  the phone, the view 380 and 640 pixels square as before, no sideways
+  scroll.
+- **"nothing shifts under the thumb"**: the places of the view, the sight
+  strip and the bar, read before and after a seeded miss (the cold-bore
+  note going), the result's fold opened, a seeded hit that writes a book
+  line, the full description opened, the box running empty ("Open another
+  box" shown, within reach) and another box opened, at both sizes: every
+  difference 0 pixels, and the page never scrolled by itself.
+
+`node scripts/line-layout.mjs` prints the same measure, signing in through
+the form, at 412×915, 1280×800 and 412×800 (a figure only: a phone whose
+browser bars take room); `docs/reports/line-layout-before.txt` is the page
+on `main` before the change, `line-layout-after.txt` after. The screenshot
+states `line-top-first-shot`, `line-top-after-miss`, `line-top-after-hit`,
+`line-top-short-opened` and `line-top-scrolled-wind` show the page at both
+sizes. Verify 7 now holds that the book's line under the view is the
+newest line only, and verify 13 that the result, the strip's figures and
+buttons, the rounds and the book line are above the bar. 111 tests and 73
+screenshot states after this build (109 and 68 before).
+
 ## The ground's surfaces (range-day-eight, 20 Nov 2026)
 
 What the checks hold the photographed ground to, and where its files come
