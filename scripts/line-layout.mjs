@@ -1,7 +1,7 @@
 // The firing line's layout, measured (brief range-day-nine, task item 1).
 // Signs in through the form, opens the firing line with the page at its top
-// at 412×915 and 1280×800 (and 412×800 as a figure only: a phone whose
-// browser bars take room) for three sights (the Vepr's scope, the Tavor SAR's
+// at 412×915, at 412×830 (Dan's own phone, measured from his screenshots),
+// and at 1280×800 (and 412×760 as a figure only: a phone whose browser bars take more room) for three sights (the Vepr's scope, the Tavor SAR's
 // dot, the AK's irons), and prints for each element of the within-reach list
 // whether its whole box is inside the screen and, on the phone, above the
 // Steady and Fire bar; the bar's own checks; the view's size in pixels; and
@@ -21,7 +21,7 @@ const arg = (name, fallback) => { const i = process.argv.indexOf(name); return i
 const PORT = Number(arg('--port', 8925));
 const PASS = 'open sesame';
 const base = `http://127.0.0.1:${PORT}`;
-const SIZES = [['phone', 412, 915, true], ['computer', 1280, 800, true], ['short phone (figure only)', 412, 800, false]];
+const SIZES = [['phone', 412, 915, true], ["Dan's phone", 412, 830, true], ['computer', 1280, 800, true], ['short phone (figure only)', 412, 760, false]];
 
 const server = spawn('node', ['server.js'], { cwd: root, env: { ...process.env, PORT: String(PORT), APP_PASSWORD: PASS, COOKIE_SECRET: 'x'.repeat(64), COOKIE_INSECURE: '1', SENTRY_DSN: '' }, stdio: ['ignore', 'ignore', 'inherit'] });
 process.on('exit', () => server.kill());
@@ -58,7 +58,7 @@ for (const [size, width, height, held] of SIZES) {
     say(`  coarse buttons (1 MOA): ${m.coarse.length ? m.coarse.map((c) => `${c.id} ${c.box.top}-${c.box.bottom}`).join(', ') : 'not shown for this sight'}; within reach ${yn(m.coarseInStrip)}`);
     if (m.wide) say(`  Steady and Fire bar: ${m.bar.left}-${m.bar.right} x ${m.bar.top}-${m.bar.bottom}; beside the view covering none of it ${yn(m.barChecks.besideView)}; inside the screen ${yn(m.barChecks.inside)}`);
     else say(`  Steady and Fire bar: from ${m.bar.top} to ${m.bar.bottom}; fixed at the bottom inside the screen ${yn(m.barChecks.fixedAtBottom)}`);
-    if (width === 412 && height === 915) say(`  touch heights: ${m.touch.map((t) => `${t.id} ${t.height}`).join(', ')}; under 44: ${m.touch.filter((t) => t.height < 44).map((t) => t.id).join(', ') || 'none'}`);
+    if (width === 412 && height <= 915 && held) say(`  touch heights: ${m.touch.map((t) => `${t.id} ${t.height}`).join(', ')}; under 44: ${m.touch.filter((t) => t.height < 44).map((t) => t.id).join(', ') || 'none'}`);
     const bad = meets(m);
     say(`  verdict: ${bad.length ? `NOT within reach — ${bad.join('; ')}` : 'everything within reach'}${held ? '' : ' (figure only)'}`);
     if (held && bad.length) failures++;

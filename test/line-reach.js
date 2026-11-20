@@ -3,6 +3,11 @@
 // the one function that measures it in the page. scripts/line-layout.mjs prints
 // it; test/day.test.js holds it. Not a test file itself (no ".test.js").
 
+// The phone sizes the list is held at: 412×915 (the kit's phone), and 412×830, the height of Dan's own phone measured from
+// his screenshots of the firing line on 21 Nov 2026 (992×2000 pixels at 2.41 device pixels per CSS pixel), where the
+// book line fell under Steady and Fire.
+const PHONES = [[412, 915], [412, 830]];
+
 // The three sights the measure runs for: a scope with its zoom, a dot with its
 // magnifier, irons with a rear leaf (the screenshot states line-scope-7x,
 // line-magnifier-300 and line-ak-leaf).
@@ -45,7 +50,9 @@ function measure(glass) {
     if (!shown(el)) return { name, shown: false };
     const b = box(el);
     const inside = b.top >= 0 && b.bottom <= h && b.left >= 0 && b.right <= w;
-    const aboveBar = wide ? null : b.bottom <= bar.top + 0.5;
+    // The rounds left stand inside the Fire button since range-day-nine-b: within reach inside the bar.
+    const inBar = barEl.contains(el);
+    const aboveBar = wide || inBar ? null : b.bottom <= bar.top + 0.5;
     return { name, shown: true, box: b, inside, aboveBar };
   });
   const coarseBoxes = coarse.map((el) => ({ id: el.id, box: box(el) }));
@@ -72,4 +79,4 @@ function meets(m) {
   return bad;
 }
 
-module.exports = { SIGHTS, measure, meets };
+module.exports = { PHONES, SIGHTS, measure, meets };

@@ -98,11 +98,15 @@ beside the view covering none of it; the view's size; and every button's
 touch height. Two tests in `test/day.test.js` hold it:
 
 - **"the firing line within reach"**: for the Vepr with its scope, the
-  Tavor SAR with its dot and the AK with its irons, at 412×915 and
-  1280×800, page at its top: every item within reach, the 1 MOA buttons
+  Tavor SAR with its dot and the AK with its irons, at 412×915, at
+  412×830 (Dan's own phone, measured from his screenshots of 21 Nov 2026,
+  where the book line had fallen under Steady and Fire) and at 1280×800,
+  page at its top: every item within reach, the 1 MOA buttons
   too where the sight has them, every button at least 44 pixels tall on
   the phone, the view 380 and 640 pixels square as before, no sideways
-  scroll.
+  scroll; and neither text slot has vertical padding (a clamped text
+  overflows into padding, which showed the top of a third line under the
+  book line on Dan's phone).
 - **"nothing shifts under the thumb"**: the places of the view, the sight
   strip and the bar, read before and after a seeded miss (the cold-bore
   note going), the result's fold opened, a seeded hit that writes a book

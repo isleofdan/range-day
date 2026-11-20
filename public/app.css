@@ -167,6 +167,11 @@ body.line main { padding-bottom: 110px; }
 .firebar { position: fixed; left: 0; right: 0; bottom: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: var(--bg); border-top: 1px solid var(--line); max-width: 680px; margin: 0 auto; }
 .firebar .btn { margin: 0; min-height: 56px; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
 .firebar .btn.fire { background: #b3261e; color: #fff; }
+/* The rounds left, under "Fire" where the thumb is (range-day-nine-b). */
+body.line .firebar { padding-top: 8px; padding-bottom: calc(8px + env(safe-area-inset-bottom)); }
+body.line .firebar .btn { min-height: 52px; }
+.firebar .btn.fire { display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.15; }
+.firebar .btn.fire .rounds { display: block; font-size: 13px; font-weight: 400; }
 .firebar .btn.on { outline: 3px solid var(--fg); }
 @media (prefers-color-scheme: dark) { .viewwrap canvas { background: #111; } }
 @media (min-width: 900px) { .choices { grid-template-columns: 1fr 1fr; } }
@@ -207,9 +212,9 @@ table.shots td.hit { color: var(--accent); font-weight: 600; }
    list stands in a column beside the view, with Steady and Fire at its foot. */
 .vh { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 body.line header.bar { padding: 0 16px; }
-body.line header.bar nav a { display: inline-block; padding: 10px 0; }
-body.line main.game { padding-top: 6px; }
-.reach > * { margin: 0 0 6px; }
+body.line header.bar nav a { display: inline-block; padding: 8px 0; }
+body.line main.game { padding-top: 4px; }
+.reach > * { margin: 0 0 4px; }
 .reach .head { position: relative; z-index: 7; }
 .linehead { display: flex; align-items: center; gap: 6px; width: 100%; min-height: 44px; margin: 0; padding: 6px 10px; font: inherit; font-size: 15px; line-height: 1.3; text-align: left; color: var(--fg); background: var(--card); border: 0; border-left: 4px solid var(--accent); border-radius: 0 10px 10px 0; cursor: pointer; }
 .linehead #line-short { flex: 1 1 auto; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
@@ -230,27 +235,30 @@ body.line main.game { padding-top: 6px; }
 .reach .pick .glass.leaf .mono { font-size: 13px; }
 .reach .pick .glass.leaf .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
 .reach .pick .glass.leaf .btn.inline { font-size: 15px; touch-action: none; user-select: none; -webkit-user-select: none; }
-body.line .reach .viewwrap { margin: 0 0 6px; }
+body.line .reach .viewwrap { margin: 0 0 4px; }
 .reach .slot { position: relative; }
-.reach .slot.result { height: 56px; }
-.reach .slot.book { height: 53px; }
-.reach .fold { position: absolute; top: 0; left: 0; right: 0; margin: 0; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; }
+.reach .slot.result { height: 53px; }
+.reach .slot.book { height: 33px; }
+.reach .fold { position: absolute; top: 0; left: 0; right: 0; margin: 0; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; padding-top: 0 !important; padding-bottom: 0 !important; border-style: solid !important; border-color: transparent !important; border-left-width: 0 !important; border-right-width: 0 !important; outline: 1px solid var(--line); outline-offset: -1px; }
+/* The space above and below the text inside a fold is its transparent border, not padding: a clamped text overflows into padding, and on a phone the top of a third line showed under the book line (Dan, 21 Nov 2026). */
 .reach .fold.long { cursor: pointer; padding-right: 26px; }
-.reach .fold.long::after { content: "▾"; position: absolute; right: 8px; bottom: 4px; color: var(--accent); }
+.reach .fold.long::after { content: "▾"; position: absolute; right: 8px; bottom: 0; color: var(--accent); }
 .reach .fold.open { display: block; -webkit-line-clamp: unset; line-clamp: unset; overflow: visible; z-index: 6; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25); }
+.reach #book-line.open { -webkit-line-clamp: unset; line-clamp: unset; }
 .reach .fold.open::after { content: "▴"; }
-.reach #result { padding: 6px 10px; font-size: 15px; line-height: 1.35; min-height: 0; }
-.reach #book-line { padding: 5px 10px; line-height: 1.35; }
+.reach #result { border-top-width: 6px; border-bottom-width: 6px; padding-left: 10px; padding-right: 10px; font-size: 15px; line-height: 1.35; min-height: 0; }
+.reach #book-line { border-top-width: 6px; border-bottom-width: 6px; padding-left: 10px; padding-right: 10px; line-height: 1.35; -webkit-line-clamp: 1; line-clamp: 1; }
 .reach .slot.result:has(> .another:not([hidden])) #result { right: 152px; }
 .reach .another { position: absolute; top: 0; right: 0; bottom: 0; width: 144px; display: flex; }
 .reach .another .btn.inline { display: block; width: 100%; margin: 0; padding: 0 8px; min-height: 44px; font-size: 15px; line-height: 1.25; white-space: normal; }
 .reach .strip .knobs { gap: 8px; }
-.reach .strip .knob { gap: 4px; padding: 6px 8px; }
-.reach .strip .kh { display: block; min-height: 34px; font-size: 13px; line-height: 1.3; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
-.reach .strip .kh .mono { font-size: 13px; }
+.reach .strip { margin-top: 6px; }
+.reach .strip .knob { position: relative; gap: 4px; padding: 8px 8px 6px; }
+/* Each knob's name sits on its top edge, as a fieldset's legend does, so the setting takes one line under it. */
+.reach .strip .legend { position: absolute; top: -8px; left: 8px; padding: 0 4px; font-size: 13px; line-height: 16px; background: linear-gradient(var(--bg) 50%, var(--card) 50%); }
+.reach .strip .kh { display: block; font-size: 14px; line-height: 18px; height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-variant-numeric: tabular-nums; }
 .reach .strip .knob .btn.inline { min-height: 44px; }
 .reach .strip .knob .pair.coarse .btn.inline { min-height: 44px; line-height: 40px; }
-.reach .strip .setting { margin: 4px 0 0; padding: 0; font-size: 14px; line-height: 1.3; text-align: center; background: none; border: 0; }
 body.line .more { margin-top: 18px; }
 body.line .more .windcall { margin-top: 0; }
 @media (min-width: 1100px) {

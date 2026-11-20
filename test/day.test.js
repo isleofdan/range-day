@@ -488,7 +488,8 @@ test('verify 13: the phone: home with no day open shows the picks, When and both
   await page.evaluate(() => window.scrollTo(0, 0));
   const r1 = await inside(['#view', '#rounds', '#el-text', '#wd-text', '#el-up', '#wd-right', '#result', '#book-line']);
   const barTop = await page.evaluate(() => document.querySelector('.firebar').getBoundingClientRect().top);
-  for (const b of r1.boxes) assert.ok(b.ok && b.bottom <= barTop, `firing line: ${b.sel} at ${b.top.toFixed(0)}-${b.bottom.toFixed(0)} above the Steady/Fire bar at ${barTop.toFixed(0)}`);
+  for (const b of r1.boxes) assert.ok(b.ok && (b.sel === '#rounds' ? b.top >= barTop : b.bottom <= barTop), `firing line: ${b.sel} at ${b.top.toFixed(0)}-${b.bottom.toFixed(0)} ${b.sel === '#rounds' ? 'inside' : 'above'} the Steady/Fire bar at ${barTop.toFixed(0)}`);
+  assert.ok(await page.evaluate(() => document.getElementById('fire').contains(document.getElementById('rounds'))), 'the rounds left stand in the Fire button');
   assert.match(await page.textContent('#el-text'), /clicks/); assert.match(await page.textContent('#setting-line'), /^Elevation .* · Windage /);
   lines.push(`firing line: view ${r1.boxes[0].top.toFixed(0)}-${r1.boxes[0].bottom.toFixed(0)}, result bottom ${r1.boxes[6].bottom.toFixed(0)}, setting and buttons bottom ${r1.boxes[5].bottom.toFixed(0)}, rounds bottom ${r1.boxes[1].bottom.toFixed(0)}, book line bottom ${r1.boxes[7].bottom.toFixed(0)}, the Steady/Fire bar from ${barTop.toFixed(0)}, of 915`);
   await page.goto(`${base}/`); await page.waitForSelector('#day-card');
@@ -531,10 +532,10 @@ test('verify 4 (browser): with GUN_RECORDS_FILE naming a file with an eighth gun
 });
 
 // range-day-nine: the firing line arranged for shooting (brief range-day-nine, task items 2, 4 and 5).
-const { SIGHTS, measure: measureReach, meets } = require('./line-reach');
+const { PHONES, SIGHTS, measure: measureReach, meets } = require('./line-reach');
 test('the firing line within reach: for the Vepr\'s scope, the Tavor SAR\'s dot and the AK\'s irons, at 412x915 every item of the within-reach list is inside the screen above the Steady and Fire bar, and at 1280x800 inside the screen with the bar beside the view; the view keeps its size', { skip }, async () => {
   const lines = [];
-  for (const [w, h, viewPx] of [[412, 915, 380], [1280, 800, 640]]) {
+  for (const [w, h, viewPx] of [...PHONES.map(([pw, ph]) => [pw, ph, 380]), [1280, 800, 640]]) {
     const { page, context, errors } = await signedIn({ width: w, height: h });
     for (const s of SIGHTS) {
       await noDay(page);
@@ -551,6 +552,9 @@ test('the firing line within reach: for the Vepr\'s scope, the Tavor SAR\'s dot 
       // The coarse buttons, where the sight has them, are in the strip, within reach too.
       if (m.coarse.length) assert.equal(m.coarseInStrip, true, `${s.name}: the 1 MOA buttons within reach`);
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), 'no sideways scroll');
+      // A clamped fold has no vertical padding: a clamped text overflows into padding, which showed the top of a third line under the book line on Dan's phone.
+      const pads = await page.evaluate(() => ['result', 'book-line'].map((id) => { const c = getComputedStyle(document.getElementById(id)); return `${id} ${c.paddingTop} ${c.paddingBottom}`; }));
+      assert.deepEqual(pads, ['result 0px 0px', 'book-line 0px 0px']);
     }
     assert.deepEqual(errors, []);
     await context.close();
