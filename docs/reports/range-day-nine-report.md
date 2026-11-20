@@ -138,3 +138,36 @@ All the automatic checks pass.
 
 Needed from you
 1. Type: `yes, merge and deploy range-day-nine, then merge its notes`.
+
+## Addendum: range-day-nine-b, from Dan's look on his phone (21 Nov 2026)
+
+After the deploy, Dan opened the firing line on his phone and sent two screenshots. His words: "The book line isn't visible at first when I open the firing line … a little bit cut off, but with a button that allows me to expand it."
+
+What the screenshots showed:
+- His screen is about 830 CSS pixels tall (992×2000 pixels at 2.41 device pixels per CSS pixel), not the 915 this build was held at. So the book line sat under Steady and Fire.
+- The top of a third line ("2026") showed under the clipped book line. A clamped text overflows into its box's padding, and the slots had padding.
+
+What the report above got wrong: it held the layout at 412×915 only and gave 412×800 "as a figure only". The real phone was between the two, and the figure was not held by any test.
+
+What changed, in pull request [#24](https://github.com/isleofdan/range-day/pull/24), commit c9cabbf:
+- The rounds left (same text) stand under the word **Fire**.
+- Elevation and Windage are named on their box's top edge, so each setting takes one line.
+- The book line holds one line, and ▾ opens the rest.
+- The gaps, the top bar's link padding and the bar's padding are trimmed. Steady and Fire are 52 px tall.
+- The text slots' space above and below the text is transparent border, not padding.
+
+The view is unchanged (380 and 640 px square).
+
+The lasting fix, so a short phone cannot slip through again:
+- `test/line-reach.js` now holds the within-reach list at **412×830, Dan's phone**, as well as 412×915.
+- The "within reach" test asserts that neither text slot has vertical padding.
+- `scripts/line-layout.mjs` measures 412×830 too.
+
+Verify:
+- `docs/reports/line-layout-after.txt` (range-day-nine-b): "every held sight-and-size pair within reach". At 412×830 the bar's top is at 761 and the book line's bottom at 755.8 (Vepr), 751.8 (Tavor SAR) and 723.6 (AK).
+- At 412×760 (figure only), the book line falls under the bar.
+- Touch heights at both phone sizes are all 44 px or more, and Steady and Fire are 52.
+- Tests in the session: `--group day` passed (12 tests), `--group browser` passed, the five `line-top-*` screenshot states passed.
+- The pull request's Checks run: CHECKSB_PLACEHOLDER
+
+Ask: merge and deploy range-day-nine-b? Recommended: yes. Type `yes, merge and deploy range-day-nine-b, then merge its notes`.
