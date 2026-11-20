@@ -99,7 +99,7 @@ Screenshots (`docs/reports/screenshots/`, both sizes): `line-top-first-shot` (be
    - verify 13 in `test/day.test.js`: it checks the strip's figures and buttons, the result and the book line above the bar, in place of the hidden setting line (task item 6: "brought up to the new arrangement, not weakened").
 
    Run in the session, one piece at a time: `--group browser` passed, `--group day` passed (12 tests), `--group rest` passed, `--group scene-rest` passed (519.2 s), and `npm run screenshots -- --grep '^line-top-'` passed ("all checks passed (5 of 73 states)").
-7. **Size for the result checker:** `git diff origin/main...range-day-nine | wc -c` gives 90,225 bytes, under 400,000.
+7. **Size for the result checker:** `git diff origin/main...range-day-nine | wc -c` gives 90527 bytes on commit 875a99d, under 400,000.
 8. **The deploy result:** filed on the card after the deploy, in the note of close-out item 5.
 
 What this cannot prove: the session cannot open the live app or hold a phone. Dan's phone may show a shorter screen than 412×915, because a browser's own bars take room. So this session has not verified that everything is within reach on his phone. At 412×800 the result, the settings, the one-click buttons, the glass control and the view are within reach; the 1 MOA buttons (scope and dot), the rounds left and the book's line fall under the Steady and Fire bar (figures in verify 1).
