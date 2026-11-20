@@ -81,7 +81,7 @@ Screenshots (`docs/reports/screenshots/`, both sizes): `line-top-first-shot` (be
    - verify 4 (range-day-six) read the scope's reticle and found no dots at all ("mil-dot spacing NaN/NaN vs 48.0").
 
    Why this points to a slow machine, not the change:
-   - The job ran on a slower runner (Azure eastus) than `main`'s last run of the same job (run 44762215589, AWS us-west-2), and took 1,352 s against `main`'s 502 s, with every test slower.
+   - The job ran on a slower runner (Azure eastus) than `main`'s last run of the same job (run 44762215589, AWS us-west-2), and the whole group took 1,352 s against `main`'s 502 s (`main`'s log gives only the group's total, so test-by-test times cannot be compared).
    - Both failures are timing failures. One is the 30-second wait. The other reads the canvas 300 ms after the page loads and finds nothing drawn, which happens when the first frame has not come yet.
    - The same group on this same code passed in this session's container: `node scripts/check.mjs --only tests --group scene-rest`, "ok tests: scene-rest … 519.2 s", all 12.
    - Neither test touches the arranged parts: the view's size, the picture and its drawing code are unchanged (verify 2).
