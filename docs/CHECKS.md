@@ -122,6 +122,12 @@ The download ran once, on GitHub's runner, by the Ground workflow
 `main` ever starts it, and it commits only to that scratch branch. A new
 download needs Dan's yes first.
 
+The jobs' limit is 28 minutes since range-day-eight: on its pull request's
+run of 20 Nov 2026 (44739943613) the slowest job, tests scene-shots, took
+13 min 52 s (the same piece took 8 min 21 s on the run before, 44737304008:
+the runner varies), over the 11 minutes at which the limit is set to twice
+the slowest job seen.
+
 ## What runs when
 
 | When | What runs | Where it is set |
