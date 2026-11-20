@@ -71,9 +71,17 @@ Screenshots (`docs/reports/screenshots/`, both sizes): `line-top-first-shot` (be
    | 1280×800 | Tavor SAR dot | no | yes | yes / yes | 640×640 → 640×640 |
    | 1280×800 | AK irons | no | yes | yes / yes | 640×640 → 640×640 |
 
-   At 412×800 (figure only): everything is within reach except the rounds left and the book line, which fall under the bar. The book line's bottom is at 810.7 (Vepr), 806.7 (Tavor SAR) and 778.6 (AK) against the bar's top at 723. The result, the strip's buttons and figures, the glass control and the view are all within reach at 412×800.
+   At 412×800 (figure only), the bar's top is at 723:
+   - For the scope and the dot, the 1 MOA buttons end under the bar (699.3–743.3 and 695.3–739.3).
+   - The rounds left end under it too (771.3, 767.3 and 739.2 for the three sights).
+   - The book line ends at 810.7 (Vepr), 806.7 (Tavor SAR) and 778.6 (AK).
+   - Within reach at 412×800: the summary line, the plate, the glass control, the view, the result, the settings, and the one-click elevation and windage buttons.
 2. **Same shots and same picture:** `git diff origin/main -- public/engine.js data src/scene` is empty (0 bytes).
-3. **Nothing shifts** (`test/day.test.js`, printed): at 412×915 and 1280×800, after a seeded miss, with the result opened (phone; on the computer the result fit in two lines and was not long), after a seeded hit that wrote a book line, with the description opened, with the box empty, and after another box was opened: "view 0, strip 0, bar 0 px moved; scrolled 0" every time.
+3. **Nothing shifts** (`test/day.test.js`, "nothing shifts under the thumb", printed; each place is left, top, width, height in pixels):
+   - **412×915, before:** view [16, 156.5, 380, 380], strip [16, 604.5, 380, 168], bar [0, 838, 412, 77].
+   - **The same places at 412×915** after a seeded miss (the cold-bore note gone), with the result opened, after a seeded hit that wrote a book line, with the full description opened, with the box empty and "Open another box" shown, and after another box was opened. Each time: "moved view 0, strip 0, bar 0 px; scrolled 0".
+   - **1280×800, before:** view [106, 62.5, 640, 640], strip [766, 280.5, 408, 168], bar [766, 694, 408, 82].
+   - **The same places at 1280×800** after the same steps (the result fit in two lines there, so it had no fold to open). Each time: moved 0, 0, 0; scrolled 0.
 4. **Touch size at 412×915** (after-measure): plate 44, zoom 44, magnifier 44, leaf-down 44, leaf-up 44, el-down 44, el-up 44, wd-left 44, wd-right 44, the four 1 MOA buttons 44, the summary line 44, steady 56, fire 56. None is under 44. Before: plate 41 and the four 1 MOA buttons 40.
 5. **Screenshots:** the five new states at both sizes (`docs/reports/screenshots/line-top-*.png`), "all checks passed (5 of 73 states)": each fits the width (no sideways scroll), and the tests found no console error (`assert.deepEqual(errors, [])` in both new tests).
 6. **The check:** the pull request's Checks run is [44776316081](https://github.com/isleofdan/range-day/actions/runs/44776316081) on commit 752c7d4. Nine of its ten jobs passed: tests rest 23 s, tests browser 1 min 10 s, tests day 2 min 14 s, tests scene-scale 4 min 3 s, tests scene-shots 10 min 54 s, screenshots shard 1 5 min 58 s, shard 2 6 min 59 s, shard 3 6 min 48 s, shard 4 9 min 4 s. **Tests scene-rest failed** after 22 min 49 s, with 2 of its 12 tests failing:
@@ -86,7 +94,7 @@ Screenshots (`docs/reports/screenshots/`, both sizes): `line-top-first-shot` (be
    - The same group on this same code passed in this session's container: `node scripts/check.mjs --only tests --group scene-rest`, "ok tests: scene-rest … 519.2 s", all 12.
    - Neither test touches the arranged parts: the view's size, the picture and its drawing code are unchanged (verify 2).
 
-   Re-running that one job counts as starting a workflow, which needs Dan's yes (`CLAUDE.md`, "What an agent may and may not touch"), so it is in Ask 1. If it fails again on a re-run, the merge stops there and the next session looks into it.
+   Later: the test change for result-check finding 2 (commit 875a99d) started a new Checks run on the pull request by itself; its result is in the newest report on the card. Re-running the old job counts as starting a workflow, which needs Dan's yes (`CLAUDE.md`, "What an agent may and may not touch"), so it is in Ask 1. If it fails again on a re-run, the merge stops there and the next session looks into it.
 
    Counts: tests 109 before and 111 after (counted as `test(` lines in `test/*.test.js` on `origin/main` and on `range-day-nine`); screenshot states 68 before and 73 after (`node scripts/screenshots.mjs --list`). Changed tests and why:
    - verify 7 in `test/day.test.js`: the book line now shows the newest line only, as the brief's task item 2 asks.
@@ -96,7 +104,7 @@ Screenshots (`docs/reports/screenshots/`, both sizes): `line-top-first-shot` (be
 7. **Size for the result checker:** `git diff origin/main...range-day-nine | wc -c` gives 90,225 bytes, under 400,000.
 8. **The deploy result:** filed on the card after the deploy, in the note of close-out item 5.
 
-What this cannot prove: the session cannot open the live app or hold a phone. Dan's phone may show a shorter screen than 412×915, because a browser's own bars take room. So whether everything is within reach on his phone is unverified until he looks. At 412×800 the result, the sight strip, the glass control and the view are within reach; the rounds left and the book's line fall under the Steady and Fire bar (figures in verify 1).
+What this cannot prove: the session cannot open the live app or hold a phone. Dan's phone may show a shorter screen than 412×915, because a browser's own bars take room. So this session has not verified that everything is within reach on his phone. At 412×800 the result, the settings, the one-click buttons, the glass control and the view are within reach; the 1 MOA buttons (scope and dot), the rounds left and the book's line fall under the Steady and Fire bar (figures in verify 1).
 
 ## Asks
 
@@ -108,9 +116,12 @@ What this cannot prove: the session cannot open the live app or hold a phone. Da
 - Older wording, seen in the new screenshots and not touched: a dead-centre hit reads "level, centered of center" (`RD.whereText` in `public/game.js`, used by the result line). One line fixes it.
 - After this build the after-every-edit hook's fast test subset still runs the whole `npm test` (`CLAUDE.md`, "An app whose `npm test` takes more than 20 seconds puts a fast subset in `npm run test:fast`"). This is noted only; the starting kit is untouched.
 - In a cloud container, Playwright 1.56.1 looks for Chromium build 1194 while the container has 1243. This session linked the installed build into a folder outside the repository (`PLAYWRIGHT_BROWSERS_PATH`, with `chromium-1194/chrome-linux` and `chromium_headless_shell-1194/chrome-linux/headless_shell` pointing at the 1243 files). Without that link the browser tests are skipped, quietly.
-- The rest, each planned by a Personal Shipyard chat: the near targets at 50 and 100 yards with paper to shoot, with the spotting scope; the sights Dan fitted to his rifles and the Vepr's 3-9x scope; recording and playback. The picture work stays paused on Dan's word until he returns to it.
+- The rest, each planned by a Personal Shipyard chat: the near targets at 50 and 100 yards with paper to shoot, with the spotting scope; the sights Dan fitted to his rifles and the Vepr's 3-9x scope; recording and playback. The picture work (the ground, the Light picture's speed, the iron sights' look, the rifle line's picture) is paused on Dan's word of 21 Nov 2026, and is not in that list.
 
-Branches: the change is on `range-day-nine` (pull request #22). This report and the `PLAN.md` note are on `range-day-nine-notes`, which reaches `main` in a notes-only pull request after the deploy result. That order is this repository's standing rule (`CLAUDE.md`, "Field reports"), not a choice of this session.
+Branches and the close-out order: the change is on `range-day-nine` (pull request #22). This report and the `PLAN.md` note are on `range-day-nine-notes`. The order on Dan's typed line is fixed by this repository's standing rule (`CLAUDE.md`, "Field reports"), not by this session:
+1. Merge pull request #22.
+2. The Deploy run.
+3. A notes-only pull request from `range-day-nine-notes`, which then differs from `main` only by this report and the `PLAN.md` note, merged.
 
 ## Closing message to Dan
 
