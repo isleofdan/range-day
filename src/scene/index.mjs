@@ -176,7 +176,7 @@ async function create(opts) {
     groundAt, materials: terrainBuilt.materials.state,
     // for the measures only: the materials laid in a plain grid, and slid along the ground
     setPlainGrid(on) { terrainBuilt.setPlainGrid(on); },
-    setMaterialShift(east, north) { terrainBuilt.setMaterialShift(east, north); },
+    setMaterialShift(east, north, big) { terrainBuilt.setMaterialShift(east, north, big); },
     // The light's figures, changeable while the picture is up: how the figures in data/look.json were measured against the photographs' colours (scripts/picture-measure.mjs and the tests read the picture; nothing on a screen calls this).
     tune({ exposure, sun: sunK, sky: skyK, bounce: bounceK, airBright, airDist, skyScale } = {}) {
       if (exposure != null) renderer.toneMappingExposure = exposure;

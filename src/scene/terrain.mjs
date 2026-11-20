@@ -125,7 +125,7 @@ export function buildTerrain({ near, far, photo, photoUrl, frame, groundM, look,
       slopeCol: { value: slope }, scrubCol: { value: scrub }, floorCol: { value: floor }, rockCol: { value: rock }, screeCol: { value: scree }, weedCol: { value: weeds },
       matCol: mats.color, matRel: mats.relief, matMean: mats.mean, matSize: mats.sizeM, photoPx: { value: photo.width }, photoLodMin: { value: Math.log2(G.photoFinestPx) }, sunMapDir: { value: sunMap },
       reliefShadowM: { value: G.reliefShadowM * Math.min(3, 1 / Math.max(0.2, Math.tan((sun.elevation * Math.PI) / 180))) }, reliefShadowDark: { value: full ? G.reliefShadowDark : 0 }, reliefShadowDepth: { value: G.reliefShadowDepth },
-      hexTiles: { value: G.hexTiles }, hexSharpness: { value: G.hexSharpness }, heightBlend: { value: G.heightBlend }, varyM: { value: G.varyM }, plainGrid: { value: typeof window !== 'undefined' && window.RD_SCENE_DEBUG === 'plaingrid' ? 1 : 0 }, matShift: { value: new THREE.Vector2(0, 0) }, matCount: { value: full ? 2 : 1 }, matPx: mats.px, fineFade: { value: full ? new THREE.Vector2(32, 8) : new THREE.Vector2(G.lightFineFade[0], G.lightFineFade[1]) },
+      hexTiles: { value: G.hexTiles }, hexSharpness: { value: G.hexSharpness }, heightBlend: { value: G.heightBlend }, varyM: { value: G.varyM }, plainGrid: { value: typeof window !== 'undefined' && window.RD_SCENE_DEBUG === 'plaingrid' ? 1 : 0 }, matShift: { value: new THREE.Vector2(0, 0) }, matShiftBig: { value: new THREE.Vector2(0, 0) }, matCount: { value: full ? 2 : 1 }, matPx: mats.px, fineFade: { value: full ? new THREE.Vector2(32, 8) : new THREE.Vector2(G.lightFineFade[0], G.lightFineFade[1]) },
       sunCutA: { value: new THREE.Vector3(G.sunCut.floor, G.sunCut['dry-grass'], G.sunCut['green-grass']) }, sunCutB: { value: new THREE.Vector3(G.sunCut['scrub-litter'], G.sunCut.rock, G.sunCut.scree) }, macroScale: { value: G.macroScale }, macroShare: { value: full ? G.macroShare : G.macroShareLight },
       matAlbedo: { value: G.materialAlbedo }, bumpFloor: { value: G.bump.floor }, bumpGrass: { value: G.bump.grass }, bumpRock: { value: G.bump.rock },
       steepTan: { value: Math.tan((G.steepDeg * Math.PI) / 180) }, hollowM: { value: G.hollowM }, hollowDark: { value: G.hollowDarkening }, clearanceM: { value: G.clearanceM },
@@ -145,7 +145,7 @@ export function buildTerrain({ near, far, photo, photoUrl, frame, groundM, look,
         varying float vFar; varying vec3 vWorld; varying vec2 vMap; varying vec2 vGround;
         uniform sampler2D litNear, litFar, normNear, normFar;
         uniform highp sampler2DArray matCol, matRel;
-        uniform vec3 matMean[6]; uniform float matSize[6]; uniform vec2 matShift; uniform float matCount, macroScale, macroShare, matPx; uniform vec2 fineFade; uniform vec3 sunCutA, sunCutB;
+        uniform vec3 matMean[6]; uniform float matSize[6]; uniform vec2 matShift, matShiftBig; uniform float matCount, macroScale, macroShare, matPx; uniform vec2 fineFade; uniform vec3 sunCutA, sunCutB;
         uniform vec2 nearOrigin, farOrigin, photoOrigin, trackLanes; uniform float nearSide, farSide, photoSide;
         uniform vec3 slopeCol, scrubCol, floorCol, rockCol, screeCol, weedCol;
         uniform vec2 sunMapDir; uniform float reliefShadowM, reliefShadowDark, reliefShadowDepth, hexTiles, hexSharpness, heightBlend, varyM, plainGrid, matAlbedo, photoPx, photoLodMin, debugMode, bumpFloor, bumpGrass, bumpRock, steepTan, hollowM, hollowDark, clearanceM, sheenRock, greenness, trackGauge, trackDark, trackReachM;
@@ -268,7 +268,7 @@ export function buildTerrain({ near, far, photo, photoUrl, frame, groundM, look,
           vec3 r = mix(vec3(1.0), mc.rgb / max(matMean[i], vec3(0.004)), matAlbedo * keep);
           vec2 d = (mr.rg * 2.0 - 1.0) * keep;
           if (keepM > 0.0) {
-            r *= mix(vec3(1.0), macroColour(i, (vGround + matShift) / big + 0.37, gmx / big, gmy / big) / max(matMean[i], vec3(0.004)), matAlbedo * keepM);
+            r *= mix(vec3(1.0), macroColour(i, (vGround + matShiftBig) / big + 0.37, gmx / big, gmy / big) / max(matMean[i], vec3(0.004)), matAlbedo * keepM);
           }
           if (j == 0) { rt1 = r; dn1 = d; h1 = mix(0.5, mr.b, keep); oTop1 = ot; s1 = size; } else { rt2 = r; dn2 = d; h2 = mix(0.5, mr.b, keep); }
         }
@@ -343,8 +343,8 @@ export function buildTerrain({ near, far, photo, photoUrl, frame, groundM, look,
   return { mesh, heightAt: (x, z) => { const m = frame.toMap(x, z); return heightAt(m.e, m.n); }, texture: tex, dists, materials: mats,
     // for the measures only (scripts/picture-measure.mjs, test/scene.test.js): lay the materials in a plain grid, without the cells' shifts
     setPlainGrid(on) { if (shaderRef.uniforms) shaderRef.uniforms.plainGrid.value = on ? 1 : 0; },
-    // and slide the materials along the ground by east and north metres, the camera and everything else unmoved
-    setMaterialShift(east, north) { if (shaderRef.uniforms) shaderRef.uniforms.matShift.value.set(east, north); } };
+    // and slide one copy of the materials along the ground by east and north metres (the fine copy, or with big the larger one), the camera, the other copy and everything else unmoved
+    setMaterialShift(east, north, big) { if (shaderRef.uniforms) (big ? shaderRef.uniforms.matShiftBig : shaderRef.uniforms.matShift).value.set(east, north); } };
 }
 
 export { YD, FT };

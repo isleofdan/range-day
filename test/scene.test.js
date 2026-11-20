@@ -503,15 +503,15 @@ test('verify 5 (range-day-eight): no visible repeat: on the floor and on a hills
     await page.evaluate(() => { window.requestAnimationFrame = () => 0; window.RD_SCENE_DEBUG = 'noshimmer'; RangeDayLine.setZoom(7); }); await wait(300);
     const fov7 = await page.evaluate(() => RangeDayLine.fovMoa / 60);
     const beside = await page.evaluate(() => { const w = RangeDayLine.scene.plateWorld(4); return [w.x + 20, w.z]; });
-    // each material is laid twice, at its own size and at macroScale times it: each copy is slid by its own width (sliding by the fine width moves the larger copy by a fifth of its width, which does not repeat, so that one is measured at its own width)
+    // each material is laid twice, at its own size and at macroScale times it: each copy is slid by its own width while the other stays put (sliding both at once, the one not at its own width diluted the plain grid's match: 0.29 and 0.45 on the runner)
     const M = flat.look.ground.materials, K = flat.look.ground.macroScale;
-    for (const [name, aimAt, fov, sizeM] of [['the floor, 40 m out at 1x', [2, -40], 6.68, M.floor.sizeM], ['the floor, 40 m out at 1x, the larger copy', [2, -40], 6.68, M.floor.sizeM * K], ['the hillside beside the 600-yard plate at 7x', beside, fov7, M[grass].sizeM], ['the hillside beside the 600-yard plate at 7x, the larger copy', beside, fov7, M[grass].sizeM * K]]) {
+    for (const [name, aimAt, fov, sizeM, big] of [['the floor, 40 m out at 1x', [2, -40], 6.68, M.floor.sizeM, false], ['the floor, 40 m out at 1x, the larger copy', [2, -40], 6.68, M.floor.sizeM * K, true], ['the hillside beside the 600-yard plate at 7x', beside, fov7, M[grass].sizeM, false], ['the hillside beside the 600-yard plate at 7x, the larger copy', beside, fov7, M[grass].sizeM * K, true]]) {
       const r = {};
-      for (const plain of [true, false]) r[plain ? 'plain' : 'laid'] = await page.evaluate(([src, P, f, size, pl]) => { const repeat = eval(src); const s = RangeDayLine.scene; s.setPlainGrid(pl); const out = repeat(P, size, f, f < 3); s.setPlainGrid(false); return out; }, [inPage(GM.repeat.toString()), aimAt, fov, sizeM, plain]);
+      for (const plain of [true, false]) r[plain ? 'plain' : 'laid'] = await page.evaluate(([src, P, f, size, pl, bg]) => { const repeat = eval(src); const s = RangeDayLine.scene; s.setPlainGrid(pl); const out = repeat(P, size, f, f < 3, bg); s.setPlainGrid(false); return out; }, [inPage(GM.repeat.toString()), aimAt, fov, sizeM, plain, big]);
       // the share of the material's own fine texture that comes back at one width: the boards, the light and the survey's relief do not slide with the materials and match at every step, so the score is the rise at one width over what the other steps leave
       const score = (x) => (x.at1 - x.others) / Math.max(1e-6, 1 - x.others);
       console.log(`  ${day}, ${name}: plain grid ${score(r.plain).toFixed(3)} (${r.plain.at1.toFixed(3)} at one width, ${r.plain.others.toFixed(3)} elsewhere); as laid ${score(r.laid).toFixed(3)} (${r.laid.at1.toFixed(3)}, ${r.laid.others.toFixed(3)})`);
-      assert.ok(score(r.plain) > 0.3, `${day}, ${name}: the measure sees the plain grid's repeat (${score(r.plain).toFixed(3)})`);
+      assert.ok(score(r.plain) > 0.5, `${day}, ${name}: the measure sees the plain grid's repeat (${score(r.plain).toFixed(3)})`);
       assert.ok(score(r.laid) < 0.5 * score(r.plain), `${day}, ${name}: as laid, the repeat is under half the plain grid's (${score(r.laid).toFixed(3)} against ${score(r.plain).toFixed(3)})`);
     }
   }

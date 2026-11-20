@@ -8,18 +8,19 @@ const contrast = () => { const sc = document.getElementById('scene'); const c = 
 // The repeat measure. With the view aimed at a ground point P (metres right of the line and downrange as world x, z) the
 // whole view is read as fine texture (each pixel's brightness less the mean of the 13-by-13 around it, so the light's and
 // the aerial photograph's broad changes do not count); then the materials alone are slid along the ground by f of their
-// widths, east and then north, the camera and everything else unmoved, and the view read again. At f = 1 a material laid
+// widths, east and then north, the camera and everything else unmoved, and the view read again. Each material is laid
+// twice (at its own size and at macroScale times it); one copy slides at a time (big: the larger), the other stays put. At f = 1 a material laid
 // in a plain grid shows exactly the same picture again; at f = 0.5, 0.75, 1.25 and 1.5 it does not. It answers the
 // correlation at one width and the mean of the others, for the direction where their difference is larger. The score the
 // tests and picture-measure print is (at one width − the others) / (1 − the others): the share of the material's own fine
 // texture that comes back one width on (the boards, the light and the survey's relief match at every step). A plain grid
 // scores near 1, a material laid without a visible repeat near 0.
-const repeat = (P, sizeM, fovDeg, glass) => {
+const repeat = (P, sizeM, fovDeg, glass, big) => {
   const s = RangeDayLine.scene, eye = 4 * 0.3048, sc = document.getElementById('scene');
   const g0 = s.groundAt(P[0], P[1]);
   s.setView({ yawDeg: (Math.atan2(P[0], -P[1]) * 180) / Math.PI, pitchDeg: (Math.atan2(g0 - eye, -P[1]) * 180) / Math.PI, fovDeg: fovDeg, glass: Boolean(glass), windMph: 0 });
   const read = (e, n) => {
-    s.setMaterialShift(e, n); s.render(3);
+    s.setMaterialShift(e, n, big); s.render(3);
     const w = sc.width, h = sc.height, m = Math.round(Math.min(w, h) * 0.6), x0 = Math.round((w - m) / 2), y0 = Math.round((h - m) / 2);
     const c = document.createElement('canvas'); c.width = w; c.height = h; const cg = c.getContext('2d'); cg.drawImage(sc, 0, 0);
     const d = cg.getImageData(x0, y0, m, m).data, L = new Float32Array(m * m);
@@ -38,7 +39,7 @@ const repeat = (P, sizeM, fovDeg, glass) => {
     const at1 = at(1), others = [0.5, 0.75, 1.25, 1.5].map(at);
     out.push({ at1, others: others.reduce((a, b) => a + b, 0) / others.length, direction: e ? 'east' : 'north' });
   }
-  s.setMaterialShift(0, 0);
+  s.setMaterialShift(0, 0, big);
   out.sort((a, b) => (b.at1 - b.others) - (a.at1 - a.others));
   return out[0];
 };
