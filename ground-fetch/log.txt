@@ -1,0 +1,57 @@
+polyhaven: license page 200 https://polyhaven.com/license
+polyhaven: https://polyhaven.com/license states CC0
+polyhaven: API terms 200 https://raw.githubusercontent.com/Poly-Haven/Public-API/master/ToS.md
+ambientcg: license page 200 https://docs.ambientcg.com/license/
+ambientcg: https://docs.ambientcg.com/license/ states CC0
+polyhaven: listing 200 https://api.polyhaven.com/types
+polyhaven: floor: 23 listed, picked dry_ground_rocks, dirt, dry_mud_field_001, dirt_aerial_03, aerial_ground_rock
+polyhaven: file request 200 https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dry_ground_rocks/dry_ground_rocks_diff_2k.jpg
+polyhaven: floor: dry_ground_rocks: color, normal, rough, height
+polyhaven: floor: dirt: color, normal, rough, height
+polyhaven: floor: dry_mud_field_001: color, normal, rough, height
+polyhaven: floor: dirt_aerial_03: color, normal, rough, height
+polyhaven: floor: aerial_ground_rock: color, normal, rough, height
+polyhaven: dry-grass: 4 listed, picked grass_ground, sparse_grass, withered_grass, riet_01
+polyhaven: dry-grass: grass_ground: color, normal, rough, height
+polyhaven: dry-grass: sparse_grass: color, normal, rough, height
+polyhaven: dry-grass: withered_grass: color, normal, rough, height
+polyhaven: dry-grass: riet_01: color, normal, rough, height
+polyhaven: green-grass: 4 listed, picked grass_ground, leafy_grass, sparse_grass, withered_grass
+polyhaven: green-grass: leafy_grass: color, normal, rough, height
+polyhaven: scrub-litter: 20 listed, picked dry_decay_leaves, forest_ground_05, forest_ground_06, forest_leaves_03
+polyhaven: scrub-litter: dry_decay_leaves: color, normal, rough, height
+polyhaven: scrub-litter: forest_ground_05: color, normal, rough, height
+polyhaven: scrub-litter: forest_ground_06: color, normal, rough, height
+polyhaven: scrub-litter: forest_leaves_03: color, normal, rough, height
+polyhaven: rock: 20 listed, picked rock_face_03, dark_rock_02, rock_01, rock_06, rocky_terrain_03
+polyhaven: rock: rock_face_03: color, normal, rough, height
+polyhaven: rock: dark_rock_02: color, normal, rough, height
+polyhaven: rock: rock_01: color, normal, rough, height
+polyhaven: rock: rock_06: color, normal, rough, height
+polyhaven: rock: rocky_terrain_03: color, normal, rough, height
+polyhaven: scree: 17 listed, picked sandy_gravel, sandy_gravel_02, gravel_floor_04, gravel_ground_01
+polyhaven: scree: sandy_gravel: color, normal, rough, height
+polyhaven: scree: sandy_gravel_02: color, normal, rough, height
+polyhaven: scree: gravel_floor_04: color, normal, rough, height
+polyhaven: scree: gravel_ground_01: color, normal, rough, height
+ambientcg: listing 200 https://ambientcg.com/api/v2/full_json?type=Material&q=Ground&include=downloadData,tagData,dimensionsData&limit=30&sort=Popular
+ambientcg: floor: 41 listed, picked Ground111, Ground110
+ambientcg: file request 200 https://ambientcg.com/get?file=Ground111_2K-JPG.zip
+ambientcg: floor: Ground111: color, normal, rough, height
+ambientcg: floor: Ground110: color, normal, rough, height
+ambientcg: dry-grass: 15 listed, picked Grass005, Grass004
+ambientcg: dry-grass: Grass005: color, normal, rough, height
+ambientcg: dry-grass: Grass004: color, normal, rough, height
+ambientcg: green-grass: 15 listed, picked Grass001, Ground037
+ambientcg: green-grass: Grass001: color, normal, rough, height
+ambientcg: green-grass: Ground037: color, normal, rough, height
+ambientcg: scrub-litter: 18 listed, picked Ground106, ScatteredLeaves009
+ambientcg: scrub-litter: Ground106: color, normal, rough, height
+ambientcg: scrub-litter: ScatteredLeaves009: color, normal, rough, height
+ambientcg: rock: 30 listed, picked Rock064, Rock063
+ambientcg: rock: Rock064: color, normal, rough, height
+ambientcg: rock: Rock063: color, normal, rough, height
+ambientcg: scree: 46 listed, picked Ground108, Gravel043
+ambientcg: scree: Ground108: color, normal, rough, height
+ambientcg: scree: Gravel043: color, normal, rough, height
+summary: 2 of 2 libraries answered; 38 candidates with a colour map

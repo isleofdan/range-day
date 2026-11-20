@@ -1,0 +1,2996 @@
+{
+  "fetched": "2026-11-20",
+  "run": "44711714459",
+  "keptPx": 1024,
+  "userAgent": "range-day-ground-fetch/1 (one download run of CC0 ground scans for a personal game)",
+  "libraries": {
+    "polyhaven": {
+      "name": "Poly Haven",
+      "licensePage": "https://polyhaven.com/license",
+      "status": {
+        "licensePage1": 200,
+        "apiTerms": 200,
+        "listing": 200,
+        "file": 200
+      },
+      "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+      "answered": true,
+      "apiTerms": "https://raw.githubusercontent.com/Poly-Haven/Public-API/master/ToS.md"
+    },
+    "ambientcg": {
+      "name": "ambientCG",
+      "licensePage": "https://docs.ambientcg.com/license/",
+      "status": {
+        "licensePage1": 200,
+        "listing": 200,
+        "file": 200
+      },
+      "license": "Creative Commons CC0 1.0 Universal License . The Creative Commons CC0 license gives you near limitless freedom to use the materials, models and other assets: Creative Commons CC0 License licensed under the Creative Commons CC0 1.0 Universal License.",
+      "answered": true
+    }
+  },
+  "surfaces": {
+    "floor": {
+      "words": "pale tan packed dirt with clods and crumbs",
+      "candidates": [
+        {
+          "library": "polyhaven",
+          "id": "dry_ground_rocks",
+          "name": "Dry Ground Rocks",
+          "page": "https://polyhaven.com/a/dry_ground_rocks",
+          "category": "Ground & Terrain/Rocky Ground/Stony Dirt",
+          "tags": [
+            "mud",
+            "rocks",
+            "cracked",
+            "ground",
+            "dry",
+            "parched",
+            "soil",
+            "dirt",
+            "stones",
+            "rough",
+            "stony"
+          ],
+          "aerial": false,
+          "groundMm": [
+            4000,
+            4000
+          ],
+          "searchRank": 0,
+          "downloads": 56708,
+          "dir": "candidates/floor--polyhaven--dry-ground-rocks",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/floor--polyhaven--dry-ground-rocks/color.jpg",
+              "keptBytes": 726126,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dry_ground_rocks/dry_ground_rocks_diff_2k.jpg",
+              "md5": "3106a1157ea4c6823b78494988ac0269",
+              "md5Listed": "3106a1157ea4c6823b78494988ac0269",
+              "md5Matches": true,
+              "bytes": 3428360,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/floor--polyhaven--dry-ground-rocks/normal.jpg",
+              "keptBytes": 1151448,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dry_ground_rocks/dry_ground_rocks_nor_gl_2k.jpg",
+              "md5": "26584932ec2393a45cc7a6a596ba7c19",
+              "md5Listed": "26584932ec2393a45cc7a6a596ba7c19",
+              "md5Matches": true,
+              "bytes": 5336020,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/floor--polyhaven--dry-ground-rocks/rough.jpg",
+              "keptBytes": 353657,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dry_ground_rocks/dry_ground_rocks_rough_2k.jpg",
+              "md5": "5a461a436095cbe54cbd1de156bdc164",
+              "md5Listed": "5a461a436095cbe54cbd1de156bdc164",
+              "md5Matches": true,
+              "bytes": 1890402,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/floor--polyhaven--dry-ground-rocks/height.jpg",
+              "keptBytes": 198621,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dry_ground_rocks/dry_ground_rocks_disp_2k.jpg",
+              "md5": "a9c72cb0108f1ac54b611798cddc1422",
+              "md5Listed": "a9c72cb0108f1ac54b611798cddc1422",
+              "md5Matches": true,
+              "bytes": 868001,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          }
+        },
+        {
+          "library": "polyhaven",
+          "id": "dirt",
+          "name": "Dirt",
+          "page": "https://polyhaven.com/a/dirt",
+          "category": "Ground & Terrain/Soil & Mud/Bare Dirt & Soil",
+          "tags": [
+            "dirt",
+            "dirty",
+            "ground",
+            "nature",
+            "earth",
+            "dusty",
+            "rocky",
+            "debris",
+            "footprints"
+          ],
+          "aerial": false,
+          "groundMm": [
+            2000,
+            2000
+          ],
+          "searchRank": 1,
+          "downloads": 34166,
+          "dir": "candidates/floor--polyhaven--dirt",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/floor--polyhaven--dirt/color.jpg",
+              "keptBytes": 281765,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dirt/dirt_diff_2k.jpg",
+              "md5": "8e6fb7316bca5840c386cb72a3f16c62",
+              "md5Listed": "8e6fb7316bca5840c386cb72a3f16c62",
+              "md5Matches": true,
+              "bytes": 3053062,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/floor--polyhaven--dirt/normal.jpg",
+              "keptBytes": 539701,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dirt/dirt_nor_gl_2k.jpg",
+              "md5": "060d0ca175eeb140ac46f48bc56263ad",
+              "md5Listed": "060d0ca175eeb140ac46f48bc56263ad",
+              "md5Matches": true,
+              "bytes": 4914156,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/floor--polyhaven--dirt/rough.jpg",
+              "keptBytes": 68585,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dirt/dirt_rough_2k.jpg",
+              "md5": "420569deb8fab894119e32ed3712f7b8",
+              "md5Listed": "420569deb8fab894119e32ed3712f7b8",
+              "md5Matches": true,
+              "bytes": 964887,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/floor--polyhaven--dirt/height.jpg",
+              "keptBytes": 154186,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dirt/dirt_disp_2k.jpg",
+              "md5": "4e23138b81f4d8e57352bb544fcd49dd",
+              "md5Listed": "4e23138b81f4d8e57352bb544fcd49dd",
+              "md5Matches": true,
+              "bytes": 1274950,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          }
+        },
+        {
+          "library": "polyhaven",
+          "id": "dry_mud_field_001",
+          "name": "Dry Mud Field 001",
+          "page": "https://polyhaven.com/a/dry_mud_field_001",
+          "category": "Ground & Terrain/Soil & Mud/Compacted Soil",
+          "tags": [
+            "road",
+            "mud",
+            "dry",
+            "uneven",
+            "dirt",
+            "farm",
+            "ground",
+            "rough",
+            "brown"
+          ],
+          "aerial": false,
+          "groundMm": [
+            3000,
+            3000.000238418579
+          ],
+          "searchRank": 3,
+          "downloads": 38766,
+          "dir": "candidates/floor--polyhaven--dry-mud-field-001",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/floor--polyhaven--dry-mud-field-001/color.jpg",
+              "keptBytes": 469670,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dry_mud_field_001/dry_mud_field_001_diff_2k.jpg",
+              "md5": "e24815195475758e9a7f83c01d64031f",
+              "md5Listed": "e24815195475758e9a7f83c01d64031f",
+              "md5Matches": true,
+              "bytes": 1375586,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/floor--polyhaven--dry-mud-field-001/normal.jpg",
+              "keptBytes": 744767,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dry_mud_field_001/dry_mud_field_001_nor_gl_2k.jpg",
+              "md5": "670bd292f47dd16c5eeafec5449bb0f9",
+              "md5Listed": "670bd292f47dd16c5eeafec5449bb0f9",
+              "md5Matches": true,
+              "bytes": 2344766,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/floor--polyhaven--dry-mud-field-001/rough.jpg",
+              "keptBytes": 386300,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dry_mud_field_001/dry_mud_field_001_rough_2k.jpg",
+              "md5": "0cffecc5dd88ceefcb59e3c9f302375d",
+              "md5Listed": "0cffecc5dd88ceefcb59e3c9f302375d",
+              "md5Matches": true,
+              "bytes": 1066381,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/floor--polyhaven--dry-mud-field-001/height.jpg",
+              "keptBytes": 186526,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dry_mud_field_001/dry_mud_field_001_disp_2k.jpg",
+              "md5": "1131587ebb288e6167330eed46a56f35",
+              "md5Listed": "1131587ebb288e6167330eed46a56f35",
+              "md5Matches": true,
+              "bytes": 400745,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          }
+        },
+        {
+          "library": "polyhaven",
+          "id": "dirt_aerial_03",
+          "name": "Dirt Aerial 03",
+          "page": "https://polyhaven.com/a/dirt_aerial_03",
+          "category": "Ground & Terrain/Soil & Mud/Compacted Soil",
+          "tags": [
+            "mud",
+            "gravel",
+            "stones",
+            "dry",
+            "organic",
+            "ground",
+            "rock fragments"
+          ],
+          "aerial": true,
+          "groundMm": [
+            25000,
+            25000
+          ],
+          "searchRank": 5,
+          "downloads": 31852,
+          "dir": "candidates/floor--polyhaven--dirt-aerial-03",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/floor--polyhaven--dirt-aerial-03/color.jpg",
+              "keptBytes": 229630,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dirt_aerial_03/dirt_aerial_03_diff_2k.jpg",
+              "md5": "d67e26f08c08aa095235d49015e48baf",
+              "md5Listed": "d67e26f08c08aa095235d49015e48baf",
+              "md5Matches": true,
+              "bytes": 1115831,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/floor--polyhaven--dirt-aerial-03/normal.jpg",
+              "keptBytes": 226976,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dirt_aerial_03/dirt_aerial_03_nor_gl_2k.jpg",
+              "md5": "cd63c161d01134e90cedda32367a675e",
+              "md5Listed": "cd63c161d01134e90cedda32367a675e",
+              "md5Matches": true,
+              "bytes": 1325847,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/floor--polyhaven--dirt-aerial-03/rough.jpg",
+              "keptBytes": 144570,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dirt_aerial_03/dirt_aerial_03_rough_2k.jpg",
+              "md5": "1afbf952422c8023bcfc47c4a48c24c5",
+              "md5Listed": "1afbf952422c8023bcfc47c4a48c24c5",
+              "md5Matches": true,
+              "bytes": 802443,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/floor--polyhaven--dirt-aerial-03/height.jpg",
+              "keptBytes": 62601,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dirt_aerial_03/dirt_aerial_03_disp_2k.jpg",
+              "md5": "1bec32ac53a23e469bcb0b5467db1606",
+              "md5Listed": "1bec32ac53a23e469bcb0b5467db1606",
+              "md5Matches": true,
+              "bytes": 269813,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          }
+        },
+        {
+          "library": "polyhaven",
+          "id": "aerial_ground_rock",
+          "name": "Aerial Ground Rock",
+          "page": "https://polyhaven.com/a/aerial_ground_rock",
+          "category": "Ground & Terrain/Rocky Ground/Stony Dirt",
+          "tags": [
+            "mud",
+            "rocks",
+            "stones",
+            "dirt",
+            "dry"
+          ],
+          "aerial": true,
+          "groundMm": [
+            19999.950408935547,
+            20000
+          ],
+          "searchRank": 18,
+          "downloads": 32768,
+          "dir": "candidates/floor--polyhaven--aerial-ground-rock",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/floor--polyhaven--aerial-ground-rock/color.jpg",
+              "keptBytes": 525666,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/aerial_ground_rock/aerial_ground_rock_diff_2k.jpg",
+              "md5": "15231697c4359016368c7e7baf15e9e5",
+              "md5Listed": "15231697c4359016368c7e7baf15e9e5",
+              "md5Matches": true,
+              "bytes": 2522323,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/floor--polyhaven--aerial-ground-rock/normal.jpg",
+              "keptBytes": 512856,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/aerial_ground_rock/aerial_ground_rock_nor_gl_2k.jpg",
+              "md5": "76b7477a6a589f837d51a75157589f3f",
+              "md5Listed": "76b7477a6a589f837d51a75157589f3f",
+              "md5Matches": true,
+              "bytes": 2486280,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/floor--polyhaven--aerial-ground-rock/rough.jpg",
+              "keptBytes": 283040,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/aerial_ground_rock/aerial_ground_rock_rough_2k.jpg",
+              "md5": "ff499aca3aa1ac487c0f51493827f66e",
+              "md5Listed": "ff499aca3aa1ac487c0f51493827f66e",
+              "md5Matches": true,
+              "bytes": 1598716,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/floor--polyhaven--aerial-ground-rock/height.jpg",
+              "keptBytes": 91724,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/aerial_ground_rock/aerial_ground_rock_disp_2k.jpg",
+              "md5": "b1c05b14eaeb47c05520a72d8846ee81",
+              "md5Listed": "b1c05b14eaeb47c05520a72d8846ee81",
+              "md5Matches": true,
+              "bytes": 377928,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          }
+        },
+        {
+          "library": "ambientcg",
+          "id": "Ground111",
+          "name": "Ground 111",
+          "page": "https://ambientcg.com/view?id=Ground111",
+          "tags": [
+            "111",
+            "brick",
+            "brown",
+            "construction",
+            "debris",
+            "dirt",
+            "fragments",
+            "gravel",
+            "gray",
+            "ground",
+            "ground111",
+            "orange",
+            "rock",
+            "rough",
+            "rubble",
+            "scattered",
+            "urban"
+          ],
+          "groundMm": null,
+          "dimensionX": 280,
+          "dimensionY": 280,
+          "zipGuessed": false,
+          "dir": "candidates/floor--ambientcg--ground111",
+          "license": "Creative Commons CC0 1.0 Universal License . The Creative Commons CC0 license gives you near limitless freedom to use the materials, models and other assets: Creative Commons CC0 License licensed under the Creative Commons CC0 1.0 Universal License.",
+          "licensePage": "https://docs.ambientcg.com/license/",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/floor--ambientcg--ground111/color.jpg",
+              "keptBytes": 748707,
+              "url": "https://ambientcg.com/get?file=Ground111_2K-JPG.zip",
+              "inZip": "Ground111_2K-JPG_Color.jpg",
+              "zipMd5": "331a58dfeabcc1de3a09247f2046bac1",
+              "zipBytes": 34401646,
+              "bytes": 7561605
+            },
+            "normal": {
+              "file": "candidates/floor--ambientcg--ground111/normal.jpg",
+              "keptBytes": 863701,
+              "url": "https://ambientcg.com/get?file=Ground111_2K-JPG.zip",
+              "inZip": "Ground111_2K-JPG_NormalGL.jpg",
+              "zipMd5": "331a58dfeabcc1de3a09247f2046bac1",
+              "zipBytes": 34401646,
+              "bytes": 8593665
+            },
+            "rough": {
+              "file": "candidates/floor--ambientcg--ground111/rough.jpg",
+              "keptBytes": 406967,
+              "url": "https://ambientcg.com/get?file=Ground111_2K-JPG.zip",
+              "inZip": "Ground111_2K-JPG_Roughness.jpg",
+              "zipMd5": "331a58dfeabcc1de3a09247f2046bac1",
+              "zipBytes": 34401646,
+              "bytes": 3194070
+            },
+            "height": {
+              "file": "candidates/floor--ambientcg--ground111/height.jpg",
+              "keptBytes": 164773,
+              "url": "https://ambientcg.com/get?file=Ground111_2K-JPG.zip",
+              "inZip": "Ground111_2K-JPG_Displacement.jpg",
+              "zipMd5": "331a58dfeabcc1de3a09247f2046bac1",
+              "zipBytes": 34401646,
+              "bytes": 1641432
+            }
+          }
+        },
+        {
+          "library": "ambientcg",
+          "id": "Ground110",
+          "name": "Ground 110",
+          "page": "https://ambientcg.com/view?id=Ground110",
+          "tags": [
+            "110",
+            "brown",
+            "dirt",
+            "dry",
+            "gravel",
+            "gray",
+            "ground",
+            "ground110",
+            "rocky",
+            "rough",
+            "scattered",
+            "uneven"
+          ],
+          "groundMm": null,
+          "dimensionX": 210,
+          "dimensionY": 210,
+          "zipGuessed": false,
+          "dir": "candidates/floor--ambientcg--ground110",
+          "license": "Creative Commons CC0 1.0 Universal License . The Creative Commons CC0 license gives you near limitless freedom to use the materials, models and other assets: Creative Commons CC0 License licensed under the Creative Commons CC0 1.0 Universal License.",
+          "licensePage": "https://docs.ambientcg.com/license/",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/floor--ambientcg--ground110/color.jpg",
+              "keptBytes": 658950,
+              "url": "https://ambientcg.com/get?file=Ground110_2K-JPG.zip",
+              "inZip": "Ground110_2K-JPG_Color.jpg",
+              "zipMd5": "c315e39790be36bfa074f9cd97f93d32",
+              "zipBytes": 35158854,
+              "bytes": 6379221
+            },
+            "normal": {
+              "file": "candidates/floor--ambientcg--ground110/normal.jpg",
+              "keptBytes": 1110957,
+              "url": "https://ambientcg.com/get?file=Ground110_2K-JPG.zip",
+              "inZip": "Ground110_2K-JPG_NormalGL.jpg",
+              "zipMd5": "c315e39790be36bfa074f9cd97f93d32",
+              "zipBytes": 35158854,
+              "bytes": 9186042
+            },
+            "rough": {
+              "file": "candidates/floor--ambientcg--ground110/rough.jpg",
+              "keptBytes": 412128,
+              "url": "https://ambientcg.com/get?file=Ground110_2K-JPG.zip",
+              "inZip": "Ground110_2K-JPG_Roughness.jpg",
+              "zipMd5": "c315e39790be36bfa074f9cd97f93d32",
+              "zipBytes": 35158854,
+              "bytes": 3045386
+            },
+            "height": {
+              "file": "candidates/floor--ambientcg--ground110/height.jpg",
+              "keptBytes": 249069,
+              "url": "https://ambientcg.com/get?file=Ground110_2K-JPG.zip",
+              "inZip": "Ground110_2K-JPG_Displacement.jpg",
+              "zipMd5": "c315e39790be36bfa074f9cd97f93d32",
+              "zipBytes": 35158854,
+              "bytes": 1993496
+            }
+          }
+        }
+      ]
+    },
+    "dry-grass": {
+      "words": "dry straw grass on a slope",
+      "candidates": [
+        {
+          "library": "polyhaven",
+          "id": "grass_ground",
+          "name": "Grass Ground",
+          "page": "https://polyhaven.com/a/grass_ground",
+          "category": "Ground & Terrain/Grass & Vegetation/Dry & Sparse Grass",
+          "tags": [
+            "grass",
+            "dry grass",
+            "dirt",
+            "root",
+            "dead grass",
+            "turf",
+            "dry"
+          ],
+          "aerial": false,
+          "groundMm": [
+            2509.999990463257,
+            2509.999990463257
+          ],
+          "searchRank": 0,
+          "downloads": 21533,
+          "dir": "candidates/dry-grass--polyhaven--grass-ground",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/dry-grass--polyhaven--grass-ground/color.jpg",
+              "keptBytes": 359984,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/grass_ground/grass_ground_diff_2k.jpg",
+              "md5": "fd97f2402677e6686b2d9159fc3a4256",
+              "md5Listed": "fd97f2402677e6686b2d9159fc3a4256",
+              "md5Matches": true,
+              "bytes": 3787330,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/dry-grass--polyhaven--grass-ground/normal.jpg",
+              "keptBytes": 593157,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/grass_ground/grass_ground_nor_gl_2k.jpg",
+              "md5": "c8b2dd95f09868c4aacb91f62c673344",
+              "md5Listed": "c8b2dd95f09868c4aacb91f62c673344",
+              "md5Matches": true,
+              "bytes": 5968024,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/dry-grass--polyhaven--grass-ground/rough.jpg",
+              "keptBytes": 65548,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/grass_ground/grass_ground_rough_2k.jpg",
+              "md5": "0685285b42a7110ce0876f676a2f79c2",
+              "md5Listed": "0685285b42a7110ce0876f676a2f79c2",
+              "md5Matches": true,
+              "bytes": 1525000,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/dry-grass--polyhaven--grass-ground/height.jpg",
+              "keptBytes": 315678,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/grass_ground/grass_ground_disp_2k.jpg",
+              "md5": "4e924088734d7e63ad0badeb821b184d",
+              "md5Listed": "4e924088734d7e63ad0badeb821b184d",
+              "md5Matches": true,
+              "bytes": 2667246,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          }
+        },
+        {
+          "library": "polyhaven",
+          "id": "sparse_grass",
+          "name": "Sparse Grass",
+          "page": "https://polyhaven.com/a/sparse_grass",
+          "category": "Ground & Terrain/Grass & Vegetation/Dry & Sparse Grass",
+          "tags": [
+            "grass",
+            "nature",
+            "sparse",
+            "roots",
+            "root",
+            "vegetation",
+            "greenery",
+            "landscape",
+            "soil",
+            "environment",
+            "dirt",
+            "plants",
+            "ground",
+            "growth",
+            "flora"
+          ],
+          "aerial": false,
+          "groundMm": [
+            2000,
+            2000
+          ],
+          "searchRank": 5,
+          "downloads": 48473,
+          "dir": "candidates/dry-grass--polyhaven--sparse-grass",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/dry-grass--polyhaven--sparse-grass/color.jpg",
+              "keptBytes": 387987,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/sparse_grass/sparse_grass_diff_2k.jpg",
+              "md5": "b181e9c61bae87c1bb9b14eecd767d65",
+              "md5Listed": "b181e9c61bae87c1bb9b14eecd767d65",
+              "md5Matches": true,
+              "bytes": 3733797,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/dry-grass--polyhaven--sparse-grass/normal.jpg",
+              "keptBytes": 694384,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/sparse_grass/sparse_grass_nor_gl_2k.jpg",
+              "md5": "8ec54ff3b639e6e044ea83792d7c49b0",
+              "md5Listed": "8ec54ff3b639e6e044ea83792d7c49b0",
+              "md5Matches": true,
+              "bytes": 5892473,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/dry-grass--polyhaven--sparse-grass/rough.jpg",
+              "keptBytes": 153804,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/sparse_grass/sparse_grass_rough_2k.jpg",
+              "md5": "446cbe6254b1b210de44ef7c53da6204",
+              "md5Listed": "446cbe6254b1b210de44ef7c53da6204",
+              "md5Matches": true,
+              "bytes": 1729786,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/dry-grass--polyhaven--sparse-grass/height.jpg",
+              "keptBytes": 301416,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/sparse_grass/sparse_grass_disp_2k.jpg",
+              "md5": "eee6c221c24fa7825cea74df55be6a91",
+              "md5Listed": "eee6c221c24fa7825cea74df55be6a91",
+              "md5Matches": true,
+              "bytes": 2312240,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          }
+        },
+        {
+          "library": "polyhaven",
+          "id": "withered_grass",
+          "name": "Withered Grass",
+          "page": "https://polyhaven.com/a/withered_grass",
+          "category": "Ground & Terrain/Grass & Vegetation/Dry & Sparse Grass",
+          "tags": [
+            "old",
+            "weathered",
+            "grass",
+            "dead grass",
+            "discolored",
+            "driedup",
+            "dry"
+          ],
+          "aerial": false,
+          "groundMm": [
+            1999.9996423721313,
+            1999.9996423721313
+          ],
+          "searchRank": 9,
+          "downloads": 8853,
+          "dir": "candidates/dry-grass--polyhaven--withered-grass",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/dry-grass--polyhaven--withered-grass/color.jpg",
+              "keptBytes": 546277,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/withered_grass/withered_grass_diff_2k.jpg",
+              "md5": "503d5c7262c46351e5b0acdcc90dd30b",
+              "md5Listed": "503d5c7262c46351e5b0acdcc90dd30b",
+              "md5Matches": true,
+              "bytes": 4632786,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/dry-grass--polyhaven--withered-grass/normal.jpg",
+              "keptBytes": 706068,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/withered_grass/withered_grass_nor_gl_2k.jpg",
+              "md5": "dd239e55b44c9b9bb0e9f1e145bf3a22",
+              "md5Listed": "dd239e55b44c9b9bb0e9f1e145bf3a22",
+              "md5Matches": true,
+              "bytes": 6194953,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/dry-grass--polyhaven--withered-grass/rough.jpg",
+              "keptBytes": 416549,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/withered_grass/withered_grass_rough_2k.jpg",
+              "md5": "5c065d1438f6d74ec9c67bf8051430fd",
+              "md5Listed": "5c065d1438f6d74ec9c67bf8051430fd",
+              "md5Matches": true,
+              "bytes": 3666367,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/dry-grass--polyhaven--withered-grass/height.jpg",
+              "keptBytes": 306149,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/withered_grass/withered_grass_disp_2k.jpg",
+              "md5": "79a099429fb43c8557d223ba4fed887b",
+              "md5Listed": "79a099429fb43c8557d223ba4fed887b",
+              "md5Matches": true,
+              "bytes": 2432965,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          }
+        },
+        {
+          "library": "polyhaven",
+          "id": "riet_01",
+          "name": "Riet 01",
+          "page": "https://polyhaven.com/a/riet_01",
+          "category": "Organic/Thatch & Reed/Reed & Straw",
+          "tags": [
+            "reed",
+            "grey",
+            "old",
+            "village",
+            "straw",
+            "hut",
+            "thatch",
+            "rural",
+            "medieval"
+          ],
+          "aerial": false,
+          "groundMm": [
+            2500,
+            2500
+          ],
+          "searchRank": null,
+          "downloads": 34013,
+          "dir": "candidates/dry-grass--polyhaven--riet-01",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/dry-grass--polyhaven--riet-01/color.jpg",
+              "keptBytes": 623807,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/riet_01/riet_01_diff_2k.jpg",
+              "md5": "5992cb4d0065e3bfdb83fde0d7982594",
+              "md5Listed": "5992cb4d0065e3bfdb83fde0d7982594",
+              "md5Matches": true,
+              "bytes": 2630988,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/dry-grass--polyhaven--riet-01/normal.jpg",
+              "keptBytes": 470726,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/riet_01/riet_01_nor_gl_2k.jpg",
+              "md5": "8f758097b0b12879d4da599abdf84eb3",
+              "md5Listed": "8f758097b0b12879d4da599abdf84eb3",
+              "md5Matches": true,
+              "bytes": 1945994,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/dry-grass--polyhaven--riet-01/rough.jpg",
+              "keptBytes": 510514,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/riet_01/riet_01_rough_2k.jpg",
+              "md5": "edd4a290bb5ff2b7c1b6fba59915e150",
+              "md5Listed": "edd4a290bb5ff2b7c1b6fba59915e150",
+              "md5Matches": true,
+              "bytes": 2221038,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/dry-grass--polyhaven--riet-01/height.jpg",
+              "keptBytes": 132382,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/riet_01/riet_01_disp_2k.jpg",
+              "md5": "850cd492373782edf4a6263d8d791378",
+              "md5Listed": "850cd492373782edf4a6263d8d791378",
+              "md5Matches": true,
+              "bytes": 457782,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          }
+        },
+        {
+          "library": "ambientcg",
+          "id": "Grass005",
+          "name": "Grass 005",
+          "page": "https://ambientcg.com/view?id=Grass005",
+          "tags": [
+            "5",
+            "clean",
+            "grass",
+            "green",
+            "lawn",
+            "short"
+          ],
+          "groundMm": null,
+          "dimensionX": 0,
+          "dimensionY": 0,
+          "zipGuessed": false,
+          "dir": "candidates/dry-grass--ambientcg--grass005",
+          "license": "Creative Commons CC0 1.0 Universal License . The Creative Commons CC0 license gives you near limitless freedom to use the materials, models and other assets: Creative Commons CC0 License licensed under the Creative Commons CC0 1.0 Universal License.",
+          "licensePage": "https://docs.ambientcg.com/license/",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/dry-grass--ambientcg--grass005/color.jpg",
+              "keptBytes": 736707,
+              "url": "https://ambientcg.com/get?file=Grass005_2K-JPG.zip",
+              "inZip": "Grass005_2K-JPG_Color.jpg",
+              "zipMd5": "971e64484b713e77fdb1fe992ad75f6d",
+              "zipBytes": 39523019,
+              "bytes": 7710363
+            },
+            "normal": {
+              "file": "candidates/dry-grass--ambientcg--grass005/normal.jpg",
+              "keptBytes": 1025239,
+              "url": "https://ambientcg.com/get?file=Grass005_2K-JPG.zip",
+              "inZip": "Grass005_2K-JPG_NormalGL.jpg",
+              "zipMd5": "971e64484b713e77fdb1fe992ad75f6d",
+              "zipBytes": 39523019,
+              "bytes": 9634506
+            },
+            "rough": {
+              "file": "candidates/dry-grass--ambientcg--grass005/rough.jpg",
+              "keptBytes": 470165,
+              "url": "https://ambientcg.com/get?file=Grass005_2K-JPG.zip",
+              "inZip": "Grass005_2K-JPG_Roughness.jpg",
+              "zipMd5": "971e64484b713e77fdb1fe992ad75f6d",
+              "zipBytes": 39523019,
+              "bytes": 3473702
+            },
+            "height": {
+              "file": "candidates/dry-grass--ambientcg--grass005/height.jpg",
+              "keptBytes": 439465,
+              "url": "https://ambientcg.com/get?file=Grass005_2K-JPG.zip",
+              "inZip": "Grass005_2K-JPG_Displacement.jpg",
+              "zipMd5": "971e64484b713e77fdb1fe992ad75f6d",
+              "zipBytes": 39523019,
+              "bytes": 3275876
+            }
+          }
+        },
+        {
+          "library": "ambientcg",
+          "id": "Grass004",
+          "name": "Grass 004",
+          "page": "https://ambientcg.com/view?id=Grass004",
+          "tags": [
+            "004",
+            "4",
+            "dense",
+            "garden",
+            "grass",
+            "grass004",
+            "green",
+            "ground",
+            "lawn",
+            "lush",
+            "natural",
+            "park",
+            "short",
+            "soft",
+            "suburban"
+          ],
+          "groundMm": null,
+          "dimensionX": 140,
+          "dimensionY": 140,
+          "zipGuessed": false,
+          "dir": "candidates/dry-grass--ambientcg--grass004",
+          "license": "Creative Commons CC0 1.0 Universal License . The Creative Commons CC0 license gives you near limitless freedom to use the materials, models and other assets: Creative Commons CC0 License licensed under the Creative Commons CC0 1.0 Universal License.",
+          "licensePage": "https://docs.ambientcg.com/license/",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/dry-grass--ambientcg--grass004/color.jpg",
+              "keptBytes": 820809,
+              "url": "https://ambientcg.com/get?file=Grass004_2K-JPG.zip",
+              "inZip": "Grass004_2K-JPG_Color.jpg",
+              "zipMd5": "993b8a03c77c3d0b6a7f08d59bd367a5",
+              "zipBytes": 39900302,
+              "bytes": 7644307
+            },
+            "normal": {
+              "file": "candidates/dry-grass--ambientcg--grass004/normal.jpg",
+              "keptBytes": 1226371,
+              "url": "https://ambientcg.com/get?file=Grass004_2K-JPG.zip",
+              "inZip": "Grass004_2K-JPG_NormalGL.jpg",
+              "zipMd5": "993b8a03c77c3d0b6a7f08d59bd367a5",
+              "zipBytes": 39900302,
+              "bytes": 10015079
+            },
+            "rough": {
+              "file": "candidates/dry-grass--ambientcg--grass004/rough.jpg",
+              "keptBytes": 470407,
+              "url": "https://ambientcg.com/get?file=Grass004_2K-JPG.zip",
+              "inZip": "Grass004_2K-JPG_Roughness.jpg",
+              "zipMd5": "993b8a03c77c3d0b6a7f08d59bd367a5",
+              "zipBytes": 39900302,
+              "bytes": 3413801
+            },
+            "height": {
+              "file": "candidates/dry-grass--ambientcg--grass004/height.jpg",
+              "keptBytes": 527657,
+              "url": "https://ambientcg.com/get?file=Grass004_2K-JPG.zip",
+              "inZip": "Grass004_2K-JPG_Displacement.jpg",
+              "zipMd5": "993b8a03c77c3d0b6a7f08d59bd367a5",
+              "zipBytes": 39900302,
+              "bytes": 3491166
+            }
+          }
+        }
+      ]
+    },
+    "green-grass": {
+      "words": "short green grass on a slope",
+      "candidates": [
+        {
+          "library": "polyhaven",
+          "id": "grass_ground",
+          "name": "Grass Ground",
+          "page": "https://polyhaven.com/a/grass_ground",
+          "category": "Ground & Terrain/Grass & Vegetation/Dry & Sparse Grass",
+          "tags": [
+            "grass",
+            "dry grass",
+            "dirt",
+            "root",
+            "dead grass",
+            "turf",
+            "dry"
+          ],
+          "aerial": false,
+          "groundMm": [
+            2509.999990463257,
+            2509.999990463257
+          ],
+          "searchRank": 0,
+          "downloads": 21533,
+          "dir": "candidates/dry-grass--polyhaven--grass-ground",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/dry-grass--polyhaven--grass-ground/color.jpg",
+              "keptBytes": 359984,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/grass_ground/grass_ground_diff_2k.jpg",
+              "md5": "fd97f2402677e6686b2d9159fc3a4256",
+              "md5Listed": "fd97f2402677e6686b2d9159fc3a4256",
+              "md5Matches": true,
+              "bytes": 3787330,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/dry-grass--polyhaven--grass-ground/normal.jpg",
+              "keptBytes": 593157,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/grass_ground/grass_ground_nor_gl_2k.jpg",
+              "md5": "c8b2dd95f09868c4aacb91f62c673344",
+              "md5Listed": "c8b2dd95f09868c4aacb91f62c673344",
+              "md5Matches": true,
+              "bytes": 5968024,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/dry-grass--polyhaven--grass-ground/rough.jpg",
+              "keptBytes": 65548,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/grass_ground/grass_ground_rough_2k.jpg",
+              "md5": "0685285b42a7110ce0876f676a2f79c2",
+              "md5Listed": "0685285b42a7110ce0876f676a2f79c2",
+              "md5Matches": true,
+              "bytes": 1525000,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/dry-grass--polyhaven--grass-ground/height.jpg",
+              "keptBytes": 315678,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/grass_ground/grass_ground_disp_2k.jpg",
+              "md5": "4e924088734d7e63ad0badeb821b184d",
+              "md5Listed": "4e924088734d7e63ad0badeb821b184d",
+              "md5Matches": true,
+              "bytes": 2667246,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          },
+          "alsoFor": true
+        },
+        {
+          "library": "polyhaven",
+          "id": "leafy_grass",
+          "name": "Leafy Grass",
+          "page": "https://polyhaven.com/a/leafy_grass",
+          "category": "Ground & Terrain/Grass & Vegetation/Lush & Green Grass",
+          "tags": [
+            "grass",
+            "green",
+            "nature",
+            "ground",
+            "foliage",
+            "leaves",
+            "plants",
+            "outdoors",
+            "twigs",
+            "sticks",
+            "trampled"
+          ],
+          "aerial": false,
+          "groundMm": [
+            2000,
+            2000
+          ],
+          "searchRank": 1,
+          "downloads": 99144,
+          "dir": "candidates/green-grass--polyhaven--leafy-grass",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/green-grass--polyhaven--leafy-grass/color.jpg",
+              "keptBytes": 542601,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/leafy_grass/leafy_grass_diff_2k.jpg",
+              "md5": "8014f4dace676a62ed71b3dd76119dae",
+              "md5Listed": "8014f4dace676a62ed71b3dd76119dae",
+              "md5Matches": true,
+              "bytes": 4766204,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/green-grass--polyhaven--leafy-grass/normal.jpg",
+              "keptBytes": 710118,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/leafy_grass/leafy_grass_nor_gl_2k.jpg",
+              "md5": "ea5e91abe01dc5e5d7028c68c3bc9194",
+              "md5Listed": "ea5e91abe01dc5e5d7028c68c3bc9194",
+              "md5Matches": true,
+              "bytes": 6047262,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/green-grass--polyhaven--leafy-grass/rough.jpg",
+              "keptBytes": 179404,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/leafy_grass/leafy_grass_rough_2k.jpg",
+              "md5": "b5c551ed91162aab5afbfb03b73ae3f5",
+              "md5Listed": "b5c551ed91162aab5afbfb03b73ae3f5",
+              "md5Matches": true,
+              "bytes": 2274652,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/green-grass--polyhaven--leafy-grass/height.jpg",
+              "keptBytes": 328097,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/leafy_grass/leafy_grass_disp_2k.jpg",
+              "md5": "9c0a5f6c375be590bda0c28e2c1dfa2a",
+              "md5Listed": "9c0a5f6c375be590bda0c28e2c1dfa2a",
+              "md5Matches": true,
+              "bytes": 2545281,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          }
+        },
+        {
+          "library": "polyhaven",
+          "id": "sparse_grass",
+          "name": "Sparse Grass",
+          "page": "https://polyhaven.com/a/sparse_grass",
+          "category": "Ground & Terrain/Grass & Vegetation/Dry & Sparse Grass",
+          "tags": [
+            "grass",
+            "nature",
+            "sparse",
+            "roots",
+            "root",
+            "vegetation",
+            "greenery",
+            "landscape",
+            "soil",
+            "environment",
+            "dirt",
+            "plants",
+            "ground",
+            "growth",
+            "flora"
+          ],
+          "aerial": false,
+          "groundMm": [
+            2000,
+            2000
+          ],
+          "searchRank": 5,
+          "downloads": 48473,
+          "dir": "candidates/dry-grass--polyhaven--sparse-grass",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/dry-grass--polyhaven--sparse-grass/color.jpg",
+              "keptBytes": 387987,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/sparse_grass/sparse_grass_diff_2k.jpg",
+              "md5": "b181e9c61bae87c1bb9b14eecd767d65",
+              "md5Listed": "b181e9c61bae87c1bb9b14eecd767d65",
+              "md5Matches": true,
+              "bytes": 3733797,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/dry-grass--polyhaven--sparse-grass/normal.jpg",
+              "keptBytes": 694384,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/sparse_grass/sparse_grass_nor_gl_2k.jpg",
+              "md5": "8ec54ff3b639e6e044ea83792d7c49b0",
+              "md5Listed": "8ec54ff3b639e6e044ea83792d7c49b0",
+              "md5Matches": true,
+              "bytes": 5892473,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/dry-grass--polyhaven--sparse-grass/rough.jpg",
+              "keptBytes": 153804,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/sparse_grass/sparse_grass_rough_2k.jpg",
+              "md5": "446cbe6254b1b210de44ef7c53da6204",
+              "md5Listed": "446cbe6254b1b210de44ef7c53da6204",
+              "md5Matches": true,
+              "bytes": 1729786,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/dry-grass--polyhaven--sparse-grass/height.jpg",
+              "keptBytes": 301416,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/sparse_grass/sparse_grass_disp_2k.jpg",
+              "md5": "eee6c221c24fa7825cea74df55be6a91",
+              "md5Listed": "eee6c221c24fa7825cea74df55be6a91",
+              "md5Matches": true,
+              "bytes": 2312240,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          },
+          "alsoFor": true
+        },
+        {
+          "library": "polyhaven",
+          "id": "withered_grass",
+          "name": "Withered Grass",
+          "page": "https://polyhaven.com/a/withered_grass",
+          "category": "Ground & Terrain/Grass & Vegetation/Dry & Sparse Grass",
+          "tags": [
+            "old",
+            "weathered",
+            "grass",
+            "dead grass",
+            "discolored",
+            "driedup",
+            "dry"
+          ],
+          "aerial": false,
+          "groundMm": [
+            1999.9996423721313,
+            1999.9996423721313
+          ],
+          "searchRank": 9,
+          "downloads": 8853,
+          "dir": "candidates/dry-grass--polyhaven--withered-grass",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/dry-grass--polyhaven--withered-grass/color.jpg",
+              "keptBytes": 546277,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/withered_grass/withered_grass_diff_2k.jpg",
+              "md5": "503d5c7262c46351e5b0acdcc90dd30b",
+              "md5Listed": "503d5c7262c46351e5b0acdcc90dd30b",
+              "md5Matches": true,
+              "bytes": 4632786,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/dry-grass--polyhaven--withered-grass/normal.jpg",
+              "keptBytes": 706068,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/withered_grass/withered_grass_nor_gl_2k.jpg",
+              "md5": "dd239e55b44c9b9bb0e9f1e145bf3a22",
+              "md5Listed": "dd239e55b44c9b9bb0e9f1e145bf3a22",
+              "md5Matches": true,
+              "bytes": 6194953,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/dry-grass--polyhaven--withered-grass/rough.jpg",
+              "keptBytes": 416549,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/withered_grass/withered_grass_rough_2k.jpg",
+              "md5": "5c065d1438f6d74ec9c67bf8051430fd",
+              "md5Listed": "5c065d1438f6d74ec9c67bf8051430fd",
+              "md5Matches": true,
+              "bytes": 3666367,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/dry-grass--polyhaven--withered-grass/height.jpg",
+              "keptBytes": 306149,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/withered_grass/withered_grass_disp_2k.jpg",
+              "md5": "79a099429fb43c8557d223ba4fed887b",
+              "md5Listed": "79a099429fb43c8557d223ba4fed887b",
+              "md5Matches": true,
+              "bytes": 2432965,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          },
+          "alsoFor": true
+        },
+        {
+          "library": "ambientcg",
+          "id": "Grass001",
+          "name": "Grass 001",
+          "page": "https://ambientcg.com/view?id=Grass001",
+          "tags": [
+            "001",
+            "1",
+            "cover",
+            "dark",
+            "dense",
+            "fresh",
+            "garden",
+            "grass",
+            "grass001",
+            "green",
+            "ground",
+            "lawn",
+            "natural",
+            "park",
+            "short",
+            "soft"
+          ],
+          "groundMm": null,
+          "dimensionX": 140,
+          "dimensionY": 140,
+          "zipGuessed": false,
+          "dir": "candidates/green-grass--ambientcg--grass001",
+          "license": "Creative Commons CC0 1.0 Universal License . The Creative Commons CC0 license gives you near limitless freedom to use the materials, models and other assets: Creative Commons CC0 License licensed under the Creative Commons CC0 1.0 Universal License.",
+          "licensePage": "https://docs.ambientcg.com/license/",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/green-grass--ambientcg--grass001/color.jpg",
+              "keptBytes": 629067,
+              "url": "https://ambientcg.com/get?file=Grass001_2K-JPG.zip",
+              "inZip": "Grass001_2K-JPG_Color.jpg",
+              "zipMd5": "e80ac9bf7cc4e81ee1802ed68d03a8a5",
+              "zipBytes": 38930280,
+              "bytes": 6953345
+            },
+            "normal": {
+              "file": "candidates/green-grass--ambientcg--grass001/normal.jpg",
+              "keptBytes": 1223636,
+              "url": "https://ambientcg.com/get?file=Grass001_2K-JPG.zip",
+              "inZip": "Grass001_2K-JPG_NormalGL.jpg",
+              "zipMd5": "e80ac9bf7cc4e81ee1802ed68d03a8a5",
+              "zipBytes": 38930280,
+              "bytes": 9979388
+            },
+            "rough": {
+              "file": "candidates/green-grass--ambientcg--grass001/rough.jpg",
+              "keptBytes": 437445,
+              "url": "https://ambientcg.com/get?file=Grass001_2K-JPG.zip",
+              "inZip": "Grass001_2K-JPG_Roughness.jpg",
+              "zipMd5": "e80ac9bf7cc4e81ee1802ed68d03a8a5",
+              "zipBytes": 38930280,
+              "bytes": 3286058
+            },
+            "height": {
+              "file": "candidates/green-grass--ambientcg--grass001/height.jpg",
+              "keptBytes": 522048,
+              "url": "https://ambientcg.com/get?file=Grass001_2K-JPG.zip",
+              "inZip": "Grass001_2K-JPG_Displacement.jpg",
+              "zipMd5": "e80ac9bf7cc4e81ee1802ed68d03a8a5",
+              "zipBytes": 38930280,
+              "bytes": 3460522
+            }
+          }
+        },
+        {
+          "library": "ambientcg",
+          "id": "Ground037",
+          "name": "Ground 037",
+          "page": "https://ambientcg.com/view?id=Ground037",
+          "tags": [
+            "037",
+            "37",
+            "damp",
+            "earth",
+            "forest",
+            "grass",
+            "green",
+            "ground",
+            "moss",
+            "natural",
+            "overgrown",
+            "rough",
+            "woodland"
+          ],
+          "groundMm": null,
+          "dimensionX": 210,
+          "dimensionY": 210,
+          "zipGuessed": false,
+          "dir": "candidates/green-grass--ambientcg--ground037",
+          "license": "Creative Commons CC0 1.0 Universal License . The Creative Commons CC0 license gives you near limitless freedom to use the materials, models and other assets: Creative Commons CC0 License licensed under the Creative Commons CC0 1.0 Universal License.",
+          "licensePage": "https://docs.ambientcg.com/license/",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/green-grass--ambientcg--ground037/color.jpg",
+              "keptBytes": 930165,
+              "url": "https://ambientcg.com/get?file=Ground037_2K-JPG.zip",
+              "inZip": "Ground037_2K-JPG_Color.jpg",
+              "zipMd5": "d69bd32490904c41088170b251fcc172",
+              "zipBytes": 37874033,
+              "bytes": 8674228
+            },
+            "normal": {
+              "file": "candidates/green-grass--ambientcg--ground037/normal.jpg",
+              "keptBytes": 1258254,
+              "url": "https://ambientcg.com/get?file=Ground037_2K-JPG.zip",
+              "inZip": "Ground037_2K-JPG_NormalGL.jpg",
+              "zipMd5": "d69bd32490904c41088170b251fcc172",
+              "zipBytes": 37874033,
+              "bytes": 10341826
+            },
+            "rough": {
+              "file": "candidates/green-grass--ambientcg--ground037/rough.jpg",
+              "keptBytes": 335473,
+              "url": "https://ambientcg.com/get?file=Ground037_2K-JPG.zip",
+              "inZip": "Ground037_2K-JPG_Roughness.jpg",
+              "zipMd5": "d69bd32490904c41088170b251fcc172",
+              "zipBytes": 37874033,
+              "bytes": 3058522
+            },
+            "height": {
+              "file": "candidates/green-grass--ambientcg--ground037/height.jpg",
+              "keptBytes": 163882,
+              "url": "https://ambientcg.com/get?file=Ground037_2K-JPG.zip",
+              "inZip": "Ground037_2K-JPG_Displacement.jpg",
+              "zipMd5": "d69bd32490904c41088170b251fcc172",
+              "zipBytes": 37874033,
+              "bytes": 1721182
+            }
+          }
+        }
+      ]
+    },
+    "scrub-litter": {
+      "words": "the litter and bare soil under grey-green sage scrub",
+      "candidates": [
+        {
+          "library": "polyhaven",
+          "id": "dry_decay_leaves",
+          "name": "Dry Decay Leaves",
+          "page": "https://polyhaven.com/a/dry_decay_leaves",
+          "category": "Ground & Terrain/Forest Floor/Leaf Litter",
+          "tags": [
+            "leaves",
+            "forest",
+            "dry",
+            "sticks",
+            "winter",
+            "dead grass",
+            "twigs",
+            "nature",
+            "leaf litter",
+            "organic"
+          ],
+          "aerial": false,
+          "groundMm": [
+            2000,
+            2000
+          ],
+          "searchRank": 0,
+          "downloads": 13121,
+          "dir": "candidates/scrub-litter--polyhaven--dry-decay-leaves",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/scrub-litter--polyhaven--dry-decay-leaves/color.jpg",
+              "keptBytes": 289311,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dry_decay_leaves/dry_decay_leaves_diff_2k.jpg",
+              "md5": "922abbf4d0910b1557e13695306c3f7d",
+              "md5Listed": "922abbf4d0910b1557e13695306c3f7d",
+              "md5Matches": true,
+              "bytes": 2856071,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/scrub-litter--polyhaven--dry-decay-leaves/normal.jpg",
+              "keptBytes": 459205,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dry_decay_leaves/dry_decay_leaves_nor_gl_2k.jpg",
+              "md5": "d738a242d0b12ba5da47d705622b585b",
+              "md5Listed": "d738a242d0b12ba5da47d705622b585b",
+              "md5Matches": true,
+              "bytes": 3920921,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/scrub-litter--polyhaven--dry-decay-leaves/rough.jpg",
+              "keptBytes": 207598,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dry_decay_leaves/dry_decay_leaves_rough_2k.jpg",
+              "md5": "68ad9d61963e5c0349887b71be162f84",
+              "md5Listed": "68ad9d61963e5c0349887b71be162f84",
+              "md5Matches": true,
+              "bytes": 1962109,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/scrub-litter--polyhaven--dry-decay-leaves/height.jpg",
+              "keptBytes": 171054,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dry_decay_leaves/dry_decay_leaves_disp_2k.jpg",
+              "md5": "f60637cb8d8b4941aece306b5fc45c9c",
+              "md5Listed": "f60637cb8d8b4941aece306b5fc45c9c",
+              "md5Matches": true,
+              "bytes": 1191385,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          }
+        },
+        {
+          "library": "polyhaven",
+          "id": "forest_ground_05",
+          "name": "Forest Ground 05",
+          "page": "https://polyhaven.com/a/forest_ground_05",
+          "category": "Ground & Terrain/Forest Floor/Forest Soil",
+          "tags": [
+            "rough",
+            "uneven",
+            "dirt",
+            "soil",
+            "compact soil",
+            "scattered rocks",
+            "scattered leaves",
+            "forest debris",
+            "organic matter",
+            "leaf litter",
+            "forest floor",
+            "earthy",
+            "dry soil",
+            "natural path",
+            "hikers trail"
+          ],
+          "aerial": false,
+          "groundMm": [
+            2000,
+            2000
+          ],
+          "searchRank": 1,
+          "downloads": 6055,
+          "dir": "candidates/scrub-litter--polyhaven--forest-ground-05",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/scrub-litter--polyhaven--forest-ground-05/color.jpg",
+              "keptBytes": 240484,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/forest_ground_05/forest_ground_05_diff_2k.jpg",
+              "md5": "ecdf24a0fae46cf53010fdde41086a98",
+              "md5Listed": "ecdf24a0fae46cf53010fdde41086a98",
+              "md5Matches": true,
+              "bytes": 2760081,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/scrub-litter--polyhaven--forest-ground-05/normal.jpg",
+              "keptBytes": 512589,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/forest_ground_05/forest_ground_05_nor_gl_2k.jpg",
+              "md5": "2785228c8cc88a8ea518506db16a0ac0",
+              "md5Listed": "2785228c8cc88a8ea518506db16a0ac0",
+              "md5Matches": true,
+              "bytes": 4830561,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/scrub-litter--polyhaven--forest-ground-05/rough.jpg",
+              "keptBytes": 74004,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/forest_ground_05/forest_ground_05_rough_2k.jpg",
+              "md5": "73408c1237dd37df61cd0f0ccbdd44ee",
+              "md5Listed": "73408c1237dd37df61cd0f0ccbdd44ee",
+              "md5Matches": true,
+              "bytes": 1452625,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/scrub-litter--polyhaven--forest-ground-05/height.jpg",
+              "keptBytes": 153400,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/forest_ground_05/forest_ground_05_disp_2k.jpg",
+              "md5": "c31f972d9cdc702a72ab40156599bf5b",
+              "md5Listed": "c31f972d9cdc702a72ab40156599bf5b",
+              "md5Matches": true,
+              "bytes": 1296721,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          }
+        },
+        {
+          "library": "polyhaven",
+          "id": "forest_ground_06",
+          "name": "Forest Ground 06",
+          "page": "https://polyhaven.com/a/forest_ground_06",
+          "category": "Ground & Terrain/Forest Floor/Forest Soil",
+          "tags": [
+            "dirt",
+            "dirty",
+            "soil",
+            "compact soil",
+            "loose earth",
+            "scattered leaves",
+            "forest soil",
+            "forest",
+            "scattered rocks",
+            "forest debris",
+            "pathway",
+            "dry soil",
+            "pebbly",
+            "twigs",
+            "leaves",
+            "fallen leaves"
+          ],
+          "aerial": false,
+          "groundMm": [
+            2109.999895095825,
+            2109.999895095825
+          ],
+          "searchRank": 2,
+          "downloads": 23468,
+          "dir": "candidates/scrub-litter--polyhaven--forest-ground-06",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/scrub-litter--polyhaven--forest-ground-06/color.jpg",
+              "keptBytes": 348146,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/forest_ground_06/forest_ground_06_diff_2k.jpg",
+              "md5": "6891c030533e7af2abd81cb9aecb1eb9",
+              "md5Listed": "6891c030533e7af2abd81cb9aecb1eb9",
+              "md5Matches": true,
+              "bytes": 3375916,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/scrub-litter--polyhaven--forest-ground-06/normal.jpg",
+              "keptBytes": 663013,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/forest_ground_06/forest_ground_06_nor_gl_2k.jpg",
+              "md5": "fe2db5a165f671b893bb583667462670",
+              "md5Listed": "fe2db5a165f671b893bb583667462670",
+              "md5Matches": true,
+              "bytes": 5786341,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/scrub-litter--polyhaven--forest-ground-06/rough.jpg",
+              "keptBytes": 321837,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/forest_ground_06/forest_ground_06_rough_2k.jpg",
+              "md5": "02d52def0737635b968b0110f6357a92",
+              "md5Listed": "02d52def0737635b968b0110f6357a92",
+              "md5Matches": true,
+              "bytes": 2759516,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/scrub-litter--polyhaven--forest-ground-06/height.jpg",
+              "keptBytes": 226467,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/forest_ground_06/forest_ground_06_disp_2k.jpg",
+              "md5": "462a8c4a389fa4faea8f7272e505f282",
+              "md5Listed": "462a8c4a389fa4faea8f7272e505f282",
+              "md5Matches": true,
+              "bytes": 1846804,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          }
+        },
+        {
+          "library": "polyhaven",
+          "id": "forest_leaves_03",
+          "name": "Forest Leaves 03",
+          "page": "https://polyhaven.com/a/forest_leaves_03",
+          "category": "Ground & Terrain/Forest Floor/Leaf Litter",
+          "tags": [
+            "leaves",
+            "autumn",
+            "dry",
+            "nature",
+            "forest",
+            "ground",
+            "cover",
+            "dirt",
+            "debris",
+            "brown",
+            "yellow",
+            "green"
+          ],
+          "aerial": false,
+          "groundMm": [
+            2299.999952316284,
+            2300.0001907348633
+          ],
+          "searchRank": 3,
+          "downloads": 44803,
+          "dir": "candidates/scrub-litter--polyhaven--forest-leaves-03",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/scrub-litter--polyhaven--forest-leaves-03/color.jpg",
+              "keptBytes": 442459,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/forest_leaves_03/forest_leaves_03_diff_2k.jpg",
+              "md5": "61ef4565d2801ab0b8bab48ae4cca022",
+              "md5Listed": "61ef4565d2801ab0b8bab48ae4cca022",
+              "md5Matches": true,
+              "bytes": 3404048,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/scrub-litter--polyhaven--forest-leaves-03/normal.jpg",
+              "keptBytes": 680170,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/forest_leaves_03/forest_leaves_03_nor_gl_2k.jpg",
+              "md5": "61d078ce8d908ca9874e5185a3c938c7",
+              "md5Listed": "61d078ce8d908ca9874e5185a3c938c7",
+              "md5Matches": true,
+              "bytes": 5277984,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/scrub-litter--polyhaven--forest-leaves-03/rough.jpg",
+              "keptBytes": 369450,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/forest_leaves_03/forest_leaves_03_rough_2k.jpg",
+              "md5": "fc5833c9c3843fac846b17f7767f51f4",
+              "md5Listed": "fc5833c9c3843fac846b17f7767f51f4",
+              "md5Matches": true,
+              "bytes": 2738845,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/scrub-litter--polyhaven--forest-leaves-03/height.jpg",
+              "keptBytes": 170931,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/forest_leaves_03/forest_leaves_03_disp_2k.jpg",
+              "md5": "61841b278a4e97fa0919c53e6e72a8c0",
+              "md5Listed": "61841b278a4e97fa0919c53e6e72a8c0",
+              "md5Matches": true,
+              "bytes": 1143011,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          }
+        },
+        {
+          "library": "ambientcg",
+          "id": "Ground106",
+          "name": "Ground 106",
+          "page": "https://ambientcg.com/view?id=Ground106",
+          "tags": [
+            "106",
+            "beige",
+            "brown",
+            "dirt",
+            "earth",
+            "forest",
+            "ground",
+            "ground106",
+            "leaves",
+            "mud",
+            "muddy",
+            "natural",
+            "river",
+            "riverbed",
+            "rough",
+            "scattered",
+            "soil",
+            "uneven"
+          ],
+          "groundMm": null,
+          "dimensionX": 250,
+          "dimensionY": 250,
+          "zipGuessed": false,
+          "dir": "candidates/scrub-litter--ambientcg--ground106",
+          "license": "Creative Commons CC0 1.0 Universal License . The Creative Commons CC0 license gives you near limitless freedom to use the materials, models and other assets: Creative Commons CC0 License licensed under the Creative Commons CC0 1.0 Universal License.",
+          "licensePage": "https://docs.ambientcg.com/license/",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/scrub-litter--ambientcg--ground106/color.jpg",
+              "keptBytes": 558662,
+              "url": "https://ambientcg.com/get?file=Ground106_2K-JPG.zip",
+              "inZip": "Ground106_2K-JPG_Color.jpg",
+              "zipMd5": "61ac496b9461573181a25d408fd50fb5",
+              "zipBytes": 34247201,
+              "bytes": 6367252
+            },
+            "normal": {
+              "file": "candidates/scrub-litter--ambientcg--ground106/normal.jpg",
+              "keptBytes": 965652,
+              "url": "https://ambientcg.com/get?file=Ground106_2K-JPG.zip",
+              "inZip": "Ground106_2K-JPG_NormalGL.jpg",
+              "zipMd5": "61ac496b9461573181a25d408fd50fb5",
+              "zipBytes": 34247201,
+              "bytes": 9047576
+            },
+            "rough": {
+              "file": "candidates/scrub-litter--ambientcg--ground106/rough.jpg",
+              "keptBytes": 328469,
+              "url": "https://ambientcg.com/get?file=Ground106_2K-JPG.zip",
+              "inZip": "Ground106_2K-JPG_Roughness.jpg",
+              "zipMd5": "61ac496b9461573181a25d408fd50fb5",
+              "zipBytes": 34247201,
+              "bytes": 2837148
+            },
+            "height": {
+              "file": "candidates/scrub-litter--ambientcg--ground106/height.jpg",
+              "keptBytes": 205577,
+              "url": "https://ambientcg.com/get?file=Ground106_2K-JPG.zip",
+              "inZip": "Ground106_2K-JPG_Displacement.jpg",
+              "zipMd5": "61ac496b9461573181a25d408fd50fb5",
+              "zipBytes": 34247201,
+              "bytes": 1910114
+            }
+          }
+        },
+        {
+          "library": "ambientcg",
+          "id": "ScatteredLeaves009",
+          "name": "Scattered Leaves 009",
+          "page": "https://ambientcg.com/view?id=ScatteredLeaves009",
+          "tags": [
+            "009",
+            "9",
+            "autumn",
+            "brown",
+            "cover",
+            "dry",
+            "fallen",
+            "forest",
+            "green",
+            "ground",
+            "leaves",
+            "natural",
+            "rough",
+            "scattered",
+            "scatteredleaves009",
+            "yellow"
+          ],
+          "groundMm": null,
+          "dimensionX": 170,
+          "dimensionY": 170,
+          "zipGuessed": false,
+          "dir": "candidates/scrub-litter--ambientcg--scatteredleaves009",
+          "license": "Creative Commons CC0 1.0 Universal License . The Creative Commons CC0 license gives you near limitless freedom to use the materials, models and other assets: Creative Commons CC0 License licensed under the Creative Commons CC0 1.0 Universal License.",
+          "licensePage": "https://docs.ambientcg.com/license/",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/scrub-litter--ambientcg--scatteredleaves009/color.jpg",
+              "keptBytes": 706687,
+              "url": "https://ambientcg.com/get?file=ScatteredLeaves009_2K-JPG.zip",
+              "inZip": "ScatteredLeaves009_2K-JPG_Color.jpg",
+              "zipMd5": "5f49905b72c9ee6aecf4ee23d880ef80",
+              "zipBytes": 37990728,
+              "bytes": 6959852
+            },
+            "normal": {
+              "file": "candidates/scrub-litter--ambientcg--scatteredleaves009/normal.jpg",
+              "keptBytes": 1179745,
+              "url": "https://ambientcg.com/get?file=ScatteredLeaves009_2K-JPG.zip",
+              "inZip": "ScatteredLeaves009_2K-JPG_NormalGL.jpg",
+              "zipMd5": "5f49905b72c9ee6aecf4ee23d880ef80",
+              "zipBytes": 37990728,
+              "bytes": 9566714
+            },
+            "rough": {
+              "file": "candidates/scrub-litter--ambientcg--scatteredleaves009/rough.jpg",
+              "keptBytes": 446188,
+              "url": "https://ambientcg.com/get?file=ScatteredLeaves009_2K-JPG.zip",
+              "inZip": "ScatteredLeaves009_2K-JPG_Roughness.jpg",
+              "zipMd5": "5f49905b72c9ee6aecf4ee23d880ef80",
+              "zipBytes": 37990728,
+              "bytes": 3318828
+            },
+            "height": {
+              "file": "candidates/scrub-litter--ambientcg--scatteredleaves009/height.jpg",
+              "keptBytes": 391557,
+              "url": "https://ambientcg.com/get?file=ScatteredLeaves009_2K-JPG.zip",
+              "inZip": "ScatteredLeaves009_2K-JPG_Displacement.jpg",
+              "zipMd5": "5f49905b72c9ee6aecf4ee23d880ef80",
+              "zipBytes": 37990728,
+              "bytes": 2851316
+            }
+          }
+        }
+      ]
+    },
+    "rock": {
+      "words": "pale grey-tan eroded bare rock",
+      "candidates": [
+        {
+          "library": "polyhaven",
+          "id": "rock_face_03",
+          "name": "Rock Face 03",
+          "page": "https://polyhaven.com/a/rock_face_03",
+          "category": "Stone/Rock & Cliffs/Rough Rock Faces",
+          "tags": [
+            "rough",
+            "rock",
+            "cliff",
+            "uneven",
+            "weathered",
+            "wall",
+            "cracked",
+            "stone",
+            "rock face",
+            "rugged",
+            "chipped",
+            "eroded",
+            "cracks",
+            "rocks"
+          ],
+          "aerial": false,
+          "groundMm": [
+            2699.9995708465576,
+            2699.9995708465576
+          ],
+          "searchRank": 0,
+          "downloads": 188756,
+          "dir": "candidates/rock--polyhaven--rock-face-03",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/rock--polyhaven--rock-face-03/color.jpg",
+              "keptBytes": 385454,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rock_face_03/rock_face_03_diff_2k.jpg",
+              "md5": "657add9e8a8dffaeed19bdfc58078b59",
+              "md5Listed": "657add9e8a8dffaeed19bdfc58078b59",
+              "md5Matches": true,
+              "bytes": 3814362,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/rock--polyhaven--rock-face-03/normal.jpg",
+              "keptBytes": 507079,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rock_face_03/rock_face_03_nor_gl_2k.jpg",
+              "md5": "279b33e71ae6275cafa24e6597024c98",
+              "md5Listed": "279b33e71ae6275cafa24e6597024c98",
+              "md5Matches": true,
+              "bytes": 4473242,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/rock--polyhaven--rock-face-03/rough.jpg",
+              "keptBytes": 245575,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rock_face_03/rock_face_03_rough_2k.jpg",
+              "md5": "8895a8b199487fd6cfeed2fed1fb39b4",
+              "md5Listed": "8895a8b199487fd6cfeed2fed1fb39b4",
+              "md5Matches": true,
+              "bytes": 2601552,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/rock--polyhaven--rock-face-03/height.jpg",
+              "keptBytes": 97922,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rock_face_03/rock_face_03_disp_2k.jpg",
+              "md5": "e7629af66fe9420fe3e73b937f3eba40",
+              "md5Listed": "e7629af66fe9420fe3e73b937f3eba40",
+              "md5Matches": true,
+              "bytes": 798149,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          }
+        },
+        {
+          "library": "polyhaven",
+          "id": "dark_rock_02",
+          "name": "Dark Rock 02",
+          "page": "https://polyhaven.com/a/dark_rock_02",
+          "category": "Stone/Rock & Cliffs/Stratified & Layered Rock",
+          "tags": [
+            "rough",
+            "rock face",
+            "rock",
+            "weathered",
+            "fractured",
+            "stratified",
+            "craggy",
+            "striated",
+            "fissured",
+            "geological",
+            "veined",
+            "weathered rock",
+            "rock formation",
+            "striations",
+            "exposed rock"
+          ],
+          "aerial": false,
+          "groundMm": [
+            2000.9167194366455,
+            2000.917911529541
+          ],
+          "searchRank": 1,
+          "downloads": 12254,
+          "dir": "candidates/rock--polyhaven--dark-rock-02",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/rock--polyhaven--dark-rock-02/color.jpg",
+              "keptBytes": 201725,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dark_rock_02/dark_rock_02_diff_2k.jpg",
+              "md5": "492ae574844fa49cba63aee89ef226d1",
+              "md5Listed": "492ae574844fa49cba63aee89ef226d1",
+              "md5Matches": true,
+              "bytes": 2441558,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/rock--polyhaven--dark-rock-02/normal.jpg",
+              "keptBytes": 426913,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dark_rock_02/dark_rock_02_nor_gl_2k.jpg",
+              "md5": "bfde991c327e33704686fb7ede0561a7",
+              "md5Listed": "bfde991c327e33704686fb7ede0561a7",
+              "md5Matches": true,
+              "bytes": 3870014,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/rock--polyhaven--dark-rock-02/rough.jpg",
+              "keptBytes": 169742,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dark_rock_02/dark_rock_02_rough_2k.jpg",
+              "md5": "b21b552d0b78eb3824ac159b51ddba14",
+              "md5Listed": "b21b552d0b78eb3824ac159b51ddba14",
+              "md5Matches": true,
+              "bytes": 2022528,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/rock--polyhaven--dark-rock-02/height.jpg",
+              "keptBytes": 74928,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dark_rock_02/dark_rock_02_disp_2k.jpg",
+              "md5": "c99ac5efd7bf25184a024f92cb4cccb2",
+              "md5Listed": "c99ac5efd7bf25184a024f92cb4cccb2",
+              "md5Matches": true,
+              "bytes": 609957,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          }
+        },
+        {
+          "library": "polyhaven",
+          "id": "rock_01",
+          "name": "Rock 01",
+          "page": "https://polyhaven.com/a/rock_01",
+          "category": "Stone/Rock & Cliffs/Rough Rock Faces",
+          "tags": [
+            "grey",
+            "smooth",
+            "rock",
+            "stone",
+            "gray",
+            "weathered",
+            "rock face",
+            "solid rock"
+          ],
+          "aerial": false,
+          "groundMm": [
+            1500,
+            1500
+          ],
+          "searchRank": 5,
+          "downloads": 133363,
+          "dir": "candidates/rock--polyhaven--rock-01",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/rock--polyhaven--rock-01/color.jpg",
+              "keptBytes": 550450,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rock_01/rock_01_diff_2k.jpg",
+              "md5": "fd84a894b55e56b17bdfdeec99277f92",
+              "md5Listed": "fd84a894b55e56b17bdfdeec99277f92",
+              "md5Matches": true,
+              "bytes": 3020379,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/rock--polyhaven--rock-01/normal.jpg",
+              "keptBytes": 552382,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rock_01/rock_01_nor_gl_2k.jpg",
+              "md5": "1b75b6018dcaa4a6335b9a9b70352651",
+              "md5Listed": "1b75b6018dcaa4a6335b9a9b70352651",
+              "md5Matches": true,
+              "bytes": 2989093,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/rock--polyhaven--rock-01/rough.jpg",
+              "keptBytes": 283713,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rock_01/rock_01_rough_2k.jpg",
+              "md5": "cdaa2b58562517340a9c9d00757cb71d",
+              "md5Listed": "cdaa2b58562517340a9c9d00757cb71d",
+              "md5Matches": true,
+              "bytes": 1772336,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/rock--polyhaven--rock-01/height.jpg",
+              "keptBytes": 178369,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rock_01/rock_01_disp_2k.jpg",
+              "md5": "19ca38d27b059ba5a66b05e673c25e20",
+              "md5Listed": "19ca38d27b059ba5a66b05e673c25e20",
+              "md5Matches": true,
+              "bytes": 747303,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          }
+        },
+        {
+          "library": "polyhaven",
+          "id": "rock_06",
+          "name": "Rock 06",
+          "page": "https://polyhaven.com/a/rock_06",
+          "category": "Stone/Rock & Cliffs/Stratified & Layered Rock",
+          "tags": [
+            "yellow",
+            "cliff",
+            "rough",
+            "rock face",
+            "solid rock",
+            "rock",
+            "striated",
+            "geological",
+            "exposed rock",
+            "uneven",
+            "weathered rock",
+            "striations"
+          ],
+          "aerial": false,
+          "groundMm": [
+            1500,
+            1500
+          ],
+          "searchRank": 6,
+          "downloads": 81185,
+          "dir": "candidates/rock--polyhaven--rock-06",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/rock--polyhaven--rock-06/color.jpg",
+              "keptBytes": 705487,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rock_06/rock_06_diff_2k.jpg",
+              "md5": "4372f38840b6c9d2f3741bea8c2b292b",
+              "md5Listed": "4372f38840b6c9d2f3741bea8c2b292b",
+              "md5Matches": true,
+              "bytes": 3266219,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/rock--polyhaven--rock-06/normal.jpg",
+              "keptBytes": 489172,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rock_06/rock_06_nor_gl_2k.jpg",
+              "md5": "c22b99edea6fc33a5398c88627fc1395",
+              "md5Listed": "c22b99edea6fc33a5398c88627fc1395",
+              "md5Matches": true,
+              "bytes": 2764058,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/rock--polyhaven--rock-06/rough.jpg",
+              "keptBytes": 157073,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rock_06/rock_06_rough_2k.jpg",
+              "md5": "cf31fb05da7e9290959b57f675b4b0e3",
+              "md5Listed": "cf31fb05da7e9290959b57f675b4b0e3",
+              "md5Matches": true,
+              "bytes": 862351,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/rock--polyhaven--rock-06/height.jpg",
+              "keptBytes": 65027,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rock_06/rock_06_disp_2k.jpg",
+              "md5": "be2caa8221ec081db86ce5df31933e1f",
+              "md5Listed": "be2caa8221ec081db86ce5df31933e1f",
+              "md5Matches": true,
+              "bytes": 258145,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          }
+        },
+        {
+          "library": "polyhaven",
+          "id": "rocky_terrain_03",
+          "name": "Rocky Terrain 03",
+          "page": "https://polyhaven.com/a/rocky_terrain_03",
+          "category": "Ground & Terrain/Rocky Ground/Rocky Landscape",
+          "tags": [
+            "rocks",
+            "aerial",
+            "terrain",
+            "landscape",
+            "natural landscape",
+            "nature",
+            "boulders",
+            "landform",
+            "scenic",
+            "uneven terrain",
+            "wilderness",
+            "mountainside",
+            "greenery",
+            "rocky",
+            "ground",
+            "earth",
+            "nature scene"
+          ],
+          "aerial": true,
+          "groundMm": [
+            90000,
+            90000
+          ],
+          "searchRank": 14,
+          "downloads": 32084,
+          "dir": "candidates/rock--polyhaven--rocky-terrain-03",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/rock--polyhaven--rocky-terrain-03/color.jpg",
+              "keptBytes": 405101,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rocky_terrain_03/rocky_terrain_03_diff_2k.jpg",
+              "md5": "99743994191518e4b367e46c21d41d74",
+              "md5Listed": "99743994191518e4b367e46c21d41d74",
+              "md5Matches": true,
+              "bytes": 3670277,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/rock--polyhaven--rocky-terrain-03/normal.jpg",
+              "keptBytes": 563713,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rocky_terrain_03/rocky_terrain_03_nor_gl_2k.jpg",
+              "md5": "3524283e9500080cd04770fbebde7356",
+              "md5Listed": "3524283e9500080cd04770fbebde7356",
+              "md5Matches": true,
+              "bytes": 4761056,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/rock--polyhaven--rocky-terrain-03/rough.jpg",
+              "keptBytes": 149489,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rocky_terrain_03/rocky_terrain_03_rough_2k.jpg",
+              "md5": "3bf328393c999ffca0f1307679268e23",
+              "md5Listed": "3bf328393c999ffca0f1307679268e23",
+              "md5Matches": true,
+              "bytes": 1531494,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/rock--polyhaven--rocky-terrain-03/height.jpg",
+              "keptBytes": 127686,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rocky_terrain_03/rocky_terrain_03_disp_2k.jpg",
+              "md5": "59a058617e0f3ead1c511cda26944ed6",
+              "md5Listed": "59a058617e0f3ead1c511cda26944ed6",
+              "md5Matches": true,
+              "bytes": 961552,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          }
+        },
+        {
+          "library": "ambientcg",
+          "id": "Rock064",
+          "name": "Rock 064",
+          "page": "https://ambientcg.com/view?id=Rock064",
+          "tags": [
+            "064",
+            "64",
+            "forest",
+            "gray",
+            "green",
+            "irregular",
+            "moss",
+            "mossy",
+            "natural",
+            "old",
+            "rock",
+            "rock064",
+            "rough",
+            "stacked",
+            "stone"
+          ],
+          "groundMm": null,
+          "dimensionX": 0,
+          "dimensionY": 0,
+          "zipGuessed": false,
+          "dir": "candidates/rock--ambientcg--rock064",
+          "license": "Creative Commons CC0 1.0 Universal License . The Creative Commons CC0 license gives you near limitless freedom to use the materials, models and other assets: Creative Commons CC0 License licensed under the Creative Commons CC0 1.0 Universal License.",
+          "licensePage": "https://docs.ambientcg.com/license/",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/rock--ambientcg--rock064/color.jpg",
+              "keptBytes": 637253,
+              "url": "https://ambientcg.com/get?file=Rock064_2K-JPG.zip",
+              "inZip": "Rock064_2K-JPG_Color.jpg",
+              "zipMd5": "6bff0ba531988313128c74a4e99c0b34",
+              "zipBytes": 28438777,
+              "bytes": 6635383
+            },
+            "normal": {
+              "file": "candidates/rock--ambientcg--rock064/normal.jpg",
+              "keptBytes": 567254,
+              "url": "https://ambientcg.com/get?file=Rock064_2K-JPG.zip",
+              "inZip": "Rock064_2K-JPG_NormalGL.jpg",
+              "zipMd5": "6bff0ba531988313128c74a4e99c0b34",
+              "zipBytes": 28438777,
+              "bytes": 7152261
+            },
+            "rough": {
+              "file": "candidates/rock--ambientcg--rock064/rough.jpg",
+              "keptBytes": 298833,
+              "url": "https://ambientcg.com/get?file=Rock064_2K-JPG.zip",
+              "inZip": "Rock064_2K-JPG_Roughness.jpg",
+              "zipMd5": "6bff0ba531988313128c74a4e99c0b34",
+              "zipBytes": 28438777,
+              "bytes": 2809510
+            },
+            "height": {
+              "file": "candidates/rock--ambientcg--rock064/height.jpg",
+              "keptBytes": 91098,
+              "url": "https://ambientcg.com/get?file=Rock064_2K-JPG.zip",
+              "inZip": "Rock064_2K-JPG_Displacement.jpg",
+              "zipMd5": "6bff0ba531988313128c74a4e99c0b34",
+              "zipBytes": 28438777,
+              "bytes": 865896
+            }
+          }
+        },
+        {
+          "library": "ambientcg",
+          "id": "Rock063",
+          "name": "Rock 063",
+          "page": "https://ambientcg.com/view?id=Rock063",
+          "tags": [
+            "063",
+            "63",
+            "aged",
+            "cliff",
+            "cracked",
+            "damaged",
+            "dirty",
+            "eroded",
+            "gray",
+            "green",
+            "layered",
+            "mossy",
+            "natural",
+            "outdoor",
+            "rock",
+            "rough",
+            "rustic",
+            "stone"
+          ],
+          "groundMm": null,
+          "dimensionX": 0,
+          "dimensionY": 0,
+          "zipGuessed": false,
+          "dir": "candidates/rock--ambientcg--rock063",
+          "license": "Creative Commons CC0 1.0 Universal License . The Creative Commons CC0 license gives you near limitless freedom to use the materials, models and other assets: Creative Commons CC0 License licensed under the Creative Commons CC0 1.0 Universal License.",
+          "licensePage": "https://docs.ambientcg.com/license/",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/rock--ambientcg--rock063/color.jpg",
+              "keptBytes": 351856,
+              "url": "https://ambientcg.com/get?file=Rock063_2K-JPG.zip",
+              "inZip": "Rock063_2K-JPG_Color.jpg",
+              "zipMd5": "ceda819fa4238e60d2a410071885a167",
+              "zipBytes": 14917993,
+              "bytes": 3436561
+            },
+            "normal": {
+              "file": "candidates/rock--ambientcg--rock063/normal.jpg",
+              "keptBytes": 276663,
+              "url": "https://ambientcg.com/get?file=Rock063_2K-JPG.zip",
+              "inZip": "Rock063_2K-JPG_NormalGL.jpg",
+              "zipMd5": "ceda819fa4238e60d2a410071885a167",
+              "zipBytes": 14917993,
+              "bytes": 3424734
+            },
+            "rough": {
+              "file": "candidates/rock--ambientcg--rock063/rough.jpg",
+              "keptBytes": 158294,
+              "url": "https://ambientcg.com/get?file=Rock063_2K-JPG.zip",
+              "inZip": "Rock063_2K-JPG_Roughness.jpg",
+              "zipMd5": "ceda819fa4238e60d2a410071885a167",
+              "zipBytes": 14917993,
+              "bytes": 1437039
+            },
+            "height": {
+              "file": "candidates/rock--ambientcg--rock063/height.jpg",
+              "keptBytes": 35410,
+              "url": "https://ambientcg.com/get?file=Rock063_2K-JPG.zip",
+              "inZip": "Rock063_2K-JPG_Displacement.jpg",
+              "zipMd5": "ceda819fa4238e60d2a410071885a167",
+              "zipBytes": 14917993,
+              "bytes": 337684
+            }
+          }
+        }
+      ]
+    },
+    "scree": {
+      "words": "loose scree or gravel",
+      "candidates": [
+        {
+          "library": "polyhaven",
+          "id": "sandy_gravel",
+          "name": "Sandy Gravel",
+          "page": "https://polyhaven.com/a/sandy_gravel",
+          "category": "Ground & Terrain/Gravel & Pebbles/Sandy Gravel",
+          "tags": [
+            "rough",
+            "weathered",
+            "stones",
+            "sand",
+            "sandy",
+            "gravel",
+            "gravelly ground",
+            "gravelly texture",
+            "gravelly",
+            "gritty",
+            "coarse"
+          ],
+          "aerial": false,
+          "groundMm": [
+            2099.99942779541,
+            2099.99942779541
+          ],
+          "searchRank": 0,
+          "downloads": 39423,
+          "dir": "candidates/scree--polyhaven--sandy-gravel",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/scree--polyhaven--sandy-gravel/color.jpg",
+              "keptBytes": 328216,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/sandy_gravel/sandy_gravel_diff_2k.jpg",
+              "md5": "0cc676a86082523f9c19c3724f0cbc39",
+              "md5Listed": "0cc676a86082523f9c19c3724f0cbc39",
+              "md5Matches": true,
+              "bytes": 3591270,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/scree--polyhaven--sandy-gravel/normal.jpg",
+              "keptBytes": 499269,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/sandy_gravel/sandy_gravel_nor_gl_2k.jpg",
+              "md5": "59b0adcfb61ce90bf4f8e8eb1471fc50",
+              "md5Listed": "59b0adcfb61ce90bf4f8e8eb1471fc50",
+              "md5Matches": true,
+              "bytes": 5102712,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/scree--polyhaven--sandy-gravel/rough.jpg",
+              "keptBytes": 101727,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/sandy_gravel/sandy_gravel_rough_2k.jpg",
+              "md5": "c5a296e23957f130b1ef6002f295acaf",
+              "md5Listed": "c5a296e23957f130b1ef6002f295acaf",
+              "md5Matches": true,
+              "bytes": 1743127,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/scree--polyhaven--sandy-gravel/height.jpg",
+              "keptBytes": 283894,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/sandy_gravel/sandy_gravel_disp_2k.jpg",
+              "md5": "33f2bb6f67214ba50eed60fb3955c6e8",
+              "md5Listed": "33f2bb6f67214ba50eed60fb3955c6e8",
+              "md5Matches": true,
+              "bytes": 2360987,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          }
+        },
+        {
+          "library": "polyhaven",
+          "id": "sandy_gravel_02",
+          "name": "Sandy Gravel 02",
+          "page": "https://polyhaven.com/a/sandy_gravel_02",
+          "category": "Ground & Terrain/Gravel & Pebbles/Sandy Gravel",
+          "tags": [
+            "terrain",
+            "sand",
+            "gravel",
+            "stony",
+            "gravelly",
+            "dusty",
+            "desert",
+            "ground",
+            "pebbles",
+            "debris"
+          ],
+          "aerial": false,
+          "groundMm": [
+            2529.9999713897705,
+            2529.9999713897705
+          ],
+          "searchRank": 2,
+          "downloads": 54711,
+          "dir": "candidates/scree--polyhaven--sandy-gravel-02",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/scree--polyhaven--sandy-gravel-02/color.jpg",
+              "keptBytes": 411890,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/sandy_gravel_02/sandy_gravel_02_diff_2k.jpg",
+              "md5": "0ae7373189752d85642f589c12093ec2",
+              "md5Listed": "0ae7373189752d85642f589c12093ec2",
+              "md5Matches": true,
+              "bytes": 4097984,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/scree--polyhaven--sandy-gravel-02/normal.jpg",
+              "keptBytes": 514041,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/sandy_gravel_02/sandy_gravel_02_nor_gl_2k.jpg",
+              "md5": "795860c61dd2ae8fb06c90f7cf2a7e39",
+              "md5Listed": "795860c61dd2ae8fb06c90f7cf2a7e39",
+              "md5Matches": true,
+              "bytes": 5311499,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/scree--polyhaven--sandy-gravel-02/rough.jpg",
+              "keptBytes": 84039,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/sandy_gravel_02/sandy_gravel_02_rough_2k.jpg",
+              "md5": "753a7d079971702788c0b2501de65b1a",
+              "md5Listed": "753a7d079971702788c0b2501de65b1a",
+              "md5Matches": true,
+              "bytes": 1732319,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/scree--polyhaven--sandy-gravel-02/height.jpg",
+              "keptBytes": 164832,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/sandy_gravel_02/sandy_gravel_02_disp_2k.jpg",
+              "md5": "80a407836815156ed536f1ece7f042a1",
+              "md5Listed": "80a407836815156ed536f1ece7f042a1",
+              "md5Matches": true,
+              "bytes": 1601158,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          }
+        },
+        {
+          "library": "polyhaven",
+          "id": "gravel_floor_04",
+          "name": "Gravel Floor 04",
+          "page": "https://polyhaven.com/a/gravel_floor_04",
+          "category": "Ground & Terrain/Gravel & Pebbles/Sandy Gravel",
+          "tags": [
+            "rough",
+            "uneven",
+            "granular",
+            "gravel",
+            "gravelly",
+            "coarse",
+            "gritty",
+            "gravelly ground",
+            "stones",
+            "rock fragments",
+            "weathered",
+            "ground",
+            "sand",
+            "sandy",
+            "dusty"
+          ],
+          "aerial": false,
+          "groundMm": [
+            2460.0000381469727,
+            2460.0000381469727
+          ],
+          "searchRank": 6,
+          "downloads": 7835,
+          "dir": "candidates/scree--polyhaven--gravel-floor-04",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/scree--polyhaven--gravel-floor-04/color.jpg",
+              "keptBytes": 418718,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/gravel_floor_04/gravel_floor_04_diff_2k.jpg",
+              "md5": "f6bf2949038a5d8f445c67ad59c77007",
+              "md5Listed": "f6bf2949038a5d8f445c67ad59c77007",
+              "md5Matches": true,
+              "bytes": 3971898,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/scree--polyhaven--gravel-floor-04/normal.jpg",
+              "keptBytes": 582233,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/gravel_floor_04/gravel_floor_04_nor_gl_2k.jpg",
+              "md5": "bae4fc4a9d6ef4afbf33451a34ee3329",
+              "md5Listed": "bae4fc4a9d6ef4afbf33451a34ee3329",
+              "md5Matches": true,
+              "bytes": 5737956,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/scree--polyhaven--gravel-floor-04/rough.jpg",
+              "keptBytes": 43691,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/gravel_floor_04/gravel_floor_04_rough_2k.jpg",
+              "md5": "25afd9258b98b21f5c100caf17dd4c72",
+              "md5Listed": "25afd9258b98b21f5c100caf17dd4c72",
+              "md5Matches": true,
+              "bytes": 1214552,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/scree--polyhaven--gravel-floor-04/height.jpg",
+              "keptBytes": 340839,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/gravel_floor_04/gravel_floor_04_disp_2k.jpg",
+              "md5": "4376ce73e1fff45badac13aa79946b5f",
+              "md5Listed": "4376ce73e1fff45badac13aa79946b5f",
+              "md5Matches": true,
+              "bytes": 2734322,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          }
+        },
+        {
+          "library": "polyhaven",
+          "id": "gravel_ground_01",
+          "name": "Gravel Ground 01",
+          "page": "https://polyhaven.com/a/gravel_ground_01",
+          "category": "Ground & Terrain/Gravel & Pebbles/Crushed Aggregate",
+          "tags": [
+            "gravel",
+            "pathway",
+            "path",
+            "stones",
+            "ground",
+            "sidewalk",
+            "rural",
+            "farm"
+          ],
+          "aerial": false,
+          "groundMm": [
+            3000,
+            3000
+          ],
+          "searchRank": 10,
+          "downloads": 25849,
+          "dir": "candidates/scree--polyhaven--gravel-ground-01",
+          "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
+          "licensePage": "https://polyhaven.com/license",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/scree--polyhaven--gravel-ground-01/color.jpg",
+              "keptBytes": 731936,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/gravel_ground_01/gravel_ground_01_diff_2k.jpg",
+              "md5": "3157af7d0cb76c72efaab07061a46876",
+              "md5Listed": "3157af7d0cb76c72efaab07061a46876",
+              "md5Matches": true,
+              "bytes": 3823037,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Diffuse"
+            },
+            "normal": {
+              "file": "candidates/scree--polyhaven--gravel-ground-01/normal.jpg",
+              "keptBytes": 1030440,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/gravel_ground_01/gravel_ground_01_nor_gl_2k.jpg",
+              "md5": "9267ce17723cb3a7cac84dbef986dcbf",
+              "md5Listed": "9267ce17723cb3a7cac84dbef986dcbf",
+              "md5Matches": true,
+              "bytes": 5481185,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "nor_gl"
+            },
+            "rough": {
+              "file": "candidates/scree--polyhaven--gravel-ground-01/rough.jpg",
+              "keptBytes": 282401,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/gravel_ground_01/gravel_ground_01_rough_2k.jpg",
+              "md5": "0dec2b0888927ea575a5cb41fcc58a46",
+              "md5Listed": "0dec2b0888927ea575a5cb41fcc58a46",
+              "md5Matches": true,
+              "bytes": 1582667,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Rough"
+            },
+            "height": {
+              "file": "candidates/scree--polyhaven--gravel-ground-01/height.jpg",
+              "keptBytes": 216072,
+              "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/gravel_ground_01/gravel_ground_01_disp_2k.jpg",
+              "md5": "5c7b571a4807942956144e4e0d9ebc4a",
+              "md5Listed": "5c7b571a4807942956144e4e0d9ebc4a",
+              "md5Matches": true,
+              "bytes": 980768,
+              "resolution": "2k",
+              "format": "jpg",
+              "mapKey": "Displacement"
+            }
+          }
+        },
+        {
+          "library": "ambientcg",
+          "id": "Ground108",
+          "name": "Ground 108",
+          "page": "https://ambientcg.com/view?id=Ground108",
+          "tags": [
+            "108",
+            "brown",
+            "debris",
+            "dirt",
+            "gravel",
+            "gray",
+            "ground",
+            "ground108",
+            "river",
+            "riverbed",
+            "rocky",
+            "rough",
+            "rubble",
+            "scattered",
+            "uneven"
+          ],
+          "groundMm": null,
+          "dimensionX": 150,
+          "dimensionY": 150,
+          "zipGuessed": false,
+          "dir": "candidates/scree--ambientcg--ground108",
+          "license": "Creative Commons CC0 1.0 Universal License . The Creative Commons CC0 license gives you near limitless freedom to use the materials, models and other assets: Creative Commons CC0 License licensed under the Creative Commons CC0 1.0 Universal License.",
+          "licensePage": "https://docs.ambientcg.com/license/",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/scree--ambientcg--ground108/color.jpg",
+              "keptBytes": 629112,
+              "url": "https://ambientcg.com/get?file=Ground108_2K-JPG.zip",
+              "inZip": "Ground108_2K-JPG_Color.jpg",
+              "zipMd5": "293a5bd69aa9197d7f692c6cb70ea53a",
+              "zipBytes": 32548275,
+              "bytes": 6205227
+            },
+            "normal": {
+              "file": "candidates/scree--ambientcg--ground108/normal.jpg",
+              "keptBytes": 924171,
+              "url": "https://ambientcg.com/get?file=Ground108_2K-JPG.zip",
+              "inZip": "Ground108_2K-JPG_NormalGL.jpg",
+              "zipMd5": "293a5bd69aa9197d7f692c6cb70ea53a",
+              "zipBytes": 32548275,
+              "bytes": 8317894
+            },
+            "rough": {
+              "file": "candidates/scree--ambientcg--ground108/rough.jpg",
+              "keptBytes": 403241,
+              "url": "https://ambientcg.com/get?file=Ground108_2K-JPG.zip",
+              "inZip": "Ground108_2K-JPG_Roughness.jpg",
+              "zipMd5": "293a5bd69aa9197d7f692c6cb70ea53a",
+              "zipBytes": 32548275,
+              "bytes": 3112262
+            },
+            "height": {
+              "file": "candidates/scree--ambientcg--ground108/height.jpg",
+              "keptBytes": 179271,
+              "url": "https://ambientcg.com/get?file=Ground108_2K-JPG.zip",
+              "inZip": "Ground108_2K-JPG_Displacement.jpg",
+              "zipMd5": "293a5bd69aa9197d7f692c6cb70ea53a",
+              "zipBytes": 32548275,
+              "bytes": 1513058
+            }
+          }
+        },
+        {
+          "library": "ambientcg",
+          "id": "Gravel043",
+          "name": "Gravel 043",
+          "page": "https://ambientcg.com/view?id=Gravel043",
+          "tags": [
+            "043",
+            "43",
+            "fine",
+            "grained",
+            "granular",
+            "gravel",
+            "gravel043",
+            "gray",
+            "ground",
+            "industrial",
+            "natural",
+            "pathway",
+            "rough",
+            "stone"
+          ],
+          "groundMm": null,
+          "dimensionX": 160,
+          "dimensionY": 160,
+          "zipGuessed": false,
+          "dir": "candidates/scree--ambientcg--gravel043",
+          "license": "Creative Commons CC0 1.0 Universal License . The Creative Commons CC0 license gives you near limitless freedom to use the materials, models and other assets: Creative Commons CC0 License licensed under the Creative Commons CC0 1.0 Universal License.",
+          "licensePage": "https://docs.ambientcg.com/license/",
+          "fetched": "2026-11-20",
+          "files": {
+            "color": {
+              "file": "candidates/scree--ambientcg--gravel043/color.jpg",
+              "keptBytes": 640355,
+              "url": "https://ambientcg.com/get?file=Gravel043_2K-JPG.zip",
+              "inZip": "Gravel043_2K-JPG_Color.jpg",
+              "zipMd5": "846b27ced9b93be640dbc5ab88bb36ae",
+              "zipBytes": 35913142,
+              "bytes": 6268542
+            },
+            "normal": {
+              "file": "candidates/scree--ambientcg--gravel043/normal.jpg",
+              "keptBytes": 1135524,
+              "url": "https://ambientcg.com/get?file=Gravel043_2K-JPG.zip",
+              "inZip": "Gravel043_2K-JPG_NormalGL.jpg",
+              "zipMd5": "846b27ced9b93be640dbc5ab88bb36ae",
+              "zipBytes": 35913142,
+              "bytes": 9399917
+            },
+            "rough": {
+              "file": "candidates/scree--ambientcg--gravel043/rough.jpg",
+              "keptBytes": 396679,
+              "url": "https://ambientcg.com/get?file=Gravel043_2K-JPG.zip",
+              "inZip": "Gravel043_2K-JPG_Roughness.jpg",
+              "zipMd5": "846b27ced9b93be640dbc5ab88bb36ae",
+              "zipBytes": 35913142,
+              "bytes": 3085421
+            },
+            "height": {
+              "file": "candidates/scree--ambientcg--gravel043/height.jpg",
+              "keptBytes": 306715,
+              "url": "https://ambientcg.com/get?file=Gravel043_2K-JPG.zip",
+              "inZip": "Gravel043_2K-JPG_Displacement.jpg",
+              "zipMd5": "846b27ced9b93be640dbc5ab88bb36ae",
+              "zipBytes": 35913142,
+              "bytes": 2475724
+            }
+          }
+        }
+      ]
+    }
+  },
+  "summary": {
+    "librariesAnswered": 2,
+    "candidatesWithColour": 38
+  }
+}
