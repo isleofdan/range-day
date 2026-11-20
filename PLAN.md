@@ -478,3 +478,31 @@ semantic reviewer tests remain separate validation steps. No live changes.
 
 ## Local preparation: Checks runner compatibility - 2026-10-30
 Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 and the unchanged Playwright 1.56.1 rejects the new 26.04 runner. Tests, dependencies and triggers remain unchanged. Local assertions pass; new hosted validation and publication remain pending independent review and confirmed scope. See docs/reports/checks-runner-compatibility-report.md. No merge, deployment or restart.
+
+### range-day-eight — 20 Nov 2026 (cloud session, from the Wall card `range-day`)
+
+- **Stands:** pull request #20: the canyon course's ground takes its
+  close-up surface from six CC0 material scans (Poly Haven
+  dry_ground_rocks, withered_grass, rock_face_03, gravel_ground_01;
+  ambientCG Grass001, Ground106), fetched by the one download run Dan
+  allowed (Ground workflow run 44711714459; every candidate kept on the
+  scratch branch `range-day-eight-fetch`), recorded in
+  `data/terrain.json` (`surfaces`), laid by hex tiling at their own size
+  and five times it, lit by the sun; `detailTextures` retired. The ground
+  is placed from the firing position: its full map northing in a 32-bit
+  float stepped every 0.25 m and smeared all fine pattern into the
+  streaks Dan saw. Full is within the frame-time limit at 412 pixels;
+  Light is over it through the irons (+42 to +45 percent); the bushes'
+  colour patch and two February Light patches measure farther than
+  before (report, verify 4).
+- **Decided:** trilinear filtering only (anisotropic doubled the cost in
+  the test browser); rough ground's own shade as a figure per kind of
+  ground (`ground.sunCut`); Light reads colour only; the Checks jobs'
+  limit is 28 minutes; the Ground workflow runs only on `…-fetch`
+  branches, and any further download needs Dan's yes.
+- **Next session needs:** Dan's look on his phone (the floor through the
+  irons, a far hillside at 7x). Then, each planned by a Personal Shipyard
+  chat: anisotropic filtering if the phone draws Full smoothly; a simpler
+  Light path for its frame time; the firing line's text and controls; the
+  iron sights; the rifle line's picture. Report:
+  `docs/reports/range-day-eight-report.md`.
