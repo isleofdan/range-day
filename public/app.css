@@ -169,12 +169,6 @@ body.line main { padding-bottom: 110px; }
 .firebar .btn.fire { background: #b3261e; color: #fff; }
 .firebar .btn.on { outline: 3px solid var(--fg); }
 @media (prefers-color-scheme: dark) { .viewwrap canvas { background: #111; } }
-/* On a wide screen the Steady and Fire buttons stand beside the view, in a
-   column to its right, so the fixed bar covers nothing on a short screen. */
-@media (min-width: 1100px) {
-  .firebar { left: calc(50% + 350px); right: auto; width: 200px; max-width: none; margin: 0; bottom: 24px; grid-template-columns: 1fr; padding: 12px; border: 1px solid var(--line); border-radius: 14px; }
-  body.line main { padding-bottom: 48px; }
-}
 @media (min-width: 900px) { .choices { grid-template-columns: 1fr 1fr; } }
 .row:has(> [hidden]:only-child) { display: none; }
 
@@ -201,3 +195,78 @@ body.line .setting { margin: 4px 0 6px; }
 .book .entry .btn.inline { display: inline-block; width: auto; min-height: 40px; line-height: 36px; font-size: 14px; margin: 0; padding: 0 12px; }
 .copy input[type=file] { display: none; }
 table.shots td.hit { color: var(--accent); font-weight: 600; }
+
+/* The firing line arranged for shooting (range-day-nine). On a phone, within
+   reach without scrolling, from the top: the short line (a tap opens the full
+   description over the page), the plate and the sight's glass, the view, where
+   the last shot went (two lines; a tap opens the rest over the page), the sight
+   strip with the rounds left, the book's newest line; Steady and Fire fixed at
+   the bottom. Everything else is a short scroll below. Nothing that opens or
+   changes pushes the view, the strip or the bar: the two text slots have a
+   fixed height and open over what is below them. On a wide screen the same
+   list stands in a column beside the view, with Steady and Fire at its foot. */
+.vh { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+body.line header.bar { padding: 0 16px; }
+body.line header.bar nav a { display: inline-block; padding: 10px 0; }
+body.line main.game { padding-top: 6px; }
+.reach > * { margin: 0 0 6px; }
+.reach .head { position: relative; z-index: 7; }
+.linehead { display: flex; align-items: center; gap: 6px; width: 100%; min-height: 44px; margin: 0; padding: 6px 10px; font: inherit; font-size: 15px; line-height: 1.3; text-align: left; color: var(--fg); background: var(--card); border: 0; border-left: 4px solid var(--accent); border-radius: 0 10px 10px 0; cursor: pointer; }
+.linehead #line-short { flex: 1 1 auto; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.linehead .caret { flex: 0 0 auto; color: var(--accent); }
+.linehead[aria-expanded="true"] .caret { transform: rotate(180deg); }
+.linefull { position: absolute; top: 100%; left: 0; right: 0; margin-top: 4px; padding: 10px 12px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25); }
+.linefull .dayline { margin: 0; padding: 0; border: 0; background: none; }
+.linefull p + p { margin: 8px 0 0; }
+.reach .pick { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-items: center; }
+.reach .pick:not(:has(> .zoom:not([hidden]), > .glass:not([hidden]))) .plate { grid-column: 1 / -1; }
+.reach .pick .field { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 6px; margin: 0; }
+.reach .pick .field label { margin: 0; font-size: 14px; white-space: nowrap; }
+.reach .pick select { height: 44px; padding: 0 6px; font-size: 15px; min-width: 0; }
+.reach .pick .zoom { margin: 0; }
+.reach .pick .glass .btn.inline { display: block; width: 100%; margin: 0; min-height: 44px; padding: 2px 6px; font-size: 14px; line-height: 1.25; white-space: normal; }
+.reach .pick .glass.leaf { display: grid; gap: 2px; }
+.reach .pick .glass.leaf > .small { font-size: 13px; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.reach .pick .glass.leaf .mono { font-size: 13px; }
+.reach .pick .glass.leaf .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.reach .pick .glass.leaf .btn.inline { font-size: 15px; touch-action: none; user-select: none; -webkit-user-select: none; }
+body.line .reach .viewwrap { margin: 0 0 6px; }
+.reach .slot { position: relative; }
+.reach .slot.result { height: 56px; }
+.reach .slot.book { height: 53px; }
+.reach .fold { position: absolute; top: 0; left: 0; right: 0; margin: 0; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; }
+.reach .fold.long { cursor: pointer; padding-right: 26px; }
+.reach .fold.long::after { content: "▾"; position: absolute; right: 8px; bottom: 4px; color: var(--accent); }
+.reach .fold.open { display: block; -webkit-line-clamp: unset; line-clamp: unset; overflow: visible; z-index: 6; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25); }
+.reach .fold.open::after { content: "▴"; }
+.reach #result { padding: 6px 10px; font-size: 15px; line-height: 1.35; min-height: 0; }
+.reach #book-line { padding: 5px 10px; line-height: 1.35; }
+.reach .slot.result:has(> .another:not([hidden])) #result { right: 152px; }
+.reach .another { position: absolute; top: 0; right: 0; bottom: 0; width: 144px; display: flex; }
+.reach .another .btn.inline { display: block; width: 100%; margin: 0; padding: 0 8px; min-height: 44px; font-size: 15px; line-height: 1.25; white-space: normal; }
+.reach .strip .knobs { gap: 8px; }
+.reach .strip .knob { gap: 4px; padding: 6px 8px; }
+.reach .strip .kh { display: block; min-height: 34px; font-size: 13px; line-height: 1.3; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.reach .strip .kh .mono { font-size: 13px; }
+.reach .strip .knob .btn.inline { min-height: 44px; }
+.reach .strip .knob .pair.coarse .btn.inline { min-height: 44px; line-height: 40px; }
+.reach .strip .setting { margin: 4px 0 0; padding: 0; font-size: 14px; line-height: 1.3; text-align: center; background: none; border: 0; }
+body.line .more { margin-top: 18px; }
+body.line .more .windcall { margin-top: 0; }
+@media (min-width: 1100px) {
+  body.line header.bar { max-width: 1100px; }
+  body.line main.game { max-width: 1100px; padding: 16px 16px 48px; }
+  .reach { display: grid; grid-template-columns: 640px minmax(0, 1fr); column-gap: 20px; grid-template-rows: auto auto auto auto auto 1fr; grid-template-areas: "view head" "view pick" "view result" "view strip" "view book" "view ."; align-items: start; }
+  .reach .head { grid-area: head; }
+  .reach .pick { grid-area: pick; grid-template-columns: 1fr; }
+  .reach .pick .plate { grid-column: auto; }
+  body.line .reach .viewwrap { grid-area: view; margin: 0; }
+  .reach .slot.result { grid-area: result; }
+  .reach .strip { grid-area: strip; }
+  .reach .slot.book { grid-area: book; }
+  /* Steady and Fire stand at the foot of the column beside the view (408 px wide at 1100 px and over), so the fixed bar covers nothing of it on a short screen. */
+  .firebar { left: calc(50% + 126px); right: auto; width: 408px; max-width: none; margin: 0; bottom: 24px; padding: 12px; border: 1px solid var(--line); border-radius: 14px; }
+  body.line main { padding-bottom: 48px; }
+  /* Below the view the page keeps to the view's width, so the bar at the foot of the column beside it covers nothing. */
+  body.line .more { max-width: 640px; }
+}

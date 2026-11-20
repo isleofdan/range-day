@@ -70,7 +70,19 @@
     if (entered.redirected) t += ` A day is already open with the ${rifle.name} and ${d.loads[loadId].name} on the ${course.name.replace(/ \(modeled on.*\)$/, '')}, so that day is shown, not the one the address asked for.`;
     if (!entered.saved || RD.dayReadFailed()) t += ' The day is not saved on this device (the browser refused its storage); it holds while this page is open.';
     $('day-line').textContent = t;
+    lineShort(t !== RD.dayWords(weather, d.weather));
   };
+  // The short line at the top (range-day-nine): the rifle, the load's weight, the course and the day in a few words; a tap opens the
+  // full description above over the page and a second tap closes it. A note about the day (another day shown, storage refused) is flagged here.
+  function lineShort(note) {
+    const grains = /(\d+ gr)\b/.exec(d.loads[loadId].name);
+    const words = `${rifle.name.split(',')[0]}, ${grains ? grains[1] : d.loads[loadId].name.replace(/ \(.*\)$/, '')}, ${course.name.replace(/ \(.*\)$/, '')} · ${weather.tempF} F, ${RD.dayWords(weather, d.weather).replace(/^A (\w+)(, dry)? /, '').replace(/, -?\d+ F\.$/, '')}`; // "44 F, November morning": the temperature first, so a narrow screen cuts the month, not the figure
+    $('line-short').textContent = note ? `A note on this day (tap to read) · ${words}` : words;
+  }
+  $('line-head').addEventListener('click', () => {
+    const open = $('line-full').hidden;
+    $('line-full').hidden = !open; $('line-head').setAttribute('aria-expanded', String(open));
+  });
   dayLine();
   $('plate').innerHTML = plates.map((p, i) => `<option value="${i}">${p.yards} yards (${p.widthIn} × ${p.heightIn} in steel)</option>`).join('');
   const zeroHref = () => `/zero${RD.params(c)}`;
@@ -612,14 +624,14 @@
     while (pending.length) land(pending.shift());
   }
   window.addEventListener('pagehide', landAll);
-  // The book for the plate now chosen: the two newest unstruck lines for this
+  // The book for the plate now chosen: the newest unstruck line for this
   // rifle, sight and load at that distance, or what the nearest distances
   // with lines are. It only shows his own hits; it never turns a knob.
   function bookLine() {
     const y = plate().yards;
     const href = `/book${RD.params(c)}&yards=${y}`;
     if (RD.bookReadFailed(rifleId, sightId, loadId)) { $('book-line').innerHTML = `<a href="${href}">Book</a>: not saved on this device (the browser refused its storage).`; return; }
-    const lines = RD.bookAt(rifleId, sightId, loadId, y).slice(0, 2);
+    const lines = RD.bookAt(rifleId, sightId, loadId, y).slice(0, 1); // the newest line only; the rest stay in the book
     if (!lines.length) {
       const n = RD.bookNeighbours(rifleId, sightId, loadId, y);
       const near = [n.below != null ? `${n.below} yards below` : null, n.above != null ? `${n.above} yards above` : null].filter(Boolean);
@@ -671,7 +683,7 @@
   }
   const storeSetting = () => { if (!RD.setSight(rifleId, sightId, setting)) $('zero-note').textContent = 'Sight setting not saved on this device: the browser refused to store it. It holds while this page is open.'; };
   if (leaf) {
-    $('leafrow').hidden = false;
+    $('leafrow').hidden = false; $('leaf-words').hidden = false;
     const moveLeaf = (delta) => {
       const ix = (setting.leafIx || 0) + delta;
       if (ix < 0 || ix >= leaf.settingsMeters.length) { $('result').textContent = `The leaf is at the end of its slide (${leaf.settingsMeters[ix < 0 ? 0 : leaf.settingsMeters.length - 1]} m).`; return; }
@@ -729,6 +741,16 @@
     for (let i = dust.length - 1; i >= 0; i--) if (now - dust[i].bornAt > d.physics.dust.lifeS) dust.splice(i, 1);
     draw();
     requestAnimationFrame(frame);
+  }
+  // Where the last shot went and the book's line each hold two lines of text in a slot of fixed height; a longer text is
+  // marked and opens on a tap over what is below it, so nothing under the thumb moves. New text closes it again.
+  for (const id of ['result', 'book-line']) {
+    const el = $(id);
+    const measure = () => { const open = el.classList.contains('open'); el.classList.remove('open'); el.classList.toggle('long', el.scrollHeight > el.clientHeight + 1); if (open && el.classList.contains('long')) el.classList.add('open'); };
+    new MutationObserver(() => { el.classList.remove('open'); measure(); }).observe(el, { childList: true, characterData: true, subtree: true });
+    window.addEventListener('resize', measure);
+    el.addEventListener('click', (e) => { if (e.target.closest('a')) return; if (el.classList.contains('open')) el.classList.remove('open'); else if (el.classList.contains('long')) el.classList.add('open'); });
+    measure();
   }
   applyZero(); renderLog(); conditions(); rounds(); bookLine(); coldLine();
   fitScene(); choosePicture();

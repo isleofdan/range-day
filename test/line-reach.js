@@ -27,7 +27,7 @@ function measure(glass) {
   const barEl = q('.firebar');
   const bar = box(barEl);
   const view = box(q('#view'));
-  const wide = w >= 1000;
+  const wide = w >= 1100; // public/app.css: the column beside the view from 1100 px
   const shown = (el) => el && !el.hidden && el.offsetParent !== null;
   const list = [
     ['short line', q('#line-head') || q('.dayline')],
