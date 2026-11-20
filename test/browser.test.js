@@ -225,6 +225,8 @@ test('every screen renders at 412x915 and 1280x800 with no sideways scroll and n
     for (const p of ['/', '/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt', '/line?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt', '/line?course=angeles-sylmar&rifle=bcm-ar15&load=imi-m193', '/day', '/book?course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt']) {
       await page.goto(`${base}${p}`);
       await page.waitForSelector(p === '/' ? '.rifle' : p === '/day' ? '#facts' : p.startsWith('/book') ? '#pages' : '#el-up');
+      // the firing line's script fits its canvas to the screen when it runs (the HTML's canvas is 400 px wide until then); the width is read once the page's own script has run, not between the HTML and the script (with other checks loading the machine, range-day-seven saw the read land in that gap)
+      if (p.startsWith('/line')) await page.waitForFunction(() => Boolean(window.RangeDayLine), null, { timeout: 30000 });
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `${p} at ${viewport.width}: no sideways scroll`);
     }
     assert.deepEqual(errors, []);

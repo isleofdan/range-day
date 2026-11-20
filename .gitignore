@@ -1,3 +1,5 @@
 node_modules/
 var/
 .env
+# built from src/scene/ by scripts/build-scene.mjs wherever it is needed (range-day-seven), not stored
+public/scene.min.js
