@@ -214,7 +214,7 @@ September afternoon, the hillside, the larger copy: plain grid 1.000; as laid 0.
 
 What this cannot prove: the test browser draws in software and the session cannot open the live app, so how the ground looks and how fast it draws on Dan's phone is unverified until he looks.
 
-Independent check (Codex result checker): round 1, job 20261120-150414-2d5952, FINDINGS: 1 colour patches farther than before (bushes everywhere; Light February hillside and scrub); 2 Light frame time over the 25% limit; 3 to 9 the report filed on the card was a summary without its sections. 3 to 9 fixed by filing this report in full. 1 and 2 stand as reported above, and are Ask 1.
+Independent check (Codex result checker): round 1, job 20261120-150414-2d5952, FINDINGS: 1 colour patches farther than before; 2 Light frame time over 25%; 3 to 9 the report on the card was a summary without its sections; 3 to 9 fixed by filing the report in full; 1 and 2 stand as reported, and are Ask 1. Round 2, job 20261120-150605-c57bcf, FINDINGS: 1 Light's relief overstated; 2 the ask overstated Full; 3 where ground-after.txt sits; all three corrected in this report.
 
 ## Asks
 
