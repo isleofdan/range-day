@@ -191,7 +191,7 @@
       await loadSceneScript();
       if (!window.RangeDayScene.canDraw()) throw new Error('no 3D context');
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const next = await window.RangeDayScene.create({ canvas: sceneCanvas, size: view.size, dpr, course, terrain: d.terrain[courseId], look: d.look, physics: d.physics, weather, month: day.month, timeOfDay: day.timeOfDay, quality });
+      const next = await window.RangeDayScene.create({ canvas: sceneCanvas, size: view.size, dpr, course, terrain: d.terrain[courseId], surfaces: d.terrain.surfaces, look: d.look, physics: d.physics, weather, month: day.month, timeOfDay: day.timeOfDay, quality });
       if (scene) scene.dispose();
       scene = next;
       sceneCanvas.hidden = false; canvas.parentElement.classList.add('scene-on');

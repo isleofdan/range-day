@@ -5,14 +5,17 @@
 // 1 m heights inside the square and the 10 m heights beyond), shaded where
 // the sun's ray does not clear the ground, darkened in creases; sorted
 // per pixel into packed dirt, grass, scrub, bare rock and loose scree by
-// the slope's steepness and the photograph's colour; and given surface
-// detail at three scales, fixed to the ground, so a hillside through a
-// strong glass shows clumps, stones and rills instead of a stretched
-// photograph. World frame: origin at the firing position's ground, x right
+// the slope's steepness and the photograph's colour; and given each
+// class's surface from a photographed material scan (range-day-eight:
+// dirt, dry and green grass, the litter under scrub, rock and scree, CC0
+// scans listed in data/terrain.json, surfaces), fixed to the ground, so a
+// hillside through a strong glass shows clods, stones and blades instead
+// of a stretched photograph. World frame: origin at the firing position's ground, x right
 // of the line of fire, y up, z toward the shooter (so the plates stand at
 // negative z), metres.
 import * as THREE from 'three';
 import { sunMask, normalMap } from './heights.mjs';
+import { materialSlots } from './surfaces.mjs';
 
 const YD = 0.9144, FT = 0.3048;
 
@@ -105,39 +108,51 @@ export function buildTerrain({ near, far, photo, photoUrl, frame, groundM, look,
   const slope = pal(P.green.sunlitSlope, P.dry.sunlitSlope), scrub = pal(P.green.scrub, P.dry.scrub), floor = pal(P.green.floor, P.dry.floor);
   const rock = hex(P.green.rockSun), scree = hex(P.green.rockSun).lerp(hex(P.dry.floor), 0.45), weeds = pal(P.green.weeds, P.dry.sunlitSlope);
 
-  const { dirt, grass, patch } = detailTextures(full ? 512 : 256);
+  // The photographed materials, one layer per surface (surfaces.mjs). Until they arrive (or for one that fails) a layer is
+  // neutral: mid grey with its own mean equal to it, flat, at mid height, so that class is drawn with its plain palette colour.
+  const mats = materialSlots(full, look);
   const sunMap = new THREE.Vector2(Math.sin((sun.azimuth * Math.PI) / 180), Math.cos((sun.azimuth * Math.PI) / 180));
   const b = (course.firing.bearingDeg * Math.PI) / 180;
   const mat = new THREE.MeshLambertMaterial({ map: tex, color: 0xffffff });
+  const shaderRef = { uniforms: null };
   mat.onBeforeCompile = (shader) => {
+    shaderRef.uniforms = shader.uniforms;
     Object.assign(shader.uniforms, {
       litNear: { value: litNear }, litFar: { value: litFar }, normNear: { value: normNear }, normFar: { value: normFar },
-      nearOrigin: { value: new THREE.Vector2(near.originE, near.originN) }, nearSide: { value: near.width * near.spacingM },
-      farOrigin: { value: new THREE.Vector2(far.originE, far.originN) }, farSide: { value: far.width * far.spacingM },
+      nearOrigin: { value: new THREE.Vector2(near.originE - frame.toMap(0, 0).e, near.originN - frame.toMap(0, 0).n) }, nearSide: { value: near.width * near.spacingM },
+      farOrigin: { value: new THREE.Vector2(far.originE - frame.toMap(0, 0).e, far.originN - frame.toMap(0, 0).n) }, farSide: { value: far.width * far.spacingM },
       photoOrigin: { value: new THREE.Vector2(photo.originE, photo.originN) }, photoSide: { value: photoSide },
       slopeCol: { value: slope }, scrubCol: { value: scrub }, floorCol: { value: floor }, rockCol: { value: rock }, screeCol: { value: scree }, weedCol: { value: weeds },
-      dirtMap: { value: dirt }, grassMap: { value: grass }, patchMap: { value: patch }, photoPx: { value: photo.width }, photoLodMin: { value: Math.log2(G.photoFinestPx) }, detailPx: { value: full ? 512 : 256 }, detailFadeLod: { value: Math.log2(G.detailFadeTexels) }, sunMapDir: { value: sunMap }, clumpShadowM: { value: G.clumpShadowM * Math.min(3, 1 / Math.max(0.2, Math.tan((sun.elevation * Math.PI) / 180))) }, clumpShadowDark: { value: G.clumpShadowDark },
-      tiles: { value: new THREE.Vector3(G.detailTilesM[0], G.detailTilesM[1], G.detailTilesM[2]) }, octaves: { value: full ? 3 : 2 },
-      detailAlbedo: { value: G.detailAlbedo }, bumpFloor: { value: G.bump.floor }, bumpGrass: { value: G.bump.grass }, bumpRock: { value: G.bump.rock },
+      matCol: mats.color, matRel: mats.relief, matMean: mats.mean, matSize: mats.sizeM, photoPx: { value: photo.width }, photoLodMin: { value: Math.log2(G.photoFinestPx) }, sunMapDir: { value: sunMap },
+      reliefShadowM: { value: G.reliefShadowM * Math.min(3, 1 / Math.max(0.2, Math.tan((sun.elevation * Math.PI) / 180))) }, reliefShadowDark: { value: full ? G.reliefShadowDark : 0 }, reliefShadowDepth: { value: G.reliefShadowDepth },
+      hexTiles: { value: G.hexTiles }, hexSharpness: { value: G.hexSharpness }, heightBlend: { value: G.heightBlend }, varyM: { value: G.varyM }, plainGrid: { value: typeof window !== 'undefined' && window.RD_SCENE_DEBUG === 'plaingrid' ? 1 : 0 }, matShift: { value: new THREE.Vector2(0, 0) },
+      matAlbedo: { value: G.materialAlbedo }, bumpFloor: { value: G.bump.floor }, bumpGrass: { value: G.bump.grass }, bumpRock: { value: G.bump.rock },
       steepTan: { value: Math.tan((G.steepDeg * Math.PI) / 180) }, hollowM: { value: G.hollowM }, hollowDark: { value: G.hollowDarkening }, clearanceM: { value: G.clearanceM },
-      sheenRock: { value: G.sheenRock }, greenness: { value: green }, debugMode: { value: typeof window !== 'undefined' && window.RD_SCENE_DEBUG === 'classes' ? 1 : window.RD_SCENE_DEBUG === 'photo' ? 2 : window.RD_SCENE_DEBUG === 'weights' ? 3 : window.RD_SCENE_DEBUG === 'nodetail' ? 4 : window.RD_SCENE_DEBUG === 'nonormal' ? 5 : /^oct[012]$/.test(window.RD_SCENE_DEBUG || '') ? 6 + Number(window.RD_SCENE_DEBUG[3]) : 0 },
+      sheenRock: { value: G.sheenRock }, greenness: { value: green }, debugMode: { value: typeof window !== 'undefined' && window.RD_SCENE_DEBUG === 'classes' ? 1 : window.RD_SCENE_DEBUG === 'photo' ? 2 : window.RD_SCENE_DEBUG === 'weights' ? 3 : window.RD_SCENE_DEBUG === 'nodetail' ? 4 : window.RD_SCENE_DEBUG === 'nonormal' ? 5 : 0 },
       trackLanes: { value: new THREE.Vector2(G.tracks.lanesM[0], G.tracks.lanesM[1]) }, trackGauge: { value: G.tracks.gaugeM }, trackDark: { value: G.tracks.darkening }, trackReachM: { value: G.tracks.reachYd * YD },
       mapOf: { value: new THREE.Vector4(frame.toMap(0, 0).e, frame.toMap(0, 0).n, Math.sin(b), Math.cos(b)) },
     });
     shader.vertexShader = shader.vertexShader
-      .replace('#include <common>', '#include <common>\nattribute float farness; varying float vFar; varying vec3 vWorld; varying vec2 vMap; uniform vec4 mapOf;')
-      .replace('#include <worldpos_vertex>', '#include <worldpos_vertex>\nvFar = farness; vWorld = (modelMatrix * vec4(transformed, 1.0)).xyz; float f = -vWorld.z; vMap = vec2(mapOf.x + f * mapOf.z + vWorld.x * mapOf.w, mapOf.y + f * mapOf.w - vWorld.x * mapOf.z);');
+      .replace('#include <common>', '#include <common>\nattribute float farness; varying float vFar; varying vec3 vWorld; varying vec2 vMap; varying vec2 vGround; uniform vec4 mapOf;')
+      // vMap: the survey's map metres (easting, northing), for the survey's own pictures; vGround: east and north metres from the
+      // firing position, for everything finer than a metre. The map's northing is about 3.8 million metres, and a 32-bit float
+      // holds it only to a quarter of a metre, so a pattern laid by vMap is cut into quarter-metre steps north to south and
+      // smeared into streaks (range-day-eight, the "flat tan with smeared streaks" on the floor); vGround stays small and exact.
+      .replace('#include <worldpos_vertex>', '#include <worldpos_vertex>\nvFar = farness; vWorld = (modelMatrix * vec4(transformed, 1.0)).xyz; float f = -vWorld.z; vGround = vec2(f * mapOf.z + vWorld.x * mapOf.w, f * mapOf.w - vWorld.x * mapOf.z); vMap = mapOf.xy + vGround;');
     shader.fragmentShader = shader.fragmentShader
       .replace('#include <common>', `#include <common>
-        varying float vFar; varying vec3 vWorld; varying vec2 vMap;
-        uniform sampler2D litNear, litFar, normNear, normFar, dirtMap, grassMap, patchMap;
+        varying float vFar; varying vec3 vWorld; varying vec2 vMap; varying vec2 vGround;
+        uniform sampler2D litNear, litFar, normNear, normFar;
+        uniform highp sampler2DArray matCol, matRel;
+        uniform vec3 matMean[6]; uniform float matSize[6]; uniform vec2 matShift;
         uniform vec2 nearOrigin, farOrigin, photoOrigin, trackLanes; uniform float nearSide, farSide, photoSide;
-        uniform vec3 slopeCol, scrubCol, floorCol, rockCol, screeCol, weedCol, tiles;
-        uniform vec2 sunMapDir; uniform float clumpShadowM, clumpShadowDark, detailPx, detailFadeLod, photoPx, photoLodMin, debugMode, octaves, detailAlbedo, bumpFloor, bumpGrass, bumpRock, steepTan, hollowM, hollowDark, clearanceM, sheenRock, greenness, trackGauge, trackDark, trackReachM;
+        uniform vec3 slopeCol, scrubCol, floorCol, rockCol, screeCol, weedCol;
+        uniform vec2 sunMapDir; uniform float reliefShadowM, reliefShadowDark, reliefShadowDepth, hexTiles, hexSharpness, heightBlend, varyM, plainGrid, matAlbedo, photoPx, photoLodMin, debugMode, bumpFloor, bumpGrass, bumpRock, steepTan, hollowM, hollowDark, clearanceM, sheenRock, greenness, trackGauge, trackDark, trackReachM;
         uniform vec4 mapOf;
-        vec3 gNormalW; float gAo; float gSheen; float gSunLit;
-        vec2 nearUv() { return vec2((vMap.x - nearOrigin.x) / nearSide, 1.0 - (nearOrigin.y - vMap.y) / nearSide); }
-        vec2 farUv() { return vec2((vMap.x - farOrigin.x) / farSide, 1.0 - (farOrigin.y - vMap.y) / farSide); }
+        vec3 gNormalW; float gAo; float gSheen; float gSunLit; float gRelShade;
+        // the survey's squares, placed from the firing position (nearOrigin and farOrigin carry the squares' corners less the firing position's map metres, worked out in double precision)
+        vec2 nearUv() { return vec2((vGround.x - nearOrigin.x) / nearSide, 1.0 - (nearOrigin.y - vGround.y) / nearSide); }
+        vec2 farUv() { return vec2((vGround.x - farOrigin.x) / farSide, 1.0 - (farOrigin.y - vGround.y) / farSide); }
         bool inNear() { vec2 un = nearUv(); return un.x > 0.002 && un.x < 0.998 && un.y > 0.002 && un.y < 0.998; }
         // how far the sun's ray clears the ground here, in metres (negative in shade), from the survey
         float clearance() {
@@ -149,9 +164,45 @@ export function buildTerrain({ near, far, photo, photoUrl, frame, groundM, look,
           vec4 t = inNear() ? texture2D(normNear, nearUv()) : texture2D(normFar, clamp(farUv(), 0.0, 1.0));
           return vec4(t.x * 2.0 - 1.0, t.y, t.z * 2.0 - 1.0, (t.w * 2.0 - 1.0) * (inNear() ? hollowM : hollowM * 4.0));
         }
-        vec3 eastNorthUpToWorld(vec3 v) { return vec3(v.x * mapOf.w - v.z * mapOf.z, v.y, -(v.x * mapOf.z + v.z * mapOf.w)); }`)
+        vec3 eastNorthUpToWorld(vec3 v) { return vec3(v.x * mapOf.w - v.z * mapOf.z, v.y, -(v.x * mapOf.z + v.z * mapOf.w)); }
+        // a smooth value noise over the ground (no picture: four hashes), for the slow variation and for the materials' shifts
+        float hash12(vec2 p) { vec3 q = fract(vec3(p.xyx) * 0.1031); q += dot(q, q.yzx + 33.33); return fract((q.x + q.y) * q.z); }
+        float vnoise(vec2 p) { vec2 i = floor(p), f = fract(p); vec2 u = f * f * (3.0 - 2.0 * f); return mix(mix(hash12(i), hash12(i + vec2(1.0, 0.0)), u.x), mix(hash12(i + vec2(0.0, 1.0)), hash12(i + vec2(1.0, 1.0)), u.x), u.y); }
+        // One material at a place, laid without a visible repeat (hexagonal stochastic tiling, after Mikkelsen, "Practical
+        // Real-Time Hex-Tiling", JCGT 2022): the ground is covered by a grid of small triangles (hexTiles copies of the
+        // picture across); each corner shifts the picture by its own random amount, and every point blends the three copies of
+        // its triangle's corners, the blend sharpened toward the nearest corner and toward the higher picture, so the seams
+        // follow the material's own relief and no two neighbouring copies line up. The screen-space gradients are passed in,
+        // worked out once outside any branch. plainGrid lays the plain repeating picture instead (for the repeat measure).
+        vec2 hash22(vec2 p) { vec3 p3 = fract(vec3(p.xyx) * vec3(0.1031, 0.1030, 0.0973)); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.xx + p3.yz) * p3.zy); }
+        void hexGrid(vec2 uv, out vec3 w, out vec2 o1, out vec2 o2, out vec2 o3, float layer) {
+          vec2 st = uv * 3.4641016 / hexTiles;
+          vec2 sk = vec2(st.x, -0.57735027 * st.x + 1.15470054 * st.y);
+          vec2 base = floor(sk); vec3 t = vec3(fract(sk), 0.0); t.z = 1.0 - t.x - t.y;
+          float s = step(0.0, -t.z), s2 = 2.0 * s - 1.0;
+          w = vec3(-t.z * s2, s - t.y * s2, s - t.x * s2);
+          o1 = hash22(base + vec2(s, s) + layer * 13.1); o2 = hash22(base + vec2(s, 1.0 - s) + layer * 13.1); o3 = hash22(base + vec2(1.0 - s, s) + layer * 13.1);
+        }
+        vec3 hexWeights(vec3 w, vec3 h) { vec3 k = pow(max(w, vec3(0.0)), vec3(hexSharpness)) * (0.25 + h); return k / max(k.x + k.y + k.z, 1e-5); }
+        void material(int L, vec2 uv, vec2 gx, vec2 gy, out vec4 col, out vec4 rel) {
+          float layer = float(L);
+          if (plainGrid > 0.5) { col = textureGrad(matCol, vec3(uv, layer), gx, gy); rel = textureGrad(matRel, vec3(uv, layer), gx, gy); return; }
+          vec3 w; vec2 o1, o2, o3; hexGrid(uv, w, o1, o2, o3, layer);
+          vec4 r1 = textureGrad(matRel, vec3(uv + o1, layer), gx, gy), r2 = textureGrad(matRel, vec3(uv + o2, layer), gx, gy), r3 = textureGrad(matRel, vec3(uv + o3, layer), gx, gy);
+          vec3 k = hexWeights(w, vec3(r1.b, r2.b, r3.b));
+          col = textureGrad(matCol, vec3(uv + o1, layer), gx, gy) * k.x + textureGrad(matCol, vec3(uv + o2, layer), gx, gy) * k.y + textureGrad(matCol, vec3(uv + o3, layer), gx, gy) * k.z;
+          rel = r1 * k.x + r2 * k.y + r3 * k.z;
+        }
+        // its height a little toward the sun, laid the same way: the relief's own small shadows
+        float materialHeightAt(int L, vec2 uv, vec2 gx, vec2 gy) {
+          float layer = float(L);
+          if (plainGrid > 0.5) return textureGrad(matRel, vec3(uv, layer), gx, gy).b;
+          vec3 w; vec2 o1, o2, o3; hexGrid(uv, w, o1, o2, o3, layer);
+          vec3 h = vec3(textureGrad(matRel, vec3(uv + o1, layer), gx, gy).b, textureGrad(matRel, vec3(uv + o2, layer), gx, gy).b, textureGrad(matRel, vec3(uv + o3, layer), gx, gy).b);
+          return dot(hexWeights(w, h), h);
+        }`)
       .replace('#include <map_fragment>', `
-        // the photograph, never magnified past its own pixels (0.6 m): through a strong glass a screen pixel covers a few centimetres, and the photograph's compression would show as blocks; its coarser copies are used instead, and the survey's relief and the detail carry the fine structure
+        // the photograph, never magnified past its own pixels (0.6 m): through a strong glass a screen pixel covers a few centimetres, and the photograph's compression would show as blocks; its coarser copies are used instead, and the survey's relief and the materials carry the fine structure
         vec2 ddx = dFdx(vMapUv * photoPx), ddy = dFdy(vMapUv * photoPx);
         float lod = 0.5 * log2(max(dot(ddx, ddx), dot(ddy, ddy)));
         vec4 texel = textureLod(map, vMapUv, max(lod, photoLodMin));
@@ -167,8 +218,8 @@ export function buildTerrain({ near, far, photo, photoUrl, frame, groundM, look,
         vec3 mapN = normalize(sn.xyz);
         float slopeT = length(mapN.xz) / max(mapN.y, 0.05);
         float steep = smoothstep(steepTan * 0.8, steepTan * 1.25, slopeT);
-        // a slow variation over the ground, for where the rock is bare and where the grass is thin (the big tile of the dirt picture)
-        float vary = texture2D(patchMap, vMap / (tiles.x * 5.0)).z;
+        // a slow variation over the ground, for where the rock is bare and where the grass is thin
+        float vary = vnoise(vGround / varyM) * 0.65 + vnoise(vGround / (varyM * 0.31)) * 0.35;
         // what the ground is: scrub where the photograph is dark, floor where it is bright, flat and grey, rock where steep or pale and grey, scree on the lower steep faces
         float scrubW = mix(smoothstep(0.11, 0.045, L), smoothstep(0.62, 0.3, vary) * (1.0 - steep), farW);
         float level = 1.0 - smoothstep(0.06, 0.18, slopeT);
@@ -179,162 +230,89 @@ export function buildTerrain({ near, far, photo, photoUrl, frame, groundM, look,
         float screeW = rockW * smoothstep(0.35, 0.65, vary) * (1.0 - sn.w * 0.1);
         rockW -= screeW;
         float grassW = max(0.0, 1.0 - scrubW - floorW - rockW - screeW);
-        vec3 base = slopeCol * grassW + scrubCol * scrubW + floorCol * floorW + rockCol * rockW + screeCol * screeW;
+        // The photographed materials, one per class (layers: 0 floor, 1 dry grass, 2 green grass, 3 litter under scrub, 4 rock,
+        // 5 scree; grass is the season's mix of the dry and the green). Each class's weight is pushed by its material's own
+        // height, so where two classes meet the higher picture wins (dirt between tufts, stones standing out of grit) instead
+        // of a soft smear between them.
+        float w[6]; w[0] = floorW; w[1] = grassW * (1.0 - greenness); w[2] = grassW * greenness; w[3] = scrubW; w[4] = rockW; w[5] = screeW;
+        vec2 gmx = dFdx(vGround), gmy = dFdy(vGround);
+        vec4 mc[6]; vec4 mr[6];
+        float hmax = -1.0;
+        for (int i = 0; i < 6; i++) {
+          mc[i] = vec4(matMean[i], 1.0); mr[i] = vec4(0.5, 0.5, 0.5, 1.0);
+          if (w[i] < 0.02 || debugMode > 3.5 && debugMode < 4.5) continue;
+          material(i, (vGround + matShift) / matSize[i], gmx / matSize[i], gmy / matSize[i], mc[i], mr[i]);
+          hmax = max(hmax, w[i] + mr[i].b * heightBlend);
+        }
+        float wsum = 0.0;
+        for (int i = 0; i < 6; i++) { float a = w[i] < 0.02 ? 0.0 : max(0.0, w[i] + mr[i].b * heightBlend - (hmax - heightBlend)); w[i] = a; wsum += a; }
+        if (wsum <= 0.0) { w[0] = floorW; w[1] = grassW * (1.0 - greenness); w[2] = grassW * greenness; w[3] = scrubW; w[4] = rockW; w[5] = screeW; wsum = 1.0; }
+        vec3 ratio = vec3(0.0); vec2 dn = vec2(0.0); float bumpK = 0.0; int top = 0; float topW = 0.0;
+        for (int i = 0; i < 6; i++) {
+          float wi = w[i] / wsum;
+          // the material's own pattern, its average taken out: brighter and darker, warmer and cooler than its mean, never its mean itself, which is the palette's
+          ratio += wi * mix(vec3(1.0), mc[i].rgb / max(matMean[i], vec3(0.004)), matAlbedo);
+          dn += wi * (mr[i].rg * 2.0 - 1.0);
+          bumpK += wi * (i == 0 ? bumpFloor : (i == 4 || i == 5 ? bumpRock : bumpGrass));
+          if (wi > topW) { topW = wi; top = i; }
+        }
+        float fW = w[0] / wsum, gW = (w[1] + w[2]) / wsum, sW = w[3] / wsum, rW = w[4] / wsum, scW = w[5] / wsum;
+        vec3 base = slopeCol * gW + scrubCol * sW + floorCol * fW + rockCol * rW + screeCol * scW;
         // the photograph's own pattern: its brightness against its class's typical brightness; and half its hue
         float refL = mix(mix(0.24, 0.085, scrubW), 0.42, floorW + paleW * 0.5);
         float rel = mix(clamp(Lc / refL, 0.65, 1.3), 1.0, farW);
         vec3 photoHue = c / max(Lc, 0.02) * dot(base, vec3(0.299, 0.587, 0.114));
         vec3 ground = mix(base, photoHue, 0.45 * (1.0 - farW)) * rel;
         ground = mix(ground, ground * (0.85 + 0.3 * vary), farW);
-        // surface detail at three scales, fixed to the ground: dirt (clods, stones, rills) under the floor, rock and scree; strands and clumps under grass and scrub
-        float dirtiness = clamp(floorW + rockW + screeW, 0.0, 1.0);
-        float clumpShade = 0.0;
-        vec2 dn = vec2(0.0); float albedo = 0.0; float stone = 0.0;
-        float wts[3]; wts[0] = 1.0; wts[1] = 0.8; wts[2] = 0.6;
-        float dbgOct = 0.0;
-        for (int i = 0; i < 3; i++) {
-          if (float(i) >= octaves || (debugMode > 3.5 && debugMode < 5.5)) break;
-          if (debugMode > 5.5 && float(i) != debugMode - 6.0) continue;
-          float tile = i == 0 ? tiles.x : (i == 1 ? tiles.y : tiles.z);
-          vec2 tuv = vMap / tile;
-          // a scale whose texels are far smaller than a screen pixel carries nothing but aliasing: it fades out as it shrinks past detailFadePx texels a pixel
-          vec2 tdx = dFdx(tuv * detailPx), tdy = dFdy(tuv * detailPx);
-          float tlod = 0.5 * log2(max(dot(tdx, tdx), dot(tdy, tdy)));
-          float keep = 1.0 - smoothstep(detailFadeLod - 1.0, detailFadeLod + 1.0, tlod);
-          if (keep <= 0.0) continue;
-          vec4 d, g;
-          if (i == 0) {
-            // the coarse scale: patches of clumps, bare spots and stones, the clumps darker on grass and scrub (bushes too small to stand), each throwing a short hard shadow away from the sun
-            vec4 pt = texture2D(patchMap, tuv);
-            d = pt; g = pt;
-            g.z -= pt.w * 0.3 * (1.0 - dirtiness);
-            float sh = texture2D(patchMap, tuv + sunMapDir * (clumpShadowM / tile)).w;
-            clumpShade = max(clumpShade, max(0.0, sh - pt.w) * keep);
-          } else {
-            // the middle scale: clods and stones under dirt, small clumps under grass; the fine scale: grains under dirt, strands under grass
-            d = texture2D(dirtMap, tuv);
-            g = i == 1 ? texture2D(patchMap, tuv) : texture2D(grassMap, tuv);
-            if (i == 1) { float sh = texture2D(patchMap, tuv + sunMapDir * (clumpShadowM * 0.15 / tile)).w; clumpShade = max(clumpShade, max(0.0, sh - g.w) * keep * 0.7); }
-            // the finer pictures are sampled twice, the second turned and shifted, blended by the slow variation, so no repeat shows at a distance
-            vec2 ruv = vec2(tuv.x * 0.78 - tuv.y * 0.63, tuv.x * 0.63 + tuv.y * 0.78) + 0.37;
-            float bw = smoothstep(0.3, 0.7, vary);
-            d = mix(d, texture2D(dirtMap, ruv), bw);
-            g = mix(g, i == 1 ? texture2D(patchMap, ruv) : texture2D(grassMap, ruv), bw);
-          }
-          vec4 t = mix(g, d, dirtiness);
-          dn += (t.xy * 2.0 - 1.0) * wts[i] * keep;
-          albedo += (t.z * 2.0 - 1.0) * detailAlbedo * wts[i] * keep;
-          stone = max(stone, t.w * dirtiness * keep);
-        }
-        // stones are paler and greyer than the dirt around them
-        ground = mix(ground, mix(ground, rockCol * 0.9, 0.5), stone * (0.35 + 0.4 * rockW + 0.4 * screeW));
-        // tire tracks on the floor: two ruts a tire's gauge apart on each lane, wandering a little, fading by the first boards
+        // tire tracks on the floor: two ruts a tire's gauge apart on each lane, wandering a little, fading by the first boards; each rut's edge broken by the dirt's own relief
         float tracks = 0.0;
-        if (floorW > 0.2 && -vWorld.z < trackReachM) {
+        if (fW > 0.2 && -vWorld.z < trackReachM) {
           float wob = sin(-vWorld.z * 0.07) * 0.3;
+          float rough = (mr[0].b - 0.5) * 0.25;
           for (int k = 0; k < 2; k++) {
             float lane = k == 0 ? trackLanes.x : trackLanes.y;
             for (int s = 0; s < 2; s++) {
               float lx = (s == 0 ? lane : -lane) + wob;
-              float a = abs(abs(vWorld.x - lx) - trackGauge * 0.5);
+              float a = abs(abs(vWorld.x - lx) - trackGauge * 0.5) + rough;
               tracks = max(tracks, 1.0 - smoothstep(0.1, 0.28, a));
             }
           }
-          tracks *= floorW * (1.0 - smoothstep(trackReachM * 0.6, trackReachM, -vWorld.z));
+          tracks *= fW * (1.0 - smoothstep(trackReachM * 0.6, trackReachM, -vWorld.z));
         }
         ground *= 1.0 - tracks * trackDark;
-        ground *= 1.0 - clumpShade * clumpShadowDark * (1.0 - dirtiness * 0.5);
-        diffuseColor.rgb *= ground * clamp(1.0 + albedo, 0.55, 1.45);
-        if (debugMode > 5.5) diffuseColor.rgb = vec3(0.5 + albedo * 2.0);
-        if (debugMode > 0.5 && debugMode < 3.5) diffuseColor.rgb = debugMode < 1.5 ? base : (debugMode < 2.5 ? c : vec3(scrubW, grassW, floorW + rockW + screeW));
-        // the normal: the survey's, tilted by the detail's small relief (more on rock and scree, little on grass)
-        float bumpK = bumpFloor * floorW + bumpGrass * (grassW + scrubW) + bumpRock * (rockW + screeW * 0.8);
+        diffuseColor.rgb *= ground * clamp(ratio, 0.35, 2.2);
+        if (debugMode > 0.5 && debugMode < 3.5) diffuseColor.rgb = debugMode < 1.5 ? base : (debugMode < 2.5 ? c : vec3(sW + gW * 0.0, gW, fW + rW + scW));
+        // the relief's own small shadows: where the material's surface a little toward the sun stands higher than here, the sun is cut (the dominant material only)
+        gRelShade = 0.0;
+        if (reliefShadowDark > 0.0 && topW > 0.3) {
+          vec2 uvT = (vGround + matShift) / matSize[top];
+          float hs = materialHeightAt(top, uvT + sunMapDir * (reliefShadowM / matSize[top]), gmx / matSize[top], gmy / matSize[top]);
+          // fade with distance: once a screen pixel covers more of the ground than the shadow's length, it is gone
+          float px = max(length(gmx), length(gmy));
+          gRelShade = smoothstep(0.0, reliefShadowDepth, hs - mr[top].b) * reliefShadowDark * (1.0 - smoothstep(reliefShadowM * 0.5, reliefShadowM * 2.0, px));
+        }
+        // the normal: the survey's, tilted by the material's small relief (more on rock and scree, little on grass)
         vec3 enuN = normalize(mapN + vec3(dn.x, 0.0, dn.y) * bumpK);
         gNormalW = debugMode > 4.5 ? vec3(0.0, 1.0, 0.0) : eastNorthUpToWorld(enuN);
         // creases and gullies are darker: the ground around them blocks the sky
         gAo = 1.0 - hollowDark * clamp(sn.w / hollowM, 0.0, 1.0);
-        gSheen = sheenRock * (rockW + 0.5 * screeW + 0.3 * stone);
+        gSheen = sheenRock * (rW + 0.5 * scW);
         gSunLit = smoothstep(-0.4, 0.5, clearance());`)
       .replace('#include <normal_fragment_maps>', 'normal = normalize((viewMatrix * vec4(gNormalW, 0.0)).xyz);')
       .replace('#include <aomap_fragment>', 'reflectedLight.indirectDiffuse *= gAo;')
       .replace('#include <lights_fragment_begin>', THREE.ShaderChunk.lights_fragment_begin
-        .replace('getDirectionalLightInfo( directionalLight, directLight );', 'getDirectionalLightInfo( directionalLight, directLight ); directLight.color *= mix(0.0, 1.0, gSunLit);')
+        .replace('getDirectionalLightInfo( directionalLight, directLight );', 'getDirectionalLightInfo( directionalLight, directLight ); directLight.color *= mix(0.0, 1.0, gSunLit) * (1.0 - gRelShade);')
         .replace('RE_Direct( directLight, geometryPosition, geometryNormal, geometryViewDir, geometryClearcoatNormal, material, reflectedLight );', 'RE_Direct( directLight, geometryPosition, geometryNormal, geometryViewDir, geometryClearcoatNormal, material, reflectedLight ); reflectedLight.directSpecular += directLight.color * gSheen * pow(max(dot(reflect(-directLight.direction, geometryNormal), geometryViewDir), 0.0), 20.0);'));
   };
-  mat.customProgramCacheKey = () => 'range-day-terrain-6';
+  mat.customProgramCacheKey = () => 'range-day-terrain-8';
   const mesh = new THREE.Mesh(geo, mat);
   mesh.receiveShadow = full;
   mesh.frustumCulled = false;
-  return { mesh, heightAt: (x, z) => { const m = frame.toMap(x, z); return heightAt(m.e, m.n); }, texture: tex, dists, dirt, grass, patch };
-}
-
-// Surface detail, made in code as two tileable pictures sampled at several
-// scales over the ground: `dirt` (clods, crumbs, stones and shallow rills)
-// and `grass` (strands and clumps). Each pixel holds the surface's small
-// slope (R, G: a normal's east and north parts, 128 flat), its brightness
-// against the ground's own (B, 128 even) and a mask (A: stones in the dirt,
-// clump tops in the grass). A seeded generator, so the ground is the same
-// each visit.
-function detailTextures(size = 512) {
-  let seed = 7;
-  const rnd = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
-  const field = () => new Float32Array(size * size);
-  const wrap = (v) => ((v % size) + size) % size;
-  // a soft bump (a clod, a stone, a clump) of radius r and height h at x, y, with a shape exponent
-  const bump = (H, A, x0, y0, r, h, pow, a) => {
-    const x = Math.round(x0), y = Math.round(y0), ri = Math.ceil(r);
-    for (let dy = -ri; dy <= ri; dy++) for (let dx = -ri; dx <= ri; dx++) {
-      const d = Math.hypot(dx, dy) / r; if (d >= 1) continue;
-      const k = wrap(y + dy) * size + wrap(x + dx);
-      const v = Math.pow(1 - d * d, pow) * h;
-      H[k] += v; if (A && a) A[k] = Math.max(A[k], a * (1 - d));
-    }
-  };
-  const stroke = (H, B, x, y, len, ang, w, h, bright) => {
-    const n = Math.ceil(len);
-    for (let i = 0; i <= n; i++) { const px = x + Math.cos(ang) * i, py = y + Math.sin(ang) * i; for (let o = -w; o <= w; o++) { const k = wrap(Math.round(py + o * Math.sin(ang + 1.5708))) * size + wrap(Math.round(px + o * Math.cos(ang + 1.5708))); H[k] += h; if (B) B[k] += bright; } }
-  };
-  // brightness from a height field, scaled between its 2nd and 98th percentiles (a few tall overlaps must not flatten the rest)
-  const norm = (H, lo = -0.5, span = 1) => { const smp = Array.from({ length: 4096 }, (_, i) => H[Math.floor((i / 4096) * H.length)]).sort((a, b) => a - b); const p2 = smp[82], p98 = smp[4013]; return (v) => Math.max(lo, Math.min(lo + span, ((v - p2) / Math.max(1e-6, p98 - p2)) * span + lo)); };
-  const pack = (H, B, A, scale) => {
-    const out = new Uint8Array(size * size * 4);
-    for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
-      const k = y * size + x;
-      const dzdx = (H[y * size + wrap(x + 1)] - H[y * size + wrap(x - 1)]) * scale, dzdy = (H[wrap(y - 1) * size + x] - H[wrap(y + 1) * size + x]) * scale;
-      const l = Math.hypot(dzdx, 1, dzdy);
-      out[k * 4] = Math.round((-dzdx / l * 0.5 + 0.5) * 255); out[k * 4 + 1] = Math.round((-dzdy / l * 0.5 + 0.5) * 255);
-      out[k * 4 + 2] = Math.round(Math.max(0, Math.min(255, 128 + B[k] * 128)));
-      out[k * 4 + 3] = Math.round(Math.max(0, Math.min(1, A[k])) * 255);
-    }
-    const t = new THREE.DataTexture(out, size, size, THREE.RGBAFormat, THREE.UnsignedByteType);
-    t.wrapS = t.wrapT = THREE.RepeatWrapping; t.minFilter = THREE.LinearMipmapLinearFilter; t.magFilter = THREE.LinearFilter; t.generateMipmaps = true; t.anisotropy = 4; t.colorSpace = THREE.NoColorSpace; t.needsUpdate = true;
-    return t;
-  };
-  // dirt: clods and crumbs of many sizes, a few hundred stones, shallow rills
-  const dH = field(), dB = field(), dA = field();
-  for (let i = 0; i < 3000; i++) { const r = 1.5 + rnd() * rnd() * 14, x = rnd() * size, y = rnd() * size; bump(dH, null, x, y, r, 0.4 + rnd() * 0.6, 1.2, 0); }
-  for (let i = 0; i < 420; i++) { const r = 1.5 + rnd() * rnd() * 7, x = rnd() * size, y = rnd() * size; bump(dH, dA, x, y, r, 1.2 + rnd() * 1.2, 0.7, 0.6 + rnd() * 0.4); }
-  for (let i = 0; i < 24; i++) { const x = rnd() * size, y = rnd() * size, a = rnd() * 6.3; let px = x, py = y, ang = a; for (let s = 0; s < 14; s++) { stroke(dH, null, px, py, 10, ang, 2, -0.35, 0); px += Math.cos(ang) * 10; py += Math.sin(ang) * 10; ang += (rnd() - 0.5) * 0.8; } }
-  // brightness: lit clods paler on top, hollows darker, stones pale
-  { const n = norm(dH, -0.3, 0.6); for (let i = 0; i < dH.length; i++) dB[i] = n(dH[i]) + dA[i] * 0.3; }
-  // grass: thousands of short strands and a hundred clumps
-  const gH = field(), gB = field(), gA = field();
-  for (let i = 0; i < 160; i++) { const r = 6 + rnd() * 18, x = rnd() * size, y = rnd() * size; bump(gH, gA, x, y, r, 0.8 + rnd() * 0.8, 1.0, 0.5 + rnd() * 0.5); }
-  for (let i = 0; i < 1400; i++) {
-    // a blade: a curved stroke a few hundredths of the tile long, a blade's width, paler or darker than the ground
-    const len = 30 + rnd() * 150, bright = (rnd() - 0.45) * 0.5, w = rnd() < 0.3 ? 1 : 0;
-    let x = rnd() * size, y = rnd() * size, a = rnd() * 6.3; const turn = (rnd() - 0.5) * 0.08;
-    for (let s = 0; s < len; s += 6) { stroke(gH, gB, x, y, 6, a, w, 0.25 + rnd() * 0.2, bright); x += Math.cos(a) * 6; y += Math.sin(a) * 6; a += turn; }
-  }
-  for (let i = 0; i < 1200; i++) { const r = 1 + rnd() * rnd() * 5, x = rnd() * size, y = rnd() * size; bump(gH, null, x, y, r, 0.3 + rnd() * 0.5, 1.0, 0); }
-  { const n = norm(gH, -0.15, 0.3); for (let i = 0; i < gB.length; i++) gB[i] = Math.max(-0.5, Math.min(0.5, gB[i] * 0.5 + n(gH[i]) + (gA[i] - 0.3) * 0.2)); }
-  // patches, for the coarse scale: clumps of grass and low bushes as soft dark blotches, bare spots paler, scattered stones; no strands (a line at this scale reads as cloth)
-  const pH = field(), pB = field(), pA = field();
-  for (let i = 0; i < 220; i++) { const r = 8 + rnd() * rnd() * 36, x = rnd() * size, y = rnd() * size, a = 0.4 + rnd() * 0.6, h = 0.3 + rnd() * 0.5; for (let k = 0; k < 3; k++) bump(pH, pA, x + (rnd() - 0.5) * r * 1.2, y + (rnd() - 0.5) * r * 1.2, r * (0.5 + rnd() * 0.6), h, 2.0, a); }
-  for (let i = 0; i < 160; i++) { const r = 12 + rnd() * 30, x = rnd() * size, y = rnd() * size; bump(pH, null, x, y, r, -0.2 - rnd() * 0.3, 2.0, 0); }
-  for (let i = 0; i < 300; i++) { const r = 3 + rnd() * rnd() * 5, x = rnd() * size, y = rnd() * size; bump(pH, null, x, y, r, 0.5 + rnd() * 0.5, 1.2, 0); }
-  { const n = norm(pH, -0.2, 0.4); for (let i = 0; i < pH.length; i++) pB[i] = n(pH[i]) - pA[i] * 0.4; }
-  return { dirt: pack(dH, dB, dA, 1.0), grass: pack(gH, gB, gA, 0.6), patch: pack(pH, pB, pA, 0.3) };
+  return { mesh, heightAt: (x, z) => { const m = frame.toMap(x, z); return heightAt(m.e, m.n); }, texture: tex, dists, materials: mats,
+    // for the measures only (scripts/picture-measure.mjs, test/scene.test.js): lay the materials in a plain grid, without the cells' shifts
+    setPlainGrid(on) { if (shaderRef.uniforms) shaderRef.uniforms.plainGrid.value = on ? 1 : 0; },
+    // and slide the materials along the ground by east and north metres, the camera and everything else unmoved
+    setMaterialShift(east, north) { if (shaderRef.uniforms) shaderRef.uniforms.matShift.value.set(east, north); } };
 }
 
 export { YD, FT };

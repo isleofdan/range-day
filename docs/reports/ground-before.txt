@@ -1,0 +1,121 @@
+picture-measure: 2026-11-20, test browser (software 3D), scene canvas only
+412 px, full, February midday, scope 2x, 600 yd: sharpness 2.93, view 380 px at 2.67 degrees, median frame 583.3 ms
+412 px, full, February midday, scope 2x, 1000 yd: sharpness 2.84, view 380 px at 2.67 degrees, median frame 583.3 ms
+412 px, full, February midday, scope 7x, 600 yd: sharpness 3.75, view 380 px at 0.76 degrees, median frame 583.3 ms
+412 px, full, February midday, scope 7x, 1000 yd: sharpness 3.15, view 380 px at 0.76 degrees, median frame 583.3 ms
+412 px, full, February midday, patch sky, 18 degrees up: rendered 98,167,206, measured #51a4e6 = 81,164,230, difference +17,+3,-24
+412 px, full, February midday, patch sunlit hillside (the headwall, 700 m): rendered 145,153,113, measured #83965f = 131,150,95, difference +14,+3,+18
+412 px, full, February midday, patch dirt floor in sun (60 m): rendered 159,164,145, measured #bdb3a7 = 189,179,167, difference -30,-15,-22
+412 px, full, February midday, patch scrub on the left wall (450 m): rendered 105,114,79, measured #435044 = 67,80,68, difference +38,+34,+11
+412 px, full, February midday, patch sunlit brush (three bushes 250 to 350 m out, each at 0.3 degrees): rendered 133,141,103, measured #435044 = 67,80,68, difference +66,+61,+35
+412 px, full, February midday, patch the 600-yard plate's red paint through the scope at 7x: rendered 190,113,114, measured #af787b = 175,120,123, difference +15,-7,-9
+412 px, full, February midday, bytes: the canyon course's picture downloaded 8196503 bytes in 3 /terrain/ files
+412 px, full, February midday, detail floor at 1x, 25 m out (the irons' field): local contrast 2.02
+412 px, full, February midday, detail hillside 20 m right of the 600-yard plate at 7x: local contrast 1.97
+412 px, full, February midday, detail the same hillside at 21x (the test view): local contrast 1.30
+412 px, full, February midday, irons 1x, 600 yd: sharpness 3.07, view 380 px at 6.68 degrees, median frame 916.6 ms
+412 px, full, September afternoon, scope 2x, 600 yd: sharpness 3.14, view 380 px at 2.67 degrees, median frame 1016.8 ms
+412 px, full, September afternoon, scope 2x, 1000 yd: sharpness 3.14, view 380 px at 2.67 degrees, median frame 1016.8 ms
+412 px, full, September afternoon, scope 7x, 600 yd: sharpness 3.64, view 380 px at 0.76 degrees, median frame 1016.8 ms
+412 px, full, September afternoon, scope 7x, 1000 yd: sharpness 3.11, view 380 px at 0.76 degrees, median frame 1016.8 ms
+412 px, full, September afternoon, patch sky, 18 degrees up: rendered 97,169,211, measured #429ae4 = 66,154,228, difference +31,+15,-17
+412 px, full, September afternoon, patch sunlit dry slope (the right wall, 600 m): rendered 131,120,96, measured #988161 = 152,129,97, difference -21,-9,-1
+412 px, full, September afternoon, patch dirt floor in sun (60 m): rendered 144,139,128, measured #c9bda1 = 201,189,161, difference -57,-50,-33
+412 px, full, September afternoon, patch scrub on the left wall (450 m): rendered 69,65,52, measured #4a4f33 = 74,79,51, difference -5,-14,+1
+412 px, full, September afternoon, patch sunlit brush (three bushes 250 to 350 m out, each at 0.3 degrees): rendered 136,121,98, measured #4a4f33 = 74,79,51, difference +62,+42,+47
+412 px, full, September afternoon, patch the 600-yard plate's red paint through the scope at 7x: rendered 142,71,75, measured #af787b = 175,120,123, difference -33,-49,-48
+412 px, full, September afternoon, bytes: the canyon course's picture downloaded 8196503 bytes in 3 /terrain/ files
+412 px, full, September afternoon, detail floor at 1x, 25 m out (the irons' field): local contrast 2.37
+412 px, full, September afternoon, detail hillside 20 m right of the 600-yard plate at 7x: local contrast 2.42
+412 px, full, September afternoon, detail the same hillside at 21x (the test view): local contrast 2.28
+412 px, full, September afternoon, irons 1x, 600 yd: sharpness 3.90, view 380 px at 6.68 degrees, median frame 683.2 ms
+412 px, light, February midday, scope 2x, 600 yd: sharpness 3.22, view 380 px at 2.67 degrees, median frame 183.4 ms
+412 px, light, February midday, scope 2x, 1000 yd: sharpness 2.92, view 380 px at 2.67 degrees, median frame 183.4 ms
+412 px, light, February midday, scope 7x, 600 yd: sharpness 3.94, view 380 px at 0.76 degrees, median frame 183.4 ms
+412 px, light, February midday, scope 7x, 1000 yd: sharpness 3.26, view 380 px at 0.76 degrees, median frame 183.4 ms
+412 px, light, February midday, patch sky, 18 degrees up: rendered 97,166,206, measured #51a4e6 = 81,164,230, difference +16,+2,-24
+412 px, light, February midday, patch sunlit hillside (the headwall, 700 m): rendered 133,142,104, measured #83965f = 131,150,95, difference +2,-8,+9
+412 px, light, February midday, patch dirt floor in sun (60 m): rendered 165,166,156, measured #bdb3a7 = 189,179,167, difference -24,-13,-11
+412 px, light, February midday, patch scrub on the left wall (450 m): rendered 94,103,71, measured #435044 = 67,80,68, difference +27,+23,+3
+412 px, light, February midday, patch sunlit brush (three bushes 250 to 350 m out, each at 0.3 degrees): rendered 83,95,63, measured #435044 = 67,80,68, difference +16,+15,-5
+412 px, light, February midday, patch the 600-yard plate's red paint through the scope at 7x: rendered 190,113,114, measured #af787b = 175,120,123, difference +15,-7,-9
+412 px, light, February midday, bytes: the canyon course's picture downloaded 5533473 bytes in 3 /terrain/ files
+412 px, light, February midday, detail floor at 1x, 25 m out (the irons' field): local contrast 2.16
+412 px, light, February midday, detail hillside 20 m right of the 600-yard plate at 7x: local contrast 2.30
+412 px, light, February midday, detail the same hillside at 21x (the test view): local contrast 1.87
+412 px, light, February midday, irons 1x, 600 yd: sharpness 3.27, view 380 px at 6.68 degrees, median frame 333.3 ms
+412 px, light, September afternoon, scope 2x, 600 yd: sharpness 3.27, view 380 px at 2.67 degrees, median frame 316.7 ms
+412 px, light, September afternoon, scope 2x, 1000 yd: sharpness 3.04, view 380 px at 2.67 degrees, median frame 316.7 ms
+412 px, light, September afternoon, scope 7x, 600 yd: sharpness 3.63, view 380 px at 0.76 degrees, median frame 316.7 ms
+412 px, light, September afternoon, scope 7x, 1000 yd: sharpness 2.97, view 380 px at 0.76 degrees, median frame 316.7 ms
+412 px, light, September afternoon, patch sky, 18 degrees up: rendered 96,168,211, measured #429ae4 = 66,154,228, difference +30,+14,-17
+412 px, light, September afternoon, patch sunlit dry slope (the right wall, 600 m): rendered 118,108,88, measured #988161 = 152,129,97, difference -34,-21,-9
+412 px, light, September afternoon, patch dirt floor in sun (60 m): rendered 153,152,143, measured #c9bda1 = 201,189,161, difference -48,-37,-18
+412 px, light, September afternoon, patch scrub on the left wall (450 m): rendered 63,59,48, measured #4a4f33 = 74,79,51, difference -11,-20,-3
+412 px, light, September afternoon, patch sunlit brush (three bushes 250 to 350 m out, each at 0.3 degrees): rendered 58,55,43, measured #4a4f33 = 74,79,51, difference -16,-24,-8
+412 px, light, September afternoon, patch the 600-yard plate's red paint through the scope at 7x: rendered 142,72,75, measured #af787b = 175,120,123, difference -33,-48,-48
+412 px, light, September afternoon, bytes: the canyon course's picture downloaded 5533473 bytes in 3 /terrain/ files
+412 px, light, September afternoon, detail floor at 1x, 25 m out (the irons' field): local contrast 2.61
+412 px, light, September afternoon, detail hillside 20 m right of the 600-yard plate at 7x: local contrast 2.56
+412 px, light, September afternoon, detail the same hillside at 21x (the test view): local contrast 2.30
+412 px, light, September afternoon, irons 1x, 600 yd: sharpness 4.02, view 380 px at 6.68 degrees, median frame 333.3 ms
+1280 px, full, February midday, scope 2x, 600 yd: sharpness 2.66, view 640 px at 2.67 degrees, median frame 983.4 ms
+1280 px, full, February midday, scope 2x, 1000 yd: sharpness 2.57, view 640 px at 2.67 degrees, median frame 983.4 ms
+1280 px, full, February midday, scope 7x, 600 yd: sharpness 3.02, view 640 px at 0.76 degrees, median frame 983.4 ms
+1280 px, full, February midday, scope 7x, 1000 yd: sharpness 2.74, view 640 px at 0.76 degrees, median frame 983.4 ms
+1280 px, full, February midday, patch sky, 18 degrees up: rendered 100,168,207, measured #51a4e6 = 81,164,230, difference +19,+4,-23
+1280 px, full, February midday, patch sunlit hillside (the headwall, 700 m): rendered 144,151,112, measured #83965f = 131,150,95, difference +13,+1,+17
+1280 px, full, February midday, patch dirt floor in sun (60 m): rendered 159,163,145, measured #bdb3a7 = 189,179,167, difference -30,-16,-22
+1280 px, full, February midday, patch scrub on the left wall (450 m): rendered 103,112,78, measured #435044 = 67,80,68, difference +36,+32,+10
+1280 px, full, February midday, patch sunlit brush (three bushes 250 to 350 m out, each at 0.3 degrees): rendered 134,142,104, measured #435044 = 67,80,68, difference +67,+62,+36
+1280 px, full, February midday, patch the 600-yard plate's red paint through the scope at 7x: rendered 189,113,114, measured #af787b = 175,120,123, difference +14,-7,-9
+1280 px, full, February midday, bytes: the canyon course's picture downloaded 8196503 bytes in 3 /terrain/ files
+1280 px, full, February midday, detail floor at 1x, 25 m out (the irons' field): local contrast 2.03
+1280 px, full, February midday, detail hillside 20 m right of the 600-yard plate at 7x: local contrast 1.90
+1280 px, full, February midday, detail the same hillside at 21x (the test view): local contrast 1.35
+1280 px, full, February midday, irons 1x, 600 yd: sharpness 2.88, view 640 px at 6.68 degrees, median frame 2100.0 ms
+1280 px, full, September afternoon, scope 2x, 600 yd: sharpness 2.86, view 640 px at 2.67 degrees, median frame 1049.9 ms
+1280 px, full, September afternoon, scope 2x, 1000 yd: sharpness 2.87, view 640 px at 2.67 degrees, median frame 1049.9 ms
+1280 px, full, September afternoon, scope 7x, 600 yd: sharpness 3.16, view 640 px at 0.76 degrees, median frame 1049.9 ms
+1280 px, full, September afternoon, scope 7x, 1000 yd: sharpness 2.95, view 640 px at 0.76 degrees, median frame 1049.9 ms
+1280 px, full, September afternoon, patch sky, 18 degrees up: rendered 97,169,211, measured #429ae4 = 66,154,228, difference +31,+15,-17
+1280 px, full, September afternoon, patch sunlit dry slope (the right wall, 600 m): rendered 129,118,95, measured #988161 = 152,129,97, difference -23,-11,-2
+1280 px, full, September afternoon, patch dirt floor in sun (60 m): rendered 144,140,128, measured #c9bda1 = 201,189,161, difference -57,-49,-33
+1280 px, full, September afternoon, patch scrub on the left wall (450 m): rendered 68,63,52, measured #4a4f33 = 74,79,51, difference -6,-16,+1
+1280 px, full, September afternoon, patch sunlit brush (three bushes 250 to 350 m out, each at 0.3 degrees): rendered 137,122,98, measured #4a4f33 = 74,79,51, difference +63,+43,+47
+1280 px, full, September afternoon, patch the 600-yard plate's red paint through the scope at 7x: rendered 141,71,75, measured #af787b = 175,120,123, difference -34,-49,-48
+1280 px, full, September afternoon, bytes: the canyon course's picture downloaded 8196503 bytes in 3 /terrain/ files
+1280 px, full, September afternoon, detail floor at 1x, 25 m out (the irons' field): local contrast 2.45
+1280 px, full, September afternoon, detail hillside 20 m right of the 600-yard plate at 7x: local contrast 2.38
+1280 px, full, September afternoon, detail the same hillside at 21x (the test view): local contrast 2.21
+1280 px, full, September afternoon, irons 1x, 600 yd: sharpness 3.55, view 640 px at 6.68 degrees, median frame 2199.9 ms
+1280 px, light, February midday, scope 2x, 600 yd: sharpness 3.15, view 640 px at 2.67 degrees, median frame 833.4 ms
+1280 px, light, February midday, scope 2x, 1000 yd: sharpness 2.93, view 640 px at 2.67 degrees, median frame 833.4 ms
+1280 px, light, February midday, scope 7x, 600 yd: sharpness 3.46, view 640 px at 0.76 degrees, median frame 833.4 ms
+1280 px, light, February midday, scope 7x, 1000 yd: sharpness 3.05, view 640 px at 0.76 degrees, median frame 833.4 ms
+1280 px, light, February midday, patch sky, 18 degrees up: rendered 100,168,207, measured #51a4e6 = 81,164,230, difference +19,+4,-23
+1280 px, light, February midday, patch sunlit hillside (the headwall, 700 m): rendered 132,140,102, measured #83965f = 131,150,95, difference +1,-10,+7
+1280 px, light, February midday, patch dirt floor in sun (60 m): rendered 165,165,156, measured #bdb3a7 = 189,179,167, difference -24,-14,-11
+1280 px, light, February midday, patch scrub on the left wall (450 m): rendered 92,101,70, measured #435044 = 67,80,68, difference +25,+21,+2
+1280 px, light, February midday, patch sunlit brush (three bushes 250 to 350 m out, each at 0.3 degrees): rendered 84,96,63, measured #435044 = 67,80,68, difference +17,+16,-5
+1280 px, light, February midday, patch the 600-yard plate's red paint through the scope at 7x: rendered 190,113,114, measured #af787b = 175,120,123, difference +15,-7,-9
+1280 px, light, February midday, bytes: the canyon course's picture downloaded 5533473 bytes in 3 /terrain/ files
+1280 px, light, February midday, detail floor at 1x, 25 m out (the irons' field): local contrast 2.31
+1280 px, light, February midday, detail hillside 20 m right of the 600-yard plate at 7x: local contrast 2.25
+1280 px, light, February midday, detail the same hillside at 21x (the test view): local contrast 1.92
+1280 px, light, February midday, irons 1x, 600 yd: sharpness 3.20, view 640 px at 6.68 degrees, median frame 900.0 ms
+1280 px, light, September afternoon, scope 2x, 600 yd: sharpness 3.02, view 640 px at 2.67 degrees, median frame 916.6 ms
+1280 px, light, September afternoon, scope 2x, 1000 yd: sharpness 2.83, view 640 px at 2.67 degrees, median frame 916.6 ms
+1280 px, light, September afternoon, scope 7x, 600 yd: sharpness 3.03, view 640 px at 0.76 degrees, median frame 916.6 ms
+1280 px, light, September afternoon, scope 7x, 1000 yd: sharpness 2.70, view 640 px at 0.76 degrees, median frame 916.6 ms
+1280 px, light, September afternoon, patch sky, 18 degrees up: rendered 95,167,211, measured #429ae4 = 66,154,228, difference +29,+13,-17
+1280 px, light, September afternoon, patch sunlit dry slope (the right wall, 600 m): rendered 116,106,86, measured #988161 = 152,129,97, difference -36,-23,-11
+1280 px, light, September afternoon, patch dirt floor in sun (60 m): rendered 152,151,142, measured #c9bda1 = 201,189,161, difference -49,-38,-19
+1280 px, light, September afternoon, patch scrub on the left wall (450 m): rendered 61,57,47, measured #4a4f33 = 74,79,51, difference -13,-22,-4
+1280 px, light, September afternoon, patch sunlit brush (three bushes 250 to 350 m out, each at 0.3 degrees): rendered 58,55,43, measured #4a4f33 = 74,79,51, difference -16,-24,-8
+1280 px, light, September afternoon, patch the 600-yard plate's red paint through the scope at 7x: rendered 141,72,75, measured #af787b = 175,120,123, difference -34,-48,-48
+1280 px, light, September afternoon, bytes: the canyon course's picture downloaded 5533473 bytes in 3 /terrain/ files
+1280 px, light, September afternoon, detail floor at 1x, 25 m out (the irons' field): local contrast 2.86
+1280 px, light, September afternoon, detail hillside 20 m right of the 600-yard plate at 7x: local contrast 2.43
+1280 px, light, September afternoon, detail the same hillside at 21x (the test view): local contrast 2.33
+1280 px, light, September afternoon, irons 1x, 600 yd: sharpness 3.87, view 640 px at 6.68 degrees, median frame 883.4 ms

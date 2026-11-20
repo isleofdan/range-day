@@ -7,6 +7,15 @@
 // Vepr's scope at 2x and 7x on the 600- and 1,000-yard plates and its irons at
 // 1x on the 600-yard plate, each on a February midday and a September
 // afternoon, at 412 and 1,280 pixels wide, on Full and on Light.
+// Since range-day-eight also: (d) the bytes the canyon course's picture
+// downloads (every /terrain/ file the page fetched, by its body); (e) the
+// ground's local contrast on ground-only patches (the floor at 1x, a
+// hillside beside the 600-yard plate at 7x and at 21x, the heat shimmer off
+// so it measures the ground, not the air): the mean absolute difference
+// between each pixel's brightness and its 3-by-3 neighbourhood's mean; and
+// (f) a repeat measure: how strongly the picture matches itself shifted by
+// one material width on the ground, against the same at other shifts, with
+// the materials laid as the game lays them and in a plain grid.
 //   node scripts/picture-measure.mjs > docs/reports/picture-before.txt
 // The test browser draws in software; frame times are its, not a phone's.
 import { chromium } from 'playwright';
@@ -14,6 +23,7 @@ import { spawn } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import GM from './ground-measure.cjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PORT = 8963;
@@ -63,6 +73,8 @@ const inPage = {
     if (v.world) { const w = v.world; yaw = (Math.atan2(w[0], -w[2]) * 180) / Math.PI; pitch = (Math.atan2(w[1] - eye, -w[2]) * 180) / Math.PI; }
     s.setView({ yawDeg: yaw, pitchDeg: pitch, fovDeg: v.fov, glass: Boolean(v.glass), windMph: 0 });
   },
+  contrast: GM.contrast,
+  repeat: GM.repeat,
   read: () => { const sc = document.getElementById('scene'); const c = document.createElement('canvas'); c.width = sc.width; c.height = sc.height; const g = c.getContext('2d'); g.drawImage(sc, 0, 0); return { g, w: sc.width, h: sc.height }; },
 };
 const fn = (body) => new Function('...args', `${Object.entries(inPage).map(([k, f]) => `const ${k} = ${f.toString()};`).join('\n')}\nreturn (${body})(...args);`);
@@ -72,6 +84,8 @@ const browser = await chromium.launch();
 for (const [width, viewport] of WIDTHS) for (const picture of ['full', 'light']) for (const day of DAYS) {
   const context = await browser.newContext({ viewport, deviceScaleFactor: 1 });
   const page = await context.newPage();
+  const fetched = new Map();
+  page.on('response', async (r) => { const u = new URL(r.url()); if (u.pathname.startsWith('/terrain/') && !fetched.has(u.pathname)) { try { fetched.set(u.pathname, (await r.body()).length); } catch { fetched.set(u.pathname, 0); } } });
   await page.goto(`${base}/login`); await page.fill('#passphrase', PASS); await page.click('button[type=submit]'); await page.waitForURL(`${base}/`);
   await page.evaluate((p) => { try { localStorage.removeItem('range-day:day:open'); localStorage.removeItem('range-day:day:packed'); localStorage.setItem('range-day:picture', JSON.stringify(p)); } catch {} }, picture);
   let patchesDone = false;
@@ -79,6 +93,7 @@ for (const [width, viewport] of WIDTHS) for (const picture of ['full', 'light'])
     await page.evaluate(() => localStorage.removeItem('range-day:day:open'));
     await page.goto(`${base}${PIRU}&sight=${sightId}&${day.q}`); await page.waitForSelector('#fire');
     await page.waitForFunction(() => RangeDayLine.scene || RangeDayLine.sceneFailed || (!RangeDayLine.sceneLoading && RangeDayLine.picture === 'plain'), null, { timeout: 120000 });
+    await page.waitForFunction(() => !RangeDayLine.scene || !RangeDayLine.scene.materials || RangeDayLine.scene.materials.settled, null, { timeout: 120000 });
     const up = await page.evaluate(() => Boolean(RangeDayLine.scene) && RangeDayLine.picture);
     if (up !== picture) { console.log(`${width} px, ${picture}, ${day.name}: the ${picture} picture did not come up (${up})`); continue; }
     const size = await page.evaluate(() => RangeDayLine.scene.size);
@@ -127,6 +142,27 @@ for (const [width, viewport] of WIDTHS) for (const picture of ['full', 'light'])
         const t = hex(target);
         console.log(`${width} px, ${picture}, ${day.name}, patch ${name}: ${rgb ? `rendered ${rgb.join(',')}, measured ${target} = ${t.join(',')}, difference ${rgb.map((c, i) => (c - t[i] >= 0 ? '+' : '') + (c - t[i])).join(',')}` : 'no bush found'}`);
       }
+      // (d) the bytes the course downloaded for this picture; (e) the ground's local contrast; (f) the repeat measure
+      await page.waitForTimeout(500);
+      console.log(`${width} px, ${picture}, ${day.name}, bytes: the canyon course's picture downloaded ${[...fetched.values()].reduce((a, b) => a + b, 0)} bytes in ${fetched.size} /terrain/ files`);
+      const fovAt = async (z) => { await page.evaluate((m) => RangeDayLine.setZoom(m), z); return page.evaluate(() => RangeDayLine.fovMoa / 60); };
+      const fov7 = await fovAt(7), fov21 = await fovAt(21);
+      await page.evaluate(() => { window.RD_SCENE_DEBUG = 'noshimmer'; });
+      const beside = await page.evaluate(() => { const w = RangeDayLine.scene.plateWorld(4); return [w.x + 20, w.z]; });
+      for (const [name, v] of [['floor at 1x, 25 m out (the irons\' field)', { aim: [2, -25], fov: 6.68 }], ['hillside 20 m right of the 600-yard plate at 7x', { aim: beside, fov: fov7, glass: true }], ['the same hillside at 21x (the test view)', { aim: beside, fov: fov21, glass: true }]]) {
+        const lc = await page.evaluate(fn(`([v]) => { aim(v); RangeDayLine.scene.render(3); return contrast(); }`), [v]);
+        console.log(`${width} px, ${picture}, ${day.name}, detail ${name}: local contrast ${lc.toFixed(2)}`);
+      }
+      const hasGrid = await page.evaluate(() => typeof RangeDayLine.scene.setPlainGrid === 'function');
+      if (hasGrid) {
+        const sizes = look.ground.materials;
+        for (const [name, v, sizeM] of [['the floor, 40 m out at 1x (packed dirt, 4 m material)', { aim: [2, -40], fov: 6.68 }, sizes.floor.sizeM.value], ['the hillside beside the 600-yard plate at 7x (grass)', { aim: beside, fov: fov7, glass: true }, sizes[day.q.includes('month=2') ? 'green-grass' : 'dry-grass'].sizeM.value]]) {
+          const r = {};
+          for (const plain of [true, false]) r[plain ? 'plain grid' : 'as laid'] = await page.evaluate(fn(`([v, sizeM, plain]) => { RangeDayLine.scene.setPlainGrid(plain); const out = repeat(v.aim, sizeM, v.fov, v.glass); RangeDayLine.scene.setPlainGrid(false); return out; }`), [v, sizeM, plain]);
+          console.log(`${width} px, ${picture}, ${day.name}, repeat ${name}: ${Object.entries(r).map(([k, x]) => x ? `${k} ${((x.at1 - x.others) / Math.max(1e-6, 1 - x.others)).toFixed(3)} (correlation ${x.at1.toFixed(3)} one width ${x.direction}, ${x.others.toFixed(3)} at other steps)` : `${k} not measurable`).join('; ')}`);
+        }
+      }
+      await page.evaluate(() => { window.RD_SCENE_DEBUG = undefined; });
     }
   }
   await context.close();

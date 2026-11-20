@@ -36,8 +36,8 @@ const PIRU = '/line?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt';
 const ZERO = '/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt';
 const SYLMAR = '/line?course=angeles-sylmar';
 const settle = (page, ms) => page.waitForTimeout(ms);
-// The firing line is ready when its picture is: the scene built (Full or Light), or Plain shown.
-const ready = async (page) => { await page.waitForSelector('#fire'); await page.waitForFunction(() => window.RangeDayLine && (RangeDayLine.scene || RangeDayLine.sceneFailed || (!RangeDayLine.sceneLoading && RangeDayLine.picture === 'plain')), null, { timeout: 90000 }); await settle(page, 400); };
+// The firing line is ready when its picture is: the scene built (Full or Light) and its photographed ground surfaces settled (range-day-eight), or Plain shown.
+const ready = async (page) => { await page.waitForSelector('#fire'); await page.waitForFunction(() => window.RangeDayLine && (RangeDayLine.scene || RangeDayLine.sceneFailed || (!RangeDayLine.sceneLoading && RangeDayLine.picture === 'plain')), null, { timeout: 90000 }); await page.waitForFunction(() => !RangeDayLine.scene || !RangeDayLine.scene.materials || RangeDayLine.scene.materials.settled, null, { timeout: 90000 }); await settle(page, 400); };
 const plate = async (page, ix) => { await ready(page); await page.selectOption('#plate', String(ix)); await settle(page, 400); };
 // Clears what this device keeps for a rifle and sight, so a state starts from the middle.
 const fresh = (page, rifle, sight) => page.evaluate(([r, s]) => { for (const k of Object.keys(localStorage)) if (k.startsWith(`range-day:sight:${r}:${s}`) || k.startsWith(`range-day:zero:${r}:`) || k.startsWith(`range-day:log:${r}:`)) localStorage.removeItem(k); }, [rifle, sight]);
@@ -188,8 +188,22 @@ const SCREENS = [
   { name: 'line-shot-log', path: PIRU, expect: 'miss:', act: async (page) => { await ready(page); await fresh(page, 'molot-vepr-54r', 'utg-2-7x44'); await page.reload(); await ready(page); await seededShot(page, 31); await page.evaluate(() => document.getElementById('log').scrollIntoView()); await settle(page, 200); } },
   { name: 'line-conditions-on', path: PIRU, expect: 'Wind, near stretch', act: async (page) => { await ready(page); await page.check('#show-conditions'); await page.evaluate(() => document.getElementById('conditions').scrollIntoView()); await settle(page, 200); } },
 ];
+// range-day-eight: the ground, on Full and on Light, February midday and September afternoon: the floor through the
+// Vepr's irons at 1x aimed at the 200-yard plate; the 600- and 1,000-yard plates' hillsides through its scope at 7x; and
+// the 600-yard hillside through a test view three times stronger (the scope's own field-of-view rule carried to 21x through
+// the page's zoom door; a test view only, not a sight in the game).
+for (const pic of ['full', 'light']) for (const [day, q, words] of [['feb', 'month=2&time=midday', 'February midday'], ['sep', 'month=9&time=afternoon', 'September afternoon']]) {
+  const set = async (page) => { await picture(page, pic); await page.reload(); };
+  SCREENS.push(
+    { name: `ground-${pic}-${day}-floor-irons`, path: `${PIRU}&sight=vepr-irons&${q}`, expect: words, act: async (page) => { await set(page); await plate(page, 0); } },
+    { name: `ground-${pic}-${day}-600-7x`, path: `${PIRU}&sight=utg-2-7x44&${q}`, expect: words, act: async (page) => { await set(page); await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(7)); await settle(page, 400); } },
+    { name: `ground-${pic}-${day}-1000-7x`, path: `${PIRU}&sight=utg-2-7x44&${q}`, expect: words, act: async (page) => { await set(page); await plate(page, 8); await page.evaluate(() => RangeDayLine.setZoom(7)); await settle(page, 400); } },
+    { name: `ground-${pic}-${day}-600-21x`, path: `${PIRU}&sight=utg-2-7x44&${q}`, expect: words, act: async (page) => { await set(page); await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(21)); await settle(page, 400); } },
+  );
+}
 
-const SHARD = SCREENS.filter((_, i) => i % shardOf === shardIx - 1);
+const GREP = arg('--grep', null) ? new RegExp(arg('--grep')) : null; // --grep <pattern>: only the states whose names match (for a before-and-after pair by hand; the check runs every state)
+const SHARD = SCREENS.filter((_, i) => i % shardOf === shardIx - 1).filter((s) => !GREP || GREP.test(s.name));
 if (process.argv.includes('--list')) { for (const s of SHARD) console.log(s.name); process.exit(0); }
 
 const server = spawn('node', ['server.js'], {

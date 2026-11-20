@@ -10,6 +10,7 @@ import { Sky } from 'three/addons/objects/Sky.js';
 import { sunPosition, noonElevation, sunVector } from './sun.mjs';
 import { loadHeights } from './heights.mjs';
 import { buildTerrain, frameOf, YD, FT } from './terrain.mjs';
+import { loadMaterials } from './surfaces.mjs';
 import { buildPlates, buildBoards, buildShelter, buildBrush } from './things.mjs';
 import { makePost } from './post.mjs';
 
@@ -29,7 +30,7 @@ const loadImage = (url) => new Promise((resolve, reject) => { const im = new Ima
 const hex = (h) => new THREE.Color(h);
 
 async function create(opts) {
-  const { canvas, size, dpr = 1, course, terrain, look, physics, weather, month, timeOfDay, quality = 'full', eyeFt } = opts;
+  const { canvas, size, dpr = 1, course, terrain, surfaces, look, physics, weather, month, timeOfDay, quality = 'full', eyeFt } = opts;
   const full = quality === 'full';
   const eyeM = (eyeFt ?? look.eyeHeightFt) * FT;
   const frame = frameOf(course.firing);
@@ -172,7 +173,10 @@ async function create(opts) {
     // Where a world point lands on the canvas, in CSS pixels.
     project(x, y, z) { const v = new THREE.Vector3(x, y, z).project(camera); return [((v.x + 1) / 2) * size, ((1 - v.y) / 2) * size]; },
     plateWorld(ix) { const p = course.plates[ix]; return { x: p.lateralYd * YD, y: eyeM + p.riseFt * FT, z: -p.yards * YD }; },
-    groundAt, detailTextures: { dirt: terrainBuilt.dirt, grass: terrainBuilt.grass, patch: terrainBuilt.patch },
+    groundAt, materials: terrainBuilt.materials.state,
+    // for the measures only: the materials laid in a plain grid, and slid along the ground
+    setPlainGrid(on) { terrainBuilt.setPlainGrid(on); },
+    setMaterialShift(east, north) { terrainBuilt.setMaterialShift(east, north); },
     // The light's figures, changeable while the picture is up: how the figures in data/look.json were measured against the photographs' colours (scripts/picture-measure.mjs and the tests read the picture; nothing on a screen calls this).
     tune({ exposure, sun: sunK, sky: skyK, bounce: bounceK, airBright, airDist, skyScale } = {}) {
       if (exposure != null) renderer.toneMappingExposure = exposure;
@@ -188,6 +192,9 @@ async function create(opts) {
     size,
     dispose() { renderer.dispose(); post.dispose(); },
   };
+  // The photographed ground surfaces are fetched once the scene is built, beside its first frames, and swapped in when they have
+  // all settled; until then (and for any that fails) each class is drawn with its plain palette colour (surfaces.mjs).
+  api.materialsReady = new Promise((r) => setTimeout(r, 0)).then(() => loadMaterials(terrainBuilt.materials, surfaces, full)).catch((e) => { terrainBuilt.materials.state.failed.push(String(e && e.message)); terrainBuilt.materials.state.settled = true; return terrainBuilt.materials.state; });
   // project() reads api.size after a resize
   api.project = (x, y, z) => { const v = new THREE.Vector3(x, y, z).project(camera); return [((v.x + 1) / 2) * api.size, ((1 - v.y) / 2) * api.size]; };
   return api;
