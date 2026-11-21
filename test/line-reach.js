@@ -15,6 +15,8 @@ const PHONES = [[412, 915], [412, 830]];
 // first course with its first load, so a new sight is held to the same reach. A sight with no glass control
 // (irons without a leaf, the SeeAll) names none.
 const data = require('../lib/data').load().flat;
+// range-day-thirteen: the rifles as the server serves them (lib/guns.js), so each rifle's sights include the scope collection's.
+data.rifles = require('../lib/guns').fromFiles(require('../lib/data').load().raw);
 const FIRST = [
   { name: 'Vepr with its scope (zoom)', q: 'course=cta-piru&rifle=molot-vepr-54r&sight=utg-bugbuster-3-9x32&load=sb-174-hpbt', glass: '#zoomrow' },
   { name: 'Tavor SAR with its dot (magnifier)', q: 'course=angeles-sylmar&rifle=iwi-tavor-sar&sight=pa-md25&load=imi-m193', glass: '#magrow' },

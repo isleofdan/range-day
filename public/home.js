@@ -22,6 +22,14 @@
     const mag = r.sights.find((s) => d.sights[s].kind === 'magnifier');
     return d.sights[sightId].name + (mag && d.sights[sightId].kind === 'dot' ? `, with the ${d.sights[mag].name.replace(/ \(.*\)$/, '')} behind it` : '');
   }
+  // The chooser's options (range-day-thirteen): the rifle's own sights, then the scope collection's scopes it can carry, under
+  // "From the scope collection" (data/sights.json, collection; lib/guns.js names a rifle's in its `collection`).
+  function sightOptions(rifleId, picked) {
+    const r = d.rifles[rifleId], coll = r.collection || [];
+    const opt = (s) => `<option value="${s}"${s === picked ? ' selected' : ''}>${RD.esc(sightLabel(rifleId, s))}</option>`;
+    const own = sightsOf(rifleId).filter((s) => !coll.includes(s)), theirs = sightsOf(rifleId).filter((s) => coll.includes(s));
+    return own.map(opt).join('') + (theirs.length ? `<optgroup label="From the scope collection">${theirs.map(opt).join('')}</optgroup>` : '');
+  }
   const when = () => `&month=${$('month').value}&time=${$('time').value}`;
 
   // --- a day is open -------------------------------------------------------------------------
@@ -33,7 +41,7 @@
     let sightId = sights.includes(c.sightId) && c.rifleId === day.rifle ? c.sightId : (sights.includes(lastFor.sight) ? lastFor.sight : r.defaultSight);
     const hits = day.shots.filter((s) => s.place === 'line' && s.hit).length, atSteel = day.shots.filter((s) => s.place === 'line').length;
     $('day-card').innerHTML = `<strong>${RD.esc(d.courses[day.course].name.replace(/ \(modeled on.*\)$/, ''))}</strong>, ${RD.esc(r.name)}, ${RD.esc(d.loads[day.load].name)}.<br>${RD.esc(RD.dayWords(day.weather, d.weather))} ${RD.esc(RD.roundsText(day))}. ${day.shots.length} shot${day.shots.length === 1 ? '' : 's'} so far${atSteel ? ` (${atSteel} at steel, ${hits} hit)` : ''}.`;
-    $('day-sight').innerHTML = sights.map((s) => `<option value="${s}"${s === sightId ? ' selected' : ''}>${RD.esc(sightLabel(day.rifle, s))}</option>`).join('');
+    $('day-sight').innerHTML = sightOptions(day.rifle, sightId);
     const doors = () => {
       const cc = { rifleId: day.rifle, loadId: day.load, courseId: day.course, sightId };
       $('day-zero').href = `/zero${RD.params(cc)}`; $('day-line').href = `/line${RD.params(cc)}`;
@@ -61,7 +69,7 @@
   }
   function renderPicks() {
     const r = d.rifles[c.rifleId];
-    $('sight').innerHTML = sightsOf(c.rifleId).map((s) => `<option value="${s}"${s === c.sightId ? ' selected' : ''}>${RD.esc(sightLabel(c.rifleId, s))}</option>`).join('');
+    $('sight').innerHTML = sightOptions(c.rifleId, c.sightId);
     $('load').innerHTML = r.loads.map((l) => `<option value="${l}"${l === c.loadId ? ' selected' : ''}>${RD.esc(d.loads[l].name)}</option>`).join('');
     $('course').innerHTML = COURSE_IDS.map((k) => `<option value="${k}"${k === c.courseId ? ' selected' : ''}>${RD.esc(d.courses[k].name.replace(/ \(modeled on.*\)$/, ''))}</option>`).join('');
     showZero();
@@ -109,5 +117,5 @@
 
   // The whole set, for reference.
   $('set').innerHTML = Object.entries(d.rifles).filter(([k]) => !k.startsWith('_')).map(([k, r]) =>
-    `<li><strong>${RD.esc(r.name)}</strong><br><span class="muted">${r.loads.map((l) => `${RD.esc(d.loads[l].name)} (box of ${d.loads[l].boxCount})`).join('; ')}. Sights: ${r.sights.map((s) => RD.esc(d.sights[s].name)).join('; ')}.</span></li>`).join('');
+    `<li><strong>${RD.esc(r.name)}</strong><br><span class="muted">${r.loads.map((l) => `${RD.esc(d.loads[l].name)} (box of ${d.loads[l].boxCount})`).join('; ')}. Sights: ${r.sights.filter((s) => !(r.collection || []).includes(s)).map((s) => RD.esc(d.sights[s].name)).join('; ')}.${(r.collection || []).length ? ` From the scope collection: ${r.collection.map((s) => RD.esc(d.sights[s].name)).join('; ')}.` : ''}</span></li>`).join('');
 }());

@@ -21,11 +21,18 @@ test('fromFiles() yields the same seven rifles the screens had before, figure fo
   const set = guns.fromFiles(raw);
   const ids = Object.keys(flat.rifles).filter((k) => !k.startsWith('_'));
   assert.deepEqual(Object.keys(set), ids, 'the same rifles in the same order');
-  for (const id of ids) assert.deepStrictEqual(set[id], flat.rifles[id], id);
+  // range-day-thirteen: each rifle also offers the scope collection's scopes it can carry, after its own sights; apart from those
+  // (`collection`, the longer `sights`, their heights in `sightHeightIn`, held by the test below) every figure is the file's.
+  for (const id of ids) {
+    const { collection, ...rest } = set[id];
+    const own = { ...rest, sights: rest.sights.filter((x) => !collection.includes(x)), sightHeightIn: Object.fromEntries(Object.entries(rest.sightHeightIn).filter(([x]) => !collection.includes(x))) };
+    assert.deepStrictEqual(own, flat.rifles[id], id);
+    assert.deepEqual(rest.sights.slice(0, flat.rifles[id].sights.length), flat.rifles[id].sights, `${id}: its own sights first, in their order`);
+  }
   assert.equal(set['molot-vepr-54r'].firstCourse, 'cta-piru');
   // range-day-twelve: the 5.45 rifle's two sights each carry the 5.45's own leaf as their own, so it names no leaf table (sightLeaf is still checked below)
   assert.equal(set['ak-545'].sightLeaf, undefined);
-  for (const s of set['ak-545'].sights) assert.deepEqual(flat.sights[s].leaf.settingsMeters, flat.sights['ak-irons'].leaf545.settingsMeters, s);
+  for (const s of set['ak-545'].sights.filter((x) => !set['ak-545'].collection.includes(x))) assert.deepEqual(flat.sights[s].leaf.settingsMeters, flat.sights['ak-irons'].leaf545.settingsMeters, s);
 });
 
 test('a bare number, an unknown sight, a defaultSight it does not carry, a missing sight height: each refused, naming the gun, the fault and the valid values', () => {
@@ -40,7 +47,7 @@ test('a bare number, an unknown sight, a defaultSight it does not carry, a missi
   ];
   console.log('  ' + messages.join('\n  '));
   assert.match(messages[0], /^gun 'x': game\.barrelIn: a bare number; wrap it as \{value, source\} or \{value, estimate\}$/);
-  assert.match(messages[1], /^gun 'x': sight 'foo' is not in the game's data: ar-irons, tavor-irons, ak-irons, vepr-irons, rem-irons, pa-md25, pa-magnifier, pa-3x-acss, utg-2-7x44, utg-bugbuster-3-9x32, troy-battlesights, fab-flipup, seeall-gen1, ak762-kns-peep, ak545-ball, ak545-xs$/);
+  assert.match(messages[1], /^gun 'x': sight 'foo' is not in the game's data: ar-irons, tavor-irons, ak-irons, vepr-irons, rem-irons, pa-md25, pa-magnifier, pa-3x-acss, utg-2-7x44, utg-bugbuster-3-9x32, troy-battlesights, fab-flipup, seeall-gen1, ak762-kns-peep, ak545-ball, ak545-xs, trijicon-acog-ta31f, vortex-razor-1-10, leupold-mark5hd-5-25$/); // range-day-thirteen: the three collection scopes are in the data
   assert.match(messages[2], /^gun 'x': defaultSight 'pa-md25' is not one of its sights: troy-battlesights$/);
   assert.match(messages[3], /^gun 'x': no sightHeightIn for sight 'troy-battlesights'; it carries: troy-battlesights$/);
   // And the rest of the shape: an unknown load, a wrong caliber, a course that does not exist, a leaf table the sight lacks, a duplicate.
@@ -95,4 +102,61 @@ test('with GUN_RECORDS_FILE naming a file with an eighth gun, the server serves 
   assert.notEqual(code, 0);
   assert.match(err, /gun 'test-carbine': defaultSight 'utg-2-7x44' is not one of its sights: troy-battlesights/);
   fs.rmSync(dir, { recursive: true, force: true });
+});
+
+// range-day-thirteen: the scope collection, moved among the rifles (task items 6 and 7).
+const COLLECTION = ['trijicon-acog-ta31f', 'vortex-razor-1-10', 'leupold-mark5hd-5-25'];
+test('range-day-thirteen: each rifle offers the collection\'s scopes its scope mounting takes, each at its rail\'s height over the bore plus its mount\'s; the .22 offers none; no rifle\'s opening sight or own sights change', () => {
+  const set = guns.fromFiles(raw);
+  const lines = [];
+  for (const [id, r] of Object.entries(set)) {
+    const f = flat.rifles[id];
+    assert.equal(r.defaultSight, f.defaultSight, `${id}: its opening sight is unchanged`);
+    for (const s of f.sights) assert.ok(r.sights.includes(s), `${id}: still offers ${s}`);
+    if (f.scopeMount.rail === 'rimfire-dovetail') { assert.deepEqual(r.collection, [], `${id}: a grooved rimfire receiver takes none of the collection's mounts`); lines.push(`${id}: none (${f.scopeMount.rail})`); continue; }
+    assert.deepEqual(r.collection, COLLECTION, `${id}: all three, in the file's order`);
+    for (const c of COLLECTION) {
+      const want = Math.round((f.scopeMount.railHeightOverBoreIn + flat.sights[c].mount.centerOverRailIn) * 1000) / 1000;
+      assert.equal(r.sightHeightIn[c], want, `${id} ${c}`);
+      lines.push(`${id} ${c}: ${f.scopeMount.railHeightOverBoreIn} + ${flat.sights[c].mount.centerOverRailIn} = ${r.sightHeightIn[c]} in`);
+    }
+  }
+  console.log('  ' + lines.join('\n  '));
+});
+
+test('range-day-thirteen: a bad scope mounting is refused by name: an unknown rail, no words, a rail height that puts a scope outside 1.5 to 5 in, a Picatinny rail with no height', () => {
+  const base = guns.toRecord('bcm-ar15', raw.rifles['bcm-ar15']);
+  const broken = (f) => { const r = JSON.parse(JSON.stringify(base)); r.id = 'x'; f(r.fields.game); return r; };
+  const refuse = (r) => { try { guns.checkRecord(r, raw); } catch (e) { return e.message; } assert.fail('accepted'); };
+  assert.match(refuse(broken((g) => { g.scopeMount.rail = 'weaver'; })), /^gun 'x': scopeMount.rail must be one of: picatinny, rimfire-dovetail$/);
+  assert.match(refuse(broken((g) => { g.scopeMount.words = ''; })), /scopeMount needs words/);
+  assert.match(refuse(broken((g) => { g.scopeMount.railHeightOverBoreIn = { value: 12, estimate: 'a slip of the finger, for the test' }; })), /the collection scope 'trijicon-acog-ta31f' would sit 13.535 in over the bore/);
+  assert.match(refuse(broken((g) => { delete g.scopeMount.railHeightOverBoreIn; })), /scopeMount has no railHeightOverBoreIn/);
+  assert.match(refuse(broken((g) => { g.scopeMount.railHeightOverBoreIn = 1.21; })), /a bare number/);
+});
+
+test('range-day-thirteen: the three scopes\' figures, each from its maker\'s page or manual or an estimate with its basis, as the report\'s table gives them; a collection scope without its mount, a chevron without its sizes and a crosshair without its note are refused', () => {
+  const S = flat.sights;
+  const want = {
+    'trijicon-acog-ta31f': { clickMoa: 0.4776, windageClickMoa: 0.4776, clicks: 42, zoom: { low: 4, high: 4 }, fovFtAt100: { low: 36.69, high: 36.69 }, mount: 1.535, reticle: 'chevron' },
+    'vortex-razor-1-10': { clickMoa: 0.25, windageClickMoa: 0.25, clicks: 240, zoom: { low: 1, high: 10 }, fovFtAt100: { low: 116, high: 11.7 }, mount: 1.574, reticle: 'crosshair' },
+    'leupold-mark5hd-5-25': { clickMoa: 0.25, windageClickMoa: 0.25, clicks: 240, windageClicks: 120, zoom: { low: 5, high: 25 }, fovFtAt100: { low: 20.4, high: 4.2 }, mount: 1.5, reticle: 'crosshair' },
+  };
+  for (const [id, w] of Object.entries(want)) {
+    const s = S[id];
+    assert.equal(s.kind, 'scope'); assert.equal(s.collection, true);
+    for (const k of ['clickMoa', 'windageClickMoa', 'clicks', 'windageClicks']) if (k in w) assert.equal(s[k], w[k], `${id} ${k}`);
+    assert.deepEqual(s.zoom, w.zoom, id); assert.deepEqual(s.fovFtAt100, w.fovFtAt100, id);
+    assert.equal(s.mount.centerOverRailIn, w.mount, id); assert.deepEqual(s.mount.fits, ['picatinny'], id);
+    assert.equal(s.reticle.kind, w.reticle, id);
+    // every figure of the entry carries a source with its page, or an estimate with its basis
+    assert.deepEqual(data.check(raw.sights[id], id), [], id);
+  }
+  assert.equal(S['trijicon-acog-ta31f'].reticle.chevronBaseWidthMoa, 5.53);
+  assert.ok(raw.sights['trijicon-acog-ta31f'].reticle.chevronHeightMoa.estimate, 'the chevron\'s height is an estimate: no maker figure could be read');
+  for (const id of ['vortex-razor-1-10', 'leupold-mark5hd-5-25']) assert.equal(S[id].reticle.focalPlane, 'first', id);
+  const bad = (f) => { const s = JSON.parse(JSON.stringify(raw.sights)); f(s); return data.checkSights(s); };
+  assert.match(bad((s) => { delete s['vortex-razor-1-10'].mount; }).join(), /sights.vortex-razor-1-10: a scope of the collection needs mount.name, mount.fits and mount.centerOverRailIn/);
+  assert.match(bad((s) => { delete s['trijicon-acog-ta31f'].reticle.chevronHeightMoa; }).join(), /a chevron needs chevronBaseWidthMoa and chevronHeightMoa/);
+  assert.match(bad((s) => { delete s['leupold-mark5hd-5-25'].reticle.marksNotDrawn; }).join(), /a crosshair says in marksNotDrawn/);
 });

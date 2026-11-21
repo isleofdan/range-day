@@ -73,7 +73,42 @@ clicks, then works out the drop and the wind for each distance himself.
   repeats, a second pair moves a whole minute of angle on the finer
   sights), fire again, press **Save this zero**. The zero is saved on the
   device for that rifle, sight and load. Changing the load keeps the
-  sight where it is, so the group moves as it would in life.
+  sight where it is, so the group moves as it would in life. Since
+  range-day-thirteen the bench is one screen on a phone (412×830 and up)
+  with nothing scrolled: a short line naming the rifle, sight and load
+  with the paper's distance beside it; the paper, as large as the screen
+  leaves it; where the last group landed, at a fixed height; the
+  elevation row and the windage row, each its setting beside its name and
+  four buttons (a whole minute down, one click down, one click up, a
+  whole minute up); **Fresh paper** and **Save this zero**; **Fire one**
+  and **Fire five** lowest and largest (**Open another box** in their
+  place when the zeroing supply is empty). On a computer the paper is on
+  the left and the rest in a column on its right. Every line of words has
+  a fixed height, so no button moves; the words for a knob at the end of
+  its travel stand by the rows, the save's line under its button. **Fresh
+  paper** becomes **Put the old paper back** until the next shot (the
+  firing line's way: a marker in the day, no shot deleted), and the
+  holes are read from the day's record, so a reload shows them again.
+  Everything else (the aim and grid sentence, the day's weather, what
+  one click moves, the rear leaf, the saved zero's full words, the
+  conditions, the supply's note, **The day so far**, **Pack up**) is a
+  short scroll below. `scripts/bench-layout.mjs` measures it.
+- **The scope collection** (range-day-thirteen): three scopes that move
+  among the rifles, each from its maker's figures in `data/sights.json`:
+  the Trijicon ACOG 4x32 TA31F on its TA51 mount (fixed 4 power, half an
+  inch at 100 yards a click, the red chevron), the Vortex Razor HD Gen III
+  1-10x24 first focal plane on Vortex's 34 mm cantilever mount, and the
+  Leupold Mark 5HD 5-25x56 first focal plane on Leupold's Mark IMS. Each
+  rifle that can carry them offers them after its own sights, under
+  "From the scope collection" on home: the AR-15, both Tavors, both AK
+  rifles and the Vepr (on a Picatinny side mount); the .22's grooved
+  receiver takes none of their mounts. A scope's height over the bore on
+  a rifle is the rifle's rail height plus the mount's (`lib/guns.js`
+  works it out and checks it). A scope moved to another rifle starts
+  unzeroed there and keeps its zero on the rifle it left. The chevron is
+  drawn at its maker's width; the two zoom scopes show only their fine
+  crosshair, because the makers' reticle drawings could not be read for
+  their marks (each entry's `marksNotDrawn` says so).
 - **Firing line** (`/line`): the view through the sight. On the canyon
   course the view is a 3D picture of the real place (below, "The
   picture"); on the rifle line it is still the flat drawing. A scope zooms

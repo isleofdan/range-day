@@ -322,12 +322,37 @@ name or angle. The reach list holds the flip (`#aperturerow`) for both
 sights; screenshot state `line-troy-100-small` shows the small peep. 140
 tests (with the fenced-lines check) and 94 screenshot states on this change.
 
+## The zero bench on one screen and the scope collection (range-day-thirteen, 21 Nov 2026)
+
+`test/bench-reach.js` holds the bench's within-reach list (the short line,
+the distance, the paper, the group line, both rows with their settings,
+the knobs' note, Fresh paper, Save this zero, the save's note, the supply,
+Fire one and Fire five) and the function that measures it in the page;
+`scripts/bench-layout.mjs` prints it for every sight of every rifle at
+412×915, 412×830 and 1280×800. `test/bench.test.js` (its own check group,
+`bench`) holds it: every control wholly on the first screen with the page
+at its top, no two buttons closer than 2 px, the paper square and at least
+300 px on a phone; nothing moves through a group, a knob at its stop, a
+save, a fresh paper and its way back, the group line opened, the supply
+empty; a reload mid-group shows the same holes; home's chooser lists the
+collection under its heading; each scope's view is the maker's width at
+both ends; the chevron is read from the canvas against its data and the
+crosshairs as a fine line with no mark; the same-scale test through each
+scope at both ends of its power; a zero saved with a scope on one rifle is
+not read on another, every stored key unchanged; a line shot carries its
+time of flight and target key, and a day without them still reads and
+loads from a copy. `test/guns.test.js` holds each rifle's collection and
+heights, the refusals of a bad scope mounting, and each scope's figures.
+`test/line-reach.js` now reads the rifles as the server serves them, so
+the firing line's reach holds every collection scope too. 151 tests and
+105 screenshot states on this change (140 and 94 before).
+
 ## What runs when
 
 | When | What runs | Where it is set |
 | - | - | - |
 | After every edit or new file an agent makes in Claude Code | syntax, tests | `.claude/settings.json`: a `PostToolUse` hook on `Edit\|Write` running `node scripts/check.mjs --hook`, timeout 30 s |
-| On every pull request, and every push to `main`, that touches anything but notes (Markdown files and `docs/reports/`) | syntax, tests, screenshots, in eight jobs at once | `.github/workflows/checks.yml` ("Checks"); a notes-only push or pull request runs nothing, since the code it would prove is unchanged; a push to a branch runs nothing of its own, its pull request's run checks the commit |
+| On every pull request, and every push to `main`, that touches anything but notes (Markdown files and `docs/reports/`) | syntax, tests, screenshots, in twelve jobs at once | `.github/workflows/checks.yml` ("Checks"); a notes-only push or pull request runs nothing, since the code it would prove is unchanged; a push to a branch runs nothing of its own, its pull request's run checks the commit |
 | By hand | any of them | `npm run check`, `npm test`, `npm run screenshots` |
 
 Only checks that finish in a few seconds run after every edit; the

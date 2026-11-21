@@ -12,57 +12,75 @@
 <script src="/crash.js"></script>
 <script src="/install.js" defer></script>
 </head>
-<body>
+<body class="bench">
 <header class="bar">
   <a class="name" href="/">{{TITLE}}</a>
   <nav><a id="to-line" href="/line">Firing line</a><a href="/logout">Sign out</a></nav>
 </header>
 <main class="game">
-  <h1>Zero bench</h1>
-  <p class="dayline"><span id="intro">Loading…</span> <span id="day-line"></span></p>
-  <div class="viewwrap"><canvas id="view" width="400" height="400"></canvas></div>
-  <p class="setting mono"><span id="setting-line"></span> · <span id="rounds"></span></p>
-  <p id="group" class="readout">No shots yet. Fire a group, read where it lands against the center, then turn the sight.</p>
-  <div id="another-box-row" class="row" hidden><button id="another-box" type="button" class="btn inline">Open another box</button></div>
-  <div class="controls one">
-    <div class="field"><label for="distance">Paper at</label><select id="distance"></select></div>
-  </div>
-  <div class="row fire">
-    <button id="fire1" type="button" class="btn inline">Fire one</button>
-    <button id="fire5" type="button" class="btn inline">Fire five</button>
-    <button id="fresh" type="button" class="btn inline secondary">Fresh paper</button>
-  </div>
-  <h2 id="sight-name">Sight</h2>
-  <div id="leafrow" class="knob leaf" hidden>
-    <span class="muted">Rear leaf (the sliding range setting; the number is hundreds of meters). Zero with the front post; the leaf is for distance on the firing line.</span>
-    <div class="pair"><button id="leaf-down" type="button" class="btn inline">◀ nearer</button><button id="leaf-up" type="button" class="btn inline">farther ▶</button></div>
-    <span id="leaf-text" class="mono"></span>
-  </div>
-  <div class="knobs">
-    <div class="knob">
-      <span class="muted">Elevation</span>
-      <div class="pair"><button id="el-down" type="button" class="btn inline">▼ down</button><button id="el-up" type="button" class="btn inline">▲ up</button></div>
-      <div class="pair coarse"><button id="el-down-moa" type="button" class="btn inline secondary">▼ 1 MOA</button><button id="el-up-moa" type="button" class="btn inline secondary">▲ 1 MOA</button></div>
-      <span id="el-text" class="mono"></span>
+  <h1 class="vh">Zero bench</h1>
+  <!-- Within reach without scrolling (range-day-thirteen), from the top: the short line with the paper's distance; the paper; where
+       the last group landed (a fixed height); the elevation row and the windage row, each its setting beside its name and four
+       buttons; the knobs' note; Fresh paper and Save this zero, and the save's note; the zeroing supply; Fire one and Fire five,
+       lowest and largest ("Open another box" in their place when the supply is empty). On a computer the paper stands on the
+       left and the rest in a column on its right. -->
+  <div class="benchreach">
+    <div class="bhead">
+      <p id="bench-short" class="bshort">Loading…</p>
+      <div class="field bdist"><label for="distance" class="vh">Paper at</label><select id="distance"></select></div>
     </div>
-    <div class="knob">
-      <span class="muted">Windage</span>
-      <div class="pair"><button id="wd-left" type="button" class="btn inline">◀ left</button><button id="wd-right" type="button" class="btn inline">right ▶</button></div>
-      <div class="pair coarse"><button id="wd-left-moa" type="button" class="btn inline secondary">◀ 1 MOA</button><button id="wd-right-moa" type="button" class="btn inline secondary">1 MOA ▶</button></div>
-      <span id="wd-text" class="mono"></span>
+    <div class="viewwrap"><canvas id="view" width="400" height="400"></canvas></div>
+    <div class="bcol">
+      <div class="bslot"><p id="group" class="readout bfold">No shots yet. Fire a group, read where it lands against the center, then turn the sight.</p></div>
+      <div class="brows">
+        <div class="brow" role="group" aria-label="Elevation">
+          <span class="blabel"><span class="muted">Elevation</span><span id="el-text" class="bset"></span></span>
+          <button id="el-down-moa" type="button" class="btn inline secondary coarse">▼ 1 MOA</button>
+          <button id="el-down" type="button" class="btn inline">▼ down</button>
+          <button id="el-up" type="button" class="btn inline">▲ up</button>
+          <button id="el-up-moa" type="button" class="btn inline secondary coarse">▲ 1 MOA</button>
+        </div>
+        <div class="brow" role="group" aria-label="Windage">
+          <span class="blabel"><span class="muted">Windage</span><span id="wd-text" class="bset"></span></span>
+          <button id="wd-left-moa" type="button" class="btn inline secondary coarse">◀ 1 MOA</button>
+          <button id="wd-left" type="button" class="btn inline">◀ left</button>
+          <button id="wd-right" type="button" class="btn inline">right ▶</button>
+          <button id="wd-right-moa" type="button" class="btn inline secondary coarse">1 MOA ▶</button>
+        </div>
+        <p id="knob-note" class="bnote small" aria-live="polite"></p>
+      </div>
+      <div class="bpair">
+        <button id="fresh" type="button" class="btn inline secondary">Fresh paper</button>
+        <button id="save" type="button" class="btn inline">Save this zero</button>
+      </div>
+      <p id="pair-note" class="bnote small" aria-live="polite"></p>
+      <p id="rounds" class="bnote small muted"></p>
+      <div class="bfire">
+        <button id="fire1" type="button" class="btn">Fire one</button>
+        <button id="fire5" type="button" class="btn">Fire five</button>
+        <div id="another-box-row" class="banother" hidden><button id="another-box" type="button" class="btn">Open another box</button></div>
+      </div>
     </div>
   </div>
-  <p id="click-help" class="muted"></p>
-  <div class="row">
-    <button id="save" type="button" class="btn inline">Save this zero</button>
-  </div>
-  <p id="saved" class="readout"></p>
-  <p id="conditions" class="muted small"></p>
-  <h2>The day</h2>
-  <p class="muted small">Shots here come out of the zeroing supply for this rifle and load, kept from one day to the next; the day's box is for the steel. A day that begins at the bench has no cold-bore line.</p>
-  <div class="row">
-    <a id="to-day" class="btn inline secondary" href="/day">The day so far</a>
-    <button id="pack-up" type="button" class="btn inline secondary">Pack up</button>
+  <!-- A short scroll away: everything else the bench has, nothing lost. -->
+  <div class="more">
+    <p class="dayline"><span id="intro">Loading…</span> <span id="day-line"></span></p>
+    <h2 id="sight-name">Sight</h2>
+    <p class="setting mono small"><span id="setting-line"></span></p>
+    <p id="click-help" class="muted"></p>
+    <div id="leafrow" class="knob leaf" hidden>
+      <span class="muted">Rear leaf (the sliding range setting; the number is hundreds of meters). Zero with the front post; the leaf is for distance on the firing line.</span>
+      <div class="pair"><button id="leaf-down" type="button" class="btn inline">◀ nearer</button><button id="leaf-up" type="button" class="btn inline">farther ▶</button></div>
+      <span id="leaf-text" class="mono"></span>
+    </div>
+    <p id="saved" class="readout"></p>
+    <p id="conditions" class="muted small"></p>
+    <h2>The day</h2>
+    <p class="muted small">Shots here come out of the zeroing supply for this rifle and load, kept from one day to the next; the day's box is for the steel. A day that begins at the bench has no cold-bore line.</p>
+    <div class="row">
+      <a id="to-day" class="btn inline secondary" href="/day">The day so far</a>
+      <button id="pack-up" type="button" class="btn inline secondary">Pack up</button>
+    </div>
   </div>
 </main>
 <script src="/engine.js"></script>
