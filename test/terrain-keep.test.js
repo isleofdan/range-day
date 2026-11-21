@@ -70,6 +70,29 @@ test('terrain keep (keeping): a fetch result without the surfaces leaves every k
   fs.rmSync(dir, { recursive: true, force: true });
 });
 
+test('terrain keep (keeping, any layout): a part the run did not fetch is copied from the old text, so its bytes stay whatever its layout, escaping or number spelling; a part it fetched replaces only its own text', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'terrain-keep-odd-'));
+  fs.mkdirSync(path.join(dir, 'data'));
+  // Laid out unlike the writer's own JSON.stringify(…, null, 1): two-space and no indent, a space before a colon,
+  // an escaped é, a brace, a comma and a bracket inside a string, a number spelled 1.50.
+  const kept = '"surfaces":{"floor":{"note":"caf\\u00e9 } , [ \\"quoted\\"","scaleM": 1.50, "list": [1,2 ,3]}}';
+  const odd = `{\n  "_about" : "old about",\n  ${kept}\n,"cta-piru": {"heights": {"file": "terrain/old.png"}}\n}\n`;
+  fs.writeFileSync(path.join(dir, 'data', 'terrain.json'), odd);
+  keep.writeResults({ root: dir, fetched: { _about: 'new about', 'cta-piru': { heights: { file: 'terrain/new.png' } }, 'angeles-sylmar': { heights: { file: 'terrain/a.png' } } } });
+  const after = fs.readFileSync(path.join(dir, 'data', 'terrain.json'), 'utf8');
+  assert.ok(after.includes(kept), 'the surfaces part\'s text is in the file exactly as it was');
+  const parsed = JSON.parse(after);
+  assert.deepEqual(Object.keys(parsed), ['_about', 'surfaces', 'cta-piru', 'angeles-sylmar']);
+  assert.equal(parsed.surfaces.floor.note, 'café } , [ "quoted"'); assert.equal(parsed.surfaces.floor.scaleM, 1.5);
+  assert.equal(parsed._about, 'new about'); assert.equal(parsed['cta-piru'].heights.file, 'terrain/new.png');
+  assert.ok(!after.includes('terrain/old.png'), 'the fetched part replaced its own text');
+  // and the committed record itself: written back with nothing fetched, or with the same values fetched, it is the same bytes
+  const real = fs.readFileSync(path.join(root, 'data', 'terrain.json'), 'utf8');
+  assert.equal(keep.spliceTerrain(real, {}), real);
+  assert.equal(keep.spliceTerrain(real, { _about: record._about, 'cta-piru': record['cta-piru'], 'angeles-sylmar': record['angeles-sylmar'] }), real);
+  fs.rmSync(dir, { recursive: true, force: true });
+});
+
 test('terrain keep (refusing): a staged change that removes a surface photograph and drops the surfaces part fails the guard, which names them', () => {
   const dir = scratchRepo();
   // What range-day-ten's branch saw: the record rewritten without "surfaces", the photographs removed, all staged.
