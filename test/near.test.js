@@ -243,13 +243,19 @@ test('range-day-ten verify 3 and 5: the spotting scope: its view is the data\'s 
     // range-day-ten-b: the zoom sliders are not cramped (Dan, on his phone: the button beside them made them hard to use). At the
     // scope its slider, back at the rifle the scope's own; on a phone each at least 100 px wide (70 and 57 px before the fix).
     const spotW = await page.evaluate(() => document.getElementById('spot-zoom').getBoundingClientRect().width);
-    assert.ok(spotW >= 100, `${w}x${h}: the spotting scope's zoom slider is ${spotW.toFixed(0)} px wide`);
+    assert.ok(spotW >= 110, `${w}x${h}: the spotting scope's zoom slider is ${spotW.toFixed(0)} px wide`);
+    // range-day-ten-c: on a phone the slider ends at least 40 px in from the screen's right edge, clear of Android's edge-swipe back
+    // gesture (an inward swipe from either edge; about 20 dp wide by default), which Dan's phone read from a drag near the edge.
+    const spotGap = await page.evaluate(() => window.innerWidth - document.getElementById('spot-zoom').getBoundingClientRect().right);
+    if (w < 1100) assert.ok(spotGap >= 40, `${w}x${h}: the spotting scope's slider ends ${spotGap.toFixed(0)} px from the right edge`);
     for (const [id, ht] of heights) assert.ok(ht >= 44, `${w}x${h}: #${id} is ${ht} px tall`);
     // back by the bar's button, then there and back by the control beside the glass
     await page.click('#back-to-rifle');
     assert.equal(await page.evaluate(() => RangeDayLine.spotting), false);
     const zoomW = await page.evaluate(() => document.getElementById('zoom').getBoundingClientRect().width);
-    assert.ok(zoomW >= 110, `${w}x${h}: the rifle scope's zoom slider is ${zoomW.toFixed(0)} px wide`);
+    assert.ok(zoomW >= 125, `${w}x${h}: the rifle scope's zoom slider is ${zoomW.toFixed(0)} px wide`);
+    const zoomGap = await page.evaluate(() => window.innerWidth - document.getElementById('zoom').getBoundingClientRect().right);
+    if (w < 1100) assert.ok(zoomGap >= 40, `${w}x${h}: the rifle scope's slider ends ${zoomGap.toFixed(0)} px from the right edge`);
     assert.deepEqual(moved(await places()), [0, 0, 0, 0], `${w}x${h}: back to the rifle moved nothing`);
     await page.click('#spotting'); await page.click('#spotting');
     assert.deepEqual(moved(await places()), [0, 0, 0, 0], `${w}x${h}: there and back by the control moved nothing`);

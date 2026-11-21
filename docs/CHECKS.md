@@ -154,7 +154,10 @@ form:
   Dan found the zoom cramped on his phone) the spotting scope's zoom slider is
   at least 100 px wide and the rifle scope's at least 110 px (they were 57 and
   70 px with the scope's button beside them; it now stands in the short line's
-  row);
+  row); since range-day-ten-c at least 110 and 125 px, and on a phone both
+  sliders end at least 40 px in from the screen's right edge, clear of
+  Android's edge-swipe back gesture, which Dan's phone read from a drag near
+  the edge;
 - **same scale**: the 3D picture puts each new canyon target's center
   within 1 pixel of the plain drawing through the Vepr's scope at 2x and
   7x, its irons, and the spotting scope at 20x and 60x, at both sizes.
