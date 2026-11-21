@@ -125,3 +125,9 @@ Needed from you
 yes, merge and deploy range-day-ten, then merge its notes
 ```
 2. Ask 2 (recommended: yes): change the ground-fetching workflow so it can never again delete the ground's photographed surfaces when a change touches its folder.
+
+## Addendum: range-day-ten-b (21 Nov 2026, same session, from Dan's phone)
+
+Dan, after the walkthrough: "the upper scope and back-to-rifle button cramp the zoom lever, both for the UTG Viper scope and for the tripod scope itself, too much, so they're hard to use." Pull request [#29](https://github.com/isleofdan/range-day/pull/29) moved the "Spotting scope" / "Back to the rifle" button from the target row to the right end of the short line's row; the target row is back to the picker and the sight's glass control (at the scope, its zoom). Measured on a 412-px phone with the Vepr's scope: the rifle scope's slider 70 → 120 px, the spotting scope's 57 → 107 px; on a computer unchanged (342 and 329 px). `scripts/line-layout.mjs`: every held sight-and-size pair within reach at 412×915, 412×830 and 1280×800, the view's place unchanged. `test/near.test.js` now holds the sliders' widths (spotting scope ≥ 100 px, rifle scope ≥ 110 px). Checks run [44883792852](https://github.com/isleofdan/range-day/actions/runs/44883792852), all eleven jobs green; merged as 33ee1a6 on Dan's typed line; Deploy run [44885172332](https://github.com/isleofdan/range-day/actions/runs/44885172332) green in 78 s.
+
+Dan's other items from the same message, on the card for the next planned build: Ask 2 is a yes (the Terrain workflow keeps what it did not fetch); a more powerful spotting scope; the UTG scope's strength adjusted, with the fitted sights and the Vepr's 3-9x scope already queued.
