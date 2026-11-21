@@ -609,7 +609,7 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
   BugBuster 3-9x32 (SCP-M392AOLWQ: 1/4 MOA clicks, 120 each way, 37.7 to
   14 ft at 100 yards, the maker's figures); the 2-7x44 stays in the data,
   offered by no rifle. The spotting scope is 25-125x, modeled on the
-  Barska Benchmark 25-125x88 (54 to 24 ft at 1,000 yards). 129 tests, 82
+  Barska Benchmark 25-125x88 (54 to 24 ft at 1,000 yards). 130 tests, 82
   screenshot states (121 and 81 before).
 - **Decided:** the BugBuster carries the 2-7x44's zeros, settings, logs
   and book lines (same click, same height over the bore), so the Vepr
