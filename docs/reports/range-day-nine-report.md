@@ -168,6 +168,15 @@ Verify:
 - At 412×760 (figure only), the book line falls under the bar.
 - Touch heights at both phone sizes are all 44 px or more, and Steady and Fire are 52.
 - Tests in the session: `--group day` passed (12 tests), `--group browser` passed, the five `line-top-*` screenshot states passed.
-- The pull request's Checks run: CHECKSB_PLACEHOLDER
+- The pull request's Checks runs:
+  - [44839550566](https://github.com/isleofdan/range-day/actions/runs/44839550566) on c9cabbf: 9 of 10 jobs passed. Tests scene-shots failed after 11 min 16 s: verify 3 could not click "Open another box" ("element is not visible").
+  - Cause: that test gave each seeded shot at most 10 s to land. On a slow runner, under the Full picture, a shot took longer. The page refuses a shot while three are in the air, so later shots were never fired and the box never emptied.
+  - This was the second Checks run in this session to fail on a fixed wait on a slow runner (the first was 44776316081). So the waits were fixed rather than the job re-run, in commit b7ef52e, `test/scene.test.js`, test code only:
+    - a seeded shot now waits until it has landed (up to 90 s);
+    - after the frame loop is stopped, the tests wait until two real frames have passed instead of a fixed 300 ms (verify 4 had read a blank view);
+    - the first visit waits 90 s instead of 30.
+  - The three tests passed in the session: verify 3, the first visit (it chose Light), and verify 4 ("first mil-dot 47.5 px right and 48.5 px left of the centre … data … 48.0 px").
+  - [44841130824](https://github.com/isleofdan/range-day/actions/runs/44841130824) on b7ef52e: **green, all ten jobs**. Tests: rest 38 s, day 1 min 23 s, browser 1 min 25 s, scene-scale 4 min 34 s, scene-shots 8 min 7 s, scene-rest 8 min 52 s. Screenshots: shard 1 5 min 54 s, shard 2 6 min 49 s, shard 3 8 min 26 s, shard 4 7 min 17 s.
+  - Counts: tests 111 (unchanged by -b; the new assertions are inside existing tests); screenshot states 73.
 
 Ask: merge and deploy range-day-nine-b? Recommended: yes. Type `yes, merge and deploy range-day-nine-b, then merge its notes`.
