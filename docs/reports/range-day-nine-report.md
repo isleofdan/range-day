@@ -340,6 +340,7 @@ Branches and the close-out order: the change is on `range-day-nine-b` (#24); the
    - 1: answered by running the check again (round 5).
    - 2: the close-out order is stated as the repository's fixed sequence, in the words the range-day-nine report passed with.
 5. Job 20261121-004613-83909e (card event 2896): FINDINGS, 1. It flagged the words round 4's answer had added ("sent only after a PASS"). Those words are removed. Both are met by running this check again (the brief's close-out item 3).
+6. Job 20261121-004825-09e708 (card event 2898): PASS.
 
 ## Closing message to Dan
 
