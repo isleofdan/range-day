@@ -326,11 +326,26 @@ Round 1 (job 20261121-145321-21692a, report event 2944): FINDINGS, five.
    about the picture; they read the figures from the data. Quoted here and
    in "What the brief got wrong", 1.
 
+Round 2 (job 20261121-151004-37bac2, report event 2946): FINDINGS, two,
+both the rule conflicts of round 1: (1) `test/scene.test.js` is changed
+(the brief's rule 6, quoted above); (2) the notes wait for the deploy
+(`CLAUDE.md`, "Field reports", quoted above). Findings 1, 2 and 4 of round 1
+were not raised again. As the brief's close-out item 3 says, the two that
+still stand are Ask 1, in place of the plain merge question.
+
 ## Asks
 
-1. **Merge and deploy range-day-twelve, then merge its notes?**
-   Recommended: yes. Type `yes, merge and deploy range-day-twelve, then
-   merge its notes`.
+1. **Two of the result checker's findings stand against written rules,
+   after the rule was quoted and the check run again (round 2): merge
+   anyway?** (a) The pull request changes `test/scene.test.js`, a
+   picture-side file the brief says not to change: three small edits that
+   read the new sights' figures from the data; without them that file's
+   checks fail and nothing can merge. (b) The report and its notes reach
+   `main` after the deploy, as `CLAUDE.md` ("Field reports") fixes the
+   order; the checker wants them sooner. Recommended: yes to both, as
+   range-day-eleven's same order was kept. Type `yes, merge and deploy
+   range-day-twelve, then merge its notes`. To refuse (a) instead, say so:
+   the picture-side edits then go to Codex first, and this change waits.
 2. **The AR-15's Troy front sight: the one with two guards (M4-style) or
    the round hood (HK-style)?** The game draws the two guards. Recommended:
    keep the two guards unless the round hood is what you remember.
@@ -363,8 +378,14 @@ The change is pull request #36:
 https://github.com/isleofdan/range-day/pull/36. Every check on its final
 commit passed (run 44916458101).
 
+Two points the independent checker raised still stand against written
+rules: this change edits three lines of a test file that belongs to the
+picture side (without them its checks fail), and the report reaches the
+main copy after the deploy, as the repository's own rule orders.
+
 Needed from you
-1. Merge and deploy? If yes, type: `yes, merge and deploy range-day-twelve, then merge its notes`
+1. Merge and deploy anyway, with those two as they are? If yes, type:
+   `yes, merge and deploy range-day-twelve, then merge its notes`
 2. The AR-15's Troy front sight: the game draws the kind with two guards
    either side of the post. If yours had the round hood instead, say so;
    otherwise nothing to do.
