@@ -299,6 +299,18 @@ the slowest job seen.
   the Tavor's irons are the FAB sights, and the BugBuster's dots at the old
   7x test view stand at the data's spacing for that power.
 
+## Lines for Dan to type are fenced (21 Nov 2026)
+
+`test/report-shape.test.js` (in the `rest` group, so it runs after every
+edit in a session and in Checks) reads the "Asks" and "Closing message to
+Dan" sections of every field report from range-day-twelve on: a sentence
+asking Dan to type, send, reply or paste something that carries the words
+as inline code or quotes, on its line or the next, fails, naming the line.
+The words go alone in a fenced block under the sentence, so they have a
+copy button. Its second test holds the four shapes that reached Dan (the
+range-day-one and range-day-twelve closing messages among them). Reports
+before range-day-twelve are records and are not rewritten. Taste
+constraint azxfbwouwp9lt6jhny8n. 139 tests.
 ## The rear aperture flip (range-day-twelve-b, 21 Nov 2026)
 
 `test/browser.test.js`, "range-day-twelve-b": on the Troy and the FAB rear
@@ -307,8 +319,8 @@ the canvas against that peep's `apertureMoa`; the choice survives a
 reload; the same seeded shot lands in the same place with either peep; a
 sight with one peep shows no flip. `lib/data.js` refuses a peep without its
 name or angle. The reach list holds the flip (`#aperturerow`) for both
-sights; screenshot state `line-troy-100-small` shows the small peep. 138
-tests and 94 screenshot states on this change.
+sights; screenshot state `line-troy-100-small` shows the small peep. 140
+tests (with the fenced-lines check) and 94 screenshot states on this change.
 
 ## What runs when
 
