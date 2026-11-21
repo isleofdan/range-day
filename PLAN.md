@@ -573,3 +573,14 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
   Personal Shipyard chat: the sights Dan fitted and the Vepr's 3-9x
   scope; recording and playback. The picture work stays paused on Dan's
   word. Report: `docs/reports/range-day-ten-report.md`.
+
+### range-day-ten-b — 21 Nov 2026 (same session, from Dan's phone)
+
+- **Stands:** pull request #29, merged as `33ee1a6`, deployed by Deploy
+  run 44885172332: the spotting scope's button stands at the right end of
+  the short line's row, so the zoom sliders are not cramped (on a 412-px
+  phone 120 and 107 px, were 70 and 57).
+- **Decided:** the sliders' widths are held by `test/near.test.js`.
+- **Next session needs:** Dan's three items, on the card: Ask 2 (the
+  Terrain workflow keeps what it did not fetch), a more powerful spotting
+  scope, the UTG scope's strength; each planned by a Personal Shipyard chat.
