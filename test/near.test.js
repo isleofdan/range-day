@@ -281,3 +281,39 @@ test('range-day-ten verify 3: same scale: the scene puts each new canyon target\
   }
   console.log(`  largest difference ${worst.toFixed(3)} px\n  ` + lines.join('\n  '));
 });
+
+test('range-day-ten verify 3: same scale on the rifle line (its flat drawing): where the drawing put each new paper sheet\'s centre, read from the frame that drew it, is within 1 pixel of the angles from the data at that frame\'s aim, through the AR\'s irons and through the spotting scope at 20x and 60x, aimed at each paper and at the 100-yard plate, at both sizes', { skip }, async () => {
+  const MOA = Math.PI / (180 * 60);
+  const c = flat.courses['angeles-sylmar'];
+  const ang = (t) => ({ up: Math.atan2(t.riseFt, t.yards * 3) / MOA, right: Math.atan2(t.lateralYd, t.yards) / MOA });
+  const byKey = { 'near-0': c.near[0], 'near-1': c.near[1], 0: c.plates[0] };
+  const lines = [];
+  let worst = 0, checked = 0;
+  for (const [sizeName, viewport] of [['phone', { width: 412, height: 915 }], ['computer', { width: 1280, height: 800 }]]) {
+    const { page, context, errors } = await signedIn(viewport);
+    await setPicture(page, 'plain');
+    await line(page, AR);
+    for (const [name, spot] of [['irons', null], ['spotting scope 20x', 20], ['spotting scope 60x', 60]]) {
+      await page.evaluate((z) => { RangeDayLine.setSpotting(Boolean(z)); if (z) RangeDayLine.setSpotZoom(z); }, spot);
+      for (const aimed of ['near-0', 'near-1', '0']) {
+        await page.evaluate((k) => RangeDayLine.setTarget(k), aimed);
+        await page.waitForTimeout(250); // a frame or more, drawn from this aim
+        for (const key of ['near-0', 'near-1']) {
+          const d = await page.evaluate((k) => RangeDayLine.drawnPaper(k), key);
+          if (!d) continue; // off the canvas this frame: the drawing skips a sheet wholly outside the view
+          const a = ang(byKey[aimed]), t = ang(byKey[key]);
+          const ex = d.size / 2 + (t.right - a.right - d.aimRight) * d.pxPerMoa, ey = d.size / 2 - (t.up - a.up - d.aimUp) * d.pxPerMoa;
+          if (ex < 0 || ex > d.size || ey < 0 || ey > d.size) continue;
+          const off = Math.hypot(d.x - ex, d.y - ey);
+          assert.ok(off <= 1, `${sizeName} ${name}, aimed at ${aimed}, ${key}: drawn at ${d.x.toFixed(2)}, ${d.y.toFixed(2)}, the angles put it at ${ex.toFixed(2)}, ${ey.toFixed(2)}`);
+          worst = Math.max(worst, off); checked++;
+          lines.push(`${sizeName} ${name}, aimed at ${aimed}: ${key} ${off.toFixed(3)} px`);
+        }
+      }
+    }
+    assert.deepEqual(errors, []);
+    await context.close();
+  }
+  assert.ok(checked >= 12, `at least the aimed papers themselves were checked at every sight and size (${checked})`);
+  console.log(`  ${checked} sheet centres checked, largest difference ${worst.toFixed(3)} px\n  ` + lines.join('\n  '));
+});
