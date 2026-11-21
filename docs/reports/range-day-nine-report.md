@@ -128,7 +128,7 @@ Branches and the close-out order: the change is on `range-day-nine` (pull reques
 1. Job 20261120-171610-ecf799 (report event 2883): FINDINGS, 4 findings, all on the report; each is fixed as listed at the top of this filing.
 2. Job 20261120-173010-dc4b73 (report event 2885): PASS.
 
-## Closing message to Dan
+## Closing message to Dan (draft; sent only after a PASS)
 
 Nothing on your screen has changed yet: the new firing line is ready in [pull request #22](https://github.com/isleofdan/range-day/pull/22), and merging and deploying it will put it on the live app.
 
@@ -315,10 +315,10 @@ What this cannot prove: the session cannot hold Dan's phone. 830 is measured fro
 - If Dan's phone ever shows less than 830 pixels, the next lever is the view's size on short screens, which belongs to the picture work Dan has paused.
 - Otherwise as in the range-day-nine report.
 
-Close-out order, by `CLAUDE.md` "Field reports":
-1. Merge #24, then #25 (test code only).
+Branches and the close-out order: the change is on `range-day-nine-b` (#24); the picture tests' waits are on `range-day-test-waits` (#25); this addendum and the `PLAN.md` note are on `range-day-nine-b-notes`. The order on Dan's typed line is fixed by this repository's standing rule (`CLAUDE.md`, "Field reports"), not by this session:
+1. Merge #24, then #25.
 2. The Deploy run.
-3. A notes-only pull request from `range-day-nine-b-notes` (this addendum and the `PLAN.md` note), merged.
+3. A notes-only pull request from `range-day-nine-b-notes`, which then differs from `main` only by this addendum and the `PLAN.md` note, merged.
 
 ## Result check rounds
 
@@ -336,8 +336,11 @@ Close-out order, by `CLAUDE.md` "Field reports":
    - 1: the original measure is now given element by element in verify 1.
    - 2: the deploy line comes after the deploy, by the brief's close-out item 5, quoted in verify 8.
    - 3: `test/scene.test.js` is out of #24 (commit 9ee1e68) and in its own pull request, #25.
+4. Job 20261121-004414-6c153d (card event 2894): FINDINGS, 2.
+   - 1: the closing message below is a draft. It is sent to Dan only after a PASS, which will be recorded here.
+   - 2: the close-out order is stated as the repository's fixed sequence, in the words the range-day-nine report passed with.
 
-## Closing message to Dan
+## Closing message to Dan (draft; sent only after a PASS)
 
 Nothing on your screen has changed yet: the fix is ready in pull request #24, and merging and deploying it will put it on the live app. On a screen your phone's height, everything now fits above Steady and Fire, and the third line no longer peeks out. The rounds left show under the word Fire, and your book line is one line (tap ▾ for the rest). All the automatic checks pass.
 
