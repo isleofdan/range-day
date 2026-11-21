@@ -253,7 +253,7 @@ It held the layout at 412×915 only and gave 412×800 "as a figure only". The re
    - [44841130824](https://github.com/isleofdan/range-day/actions/runs/44841130824) on b7ef52e: **green, all ten jobs**.
      - Tests: rest 38 s, day 1 min 23 s, browser 1 min 25 s, scene-scale 4 min 34 s, scene-shots 8 min 7 s, scene-rest 8 min 52 s.
      - Screenshots: shard 1 5 min 54 s, shard 2 6 min 49 s, shard 3 8 min 26 s, shard 4 7 min 17 s.
-   - Commit f774c87 then added only the before-measure file (`docs/reports/`).
+   - Commit f774c87 then added only the before-measure file (`docs/reports/`). Its run, [44842823187](https://github.com/isleofdan/range-day/actions/runs/44842823187), is **green, all ten jobs**; the slowest job was tests scene-rest at 8 min 56 s.
    - Counts: tests 111 and screenshot states 73, unchanged by #24.
 7. **Size:** `git diff origin/main...range-day-nine-b | wc -c` gives 81124 bytes, under 400,000.
 8. **The deploy result:** filed on the card after the deploy.
