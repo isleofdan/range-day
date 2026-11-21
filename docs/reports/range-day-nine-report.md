@@ -139,44 +139,150 @@ All the automatic checks pass.
 Needed from you
 1. Type: `yes, merge and deploy range-day-nine, then merge its notes`.
 
-## Addendum: range-day-nine-b, from Dan's look on his phone (21 Nov 2026)
+# FIELD REPORT — range-day-nine-b — 2026-11-21
 
-After the deploy, Dan opened the firing line on his phone and sent two screenshots. His words: "The book line isn't visible at first when I open the firing line … a little bit cut off, but with a button that allows me to expand it."
+Nothing on Dan's screen has changed yet: this follow-up is in pull request [#24](https://github.com/isleofdan/range-day/pull/24), not merged or deployed; merging and deploying it will show it.
 
-What the screenshots showed:
-- His screen is about 830 CSS pixels tall (992×2000 pixels at 2.41 device pixels per CSS pixel), not the 915 this build was held at. So the book line sat under Steady and Fire.
+This is the second change of session range-day-nine, made after the first was merged and deployed. Dan looked at the live firing line on his phone and sent two screenshots.
+
+## Where each task item of the brief stands
+
+Items 1 to 7 of the brief were done in pull request [#22](https://github.com/isleofdan/range-day/pull/22), merged as 6f72061 and deployed (Deploy run 44836938388). The record is the range-day-nine report above.
+- Item 1, the measure: `scripts/line-layout.mjs`, and `docs/reports/line-layout-before.txt` from `main` before any change. #24 adds `docs/reports/line-layout-before-nine-b.txt`, the live page (38b5702) measured before #24 at all sizes including Dan's.
+- Items 2 to 5: the within-reach arrangement, the scroll area's order, the computer layout and "nothing shifts" (`public/line.js`'s folds, `public/app.css`'s fixed-height slots and wide-screen column).
+- Item 6: the two new tests and the five `line-top-*` screenshot states.
+- Item 7: README and `docs/CHECKS.md`.
+
+#24 changes only what Dan's phone showed was short of item 2 at his screen's height. It keeps items 3 to 7 as merged: the scroll area's order, the computer layout and the folds' code are untouched. It brings the tests (`test/line-reach.js`, `test/day.test.js`), the screenshots, the measure and the two documents up to date.
+
+## What stands
+
+Route: the same Claude Code cloud session, permission mode auto, builder model claude-opus-5-5. Independent checker: the Codex result checker.
+
+Dan's words with his screenshots: "The book line isn't visible at first when I open the firing line … a little bit cut off, but with a button that allows me to expand it."
+- His screen is about 830 CSS pixels tall (992×2000 pixels at 2.41 device pixels per CSS pixel), not the 915 the first change was held at. So the book line sat under Steady and Fire. The before-measure shows it: at 412×830 the book line's bottom was at 810.7 (Vepr), 806.7 (Tavor SAR) and 778.6 (AK), against the bar's top at 753 (`line-layout-before-nine-b.txt`).
 - The top of a third line ("2026") showed under the clipped book line. A clamped text overflows into its box's padding, and the slots had padding.
 
-What the report above got wrong: it held the layout at 412×915 only and gave 412×800 "as a figure only". The real phone was between the two, and the figure was not held by any test.
-
-What changed, in pull request [#24](https://github.com/isleofdan/range-day/pull/24), commit c9cabbf:
+What #24 changes (`public/line.html`, `public/app.css`, commit c9cabbf):
 - The rounds left (same text) stand under the word **Fire**.
 - Elevation and Windage are named on their box's top edge, so each setting takes one line.
 - The book line holds one line, and ▾ opens the rest.
 - The gaps, the top bar's link padding and the bar's padding are trimmed. Steady and Fire are 52 px tall.
 - The text slots' space above and below the text is transparent border, not padding.
 
-The view is unchanged (380 and 640 px square).
+The view is unchanged (380 and 640 px square). `git diff origin/main -- public/engine.js data src/scene` is empty.
 
-The lasting fix, so a short phone cannot slip through again:
-- `test/line-reach.js` now holds the within-reach list at **412×830, Dan's phone**, as well as 412×915.
+The lasting fix:
+- `test/line-reach.js` holds the within-reach list at **412×830, Dan's phone**, as well as 412×915.
 - The "within reach" test asserts that neither text slot has vertical padding.
-- `scripts/line-layout.mjs` measures 412×830 too.
+- `scripts/line-layout.mjs` measures 412×830.
+- Commit b7ef52e makes three picture tests wait for what they read, not a fixed time (verify 6 below).
 
-Verify:
-- `docs/reports/line-layout-after.txt` (range-day-nine-b): "every held sight-and-size pair within reach". At 412×830 the bar's top is at 761 and the book line's bottom at 755.8 (Vepr), 751.8 (Tavor SAR) and 723.6 (AK).
-- At 412×760 (figure only), the book line falls under the bar.
-- Touch heights at both phone sizes are all 44 px or more, and Steady and Fire are 52.
-- Tests in the session: `--group day` passed (12 tests), `--group browser` passed, the five `line-top-*` screenshot states passed.
-- The pull request's Checks runs:
-  - [44839550566](https://github.com/isleofdan/range-day/actions/runs/44839550566) on c9cabbf: 9 of 10 jobs passed. Tests scene-shots failed after 11 min 16 s: verify 3 could not click "Open another box" ("element is not visible").
-  - Cause: that test gave each seeded shot at most 10 s to land. On a slow runner, under the Full picture, a shot took longer. The page refuses a shot while three are in the air, so later shots were never fired and the box never emptied.
-  - This was the second Checks run in this session to fail on a fixed wait on a slow runner (the first was 44776316081). So the waits were fixed rather than the job re-run, in commit b7ef52e, `test/scene.test.js`, test code only:
-    - a seeded shot now waits until it has landed (up to 90 s);
-    - after the frame loop is stopped, the tests wait until two real frames have passed instead of a fixed 300 ms (verify 4 had read a blank view);
-    - the first visit waits 90 s instead of 30.
-  - The three tests passed in the session: verify 3, the first visit (it chose Light), and verify 4 ("first mil-dot 47.5 px right and 48.5 px left of the centre … data … 48.0 px").
-  - [44841130824](https://github.com/isleofdan/range-day/actions/runs/44841130824) on b7ef52e: **green, all ten jobs**. Tests: rest 38 s, day 1 min 23 s, browser 1 min 25 s, scene-scale 4 min 34 s, scene-shots 8 min 7 s, scene-rest 8 min 52 s. Screenshots: shard 1 5 min 54 s, shard 2 6 min 49 s, shard 3 8 min 26 s, shard 4 7 min 17 s.
-  - Counts: tests 111 (unchanged by -b; the new assertions are inside existing tests); screenshot states 73.
+## UI review (the firing line)
 
-Ask: merge and deploy range-day-nine-b? Recommended: yes. Type `yes, merge and deploy range-day-nine-b, then merge its notes`.
+1. **Speed of the frequent action:** on Dan's 830-pixel screen, reading the result, turning the sight and firing all happen without a scroll (verify 1).
+2. **Recovery:** unchanged. The folds close with a second tap, and "Open another box" stands beside the result.
+3. **Finding the tool:** each knob's name sits on its box's edge. The ▾ on the one-line book line says there is more.
+4. **Orientation:** unchanged: the one-line summary at the top.
+5. **Feedback:** where the shot went shows under the view. The rounds left change under the word Fire at the press.
+6. **Interruption:** none added. Nothing moves (verify 3).
+7. **Thumb reach:** Steady and Fire are lowest and largest (52 px). Every other button is 44 px (verify 4).
+8. **Defaults and prefill:** unchanged.
+
+What I did not add: no new control or record. Which of the eight Dan's report came from: 1 and 7 (the book line under the bar), and 5 (the clipped third line read as an error).
+
+Screenshots (`docs/reports/screenshots/`, both sizes, retaken for #24): `line-top-first-shot` (empty: no shot yet), `line-top-after-miss` (after a mistake), `line-top-after-hit` (after the frequent action), `line-top-short-opened`, `line-top-scrolled-wind`. Dan's own two screenshots of 21 Nov 2026 are the "before" at his phone width.
+
+## What the earlier report got wrong
+
+It held the layout at 412×915 only and gave 412×800 "as a figure only". The real phone was between the two, and that figure was not held by any test.
+
+## Deliberate divergences
+
+1. The rounds left moved from beside the sight strip (task item 2) into the Fire button, because the strip and the book line did not fit Dan's screen with the rounds on their own line. Verify 13 holds the rounds inside the Fire button.
+2. The book line holds one line, not two (the brief allowed "one or two lines").
+3. Steady and Fire are 52 px tall, from 56. They are still the largest controls on the page.
+
+## Verify results
+
+1. **The measure**, before (`docs/reports/line-layout-before-nine-b.txt`, the live page 38b5702) and after (`docs/reports/line-layout-after.txt`, #24). For each sight and size:
+
+   | Size | Sight | Before | After | Bar before → after | View before → after |
+   | - | - | - | - | - | - |
+   | 412×915 | Vepr scope | all within reach | all within reach | fixed at bottom, top 838 → 846 | 380×380 → 380×380 |
+   | 412×915 | Tavor SAR dot | all within reach | all within reach | 838 → 846 | 380×380 → 380×380 |
+   | 412×915 | AK irons | all within reach | all within reach | 838 → 846 | 380×380 → 380×380 |
+   | 412×830 | Vepr scope | no: rounds left (771.3) and book line (810.7) under the bar | all within reach (book line bottom 755.8) | 753 → 761 | 380×380 → 380×380 |
+   | 412×830 | Tavor SAR dot | no: rounds left (767.3) and book line (806.7) under the bar | all within reach (751.8) | 753 → 761 | 380×380 → 380×380 |
+   | 412×830 | AK irons | no: book line (778.6) under the bar | all within reach (723.6) | 753 → 761 | 380×380 → 380×380 |
+   | 1280×800 | all three | all within reach, bar beside the view | the same | 628–776 → 706–776, beside the view covering none of it | 640×640 → 640×640 |
+
+   At 412×760 (figure only), the book line falls under the bar after the change (bottom 755.8, 751.8 and 723.6 against 691). Before the change, the strip's buttons fell under it as well.
+2. **Same shots and same picture:** `git diff origin/main -- public/engine.js data src/scene` is empty.
+3. **Nothing shifts** (`test/day.test.js`, "nothing shifts under the thumb", run on #24; places are left, top, width, height in pixels):
+   - 412x915 before (left, top, width, height): view [16, 146.5, 380, 380], strip [16, 589.5, 380, 130], bar [0, 846, 412, 69]
+   - 412x915 after a seeded miss (the cold-bore note gone): view [16, 146.5, 380, 380], strip [16, 589.5, 380, 130], bar [0, 846, 412, 69]; moved view 0, strip 0, bar 0 px; scrolled 0
+   - 412x915 with the result opened: view [16, 146.5, 380, 380], strip [16, 589.5, 380, 130], bar [0, 846, 412, 69]; moved view 0, strip 0, bar 0 px; scrolled 0
+   - 412x915 after a seeded hit that wrote a book line: view [16, 146.5, 380, 380], strip [16, 589.5, 380, 130], bar [0, 846, 412, 69]; moved view 0, strip 0, bar 0 px; scrolled 0
+   - 412x915 with the full description opened: view [16, 146.5, 380, 380], strip [16, 589.5, 380, 130], bar [0, 846, 412, 69]; moved view 0, strip 0, bar 0 px; scrolled 0
+   - 412x915 with the box empty and "Open another box" shown: view [16, 146.5, 380, 380], strip [16, 589.5, 380, 130], bar [0, 846, 412, 69]; moved view 0, strip 0, bar 0 px; scrolled 0
+   - 412x915 after another box was opened: view [16, 146.5, 380, 380], strip [16, 589.5, 380, 130], bar [0, 846, 412, 69]; moved view 0, strip 0, bar 0 px; scrolled 0
+   - 1280x800 before (left, top, width, height): view [106, 58.5, 640, 640], strip [766, 273.5, 408, 130], bar [766, 706, 408, 70]
+   - 1280x800 after a seeded miss (the cold-bore note gone): view [106, 58.5, 640, 640], strip [766, 273.5, 408, 130], bar [766, 706, 408, 70]; moved view 0, strip 0, bar 0 px; scrolled 0
+   - 1280x800 after a seeded hit that wrote a book line: view [106, 58.5, 640, 640], strip [766, 273.5, 408, 130], bar [766, 706, 408, 70]; moved view 0, strip 0, bar 0 px; scrolled 0
+   - 1280x800 with the full description opened: view [106, 58.5, 640, 640], strip [766, 273.5, 408, 130], bar [766, 706, 408, 70]; moved view 0, strip 0, bar 0 px; scrolled 0
+   - 1280x800 with the box empty and "Open another box" shown: view [106, 58.5, 640, 640], strip [766, 273.5, 408, 130], bar [766, 706, 408, 70]; moved view 0, strip 0, bar 0 px; scrolled 0
+   - 1280x800 after another box was opened: view [106, 58.5, 640, 640], strip [766, 273.5, 408, 130], bar [766, 706, 408, 70]; moved view 0, strip 0, bar 0 px; scrolled 0
+4. **Touch heights** (`line-layout-after.txt`), the same at 412×915 and 412×830:
+   - Vepr scope: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52.
+   - Tavor SAR dot: plate 44, magnifier 44, and the same strip, summary, Steady and Fire.
+   - AK irons: plate 44, leaf-down 44, leaf-up 44, el-down 44, el-up 44, wd-left 44, wd-right 44, line-head 44, steady 52, fire 52.
+   - None is under 44.
+5. **Screenshots and errors:**
+   - `npm run screenshots -- --grep '^line-top-'`: "all checks passed (5 of 73 states)". Each state's "fits the width" check passed, so there is no sideways scroll.
+   - The Checks run below ran all 73 states at both sizes, each with that check.
+   - No console error: both firing-line tests assert `errors` is empty, and they passed.
+6. **The Checks runs** on #24:
+   - [44839550566](https://github.com/isleofdan/range-day/actions/runs/44839550566) on c9cabbf: 9 of 10 jobs passed. Tests scene-shots failed after 11 min 16 s: verify 3 could not click "Open another box" ("element is not visible").
+     - Cause: that test gave each seeded shot at most 10 s to land. On a slow runner, under the Full picture, a shot took longer. The page refuses a shot while three are in the air, so the box never emptied.
+     - It was the second Checks run in the session to fail on a fixed wait (the first was 44776316081). So the waits were fixed in commit b7ef52e (`test/scene.test.js`, test code only):
+       - a seeded shot waits until it has landed (up to 90 s);
+       - after the frame loop stops, the tests wait for two real frames instead of 300 ms;
+       - the first visit waits 90 s instead of 30.
+     - All three passed in the session (verify 4: "first mil-dot 47.5 px right and 48.5 px left of the centre … 48.0 px").
+   - [44841130824](https://github.com/isleofdan/range-day/actions/runs/44841130824) on b7ef52e: **green, all ten jobs**.
+     - Tests: rest 38 s, day 1 min 23 s, browser 1 min 25 s, scene-scale 4 min 34 s, scene-shots 8 min 7 s, scene-rest 8 min 52 s.
+     - Screenshots: shard 1 5 min 54 s, shard 2 6 min 49 s, shard 3 8 min 26 s, shard 4 7 min 17 s.
+   - Commit f774c87 then added only the before-measure file (`docs/reports/`).
+   - Counts: tests 111 and screenshot states 73, unchanged by #24.
+7. **Size:** `git diff origin/main...range-day-nine-b | wc -c` gives 81124 bytes, under 400,000.
+8. **The deploy result:** filed on the card after the deploy.
+
+What this cannot prove: the session cannot hold Dan's phone. 830 is measured from his screenshots; a browser with more of its own bars showing leaves less room.
+
+## Asks
+
+1. Merge and deploy range-day-nine-b? Recommended: yes. Type `yes, merge and deploy range-day-nine-b, then merge its notes`.
+
+## What the next session needs
+
+- If Dan's phone ever shows less than 830 pixels, the next lever is the view's size on short screens, which belongs to the picture work Dan has paused.
+- Otherwise as in the range-day-nine report.
+
+Close-out order, by `CLAUDE.md` "Field reports":
+1. Merge #24.
+2. The Deploy run.
+3. A notes-only pull request from `range-day-nine-b-notes` (this addendum and the `PLAN.md` note), merged.
+
+## Result check rounds
+
+1. Job 20261121-001558-e62c3f (card event 2888): FINDINGS, 11.
+   - 1–5 read #24 against the whole brief. Answered by "Where each task item of the brief stands" and the new before-measure, commit f774c87.
+   - 6–11 asked for full figures. Answered in verify 1, 3, 4, 5 and 7 and in the UI review.
+
+## Closing message to Dan
+
+Nothing on your screen has changed yet: the fix is ready in pull request #24, and merging and deploying it will put it on the live app. On a screen your phone's height, everything now fits above Steady and Fire, and the third line no longer peeks out. The rounds left show under the word Fire, and your book line is one line (tap ▾ for the rest). All the automatic checks pass.
+
+Needed from you
+1. Type: `yes, merge and deploy range-day-nine-b, then merge its notes`.
