@@ -655,3 +655,9 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
   stays paused on Dan's word. A cloud session must link Chromium for
   Playwright before a browser test's "passed" means anything. Report:
   `docs/reports/range-day-twelve-report.md`.
+
+### range-day-twelve-b — 21 Nov 2026 (same session, on Dan's word)
+
+- **Stands:** pull request #39 merged as `9241fe2`, deployed by Deploy run 44922340703 (green, 87 s): the Troy and FAB rear sights flip between their large and small peeps on the firing line, kept on the device, no shot moved. Pull request #38 (`cf8d38a`): a report's line for Dan to type must be a fenced block, checked by `test/report-shape.test.js`. 140 tests, 94 screenshot states.
+- **Next session needs:** as range-day-twelve; Dan's look at the flip on his phone. Report addendum in `docs/reports/range-day-twelve-report.md`.
+
