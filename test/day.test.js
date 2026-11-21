@@ -45,7 +45,9 @@ async function signedIn(viewport, b) {
 const noDay = (page) => page.evaluate(() => { localStorage.removeItem('range-day:day:open'); localStorage.removeItem('range-day:day:packed'); localStorage.setItem('range-day:picture', JSON.stringify('plain')); });
 const AR = 'course=angeles-sylmar&rifle=bcm-ar15&sight=troy-battlesights&load=imi-m193';
 const line = async (page, q, b) => { await page.goto(`${b || base}/line?${q}`); await page.waitForSelector('#fire'); };
-const bench = async (page, q) => { await page.goto(`${base}/zero?${q}`); await page.waitForSelector('#fire5'); };
+// The bench is ready when its supply line is written, not only when its Fire button is there (Checks run 44916065640: on a cold
+// runner the first test read the line 0.6 s in, before the page wrote it).
+const bench = async (page, q) => { await page.goto(`${base}/zero?${q}`); await page.waitForSelector('#fire5'); await page.waitForFunction(() => /zeroing supply/.test(document.getElementById('rounds').textContent)); };
 // A seeded shot through the page's own door, landed: the last log row.
 async function seededShot(page, seed) {
   const before = await page.evaluate(() => RangeDayLine.log.length);
