@@ -2,7 +2,7 @@
 
 Nothing on Dan's screen has changed yet. The near targets with paper and the spotting scope are in pull request [#27](https://github.com/isleofdan/range-day/pull/27), which is not merged or deployed. Merging and deploying it will put them on the live app.
 
-(Fourth filing: corrected for result checks 20261121-061404-bcbb99, 20261121-061552-61a01e and 20261121-063011-887ed9; see "Result check rounds".)
+(Fifth filing: result checks 20261121-061404-bcbb99, 20261121-061552-61a01e and 20261121-063011-887ed9 answered; 20261121-064803-730fc2 repeated a finding that conflicts with `CLAUDE.md`, which is now Ask 1; see "Result check rounds".)
 
 ## What stands
 
@@ -87,7 +87,7 @@ What this cannot prove: the session cannot open the live app or hold a phone, so
 
 ## Asks
 
-1. **Merge and deploy range-day-ten?** Recommended: yes. The line to type:
+1. **The result checker and this repository's rule disagree on one point; keep the rule, then merge and deploy?** The checker (rounds 3 and 4) asks that the notes (this report and the `PLAN.md` note) not wait for the deploy. `CLAUDE.md`, "Field reports": "When the session merges and deploys, the order is fixed: the change's pull request first (the report links it); after the deploy result, a notes-only close-out pull request carrying the field report and the `PLAN.md` note. That order is the rule, not a divergence." Every other finding in four rounds is fixed. Recommended: yes, keep the repository's order and merge and deploy. The line to type:
 
    ```
    yes, merge and deploy range-day-ten, then merge its notes
@@ -111,16 +111,16 @@ Round 2 (job 20261121-061552-61a01e): FINDINGS, two, one in the code and one in 
 
 Round 3 (job 20261121-063011-887ed9): FINDINGS, three. 1 and 2, steel rows not naming their target: the log row and the day's shot already carried `target: p.kind` for both kinds (the test asserted `steel.target === 'steel'` on the log row), but the cold-bore line carried it only for paper and the book line not at all; both now carry `target: shot.target` (33c7f68), the test asserts the day's steel shot and its book line, `docs/RECORDS.md` says so, and the report's sentence now names each record. 3, "the report defers the notes-only pull request until after deployment": that order is this repository's own rule, `CLAUDE.md`, "Field reports": "When the session merges and deploys, the order is fixed: the change's pull request first (the report links it); after the deploy result, a notes-only close-out pull request carrying the field report and the `PLAN.md` note. That order is the rule, not a divergence." The report keeps it; per the brief (section 10, item 3), it is quoted here and checked once more.
 
-Round 4: pending (filed with this corrected report).
+Round 4 (job 20261121-064803-730fc2): FINDINGS, one: the same point as round 3's finding 3 (the notes wait for the deploy). It conflicts with `CLAUDE.md`, "Field reports" (quoted under round 3); having been quoted and checked once more and still standing, it is Ask 1 in place of the merge, as the brief directs (section 10, item 3).
 
 ## Closing message to Dan
 
 Nothing on your screen has changed yet: the near targets and the spotting scope are in pull request #27, not merged or deployed. Merging and deploying it puts them on the live app: paper at 50 and 100 yards on both courses, a 100-yard steel plate on the canyon, and the spotting scope beside the zoom.
 
-Its full check is green (run 44875918450, eleven jobs); the independent check's verdict on this report is recorded under "Result check rounds".
+Its full check is green (run 44875918450, eleven jobs). The independent result checker raised 9 points over four rounds; 8 are fixed. The last one asks that this report reach `main` before the deploy, which this repository's rules forbid (the report goes in after the deploy result), so it is your call.
 
 Needed from you
-1. Ask 1, merge and deploy (recommended: yes). Type this line into this session:
+1. Ask 1, keep the repository's order and merge and deploy (recommended: yes). Type this line into this session:
 ```
 yes, merge and deploy range-day-ten, then merge its notes
 ```
