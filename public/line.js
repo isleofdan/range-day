@@ -446,7 +446,8 @@
       g.strokeStyle = 'rgba(0,0,0,0.85)'; g.lineWidth = 2; g.beginPath(); g.arc(cx, cy, cx - 4, 0, Math.PI * 2); g.stroke();
       if (spotting) return; // the spotting scope has no reticle
       if (sight.reticle && sight.reticle.kind === 'mil-dot') return drawMilDot(g, size, k, cx, cy);
-      if (sight.reticle && sight.reticle.marksMoaBelowZero) return drawDropReticle(g, size, k, cx, cy);
+      if (sight.reticle && (sight.reticle.marksMoaBelowZero || sight.reticle.kind === 'chevron')) return drawDropReticle(g, size, k, cx, cy);
+      if (sight.reticle && sight.reticle.kind === 'crosshair') return drawCrosshair(g, size, cx, cy);
       return;
     }
     if (sight.kind === 'seeall') return drawSeeAll(g, size, k, cx, cy);
@@ -594,11 +595,14 @@
   // ladder, wind holds, numbers beside the marks, the outer crosshair and
   // the illumination. The marks are angles for the manual's load; with the
   // loads in the set the bullet lands where the engine says.
+  // range-day-thirteen: the ACOG's chevron is drawn by the same drawing: a chevron of kind "chevron" names its base's width and its
+  // height (tip to base) itself, and has no hold marks drawn (data/sights.json, marksNotDrawn says why).
   function drawDropReticle(g, size, k, cx, cy) {
-    const marks = sight.reticle.marksMoaBelowZero;
-    const base = marks.find((m) => m.yards === sight.reticle.marksYards[0]) || marks[0];
+    const r = sight.reticle;
+    const marks = r.marksMoaBelowZero || [];
+    const base = r.kind === 'chevron' ? { moaBelowZero: r.chevronHeightMoa } : marks.find((m) => m.yards === r.marksYards[0]) || marks[0];
     const baseY = cy + base.moaBelowZero * k;
-    const halfW = sight.reticle.chevronHalfWidthMoa * k; // the chevron's half-width at its base (data/sights.json)
+    const halfW = (r.kind === 'chevron' ? r.chevronBaseWidthMoa / 2 : r.chevronHalfWidthMoa) * k; // the chevron's half-width at its base (data/sights.json)
     g.strokeStyle = '#111'; g.lineWidth = Math.max(1.2, 0.25 * k); g.lineJoin = 'miter';
     g.beginPath(); g.moveTo(cx - halfW, baseY); g.lineTo(cx, cy); g.lineTo(cx + halfW, baseY); g.stroke();
     // the hold marks below the chevron
@@ -608,6 +612,13 @@
       const y = cy + m.moaBelowZero * k;
       g.beginPath(); g.moveTo(cx - tick, y); g.lineTo(cx + tick, y); g.stroke();
     }
+  }
+
+  // A fine crosshair through the center and nothing more (range-day-thirteen: the Vortex's and the Leupold's reticles, whose marks
+  // the makers' documents could not be read for; data/sights.json, marksNotDrawn). The same fine line as the mil-dot's.
+  function drawCrosshair(g, size, cx, cy) {
+    g.strokeStyle = '#111'; g.lineWidth = 1;
+    g.beginPath(); g.moveTo(0, cy); g.lineTo(size, cy); g.moveTo(cx, 0); g.lineTo(cx, size); g.stroke();
   }
 
   // Iron sights with a ring: the rear aperture's circle, dark and soft around it; the front post rising to the center.
@@ -943,6 +954,9 @@
         frontPx: sight.frontPostMoa ? sight.frontPostMoa * k : null, stemPx: sight.stemWidthMoa ? sight.stemWidthMoa * k : null, ringPx: sight.apertureMoa ? ringMoa() * k : null, aperture: apertures ? apertures[apertureIx()].name : null,
         earGapPx: sight.frontEars ? sight.frontEars.gapMoa * k : null, rearBodyPx: sight.rearBody ? sight.rearBody.widthMoa * k : null, hoodPx: sight.frontHood ? sight.frontHood.innerMoa * k : null, hoodWallPx: sight.frontHood ? sight.frontHood.wallMoa * k : null, earPx: sight.frontEars ? sight.frontEars.widthMoa * k : null, stripePx: sight.frontStripeMoa ? sight.frontStripeMoa * k : null,
         triangle: sight.kind === 'seeall' ? { widthPx: sight.reticle.triangleWidthMoa * k, heightPx: sight.reticle.triangleHeightMoa * k, linePx: sight.reticle.lineBelowTipMoa * k, fieldPx: sight.reticle.fieldWidthMoa * k } : null,
-        milDotPx: sight.reticle && sight.reticle.kind === 'mil-dot' ? milDotMoa() * k : null, zoom: mag, aim: center() };
+        milDotPx: sight.reticle && sight.reticle.kind === 'mil-dot' ? milDotMoa() * k : null, zoom: mag, aim: center(),
+        // range-day-thirteen: the ACOG's chevron, its base's width and its height in pixels; whether the reticle is a plain crosshair
+        chevronPx: sight.reticle && sight.reticle.kind === 'chevron' ? { widthPx: sight.reticle.chevronBaseWidthMoa * k, heightPx: sight.reticle.chevronHeightMoa * k } : null,
+        crosshair: Boolean(sight.reticle && sight.reticle.kind === 'crosshair') };
     } };
 }());

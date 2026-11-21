@@ -1,5 +1,5 @@
 {
- "_about": "The rifle set. barrelIn is the barrel length the loads' speeds are given for. sightHeightIn is how far the sight line sits above the bore for each sight the rifle can carry. boreOffsetMoa is the rifle's mechanical offset with the sight at its middle setting: the reason a sight needs zeroing. sights lists the sights (data/sights.json) the rifle can carry; defaultSight is the sight the rifle opened with before every sight could be chosen (the Vepr its scope, the others their iron sights), which an address without a sight still opens and whose old saved zero and shot log are read forward. firstCourse is the course the rifle opens on the first time on a device (then the last used). sightLeaf names, per iron sight that has more than one leaf table, which table this rifle's leaf follows (the 5.45x39 rifle's leaf is cut for its own load); a sight not named uses its own \"leaf\".",
+ "_about": "The rifle set. barrelIn is the barrel length the loads' speeds are given for. sightHeightIn is how far the sight line sits above the bore for each sight the rifle can carry. boreOffsetMoa is the rifle's mechanical offset with the sight at its middle setting: the reason a sight needs zeroing. sights lists the sights (data/sights.json) the rifle can carry; defaultSight is the sight the rifle opened with before every sight could be chosen (the Vepr its scope, the others their iron sights), which an address without a sight still opens and whose old saved zero and shot log are read forward. firstCourse is the course the rifle opens on the first time on a device (then the last used). sightLeaf names, per iron sight that has more than one leaf table, which table this rifle's leaf follows (the 5.45x39 rifle's leaf is cut for its own load); a sight not named uses its own \"leaf\". range-day-thirteen: scopeMount is how a scope is mounted on the rifle: the kind of rail (rail: \"picatinny\" takes every mount of the scope collection; \"rimfire-dovetail\" takes none of them), in words, and the rail top's height over the bore (railHeightOverBoreIn); a collection scope's height over the bore on the rifle is that height plus its mount's (data/sights.json, mount.centerOverRailIn), worked out and checked by lib/guns.js.",
  "bcm-ar15": {
   "name": "BCM AR-15 carbine, 5.56",
   "caliber": "5.56x45",
@@ -42,7 +42,19 @@
    "federal-gmm-69",
    "imi-razorcore-77"
   ],
-  "firstCourse": "angeles-sylmar"
+  "firstCourse": "angeles-sylmar",
+  "scopeMount": {
+   "rail": "picatinny",
+   "words": "the flat-top upper's own Picatinny rail",
+   "railHeightOverBoreIn": {
+    "value": 1.21,
+    "source": {
+     "url": "https://en.wikipedia.org/wiki/Bore_axis",
+     "read": "2026-11-21",
+     "note": "\"1.211 inches\" from the bore's center to the top of an AR-type (mil-spec) rail; owners measuring bare uppers on AR15.com give 1.215 to 1.218 in (https://www.ar15.com/forums/ar-15/What_is_rail_height_over_center_of_bore_/12-626241/). Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+    }
+   }
+  }
  },
  "iwi-tavor-sar": {
   "name": "IWI Tavor SAR, 5.56",
@@ -101,7 +113,15 @@
    "federal-gmm-69",
    "imi-razorcore-77"
   ],
-  "firstCourse": "angeles-sylmar"
+  "firstCourse": "angeles-sylmar",
+  "scopeMount": {
+   "rail": "picatinny",
+   "words": "the receiver's full-length top Picatinny rail",
+   "railHeightOverBoreIn": {
+    "value": 2.25,
+    "estimate": "IWI publishes no rail height. A Tavor SAR owner measured 3.75 in over the bore with a scope in an AR-height (about 1.5 in) mount (https://www.ar15.com/forums/armory/Tavor_sight_height_over_bore_/43-412550/), which puts the top rail about 2.25 in over the bore, the figure the red dot's and the SeeAll's heights on this rifle already rest on; an X95 owner's 3.5 in over the bore with a similar mount fits the same band."
+   }
+  }
  },
  "iwi-x95": {
   "name": "IWI Tavor X95, 5.56",
@@ -155,7 +175,15 @@
    "federal-gmm-69",
    "imi-razorcore-77"
   ],
-  "firstCourse": "angeles-sylmar"
+  "firstCourse": "angeles-sylmar",
+  "scopeMount": {
+   "rail": "picatinny",
+   "words": "the receiver's full-length top Picatinny rail",
+   "railHeightOverBoreIn": {
+    "value": 2.25,
+    "estimate": "IWI publishes no rail height. A Tavor SAR owner measured 3.75 in over the bore with a scope in an AR-height (about 1.5 in) mount (https://www.ar15.com/forums/armory/Tavor_sight_height_over_bore_/43-412550/), which puts the top rail about 2.25 in over the bore, the figure the red dot's and the SeeAll's heights on this rifle already rest on; an X95 owner's 3.5 in over the bore with a similar mount fits the same band."
+   }
+  }
  },
  "ak-762": {
   "name": "AK-pattern rifle, 7.62x39",
@@ -204,7 +232,15 @@
    "sb-124",
    "yugo-m67"
   ],
-  "firstCourse": "angeles-sylmar"
+  "firstCourse": "angeles-sylmar",
+  "scopeMount": {
+   "rail": "picatinny",
+   "words": "a Picatinny-topped mount on the AK's left-side scope rail (the AK pattern's side rail)",
+   "railHeightOverBoreIn": {
+    "value": 1.9,
+    "estimate": "No maker figure for a side mount's rail over the bore could be read. A side mount is made to stand its rail clear over the receiver cover and the rear sight, so its top is taken level with the AK's own iron sight line, 1.9 in over the bore (the figure its irons use in this file); the prism sight already modeled on this kind of mount sits at 3.0 in, the same band once a mount's own height is added."
+   }
+  }
  },
  "ak-545": {
   "name": "AK-pattern rifle, 5.45x39",
@@ -258,7 +294,15 @@
   "loads": [
    "hornady-545-60"
   ],
-  "firstCourse": "angeles-sylmar"
+  "firstCourse": "angeles-sylmar",
+  "scopeMount": {
+   "rail": "picatinny",
+   "words": "a Picatinny-topped mount on the AK's left-side scope rail (the AK pattern's side rail)",
+   "railHeightOverBoreIn": {
+    "value": 1.9,
+    "estimate": "No maker figure for a side mount's rail over the bore could be read. A side mount is made to stand its rail clear over the receiver cover and the rear sight, so its top is taken level with the AK's own iron sight line, 1.9 in over the bore (the figure its irons use in this file); the prism sight already modeled on this kind of mount sits at 3.0 in, the same band once a mount's own height is added."
+   }
+  }
  },
  "molot-vepr-54r": {
   "name": "Molot Vepr, 7.62x54R",
@@ -305,7 +349,15 @@
    "silver-bear-174",
    "wolf-174"
   ],
-  "firstCourse": "cta-piru"
+  "firstCourse": "cta-piru",
+  "scopeMount": {
+   "rail": "picatinny",
+   "words": "a Picatinny-topped mount on the Vepr's left-side scope rail (the AK pattern's side rail)",
+   "railHeightOverBoreIn": {
+    "value": 2,
+    "estimate": "No maker figure for a side mount's rail over the bore could be read. A side mount is made to stand its rail clear over the receiver cover and the rear sight, so its top is taken level with the Vepr's own iron sight line, 2 in over the bore (the figure its irons use in this file); the prism sight already modeled on this kind of mount sits at 3.0 in, the same band once a mount's own height is added. The Vepr's rail is the AK pattern's: \"almost any AK optic will fit\" (https://russianoptics.net/Concepts.html, search text)."
+   }
+  }
  },
  "remington-22": {
   "name": "Remington bolt-action .22 LR, heavy barrel",
@@ -342,6 +394,10 @@
   "loads": [
    "cci-sv-40"
   ],
-  "firstCourse": "angeles-sylmar"
+  "firstCourse": "angeles-sylmar",
+  "scopeMount": {
+   "rail": "rimfire-dovetail",
+   "words": "a receiver grooved for 3/8-inch tip-off rimfire mounts (Remington's open-sighted bolt-action .22s, e.g. the Model Five: \"the receiver is grooved for tip-off scope mounts\", https://www.gunblast.com/Remington-ModelFive.htm, search text). None of the collection's mounts clamps a dovetail, and an adapter rail is no part of this set, so the .22 offers none of them."
+  }
  }
 }

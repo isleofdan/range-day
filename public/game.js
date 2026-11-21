@@ -638,12 +638,14 @@ window.RD = (function () {
   // nextClicks)` is the screen's own setter.
   function wireKnobs(doc, sight, getSetting, apply, say) {
     const $ = (id) => doc.getElementById(id);
-    const limit = sight.clicks;
+    // A scope's windage can travel less than its elevation (range-day-thirteen: the Leupold, 30 MOA each way against 60): windageClicks.
+    const limitOf = (which) => (which === 'windageClicks' && sight.windageClicks ? sight.windageClicks : sight.clicks);
     const perMoa = (which) => Math.round(1 / (which === 'elevationClicks' ? sight.clickMoa : sight.windageClickMoa));
     const coarse = sight.clickMoa < 1 || sight.windageClickMoa < 1;
     for (const el of doc.querySelectorAll('.pair.coarse, .btn.coarse')) el.hidden = !coarse; // the bench's coarse buttons stand singly in its rows (range-day-thirteen)
     const turn = (which, delta) => {
       const cur = getSetting()[which] || 0;
+      const limit = limitOf(which);
       let next = Math.max(-limit, Math.min(limit, cur + delta));
       const name = which === 'elevationClicks' ? 'elevation' : 'windage';
       if (next === cur) { say(`The ${name} knob is at the end of its travel (${limit} clicks, ${moaOf(limit, which === 'elevationClicks' ? sight.clickMoa : sight.windageClickMoa)} MOA from the middle).`); return; }
