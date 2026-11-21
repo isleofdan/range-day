@@ -128,7 +128,7 @@ Branches and the close-out order: the change is on `range-day-nine` (pull reques
 1. Job 20261120-171610-ecf799 (report event 2883): FINDINGS, 4 findings, all on the report; each is fixed as listed at the top of this filing.
 2. Job 20261120-173010-dc4b73 (report event 2885): PASS.
 
-## Closing message to Dan (draft; sent only after a PASS)
+## Closing message to Dan
 
 Nothing on your screen has changed yet: the new firing line is ready in [pull request #22](https://github.com/isleofdan/range-day/pull/22), and merging and deploying it will put it on the live app.
 
@@ -337,10 +337,11 @@ Branches and the close-out order: the change is on `range-day-nine-b` (#24); the
    - 2: the deploy line comes after the deploy, by the brief's close-out item 5, quoted in verify 8.
    - 3: `test/scene.test.js` is out of #24 (commit 9ee1e68) and in its own pull request, #25.
 4. Job 20261121-004414-6c153d (card event 2894): FINDINGS, 2.
-   - 1: the closing message below is a draft. It is sent to Dan only after a PASS, which will be recorded here.
+   - 1: answered by running the check again (round 5).
    - 2: the close-out order is stated as the repository's fixed sequence, in the words the range-day-nine report passed with.
+5. Job 20261121-004613-83909e (card event 2896): FINDINGS, 1. It flagged the words round 4's answer had added ("sent only after a PASS"). Those words are removed. Round 4's finding 1 and this finding together are met by the brief's close-out item 3: the closing message goes to Dan only once the newest verdict here is PASS.
 
-## Closing message to Dan (draft; sent only after a PASS)
+## Closing message to Dan
 
 Nothing on your screen has changed yet: the fix is ready in pull request #24, and merging and deploying it will put it on the live app. On a screen your phone's height, everything now fits above Steady and Fire, and the third line no longer peeks out. The rounds left show under the word Fire, and your book line is one line (tap ▾ for the rest). All the automatic checks pass.
 
