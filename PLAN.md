@@ -666,3 +666,32 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
 - **Stands:** pull request #41 merged as `66b6bbf`, deployed by Deploy run 44933020940 (green, 82 s): the Troy front sight is the HK-style round hood around the A2 post (Dan: "I think it was round"); no record changes.
 - **Next session needs:** as range-day-twelve. Report addendum in `docs/reports/range-day-twelve-report.md`.
 
+
+### range-day-thirteen — 21 Nov 2026 (cloud session, from the Wall card `range-day`)
+
+- **Stands:** pull request #43: the zero bench on one screen (the paper,
+  where the group landed, both adjustment rows, Fresh paper and Save, Fire
+  one and Fire five within reach at 412×830 and up, nothing scrolled; the
+  paper on the left on a computer; every line of words at a fixed height;
+  Fresh paper turns into Put the old paper back until the next shot; the
+  holes read from the day, so a reload shows them); the scope collection
+  (Trijicon ACOG 4x32 TA31F on its TA51, Vortex Razor HD Gen III 1-10x24 on
+  the CM-534, Leupold Mark 5HD 5-25x56 M1C3 on the Mark IMS), offered on the
+  AR-15, both Tavors, both AK rifles and the Vepr after their own sights,
+  each at its rifle's rail height plus its mount's (`lib/guns.js`); each
+  firing-line shot carries `flightS` and `targetKey` for playback. 151 tests,
+  105 screenshot states (140 and 94 before).
+- **Decided:** a scope moved to another rifle starts unzeroed there (its
+  records are kept under the rifle); the .22 offers none (a grooved rimfire
+  receiver); the Vortex's and the Leupold's reticles are a fine crosshair
+  until their makers' drawings are read, the ACOG's drop lines likewise;
+  the chevron's height is an estimate; the Leupold's elevation is held to
+  its whole 120 MOA, its windage to its own 60; the zoom's power stands
+  under the word "Zoom" so the slider keeps one length.
+- **Next session needs:** Dan's look on his phone (the bench; each scope on
+  the BCM); the three reticles' marks from the makers' documents, which
+  needs the makers' pages reachable from a cloud session (Asks 2 and 3);
+  then, each planned by a Personal Shipyard chat: pistols and their targets;
+  the .22's own scope. The playback screen can read `flightS` and
+  `targetKey`. The picture work stays paused on Dan's word. Report:
+  `docs/reports/range-day-thirteen-report.md`.
