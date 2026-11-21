@@ -600,7 +600,7 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
 
 ### range-day-eleven — 21 Nov 2026
 
-- **Stands:** pull request #34 (MERGE-LINE): the ground-fetching
+- **Stands:** pull request #34, merged as `0793892` on Dan's typed line and deployed by Deploy run 44902508221 (green, 72 s; the alive line, sign-in through the form, the picture file and crash reporting all checked by the run): the ground-fetching
   workflows cannot delete what they did not fetch (Terrain starts only by
   hand, never on `main`; the fetch keeps every part and file it did not
   fetch, `scripts/terrain/keep.mjs`; both workflows stage by name without
