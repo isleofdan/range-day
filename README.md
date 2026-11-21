@@ -100,7 +100,7 @@ clicks, then works out the drop and the wind for each distance himself.
   18 inch steel plate at 100 yards; the target picker lists them first, as
   "50 yards (paper)", "100 yards (paper)" and "100 yards (12 × 18 in
   steel)". Each stands at its own place on the surveyed ground
-  (`data/courses.json`, `near`; `scripts/terrain/place-near.mjs` works
+  (`data/courses.json`, `near`; `scripts/place-near.mjs` works
   the places out): on the canyon the paper hangs on a board of the
   50-yard group and of the 100-yard row, where the picture already drew
   boards. The paper is the game's own drawing of a dark sight-in sheet: a

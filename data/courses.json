@@ -80,7 +80,7 @@
      "source": {
       "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
       "read": "2026-11-18",
-      "note": "how high the sheet's centre stands above the eye at the firing position (4 ft above the ground there, data/look.json eyeHeightFt), in feet: the surveyed ground at its place is 4.3 ft above the ground at the firing position (data/terrain.json cta-piru.heights, USGS 1 Meter 11 x34y382 CA_LosAngeles_B23, captured 2024-07-01)), plus the sheet's centre above its own ground (data/look.json paper: the board's foot, the low mound it stands on and the sheet's centre above the board's foot), less the eye's 4 ft. Worked out by scripts/terrain/place-near.mjs (range-day-ten); the engine and every picture use this one figure"
+      "note": "how high the sheet's centre stands above the eye at the firing position (4 ft above the ground there, data/look.json eyeHeightFt), in feet: the surveyed ground at its place is 4.3 ft above the ground at the firing position (data/terrain.json cta-piru.heights, USGS 1 Meter 11 x34y382 CA_LosAngeles_B23, captured 2024-07-01)), plus the sheet's centre above its own ground (data/look.json paper: the board's foot, the low mound it stands on and the sheet's centre above the board's foot), less the eye's 4 ft. Worked out by scripts/place-near.mjs (range-day-ten); the engine and every picture use this one figure"
      }
     },
     "lateralYd": {
@@ -95,7 +95,7 @@
      "_about": "Where the target stands on the ground, NAD83 / UTM zone 11N metres: at its stated distance from the firing position and its sideways place.",
      "easting": {
       "value": 340525.9,
-      "estimate": "worked out from the firing position, the bearing of fire, the distance and the sideways place above (scripts/terrain/place-near.mjs, range-day-ten)"
+      "estimate": "worked out from the firing position, the bearing of fire, the distance and the sideways place above (scripts/place-near.mjs, range-day-ten)"
      },
      "northing": {
       "value": 3812303.8,
@@ -127,7 +127,7 @@
      "source": {
       "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
       "read": "2026-11-18",
-      "note": "how high the sheet's centre stands above the eye at the firing position (4 ft above the ground there, data/look.json eyeHeightFt), in feet: the surveyed ground at its place is 7.1 ft above the ground at the firing position (data/terrain.json cta-piru.heights, USGS 1 Meter 11 x34y382 CA_LosAngeles_B23, captured 2024-07-01)), plus the sheet's centre above its own ground (data/look.json paper: the board's foot and the sheet's centre above the board's foot), less the eye's 4 ft. Worked out by scripts/terrain/place-near.mjs (range-day-ten); the engine and every picture use this one figure"
+      "note": "how high the sheet's centre stands above the eye at the firing position (4 ft above the ground there, data/look.json eyeHeightFt), in feet: the surveyed ground at its place is 7.1 ft above the ground at the firing position (data/terrain.json cta-piru.heights, USGS 1 Meter 11 x34y382 CA_LosAngeles_B23, captured 2024-07-01)), plus the sheet's centre above its own ground (data/look.json paper: the board's foot and the sheet's centre above the board's foot), less the eye's 4 ft. Worked out by scripts/place-near.mjs (range-day-ten); the engine and every picture use this one figure"
      }
     },
     "lateralYd": {
@@ -142,7 +142,7 @@
      "_about": "Where the target stands on the ground, NAD83 / UTM zone 11N metres: at its stated distance from the firing position and its sideways place.",
      "easting": {
       "value": 340522.9,
-      "estimate": "worked out from the firing position, the bearing of fire, the distance and the sideways place above (scripts/terrain/place-near.mjs, range-day-ten)"
+      "estimate": "worked out from the firing position, the bearing of fire, the distance and the sideways place above (scripts/place-near.mjs, range-day-ten)"
      },
      "northing": {
       "value": 3812350,
@@ -170,7 +170,7 @@
      "source": {
       "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
       "read": "2026-11-18",
-      "note": "how high the plate's centre stands above the eye at the firing position (4 ft above the ground there, data/look.json eyeHeightFt), in feet: the surveyed ground at its place is 13.8 ft above the ground at the firing position (data/terrain.json cta-piru.heights, USGS 1 Meter 11 x34y382 CA_LosAngeles_B23, captured 2024-07-01)), plus the plate's centre above its own ground (the post at 18 × 0.9 in and half the plate, data/physics.json postHeightShareOfPlate), less the eye's 4 ft. Worked out by scripts/terrain/place-near.mjs (range-day-ten); the engine and every picture use this one figure"
+      "note": "how high the plate's centre stands above the eye at the firing position (4 ft above the ground there, data/look.json eyeHeightFt), in feet: the surveyed ground at its place is 13.8 ft above the ground at the firing position (data/terrain.json cta-piru.heights, USGS 1 Meter 11 x34y382 CA_LosAngeles_B23, captured 2024-07-01)), plus the plate's centre above its own ground (the post at 18 × 0.9 in and half the plate, data/physics.json postHeightShareOfPlate), less the eye's 4 ft. Worked out by scripts/place-near.mjs (range-day-ten); the engine and every picture use this one figure"
      }
     },
     "lateralYd": {
@@ -185,7 +185,7 @@
      "_about": "Where the target stands on the ground, NAD83 / UTM zone 11N metres: at its stated distance from the firing position and its sideways place.",
      "easting": {
       "value": 340545.5,
-      "estimate": "worked out from the firing position, the bearing of fire, the distance and the sideways place above (scripts/terrain/place-near.mjs, range-day-ten)"
+      "estimate": "worked out from the firing position, the bearing of fire, the distance and the sideways place above (scripts/place-near.mjs, range-day-ten)"
      },
      "northing": {
       "value": 3812355.2,
@@ -718,7 +718,7 @@
      "source": {
       "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
       "read": "2026-11-18",
-      "note": "how high the sheet's centre stands above the eye at the firing position (4 ft above the ground there, data/look.json eyeHeightFt), in feet: the surveyed ground at its place is 7.9 ft above the ground at the firing position (data/terrain.json angeles-sylmar.heights, USGS 1 Meter 11 x37y380 CA_LosAngeles_B23, captured 2024-07-01)), plus the sheet's centre above its own ground (data/look.json paper: the board's foot and the sheet's centre above the board's foot), less the eye's 4 ft. Worked out by scripts/terrain/place-near.mjs (range-day-ten); the engine and every picture use this one figure"
+      "note": "how high the sheet's centre stands above the eye at the firing position (4 ft above the ground there, data/look.json eyeHeightFt), in feet: the surveyed ground at its place is 7.9 ft above the ground at the firing position (data/terrain.json angeles-sylmar.heights, USGS 1 Meter 11 x37y380 CA_LosAngeles_B23, captured 2024-07-01)), plus the sheet's centre above its own ground (data/look.json paper: the board's foot and the sheet's centre above the board's foot), less the eye's 4 ft. Worked out by scripts/place-near.mjs (range-day-ten); the engine and every picture use this one figure"
      }
     },
     "lateralYd": {
@@ -733,7 +733,7 @@
      "_about": "Where the target stands on the ground, NAD83 / UTM zone 11N metres: at its stated distance from the firing position and its sideways place.",
      "easting": {
       "value": 374470.9,
-      "estimate": "worked out from the firing position, the bearing of fire, the distance and the sideways place above (scripts/terrain/place-near.mjs, range-day-ten)"
+      "estimate": "worked out from the firing position, the bearing of fire, the distance and the sideways place above (scripts/place-near.mjs, range-day-ten)"
      },
      "northing": {
       "value": 3797181.5,
@@ -760,7 +760,7 @@
      "source": {
       "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
       "read": "2026-11-18",
-      "note": "how high the sheet's centre stands above the eye at the firing position (4 ft above the ground there, data/look.json eyeHeightFt), in feet: the surveyed ground at its place is 17.1 ft above the ground at the firing position (data/terrain.json angeles-sylmar.heights, USGS 1 Meter 11 x37y380 CA_LosAngeles_B23, captured 2024-07-01)), plus the sheet's centre above its own ground (data/look.json paper: the board's foot and the sheet's centre above the board's foot), less the eye's 4 ft. Worked out by scripts/terrain/place-near.mjs (range-day-ten); the engine and every picture use this one figure"
+      "note": "how high the sheet's centre stands above the eye at the firing position (4 ft above the ground there, data/look.json eyeHeightFt), in feet: the surveyed ground at its place is 17.1 ft above the ground at the firing position (data/terrain.json angeles-sylmar.heights, USGS 1 Meter 11 x37y380 CA_LosAngeles_B23, captured 2024-07-01)), plus the sheet's centre above its own ground (data/look.json paper: the board's foot and the sheet's centre above the board's foot), less the eye's 4 ft. Worked out by scripts/place-near.mjs (range-day-ten); the engine and every picture use this one figure"
      }
     },
     "lateralYd": {
@@ -775,7 +775,7 @@
      "_about": "Where the target stands on the ground, NAD83 / UTM zone 11N metres: at its stated distance from the firing position and its sideways place.",
      "easting": {
       "value": 374466.6,
-      "estimate": "worked out from the firing position, the bearing of fire, the distance and the sideways place above (scripts/terrain/place-near.mjs, range-day-ten)"
+      "estimate": "worked out from the firing position, the bearing of fire, the distance and the sideways place above (scripts/place-near.mjs, range-day-ten)"
      },
      "northing": {
       "value": 3797227.1,

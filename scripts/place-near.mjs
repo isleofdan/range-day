@@ -8,15 +8,17 @@
 // from every other target as seen from the firing line. It writes nothing;
 // the figures it prints are the ones written into data/courses.json, and
 // test/terrain.test.js checks them against the heights themselves.
-//   node scripts/terrain/place-near.mjs
+//   node scripts/place-near.mjs
+// (It lives outside scripts/terrain/ on purpose: a push touching that folder starts the Terrain
+// workflow, which fetches the ground again and commits to the branch that pushed.)
 import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
-import { readPng16 } from './image.mjs';
+import { readPng16 } from './terrain/image.mjs';
 
 const require = createRequire(import.meta.url);
-const root = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
+const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const { flat } = require(join(root, 'lib', 'data.js')).load();
 const YD = 0.9144, FT = 0.3048, IN = 0.0254, MOA = Math.PI / (180 * 60);
 
