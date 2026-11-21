@@ -647,8 +647,13 @@ function readSight() {
   if (G.stemPx) { const T = row(cy + Math.max(G.frontPx * 1.5, (G.notchDepthPx || 0) * 0.5)); const tl = Math.max(...span(T, cx - window, cx + window)); out.stem = run(T, cx, (tl + Math.min(...span(T, cx - 1, cx + 2))) / 2).width; }
   if (G.ringPx) {
     // the ring: on the row 0.6 of its radius above the centre, the chord between the half-dark points is 1.6 times the radius
-    const R = G.ringPx / 2, A = row(cy - 0.6 * R), inner = A[Math.round(cx)], outer = Math.min(A[1], A[size - 2]);
+    const R = G.ringPx / 2, A = row(cy - 0.6 * R), inner = A[Math.round(cx)], outer = Math.min(A[Math.max(1, Math.round(cx - R * 1.8))], A[Math.min(size - 2, Math.round(cx + R * 1.8))]); // dark beside the ring: inside a peep's leaf too
     out.ring = (2 * run(A, cx, (inner + outer) / 2, false).width) / 1.6; // the diameter
+  }
+  if (G.rearBodyPx) {
+    // a peep's leaf: the dark band across a row under the ring, between the world either side
+    const B = row(cy + G.ringPx), mid = B[Math.round(cx + G.ringPx)], side = Math.max(B[2], B[size - 3]);
+    out.leafW = run(B, cx + G.ringPx, (mid + side) / 2).width;
   }
   if (G.earGapPx) {
     // the guards: the light between them on the row 2 px above the post's top (below the guards' tops)
@@ -682,6 +687,7 @@ test('range-day-twelve verify 3: each new sight as drawn, read from the canvas a
         else pairs.push([S.frontBead ? 'ball' : 'post', r.front, S.frontPostMoa * k, 1.5]);
         if (r.stem != null) pairs.push(['stem', r.stem, S.stemWidthMoa * k, 1.5]);
         if (r.ring != null) pairs.push(['ring', r.ring, S.apertureMoa * k, Math.max(2, S.apertureMoa * k * 0.06)]);
+        if (r.leafW != null) pairs.push(['the peep\'s leaf', r.leafW, S.rearBody.widthMoa * k, 2]);
         // the guards are read where the ring shows them; a guard outside the ring is hidden by it, as through the real peep
         if (r.earGap != null && S.frontEars.gapMoa < S.apertureMoa * 0.8) pairs.push(['gap between the guards', r.earGap, S.frontEars.gapMoa * k, 1.5]);
         else if (r.earGap != null) lines.push(`${sizeName} ${rifle} ${sight}: the guards (${(S.frontEars.gapMoa * k).toFixed(2)} px apart) stand outside the ring (${(S.apertureMoa * k).toFixed(2)} px): hidden by it`);

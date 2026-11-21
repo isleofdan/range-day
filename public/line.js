@@ -606,7 +606,13 @@
     // the aperture's disc: the ring is right at the eye, so its edge is a soft dark fade, its inner edge faintly paler where the sky reaches the metal
     const ring = g.createRadialGradient(cx, cy, r * 0.9, cx, cy, r * 1.25);
     ring.addColorStop(0, 'rgba(0,0,0,0)'); ring.addColorStop(0.3, 'rgba(25,26,28,0.55)'); ring.addColorStop(1, 'rgba(8,8,8,0.97)');
-    g.fillStyle = ring; g.fillRect(0, 0, size, size);
+    g.fillStyle = ring;
+    if (sight.rearBody) {
+      // a peep far from the eye (range-day-twelve: the KNS rear peep on the AK): only its leaf is dark around the hole, the leaf's
+      // width and top the data's; past the leaf the world is seen
+      const w = sight.rearBody.widthMoa * k, top = cy - sight.rearBody.topAboveMoa * k;
+      g.fillRect(cx - w / 2, top, w, size - top);
+    } else g.fillRect(0, 0, size, size);
     const w = sight.frontPostMoa * k;
     if (sight.frontEars) return drawFront(g, size, k, cx, cy); // the guards at their own gap and width (range-day-twelve)
     drawFront(g, size, k, cx, cy);
@@ -920,7 +926,7 @@
         leafMoa: leaf ? leafMoa() : null, magnifierIn: magnifierIn(),
         // range-day-twelve: each iron front's widths, the ring, the guards and the stripe; the SeeAll's triangle; the mil-dots' drawn spacing
         frontPx: sight.frontPostMoa ? sight.frontPostMoa * k : null, stemPx: sight.stemWidthMoa ? sight.stemWidthMoa * k : null, ringPx: sight.apertureMoa ? sight.apertureMoa * k : null,
-        earGapPx: sight.frontEars ? sight.frontEars.gapMoa * k : null, earPx: sight.frontEars ? sight.frontEars.widthMoa * k : null, stripePx: sight.frontStripeMoa ? sight.frontStripeMoa * k : null,
+        earGapPx: sight.frontEars ? sight.frontEars.gapMoa * k : null, rearBodyPx: sight.rearBody ? sight.rearBody.widthMoa * k : null, earPx: sight.frontEars ? sight.frontEars.widthMoa * k : null, stripePx: sight.frontStripeMoa ? sight.frontStripeMoa * k : null,
         triangle: sight.kind === 'seeall' ? { widthPx: sight.reticle.triangleWidthMoa * k, heightPx: sight.reticle.triangleHeightMoa * k, linePx: sight.reticle.lineBelowTipMoa * k, fieldPx: sight.reticle.fieldWidthMoa * k } : null,
         milDotPx: sight.reticle && sight.reticle.kind === 'mil-dot' ? milDotMoa() * k : null, zoom: mag, aim: center() };
     } };
