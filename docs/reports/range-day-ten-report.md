@@ -10,13 +10,13 @@ Environment checks: 1 cloud; 2 auto; 3 `git ls-remote --heads origin main` print
 
 - **The near targets' data** (`data/courses.json`, a new `near` list per course, before `plates`): both courses gain paper at 50 and 100 yards; the canyon course gains a 12 × 18 in steel plate at 100 yards. `git diff origin/main -- data/courses.json` is 220 insertions and no deletions: the existing plates are untouched. Each target says `paper` or `steel`; `RD.kindOf` reads a target (or a shot row) without the word as steel. Places, worked out on the committed 1 m survey by `scripts/place-near.mjs` and held by `test/terrain.test.js` (riseFt within 1 ft of the heights, line of sight clear by 1 ft or more) and `test/data.test.js` (at least 5 MOA from every other target):
 
-  | course | target | sideways | rise above the eye | line of sight clears the ground by |
-  | - | - | - | - | - |
-  | canyon | paper 50 yd | 8.58 yd left (board 03 of the left group of four, where the picture drew a board) | 4.1 ft | 2.0 ft |
-  | canyon | paper 100 yd | 0.42 yd left (board 15 of the 100-yard row) | 5.6 ft | 1.9 ft |
-  | canyon | steel 100 yd | 25 yd right (outside the row and the 50-yard boards as seen from the line) | 11.9 ft | 1.2 ft |
-  | rifle line | paper 50 yd | 3 yd left | 6.4 ft | 2.5 ft |
-  | rifle line | paper 100 yd | 5 yd left | 15.6 ft | 1.4 ft |
+  | course | target | size | sideways | rise above the eye | line of sight clears the ground by |
+  | - | - | - | - | - | - |
+  | canyon | paper 50 yd | 12 × 18 in sheet | 8.58 yd left (board 03 of the left group of four, where the picture drew a board) | 4.1 ft | 2.0 ft |
+  | canyon | paper 100 yd | 12 × 18 in sheet | 0.42 yd left (board 15 of the 100-yard row) | 5.6 ft | 1.9 ft |
+  | canyon | steel 100 yd | 12 × 18 in plate | 25 yd right (outside the row and the 50-yard boards as seen from the line) | 11.9 ft | 1.2 ft |
+  | rifle line | paper 50 yd | 12 × 18 in sheet | 3 yd left | 6.4 ft | 2.5 ft |
+  | rifle line | paper 100 yd | 12 × 18 in sheet | 5 yd left | 15.6 ft | 1.4 ft |
 
 - **The paper** (`public/game.js`, `RD.drawPaper`, one function every picture calls; figures in `data/look.json`, `paper`): a dark sheet, a 1-inch grid, a 2-inch center mark and four 1-inch marks toward the corners; a hole is the bullet's own width with a ragged bright yellow burst around it (1.5 in for a rifle bullet, 1 in for a .22, estimates with their basis). No brand name; not the product's layout.
 - **Shooting it** (`public/line.js`, `public/line.html`): the picker (`#plate`, its id kept, its label now "Target") lists "50 yards (paper)", "100 yards (paper)", "100 yards (12 × 18 in steel)" first; the plates keep their option values "0" to "8", the near ones are "near-0" to "near-2". A shot at paper goes through `public/engine.js` (`git diff origin/main -- public/engine.js` is empty). On the sheet: "On paper at 50 yards, 1.9 in high, 2.5 in left from the lower right mark" (no ring; a soft thud from the bank behind); off it: "Miss at 50 yards: off the paper, …", with the dust. "Plate" is corrected to "target" or "paper" where it named a paper (the opening line, the conditions line, "into the ground before the paper"). A dead-center hit now reads "hit (dead on the center)" (`RD.offText`, held by the records test).
@@ -67,7 +67,7 @@ Screenshots (`docs/reports/screenshots/`, both sizes, on this report's branch): 
 ## Verify results
 
 1. **Same engine, same old targets**: `git diff origin/main -- public/engine.js` is empty; `data/courses.json` 220 insertions, 0 deletions.
-2. **Each new target, twenty seeded shots against the engine run in the test with the same inputs** (`test/near.test.js`, verify 2): largest difference 4.4e-16 in (rifle line 50 yd paper 1.1e-16, 100 yd paper 4.4e-16; canyon 50 yd paper, 100 yd paper and 100 yd steel 0). Places and heights in the table above.
+2. **Each new target, twenty seeded shots against the engine run in the test with the same inputs** (`test/near.test.js`, verify 2): largest difference 4.4e-16 in (rifle line 50 yd paper, 12 × 18 in, 3 yd left, rise 6.4 ft: 1.1e-16; rifle line 100 yd paper, 12 × 18 in, 5 yd left, rise 15.6 ft: 4.4e-16; canyon 50 yd paper, 12 × 18 in, 8.58 yd left, rise 4.1 ft: 0; canyon 100 yd paper, 12 × 18 in, 0.42 yd left, rise 5.6 ft: 0; canyon 100 yd steel, 12 × 18 in, 25 yd right, rise 11.9 ft: 0). The test prints each target's distance, size, rise and sideways place beside its result.
 3. **Same scale** (`test/near.test.js`, verify 3): the 3D picture against the plain drawing for the three new canyon targets through the Vepr's scope at 2x and 7x, its irons at 1x, and the spotting scope at 20x and 60x, at both sizes: largest difference 0.184 px (computer, the Vepr's scope at 7x, the 100-yard steel); through the spotting scope 0.000 px. The scope's view at 412 px wide: 380 px across = 123.76 MOA at 20x (108 ft at 1,000 yd), 68.75 MOA at 60x (60 ft); at 1280 px, 640 px across the same angles.
 4. **Records** (verify 4 tests): paper row `{"yards":50,"target":"paper","hit":true,"where":"on paper (1.9 in high, 2.5 in left from the lower right mark)",…}`; steel row `{"yards":100,"target":"steel","hit":true,"where":"hit (dead on the center)",…}`; an old row without a target: `{"kind":"steel","marks":1,"holes":0}`; book lines 0 → 0 after the paper shot → 1 after the steel hit; cold-bore lines 0 → 1 (the paper shot, `"target":"paper"`, `"hit":true`) → 1; holes and marks before a reload `{"holes":5,"marks":2,"shots":8}`, after `{"holes":5,"marks":2,"shots":8}`, the same in the 3D picture.
 5. **The arrangement**: `scripts/line-layout.mjs` with the new control at 412×915, 412×830 and 1280×800: "every held sight-and-size pair within reach" (`docs/reports/line-layout-ten-after.txt`; before, on `main`: `line-layout-ten-before.txt`). The view stays 380 and 640 px; at 412 wide its top is where it was for the Vepr and the AK and 4 px lower for the Tavor SAR (the picker row is 48 px, the Vepr's zoom height). Going to the scope and back, by either button: view, strip, bar and picker row moved 0/0/0/0 px at all three sizes. Button heights: Spotting scope 44, its zoom 44, Back to the rifle 52; none under 44.
@@ -90,12 +90,12 @@ What this cannot prove: the session cannot open the live app or hold a phone, so
    ```
    yes, merge and deploy range-day-ten, then merge its notes
    ```
-2. **The Terrain workflow can wipe the ground's photographed surfaces.** Any push touching `scripts/terrain/` (on any branch, `main` included) fetches the ground again and commits a `data/terrain.json` without its `surfaces` record, deleting the 24 surface photographs; it did so on this branch today, and it was undone. Should the workflow be changed so that it keeps every ground file it did not fetch itself and refuses to commit a deletion, with a test that holds it? Recommended: yes. Until then no session puts files in `scripts/terrain/`.
+2. **The Terrain workflow can wipe the ground's photographed surfaces.** Any push touching `scripts/terrain/` (on any branch, `main` included) fetches the ground again and commits a `data/terrain.json` without its `surfaces` record, deleting the 24 surface photographs; it did so on this branch today, and it was undone. Should the workflow be changed so that it keeps every ground file it did not fetch itself and refuses to commit a deletion, with a test that holds it? Recommended: yes.
 
 ## What the next session needs
 
 - Dan's look on his phone: the 50-yard paper and a shot into it, the spotting scope on that paper at 20x and 60x, and the scope on a far plate. On a phone the picker cuts "(paper)" from the target's name; whether that matters is his call.
-- The Terrain workflow's hazard (Ask 2) before any session touches `scripts/terrain/`.
+- The Terrain workflow's hazard (Ask 2): a push that touches `scripts/terrain/` starts it, and as it stands it drops the ground's surfaces; this session's script lives in `scripts/` for that reason.
 - Then, each planned by a Personal Shipyard chat: the sights Dan fitted to his rifles and the Vepr's 3-9x scope; recording and playback (the scope's view is the natural place to replay a string). The picture work stays paused on Dan's word until he returns to it.
 - For the starting kit (notes only): a workflow that commits to the branch that pushed should never be started by a path an ordinary build touches; the kit's own workflows may have the same shape.
 
@@ -103,13 +103,15 @@ The notes branch (`range-day-ten-notes`) holds this report, its screenshots and 
 
 ## Result check rounds
 
-Round 1: pending (filed with this report).
+Round 1 (job 20261121-061404-bcbb99): FINDINGS, three, all in the report. 1, the closing message said the independent check had passed while round 1 was pending: it now says where the verdict is recorded. 2, the report held other work back until the Terrain workflow was changed: the hazard is now stated as a fact, with no gate. 3, Verify 2 and the table lacked each target's size: added (12 × 18 in for every new sheet and the plate).
+
+Round 2: pending (filed with this corrected report).
 
 ## Closing message to Dan
 
 Nothing on your screen has changed yet: the near targets and the spotting scope are in pull request #27, not merged or deployed. Merging and deploying it puts them on the live app: paper at 50 and 100 yards on both courses, a 100-yard steel plate on the canyon, and the spotting scope beside the zoom.
 
-Its full check is green, and the independent check of this report passed.
+Its full check is green (run 44873363670, eleven jobs); the independent check's verdict on this report is recorded under "Result check rounds".
 
 Needed from you
 1. Ask 1, merge and deploy (recommended: yes). Type this line into this session:
