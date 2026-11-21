@@ -1,0 +1,2627 @@
+Firing line layout, page at its top, Plain picture. Commit dcc3564.
+
+== phone 412x915 — Vepr with its scope (zoom)
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — Tavor SAR with its dot (magnifier)
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 96.5-140.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, magnifier 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — AK with its irons (rear leaf)
+view: 380 x 380 px, top at 162.4; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 104.4-148.4; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-158.4; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 162.4-542.4; inside the screen yes; above the bar yes
+  where the last shot went: 546.4-598.9; inside the screen yes; above the bar yes
+  elevation setting: 614.4-631.4; inside the screen yes; above the bar yes
+  elevation down: 636.4-680.4; inside the screen yes; above the bar yes
+  elevation up: 636.4-680.4; inside the screen yes; above the bar yes
+  windage setting: 614.4-631.4; inside the screen yes; above the bar yes
+  windage left: 636.4-680.4; inside the screen yes; above the bar yes
+  windage right: 636.4-680.4; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 691.4-723.6; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, leaf-down 44, leaf-up 44, el-down 44, el-up 44, wd-left 44, wd-right 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — BCM AR-15 carbine, 5.56 with the Troy folding BattleSights
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 96.5-140.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, aperture 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — BCM AR-15 carbine, 5.56 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — BCM AR-15 carbine, 5.56 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — BCM AR-15 carbine, 5.56 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — IWI Tavor SAR, 5.56 with the FAB Defense flip-up sights
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 96.5-140.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 675.5-707.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, aperture 44, el-down 44, el-up 44, wd-left 44, wd-right 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — IWI Tavor SAR, 5.56 with the SeeAll Open Sight, first generation
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — IWI Tavor SAR, 5.56 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — IWI Tavor SAR, 5.56 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — IWI Tavor SAR, 5.56 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — IWI Tavor X95, 5.56 with the FAB Defense flip-up sights
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 96.5-140.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 675.5-707.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, aperture 44, el-down 44, el-up 44, wd-left 44, wd-right 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — IWI Tavor X95, 5.56 with the Primary Arms SLx MD-25 red dot, 2 MOA dot
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — IWI Tavor X95, 5.56 with the SeeAll Open Sight, first generation
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — IWI Tavor X95, 5.56 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — IWI Tavor X95, 5.56 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — IWI Tavor X95, 5.56 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — AK-pattern rifle, 7.62x39 with the AK ball front post (KNS 0.034 in) and KNS adjustable rear peep
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — AK-pattern rifle, 7.62x39 with the Primary Arms SLx 3x32 Gen III prism sight, ACSS CQB reticle for 7.62x39 / 300 Blackout
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — AK-pattern rifle, 7.62x39 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — AK-pattern rifle, 7.62x39 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — AK-pattern rifle, 7.62x39 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — AK-pattern rifle, 5.45x39 with the XS tritium stripe front post (AK), rear notch, sliding leaf
+view: 380 x 380 px, top at 162.4; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 104.4-148.4; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-158.4; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 162.4-542.4; inside the screen yes; above the bar yes
+  where the last shot went: 546.4-598.9; inside the screen yes; above the bar yes
+  elevation setting: 614.4-631.4; inside the screen yes; above the bar yes
+  elevation down: 636.4-680.4; inside the screen yes; above the bar yes
+  elevation up: 636.4-680.4; inside the screen yes; above the bar yes
+  windage setting: 614.4-631.4; inside the screen yes; above the bar yes
+  windage left: 636.4-680.4; inside the screen yes; above the bar yes
+  windage right: 636.4-680.4; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 691.4-723.6; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, leaf-down 44, leaf-up 44, el-down 44, el-up 44, wd-left 44, wd-right 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — AK-pattern rifle, 5.45x39 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — AK-pattern rifle, 5.45x39 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — AK-pattern rifle, 5.45x39 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — Molot Vepr, 7.62x54R with the Vepr iron sights
+view: 380 x 380 px, top at 162.4; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 104.4-148.4; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-158.4; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 162.4-542.4; inside the screen yes; above the bar yes
+  where the last shot went: 546.4-598.9; inside the screen yes; above the bar yes
+  elevation setting: 614.4-631.4; inside the screen yes; above the bar yes
+  elevation down: 636.4-680.4; inside the screen yes; above the bar yes
+  elevation up: 636.4-680.4; inside the screen yes; above the bar yes
+  windage setting: 614.4-631.4; inside the screen yes; above the bar yes
+  windage left: 636.4-680.4; inside the screen yes; above the bar yes
+  windage right: 636.4-680.4; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 691.4-723.6; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, leaf-down 44, leaf-up 44, el-down 44, el-up 44, wd-left 44, wd-right 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — Molot Vepr, 7.62x54R with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — Molot Vepr, 7.62x54R with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — Molot Vepr, 7.62x54R with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== phone 412x915 — Remington bolt-action .22 LR, heavy barrel with the Open rimfire sights
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 882.8-898.8; inside the screen yes; above the bar n/a
+  book line: 675.5-707.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: from 846 to 915; fixed at the bottom inside the screen yes
+  touch heights: plate 44, el-down 44, el-up 44, wd-left 44, wd-right 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — Vepr with its scope (zoom)
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — Tavor SAR with its dot (magnifier)
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 96.5-140.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, magnifier 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — AK with its irons (rear leaf)
+view: 380 x 380 px, top at 162.4; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 104.4-148.4; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-158.4; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 162.4-542.4; inside the screen yes; above the bar yes
+  where the last shot went: 546.4-598.9; inside the screen yes; above the bar yes
+  elevation setting: 614.4-631.4; inside the screen yes; above the bar yes
+  elevation down: 636.4-680.4; inside the screen yes; above the bar yes
+  elevation up: 636.4-680.4; inside the screen yes; above the bar yes
+  windage setting: 614.4-631.4; inside the screen yes; above the bar yes
+  windage left: 636.4-680.4; inside the screen yes; above the bar yes
+  windage right: 636.4-680.4; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 691.4-723.6; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, leaf-down 44, leaf-up 44, el-down 44, el-up 44, wd-left 44, wd-right 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — BCM AR-15 carbine, 5.56 with the Troy folding BattleSights
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 96.5-140.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, aperture 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — BCM AR-15 carbine, 5.56 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — BCM AR-15 carbine, 5.56 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — BCM AR-15 carbine, 5.56 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — IWI Tavor SAR, 5.56 with the FAB Defense flip-up sights
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 96.5-140.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 675.5-707.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, aperture 44, el-down 44, el-up 44, wd-left 44, wd-right 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — IWI Tavor SAR, 5.56 with the SeeAll Open Sight, first generation
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — IWI Tavor SAR, 5.56 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — IWI Tavor SAR, 5.56 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — IWI Tavor SAR, 5.56 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — IWI Tavor X95, 5.56 with the FAB Defense flip-up sights
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 96.5-140.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 675.5-707.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, aperture 44, el-down 44, el-up 44, wd-left 44, wd-right 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — IWI Tavor X95, 5.56 with the Primary Arms SLx MD-25 red dot, 2 MOA dot
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — IWI Tavor X95, 5.56 with the SeeAll Open Sight, first generation
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — IWI Tavor X95, 5.56 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — IWI Tavor X95, 5.56 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — IWI Tavor X95, 5.56 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — AK-pattern rifle, 7.62x39 with the AK ball front post (KNS 0.034 in) and KNS adjustable rear peep
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — AK-pattern rifle, 7.62x39 with the Primary Arms SLx 3x32 Gen III prism sight, ACSS CQB reticle for 7.62x39 / 300 Blackout
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — AK-pattern rifle, 7.62x39 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — AK-pattern rifle, 7.62x39 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — AK-pattern rifle, 7.62x39 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — AK-pattern rifle, 5.45x39 with the XS tritium stripe front post (AK), rear notch, sliding leaf
+view: 380 x 380 px, top at 162.4; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 104.4-148.4; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-158.4; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 162.4-542.4; inside the screen yes; above the bar yes
+  where the last shot went: 546.4-598.9; inside the screen yes; above the bar yes
+  elevation setting: 614.4-631.4; inside the screen yes; above the bar yes
+  elevation down: 636.4-680.4; inside the screen yes; above the bar yes
+  elevation up: 636.4-680.4; inside the screen yes; above the bar yes
+  windage setting: 614.4-631.4; inside the screen yes; above the bar yes
+  windage left: 636.4-680.4; inside the screen yes; above the bar yes
+  windage right: 636.4-680.4; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 691.4-723.6; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, leaf-down 44, leaf-up 44, el-down 44, el-up 44, wd-left 44, wd-right 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — AK-pattern rifle, 5.45x39 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — AK-pattern rifle, 5.45x39 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — AK-pattern rifle, 5.45x39 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — Molot Vepr, 7.62x54R with the Vepr iron sights
+view: 380 x 380 px, top at 162.4; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 104.4-148.4; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-158.4; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 162.4-542.4; inside the screen yes; above the bar yes
+  where the last shot went: 546.4-598.9; inside the screen yes; above the bar yes
+  elevation setting: 614.4-631.4; inside the screen yes; above the bar yes
+  elevation down: 636.4-680.4; inside the screen yes; above the bar yes
+  elevation up: 636.4-680.4; inside the screen yes; above the bar yes
+  windage setting: 614.4-631.4; inside the screen yes; above the bar yes
+  windage left: 636.4-680.4; inside the screen yes; above the bar yes
+  windage right: 636.4-680.4; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 691.4-723.6; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, leaf-down 44, leaf-up 44, el-down 44, el-up 44, wd-left 44, wd-right 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — Molot Vepr, 7.62x54R with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — Molot Vepr, 7.62x54R with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — Molot Vepr, 7.62x54R with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach yes
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, zoom 44, el-down 44, el-up 44, wd-left 44, wd-right 44, el-down-moa 44, el-up-moa 44, wd-left-moa 44, wd-right-moa 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== Dan's phone 412x830 — Remington bolt-action .22 LR, heavy barrel with the Open rimfire sights
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 797.8-813.8; inside the screen yes; above the bar n/a
+  book line: 675.5-707.8; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: from 761 to 830; fixed at the bottom inside the screen yes
+  touch heights: plate 44, el-down 44, el-up 44, wd-left 44, wd-right 44, line-head 44, steady 52, fire 52, spotting 44; under 44: none
+  verdict: everything within reach
+
+== computer 1280x800 — Vepr with its scope (zoom)
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: 158.5-206.5; inside the screen yes
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — Tavor SAR with its dot (magnifier)
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: 160.5-204.5; inside the screen yes
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — AK with its irons (rear leaf)
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: 158.5-222.4; inside the screen yes
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 226.4-278.9; inside the screen yes
+  elevation setting: 298.4-315.4; inside the screen yes
+  elevation down: 320.4-364.4; inside the screen yes
+  elevation up: 320.4-364.4; inside the screen yes
+  windage setting: 298.4-315.4; inside the screen yes
+  windage left: 320.4-364.4; inside the screen yes
+  windage right: 320.4-364.4; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 375.4-407.6; inside the screen yes
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — BCM AR-15 carbine, 5.56 with the Troy folding BattleSights
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: 160.5-204.5; inside the screen yes
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — BCM AR-15 carbine, 5.56 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: not shown for this sight
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — BCM AR-15 carbine, 5.56 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: 158.5-206.5; inside the screen yes
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — BCM AR-15 carbine, 5.56 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: 158.5-206.5; inside the screen yes
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — IWI Tavor SAR, 5.56 with the FAB Defense flip-up sights
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: 160.5-204.5; inside the screen yes
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 359.5-391.8; inside the screen yes
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — IWI Tavor SAR, 5.56 with the SeeAll Open Sight, first generation
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: not shown for this sight
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — IWI Tavor SAR, 5.56 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: not shown for this sight
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — IWI Tavor SAR, 5.56 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: 158.5-206.5; inside the screen yes
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — IWI Tavor SAR, 5.56 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: 158.5-206.5; inside the screen yes
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — IWI Tavor X95, 5.56 with the FAB Defense flip-up sights
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: 160.5-204.5; inside the screen yes
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 359.5-391.8; inside the screen yes
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — IWI Tavor X95, 5.56 with the Primary Arms SLx MD-25 red dot, 2 MOA dot
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: not shown for this sight
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — IWI Tavor X95, 5.56 with the SeeAll Open Sight, first generation
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: not shown for this sight
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — IWI Tavor X95, 5.56 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: not shown for this sight
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — IWI Tavor X95, 5.56 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: 158.5-206.5; inside the screen yes
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — IWI Tavor X95, 5.56 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: 158.5-206.5; inside the screen yes
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — AK-pattern rifle, 7.62x39 with the AK ball front post (KNS 0.034 in) and KNS adjustable rear peep
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: not shown for this sight
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — AK-pattern rifle, 7.62x39 with the Primary Arms SLx 3x32 Gen III prism sight, ACSS CQB reticle for 7.62x39 / 300 Blackout
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: not shown for this sight
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — AK-pattern rifle, 7.62x39 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: not shown for this sight
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — AK-pattern rifle, 7.62x39 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: 158.5-206.5; inside the screen yes
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — AK-pattern rifle, 7.62x39 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: 158.5-206.5; inside the screen yes
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — AK-pattern rifle, 5.45x39 with the XS tritium stripe front post (AK), rear notch, sliding leaf
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: 158.5-222.4; inside the screen yes
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 226.4-278.9; inside the screen yes
+  elevation setting: 298.4-315.4; inside the screen yes
+  elevation down: 320.4-364.4; inside the screen yes
+  elevation up: 320.4-364.4; inside the screen yes
+  windage setting: 298.4-315.4; inside the screen yes
+  windage left: 320.4-364.4; inside the screen yes
+  windage right: 320.4-364.4; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 375.4-407.6; inside the screen yes
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — AK-pattern rifle, 5.45x39 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: not shown for this sight
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — AK-pattern rifle, 5.45x39 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: 158.5-206.5; inside the screen yes
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — AK-pattern rifle, 5.45x39 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: 158.5-206.5; inside the screen yes
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — Molot Vepr, 7.62x54R with the Vepr iron sights
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: 158.5-222.4; inside the screen yes
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 226.4-278.9; inside the screen yes
+  elevation setting: 298.4-315.4; inside the screen yes
+  elevation down: 320.4-364.4; inside the screen yes
+  elevation up: 320.4-364.4; inside the screen yes
+  windage setting: 298.4-315.4; inside the screen yes
+  windage left: 320.4-364.4; inside the screen yes
+  windage right: 320.4-364.4; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 375.4-407.6; inside the screen yes
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — Molot Vepr, 7.62x54R with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: not shown for this sight
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — Molot Vepr, 7.62x54R with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: 158.5-206.5; inside the screen yes
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — Molot Vepr, 7.62x54R with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: 158.5-206.5; inside the screen yes
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 407.5-439.8; inside the screen yes
+  coarse buttons (1 MOA): el-down-moa 352.5-396.5, el-up-moa 352.5-396.5, wd-left-moa 352.5-396.5, wd-right-moa 352.5-396.5; within reach yes
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== computer 1280x800 — Remington bolt-action .22 LR, heavy barrel with the Open rimfire sights
+view: 640 x 640 px, top at 58.5; page scrolled 0
+  short line: 58.5-102.5; inside the screen yes
+  plate picker: 106.5-150.5; inside the screen yes
+  sight's glass control: not shown for this sight
+  spotting scope: 58.5-102.5; inside the screen yes
+  view: 58.5-698.5; inside the screen yes
+  where the last shot went: 210.5-263; inside the screen yes
+  elevation setting: 282.5-299.5; inside the screen yes
+  elevation down: 304.5-348.5; inside the screen yes
+  elevation up: 304.5-348.5; inside the screen yes
+  windage setting: 282.5-299.5; inside the screen yes
+  windage left: 304.5-348.5; inside the screen yes
+  windage right: 304.5-348.5; inside the screen yes
+  rounds left: 742.8-758.8; inside the screen yes
+  book line: 359.5-391.8; inside the screen yes
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: 766-1174 x 706-776; beside the view covering none of it yes; inside the screen yes
+  verdict: everything within reach
+
+== short phone (figure only) 412x760 — Vepr with its scope (zoom)
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — Tavor SAR with its dot (magnifier)
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 96.5-140.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — AK with its irons (rear leaf)
+view: 380 x 380 px, top at 162.4; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 104.4-148.4; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-158.4; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 162.4-542.4; inside the screen yes; above the bar yes
+  where the last shot went: 546.4-598.9; inside the screen yes; above the bar yes
+  elevation setting: 614.4-631.4; inside the screen yes; above the bar yes
+  elevation down: 636.4-680.4; inside the screen yes; above the bar yes
+  elevation up: 636.4-680.4; inside the screen yes; above the bar yes
+  windage setting: 614.4-631.4; inside the screen yes; above the bar yes
+  windage left: 636.4-680.4; inside the screen yes; above the bar yes
+  windage right: 636.4-680.4; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 691.4-723.6; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 723.6, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — BCM AR-15 carbine, 5.56 with the Troy folding BattleSights
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 96.5-140.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — BCM AR-15 carbine, 5.56 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — BCM AR-15 carbine, 5.56 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — BCM AR-15 carbine, 5.56 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — IWI Tavor SAR, 5.56 with the FAB Defense flip-up sights
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 96.5-140.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 675.5-707.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 707.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — IWI Tavor SAR, 5.56 with the SeeAll Open Sight, first generation
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — IWI Tavor SAR, 5.56 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — IWI Tavor SAR, 5.56 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — IWI Tavor SAR, 5.56 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — IWI Tavor X95, 5.56 with the FAB Defense flip-up sights
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 96.5-140.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 675.5-707.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 707.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — IWI Tavor X95, 5.56 with the Primary Arms SLx MD-25 red dot, 2 MOA dot
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — IWI Tavor X95, 5.56 with the SeeAll Open Sight, first generation
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — IWI Tavor X95, 5.56 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — IWI Tavor X95, 5.56 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — IWI Tavor X95, 5.56 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — AK-pattern rifle, 7.62x39 with the AK ball front post (KNS 0.034 in) and KNS adjustable rear peep
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — AK-pattern rifle, 7.62x39 with the Primary Arms SLx 3x32 Gen III prism sight, ACSS CQB reticle for 7.62x39 / 300 Blackout
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — AK-pattern rifle, 7.62x39 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — AK-pattern rifle, 7.62x39 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — AK-pattern rifle, 7.62x39 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — AK-pattern rifle, 5.45x39 with the XS tritium stripe front post (AK), rear notch, sliding leaf
+view: 380 x 380 px, top at 162.4; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 104.4-148.4; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-158.4; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 162.4-542.4; inside the screen yes; above the bar yes
+  where the last shot went: 546.4-598.9; inside the screen yes; above the bar yes
+  elevation setting: 614.4-631.4; inside the screen yes; above the bar yes
+  elevation down: 636.4-680.4; inside the screen yes; above the bar yes
+  elevation up: 636.4-680.4; inside the screen yes; above the bar yes
+  windage setting: 614.4-631.4; inside the screen yes; above the bar yes
+  windage left: 636.4-680.4; inside the screen yes; above the bar yes
+  windage right: 636.4-680.4; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 691.4-723.6; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 723.6, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — AK-pattern rifle, 5.45x39 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — AK-pattern rifle, 5.45x39 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — AK-pattern rifle, 5.45x39 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — Molot Vepr, 7.62x54R with the Vepr iron sights
+view: 380 x 380 px, top at 162.4; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 104.4-148.4; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-158.4; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 162.4-542.4; inside the screen yes; above the bar yes
+  where the last shot went: 546.4-598.9; inside the screen yes; above the bar yes
+  elevation setting: 614.4-631.4; inside the screen yes; above the bar yes
+  elevation down: 636.4-680.4; inside the screen yes; above the bar yes
+  elevation up: 636.4-680.4; inside the screen yes; above the bar yes
+  windage setting: 614.4-631.4; inside the screen yes; above the bar yes
+  windage left: 636.4-680.4; inside the screen yes; above the bar yes
+  windage right: 636.4-680.4; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 691.4-723.6; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 723.6, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — Molot Vepr, 7.62x54R with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — Molot Vepr, 7.62x54R with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — Molot Vepr, 7.62x54R with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 723.5-755.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 668.5-712.5, el-up-moa 668.5-712.5, wd-left-moa 668.5-712.5, wd-right-moa 668.5-712.5; within reach no
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 755.8, bar from 691) (figure only)
+
+== short phone (figure only) 412x760 — Remington bolt-action .22 LR, heavy barrel with the Open rimfire sights
+view: 380 x 380 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: not shown for this sight
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-526.5; inside the screen yes; above the bar yes
+  where the last shot went: 530.5-583; inside the screen yes; above the bar yes
+  elevation setting: 598.5-615.5; inside the screen yes; above the bar yes
+  elevation down: 620.5-664.5; inside the screen yes; above the bar yes
+  elevation up: 620.5-664.5; inside the screen yes; above the bar yes
+  windage setting: 598.5-615.5; inside the screen yes; above the bar yes
+  windage left: 620.5-664.5; inside the screen yes; above the bar yes
+  windage right: 620.5-664.5; inside the screen yes; above the bar yes
+  rounds left: 727.8-743.8; inside the screen yes; above the bar n/a
+  book line: 675.5-707.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: from 691 to 760; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 707.8, bar from 691) (figure only)
+
+every held sight-and-size pair within reach
