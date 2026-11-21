@@ -231,3 +231,30 @@ These bind every session on this app, on top of the kit's rules above.
   unlocks, streaks, badges, reminders, or praise. A hit is a hit; a
   record is a plain record; the day's page shows no totals dressed as a
   score.
+
+## Who works on what (Dan, 21 Nov 2026)
+
+Claude and Codex split the work on this app. Codex has declined to model
+real firearms, so the line is drawn at the real items' figures, not at the
+subject of the app.
+
+- **Claude keeps the real side:** the physics engine, the rifles', sights',
+  ammunition's and spotting scope's data, the courses' targets, the gun
+  records, the zero bench and the data book. The list is `REAL` in
+  `scripts/owners.mjs`.
+- **Codex leads the picture:** the 3D scene, the ground and its survey
+  files, the look, and how targets and plates are drawn; the list is
+  `PICTURE` in the same file. A picture change never moves a shot: the
+  engine's tests and the same-scale tests stay green.
+- **Everything else is shared** (the firing line's screen, `public/game.js`,
+  the styles, the checks): either side, one open pull request on a file at
+  a time, the other side's independent check on the result.
+- **Enforced:** a Codex branch is named `codex/…`; the Checks workflow's
+  job "who works on what" fails a Codex pull request that changes any
+  `REAL` file, and names them. The split, its test and the Checks workflow
+  are themselves `REAL`, so a branch cannot loosen its own check.
+- **A job that needs both** is split in two: Claude puts the real figures
+  in, Codex draws what they show. A brief to Codex describes the drawing
+  work it involves; it never hides what the app is. If Codex declines a
+  job with the full picture in view, the job comes back to Claude rather
+  than being reworded until it passes.
