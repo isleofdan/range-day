@@ -73,15 +73,15 @@ async function seededHit(page, seed) {
 // from inside the page: a Playwright click waits for two steady frames before each press, and under the Full picture drawn
 // in software a frame takes seconds (41 presses took 10 minutes on the runner, range-day-seven).
 const press = (page, sel, n) => page.evaluate(([sel, n]) => { const b = document.querySelector(sel); for (let i = 0; i < n; i++) { b.dispatchEvent(new PointerEvent('pointerdown', { button: 0, pointerId: 1, bubbles: true })); b.dispatchEvent(new PointerEvent('pointerup', { button: 0, pointerId: 1, bubbles: true })); } }, [sel, n]);
-const AR = '/line?course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193';
+const AR = '/line?course=angeles-sylmar&rifle=bcm-ar15&sight=troy-battlesights&load=imi-m193';
 const SCREENS = [
   { name: 'home', path: '/?rifle=iwi-x95', expect: 'When: time of day', act: (page) => page.waitForSelector('.rifle.picked[data-rifle="iwi-x95"]') },
   // A day is open (shots fired at the bench): home shows the day first, with the doors back into it.
-  { name: 'home-day-open', path: '/zero?course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193', expect: 'A day is open', act: async (page) => { await page.waitForSelector('#fire5'); await page.click('#fire5'); await page.goto(`${base}/`); await page.waitForSelector('#day-card'); } },
+  { name: 'home-day-open', path: '/zero?course=angeles-sylmar&rifle=bcm-ar15&sight=troy-battlesights&load=imi-m193', expect: 'A day is open', act: async (page) => { await page.waitForSelector('#fire5'); await page.click('#fire5'); await page.goto(`${base}/`); await page.waitForSelector('#day-card'); } },
   // The bench in the middle of a day: a group fired, the rounds left beside the setting.
-  { name: 'zero-mid-day', path: '/zero?course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193', expect: 'zeroing supply: 15 of 20 left', act: async (page) => { await page.evaluate(() => localStorage.removeItem('range-day:supply:bcm-ar15:imi-m193')); await page.reload(); await page.waitForSelector('#fire5'); await page.click('#fire5'); await settle(page, 200); } },
+  { name: 'zero-mid-day', path: '/zero?course=angeles-sylmar&rifle=bcm-ar15&sight=troy-battlesights&load=imi-m193', expect: 'zeroing supply: 15 of 20 left', act: async (page) => { await page.evaluate(() => localStorage.removeItem('range-day:supply:bcm-ar15:imi-m193')); await page.reload(); await page.waitForSelector('#fire5'); await page.click('#fire5'); await settle(page, 200); } },
   // The bench with the zeroing supply used up: the bench stays, "Open another box" is offered.
-  { name: 'zero-supply-empty', path: '/zero?course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193', expect: 'Open another box to go on', act: async (page) => { await page.evaluate(() => localStorage.removeItem('range-day:supply:bcm-ar15:imi-m193')); await page.reload(); await page.waitForSelector('#fire5'); for (let i = 0; i < 4; i++) await page.click('#fire5'); await settle(page, 200); } },
+  { name: 'zero-supply-empty', path: '/zero?course=angeles-sylmar&rifle=bcm-ar15&sight=troy-battlesights&load=imi-m193', expect: 'Open another box to go on', act: async (page) => { await page.evaluate(() => localStorage.removeItem('range-day:supply:bcm-ar15:imi-m193')); await page.reload(); await page.waitForSelector('#fire5'); for (let i = 0; i < 4; i++) await page.click('#fire5'); await settle(page, 200); } },
   // The firing line before the day's first shot: the cold-bore line showing.
   { name: 'line-first-shot', path: AR, expect: 'first shot is next', act: (page) => plate(page, 0) },
   // After a hit: the book line filled.
@@ -98,7 +98,7 @@ const SCREENS = [
   { name: 'book-several', path: AR, expect: 'Restore', act: async (page) => {
     await ready(page); await page.evaluate(() => { for (const k of Object.keys(localStorage)) if (k.startsWith('range-day:book:') || k.startsWith('range-day:cold-bore:')) localStorage.removeItem(k); });
     for (const ix of [0, 1, 2]) { await plate(page, ix); await seededHit(page, 400 + ix); }
-    await page.goto(`${base}/book?course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193`); await page.waitForSelector('.entry');
+    await page.goto(`${base}/book?course=angeles-sylmar&rifle=bcm-ar15&sight=troy-battlesights&load=imi-m193`); await page.waitForSelector('.entry');
     await page.fill('.entry .note', 'wind picked up after this one'); await page.press('.entry .note', 'Tab');
     await page.click('.entry .strike'); await page.waitForSelector('.entry.struck'); await settle(page, 200);
   } },
@@ -107,7 +107,7 @@ const SCREENS = [
   // The cold-bore record with several days: three days, each begun with a shot at a plate.
   { name: 'cold-bore-several', path: AR, expect: 'The cold-bore record', act: async (page) => {
     for (let dayN = 0; dayN < 3; dayN++) { await noDay(page); await page.goto(`${base}${AR}`); await plate(page, dayN); await seededShot(page, 500 + dayN); }
-    await page.goto(`${base}/book?course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193`); await page.waitForSelector('#cold table');
+    await page.goto(`${base}/book?course=angeles-sylmar&rifle=bcm-ar15&sight=troy-battlesights&load=imi-m193`); await page.waitForSelector('#cold table');
   } },
   // A January morning and a July afternoon on the canyon course through the Vepr's scope.
   { name: 'line-january-morning', path: `${PIRU}&sight=utg-bugbuster-3-9x32&month=1&time=morning`, expect: 'January morning', act: (page) => plate(page, 4) },
@@ -173,9 +173,25 @@ const SCREENS = [
   { name: 'line-dot-300', path: `${SYLMAR}&rifle=iwi-tavor-sar&sight=pa-md25&load=imi-m193`, expect: 'Magnifier out', act: (page) => plate(page, 2) },
   { name: 'line-magnifier-300', path: `${SYLMAR}&rifle=iwi-tavor-sar&sight=pa-md25&load=imi-m193`, expect: 'Magnifier in (3×)', act: async (page) => { await plate(page, 2); await page.click('#magnifier'); await settle(page, 400); } },
   { name: 'line-acss-400', path: `${SYLMAR}&rifle=ak-762&sight=pa-3x-acss&load=silver-bear-123`, expect: '400 yards', act: (page) => plate(page, 3) },
-  { name: 'line-ak-leaf', path: `${SYLMAR}&rifle=ak-762&sight=ak-irons&load=silver-bear-123`, expect: 'Leaf 3 (300 m', act: async (page) => { await ready(page); await fresh(page, 'ak-762', 'ak-irons'); await page.reload(); await plate(page, 2); await page.click('#leaf-up'); await page.click('#leaf-up'); await settle(page, 300); } },
+  // range-day-twelve: the leaf state is the 5.45 rifle's (behind its ball post): the 7.62x39 rifle's KNS rear peep replaced its leaf.
+  { name: 'line-ak-leaf', path: `${SYLMAR}&rifle=ak-545&sight=ak545-ball&load=hornady-545-60`, expect: 'Leaf 3 (300 m', act: async (page) => { await ready(page); await fresh(page, 'ak-545', 'ak545-ball'); await page.reload(); await plate(page, 2); await page.click('#leaf-up'); await page.click('#leaf-up'); await settle(page, 300); } },
   { name: 'line-vepr-irons-600', path: '/line?course=cta-piru&rifle=molot-vepr-54r&sight=vepr-irons&load=sb-174-hpbt', expect: 'Vepr iron sights', act: (page) => plate(page, 4) },
-  { name: 'line-tavor-irons-200', path: `${SYLMAR}&rifle=iwi-x95&sight=tavor-irons&load=imi-m193`, expect: 'Tavor folding iron sights', act: (page) => plate(page, 1) },
+  { name: 'line-tavor-irons-200', path: `${SYLMAR}&rifle=iwi-x95&sight=fab-flipup&load=imi-m193`, expect: 'FAB Defense flip-up sights', act: (page) => plate(page, 1) }, // range-day-twelve: the FAB sights took the Tavor irons' place
+  // range-day-twelve: each sight fitted to the rifles on the 100-yard steel (the first plate on the rifle line; the canyon's near plate);
+  // the SeeAll on the 50-yard paper; the sight chooser on a Tavor, its list shown open (a page's own drop-down list is drawn by the
+  // browser outside the page and is not in a screenshot, so the list is shown at full length for the picture); the Vepr's scope at
+  // 3x and 9x on the same plate, its dots further apart at 3x (second focal plane, true at 10x).
+  { name: 'line-troy-100', path: `${SYLMAR}&rifle=bcm-ar15&sight=troy-battlesights&load=imi-m193`, expect: 'Troy folding BattleSights', act: (page) => plate(page, 0) },
+  { name: 'line-fab-100', path: `${SYLMAR}&rifle=iwi-tavor-sar&sight=fab-flipup&load=imi-m193`, expect: 'FAB Defense flip-up sights', act: (page) => plate(page, 0) },
+  { name: 'line-seeall-100', path: `${SYLMAR}&rifle=iwi-tavor-sar&sight=seeall-gen1&load=imi-m193`, expect: 'SeeAll Open Sight', act: (page) => plate(page, 0) },
+  { name: 'line-seeall-paper-50', path: `${SYLMAR}&rifle=iwi-tavor-sar&sight=seeall-gen1&load=imi-m193`, expect: '50 yards (paper)', act: (page) => target(page, 'near-0') },
+  { name: 'line-kns-peep-100', path: `${SYLMAR}&rifle=ak-762&sight=ak762-kns-peep&load=silver-bear-123`, expect: 'KNS adjustable rear peep', act: (page) => plate(page, 0) },
+  { name: 'line-ak545-ball-100', path: `${SYLMAR}&rifle=ak-545&sight=ak545-ball&load=hornady-545-60`, expect: 'AK ball front post', act: (page) => plate(page, 0) },
+  { name: 'line-ak545-xs-100', path: `${SYLMAR}&rifle=ak-545&sight=ak545-xs&load=hornady-545-60`, expect: 'XS tritium stripe front post', act: (page) => plate(page, 0) },
+  { name: 'line-vepr-ball-100', path: '/line?course=cta-piru&rifle=molot-vepr-54r&sight=vepr-irons&load=sb-174-hpbt', expect: 'Vepr iron sights', act: (page) => target(page, 'near-2') },
+  { name: 'home-sight-chooser-tavor', path: '/?rifle=iwi-tavor-sar', expect: 'SeeAll Open Sight', act: async (page) => { await page.waitForSelector('.rifle.picked[data-rifle="iwi-tavor-sar"]'); await page.evaluate(() => { const s = document.getElementById('sight'); s.size = s.options.length; s.scrollIntoView({ block: 'center' }); }); await settle(page, 200); } },
+  { name: 'line-bugbuster-dots-3x', path: `${PIRU}&sight=utg-bugbuster-3-9x32`, expect: '3×', act: async (page) => { await plate(page, 2); await page.evaluate(() => { RangeDayLine.setZoom(3); RangeDayLine.setHold(0, 0); }); await settle(page, 400); } },
+  { name: 'line-bugbuster-dots-9x', path: `${PIRU}&sight=utg-bugbuster-3-9x32`, expect: '9×', act: async (page) => { await plate(page, 2); await page.evaluate(() => { RangeDayLine.setZoom(9); RangeDayLine.setHold(0, 0); }); await settle(page, 400); } },
   { name: 'line-22-100', path: `${SYLMAR}&rifle=remington-22&sight=rem-irons&load=cci-sv-40`, expect: 'Open rimfire sights', act: (page) => plate(page, 0) },
   { name: 'line-knob-stop', path: `${PIRU}&sight=utg-bugbuster-3-9x32`, expect: 'end of its travel', act: async (page) => { await ready(page); await fresh(page, 'molot-vepr-54r', 'utg-bugbuster-3-9x32'); await page.reload(); await ready(page); await press(page, '#el-up-moa', 41); await settle(page, 200); } },
   { name: 'line-scope-3x', path: PIRU, expect: 'Firing line', act: async (page) => { await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(3)); await settle(page, 400); } },
@@ -184,7 +200,7 @@ const SCREENS = [
   { name: 'line-scope-9x-600', path: PIRU, expect: 'Zoom 9', act: async (page) => { await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(9)); await settle(page, 400); } },
   { name: 'line-canyon-irons', path: '/line?course=cta-piru&rifle=molot-vepr-54r&sight=vepr-irons&load=sb-174-hpbt', expect: 'Canyon course', act: (page) => plate(page, 4) },
   { name: 'line-irons-600', path: `${SYLMAR}&rifle=bcm-ar15&load=federal-gmm-69`, expect: '600 yards', act: (page) => plate(page, 5) },
-  { name: 'line-rifle-line-irons', path: `${SYLMAR}&rifle=bcm-ar15&sight=ar-irons&load=imi-m193`, expect: 'Rifle line', act: (page) => plate(page, 2) },
+  { name: 'line-rifle-line-irons', path: `${SYLMAR}&rifle=bcm-ar15&sight=troy-battlesights&load=imi-m193`, expect: 'Rifle line', act: (page) => plate(page, 2) },
   // Unzeroed, the first shot at 200 yards lands well low: a miss, with its dust, at 3x and at 9x.
   { name: 'line-miss-dust-3x', path: PIRU, expect: 'Miss', act: async (page) => {
     await ready(page); await fresh(page, 'molot-vepr-54r', 'utg-bugbuster-3-9x32');

@@ -45,7 +45,7 @@ async function signedIn(viewport) {
   return { page, context, errors };
 }
 const setPicture = (page, p) => page.evaluate((v) => { localStorage.removeItem('range-day:day:open'); localStorage.setItem('range-day:picture', JSON.stringify(v)); }, p);
-const AR = 'course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193';
+const AR = 'course=angeles-sylmar&rifle=bcm-ar15&sight=troy-battlesights&load=imi-m193';
 const VEPR = 'course=cta-piru&rifle=molot-vepr-54r&sight=utg-bugbuster-3-9x32&load=sb-174-hpbt';
 const line = async (page, q) => {
   await page.goto(`${base}/line?${q}`, { timeout: 120000 }); await page.waitForSelector('#fire', { timeout: 120000 });
@@ -79,7 +79,7 @@ test.after(async () => { if (browser) await browser.close(); if (server) server.
 test('range-day-ten verify 2: twenty seeded shots at each new target (paper at 50 and 100 yards on both courses, the canyon\'s 100-yard steel) land where the engine says, and each row names its target', { skip }, async () => {
   const { page, context, errors } = await signedIn({ width: 1280, height: 800 });
   const lines = [];
-  for (const [courseId, q, rifleId, sightId, loadId] of [['angeles-sylmar', AR, 'bcm-ar15', 'ar-irons', 'imi-m193'], ['cta-piru', VEPR, 'molot-vepr-54r', 'utg-bugbuster-3-9x32', 'sb-174-hpbt']]) {
+  for (const [courseId, q, rifleId, sightId, loadId] of [['angeles-sylmar', AR, 'bcm-ar15', 'troy-battlesights', 'imi-m193'], ['cta-piru', VEPR, 'molot-vepr-54r', 'utg-bugbuster-3-9x32', 'sb-174-hpbt']]) {
     await setPicture(page, 'plain');
     await line(page, q);
     const targets = (await page.evaluate(() => RangeDayLine.targets)).filter((t) => t.key.startsWith('near-'));
@@ -116,7 +116,7 @@ test('range-day-ten verify 4: records: a paper shot\'s row and a steel shot\'s r
   const { page, context, errors } = await signedIn({ width: 412, height: 915 });
   await setPicture(page, 'plain');
   await line(page, AR);
-  const counts = () => page.evaluate(() => ({ book: RD.getBook('bcm-ar15', 'ar-irons', 'imi-m193').length, cold: RD.getColdBore('bcm-ar15', 'imi-m193').length }));
+  const counts = () => page.evaluate(() => ({ book: RD.getBook('bcm-ar15', 'troy-battlesights', 'imi-m193').length, cold: RD.getColdBore('bcm-ar15', 'imi-m193').length }));
   const c0 = await counts();
   // the day's first shot, at the 50-yard paper, aimed at the sheet's center (seeded, held where the probe says)
   await page.evaluate(() => RangeDayLine.setTarget('near-0'));
@@ -144,7 +144,7 @@ test('range-day-ten verify 4: records: a paper shot\'s row and a steel shot\'s r
   // every new record names its target, steel as well as paper: the log row, the day's shot, the book line and the cold-bore line
   const steelDay = await page.evaluate(() => RangeDayLine.day.shots[RangeDayLine.day.shots.length - 1]);
   assert.equal(steelDay.target, 'steel', 'the day\'s steel shot says steel');
-  const bookLine = (await page.evaluate(() => RD.getBook('bcm-ar15', 'ar-irons', 'imi-m193')))[0];
+  const bookLine = (await page.evaluate(() => RD.getBook('bcm-ar15', 'troy-battlesights', 'imi-m193')))[0];
   assert.equal(bookLine.target, 'steel', 'the book line says steel');
   assert.equal(c2.cold, c1.cold);
   const rows = await page.evaluate(() => RangeDayLine.day.shots.map((s) => ({ n: s.n, target: s.target, yards: s.yards, hit: s.hit })));

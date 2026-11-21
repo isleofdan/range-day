@@ -188,3 +188,84 @@ test('range-day-eleven: the Vepr carries its real scope, the UTG BugBuster 3-9x3
   assert.equal(flat.sights['utg-2-7x44'].clickMoa, s.clickMoa); assert.equal(flat.sights['utg-2-7x44'].windageClickMoa, s.windageClickMoa);
   assert.equal(v.sightHeightIn['utg-bugbuster-3-9x32'], 3);
 });
+
+test('range-day-twelve: the sights fitted to the rifles: each figure from a page or an estimate with its basis; each rifle opens with a sight of the kind it opened with; a sight carries the records of the one it replaced only where both click alike and sit at the same height over the bore', () => {
+  const S = flat.sights, Rr = flat.rifles, rawS = raw.sights;
+  const NEW = ['troy-battlesights', 'fab-flipup', 'seeall-gen1', 'ak762-kns-peep', 'ak545-ball', 'ak545-xs'];
+  const MOA = 10800 / Math.PI;
+  for (const id of NEW) {
+    assert.ok(S[id], `${id} is in the data`);
+    assert.ok(typeof rawS[id].model === 'string' && rawS[id].model.length > 40, `${id} names its model and why`);
+    assert.ok(rawS[id].name.length <= S['pa-3x-acss'].name.length, `${id}'s name is no longer than the longest on main`);
+    assert.match(rawS[id].adjustWords, /lev|indage/, `${id} says where it adjusts`);
+  }
+  // each figure the brief asks for, against its basis
+  const T = S['troy-battlesights'];
+  assert.equal(T.kind, 'iron');
+  assert.deepEqual(T.apertures.map((a) => a.diameterIn), [0.19, 0.07], 'two rear peeps, 0.190 and 0.070 in, from Troy\'s own instructions');
+  assert.match(rawS['troy-battlesights'].apertures[0].diameterIn.source.note, /\.190" and \.070"/);
+  assert.equal(T.windageClickMoa, 0.5); assert.match(rawS['troy-battlesights'].windageClickMoa.source.note, /1\/2 MOA clicks/);
+  assert.ok(Math.abs(T.frontPostMoa - (0.07 / T.sightRadiusIn) * MOA) < 0.01, 'the post\'s angle is its width over the sight radius');
+  assert.ok(Math.abs(T.clickMoa - (0.006946 / T.sightRadiusIn) * MOA) < 0.01, 'an A2 post\'s click over this radius');
+  const F = S['fab-flipup'];
+  assert.deepEqual(F.apertures.map((a) => a.diameterIn), [0.118, 0.059], '3 mm and 1.5 mm peeps');
+  assert.ok(F.frontEars.topAboveMoa > 0 && F.frontEars.gapMoa > F.frontPostMoa, 'tall guards either side of the post');
+  const A = S['seeall-gen1'];
+  assert.equal(A.kind, 'seeall'); assert.equal(A.frontPostMoa, undefined); assert.equal(A.apertureMoa, undefined);
+  assert.deepEqual(A.zoom, { low: 1, high: 1 }, 'it magnifies nothing');
+  assert.equal(A.clickMoa, 0.95); assert.match(rawS['seeall-gen1'].clickMoa.source.note, /1\/16 turn/);
+  assert.match(rawS['seeall-gen1'].clickMoa.source.url, /^https:\/\/www\.seeallsights\.com\//, 'from the maker\'s instructions');
+  assert.ok(A.reticle.lineBelowTipMoa > 0 && A.reticle.lineBelowTipMoa < A.reticle.triangleHeightMoa, 'the line crosses the triangle');
+  for (const id of ['ak762-kns-peep', 'ak545-ball', 'vepr-irons']) {
+    assert.equal(S[id].frontPostIn, 0.034, `${id}: the KNS ball, 0.034 in`);
+    assert.match(rawS[id].frontPostIn.source.note, /AKBALL\.034/);
+    assert.ok(S[id].frontBead && S[id].stemWidthMoa < S[id].frontPostMoa, `${id}: a ball on a thinner stem`);
+    assert.ok(Math.abs(S[id].frontPostMoa - (0.034 / S[id].sightRadiusIn) * MOA) < 0.01, `${id}: the ball over its sight radius`);
+  }
+  assert.ok(S['ak762-kns-peep'].apertureMoa > 0 && !S['ak762-kns-peep'].leaf, 'the KNS peep: a ring where the notch was, and no sliding leaf');
+  assert.equal(S['ak545-xs'].frontPostIn, 0.105);
+  assert.ok(S['ak545-xs'].frontStripeMoa > 0 && S['ak545-xs'].frontStripeMoa < S['ak545-xs'].frontPostMoa, 'a glowing stripe on a wider post');
+  for (const id of ['ak545-ball', 'ak545-xs']) assert.deepEqual(S[id].leaf, S['ak-irons'].leaf545, `${id} carries the 5.45's own leaf`);
+  // which rifle carries which sight, each opening with a sight of the kind it opened with
+  assert.deepEqual(Rr['bcm-ar15'].sights, ['troy-battlesights']);
+  for (const r of ['iwi-tavor-sar', 'iwi-x95']) { assert.ok(Rr[r].sights.includes('fab-flipup') && Rr[r].sights.includes('seeall-gen1') && Rr[r].sights.includes('pa-md25'), r); assert.equal(Rr[r].defaultSight, 'fab-flipup'); }
+  assert.deepEqual(Rr['iwi-tavor-sar'].sights, ['fab-flipup', 'pa-md25', 'seeall-gen1', 'pa-magnifier']);
+  assert.deepEqual(Rr['ak-762'].sights, ['ak762-kns-peep', 'pa-3x-acss']);
+  assert.deepEqual(Rr['ak-545'].sights, ['ak545-ball', 'ak545-xs']);
+  assert.equal(Rr['molot-vepr-54r'].defaultSight, 'utg-bugbuster-3-9x32');
+  for (const [r, rifle] of Object.entries(Rr)) if (!r.startsWith('_')) for (const s of rifle.sights) assert.ok(raw.rifles[r].sightHeightIn[s].source || raw.rifles[r].sightHeightIn[s].estimate.length > 40, `${r}: ${s}'s height has its basis`);
+  // the old sights stay in the data, offered by no rifle
+  for (const old of ['ar-irons', 'tavor-irons', 'ak-irons']) {
+    assert.match(S[old].retired, /no rifle offers/);
+    for (const [r, rifle] of Object.entries(Rr)) if (!r.startsWith('_')) assert.ok(!rifle.sights.includes(old), `${r} does not offer ${old}`);
+  }
+  assert.equal(S['vepr-irons'].retired, undefined, 'the Vepr\'s irons kept their id: not retired');
+  // The two figures that decide each rifle's records, against main at fd94354 (data/sights.json and data/rifles.json there):
+  // ar-irons 1.75 / 0.75 MOA, 2.6 in on the BCM; tavor-irons 1.5 / 1 MOA, 3.0 in on both Tavors; ak-irons 2 / 2 MOA, 1.9 in on both AKs; vepr-irons 2 / 2 MOA, 2.0 in.
+  const before = { 'bcm-ar15': ['ar-irons', 1.75, 0.75, 2.6, 'troy-battlesights'], 'iwi-tavor-sar': ['tavor-irons', 1.5, 1, 3.0, 'fab-flipup'], 'iwi-x95': ['tavor-irons', 1.5, 1, 3.0, 'fab-flipup'],
+    'ak-762': ['ak-irons', 2, 2, 1.9, 'ak762-kns-peep'], 'ak-545': ['ak-irons', 2, 2, 1.9, 'ak545-ball'], 'molot-vepr-54r': ['vepr-irons', 2, 2, 2.0, 'vepr-irons'] };
+  const decided = {};
+  for (const [r, [old, el, wd, h, now]] of Object.entries(before)) {
+    assert.equal(S[old].clickMoa, el, `${old}'s click is as it was`); assert.equal(S[old].windageClickMoa, wd);
+    const same = S[now].clickMoa === el && S[now].windageClickMoa === wd && Rr[r].sightHeightIn[now] === h;
+    decided[r] = now === old ? 'kept its id' : same ? 'carries' : 'starts unzeroed';
+    if (now === old) assert.ok(same, `${r}: a sight changed in place keeps its clicks and height`);
+    else if (same) assert.equal(S[now].carriesRecordsOf.sight, old, `${r}: ${now} carries ${old}'s records`);
+    else assert.ok(!S[now].carriesRecordsOf, `${r}: ${now} clicks or sits differently, so it carries nothing`);
+  }
+  console.log('  records: ' + Object.entries(decided).map(([r, w]) => `${r} ${w}`).join('; '));
+  assert.deepEqual(decided, { 'bcm-ar15': 'starts unzeroed', 'iwi-tavor-sar': 'starts unzeroed', 'iwi-x95': 'starts unzeroed', 'ak-762': 'starts unzeroed', 'ak-545': 'carries', 'molot-vepr-54r': 'kept its id' });
+  assert.ok(!S['ak545-xs'].carriesRecordsOf, 'one sight carries the old irons\' records on the 5.45: the ball post that took their place');
+  // the kind check refuses a SeeAll with a post, a kind that is not one, and a second-focal-plane reticle without its power
+  assert.ok(data.checkSights({ x: { ...JSON.parse(JSON.stringify(S['seeall-gen1'])), frontPostMoa: 5 } }).some((m) => /no front post/.test(m)));
+  assert.ok(data.checkSights({ x: { kind: 'laser' } }).some((m) => /not a kind of sight: iron, dot, magnifier, scope, seeall/.test(m)));
+  assert.ok(data.checkSights({ x: { kind: 'scope', clickMoa: 1, windageClickMoa: 1, clicks: 1, reticle: { focalPlane: 'second' } } }).some((m) => /trueAtPower/.test(m)));
+});
+
+test('range-day-twelve: the BugBuster\'s dots: the maker states a second-focal-plane reticle true at 10x, so at each power p the dots stand 10 / p milliradians apart', () => {
+  const r = flat.sights['utg-bugbuster-3-9x32'].reticle, rr = raw.sights['utg-bugbuster-3-9x32'].reticle;
+  assert.equal(r.focalPlane, 'second');
+  assert.equal(r.trueAtPower, 10);
+  assert.match(rr.trueAtPower.source.note, /All current UTG scopes have second focal plane reticles\." and "All reticles are calibrated at 10x magnification\./);
+  assert.equal(r.dotSpacingMoa, 3.44);
+});

@@ -444,8 +444,61 @@
       if (sight.reticle && sight.reticle.marksMoaBelowZero) return drawDropReticle(g, size, k, cx, cy);
       return;
     }
+    if (sight.kind === 'seeall') return drawSeeAll(g, size, k, cx, cy);
     if (sight.apertureMoa > 0) return drawRingAndPost(g, size, k, cx, cy);
     return drawNotchAndPost(g, size, k, cx, cy);
+  }
+
+  // The front sight, sharper than the rear, its top at the center, one face in the sun and one in shade (range-day-twelve: one
+  // drawing for every iron sight's front). A flat post is frontPostMoa wide; a ball (frontBead) is a round ball frontPostMoa across
+  // on a stem stemWidthMoa wide, the ball's top at the center; a glowing stripe (frontStripeMoa wide, frontStripeTopMoa under the
+  // post's top) is a plain bright bar down the post; guards (frontEars) stand either side at their own gap and width, their tops
+  // topAboveMoa above the post's. All are the data's minutes of angle at the view's scale (k pixels per MOA).
+  function drawFront(g, size, k, cx, cy) {
+    const postW = sight.frontPostMoa * k;
+    const lit = sunOnRight();
+    g.save();
+    if ('filter' in g) g.filter = `blur(${(size * 0.0016).toFixed(2)}px)`;
+    const faces = (x, w, y0) => { const gr = g.createLinearGradient(x, 0, x + w, 0); gr.addColorStop(0, lit ? '#0b0b0b' : '#30302d'); gr.addColorStop(0.5, '#141413'); gr.addColorStop(1, lit ? '#30302d' : '#0b0b0b'); g.fillStyle = gr; g.fillRect(x, y0, w, size); };
+    if (sight.frontEars) {
+      const e = sight.frontEars, gap = e.gapMoa * k, w = e.widthMoa * k, top = cy - e.topAboveMoa * k;
+      faces(cx - gap / 2 - w, w, top); faces(cx + gap / 2, w, top);
+    }
+    if (sight.frontBead) {
+      const stemW = sight.stemWidthMoa * k;
+      faces(cx - stemW / 2, stemW, cy + postW * 0.45);
+      const bg = g.createRadialGradient(cx - postW * 0.2 * (lit ? -1 : 1), cy + postW * 0.4, 0, cx, cy + postW / 2, postW / 2);
+      bg.addColorStop(0, '#3a3a36'); bg.addColorStop(1, '#0d0d0d');
+      g.fillStyle = bg; g.beginPath(); g.arc(cx, cy + postW / 2, postW / 2, 0, Math.PI * 2); g.fill();
+    } else {
+      faces(cx - postW / 2, postW, cy);
+      g.fillStyle = 'rgba(150,150,145,0.5)'; g.fillRect(cx - postW / 2, cy, postW, Math.max(0.6, size * 0.0015));
+      if (sight.frontStripeMoa) { const sw = sight.frontStripeMoa * k; g.fillStyle = 'rgb(200, 236, 190)'; g.fillRect(cx - sw / 2, cy + sight.frontStripeTopMoa * k, sw, size); }
+    }
+    g.restore();
+  }
+
+  // The SeeAll Open Sight (range-day-twelve): no post and no ring. Its glowing block fills the lower half of the view, seen through
+  // the sight's lens; a black line runs along the block's top edge, and a black triangle stands across that line, its tip at the
+  // center: the tip is the aim point. The triangle's width and height, the line's place under the tip and the block's width are the
+  // data's minutes of angle at the view's scale. Above the line the world is seen unmagnified, as through no sight at all.
+  function drawSeeAll(g, size, k, cx, cy) {
+    const r = sight.reticle;
+    const lineY = cy + r.lineBelowTipMoa * k, fieldW = r.fieldWidthMoa * k;
+    const halfW = (r.triangleWidthMoa * k) / 2, baseY = cy + r.triangleHeightMoa * k;
+    // the sight's dark body around the block, near the eye: soft
+    g.save();
+    if ('filter' in g) g.filter = `blur(${(size * 0.006).toFixed(1)}px)`;
+    g.fillStyle = '#121212'; g.fillRect(cx - fieldW * 0.62, lineY - 2, fieldW * 1.24, size);
+    g.restore();
+    // the block's glow: brightest along its top edge, where the light gathers
+    const glow = g.createLinearGradient(0, lineY, 0, size);
+    glow.addColorStop(0, 'rgb(150, 245, 90)'); glow.addColorStop(0.25, 'rgb(70, 190, 50)'); glow.addColorStop(1, 'rgb(30, 110, 30)');
+    g.fillStyle = glow; g.fillRect(cx - fieldW / 2, lineY, fieldW, size - lineY);
+    // the line along the top edge, and the triangle standing across it, tip at the center
+    g.fillStyle = '#0a0a0a';
+    g.fillRect(cx - fieldW / 2, lineY - Math.max(0.6, 0.15 * k), fieldW, Math.max(1.2, 0.3 * k));
+    g.beginPath(); g.moveTo(cx, cy); g.lineTo(cx + halfW, baseY); g.lineTo(cx - halfW, baseY); g.closePath(); g.fill();
   }
 
   // Open sights: the rear notch, soft because it is near the eye, its top
@@ -463,8 +516,6 @@
   const steelFace = (g, x0, y0, x1, y1) => { const gr = g.createLinearGradient(0, y0, 0, y1); gr.addColorStop(0, '#2c2e30'); gr.addColorStop(0.35, '#1b1a17'); gr.addColorStop(1, '#100f0c'); g.fillStyle = gr; g.fillRect(x0, y0, x1 - x0, y1 - y0); };
   function drawNotchAndPost(g, size, k, cx, cy) {
     const notchW = sight.notchMoa * k, depth = sight.notchDepthMoa * k;
-    const postW = sight.frontPostMoa * k;
-    const bead = Boolean(sight.frontBead);
     const blur = size * 0.009; // the rear sight is a hand's length from the eye: well out of focus
     // the rear sight blade: everything below the center line, except the notch, is its dark face; blurred, so the notch's corners round and the edges soften, its angles unchanged
     g.save();
@@ -480,22 +531,8 @@
     const haze = g.createLinearGradient(0, cy - notchW * 0.25, 0, cy);
     haze.addColorStop(0, 'rgba(23,21,15,0)'); haze.addColorStop(1, 'rgba(23,21,15,0.3)');
     g.fillStyle = haze; g.fillRect(0, cy - notchW * 0.25, size, notchW * 0.25);
-    // the front post (or bead and stem), sharper, its top at the center, one face in the sun and one in shade
-    g.save();
-    if ('filter' in g) g.filter = `blur(${(size * 0.0016).toFixed(2)}px)`;
-    const lit = sunOnRight();
-    const faces = (x, w, y0) => { const gr = g.createLinearGradient(x, 0, x + w, 0); gr.addColorStop(0, lit ? '#0b0b0b' : '#30302d'); gr.addColorStop(0.5, '#141413'); gr.addColorStop(1, lit ? '#30302d' : '#0b0b0b'); g.fillStyle = gr; g.fillRect(x, y0, w, size); };
-    if (bead) {
-      const stemW = sight.stemWidthMoa * k;
-      faces(cx - stemW / 2, stemW, cy + postW * 0.45);
-      const bg = g.createRadialGradient(cx - postW * 0.2 * (lit ? -1 : 1), cy + postW * 0.4, 0, cx, cy + postW / 2, postW / 2);
-      bg.addColorStop(0, '#3a3a36'); bg.addColorStop(1, '#0d0d0d');
-      g.fillStyle = bg; g.beginPath(); g.arc(cx, cy + postW / 2, postW / 2, 0, Math.PI * 2); g.fill();
-    } else {
-      faces(cx - postW / 2, postW, cy);
-      g.fillStyle = 'rgba(150,150,145,0.5)'; g.fillRect(cx - postW / 2, cy, postW, Math.max(0.6, size * 0.0015));
-    }
-    g.restore();
+    // the front post (or ball and stem, or a post with a glowing stripe), sharper: one drawing for every iron front
+    drawFront(g, size, k, cx, cy);
   }
 
   // A red dot: an unmagnified view through a round window, the dot covering
@@ -523,9 +560,13 @@
     g.fillStyle = 'rgb(255, 36, 28)'; g.beginPath(); g.arc(cx, cy, Math.max(0.6, dot / 2), 0, Math.PI * 2); g.fill();
   }
 
-  // The mil-dot reticle: fine crosshair, dots every 3.44 MOA, heavy posts outside.
+  // The dots' spacing in MOA at the power in use: on a second-focal-plane reticle (range-day-twelve: the BugBuster, true at 10x by
+  // the maker's manual) the marks keep their size in the eye while the target grows, so at power p they stand trueAtPower / p
+  // times their true spacing apart in angle; a reticle without a stated plane is drawn at its true spacing at every power.
+  const milDotMoa = () => { const r = sight.reticle; return r.focalPlane === 'second' && r.trueAtPower ? (r.dotSpacingMoa * r.trueAtPower) / mag : r.dotSpacingMoa; };
+  // The mil-dot reticle: fine crosshair, a dot every milDotMoa(), heavy posts outside.
   function drawMilDot(g, size, k, cx, cy) {
-    const dot = sight.reticle.dotSpacingMoa * k;
+    const dot = milDotMoa() * k;
     g.strokeStyle = '#111'; g.lineWidth = 1;
     g.beginPath(); g.moveTo(0, cy); g.lineTo(size, cy); g.moveTo(cx, 0); g.lineTo(cx, size); g.stroke();
     g.fillStyle = '#111';
@@ -565,16 +606,17 @@
     // the aperture's disc: the ring is right at the eye, so its edge is a soft dark fade, its inner edge faintly paler where the sky reaches the metal
     const ring = g.createRadialGradient(cx, cy, r * 0.9, cx, cy, r * 1.25);
     ring.addColorStop(0, 'rgba(0,0,0,0)'); ring.addColorStop(0.3, 'rgba(25,26,28,0.55)'); ring.addColorStop(1, 'rgba(8,8,8,0.97)');
-    g.fillStyle = ring; g.fillRect(0, 0, size, size);
+    g.fillStyle = ring;
+    if (sight.rearBody) {
+      // a peep far from the eye (range-day-twelve: the KNS rear peep on the AK): only its leaf is dark around the hole, the leaf's
+      // width and top the data's; past the leaf the world is seen
+      const w = sight.rearBody.widthMoa * k, top = cy - sight.rearBody.topAboveMoa * k;
+      g.fillRect(cx - w / 2, top, w, size - top);
+    } else g.fillRect(0, 0, size, size);
     const w = sight.frontPostMoa * k;
-    const lit = sunOnRight();
-    g.save();
-    if ('filter' in g) g.filter = `blur(${(size * 0.0016).toFixed(2)}px)`;
-    const gr = g.createLinearGradient(cx - w / 2, 0, cx + w / 2, 0); gr.addColorStop(0, lit ? '#0b0b0b' : '#30302d'); gr.addColorStop(0.5, '#141413'); gr.addColorStop(1, lit ? '#30302d' : '#0b0b0b');
-    g.fillStyle = gr; g.fillRect(cx - w / 2, cy, w, size);
-    g.fillStyle = 'rgba(150,150,145,0.5)'; g.fillRect(cx - w / 2, cy, w, Math.max(0.6, size * 0.0015));
-    g.restore();
-    // the post's protective wings, blurred by nearness to the eye
+    if (sight.frontEars) return drawFront(g, size, k, cx, cy); // the guards at their own gap and width (range-day-twelve)
+    drawFront(g, size, k, cx, cy);
+    // a sight without measured guards: the post's protective wings, blurred by nearness to the eye
     g.save();
     if ('filter' in g) g.filter = `blur(${(size * 0.008).toFixed(1)}px)`;
     g.fillStyle = 'rgba(20,20,20,0.4)';
@@ -881,6 +923,11 @@
       const k = pxPerMoa();
       return { pxPerMoa: k, viewPx: view.size, dotPx: sight.kind === 'dot' ? sight.dotMoa * k : null, notchDepthPx: sight.notchDepthMoa ? sight.notchDepthMoa * k : null,
         marksPx: sight.reticle && sight.reticle.marksMoaBelowZero ? sight.reticle.marksMoaBelowZero.map((m) => ({ yards: m.yards, px: m.moaBelowZero * k })) : null,
-        leafMoa: leaf ? leafMoa() : null, magnifierIn: magnifierIn() };
+        leafMoa: leaf ? leafMoa() : null, magnifierIn: magnifierIn(),
+        // range-day-twelve: each iron front's widths, the ring, the guards and the stripe; the SeeAll's triangle; the mil-dots' drawn spacing
+        frontPx: sight.frontPostMoa ? sight.frontPostMoa * k : null, stemPx: sight.stemWidthMoa ? sight.stemWidthMoa * k : null, ringPx: sight.apertureMoa ? sight.apertureMoa * k : null,
+        earGapPx: sight.frontEars ? sight.frontEars.gapMoa * k : null, rearBodyPx: sight.rearBody ? sight.rearBody.widthMoa * k : null, earPx: sight.frontEars ? sight.frontEars.widthMoa * k : null, stripePx: sight.frontStripeMoa ? sight.frontStripeMoa * k : null,
+        triangle: sight.kind === 'seeall' ? { widthPx: sight.reticle.triangleWidthMoa * k, heightPx: sight.reticle.triangleHeightMoa * k, linePx: sight.reticle.lineBelowTipMoa * k, fieldPx: sight.reticle.fieldWidthMoa * k } : null,
+        milDotPx: sight.reticle && sight.reticle.kind === 'mil-dot' ? milDotMoa() * k : null, zoom: mag, aim: center() };
     } };
 }());

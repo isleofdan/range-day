@@ -23,7 +23,9 @@ test('fromFiles() yields the same seven rifles the screens had before, figure fo
   assert.deepEqual(Object.keys(set), ids, 'the same rifles in the same order');
   for (const id of ids) assert.deepStrictEqual(set[id], flat.rifles[id], id);
   assert.equal(set['molot-vepr-54r'].firstCourse, 'cta-piru');
-  assert.deepEqual(set['ak-545'].sightLeaf, { 'ak-irons': 'leaf545' });
+  // range-day-twelve: the 5.45 rifle's two sights each carry the 5.45's own leaf as their own, so it names no leaf table (sightLeaf is still checked below)
+  assert.equal(set['ak-545'].sightLeaf, undefined);
+  for (const s of set['ak-545'].sights) assert.deepEqual(flat.sights[s].leaf.settingsMeters, flat.sights['ak-irons'].leaf545.settingsMeters, s);
 });
 
 test('a bare number, an unknown sight, a defaultSight it does not carry, a missing sight height: each refused, naming the gun, the fault and the valid values', () => {
@@ -32,20 +34,20 @@ test('a bare number, an unknown sight, a defaultSight it does not carry, a missi
   const refuse = (r) => { try { guns.fromRecords([r], raw); } catch (e) { assert.ok(e instanceof guns.RecordError, e.message); return e.message; } assert.fail('accepted a bad record'); };
   const messages = [
     refuse(broken((g) => { g.barrelIn = 16; })),
-    refuse(broken((g) => { g.sights = ['ar-irons', 'foo']; g.sightHeightIn.foo = { value: 1, estimate: 'a basis long enough to count here' }; })),
+    refuse(broken((g) => { g.sights = ['troy-battlesights', 'foo']; g.sightHeightIn.foo = { value: 1, estimate: 'a basis long enough to count here' }; })),
     refuse(broken((g) => { g.defaultSight = 'pa-md25'; })),
-    refuse(broken((g) => { delete g.sightHeightIn['ar-irons']; })),
+    refuse(broken((g) => { delete g.sightHeightIn['troy-battlesights']; })),
   ];
   console.log('  ' + messages.join('\n  '));
   assert.match(messages[0], /^gun 'x': game\.barrelIn: a bare number; wrap it as \{value, source\} or \{value, estimate\}$/);
-  assert.match(messages[1], /^gun 'x': sight 'foo' is not in the game's data: ar-irons, tavor-irons, ak-irons, vepr-irons, rem-irons, pa-md25, pa-magnifier, pa-3x-acss, utg-2-7x44, utg-bugbuster-3-9x32$/);
-  assert.match(messages[2], /^gun 'x': defaultSight 'pa-md25' is not one of its sights: ar-irons$/);
-  assert.match(messages[3], /^gun 'x': no sightHeightIn for sight 'ar-irons'; it carries: ar-irons$/);
+  assert.match(messages[1], /^gun 'x': sight 'foo' is not in the game's data: ar-irons, tavor-irons, ak-irons, vepr-irons, rem-irons, pa-md25, pa-magnifier, pa-3x-acss, utg-2-7x44, utg-bugbuster-3-9x32, troy-battlesights, fab-flipup, seeall-gen1, ak762-kns-peep, ak545-ball, ak545-xs$/);
+  assert.match(messages[2], /^gun 'x': defaultSight 'pa-md25' is not one of its sights: troy-battlesights$/);
+  assert.match(messages[3], /^gun 'x': no sightHeightIn for sight 'troy-battlesights'; it carries: troy-battlesights$/);
   // And the rest of the shape: an unknown load, a wrong caliber, a course that does not exist, a leaf table the sight lacks, a duplicate.
   assert.match(refuse(broken((g) => { g.loads = ['imi-m193', 'nope']; })), /load 'nope' is not in the game's data: /);
   assert.match(refuse(broken((g) => { g.loads = ['sb-124']; })), /load 'sb-124' is 7.62x39, not the gun's 5.56x45/);
   assert.match(refuse(broken((g) => { g.firstCourse = 'moon'; })), /firstCourse 'moon' is not a course: cta-piru, angeles-sylmar/);
-  assert.match(refuse(broken((g) => { g.sightLeaf = { 'ar-irons': 'leaf' }; })), /sightLeaf for 'ar-irons' names 'leaf', which is not a leaf table on that sight: it has none/);
+  assert.match(refuse(broken((g) => { g.sightLeaf = { 'troy-battlesights': 'leaf' }; })), /sightLeaf for 'troy-battlesights' names 'leaf', which is not a leaf table on that sight: it has none/);
   assert.match(refuse(broken((g) => { g.extra = 1; })), /unknown field 'extra'/);
   assert.throws(() => guns.fromRecords([base, base], raw), /appears twice/);
   assert.throws(() => guns.fromRecords([], raw), /the list is empty/);
@@ -65,7 +67,7 @@ test('with GUN_RECORDS_FILE naming a file with an eighth gun, the server serves 
   const records = Object.entries(raw.rifles).filter(([id]) => !id.startsWith('_')).map(([id, e]) => guns.toRecord(id, e));
   const eighth = JSON.parse(JSON.stringify(guns.toRecord('bcm-ar15', raw.rifles['bcm-ar15'])));
   eighth.id = 'test-carbine'; eighth.name = 'Test carbine, 5.56';
-  eighth.fields.game.sightHeightIn['ar-irons'] = { value: 3.4, estimate: 'a made-up height for the test, higher than the AR\'s own' };
+  eighth.fields.game.sightHeightIn['troy-battlesights'] = { value: 3.4, estimate: 'a made-up height for the test, higher than the AR\'s own' };
   eighth.fields.game.firstCourse = 'cta-piru';
   records.push(eighth);
   const file = path.join(dir, 'guns.json');
@@ -79,9 +81,9 @@ test('with GUN_RECORDS_FILE naming a file with an eighth gun, the server serves 
     const d = await (await fetch(`http://127.0.0.1:${PORT}/api/data`, { headers: { cookie, accept: 'application/json' } })).json();
     assert.equal(Object.keys(d.rifles).length, 8);
     assert.equal(d.rifles['test-carbine'].name, 'Test carbine, 5.56');
-    assert.equal(d.rifles['test-carbine'].sightHeightIn['ar-irons'], 3.4);
+    assert.equal(d.rifles['test-carbine'].sightHeightIn['troy-battlesights'], 3.4);
     assert.equal(d.rifles['test-carbine'].firstCourse, 'cta-piru');
-    assert.equal(d.rifles['bcm-ar15'].sightHeightIn['ar-irons'], 2.6, 'the AR itself is unchanged');
+    assert.equal(d.rifles['bcm-ar15'].sightHeightIn['troy-battlesights'], 2.6, 'the AR itself is unchanged');
   } finally { server.kill(); }
   // A file with a bad record: the server stops and says why.
   const bad = JSON.parse(JSON.stringify(records)); bad[7].fields.game.defaultSight = 'utg-2-7x44';
@@ -91,6 +93,6 @@ test('with GUN_RECORDS_FILE naming a file with an eighth gun, the server serves 
   stopped.stderr.on('data', (c) => { err += c; });
   const code = await new Promise((r) => stopped.on('exit', r));
   assert.notEqual(code, 0);
-  assert.match(err, /gun 'test-carbine': defaultSight 'utg-2-7x44' is not one of its sights: ar-irons/);
+  assert.match(err, /gun 'test-carbine': defaultSight 'utg-2-7x44' is not one of its sights: troy-battlesights/);
   fs.rmSync(dir, { recursive: true, force: true });
 });

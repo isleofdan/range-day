@@ -37,7 +37,10 @@
   dayLine();
   $('distance').innerHTML = course.zeroYards.map((y) => `<option value="${y}"${y === distance ? ' selected' : ''}>${y} yards</option>`).join('');
   $('sight-name').textContent = sight.name;
-  $('click-help').textContent = `One click of elevation moves the strike ${sight.clickMoa} MOA (about ${(sight.clickMoa * E.inchesPerMoa(100)).toFixed(1)} inches at 100 yards); one click of windage ${sight.windageClickMoa} MOA. ${sight.kind === 'iron' ? 'Elevation is the front post; windage is the rear drum.' : 'The scope\'s turrets.'}`;
+  // Where each adjustment is, in the sight's own words (data/sights.json, adjustWords; range-day-twelve); the SeeAll's screws have
+  // no clicks, so one step of its knob is a sixteenth of a turn.
+  const step = sight.kind === 'seeall' ? 'step (a sixteenth of a turn of its screw)' : 'click';
+  $('click-help').textContent = `One ${step} of elevation moves the strike ${sight.clickMoa} MOA (about ${(sight.clickMoa * E.inchesPerMoa(100)).toFixed(1)} inches at 100 yards); one ${step.replace(/ \(.*/, '')} of windage ${sight.windageClickMoa} MOA. ${sight.adjustWords || (sight.kind === 'iron' ? 'Elevation is the front post; windage is the rear drum.' : 'The scope\'s turrets.')}`;
   $('to-line').href = `/line${RD.params(c)}`;
   $('to-day').href = `/day?id=${encodeURIComponent(day.id)}`;
 

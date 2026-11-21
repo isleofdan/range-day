@@ -16,13 +16,19 @@
   // While a day with shots is open, its rifle and load are the page's (the sight can be any the rifle carries).
   if (open && RD.hasShots(open) && !q.rifle) c = { ...c, rifleId: open.rifle, loadId: open.load, sightId: RD.chooseFrom(d, { rifle: open.rifle, remembered: true }).sightId };
   const rifle = () => d.rifles[c.rifleId];
-  const sightsOf = () => rifle().sights.filter((s) => d.sights[s].kind !== 'magnifier');
+  // The sights the rifle carries, then (range-day-twelve) any sight it no longer offers whose book lines this device still holds,
+  // so an old page stays readable: a sight that took another's place without carrying its records leaves them under the old name.
+  const kept = () => { const keys = RD.store.keys(); return keys === RD.store.FAILED ? [] : keys; };
+  const oldSights = () => [...new Set(kept().map((k) => k.split(':')).filter((p) => p[0] === 'book' && p.length === 4 && p[1] === c.rifleId).map((p) => p[2]))]
+    .filter((x) => d.sights[x] && !rifle().sights.includes(x) && RD.sightNow(d, c.rifleId, x) === x && RD.getBook(c.rifleId, x, c.loadId).length);
+  const sightsOf = () => [...rifle().sights.filter((s) => d.sights[s].kind !== 'magnifier'), ...oldSights()];
+  if (q.sight && q.sight !== c.sightId && oldSights().includes(q.sight)) c = { ...c, sightId: q.sight };
   const yardsAsked = Number(q.yards) || null;
 
   function header() {
     const s = d.sights[c.sightId];
     $('intro').textContent = `${rifle().name}, ${s.name}, ${d.loads[c.loadId].name}. One click of elevation is ${s.clickMoa} MOA.`;
-    $('sight').innerHTML = sightsOf().map((x) => `<option value="${x}"${x === c.sightId ? ' selected' : ''}>${RD.esc(d.sights[x].name)}</option>`).join('');
+    $('sight').innerHTML = sightsOf().map((x) => `<option value="${x}"${x === c.sightId ? ' selected' : ''}>${RD.esc(d.sights[x].name)}${rifle().sights.includes(x) ? '' : ' (no longer on this rifle)'}</option>`).join('');
     $('load').innerHTML = rifle().loads.map((l) => `<option value="${l}"${l === c.loadId ? ' selected' : ''}>${RD.esc(d.loads[l].name)}</option>`).join('');
     $('to-line').href = `/line${RD.params(c)}`;
   }

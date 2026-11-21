@@ -1,5 +1,5 @@
 {
- "_about": "The sights. clickMoa is what one click of elevation moves the strike, windageClickMoa one click of windage, in minutes of angle; clicks is the travel each way from the middle. zoom is the magnification range; fovFtAt100 the field of view in feet at 100 yards at the lowest and highest zoom. frontPostMoa is the front post's width over the sight radius (how wide it looks against the target); apertureMoa the rear ring's lit circle and notchMoa the rear notch's width as the eye sees them; dotMoa a red dot's size. leaf is a sliding rear leaf: its marked settings, the service load it was cut for, and each setting's angle above the 100 m setting, derived with the engine (leaf545: the same leaf on the 5.45x39 rifle, cut for its own load). notchDepthMoa is the rear notch's depth as the eye sees it; stemWidthMoa a bead's stem; a drop reticle's chevronHalfWidthMoa and markHalfWidthMoa are its drawn widths. aimWanderFactor scales the drawn wander of the aim through this sight (1 where absent). frontBead marks a front sight that is a round bead on a stem rather than a flat post.",
+ "_about": "The sights. clickMoa is what one click of elevation moves the strike, windageClickMoa one click of windage, in minutes of angle; clicks is the travel each way from the middle. zoom is the magnification range; fovFtAt100 the field of view in feet at 100 yards at the lowest and highest zoom. frontPostMoa is the front post's width over the sight radius (how wide it looks against the target); apertureMoa the rear ring's lit circle and notchMoa the rear notch's width as the eye sees them; dotMoa a red dot's size. leaf is a sliding rear leaf: its marked settings, the service load it was cut for, and each setting's angle above the 100 m setting, derived with the engine (leaf545: the same leaf on the 5.45x39 rifle, cut for its own load). notchDepthMoa is the rear notch's depth as the eye sees it; stemWidthMoa a bead's stem; a drop reticle's chevronHalfWidthMoa and markHalfWidthMoa are its drawn widths. aimWanderFactor scales the drawn wander of the aim through this sight (1 where absent). frontBead marks a front sight that is a round bead on a stem rather than a flat post. range-day-twelve: sightRadiusIn is the distance between the front and rear sight, the radius the front post's width is seen over; frontPostIn and apertures (each peep's diameterIn) are the parts' own sizes; frontEars draws the front sight's guards (their inner gap, each one's width, and how far their tops stand above the post); frontStripeMoa and frontStripeTopMoa a glowing stripe on a front post; adjustWords says in plain words where each adjustment is; kind \"seeall\" is the SeeAll Open Sight, its reticle a triangle whose tip is the aim point, standing across a line that tops a glowing field; a reticle's focalPlane and trueAtPower say where a second-focal-plane reticle's marks are true (at another power p they stand trueAtPower / p times as far apart in angle). tookThePlaceOf names the sight a new one replaced on its rifles without carrying its records (they click differently or sit at another height): a record from before any sight could be chosen, made with the old sight, is never read as the new one's. rearBody is a rear peep's leaf, where it stands far from the eye (its width and how far its top stands above the peep): only the leaf is dark around the peep; a sight without it has its ring close to the eye, dark to the edges of the view.",
  "ar-irons": {
   "name": "AR-15 iron sights (front post, rear aperture)",
   "kind": "iron",
@@ -54,7 +54,8 @@
   "aimWanderFactor": {
    "value": 1.3,
    "estimate": "the aim wanders a little more through the AR's small aperture than through other sights (the view is dimmer and the post coarser); 1.3 times the standard wander, a drawing figure, not a measurement"
-  }
+  },
+  "retired": "range-day-twelve: no rifle offers these sights any more (the BCM carries the Troy folding BattleSights, troy-battlesights); the entry stays so the records, days and book lines that name it still name a sight the game knows. The Troy sights click differently (front 1.33 MOA, rear 0.5 MOA, against 1.75 and 0.75), so nothing is carried: the old records stay readable under this name."
  },
  "tavor-irons": {
   "name": "Tavor folding iron sights",
@@ -98,7 +99,8 @@
     "value": 35,
     "estimate": "as the AR irons"
    }
-  }
+  },
+  "retired": "range-day-twelve: no rifle offers these sights any more (both Tavors carry the FAB Defense flip-up sights, fab-flipup); the entry stays so the records that name it still name a sight the game knows. The FAB sights click 1 MOA in elevation against 1.5 and sit higher over the bore (3.65 in against 3.0), so nothing is carried."
  },
  "ak-irons": {
   "name": "AK iron sights (front post, rear notch, sliding leaf)",
@@ -356,10 +358,11 @@
   "notchDepthMoa": {
    "value": 22,
    "estimate": "how deep the rear notch is cut, as the eye sees it, in minutes of angle: a little less than it is wide (the notch is about square); the same basis as notchMoa"
-  }
+  },
+  "retired": "range-day-twelve: no rifle offers these sights any more (the 7.62x39 rifle carries the ball post and KNS rear peep, ak762-kns-peep; the 5.45 rifle the ball post, ak545-ball, which carries these records, and the XS stripe post, ak545-xs); the entry stays so the records that name it still name a sight the game knows."
  },
  "vepr-irons": {
-  "name": "Vepr iron sights (front post, rear notch, sliding leaf)",
+  "name": "Vepr iron sights (ball front post, rear notch, sliding leaf)",
   "kind": "iron",
   "clickMoa": {
    "value": 2,
@@ -374,8 +377,8 @@
    "estimate": "as the AK irons"
   },
   "frontPostMoa": {
-   "value": 12,
-   "estimate": "a longer sight radius than the AK"
+   "value": 6.11,
+   "estimate": "the ball, 0.034 in across, over the Vepr's 19.13 in sight radius: 6.11 MOA"
   },
   "apertureMoa": {
    "value": 0,
@@ -503,7 +506,26 @@
   "notchDepthMoa": {
    "value": 22,
    "estimate": "how deep the rear notch is cut, as the eye sees it, in minutes of angle: a little less than it is wide (the notch is about square); the same basis as notchMoa"
-  }
+  },
+  "model": "Front: KNS Precision ball post AKBALL.034 in place of the standard post; the rear notch and its sliding leaf are the rifle's own. The ball post threads into the factory front sight base in the original post's place (\"threads directly into factory front sight blocks … without modification\", https://www.keepshooting.com/kns-ak47-sight-pack.html, search text), so elevation is still set by screwing the post with the AK tool and windage by drifting its base: the adjustment is the AK iron sights' own. The sight keeps its id: nothing about its adjustment or its height changed, so no record moves.",
+  "sightRadiusIn": {
+   "value": 19.13,
+   "estimate": "not published by Molot or the importer. The Vepr is built on the RPK's receiver, whose sight radius is 555 mm with a 590 mm barrel (https://en.wikipedia.org/wiki/RPK, search text); the front sight sits at the muzzle, so the Vepr's 20.5 in (521 mm) barrel shortens it by about 69 mm: about 486 mm, 19.13 in"
+  },
+  "frontPostIn": {
+   "value": 0.034,
+   "source": {
+    "url": "https://www.primaryarms.com/kns-precision-ak47-sks-front-sight-post-034in-diameter",
+    "read": "2026-11-21",
+    "note": "the KNS Precision AK-47/SKS ball front sight post, part AKBALL.034: \"KNS Precision AK-47, SKS Front Sight Post .034\" Diameter\" (a retailer's page title; KNS also sells .052 and .072 in posts). Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches (CONNECT 403)"
+   }
+  },
+  "stemWidthMoa": {
+   "value": 3.59,
+   "estimate": "the post under the ball, not published by KNS: thinner than the ball, about 0.020 in; over the Vepr's 19.13 in sight radius 3.59 MOA"
+  },
+  "frontBead": true,
+  "adjustWords": "Elevation is the front post (screwed with the AK tool), windage drifts its base; the rear leaf slides for distance."
  },
  "rem-irons": {
   "name": "Open rimfire sights (front bead, rear notch)",
@@ -941,12 +963,710 @@
    "kind": "mil-dot",
    "dotSpacingMoa": {
     "value": 3.44,
-    "estimate": "a mil-dot reticle's dots are one milliradian apart, 3.44 MOA, by definition"
+    "estimate": "the dots' spacing at the power they are true at (trueAtPower): one milliradian, 3.44 MOA, by definition; the maker's page: \"The distance between two adjacent marks subtends to 1 milli-radian\" (https://www.leapers.com/products-utg-scp-m392aolwq.html, search text)"
+   },
+   "focalPlane": "second",
+   "trueAtPower": {
+    "value": 10,
+    "source": {
+     "url": "https://www.pyramydair.com/airgun-resources/manuals/leapers-Optics-General-Scope-user-manual.pdf",
+     "read": "2026-11-21",
+     "note": "the maker's scope manual (Leapers, UTG's maker; a copy hosted by a retailer; the BugBuster 3-9x32 manual, https://cdn.shopify.com/s/files/1/2557/9572/files/Leapers_User_Manual_UTG_3-9X32mm_Compact_CQB_Bug_Buster_AO_RGB_Rifle_Scope.pdf, carries the same words): \"All current UTG scopes have second focal plane reticles.\" and \"All reticles are calibrated at 10x magnification.\" The dots are one milliradian apart at 10x, above this scope's 9x; at any power p they stand 10/p milliradians apart: 1.11 at 9x, 3.33 at 3x. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches (CONNECT 403)"
+    }
    }
   },
   "carriesRecordsOf": {
    "sight": "utg-2-7x44",
    "basis": "range-day-eleven: the game modeled the Vepr's scope as the UTG 2-7x44 until Dan said it was a BugBuster 3-9x32. Both scopes click 1/4 MOA on both turrets and sit at the same height over the bore on the Vepr (3.0 in, the side-rail mount's; data/rifles.json), so a zero, a sight setting, a shot log and data-book lines kept under the 2-7x44 on this device are as true on the BugBuster: they are read as its own, written forward under its name, and the old records stay stored. public/game.js checks the two click values before it carries anything."
   }
+ },
+ "troy-battlesights": {
+  "name": "Troy folding BattleSights (rear: two apertures; front: A2 post)",
+  "kind": "iron",
+  "model": "Troy Industries Folding BattleSight, rear SSIG-FBS-R0BT-00 (round, same-plane dual aperture, black) and front M4-style SSIG-FBS-FMBT-00 (A2 post between two ears). Chosen because Dan named \"Troy Industries Folding Battle Sight Rear\" and \"Troy folding rear and front\"; of Troy's two folding fronts (HK-style round hood, M4-style ears) the M4-style is the one that pairs with a round-aperture rear on an AR; the tritium and diamond-aperture versions were not named.",
+  "sightRadiusIn": {
+   "value": 18,
+   "estimate": "sight radius, not published by Troy or BCM: the folding front stands at the front end of the carbine's top rail and the rear at the back of the receiver's rail; on a 16-inch carbine with a 13- to 15-inch handguard rail the two stand about 17 to 20 in apart; 18.0 in used"
+  },
+  "clickMoa": {
+   "value": 1.33,
+   "estimate": "the front is a standard A2 post (Troy's listing: \"Utilizes a standard A2 front sight post with locking post and detent\", https://www.cheaperthandirt.com/troy-industries-ar-15-hk-style-front-folding-battle-sight-black-oxide-finish-ssig-fbs-fhbt-00/fc-812699010662.html, search text). Troy gives no figure; retailers' \"0.5 MOA per click\" does not fit an A2 post's mechanics and is not used. Magpul, whose MBUS front takes the same A2 post, gives 1.886 in at 100 m per click on a carbine (https://magpul.com/mbus-sight-front.html, search text): 1.886 / 3937 radians over a 14.5 in radius is 0.00695 in of post travel per click; over this rifle's 18 in radius that is 1.33 MOA"
+  },
+  "windageClickMoa": {
+   "value": 0.5,
+   "source": {
+    "url": "https://www.brownells.es/WebRoot/MediaDefinition/safety_instructions/100/004/381/100004381_en_GB.pdf",
+    "read": "2026-11-21",
+    "note": "Troy's own instructions for its Battle Rear Sight: \"Adjustments are made in 1/2 MOA clicks using a coin in the slot\"; the folding rear has the same windage drum (retailers list the folding rear at \"0.5 MOA click increments\", and a user review says the two are the same). Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches (CONNECT 403)"
+   }
+  },
+  "clicks": {
+   "value": 12,
+   "estimate": "the A2 front post has about 12 clicks of useful travel each way from a mid setting (as the AR iron sights before it); the rear drum goes further (one retailer lists 68 MOA of windage, https://www.tractorsupply.com/tsc/product/troy-ind-battlesight-folding-rear-sight-for-ar-15-round-flat-dark-earth-6118966), but the game gives both knobs one travel"
+  },
+  "frontPostIn": {
+   "value": 0.07,
+   "estimate": "the standard A2 front post is 0.070 in wide (the same figure as the AR iron sights before it); Troy publishes no width of its own"
+  },
+  "frontPostMoa": {
+   "value": 13.37,
+   "estimate": "0.070 in over the 18 in sight radius: 13.37 MOA"
+  },
+  "apertures": [
+   {
+    "name": "large",
+    "diameterIn": {
+     "value": 0.19,
+     "source": {
+      "url": "https://www.brownells.es/WebRoot/MediaDefinition/safety_instructions/100/004/381/100004381_en_GB.pdf",
+      "read": "2026-11-21",
+      "note": "Troy's instructions: \"flip the same-plane aperture between .190\" and .070\" diameter peeps\"; a user review says the folding rear's peeps are the same. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches (CONNECT 403)"
+     }
+    }
+   },
+   {
+    "name": "small",
+    "diameterIn": {
+     "value": 0.07,
+     "source": {
+      "url": "https://www.brownells.es/WebRoot/MediaDefinition/safety_instructions/100/004/381/100004381_en_GB.pdf",
+      "read": "2026-11-21",
+      "note": "the same sentence: the small peep is .070 in. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches (CONNECT 403)"
+     }
+    }
+   }
+  ],
+  "apertureMoa": {
+   "value": 261.27,
+   "estimate": "the large (0.190 in) peep, the one drawn: seen at about 2.5 in from the eye (the AR's rear sight sits at the back of the receiver, a cheek-weld from the eye) it covers 0.190 / 2.5 radians, 261.27 MOA. The small peep (0.070 in, 96.26 MOA) is recorded but not offered: the game has one rear ring per sight"
+  },
+  "frontEars": {
+   "gapMoa": {
+    "value": 57.3,
+    "estimate": "the inner gap between the M4-style front's two ears; Troy publishes no drawing: an A2-style pair of ears stands about 0.3 in apart around the post, over 18 in 57.3 MOA. A drawing figure"
+   },
+   "widthMoa": {
+    "value": 15.28,
+    "estimate": "each ear about 0.08 in thick, over 18 in 15.28 MOA; not published, a drawing figure"
+   },
+   "topAboveMoa": {
+    "value": 9.55,
+    "estimate": "the ears' tops stand a little above the post's top at its middle setting, about 0.05 in: 9.55 MOA; not published, a drawing figure"
+   }
+  },
+  "zoom": {
+   "low": {
+    "value": 1,
+    "estimate": "iron sights magnify nothing"
+   },
+   "high": {
+    "value": 1,
+    "estimate": "iron sights magnify nothing"
+   }
+  },
+  "fovFtAt100": {
+   "low": {
+    "value": 35,
+    "estimate": "as every iron sight in this file: the drawn view is 400 MOA (6.7 degrees) across, 35 ft at 100 yards"
+   },
+   "high": {
+    "value": 35,
+    "estimate": "the same: iron sights magnify nothing"
+   }
+  },
+  "adjustWords": "Elevation is the front post (an A2 post, turned with a tool); windage is the rear sight's drum.",
+  "tookThePlaceOf": "ar-irons"
+ },
+ "fab-flipup": {
+  "name": "FAB Defense flip-up sights (FBS front, RBS rear)",
+  "kind": "iron",
+  "model": "FAB Defense FBS folding front (FX-FBS) and RBS folding rear (FX-RBS), sold as the set FX-FRBSKIT: polymer flip-up sights for a Picatinny rail, listed for the Tavor (\"any 1913 Picatinny rail, including TAVOR platforms\", https://zahal.org/product/fab-defense-rear-and-front-back-up-flip-up-sights/, search text). They fit the photographs' description: a black polymer rear with a round peep and the windage knob on its side; a front post raised and lowered by a dial between tall ribbed guards. FAB publishes no click values, post width or sight radius; those are estimates below.",
+  "sightRadiusIn": {
+   "value": 10,
+   "estimate": "sight radius, not published by FAB Defense or IWI: the pair stands at the two ends of the Tavor's top rail, which is short on a bullpup (a replacement top rail for the SAR is listed 8.9 in long, https://www.cheaperthandirt.com/midwest-industries-tavor-sar-gator-m-lok-rail-aluminum-black-mi-tgrm/FC-816537018667.html, search text); about 9 to 11 in apart; 10.0 in used"
+  },
+  "clickMoa": {
+   "value": 1,
+   "estimate": "FAB publishes no click value for the front's dial (\"post can be raised or lowered by simply turning a dial\", https://www.midwestgunworks.com/page/mgwi/prod/fx-fbs, search text); IWI lists its own folding backup sights for the same rifles at 1 MOA per click (iwi.us listing, search text); 1 MOA used"
+  },
+  "windageClickMoa": {
+   "value": 1,
+   "estimate": "FAB publishes no click value for the rear's windage knob (\"no tools needed for easy, rapid windage adjustments, with positive detent locking\", https://www.midwestgunworks.com/page/mgwi/prod/fx-rbs, search text); 1 MOA used, as for elevation"
+  },
+  "clicks": {
+   "value": 12,
+   "estimate": "not published: about the useful travel of a short polymer folding sight; 12 used"
+  },
+  "frontPostIn": {
+   "value": 0.08,
+   "estimate": "not published: a polymer post, about 2 mm (0.08 in) wide"
+  },
+  "frontPostMoa": {
+   "value": 27.5,
+   "estimate": "0.08 in over the 10 in sight radius: 27.5 MOA. A wide post, as a short-radius polymer sight has"
+  },
+  "apertures": [
+   {
+    "name": "large",
+    "diameterIn": {
+     "value": 0.118,
+     "source": {
+      "url": "https://www.thegundock.com/live/product.php?sku=S94726",
+      "read": "2026-11-21",
+      "note": "a retailer's listing of the FAB RBS: \"Apertures: 3mm and 1.5mm\"; 3 mm is 0.118 in. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches (CONNECT 403)"
+     }
+    }
+   },
+   {
+    "name": "small",
+    "diameterIn": {
+     "value": 0.059,
+     "source": {
+      "url": "https://www.thegundock.com/live/product.php?sku=S94726",
+      "read": "2026-11-21",
+      "note": "the same listing: 1.5 mm, 0.059 in. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches (CONNECT 403)"
+     }
+    }
+   }
+  ],
+  "apertureMoa": {
+   "value": 115.9,
+   "estimate": "the large (3 mm) peep, the one drawn (the photographs show the large peep up): on a bullpup the rear sight sits about 3.5 in in front of the eye, so it covers 0.118 / 3.5 radians, 115.9 MOA. The small peep (1.5 mm, 57.95 MOA) is recorded but not offered: the game has one rear ring per sight"
+  },
+  "frontEars": {
+   "gapMoa": {
+    "value": 171.89,
+    "estimate": "the inner gap between the front's two tall ribbed guards; not published: about 0.5 in apart (the guards stand well clear of the dial), over 10 in 171.89 MOA. A drawing figure"
+   },
+   "widthMoa": {
+    "value": 51.57,
+    "estimate": "each guard about 0.15 in thick, over 10 in 51.57 MOA; not published, a drawing figure"
+   },
+   "topAboveMoa": {
+    "value": 34.38,
+    "estimate": "the guards are tall: their tops stand about 0.1 in above the post's top, 34.38 MOA; not published, a drawing figure"
+   }
+  },
+  "zoom": {
+   "low": {
+    "value": 1,
+    "estimate": "iron sights magnify nothing"
+   },
+   "high": {
+    "value": 1,
+    "estimate": "iron sights magnify nothing"
+   }
+  },
+  "fovFtAt100": {
+   "low": {
+    "value": 35,
+    "estimate": "as every iron sight in this file: the drawn view is 400 MOA (6.7 degrees) across, 35 ft at 100 yards"
+   },
+   "high": {
+    "value": 35,
+    "estimate": "the same: iron sights magnify nothing"
+   }
+  },
+  "adjustWords": "Elevation is the front post (its dial); windage is the rear sight's side knob.",
+  "tookThePlaceOf": "tavor-irons"
+ },
+ "seeall-gen1": {
+  "name": "SeeAll Open Sight, first generation (triangle)",
+  "kind": "seeall",
+  "model": "The Original See All Open Sight, Gen-1, triangle reticle: a block of green edge-glow material on a Picatinny mount with a small black triangle printed across a line on its top edge, seen through a rear lens that enlarges the reticle only; the target is seen unmagnified. Gen-1 glows from daylight only (Gen-2 adds tritium).",
+  "clickMoa": {
+   "value": 0.95,
+   "source": {
+    "url": "https://www.seeallsights.com/pages/open-site-mounting-instructions",
+    "read": "2026-11-21",
+    "note": "the maker's instructions: a windage screw and an elevation screw, \"the screws don't produce clicks\"; \"1/16 turn … equals 1 inch of shot placement at 100 yards\". One step of the game's knob is a sixteenth of a turn: 1 in at 100 yards is 0.95 MOA. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches (CONNECT 403)"
+   }
+  },
+  "windageClickMoa": {
+   "value": 0.95,
+   "source": {
+    "url": "https://www.seeallsights.com/pages/open-site-mounting-instructions",
+    "read": "2026-11-21",
+    "note": "the same: a sixteenth of a turn of the windage screw, 1 in at 100 yards. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches (CONNECT 403)"
+   }
+  },
+  "clicks": {
+   "value": 75,
+   "source": {
+    "url": "https://muzzle-loaders.com/products/seeall%E2%84%A2-open-sight-fits-weaver-or-picatinny-rails",
+    "read": "2026-11-21",
+    "note": "a retailer's listing: \"about 150 inches of vertical and horizontal travel at 100 yards\", 75 in each way, 75 sixteenths of a turn (another seller lists 100 in of elevation; the maker publishes none). Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches (CONNECT 403)"
+   }
+  },
+  "reticle": {
+   "triangleWidthMoa": {
+    "value": 6,
+    "estimate": "the triangle's base, not published by the maker or any review read: a small triangle on a lens-enlarged block; 6 MOA across (about 6 in at 100 yards) used. A drawing figure, unverified"
+   },
+   "triangleHeightMoa": {
+    "value": 6,
+    "estimate": "the triangle's height, not published: drawn as tall as it is wide. A drawing figure, unverified"
+   },
+   "lineBelowTipMoa": {
+    "value": 3,
+    "estimate": "the line the triangle stands across (\"a small triangle bisecting a line printed on the top-center of its trailing edge\", https://www.recoilweb.com/see-all-open-sight-saos-52931.html, search text): the line crosses the triangle half way down, 3 MOA under its tip, and is the top edge of the glowing block"
+   },
+   "fieldWidthMoa": {
+    "value": 240,
+    "estimate": "how wide the glowing block looks through the lens, not published: the reticle \"appears in the bottom half of the shooter's vision\" (https://www.pewpewtactical.com/seeall-open-sight-review/, search text); drawn 240 MOA wide, a little over half the 400 MOA view. A drawing figure"
+   },
+   "tip": "The triangle's top point is where the bullet lands (\"top point of the triangle marking the bullet's impact point\", https://www.americanrifleman.org/articles/2015/7/10/product-preview-see-all-open-sight/, search text)."
+  },
+  "zoom": {
+   "low": {
+    "value": 1,
+    "estimate": "the lens enlarges the reticle only; the target is seen unmagnified"
+   },
+   "high": {
+    "value": 1,
+    "estimate": "the same: no magnification"
+   }
+  },
+  "fovFtAt100": {
+   "low": {
+    "value": 35,
+    "estimate": "unmagnified, the drawn view is 400 MOA across, as the iron sights: 35 ft at 100 yards"
+   },
+   "high": {
+    "value": 35,
+    "estimate": "the same: no magnification"
+   }
+  },
+  "adjustWords": "Elevation and windage are two screws on the sight, no clicks: a sixteenth of a turn moves the strike 1 inch at 100 yards."
+ },
+ "ak762-kns-peep": {
+  "name": "AK ball front post (KNS 0.034 in) and KNS adjustable rear peep",
+  "kind": "iron",
+  "model": "Front: KNS Precision ball post AKBALL.034. Rear: KNS Precision AK Adjustable Rear Peep Sight, part AK EL-WIN (\"for AKM-Style Rear Sight\", https://www.midwestgunworks.com/page/mgwi/prod/akel-win, search text), which takes the rear leaf's place: a peep hole in a leaf, a notched wheel and index marks, as the photographs show. It is \"FULLY adjustable for windage and elevation\" with \"positive-clicking detent adjustments\" and needs no tool (https://www.opticsplanet.com/kns-precision-ak-adjustable-rear-peep-sight.html, search text), and comes with six peep inserts. KNS publishes no click value, travel or insert size. The sliding leaf's range settings are gone with the leaf it replaces (an inference from \"drop-in\" and the photographs; KNS does not say), so this sight has no leaf: distance is clicks or hold.",
+  "sightRadiusIn": {
+   "value": 14.88,
+   "estimate": "the AKM's sight radius, 378 mm (https://en.wikipedia.com/wiki/AKM, a copy of the encyclopedia page, search text); the AK-74's is taken as the same (its front sight block and rear leaf sit in the same places)"
+  },
+  "clickMoa": {
+   "value": 0.5,
+   "estimate": "KNS publishes no click value. One buyer's review: \"1 click approximates out to about .5 MOA for the windage\" (https://www.opticsplanet.com/reviews/reviews-kns-precision-ak-adjustable-rear-peep-sight/b6299a62-9165-11ee-8932-02a83afc3e35.html, search text); the elevation wheel is taken to click the same"
+  },
+  "windageClickMoa": {
+   "value": 0.5,
+   "estimate": "the same review: about 0.5 MOA per windage click"
+  },
+  "clicks": {
+   "value": 20,
+   "estimate": "not published: the same review has \"about 20 ish clicks\" of windage to work with each way; elevation is taken to travel as far"
+  },
+  "frontPostIn": {
+   "value": 0.034,
+   "source": {
+    "url": "https://www.primaryarms.com/kns-precision-ak47-sks-front-sight-post-034in-diameter",
+    "read": "2026-11-21",
+    "note": "the KNS Precision AK-47/SKS ball front sight post, part AKBALL.034: \"KNS Precision AK-47, SKS Front Sight Post .034\" Diameter\" (a retailer's page title; KNS also sells .052 and .072 in posts). Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches (CONNECT 403)"
+   }
+  },
+  "frontPostMoa": {
+   "value": 7.86,
+   "estimate": "the ball, 0.034 in across, over the AKM's 14.88 in sight radius: 7.86 MOA"
+  },
+  "stemWidthMoa": {
+   "value": 4.62,
+   "estimate": "the post under the ball, not published by KNS: thinner than the ball, about 0.020 in; over the AKM's 14.88 in sight radius 4.62 MOA"
+  },
+  "frontBead": true,
+  "apertureMoa": {
+   "value": 24.06,
+   "estimate": "the peep, not published (six inserts, no sizes given): the largest taken as about 2.5 mm (0.098 in), seen about 14 in from the eye where the AK's rear sight sits (as the AK iron sights' notch): 0.098 / 14 radians, 24.06 MOA. A peep this far from the eye is seen sharp and small, not as a ghost ring"
+  },
+  "zoom": {
+   "low": {
+    "value": 1,
+    "estimate": "iron sights magnify nothing"
+   },
+   "high": {
+    "value": 1,
+    "estimate": "iron sights magnify nothing"
+   }
+  },
+  "fovFtAt100": {
+   "low": {
+    "value": 35,
+    "estimate": "as every iron sight in this file: the drawn view is 400 MOA (6.7 degrees) across, 35 ft at 100 yards"
+   },
+   "high": {
+    "value": 35,
+    "estimate": "the same: iron sights magnify nothing"
+   }
+  },
+  "adjustWords": "Elevation and windage are both on the rear peep (its wheel and its knob), in clicks; the front ball post was set once with the AK tool.",
+  "tookThePlaceOf": "ak-irons",
+  "rearBody": {
+   "widthMoa": {
+    "value": 221.0,
+    "estimate": "how wide the KNS peep's leaf looks, not published: the leaf with its peep and the notched wheel beside it is about 0.9 in across (the photographs show the wheel at the leaf's side), seen about 14 in from the eye: 221.0 MOA. Outside it the world is seen past the rear sight. A drawing figure"
+   },
+   "topAboveMoa": {
+    "value": 49.11,
+    "estimate": "how far the leaf's top stands above the peep's centre, not published: about 0.2 in, 49.11 MOA. A drawing figure"
+   }
+  }
+ },
+ "ak545-ball": {
+  "name": "AK ball front post (KNS 0.034 in), rear notch, sliding leaf",
+  "kind": "iron",
+  "model": "Front: KNS Precision ball post AKBALL.034 in place of the standard post; the rear notch and its sliding leaf are the rifle's own. The ball post threads into the factory front sight base in the original post's place (\"threads directly into factory front sight blocks … without modification\", https://www.keepshooting.com/kns-ak47-sight-pack.html, search text), so elevation is still set by screwing the post with the AK tool and windage by drifting its base: the adjustment is the AK iron sights' own.",
+  "sightRadiusIn": {
+   "value": 14.88,
+   "estimate": "the AKM's sight radius, 378 mm (https://en.wikipedia.com/wiki/AKM, a copy of the encyclopedia page, search text); the AK-74's is taken as the same (its front sight block and rear leaf sit in the same places)"
+  },
+  "clickMoa": {
+   "value": 2,
+   "estimate": "the AK front post screws up and down with a tool, no clicks; a quarter turn moves the strike about 2 MOA (not a maker figure)"
+  },
+  "windageClickMoa": {
+   "value": 2,
+   "estimate": "the front post is drifted sideways in its base, no clicks; one tap about 2 MOA"
+  },
+  "clicks": {
+   "value": 10,
+   "estimate": "about the useful travel"
+  },
+  "frontPostIn": {
+   "value": 0.034,
+   "source": {
+    "url": "https://www.primaryarms.com/kns-precision-ak47-sks-front-sight-post-034in-diameter",
+    "read": "2026-11-21",
+    "note": "the KNS Precision AK-47/SKS ball front sight post, part AKBALL.034: \"KNS Precision AK-47, SKS Front Sight Post .034\" Diameter\" (a retailer's page title; KNS also sells .052 and .072 in posts). Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches (CONNECT 403)"
+   }
+  },
+  "frontPostMoa": {
+   "value": 7.86,
+   "estimate": "the ball, 0.034 in across, over the AK's 14.88 in sight radius: 7.86 MOA"
+  },
+  "stemWidthMoa": {
+   "value": 4.62,
+   "estimate": "the post under the ball, not published by KNS: thinner than the ball, about 0.020 in; over the AK's 14.88 in sight radius 4.62 MOA"
+  },
+  "frontBead": true,
+  "apertureMoa": {
+   "value": 0,
+   "estimate": "an open notch, no ring"
+  },
+  "zoom": {
+   "low": {
+    "value": 1,
+    "estimate": "iron sights magnify nothing"
+   },
+   "high": {
+    "value": 1,
+    "estimate": "iron sights magnify nothing"
+   }
+  },
+  "fovFtAt100": {
+   "low": {
+    "value": 35,
+    "estimate": "as every iron sight in this file: the drawn view is 400 MOA (6.7 degrees) across, 35 ft at 100 yards"
+   },
+   "high": {
+    "value": 35,
+    "estimate": "the same: iron sights magnify nothing"
+   }
+  },
+  "leaf": {
+   "unit": "meters",
+   "settingsMeters": {
+    "value": [
+     100,
+     200,
+     300,
+     400,
+     500,
+     600,
+     700,
+     800,
+     900,
+     1000
+    ],
+    "source": {
+     "url": "https://ar15discounts.com/products/izhmash-rear-sight-assembly-for-ak-74-and-ak-100-series-1000m-with-cyrillic-p-battle-mark-russian/",
+     "read": "2026-11-17",
+     "note": "the AK-74 rear sight: 1,000 m scale with the Cyrillic \"П\" battle mark. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   },
+   "serviceLoad": {
+    "name": "Soviet 7N6 steel-core ball",
+    "grains": {
+     "value": 53,
+     "source": {
+      "url": "https://weaponsystems.net/system/1512-5.45x39mm+Soviet",
+      "read": "2026-11-17",
+      "note": "7N6 projectile 3.43 g (53 gr). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "muzzleMps": {
+     "value": 880,
+     "source": {
+      "url": "https://en.wikipedia.org/wiki/AK-74",
+      "read": "2026-11-17",
+      "note": "AK-74, 415 mm barrel: 880 to 900 m/s; Rosoboronexport lists 7N6 at 880 m/s. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "bc": {
+     "value": 0.339,
+     "source": {
+      "url": "https://www.milsurps.com/archive/index.php/t-44425.html",
+      "read": "2026-11-17",
+      "note": "a compiled table gives the 7N6 bullet G1 0.339 (G7 0.170) at 870 to 910 m/s from an AK-74M; the US Army BRL measured G7 0.168; not a maker figure. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "dragModel": "G1"
+   },
+   "moaAbove100": {
+    "value": [
+     {
+      "meters": 100,
+      "moaAbove100": 0
+     },
+     {
+      "meters": 200,
+      "moaAbove100": 1.9
+     },
+     {
+      "meters": 300,
+      "moaAbove100": 4.82
+     },
+     {
+      "meters": 400,
+      "moaAbove100": 8.46
+     },
+     {
+      "meters": 500,
+      "moaAbove100": 12.91
+     },
+     {
+      "meters": 600,
+      "moaAbove100": 18.33
+     },
+     {
+      "meters": 700,
+      "moaAbove100": 24.94
+     },
+     {
+      "meters": 800,
+      "moaAbove100": 32.97
+     },
+     {
+      "meters": 900,
+      "moaAbove100": 42.57
+     },
+     {
+      "meters": 1000,
+      "moaAbove100": 53.8
+     }
+    ],
+    "estimate": "derived by this app's engine, not published by the maker: the bore angle that zeroes the service load (Soviet 7N6 steel-core ball, 53 gr at 880 m/s, G1 0.339) at each setting's distance, less the angle at the 100 m setting, with the sight 1.9 in over the bore in standard sea-level air, in minutes of angle: 100 m 0, 200 m 1.9, 300 m 4.82, 400 m 8.46, 500 m 12.91, 600 m 18.33, 700 m 24.94, 800 m 32.97, 900 m 42.57, 1000 m 53.8. Used by the 5.45x39 rifle (ak-545) in place of leaf."
+   },
+   "battleSettingMeters": {
+    "value": 400,
+    "source": {
+     "url": "https://en.wikipedia.org/wiki/AK-74",
+     "read": "2026-11-17",
+     "note": "the 5.45x39 rear sight's \"П\" setting corresponds to a 400 m zero (one Russian optics page says about 440 m). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   }
+  },
+  "notchMoa": {
+   "value": 24,
+   "estimate": "the rear notch is about 2.5 mm wide and sits about 14 in (355 mm) from the eye on an AK: 2.5 / 355 radians = 24 MOA across as the eye sees it; the front post (frontPostMoa) is measured over the sight radius, against the target"
+  },
+  "notchDepthMoa": {
+   "value": 22,
+   "estimate": "how deep the rear notch is cut, as the eye sees it, in minutes of angle: a little less than it is wide (the notch is about square); the same basis as notchMoa"
+  },
+  "carriesRecordsOf": {
+   "sight": "ak-irons",
+   "basis": "range-day-twelve: only the front post changed. The ball post screws into the same front sight base, so it adjusts as the AK iron sights did (the same estimated 2 MOA a step, elevation and windage) and the sight line stands where it stood (1.9 in over the bore; data/rifles.json): a zero, a sight setting, a shot log and data-book lines kept under ak-irons on the 5.45 rifle are read as this sight's, written forward, and the old records stay stored."
+  },
+  "adjustWords": "Elevation is the front post (screwed with the AK tool), windage drifts its base; the rear leaf slides for distance."
+ },
+ "ak545-xs": {
+  "name": "XS tritium stripe front post (AK), rear notch, sliding leaf",
+  "kind": "iron",
+  "model": "Front: XS Sights Tritium Stripe Front for the AK, AK-2001-6 (\"Tritium Stripe Front - AK\", https://store.civilarms.com/en/ak-2001-6-ak-24-7-ak-akm-stripe-front-post.html, search text): a wide post with a vertical green tritium stripe in a white outline. XS lists it for the AK-47/AKM; its dot posts are listed for the AK-74 too, the stripe post is not named for it, so its fit on the 5.45 rifle is taken, not stated. It replaces the post in the factory drum with the AK tool (XS's AK instructions, https://xssights.com/content/Install%20Instructions/AK%20Instructions.pdf, search text), so the adjustment is the AK iron sights' own. The rear notch and its sliding leaf are the rifle's own.",
+  "sightRadiusIn": {
+   "value": 14.88,
+   "estimate": "the AKM's sight radius, 378 mm (https://en.wikipedia.com/wiki/AKM, a copy of the encyclopedia page, search text); the AK-74's is taken as the same (its front sight block and rear leaf sit in the same places)"
+  },
+  "clickMoa": {
+   "value": 2,
+   "estimate": "the AK front post screws up and down with a tool, no clicks; a quarter turn moves the strike about 2 MOA (not a maker figure)"
+  },
+  "windageClickMoa": {
+   "value": 2,
+   "estimate": "the front post is drifted sideways in its base, no clicks; one tap about 2 MOA"
+  },
+  "clicks": {
+   "value": 10,
+   "estimate": "about the useful travel"
+  },
+  "frontPostIn": {
+   "value": 0.105,
+   "source": {
+    "url": "https://rifleopticsworld.com/shop/xs-sight-systems-xs-sight-systems-tritium-stripe-front-rifle-sight-ak-xss-rs3-wl81d-ak-2001-6",
+    "read": "2026-11-21",
+    "note": "a retailer's listing of AK-2001-6: \"diameter of .105\"\"; XS publishes no width on the pages read. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches (CONNECT 403)"
+   }
+  },
+  "frontPostMoa": {
+   "value": 24.26,
+   "estimate": "0.105 in over the AK's 14.88 in sight radius: 24.26 MOA, about the rear notch's own width"
+  },
+  "frontStripeMoa": {
+   "value": 9.24,
+   "estimate": "the glowing stripe, not published: a tritium vial about 1 mm (0.04 in) wide set in the post, over 14.88 in 9.24 MOA; drawn as a plain bright bar"
+  },
+  "frontStripeTopMoa": {
+   "value": 4.62,
+   "estimate": "the stripe starts a little under the post's top, about 0.02 in: 4.62 MOA; not published, a drawing figure"
+  },
+  "frontStripeColor": "pale green (green tritium in a white outline; by day the outline shows more than the glow)",
+  "apertureMoa": {
+   "value": 0,
+   "estimate": "an open notch, no ring"
+  },
+  "zoom": {
+   "low": {
+    "value": 1,
+    "estimate": "iron sights magnify nothing"
+   },
+   "high": {
+    "value": 1,
+    "estimate": "iron sights magnify nothing"
+   }
+  },
+  "fovFtAt100": {
+   "low": {
+    "value": 35,
+    "estimate": "as every iron sight in this file: the drawn view is 400 MOA (6.7 degrees) across, 35 ft at 100 yards"
+   },
+   "high": {
+    "value": 35,
+    "estimate": "the same: iron sights magnify nothing"
+   }
+  },
+  "leaf": {
+   "unit": "meters",
+   "settingsMeters": {
+    "value": [
+     100,
+     200,
+     300,
+     400,
+     500,
+     600,
+     700,
+     800,
+     900,
+     1000
+    ],
+    "source": {
+     "url": "https://ar15discounts.com/products/izhmash-rear-sight-assembly-for-ak-74-and-ak-100-series-1000m-with-cyrillic-p-battle-mark-russian/",
+     "read": "2026-11-17",
+     "note": "the AK-74 rear sight: 1,000 m scale with the Cyrillic \"П\" battle mark. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   },
+   "serviceLoad": {
+    "name": "Soviet 7N6 steel-core ball",
+    "grains": {
+     "value": 53,
+     "source": {
+      "url": "https://weaponsystems.net/system/1512-5.45x39mm+Soviet",
+      "read": "2026-11-17",
+      "note": "7N6 projectile 3.43 g (53 gr). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "muzzleMps": {
+     "value": 880,
+     "source": {
+      "url": "https://en.wikipedia.org/wiki/AK-74",
+      "read": "2026-11-17",
+      "note": "AK-74, 415 mm barrel: 880 to 900 m/s; Rosoboronexport lists 7N6 at 880 m/s. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "bc": {
+     "value": 0.339,
+     "source": {
+      "url": "https://www.milsurps.com/archive/index.php/t-44425.html",
+      "read": "2026-11-17",
+      "note": "a compiled table gives the 7N6 bullet G1 0.339 (G7 0.170) at 870 to 910 m/s from an AK-74M; the US Army BRL measured G7 0.168; not a maker figure. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+     }
+    },
+    "dragModel": "G1"
+   },
+   "moaAbove100": {
+    "value": [
+     {
+      "meters": 100,
+      "moaAbove100": 0
+     },
+     {
+      "meters": 200,
+      "moaAbove100": 1.9
+     },
+     {
+      "meters": 300,
+      "moaAbove100": 4.82
+     },
+     {
+      "meters": 400,
+      "moaAbove100": 8.46
+     },
+     {
+      "meters": 500,
+      "moaAbove100": 12.91
+     },
+     {
+      "meters": 600,
+      "moaAbove100": 18.33
+     },
+     {
+      "meters": 700,
+      "moaAbove100": 24.94
+     },
+     {
+      "meters": 800,
+      "moaAbove100": 32.97
+     },
+     {
+      "meters": 900,
+      "moaAbove100": 42.57
+     },
+     {
+      "meters": 1000,
+      "moaAbove100": 53.8
+     }
+    ],
+    "estimate": "derived by this app's engine, not published by the maker: the bore angle that zeroes the service load (Soviet 7N6 steel-core ball, 53 gr at 880 m/s, G1 0.339) at each setting's distance, less the angle at the 100 m setting, with the sight 1.9 in over the bore in standard sea-level air, in minutes of angle: 100 m 0, 200 m 1.9, 300 m 4.82, 400 m 8.46, 500 m 12.91, 600 m 18.33, 700 m 24.94, 800 m 32.97, 900 m 42.57, 1000 m 53.8. Used by the 5.45x39 rifle (ak-545) in place of leaf."
+   },
+   "battleSettingMeters": {
+    "value": 400,
+    "source": {
+     "url": "https://en.wikipedia.org/wiki/AK-74",
+     "read": "2026-11-17",
+     "note": "the 5.45x39 rear sight's \"П\" setting corresponds to a 400 m zero (one Russian optics page says about 440 m). read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
+    }
+   }
+  },
+  "notchMoa": {
+   "value": 24,
+   "estimate": "the rear notch is about 2.5 mm wide and sits about 14 in (355 mm) from the eye on an AK: 2.5 / 355 radians = 24 MOA across as the eye sees it; the front post (frontPostMoa) is measured over the sight radius, against the target"
+  },
+  "notchDepthMoa": {
+   "value": 22,
+   "estimate": "how deep the rear notch is cut, as the eye sees it, in minutes of angle: a little less than it is wide (the notch is about square); the same basis as notchMoa"
+  },
+  "adjustWords": "Elevation is the front post (screwed with the AK tool), windage drifts its base; the rear leaf slides for distance."
  }
 }

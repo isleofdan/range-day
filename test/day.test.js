@@ -43,9 +43,11 @@ async function signedIn(viewport, b) {
 // Closes any day left open by an earlier test, and opens the plain picture: these tests are about the day's records, which are
 // the same under every picture (test/scene.test.js proves that and the picture itself); the test browser draws 3D in software.
 const noDay = (page) => page.evaluate(() => { localStorage.removeItem('range-day:day:open'); localStorage.removeItem('range-day:day:packed'); localStorage.setItem('range-day:picture', JSON.stringify('plain')); });
-const AR = 'course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193';
+const AR = 'course=angeles-sylmar&rifle=bcm-ar15&sight=troy-battlesights&load=imi-m193';
 const line = async (page, q, b) => { await page.goto(`${b || base}/line?${q}`); await page.waitForSelector('#fire'); };
-const bench = async (page, q) => { await page.goto(`${base}/zero?${q}`); await page.waitForSelector('#fire5'); };
+// The bench is ready when its supply line is written, not only when its Fire button is there (Checks run 44916065640: on a cold
+// runner the first test read the line 0.6 s in, before the page wrote it).
+const bench = async (page, q) => { await page.goto(`${base}/zero?${q}`); await page.waitForSelector('#fire5'); await page.waitForFunction(() => /zeroing supply/.test(document.getElementById('rounds').textContent)); };
 // A seeded shot through the page's own door, landed: the last log row.
 async function seededShot(page, seed) {
   const before = await page.evaluate(() => RangeDayLine.log.length);
@@ -228,7 +230,7 @@ test('verify 7: the book: a seeded hit writes one line with every field; a miss 
   await page.selectOption('#plate', '0');
   assert.match(await page.textContent('#book-line'), /nothing in the book at 100 yards yet\.$/);
   const { probe, hit } = await seededHit(page, 11);
-  let lines = await book(page, 'bcm-ar15', 'ar-irons', 'imi-m193');
+  let lines = await book(page, 'bcm-ar15', 'troy-battlesights', 'imi-m193');
   let written = (probe.hit ? 1 : 0) + 1;
   assert.equal(lines.length, written, 'one line per hit, none for a miss');
   const l = lines[lines.length - 1];
@@ -241,11 +243,11 @@ test('verify 7: the book: a seeded hit writes one line with every field; a miss 
   await page.evaluate(() => RangeDayLine.setHold(0, 40));
   const miss = await seededShot(page, 11);
   assert.equal(miss.hit, false);
-  assert.equal((await book(page, 'bcm-ar15', 'ar-irons', 'imi-m193')).length, written);
+  assert.equal((await book(page, 'bcm-ar15', 'troy-battlesights', 'imi-m193')).length, written);
   // A hit with "Show the conditions" on writes none; its log row says so.
   await page.check('#show-conditions');
   const shown = await seededHit(page, 12);
-  assert.equal((await book(page, 'bcm-ar15', 'ar-irons', 'imi-m193')).length, written, 'nothing written with the conditions shown');
+  assert.equal((await book(page, 'bcm-ar15', 'troy-battlesights', 'imi-m193')).length, written, 'nothing written with the conditions shown');
   assert.equal(shown.hit.conditionsShown, true);
   assert.match(await page.textContent('#log tbody tr'), /\(conditions shown\)/);
   assert.match(await page.textContent('#result'), /Not in the book: the conditions were shown/);
@@ -253,12 +255,12 @@ test('verify 7: the book: a seeded hit writes one line with every field; a miss 
   // Two more hits; the line under the view shows the newest one only (range-day-nine: the rest stay in the book, a tap away).
   const more = [await seededHit(page, 13), await seededHit(page, 14)];
   written += more.reduce((n, m) => n + (m.probe.hit ? 1 : 0) + 1, 0);
-  lines = await book(page, 'bcm-ar15', 'ar-irons', 'imi-m193');
+  lines = await book(page, 'bcm-ar15', 'troy-battlesights', 'imi-m193');
   assert.equal(lines.length, written);
   const under = await page.textContent('#book-line');
   assert.match(under, /^Book, 100 yards: .*clicks.*held.*wind.*F, \d+ \w{3} \d{4}$/);
   assert.equal(under.split(' · ').length, 1, 'one line: the newest');
-  const newest = await page.evaluate(() => RD.bookAt('bcm-ar15', 'ar-irons', 'imi-m193', 100)[0]);
+  const newest = await page.evaluate(() => RD.bookAt('bcm-ar15', 'troy-battlesights', 'imi-m193', 100)[0]);
   const sign = (n) => (n > 0 ? `+${n}` : String(n));
   assert.ok(under.includes(`${sign(newest.elevationClicks)}/${sign(newest.windageClicks)} clicks`), `the newest line (${newest.id}): ${under}`);
   assert.ok(under.includes(`${newest.tempF} F`));
@@ -333,7 +335,7 @@ test('verify 9: the cold-bore record: a day whose first shot is at steel adds on
   const first = await seededShot(page, 31);
   let rec = await cold(page, 'bcm-ar15', 'imi-m193');
   assert.equal(rec.length, 1);
-  assert.equal(rec[0].hit, first.hit); assert.equal(rec[0].yards, 100); assert.equal(rec[0].sight, 'ar-irons'); assert.equal(rec[0].load, 'imi-m193');
+  assert.equal(rec[0].hit, first.hit); assert.equal(rec[0].yards, 100); assert.equal(rec[0].sight, 'troy-battlesights'); assert.equal(rec[0].load, 'imi-m193');
   for (const k of ['id', 'day', 'on', 'course', 'sight', 'load', 'yards', 'elevationClicks', 'windageClicks', 'leaf', 'windCall', 'tempF', 'hit', 'upIn', 'rightIn']) assert.ok(k in rec[0], `the cold-bore line has ${k}`);
   assert.ok(await page.isHidden('#cold-line'), 'the notice is gone after the first shot');
   assert.match(await page.textContent('#result'), /first shot: in the cold-bore record/);
@@ -360,12 +362,12 @@ test('verify 9: the cold-bore record: a day whose first shot is at steel adds on
 test('verify 10: nothing on the phone is lost: a zero, a sight setting and a log written in today\'s form show on home, the bench and the line, and are still there after a whole day is shot and ended', { skip }, async () => {
   const { page, context, errors } = await signedIn();
   const before = {
-    'range-day:zero:bcm-ar15:ar-irons:imi-m193': { elevationClicks: 3, windageClicks: -1, zeroYards: 100, sight: 'ar-irons', savedAt: '2026-11-17T01:00:00.000Z' },
-    'range-day:sight:bcm-ar15:ar-irons': { elevationClicks: 3, windageClicks: -1 },
-    'range-day:log:bcm-ar15:ar-irons:imi-m193': [{ n: 1, yards: 200, el: 3, wd: -1, zoom: 1, heldUp: 0, heldRight: 0, hit: true, where: 'hit (level, centered of center)', upIn: 0.2, rightIn: 0.1 }],
+    'range-day:zero:bcm-ar15:troy-battlesights:imi-m193': { elevationClicks: 3, windageClicks: -1, zeroYards: 100, sight: 'troy-battlesights', savedAt: '2026-11-17T01:00:00.000Z' },
+    'range-day:sight:bcm-ar15:troy-battlesights': { elevationClicks: 3, windageClicks: -1 },
+    'range-day:log:bcm-ar15:troy-battlesights:imi-m193': [{ n: 1, yards: 200, el: 3, wd: -1, zoom: 1, heldUp: 0, heldRight: 0, hit: true, where: 'hit (level, centered of center)', upIn: 0.2, rightIn: 0.1 }],
     'range-day:show-conditions': false,
     'range-day:last': { rifle: 'bcm-ar15' },
-    'range-day:last:bcm-ar15': { sight: 'ar-irons', load: 'imi-m193', course: 'angeles-sylmar' },
+    'range-day:last:bcm-ar15': { sight: 'troy-battlesights', load: 'imi-m193', course: 'angeles-sylmar' },
   };
   await page.evaluate((b) => { for (const [k, v] of Object.entries(b)) localStorage.setItem(k, JSON.stringify(v)); }, before);
   await page.goto(`${base}/`); await page.waitForSelector('.rifle');
@@ -383,10 +385,10 @@ test('verify 10: nothing on the phone is lost: a zero, a sight setting and a log
   assert.match(await page.textContent('#rounds'), /the box of 20 is empty/);
   await page.click('#pack-up'); await page.waitForURL(/\/day\?id=/, { timeout: 10000 });
   const after = await page.evaluate((keys) => Object.fromEntries(keys.map((k) => [k, JSON.parse(localStorage.getItem(k))])), Object.keys(before));
-  assert.deepStrictEqual(after['range-day:zero:bcm-ar15:ar-irons:imi-m193'], before['range-day:zero:bcm-ar15:ar-irons:imi-m193'], 'the zero is untouched');
-  assert.deepStrictEqual(after['range-day:sight:bcm-ar15:ar-irons'], before['range-day:sight:bcm-ar15:ar-irons'], 'the sight setting is untouched');
-  assert.deepStrictEqual(after['range-day:log:bcm-ar15:ar-irons:imi-m193'][0], before['range-day:log:bcm-ar15:ar-irons:imi-m193'][0], 'the old log row is still first');
-  assert.equal(after['range-day:log:bcm-ar15:ar-irons:imi-m193'].length, 21);
+  assert.deepStrictEqual(after['range-day:zero:bcm-ar15:troy-battlesights:imi-m193'], before['range-day:zero:bcm-ar15:troy-battlesights:imi-m193'], 'the zero is untouched');
+  assert.deepStrictEqual(after['range-day:sight:bcm-ar15:troy-battlesights'], before['range-day:sight:bcm-ar15:troy-battlesights'], 'the sight setting is untouched');
+  assert.deepStrictEqual(after['range-day:log:bcm-ar15:troy-battlesights:imi-m193'][0], before['range-day:log:bcm-ar15:troy-battlesights:imi-m193'][0], 'the old log row is still first');
+  assert.equal(after['range-day:log:bcm-ar15:troy-battlesights:imi-m193'].length, 21);
   assert.equal(after['range-day:show-conditions'], false);
   assert.deepStrictEqual(after['range-day:last:bcm-ar15'], before['range-day:last:bcm-ar15']);
   assert.deepEqual(errors, []);
@@ -506,7 +508,7 @@ test('verify 4 (browser): with GUN_RECORDS_FILE naming a file with an eighth gun
   const records = Object.entries(raw.rifles).filter(([id]) => !id.startsWith('_')).map(([id, e]) => guns.toRecord(id, e));
   const eighth = JSON.parse(JSON.stringify(guns.toRecord('bcm-ar15', raw.rifles['bcm-ar15'])));
   eighth.id = 'test-carbine'; eighth.name = 'Test carbine, 5.56';
-  eighth.fields.game.sightHeightIn['ar-irons'] = { value: 3.4, estimate: 'a made-up height for the test, higher than the AR\'s own' };
+  eighth.fields.game.sightHeightIn['troy-battlesights'] = { value: 3.4, estimate: 'a made-up height for the test, higher than the AR\'s own' };
   eighth.fields.game.firstCourse = 'cta-piru';
   records.push(eighth);
   writeFileSync(path.join(dir, 'guns.json'), JSON.stringify(records));
@@ -520,7 +522,7 @@ test('verify 4 (browser): with GUN_RECORDS_FILE naming a file with an eighth gun
     assert.equal(await page.textContent('.rifle[data-rifle="test-carbine"] .rname'), 'Test carbine, 5.56');
     await page.click('.rifle[data-rifle="test-carbine"]'); await page.waitForSelector('.rifle.picked[data-rifle="test-carbine"]');
     assert.equal(await page.inputValue('#course'), 'cta-piru', 'its first course from the record');
-    await line(page, 'course=angeles-sylmar&rifle=test-carbine&sight=ar-irons&load=imi-m193', b);
+    await line(page, 'course=angeles-sylmar&rifle=test-carbine&sight=troy-battlesights&load=imi-m193', b);
     await page.selectOption('#plate', '0');
     await seededShot(page, 71);
     const given = await page.evaluate(() => RangeDayLine.lastShotInput);
@@ -533,7 +535,7 @@ test('verify 4 (browser): with GUN_RECORDS_FILE naming a file with an eighth gun
 
 // range-day-nine: the firing line arranged for shooting (brief range-day-nine, task items 2, 4 and 5).
 const { PHONES, SIGHTS, measure: measureReach, meets } = require('./line-reach');
-test('the firing line within reach: for the Vepr\'s scope, the Tavor SAR\'s dot and the AK\'s irons, at 412x915 every item of the within-reach list is inside the screen above the Steady and Fire bar, and at 1280x800 inside the screen with the bar beside the view; the view keeps its size', { skip }, async () => {
+test('the firing line within reach: for the Vepr\'s scope, the Tavor SAR\'s dot and the AK\'s irons (range-day-twelve: and every other sight of every rifle), at 412x915 every item of the within-reach list is inside the screen above the Steady and Fire bar, and at 1280x800 inside the screen with the bar beside the view; the view keeps its size', { skip }, async () => {
   const lines = [];
   for (const [w, h, viewPx] of [...PHONES.map(([pw, ph]) => [pw, ph, 380]), [1280, 800, 640]]) {
     const { page, context, errors } = await signedIn({ width: w, height: h });
@@ -545,7 +547,7 @@ test('the firing line within reach: for the Vepr\'s scope, the Tavor SAR\'s dot 
       const bad = meets(m);
       lines.push(`${w}x${h} ${s.name}: view ${m.view.width}x${m.view.height}; ${m.items.filter((i) => i.shown).length} items; ${bad.length ? bad.join('; ') : 'all within reach'}`);
       assert.deepEqual(bad, [], `${w}x${h}, ${s.name}`);
-      assert.equal(m.items.find((i) => i.name === 'sight\'s glass control').shown, true, `${s.name}: its glass control is shown`);
+      if (s.glass) assert.equal(m.items.find((i) => i.name === 'sight\'s glass control').shown, true, `${s.name}: its glass control is shown`);
       assert.equal(m.view.width, viewPx); assert.equal(m.view.height, viewPx);
       assert.equal(m.scrollY, 0);
       if (w === 412) for (const t of m.touch) assert.ok(t.height >= 44, `${s.name}: #${t.id} is ${t.height} px tall, under 44`);
@@ -678,6 +680,63 @@ test('range-day-eleven verify 5: a device that kept a zero, a sight setting, a s
   // The Vepr's irons are not the old scope: nothing is carried to them.
   await line(page, `course=cta-piru&rifle=${R}&sight=vepr-irons&load=${L}`);
   assert.match(await page.textContent('#zero-note'), /No zero saved/);
+  assert.deepEqual(errors, []);
+  await context.close();
+});
+
+test('range-day-twelve verify 5: for each rifle whose sight changed, a device that kept a zero, a sight setting, a shot log and a book line under the old sight: where the new sight clicks alike and sits at the same height they are its own (the 5.45 rifle\'s ball post); where it does not they stay readable under the old name and the new sight starts unzeroed (the BCM, both Tavors, the 7.62x39 rifle); where the sight kept its id nothing moves (the Vepr\'s irons). Old records stay stored, byte for byte.', { skip }, async () => {
+  const { page, context, errors } = await signedIn();
+  const CASES = [
+    { rifle: 'bcm-ar15', old: 'ar-irons', now: 'troy-battlesights', load: 'imi-m193', course: 'angeles-sylmar', carried: false },
+    { rifle: 'iwi-tavor-sar', old: 'tavor-irons', now: 'fab-flipup', load: 'imi-m193', course: 'angeles-sylmar', carried: false },
+    { rifle: 'iwi-x95', old: 'tavor-irons', now: 'fab-flipup', load: 'imi-m193', course: 'angeles-sylmar', carried: false },
+    { rifle: 'ak-762', old: 'ak-irons', now: 'ak762-kns-peep', load: 'silver-bear-123', course: 'angeles-sylmar', carried: false },
+    { rifle: 'ak-545', old: 'ak-irons', now: 'ak545-ball', load: 'hornady-545-60', course: 'angeles-sylmar', carried: true },
+    { rifle: 'molot-vepr-54r', old: 'vepr-irons', now: 'vepr-irons', load: 'sb-174-hpbt', course: 'cta-piru', carried: true },
+  ];
+  const lineOf = (c) => ({ id: `old-day-${c.rifle}:1`, day: `old-day-${c.rifle}`, on: '2026-11-20', at: '2026-11-20T17:00:00.000Z', n: 1, course: c.course, yards: 200, target: 'steel', elevationClicks: 3, windageClicks: -2, elevationMoa: 6, windageMoa: -4, leaf: null, zero: { zeroYards: 100, elevationClicks: 2, windageClicks: -2 }, heldUpMoa: 0, heldRightMoa: 0, tempF: 60, windCall: null, upIn: 0.7, rightIn: -0.4, struck: false, note: '' });
+  const seeded = {};
+  for (const c of CASES) {
+    seeded[`range-day:sight:${c.rifle}:${c.old}`] = { elevationClicks: 5, windageClicks: -3 };
+    seeded[`range-day:zero:${c.rifle}:${c.old}:${c.load}`] = { elevationClicks: 2, windageClicks: -2, zeroYards: 100, sight: c.old, savedAt: '2026-11-20T16:00:00.000Z' };
+    seeded[`range-day:log:${c.rifle}:${c.old}:${c.load}`] = [{ n: 1, yards: 200, el: 3, wd: -2, zoom: 1, heldUp: 0, heldRight: 0, hit: true, where: 'hit (0.7 in high, 0.4 in left of center)', upIn: 0.7, rightIn: -0.4 }];
+    seeded[`range-day:book:${c.rifle}:${c.old}:${c.load}`] = [lineOf(c)];
+  }
+  await page.evaluate((s) => { localStorage.clear(); localStorage.setItem('range-day:picture', JSON.stringify('plain')); for (const [k, v] of Object.entries(s)) localStorage.setItem(k, JSON.stringify(v)); }, seeded);
+  const before = await page.evaluate(() => Object.keys(localStorage).filter((k) => k !== 'range-day:picture').sort());
+  const report = [];
+  for (const c of CASES) {
+    await line(page, `course=${c.course}&rifle=${c.rifle}&sight=${c.old}&load=${c.load}`); // the old address
+    const intro = await page.textContent('#intro'), note = await page.textContent('#zero-note'), log = await page.textContent('#log');
+    assert.match(intro, new RegExp(flat.sights[c.now].name.replace(/ \(.*\)$/, '').replace(/[()]/g, '.')), `${c.rifle}: the old address opens the sight now on the rifle`);
+    const S = flat.sights[c.now], O = flat.sights[c.old], H = flat.rifles[c.rifle].sightHeightIn[c.now];
+    const figures = `click ${O.clickMoa}/${O.windageClickMoa} MOA before, ${S.clickMoa}/${S.windageClickMoa} now; height over the bore ${c.old === c.now ? H : { 'ar-irons': 2.6, 'tavor-irons': 3, 'ak-irons': 1.9 }[c.old]} in before, ${H} in now`;
+    if (c.carried) {
+      assert.match(note, /saved 100-yard zero/, `${c.rifle}: the zero is the new sight's`);
+      assert.match(await page.textContent('#el-text'), /\+2 clicks/);
+      assert.match(log, /0\.7 in high/, `${c.rifle}: the log is the new sight's`);
+      assert.deepEqual((await book(page, c.rifle, c.now, c.load)).map((l) => l.id), [lineOf(c).id], `${c.rifle}: the book line is the new sight's`);
+    } else {
+      assert.match(note, /No zero saved/, `${c.rifle}: the new sight starts unzeroed`);
+      assert.doesNotMatch(log, /0\.7 in high/, `${c.rifle}: the old log is not the new sight's`);
+      assert.deepEqual(await book(page, c.rifle, c.now, c.load), []);
+      // the old book page stays readable, under the old sight's name
+      await page.goto(`${base}/book?course=${c.course}&rifle=${c.rifle}&sight=${c.old}&load=${c.load}`); await page.waitForSelector('#pages');
+      assert.equal(await page.inputValue('#sight'), c.old, `${c.rifle}: the book opens the old sight's page`);
+      assert.match(await page.textContent('#sight'), /no longer on this rifle/);
+      assert.equal(await page.locator('#pages .entry').count(), 1, `${c.rifle}: the old book line`);
+    }
+    report.push(`${c.rifle}: ${c.old === c.now ? `${c.now} kept its id: nothing moves` : c.carried ? `${c.now} carries ${c.old}` : `${c.now} starts unzeroed; ${c.old}'s records stay readable under its name`} (${figures})`);
+  }
+  const after = await page.evaluate(() => Object.fromEntries(Object.keys(localStorage).sort().map((k) => [k, localStorage.getItem(k)])));
+  for (const [k, v] of Object.entries(seeded)) if (!k.startsWith('range-day:sight:')) assert.equal(after[k], JSON.stringify(v), `${k} is stored, unchanged`);
+  for (const c of CASES.filter((x) => !x.carried)) for (const p of ['zero', 'log', 'book']) assert.equal(after[`range-day:${p}:${c.rifle}:${c.now}:${c.load}`], undefined, `nothing of ${c.old} is written forward as ${c.now} on ${c.rifle}`);
+  const copy = await page.evaluate(() => RD.makeCopy());
+  for (const c of CASES) assert.deepEqual(copy.book.filter((l) => l.rifle === c.rifle).map((l) => l.sight), [c.carried ? c.now : c.old], `${c.rifle}: the copy holds the book line once, under ${c.carried ? 'the sight that carries it' : 'the old name'}`);
+  console.log('  ' + report.join('\n  '));
+  console.log(`  stored keys before: ${before.join(', ')}`);
+  console.log(`  stored keys after:  ${Object.keys(after).filter((k) => !/^range-day:(picture|day|days|last|when|supply|wind-call)/.test(k)).join(', ')}`);
+  console.log(`  rifles that need zeroing again: ${CASES.filter((c) => !c.carried).map((c) => c.rifle).join(', ')}`);
   assert.deepEqual(errors, []);
   await context.close();
 });

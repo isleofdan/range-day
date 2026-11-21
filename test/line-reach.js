@@ -8,14 +8,27 @@
 // book line fell under Steady and Fire.
 const PHONES = [[412, 915], [412, 830]];
 
-// The three sights the measure runs for: a scope with its zoom, a dot with its
-// magnifier, irons with a rear leaf (the screenshot states line-scope-7x,
-// line-magnifier-300 and line-ak-leaf).
-const SIGHTS = [
+// The sights the measure runs for: first the three with a glass control (a scope with its zoom, a dot with its
+// magnifier, irons with a rear leaf: the screenshot states line-scope-7x, line-magnifier-300 and line-ak-leaf;
+// range-day-twelve: the leaf is the 5.45 rifle's, behind its ball post, since the 7.62x39 rifle's KNS rear peep
+// replaced its leaf); then (range-day-twelve) every other sight of every rifle in the set, each on its rifle's
+// first course with its first load, so a new sight is held to the same reach. A sight with no glass control
+// (irons without a leaf, the SeeAll) names none.
+const data = require('../lib/data').load().flat;
+const FIRST = [
   { name: 'Vepr with its scope (zoom)', q: 'course=cta-piru&rifle=molot-vepr-54r&sight=utg-bugbuster-3-9x32&load=sb-174-hpbt', glass: '#zoomrow' },
   { name: 'Tavor SAR with its dot (magnifier)', q: 'course=angeles-sylmar&rifle=iwi-tavor-sar&sight=pa-md25&load=imi-m193', glass: '#magrow' },
-  { name: 'AK with its irons (rear leaf)', q: 'course=angeles-sylmar&rifle=ak-762&sight=ak-irons&load=silver-bear-123', glass: '#leafrow' },
+  { name: 'AK with its irons (rear leaf)', q: 'course=angeles-sylmar&rifle=ak-545&sight=ak545-ball&load=hornady-545-60', glass: '#leafrow' },
 ];
+const glassOf = (rifle, sightId) => { const s = data.sights[sightId]; return s.kind === 'dot' && rifle.sights.some((x) => data.sights[x].kind === 'magnifier') ? '#magrow' : s.leaf ? '#leafrow' : s.zoom.high > s.zoom.low ? '#zoomrow' : null; };
+const SIGHTS = [...FIRST];
+for (const [rifleId, rifle] of Object.entries(data.rifles)) {
+  if (rifleId.startsWith('_') || !rifle.playable) continue;
+  for (const sightId of rifle.sights.filter((x) => data.sights[x].kind !== 'magnifier')) {
+    if (SIGHTS.some((x) => x.q.includes(`rifle=${rifleId}&sight=${sightId}&`))) continue;
+    SIGHTS.push({ name: `${rifle.name} with the ${data.sights[sightId].name.replace(/ \(.*\)$/, '')}`, q: `course=${rifle.firstCourse}&rifle=${rifleId}&sight=${sightId}&load=${rifle.loads[0]}`, glass: glassOf(rifle, sightId) });
+  }
+}
 
 // Runs inside the page (page.evaluate(measure, glass)). For each element of the
 // within-reach list other than the Steady and Fire bar: its box, whether the
@@ -37,7 +50,7 @@ function measure(glass) {
   const list = [
     ['short line', q('#line-head') || q('.dayline')],
     ['plate picker', q('#plate')],
-    ['sight\'s glass control', q(glass)],
+    ['sight\'s glass control', glass ? q(glass) : null],
     ['spotting scope', q('#spotting')], // range-day-ten: beside the sight's glass control
     ['view', q('#view')],
     ['where the last shot went', q('#result')],
