@@ -204,6 +204,7 @@
   const crossMph = () => RD.crosswindMph(weather.wind[Math.min(2, Math.floor((plate().yards / course.steelTo) * 3))]);
   // The sideways angle of the aimed plate, so the scene's own azimuths (from straight downrange) line up with the view.
   const azOf = (sideMoa) => sideMoa - toMoa(sideAngle(plate()));
+  const drawnPaper = {}; // the plain drawing's last frame: each sheet's centre on the canvas
   // The holes shown on a paper, as the drawing takes them.
   const load = d.loads[loadId];
   const holesOf = (t) => RD.paperHoles(day, t).map((s) => ({ upIn: s.upIn, rightIn: s.rightIn, holeIn: RD.holeIn(load), burstIn: RD.burstIn(load, P), seed: RD.hash(`${day.id}:${s.n}`) }));
@@ -377,6 +378,7 @@
       g.fillStyle = mix([238, 234, 222], HAZE, haze); g.fillRect(bx - bw / 2, bFoot - bh, bw, bh);
       const [sx, sy] = toScreen(at.right, at.up);
       RD.drawPaper(g, sx, sy, ppi, p.widthIn, p.heightIn, holesOf(p), P);
+      drawnPaper[p.key] = { x: sx, y: sy, aimRight: c.right, aimUp: c.up, pxPerMoa: k, size }; // where this frame drew the sheet's centre, and the aim it drew from (the tests compare it with the angles)
     });
     drawDust(g, size, k);
     // heat shimmer leaning with the wind (seen through magnification)
@@ -858,6 +860,7 @@
     get lastShotInput() { return lastShotInput; },
     get fovMoa() { return fovMoa(); },
     // how far the last shot's recoil still holds the view off, in MOA (the screenshot states wait for it to settle)
+    drawnPaper(key) { return drawnPaper[key] || null; },
     get recoilMoa() { return Math.hypot(recoil.up, recoil.right); },
     // the spotting scope: whether the view is at it, going there and back, its zoom, and its field of view in MOA at a power
     get spotting() { return spotting; }, setSpotting(on) { setSpotting(on); }, setSpotZoom(m) { spotMag = m; $('spot-zoom').value = m; spotZoomText(); }, get spotZoom() { return spotMag; },
