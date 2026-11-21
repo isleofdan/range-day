@@ -484,6 +484,9 @@ window.RD = (function () {
         checkRecord(s, DAY_SHAPES.shot, `${at}.shots[${j}]`);
         if (!PLACES.includes(s.place)) throw notACopy(`${at}.shots[${j}].place is ${JSON.stringify(s.place)}; it must be one of ${PLACES.join(', ')}. Nothing was loaded.`);
         if (s.place === 'line') checkRecord(s, DAY_SHAPES.lineShot, `${at}.shots[${j}]`);
+        // range-day-thirteen: a line shot's time of flight and target key, written from then on; older shots have neither
+        if (s.flightS !== undefined && !(typeof s.flightS === 'number' && s.flightS > 0)) throw notACopy(`${at}.shots[${j}].flightS is ${JSON.stringify(s.flightS)}; where present it must be the time of flight in seconds, a number over 0. Nothing was loaded.`);
+        if (s.targetKey !== undefined && typeof s.targetKey !== 'string') throw notACopy(`${at}.shots[${j}].targetKey is ${JSON.stringify(s.targetKey)}; where present it must be a target's key, a string. Nothing was loaded.`);
         // Where it landed: a shot that reached has both coordinates in inches; one that went into the ground has null for both.
         for (const f of ['upIn', 'rightIn']) {
           if (s.reached && typeof s[f] !== 'number') throw notACopy(`${at}.shots[${j}].${f} is ${JSON.stringify(s[f])}; a shot that reached must have it as a number. Nothing was loaded.`);
