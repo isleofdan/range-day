@@ -240,10 +240,16 @@ test('range-day-ten verify 3 and 5: the spotting scope: its view is the data\'s 
     const back = await page.evaluate(() => { const b = document.getElementById('back-to-rifle').getBoundingClientRect(), f = document.querySelector('.firebar').getBoundingClientRect(); return { top: b.top, bottom: b.bottom, height: b.height, barTop: f.top, barBottom: f.bottom }; });
     assert.ok(back.height >= 44 && back.top >= back.barTop && back.bottom <= back.barBottom, `"Back to the rifle" stands in the bar: ${JSON.stringify(back)}`);
     const heights = await page.evaluate(() => ['spotting', 'spot-zoom', 'back-to-rifle'].map((id) => [id, Math.round(document.getElementById(id).getBoundingClientRect().height * 10) / 10]));
+    // range-day-ten-b: the zoom sliders are not cramped (Dan, on his phone: the button beside them made them hard to use). At the
+    // scope its slider, back at the rifle the scope's own; on a phone each at least 100 px wide (70 and 57 px before the fix).
+    const spotW = await page.evaluate(() => document.getElementById('spot-zoom').getBoundingClientRect().width);
+    assert.ok(spotW >= 100, `${w}x${h}: the spotting scope's zoom slider is ${spotW.toFixed(0)} px wide`);
     for (const [id, ht] of heights) assert.ok(ht >= 44, `${w}x${h}: #${id} is ${ht} px tall`);
     // back by the bar's button, then there and back by the control beside the glass
     await page.click('#back-to-rifle');
     assert.equal(await page.evaluate(() => RangeDayLine.spotting), false);
+    const zoomW = await page.evaluate(() => document.getElementById('zoom').getBoundingClientRect().width);
+    assert.ok(zoomW >= 110, `${w}x${h}: the rifle scope's zoom slider is ${zoomW.toFixed(0)} px wide`);
     assert.deepEqual(moved(await places()), [0, 0, 0, 0], `${w}x${h}: back to the rifle moved nothing`);
     await page.click('#spotting'); await page.click('#spotting');
     assert.deepEqual(moved(await places()), [0, 0, 0, 0], `${w}x${h}: there and back by the control moved nothing`);

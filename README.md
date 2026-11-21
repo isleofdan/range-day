@@ -116,7 +116,7 @@ clicks, then works out the drop and the wind for each distance himself.
   rebuilt from the open day, so a reload loses none; **Hang a fresh
   paper**, a short scroll below and shown only for paper, clears the sheet
   from that moment (no shot is deleted), and its message offers **Put the
-  old paper back**. **Spotting scope**, beside the sight's glass control,
+  old paper back**. **Spotting scope**, at the right end of the short line's row at the top (range-day-ten-b: beside the sight's glass control it cramped the zoom slider),
   turns the view to a tripod scope (20 to 60 power, its field of view from
   the maker's page, `data/spotting.json`) pointed at the chosen target: no
   reticle, the view still, a drag moves it, its zoom in the glass control's
@@ -134,7 +134,7 @@ clicks, then works out the drop and the wind for each distance himself.
   course and the day, temperature first; a tap opens the full description
   over the page, a second tap closes it); the target picker with the
   sight's own glass beside it (the zoom, the magnifier, or the rear leaf)
-  and **Spotting scope**;
+  and **Spotting scope** at the right end of the short line above;
   the view, the same size as before; **where the last shot went**, held to
   two lines (a longer one is marked ▾ and opens over the page on a tap;
   "Open another box" stands beside it when the box is empty); **the sight
