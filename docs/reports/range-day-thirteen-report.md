@@ -315,11 +315,12 @@ scope looks to him like the real one, is unverified until he looks.
 
 1. **Merge and deploy range-day-thirteen, then merge its notes.**
    Recommended: yes.
-2. **Draw the ACOG's drop lines (400 to 800 m) from the forum table as
-   estimates now, or wait for Trijicon's own drawing?** Recommended: wait;
-   the next session that can open Trijicon's, Vortex's and Leupold's
-   reticle documents adds all three scopes' marks from the makers
-   themselves.
+2. **The ACOG's drop lines (400 to 800 m): wait for Trijicon's own
+   drawing rather than draw them now from the forum table as estimates.**
+   Recommended answer: yes, wait; the next session that can open
+   Trijicon's, Vortex's and Leupold's reticle documents adds all three
+   scopes' marks from the makers themselves. It stands as the default
+   unless Dan says otherwise, so the closing message does not ask it.
 3. **Let cloud sessions open the three makers' pages:** add
    `www.trijicon.com`, `vortexoptics.com` and `www.leupold.com` to this
    cloud environment's allowed hosts (Claude Code on the web: the
@@ -367,9 +368,6 @@ its full check is green.
 yes, merge and deploy range-day-thirteen, then merge its notes
 ```
 
-2. The ACOG's drop lines below the chevron: draw them now from a forum
-   table as estimates, or wait for Trijicon's own drawing? Recommended:
-   wait.
-3. Let cloud sessions open trijicon.com, vortexoptics.com and leupold.com
+2. Let cloud sessions open trijicon.com, vortexoptics.com and leupold.com
    (this cloud environment's settings, Network, allowed hosts), so the next
    session can read the three reticle drawings. Recommended: yes.
