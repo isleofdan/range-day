@@ -38,7 +38,7 @@ Two screens changed: the firing line (`/line`), mostly, and the day's page (`/da
 4. **Orientation**: the picker names the target ("50 yards (paper)"); at the scope the button and the bar both read "Back to the rifle", and the zoom reads "Scope 60×". On a phone the picker cuts "(paper)" to "50 yards" for lack of width (screenshots `spot-*-phone.png`); the full name shows when it opens.
 5. **Feedback**: "On paper at 50 yards, …" after each shot; the hole and its burst on the sheet; the scope shows them at up to 60x.
 6. **Interruption**: none. Going to the scope and back moves the view, the strip, the bar and the picker row by 0 px (verify 5); the fresh-paper message stays in the scroll area.
-7. **Thumb reach**: the new button is within reach at 412×830, 412×915 and 1280×800 (`line-layout-after.txt`); "Back to the rifle" is the bar's full width, 52 px tall; every new button is 44 px or taller; "Hang a fresh paper" is a short scroll below, away from Fire.
+7. **Thumb reach**: the new button is within reach at 412×830, 412×915 and 1280×800 (`docs/reports/line-layout-ten-after.txt`); "Back to the rifle" is the bar's full width, 52 px tall; every new button is 44 px or taller; "Hang a fresh paper" is a short scroll below, away from Fire.
 8. **Defaults and prefill**: the picker still opens on the first plate (as before, so nothing a player is used to moves); the scope opens at 20× on the chosen target.
 
 **The day's page**: the Where column says "paper" or "steel" instead of always "steel"; a paper shot reads "on paper (…)". Nothing else changed.
@@ -85,8 +85,12 @@ What this cannot prove: the session cannot open the live app or hold a phone, so
 
 ## Asks
 
-1. **Merge and deploy range-day-ten?** Recommended: yes. Type `yes, merge and deploy range-day-ten, then merge its notes`.
-2. **The Terrain workflow can wipe the ground's photographed surfaces.** Any push touching `scripts/terrain/` (on any branch, `main` included) fetches the ground again and commits a `data/terrain.json` without its `surfaces` record, deleting the 24 surface photographs; it did so on this branch today, and it was undone. Recommended: a short session, planned by a Personal Shipyard chat, that makes the workflow keep what it did not fetch (or refuse to commit a deletion) and adds a test for it. Until then no session should put files in `scripts/terrain/`.
+1. **Merge and deploy range-day-ten?** Recommended: yes. The line to type:
+
+   ```
+   yes, merge and deploy range-day-ten, then merge its notes
+   ```
+2. **The Terrain workflow can wipe the ground's photographed surfaces.** Any push touching `scripts/terrain/` (on any branch, `main` included) fetches the ground again and commits a `data/terrain.json` without its `surfaces` record, deleting the 24 surface photographs; it did so on this branch today, and it was undone. Should the workflow be changed so that it keeps every ground file it did not fetch itself and refuses to commit a deletion, with a test that holds it? Recommended: yes. Until then no session puts files in `scripts/terrain/`.
 
 ## What the next session needs
 
@@ -112,4 +116,4 @@ Needed from you
 ```
 yes, merge and deploy range-day-ten, then merge its notes
 ```
-2. Ask 2 (recommended: yes, as its own short session planned by a Personal Shipyard chat): make the ground-fetching workflow keep the ground's photographed surfaces, so a push into its folder cannot delete them again.
+2. Ask 2 (recommended: yes): change the ground-fetching workflow so it can never again delete the ground's photographed surfaces when a change touches its folder.
