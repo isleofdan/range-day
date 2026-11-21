@@ -875,7 +875,7 @@
   "retired": "range-day-eleven: no rifle offers this scope any more (the Vepr carries the UTG BugBuster 3-9x32, utg-bugbuster-3-9x32); its entry stays so records that name it still name a sight the game knows"
  },
  "utg-bugbuster-3-9x32": {
-  "name": "UTG BugBuster 3-9x32 compact scope, 1-inch tube, illuminated mil-dot with red, green and blue lighting (SCP-M392AOLWQ)",
+  "name": "UTG BugBuster 3-9x32 compact scope, lit mil-dot (SCP-M392AOLWQ)",
   "kind": "scope",
   "clickMoa": {
    "value": 0.25,
