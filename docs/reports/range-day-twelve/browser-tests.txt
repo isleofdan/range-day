@@ -1,0 +1,128 @@
+TAP version 13
+# Subtest: home remembers each rifle's sight: pick the Tavor SAR, choose a sight that is not its first (range-day-twelve: the SeeAll; it was the irons, which are now its first), pick another rifle, pick the SAR again, that sight is still chosen
+ok 1 - home remembers each rifle's sight: pick the Tavor SAR, choose a sight that is not its first (range-day-twelve: the SeeAll; it was the irons, which are now its first), pick another rifle, pick the SAR again, that sight is still chosen
+  ---
+  duration_ms: 687.022807
+  type: 'test'
+  ...
+#   largest difference, fronts, guards, stripe and triangle: 1.07 px
+#   phone bcm-ar15 troy-battlesights: post drawn 12.42 px, data 12.67 px, difference 0.25 px
+#   phone bcm-ar15 troy-battlesights: ring drawn 255.54 px, data 247.54 px, difference 7.99 px
+#   phone bcm-ar15 troy-battlesights: gap between the guards drawn 54.25 px, data 54.29 px, difference 0.04 px
+#   phone iwi-tavor-sar fab-flipup: the guards (162.86 px apart) stand outside the ring (109.81 px): hidden by it
+#   phone iwi-tavor-sar fab-flipup: post drawn 25.95 px, data 26.06 px, difference 0.11 px
+#   phone iwi-tavor-sar fab-flipup: ring drawn 111.00 px, data 109.81 px, difference 1.19 px
+#   phone iwi-x95 fab-flipup: the guards (162.86 px apart) stand outside the ring (109.81 px): hidden by it
+#   phone iwi-x95 fab-flipup: post drawn 25.95 px, data 26.06 px, difference 0.11 px
+#   phone iwi-x95 fab-flipup: ring drawn 111.00 px, data 109.81 px, difference 1.19 px
+#   phone iwi-tavor-sar seeall-gen1: the triangle's tip, below the aim point drawn 0.00 px, data 0.00 px, difference 0.00 px
+#   phone iwi-tavor-sar seeall-gen1: the triangle's width at 0.8 of its height drawn 4.68 px, data 4.55 px, difference 0.13 px
+#   phone iwi-tavor-sar seeall-gen1: the triangle's middle, beside the aim point drawn -0.54 px, data 0.00 px, difference 0.54 px
+#   phone ak-762 ak762-kns-peep: ball drawn 7.55 px, data 7.45 px, difference 0.10 px
+#   phone ak-762 ak762-kns-peep: stem drawn 3.74 px, data 4.38 px, difference 0.63 px
+#   phone ak-762 ak762-kns-peep: ring drawn 23.65 px, data 22.80 px, difference 0.85 px
+#   phone ak-762 ak762-kns-peep: the peep's leaf drawn 209.57 px, data 209.39 px, difference 0.18 px
+#   phone ak-545 ak545-ball: ball drawn 7.55 px, data 7.45 px, difference 0.10 px
+#   phone ak-545 ak545-ball: stem drawn 4.11 px, data 4.38 px, difference 0.27 px
+#   phone ak-545 ak545-xs: the post (22.99 px) fills the notch (22.74 px): no light beside it, the brightest pixel there 46 against the sky's 175
+#   phone ak-545 ak545-xs: glowing stripe drawn 8.49 px, data 8.75 px, difference 0.26 px
+#   phone molot-vepr-54r vepr-irons: ball drawn 5.83 px, data 5.79 px, difference 0.05 px
+#   phone molot-vepr-54r vepr-irons: stem drawn 3.34 px, data 3.40 px, difference 0.06 px
+#   computer bcm-ar15 troy-battlesights: post drawn 21.12 px, data 21.33 px, difference 0.21 px
+#   computer bcm-ar15 troy-battlesights: ring drawn 430.10 px, data 416.92 px, difference 13.19 px
+#   computer bcm-ar15 troy-battlesights: gap between the guards drawn 92.00 px, data 91.44 px, difference 0.56 px
+#   computer iwi-tavor-sar fab-flipup: the guards (274.29 px apart) stand outside the ring (184.95 px): hidden by it
+#   computer iwi-tavor-sar fab-flipup: post drawn 43.66 px, data 43.88 px, difference 0.23 px
+#   computer iwi-tavor-sar fab-flipup: ring drawn 187.44 px, data 184.95 px, difference 2.50 px
+#   computer iwi-x95 fab-flipup: the guards (274.29 px apart) stand outside the ring (184.95 px): hidden by it
+#   computer iwi-x95 fab-flipup: post drawn 43.66 px, data 43.88 px, difference 0.23 px
+#   computer iwi-x95 fab-flipup: ring drawn 187.44 px, data 184.95 px, difference 2.50 px
+#   computer iwi-tavor-sar seeall-gen1: the triangle's tip, below the aim point drawn 1.00 px, data 0.00 px, difference 1.00 px
+#   computer iwi-tavor-sar seeall-gen1: the triangle's width at 0.8 of its height drawn 8.33 px, data 7.66 px, difference 0.67 px
+#   computer iwi-tavor-sar seeall-gen1: the triangle's middle, beside the aim point drawn -0.53 px, data 0.00 px, difference 0.53 px
+#   computer ak-762 ak762-kns-peep: ball drawn 12.62 px, data 12.54 px, difference 0.08 px
+#   computer ak-762 ak762-kns-peep: stem drawn 6.31 px, data 7.37 px, difference 1.07 px
+#   computer ak-762 ak762-kns-peep: ring drawn 38.66 px, data 38.39 px, difference 0.27 px
+#   computer ak-762 ak762-kns-peep: the peep's leaf drawn 352.56 px, data 352.66 px, difference 0.10 px
+#   computer ak-545 ak545-ball: ball drawn 12.54 px, data 12.54 px, difference 0.00 px
+#   computer ak-545 ak545-ball: stem drawn 7.21 px, data 7.37 px, difference 0.16 px
+#   computer ak-545 ak545-xs: the post (38.71 px) fills the notch (38.30 px): no light beside it, the brightest pixel there 63 against the sky's 156
+#   computer ak-545 ak545-xs: glowing stripe drawn 14.43 px, data 14.74 px, difference 0.31 px
+#   computer molot-vepr-54r vepr-irons: ball drawn 9.60 px, data 9.75 px, difference 0.15 px
+#   computer molot-vepr-54r vepr-irons: stem drawn 5.49 px, data 5.73 px, difference 0.24 px
+# Subtest: range-day-twelve verify 3: each new sight as drawn, read from the canvas at 412 and 1280 px wide, against the data's angles at the view's scale
+ok 2 - range-day-twelve verify 3: each new sight as drawn, read from the canvas at 412 and 1280 px wide, against the data's angles at the view's scale
+  ---
+  duration_ms: 4414.488279
+  type: 'test'
+  ...
+#   32 targets checked, largest difference 0.000 px
+#   phone troy-battlesights on bcm-ar15, 50 yd paper: drawn 190.00, 190.11; angles 190.00, 190.11; 0.000 px
+#   phone troy-battlesights on bcm-ar15, 600 yd plate: drawn 189.99, 190.19; angles 189.99, 190.19; 0.000 px
+#   phone fab-flipup on iwi-tavor-sar, 50 yd paper: drawn 189.98, 190.10; angles 189.98, 190.10; 0.000 px
+#   phone fab-flipup on iwi-tavor-sar, 600 yd plate: drawn 189.94, 190.16; angles 189.94, 190.16; 0.000 px
+#   phone fab-flipup on iwi-x95, 50 yd paper: drawn 190.00, 190.07; angles 190.00, 190.07; 0.000 px
+#   phone fab-flipup on iwi-x95, 600 yd plate: drawn 189.99, 190.11; angles 189.99, 190.11; 0.000 px
+#   phone seeall-gen1 on iwi-tavor-sar, 50 yd paper: drawn 190.00, 190.08; angles 190.00, 190.08; 0.000 px
+#   phone seeall-gen1 on iwi-tavor-sar, 600 yd plate: drawn 190.00, 190.13; angles 190.00, 190.13; 0.000 px
+#   phone ak762-kns-peep on ak-762, 50 yd paper: drawn 189.99, 190.12; angles 189.99, 190.12; 0.000 px
+#   phone ak762-kns-peep on ak-762, 600 yd plate: drawn 189.96, 190.24; angles 189.96, 190.24; 0.000 px
+#   phone ak545-ball on ak-545, 50 yd paper: drawn 190.00, 190.12; angles 190.00, 190.12; 0.000 px
+#   phone ak545-ball on ak-545, 600 yd plate: drawn 190.01, 190.20; angles 190.01, 190.20; 0.000 px
+#   phone ak545-xs on ak-545, 50 yd paper: drawn 190.00, 190.11; angles 190.00, 190.11; 0.000 px
+#   phone ak545-xs on ak-545, 600 yd plate: drawn 190.01, 190.15; angles 190.01, 190.15; 0.000 px
+#   phone vepr-irons on molot-vepr-54r, 50 yd paper: drawn 190.00, 190.13; angles 190.00, 190.13; 0.000 px
+#   phone vepr-irons on molot-vepr-54r, 1000 yd plate: drawn 190.00, 190.24; angles 190.00, 190.24; 0.000 px
+#   computer troy-battlesights on bcm-ar15, 50 yd paper: drawn 320.01, 320.28; angles 320.01, 320.28; 0.000 px
+#   computer troy-battlesights on bcm-ar15, 600 yd plate: drawn 320.03, 320.38; angles 320.03, 320.38; 0.000 px
+#   computer fab-flipup on iwi-tavor-sar, 50 yd paper: drawn 319.99, 320.34; angles 319.99, 320.34; 0.000 px
+#   computer fab-flipup on iwi-tavor-sar, 600 yd plate: drawn 319.97, 320.53; angles 319.97, 320.53; 0.000 px
+#   computer fab-flipup on iwi-x95, 50 yd paper: drawn 319.91, 320.29; angles 319.91, 320.29; 0.000 px
+#   computer fab-flipup on iwi-x95, 600 yd plate: drawn 319.82, 320.47; angles 319.82, 320.47; 0.000 px
+#   computer seeall-gen1 on iwi-tavor-sar, 50 yd paper: drawn 320.00, 320.26; angles 320.00, 320.26; 0.000 px
+#   computer seeall-gen1 on iwi-tavor-sar, 600 yd plate: drawn 320.01, 320.39; angles 320.01, 320.39; 0.000 px
+#   computer ak762-kns-peep on ak-762, 50 yd paper: drawn 320.03, 320.19; angles 320.03, 320.19; 0.000 px
+#   computer ak762-kns-peep on ak-762, 600 yd plate: drawn 320.09, 320.33; angles 320.09, 320.33; 0.000 px
+#   computer ak545-ball on ak-545, 50 yd paper: drawn 319.97, 320.24; angles 319.97, 320.24; 0.000 px
+#   computer ak545-ball on ak-545, 600 yd plate: drawn 319.94, 320.34; angles 319.94, 320.34; 0.000 px
+#   computer ak545-xs on ak-545, 50 yd paper: drawn 319.97, 320.31; angles 319.97, 320.31; 0.000 px
+#   computer ak545-xs on ak-545, 600 yd plate: drawn 319.87, 320.45; angles 319.87, 320.45; 0.000 px
+#   computer vepr-irons on molot-vepr-54r, 50 yd paper: drawn 320.04, 320.30; angles 320.04, 320.30; 0.000 px
+#   computer vepr-irons on molot-vepr-54r, 1000 yd plate: drawn 320.04, 320.42; angles 320.04, 320.42; 0.000 px
+# Subtest: range-day-twelve verify 4: same scale through each new sight: where the drawing puts the near paper and a far plate, against the angles from the data at the drawn aim, at 412 and 1280 px wide
+ok 3 - range-day-twelve verify 4: same scale through each new sight: where the drawing puts the near paper and a far plate, against the angles from the data at the drawn aim, at 412 and 1280 px wide
+  ---
+  duration_ms: 11570.352417
+  type: 'test'
+  ...
+#   phone 3x: dots drawn 9.50 px below the centre and 10.00 px apart; data 11.47 MOA × 0.880 px/MOA = 10.09 px
+#   phone 6x: dots drawn 9.00 px below the centre and 9.50 px apart; data 5.73 MOA × 1.643 px/MOA = 9.42 px
+#   phone 9x: dots drawn 8.50 px below the centre and 9.00 px apart; data 3.82 MOA × 2.369 px/MOA = 9.05 px
+#   computer 3x: dots drawn 16.50 px below the centre and 17.00 px apart; data 11.47 MOA × 1.481 px/MOA = 16.99 px
+#   computer 6x: dots drawn 15.50 px below the centre and 16.00 px apart; data 5.73 MOA × 2.768 px/MOA = 15.87 px
+#   computer 9x: dots drawn 14.50 px below the centre and 15.50 px apart; data 3.82 MOA × 3.989 px/MOA = 15.25 px
+# Subtest: range-day-twelve verify 6: the BugBuster's dots stand at their true angle for the power in use (second focal plane, true at 10x): drawn spacing in pixels at 3x, 6x and 9x, read from the canvas, against the data
+ok 4 - range-day-twelve verify 6: the BugBuster's dots stand at their true angle for the power in use (second focal plane, true at 10x): drawn spacing in pixels at 3x, 6x and 9x, read from the canvas, against the data
+  ---
+  duration_ms: 2348.807841
+  type: 'test'
+  ...
+#   seeall-gen1: One step (a sixteenth of a turn of its screw) of elevation moves the strike 0.95 MOA (about 1.0 inches at 100 yards); one step of windage 0.95 MOA. Elevation and windage are two screws on the sight, no clicks: a sixteenth of a turn moves the strike 1 inch at 100 yards.
+#   troy-battlesights: One click of elevation moves the strike 1.33 MOA (about 1.4 inches at 100 yards); one click of windage 0.5 MOA. Elevation is the front post (an A2 post, turned with a tool); windage is the rear sight's drum.
+#   ak762-kns-peep: One click of elevation moves the strike 0.5 MOA (about 0.5 inches at 100 yards); one click of windage 0.5 MOA. Elevation and windage are both on the rear peep (its wheel and its knob), in clicks; the front ball post was set once with the AK tool.
+#   Tavor SAR sight chooser: FAB Defense flip-up sights (FBS front, RBS rear) | Primary Arms SLx MD-25 red dot, 2 MOA dot, with the Primary Arms SLx 3x micro magnifier, flip to side behind it | SeeAll Open Sight, first generation (triangle)
+# Subtest: range-day-twelve task items 3 and 4: a control that does not apply is not shown (the SeeAll: no leaf, no zoom, no magnifier; the KNS rear peep: no leaf); the bench says where each new sight adjusts and by how much; the sight chooser on a Tavor lists its four
+ok 5 - range-day-twelve task items 3 and 4: a control that does not apply is not shown (the SeeAll: no leaf, no zoom, no magnifier; the KNS rear peep: no leaf); the bench says where each new sight adjusts and by how much; the sight chooser on a Tavor lists its four
+  ---
+  duration_ms: 514.311103
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 19838.899666

@@ -626,3 +626,32 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
   `scripts/picture-measure.mjs` still names the 2-7x44. The picture work
   stays paused on Dan's word. Report:
   `docs/reports/range-day-eleven-report.md`.
+
+### range-day-twelve — 21 Nov 2026 (cloud session, from the Wall card `range-day`)
+
+- **Stands:** pull request #36, merged as `a7e1abc` on Dan's typed line and deployed by Deploy run 44919146708 (green, 62 s; the alive line, sign-in through the form and the picture file checked by the run): the sights fitted
+  to the rifles, each figure in `data/sights.json` with its page or an
+  estimate with its basis: the Troy folding BattleSights on the AR-15; the
+  FAB Defense flip-ups and the SeeAll Open Sight (first generation,
+  triangle, a new kind of sight) on both Tavors; the KNS 0.034 in ball post
+  and KNS rear peep (no sliding leaf) on the 7.62x39 rifle; the ball post
+  or the XS stripe post on the 5.45 rifle; the ball post on the Vepr's
+  irons (same id). The BugBuster's dots stand at their true angle: the
+  maker says second focal plane, true at 10x. `lib/data.js` checks each
+  sight's kind. 137 tests, 93 screenshot states (130 and 82 before).
+- **Decided:** records carry only where the new sight clicks alike and sits
+  at the same height (the 5.45's ball post); the AR-15, both Tavors and the
+  7.62x39 rifle start unzeroed, their old records kept and readable on the
+  book page under the old name; a record from before any sight could be
+  chosen follows the sight it was made with (`tookThePlaceOf`). One rear
+  ring per sight (the large peep). `test/scene.test.js` changed in three
+  places to read the new sights from the data.
+- **Next session needs:** Dan's look on his phone, sight by sight; the
+  AR-15's Troy front (two guards or a round hood: Ask 2); then, each
+  planned by a Personal Shipyard chat: recording and playback, the BCM's
+  magnified scope once Dan names it, the .22's Primary Arms CLx 1-6x24.
+  Codex's side: the plate flicker; `scripts/picture-measure.mjs` still
+  names the old scope. The picture work, the drawn sights' look included,
+  stays paused on Dan's word. A cloud session must link Chromium for
+  Playwright before a browser test's "passed" means anything. Report:
+  `docs/reports/range-day-twelve-report.md`.

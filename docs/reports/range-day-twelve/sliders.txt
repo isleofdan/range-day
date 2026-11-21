@@ -1,0 +1,19 @@
+TAP version 13
+#   412x915: to the scope and back, moved view/strip/bar/picker 0/0/0/0 px; spotting 25x: 380 px across = 61.88 MOA (54 ft at 1,000 yards), 6.141 px per MOA, off by 0.0e+0 px; spotting 125x: 380 px across = 27.50 MOA (24 ft at 1,000 yards), 13.817 px per MOA, off by 0.0e+0 px; Vepr scope 3x: 380 px across = 432.01 MOA (37.7 ft at 100 yards), 0.880 px per MOA, off by 0.0e+0 px; Vepr scope 9x: 380 px across = 160.43 MOA (14 ft at 100 yards), 2.369 px per MOA, off by 5.7e-14 px; buttons \#spotting 44, \#spot-zoom 44, \#back-to-rifle 52
+#   412x830: to the scope and back, moved view/strip/bar/picker 0/0/0/0 px; spotting 25x: 380 px across = 61.88 MOA (54 ft at 1,000 yards), 6.141 px per MOA, off by 0.0e+0 px; spotting 125x: 380 px across = 27.50 MOA (24 ft at 1,000 yards), 13.817 px per MOA, off by 0.0e+0 px; Vepr scope 3x: 380 px across = 432.01 MOA (37.7 ft at 100 yards), 0.880 px per MOA, off by 0.0e+0 px; Vepr scope 9x: 380 px across = 160.43 MOA (14 ft at 100 yards), 2.369 px per MOA, off by 5.7e-14 px; buttons \#spotting 44, \#spot-zoom 44, \#back-to-rifle 52
+#   1280x800: to the scope and back, moved view/strip/bar/picker 0/0/0/0 px; spotting 25x: 640 px across = 61.88 MOA (54 ft at 1,000 yards), 10.343 px per MOA, off by 0.0e+0 px; spotting 125x: 640 px across = 27.50 MOA (24 ft at 1,000 yards), 23.271 px per MOA, off by 0.0e+0 px; Vepr scope 3x: 640 px across = 432.01 MOA (37.7 ft at 100 yards), 1.481 px per MOA, off by 0.0e+0 px; Vepr scope 9x: 640 px across = 160.43 MOA (14 ft at 100 yards), 3.989 px per MOA, off by 1.1e-13 px; buttons \#spotting 44, \#spot-zoom 44, \#back-to-rifle 52
+# Subtest: range-day-ten verify 3 and 5: the spotting scope: its view is the data's field of view at its lowest and highest power (range-day-eleven: 25x and 125x), and so is the Vepr's scope's at 3x and 9x; Fire, Steady and the keyboard do nothing there; a shot in the air lands in its view; going to the scope and back moves the view, the sight strip and the bar by 0 pixels at 412x830, 412x915 and 1280x800, and every new button is at least 44 pixels tall
+ok 1 - range-day-ten verify 3 and 5: the spotting scope: its view is the data's field of view at its lowest and highest power (range-day-eleven: 25x and 125x), and so is the Vepr's scope's at 3x and 9x; Fire, Steady and the keyboard do nothing there; a shot in the air lands in its view; going to the scope and back moves the view, the sight strip and the bar by 0 pixels at 412x830, 412x915 and 1280x800, and every new button is at least 44 pixels tall
+  ---
+  duration_ms: 7865.848544
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8255.104533
