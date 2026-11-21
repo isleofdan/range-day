@@ -542,3 +542,34 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
 - **Next session needs:** Dan's look again. At 412×760 the book line
   still falls under the bar; the next lever is the view's size on short
   screens, which only Dan can open (the picture work is paused).
+
+### range-day-ten — 21 Nov 2026 (cloud session, from the Wall card `range-day`)
+
+- **Stands:** pull request #27: paper at 50 and 100 yards on both
+  courses and a 12 × 18 in steel plate at 100 yards on the canyon
+  (`data/courses.json`, `near`, placed on the survey by
+  `scripts/place-near.mjs`); the paper is one drawing for every picture
+  (`RD.drawPaper`: dark sheet, 1-inch grid, five aiming marks, a bright
+  burst around each hole); a shot at paper answers from the nearest
+  aiming mark, writes no book line, and the day's first one goes in the
+  cold-bore record; every shot row says `target`; holes and steel marks
+  are rebuilt from the open day; "Hang a fresh paper" and "Put the old
+  paper back". The tripod spotting scope (`data/spotting.json`, 20–60x,
+  the maker's field of view at both ends): beside the glass control, no
+  reticle, a still view, a drag moves it; "Back to the rifle" replaces
+  Steady and Fire in the bar. 118 tests, 81 screenshot states (111 and 73
+  before). Merged as `dddb27c` on Dan's typed line after four result checks (seven findings fixed; one point, raised twice, conflicts with this file's notes order and was put to Dan as Ask 1, who kept the order) and deployed by Deploy run 44877510234 (green, 79 s; the picture file answered 200 with 617,204 bytes, sign-in 303, crash test 500).
+- **Decided:** the near targets are their own list so the plates keep
+  their indices; the scope's width between its ends follows a power of
+  the magnification through both published figures; the picker's label
+  is "Target"; the new browser tests run as their own check group
+  (`near`); nothing goes in `scripts/terrain/` (a push touching it starts
+  the Terrain workflow, which on this branch committed a
+  `data/terrain.json` without the ground surfaces and deleted their 24
+  photographs; reverted, Ask 2 of the report).
+- **Next session needs:** Dan's look on his phone (the 50-yard paper, the
+  scope at 20x and 60x, a far plate); the Terrain workflow made safe
+  before anything touches `scripts/terrain/`; then, each planned by a
+  Personal Shipyard chat: the sights Dan fitted and the Vepr's 3-9x
+  scope; recording and playback. The picture work stays paused on Dan's
+  word. Report: `docs/reports/range-day-ten-report.md`.
