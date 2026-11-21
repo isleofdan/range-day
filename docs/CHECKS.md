@@ -88,7 +88,7 @@ varies run to run on the runner (the tests scene-shots job took 6 min 47 s,
 What a shooter needs between shots is held within reach by measure, not by
 eye. `test/line-reach.js` (not a test file itself) holds the within-reach
 list and the one function that measures it in the page: the short line,
-the plate picker, the sight's glass control (zoom, magnifier or rear
+the target picker, the sight's glass control (zoom, magnifier or rear
 leaf), the view, where the last shot went, elevation and windage with
 their settings and one-click buttons, the rounds left and the book's line;
 for each, whether its whole box is inside the screen and, on a phone,
@@ -124,6 +124,48 @@ sizes. Verify 7 now holds that the book's line under the view is the
 newest line only, and verify 13 that the result, the strip's figures and
 buttons, the rounds and the book line are above the bar. 111 tests and 73
 screenshot states after this build (109 and 68 before).
+
+## The near targets and the spotting scope (range-day-ten, 21 Nov 2026)
+
+`test/near.test.js` (its own check group, `near`, so the other groups keep
+their times) holds the new parts in a real browser, signing in through the
+form:
+
+- **twenty seeded shots at each new target** (paper at 50 and 100 yards on
+  both courses, the canyon's 100-yard steel) land exactly where the
+  engine, run in the test with the same inputs, says, and each log row and
+  day shot names its target;
+- **records**: the day's first shot, at paper, writes the cold-bore line
+  (its `hit` meaning on the sheet) and no book line; a steel hit writes its
+  book line; a dead-center hit reads "dead on the center"; a shot row
+  from before range-day-ten (no target) reads as steel;
+- **holes and marks rebuilt from the day**: five holes and the steel's
+  marks are the same after a reload, under the plain drawing and the 3D
+  picture; **Hang a fresh paper** clears the sheet and deletes no shot,
+  **Put the old paper back** undoes it, a fresh paper holds across a
+  reload and a later shot shows on it alone;
+- **the spotting scope**: at its lowest and highest power the view spans
+  exactly the maker's field of view (108 and 60 ft at 1,000 yards); Fire,
+  Steady, Enter, the space bar and the page's own fire door fire nothing
+  there; "Back to the rifle" stands in the bar; a shot in the air lands
+  while at the scope; going there and back moves the view, the sight
+  strip, the bar and the picker row by 0 pixels at 412×830, 412×915 and
+  1280×800; every new button is 44 pixels tall or more;
+- **same scale**: the 3D picture puts each new canyon target's center
+  within 1 pixel of the plain drawing through the Vepr's scope at 2x and
+  7x, its irons, and the spotting scope at 20x and 60x, at both sizes.
+
+`test/data.test.js` holds the new data's shape (paper at 50 and 100 yards
+on both courses, one 12 × 18 in steel plate at 100, every near target
+paper or steel, a plate without the word steel, the paper's and the
+scope's figures); its "the plates stand apart" test now includes the near
+targets. `test/terrain.test.js` (verify 4) checks every near target's
+height against the surveyed ground and its line of sight. The
+within-reach list (`test/line-reach.js`) gains **Spotting scope**, and the
+touch heights the new buttons. Eight new screenshot states, at both sizes:
+`near-paper-50-clean`, `near-paper-50-group`, `spot-paper-50-20x`,
+`spot-paper-50-60x`, `spot-steel-100-marks`, `spot-plate-600-60x`,
+`spot-plate-1000-60x`, `spot-rifle-line-paper-50`.
 
 ## The ground's surfaces (range-day-eight, 20 Nov 2026)
 

@@ -197,6 +197,29 @@ const SCREENS = [
   { name: 'line-top-short-opened', path: AR, expect: 'BCM AR-15 carbine, 5.56 with', act: async (page) => { await plate(page, 0); await page.evaluate(() => window.scrollTo(0, 0)); await page.click('#line-head'); await page.waitForSelector('#line-full:not([hidden])'); await settle(page, 200); } },
   { name: 'line-top-scrolled-wind', path: AR, expect: 'Wind as you read it', act: async (page) => { await plate(page, 0); await page.evaluate(() => document.getElementById('windcall').scrollIntoView({ block: 'center' })); await settle(page, 300); } },
 ];
+// range-day-ten: the near targets and the spotting scope. A group on paper: the first seeded shot shows where the seed lands, the
+// hold is moved so the seeds land about the sheet's center, then five seeded shots; the steel's marks the same way.
+const target = async (page, key) => { await ready(page); await page.evaluate((k) => RangeDayLine.setTarget(k), key); await settle(page, 300); };
+async function groupOn(page, key, seeds) {
+  await target(page, key);
+  await page.evaluate(() => RangeDayLine.setHold(0, 0));
+  const probe = await seededShot(page, seeds[0]);
+  const ipm = probe.yards * 36 * (Math.PI / (180 * 60));
+  await page.evaluate(([u, r]) => RangeDayLine.setHold(u, r), [-probe.upIn / ipm, -probe.rightIn / ipm]);
+  for (const sd of seeds) await seededShot(page, sd);
+  await landed(page);
+}
+const spot = async (page, power) => { await page.click('#spotting'); await page.evaluate((m) => RangeDayLine.setSpotZoom(m), power); await page.evaluate(() => window.scrollTo(0, 0)); await settle(page, 1500); };
+SCREENS.push(
+  { name: 'near-paper-50-clean', path: `${PIRU}&sight=utg-2-7x44`, expect: '50 yards (paper)', act: async (page) => { await target(page, 'near-0'); await page.evaluate(() => RangeDayLine.setZoom(7)); await page.evaluate(() => window.scrollTo(0, 0)); await settle(page, 800); } },
+  { name: 'near-paper-50-group', path: `${PIRU}&sight=utg-2-7x44`, expect: 'On paper at 50 yards', act: async (page) => { await page.evaluate(() => RangeDayLine.setZoom(7)); await groupOn(page, 'near-0', [501, 502, 503, 504, 505]); await page.evaluate(() => window.scrollTo(0, 0)); await settle(page, 2500); } },
+  { name: 'spot-paper-50-20x', path: `${PIRU}&sight=utg-2-7x44`, expect: 'Back to the rifle', act: async (page) => { await groupOn(page, 'near-0', [501, 502, 503, 504, 505]); await spot(page, 20); } },
+  { name: 'spot-paper-50-60x', path: `${PIRU}&sight=utg-2-7x44`, expect: 'Back to the rifle', act: async (page) => { await groupOn(page, 'near-0', [501, 502, 503, 504, 505]); await spot(page, 60); } },
+  { name: 'spot-steel-100-marks', path: `${PIRU}&sight=utg-2-7x44`, expect: 'Back to the rifle', act: async (page) => { await groupOn(page, 'near-2', [511, 512]); await spot(page, 60); } },
+  { name: 'spot-plate-600-60x', path: `${PIRU}&sight=utg-2-7x44`, expect: 'Back to the rifle', act: async (page) => { await target(page, '4'); await spot(page, 60); } },
+  { name: 'spot-plate-1000-60x', path: `${PIRU}&sight=utg-2-7x44`, expect: 'Back to the rifle', act: async (page) => { await target(page, '8'); await spot(page, 60); } },
+  { name: 'spot-rifle-line-paper-50', path: AR, expect: 'Back to the rifle', act: async (page) => { await groupOn(page, 'near-0', [521, 522, 523, 524, 525]); await spot(page, 40); } },
+);
 // range-day-eight: the ground, on Full and on Light, February midday and September afternoon: the floor through the
 // Vepr's irons at 1x aimed at the 200-yard plate; the 600- and 1,000-yard plates' hillsides through its scope at 7x; and
 // the 600-yard hillside through a test view three times stronger (the scope's own field-of-view rule carried to 21x through

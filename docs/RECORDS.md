@@ -56,6 +56,12 @@ lack `day`, `tempF`, `call` and `conditionsShown`.
    "day": "2026-11-17-mwkoc3x1", "tempF": 52, "call": { "from": "left", "mph": 6 }, "conditionsShown": false }]
 ```
 
+Since range-day-ten a row says which target it was fired at: `target`
+is `"paper"` or `"steel"` (100-yard paper and 100-yard steel are told
+apart by it); a row without it is read as steel. On paper `hit` means on
+the sheet and `where` says where from the nearest aiming mark ("on paper
+(1.2 in high from the center mark)"); off it, "miss: off the paper, …".
+
 The older form `log:<rifle>:<load>` is read for the rifle's default
 sight and written forward, the old record left in place. "Clear the log"
 clears only this record.
@@ -92,6 +98,22 @@ freely. A day left open from an earlier date is finished by itself
       "hit": true, "reached": true, "upIn": 2.08, "rightIn": 0.83, "book": true, "coldBore": true }
   ],
   "firstShotPlace": "bench", "endedAt": null, "endedBy": null }
+```
+
+Since range-day-ten each shot at the line carries `target`, `"paper"` or
+`"steel"`; a shot without it (every shot before range-day-ten) is read as
+steel. On paper `hit` means the bullet went through the sheet, and `book`
+is always false (the book holds hits on steel). The holes a sheet shows
+and the marks a plate shows are rebuilt from these shots whenever the
+firing line opens. `freshPaper` (absent until used) holds, per paper
+distance, the number of the last shot of the day when **Hang a fresh
+paper** was pressed: the sheet shows only later shots; **Put the old
+paper back** sets it back to what it was (or removes it). No shot is ever
+deleted.
+
+```json
+{ "freshPaper": { "50": 7 },
+  "shots": [{ "n": 8, "place": "line", "yards": 50, "target": "paper", "hit": true, "reached": true, "upIn": -1.2, "rightIn": 0.4, "book": false, "coldBore": false, "...": "the other fields as above" }] }
 ```
 
 ### The finished days: `days`
@@ -150,6 +172,10 @@ names of the gun record's `measured.cold_bore` section.
    "yards": 300, "elevationClicks": 4, "windageClicks": -1, "leaf": null, "windCall": { "from": "left", "mph": 6 }, "tempF": 52,
    "hit": false, "upIn": -9.4, "rightIn": 2.1 }]
 ```
+
+A cold-bore line written at paper (range-day-ten) carries `"target":
+"paper"`, and its `hit` means on the sheet; a line without `target` was at
+steel.
 
 ### Small records
 

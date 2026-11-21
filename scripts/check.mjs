@@ -59,6 +59,7 @@ export const TEST_GROUPS = {
   'scene-rest': { files: ['test/scene.test.js'], skip: '^verify [23]:', env: { TEST_PORT: '8965' } },
   day: { files: ['test/day.test.js'] },
   browser: { files: ['test/browser.test.js'] },
+  near: { files: ['test/near.test.js'], env: { TEST_PORT: '8975' } }, // range-day-ten: the near targets and the spotting scope
 };
 TEST_GROUPS.rest = { files: readdirSync(join(root, 'test')).filter((f) => f.endsWith('.test.js')).map((f) => `test/${f}`).filter((f) => !Object.values(TEST_GROUPS).flatMap((g) => g.files).includes(f)).sort() };
 
