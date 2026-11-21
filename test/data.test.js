@@ -207,6 +207,7 @@ test('range-day-twelve: the sights fitted to the rifles: each figure from a page
   assert.equal(T.windageClickMoa, 0.5); assert.match(rawS['troy-battlesights'].windageClickMoa.source.note, /1\/2 MOA clicks/);
   assert.ok(Math.abs(T.frontPostMoa - (0.07 / T.sightRadiusIn) * MOA) < 0.01, 'the post\'s angle is its width over the sight radius');
   assert.ok(Math.abs(T.clickMoa - (0.006946 / T.sightRadiusIn) * MOA) < 0.01, 'an A2 post\'s click over this radius');
+  assert.ok(T.frontHood && T.frontHood.innerMoa > T.frontPostMoa && !T.frontEars, 'range-day-twelve-b: the HK-style round hood around the post (Dan: "I think it was round")');
   const F = S['fab-flipup'];
   assert.deepEqual(F.apertures.map((a) => a.diameterIn), [0.118, 0.059], '3 mm and 1.5 mm peeps');
   assert.ok(F.frontEars.topAboveMoa > 0 && F.frontEars.gapMoa > F.frontPostMoa, 'tall guards either side of the post');

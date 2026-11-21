@@ -1,5 +1,5 @@
 {
- "_about": "The sights. clickMoa is what one click of elevation moves the strike, windageClickMoa one click of windage, in minutes of angle; clicks is the travel each way from the middle. zoom is the magnification range; fovFtAt100 the field of view in feet at 100 yards at the lowest and highest zoom. frontPostMoa is the front post's width over the sight radius (how wide it looks against the target); apertureMoa the rear ring's lit circle and notchMoa the rear notch's width as the eye sees them; dotMoa a red dot's size. leaf is a sliding rear leaf: its marked settings, the service load it was cut for, and each setting's angle above the 100 m setting, derived with the engine (leaf545: the same leaf on the 5.45x39 rifle, cut for its own load). notchDepthMoa is the rear notch's depth as the eye sees it; stemWidthMoa a bead's stem; a drop reticle's chevronHalfWidthMoa and markHalfWidthMoa are its drawn widths. aimWanderFactor scales the drawn wander of the aim through this sight (1 where absent). frontBead marks a front sight that is a round bead on a stem rather than a flat post. range-day-twelve: sightRadiusIn is the distance between the front and rear sight, the radius the front post's width is seen over; frontPostIn and apertures (each peep's diameterIn) are the parts' own sizes; frontEars draws the front sight's guards (their inner gap, each one's width, and how far their tops stand above the post); frontStripeMoa and frontStripeTopMoa a glowing stripe on a front post; adjustWords says in plain words where each adjustment is; kind \"seeall\" is the SeeAll Open Sight, its reticle a triangle whose tip is the aim point, standing across a line that tops a glowing field; a reticle's focalPlane and trueAtPower say where a second-focal-plane reticle's marks are true (at another power p they stand trueAtPower / p times as far apart in angle). tookThePlaceOf names the sight a new one replaced on its rifles without carrying its records (they click differently or sit at another height): a record from before any sight could be chosen, made with the old sight, is never read as the new one's. rearBody is a rear peep's leaf, where it stands far from the eye (its width and how far its top stands above the peep): only the leaf is dark around the peep; a sight without it has its ring close to the eye, dark to the edges of the view. range-day-twelve-b: a rear sight with two peeps (apertures, each with its diameterIn and the apertureMoa it covers seen from the eye) flips between them on the firing line; both stand in the same plane, so the flip moves no shot.",
+ "_about": "The sights. clickMoa is what one click of elevation moves the strike, windageClickMoa one click of windage, in minutes of angle; clicks is the travel each way from the middle. zoom is the magnification range; fovFtAt100 the field of view in feet at 100 yards at the lowest and highest zoom. frontPostMoa is the front post's width over the sight radius (how wide it looks against the target); apertureMoa the rear ring's lit circle and notchMoa the rear notch's width as the eye sees them; dotMoa a red dot's size. leaf is a sliding rear leaf: its marked settings, the service load it was cut for, and each setting's angle above the 100 m setting, derived with the engine (leaf545: the same leaf on the 5.45x39 rifle, cut for its own load). notchDepthMoa is the rear notch's depth as the eye sees it; stemWidthMoa a bead's stem; a drop reticle's chevronHalfWidthMoa and markHalfWidthMoa are its drawn widths. aimWanderFactor scales the drawn wander of the aim through this sight (1 where absent). frontBead marks a front sight that is a round bead on a stem rather than a flat post. range-day-twelve: sightRadiusIn is the distance between the front and rear sight, the radius the front post's width is seen over; frontPostIn and apertures (each peep's diameterIn) are the parts' own sizes; frontEars draws the front sight's guards (their inner gap, each one's width, and how far their tops stand above the post); frontStripeMoa and frontStripeTopMoa a glowing stripe on a front post; adjustWords says in plain words where each adjustment is; kind \"seeall\" is the SeeAll Open Sight, its reticle a triangle whose tip is the aim point, standing across a line that tops a glowing field; a reticle's focalPlane and trueAtPower say where a second-focal-plane reticle's marks are true (at another power p they stand trueAtPower / p times as far apart in angle). tookThePlaceOf names the sight a new one replaced on its rifles without carrying its records (they click differently or sit at another height): a record from before any sight could be chosen, made with the old sight, is never read as the new one's. rearBody is a rear peep's leaf, where it stands far from the eye (its width and how far its top stands above the peep): only the leaf is dark around the peep; a sight without it has its ring close to the eye, dark to the edges of the view. range-day-twelve-b: a rear sight with two peeps (apertures, each with its diameterIn and the apertureMoa it covers seen from the eye) flips between them on the firing line; both stand in the same plane, so the flip moves no shot. frontHood is a round hood around the front post (its inside diameter and its wall, as the eye sees them), centred on the post's tip.",
  "ar-irons": {
   "name": "AR-15 iron sights (front post, rear aperture)",
   "kind": "iron",
@@ -981,9 +981,9 @@
   }
  },
  "troy-battlesights": {
-  "name": "Troy folding BattleSights (rear: two apertures; front: A2 post)",
+  "name": "Troy folding BattleSights (rear: two apertures; front: A2 post, round hood)",
   "kind": "iron",
-  "model": "Troy Industries Folding BattleSight, rear SSIG-FBS-R0BT-00 (round, same-plane dual aperture, black) and front M4-style SSIG-FBS-FMBT-00 (A2 post between two ears). Chosen because Dan named \"Troy Industries Folding Battle Sight Rear\" and \"Troy folding rear and front\"; of Troy's two folding fronts (HK-style round hood, M4-style ears) the M4-style is the one that pairs with a round-aperture rear on an AR; the tritium and diamond-aperture versions were not named.",
+  "model": "Troy Industries Folding BattleSight, rear SSIG-FBS-R0BT-00 (round, same-plane dual aperture, black) and front HK-style SSIG-FBS-FHBT-00 (A2 post in a round hood). Chosen because Dan named \"Troy Industries Folding Battle Sight Rear\" and \"Troy folding rear and front\"; of Troy's two folding fronts (HK-style round hood, M4-style ears) Dan remembers the round one (21 Nov 2026: \"I think it was round\"); the tritium and diamond-aperture versions were not named. range-day-twelve-b: the M4-style front drawn before carried the same A2 post, clicks and height, so no record changes.",
   "sightRadiusIn": {
    "value": 18,
    "estimate": "sight radius, not published by Troy or BCM: the folding front stands at the front end of the carbine's top rail and the rear at the back of the receiver's rail; on a 16-inch carbine with a 13- to 15-inch handguard rail the two stand about 17 to 20 in apart; 18.0 in used"
@@ -1048,20 +1048,6 @@
    "value": 261.27,
    "estimate": "the large (0.190 in) peep, the one drawn: seen at about 2.5 in from the eye (the AR's rear sight sits at the back of the receiver, a cheek-weld from the eye) it covers 0.190 / 2.5 radians, 261.27 MOA. The rear flips between its two peeps on the firing line (range-day-twelve-b, the aperture control); the large is where it starts"
   },
-  "frontEars": {
-   "gapMoa": {
-    "value": 57.3,
-    "estimate": "the inner gap between the M4-style front's two ears; Troy publishes no drawing: an A2-style pair of ears stands about 0.3 in apart around the post, over 18 in 57.3 MOA. A drawing figure"
-   },
-   "widthMoa": {
-    "value": 15.28,
-    "estimate": "each ear about 0.08 in thick, over 18 in 15.28 MOA; not published, a drawing figure"
-   },
-   "topAboveMoa": {
-    "value": 9.55,
-    "estimate": "the ears' tops stand a little above the post's top at its middle setting, about 0.05 in: 9.55 MOA; not published, a drawing figure"
-   }
-  },
   "zoom": {
    "low": {
     "value": 1,
@@ -1083,7 +1069,17 @@
    }
   },
   "adjustWords": "Elevation is the front post (an A2 post, turned with a tool); windage is the rear sight's drum.",
-  "tookThePlaceOf": "ar-irons"
+  "tookThePlaceOf": "ar-irons",
+  "frontHood": {
+   "innerMoa": {
+    "value": 95.49,
+    "estimate": "the round hood's inside diameter, not published by Troy: an HK-style hood rings the post about 0.5 in across inside, over the 18.0 in sight radius 95.49 MOA; its centre stands at the post's tip (the circle-in-circle picture). A drawing figure"
+   },
+   "wallMoa": {
+    "value": 13.37,
+    "estimate": "the hood's wall as the eye sees it end-on, about 0.07 in thick: 13.37 MOA; not published, a drawing figure"
+   }
+  }
  },
  "fab-flipup": {
   "name": "FAB Defense flip-up sights (FBS front, RBS rear)",
