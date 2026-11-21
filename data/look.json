@@ -814,5 +814,48 @@
    "value": 1500000,
    "estimate": "the same on Light, on top of 6,344,136 bytes"
   }
+ },
+ "paper": {
+  "_about": "The near targets' paper (range-day-ten): the game's own drawing of a reactive sight-in sheet (dark, so a hole shows a bright burst around it), with no brand name and not the layout of any product. The sheet's size is the course data's widthIn and heightIn; these are its marks, its board and its holes. Every picture draws it from these figures.",
+  "gridIn": {
+   "value": 1,
+   "estimate": "a 1-inch grid, the same as the zero bench's paper, so a group is read in inches against it"
+  },
+  "centreMarkIn": {
+   "value": 2,
+   "estimate": "the centre aiming mark is a 2-inch square, the size of the zero bench's centre square"
+  },
+  "cornerMarkIn": {
+   "value": 1,
+   "estimate": "each of the four smaller aiming marks is a 1-inch square, half the centre mark"
+  },
+  "cornerMarkRightIn": {
+   "value": 3.5,
+   "estimate": "the four smaller marks stand 3.5 in right and left of the sheet's centre line (2.5 in from the 12-inch sheet's edges)"
+  },
+  "cornerMarkUpIn": {
+   "value": 5.5,
+   "estimate": "and 5.5 in above and below its centre (3.5 in from the 18-inch sheet's top and bottom edges)"
+  },
+  "burstRifleIn": {
+   "value": 1.5,
+   "estimate": "the bright yellow burst around a hole, across: reactive splatter targets' own product photographs show a ring several times the hole's width around each hole; taken as about 1.5 in for a centrefire rifle bullet (not a maker's figure)"
+  },
+  "burstRimfireIn": {
+   "value": 1,
+   "estimate": "the same for a .22 rimfire bullet, smaller and slower: about 1 in (not a maker's figure)"
+  },
+  "boardFootAboveGroundM": {
+   "value": 0.15,
+   "estimate": "a board's foot stands 0.15 m above the ground on its frame, as every board in the canyon picture does (src/scene/things.mjs, buildBoards)"
+  },
+  "sheetCentreAboveBoardFootIn": {
+   "value": 24,
+   "estimate": "the sheet hangs on the upper part of its 36-inch board, its top 3 in below the board's top: its centre 36 − 3 − 9 = 24 in above the board's foot"
+  },
+  "nearGroupMoundM": {
+   "value": 0.4,
+   "estimate": "the canyon's two groups of four boards at 50 yards stand on low mounds 0.4 m above the floor, as the picture draws them (src/scene/things.mjs, buildBoards)"
+  }
  }
 }

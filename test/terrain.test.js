@@ -56,7 +56,7 @@ test('terrain: every file data/terrain.json names exists with the stated bytes a
   for (const id of COURSES) { assert.equal(flat.terrain[id].heights.spacingM, 1, `${id}: 1 m heights`); assert.equal(flat.terrain[id].heights.holes, 0, `${id}: no holes`); }
 });
 
-test('verify 4: each course\'s altitudeFt is the surveyed ground at the firing position; each plate\'s riseFt is the surveyed ground there plus the plate\'s centre above its ground, less the eye, within 1 ft; the line of sight to every plate clears the ground by at least 1 ft', () => {
+test('verify 4: each course\'s altitudeFt is the surveyed ground at the firing position; each plate\'s (and, since range-day-ten, each near target\'s) riseFt is the surveyed ground there plus the plate\'s centre above its ground, less the eye, within 1 ft; the line of sight to every plate clears the ground by at least 1 ft', () => {
   const eye = flat.look.eyeHeightFt * FT, share = flat.physics.scenery.postHeightShareOfPlate;
   for (const id of COURSES) {
     const c = flat.courses[id], h = heightsOf(id);
@@ -77,6 +77,20 @@ test('verify 4: each course\'s altitudeFt is the surveyed ground at the firing p
       assert.ok(least >= 1 * FT, `${id} ${p.yards} yd: the line of sight clears the ground by ${(least / FT).toFixed(1)} ft at ${Math.round(where / YD)} yd`);
       console.log(`    ${String(p.yards).padStart(5)}  ${String(OLD.rise[i]).padStart(6)}→${String(p.riseFt).padEnd(4)}  ${String(OLD.lat[i]).padStart(8)}→${String(p.lateralYd).padEnd(6)}  ${(least / FT).toFixed(1)} ft at ${Math.round(where / YD)} yd`);
     });
+    // range-day-ten: the near targets, each from its own ground: a plate on its post, a paper sheet on its board (data/look.json, paper)
+    for (const t of c.near) {
+      const q = pointOn(c, t.yards, t.lateralYd);
+      const P = flat.look.paper;
+      const centreUp = t.kind === 'paper' ? (t.onMoundM || 0) + P.boardFootAboveGroundM + P.sheetCentreAboveBoardFootIn * IN : (t.heightIn * share + t.heightIn / 2) * IN;
+      const expected = (h.heightAt(q.e, q.n) + centreUp - (g0 + eye)) / FT;
+      assert.ok(Math.abs(expected - t.riseFt) <= 1, `${id} ${t.kind} ${t.yards} yd: riseFt ${t.riseFt} vs the heights' ${expected.toFixed(1)}`);
+      assert.ok(Math.abs(q.e - t.position.easting) < 0.2 && Math.abs(q.n - t.position.northing) < 0.2, `${id} ${t.kind} ${t.yards} yd: the position follows from the distance and the sideways place`);
+      let least = Infinity, where = 0;
+      const target = g0 + eye + t.riseFt * FT;
+      for (let d = 3; d < t.yards * YD - 1; d += 1) { const s = pointOn(c, d / YD, (t.lateralYd * d) / (t.yards * YD)); const los = g0 + eye + (target - (g0 + eye)) * (d / (t.yards * YD)); const cl = los - h.heightAt(s.e, s.n); if (cl < least) { least = cl; where = d; } }
+      assert.ok(least >= 1 * FT, `${id} ${t.kind} ${t.yards} yd: the line of sight clears the ground by ${(least / FT).toFixed(1)} ft at ${Math.round(where / YD)} yd`);
+      console.log(`    near: ${t.kind} ${t.yards} yd, ${t.lateralYd} yd sideways, riseFt ${t.riseFt} (heights ${expected.toFixed(1)}), clears the ground by ${(least / FT).toFixed(1)} ft at ${Math.round(where / YD)} yd`);
+    }
   }
 });
 
