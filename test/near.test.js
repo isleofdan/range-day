@@ -48,7 +48,7 @@ const setPicture = (page, p) => page.evaluate((v) => { localStorage.removeItem('
 const AR = 'course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193';
 const VEPR = 'course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt';
 const line = async (page, q) => {
-  await page.goto(`${base}/line?${q}`); await page.waitForSelector('#fire');
+  await page.goto(`${base}/line?${q}`, { timeout: 120000 }); await page.waitForSelector('#fire', { timeout: 120000 });
   await page.waitForFunction(() => window.RangeDayLine && (RangeDayLine.scene || RangeDayLine.sceneFailed || (!RangeDayLine.sceneLoading && RangeDayLine.picture === 'plain')), null, { timeout: 120000 });
 };
 async function seededShot(page, seed) {

@@ -303,3 +303,5 @@ body.line .more .windcall { margin-top: 0; }
   .reach .pick:not(.spotting):not(:has(> .zoom:not([hidden]), > .glass:not([hidden]))) .plate { grid-column: auto; }
 }
 .reach .pick #spotrow input[type=range] { height: 44px; padding: 0 8px; }
+/* A control a short scroll below, brought into view (by the keyboard or a script), stops above the fixed bar, not under it. */
+body.line .more button, body.line .more a, body.line .more select, body.line .more input { scroll-margin-bottom: 96px; }
