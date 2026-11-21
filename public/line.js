@@ -857,6 +857,8 @@
     get plateAngles() { return plates.map((p) => ({ yards: p.yards, riseFt: riseOf(p), lateralYd: p.lateralYd, upMoa: toMoa(losAngle(p)), rightMoa: toMoa(sideAngle(p)) })); },
     get lastShotInput() { return lastShotInput; },
     get fovMoa() { return fovMoa(); },
+    // how far the last shot's recoil still holds the view off, in MOA (the screenshot states wait for it to settle)
+    get recoilMoa() { return Math.hypot(recoil.up, recoil.right); },
     // the spotting scope: whether the view is at it, going there and back, its zoom, and its field of view in MOA at a power
     get spotting() { return spotting; }, setSpotting(on) { setSpotting(on); }, setSpotZoom(m) { spotMag = m; $('spot-zoom').value = m; spotZoomText(); }, get spotZoom() { return spotMag; },
     spotFovMoa(m) { return spotFovMoa(m); }, setSpotAim(up, right) { spotAim.up = up; spotAim.right = right; },
