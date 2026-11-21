@@ -199,13 +199,32 @@ It held the layout at 412×915 only and gave 412×800 "as a figure only". The re
 
 ## Deliberate divergences
 
-1. The rounds left moved from beside the sight strip (task item 2) into the Fire button, because the strip and the book line did not fit Dan's screen with the rounds on their own line. Verify 13 holds the rounds inside the Fire button.
-2. The book line holds one line, not two (the brief allowed "one or two lines").
-3. Steady and Fire are 52 px tall, from 56. They are still the largest controls on the page.
+The first five are about what this pull request leaves out, named as the result checker asked (round 2, findings 1–5). The reason is the same for all five: the item was carried out in #22, which is merged and live, and #24 is a correction on top of it, not a second copy.
+
+1. **Task item 1:** #24 does not add `docs/reports/line-layout-before.txt`. That file, the measure of `main` before any change, was committed first in #22 (commit ab3c3d3) and is on `main`. #24 adds `line-layout-before-nine-b.txt`, the measure of the live page before #24. Both are in verify 1 below.
+2. **Task item 3:** #24 does not change the order below the within-reach list. #22 set it (wind call, cold-bore note, zero note, the day, the log, the settings), and #24 keeps it.
+3. **Task item 4:** #24 does not set up the computer layout. #22 did (the column beside the view at 1,100 px and over). #24 keeps it and measures it (verify 1).
+4. **Task item 5:** #24 does not add the steadiness behaviour. #22 did (the fixed-height slots and the folds that open over the page). #24 keeps it, and its test still holds it (verify 3).
+5. **Task item 6:** #24 adds no new test. The two tests item 6 asks for were added in #22. #24 makes them stricter: the within-reach test now also holds 412×830 and checks that the text slots have no vertical padding.
+
+Then the changes #24 makes on purpose:
+
+6. The rounds left moved from beside the sight strip (task item 2) into the Fire button, because the strip and the book line did not fit Dan's screen with the rounds on their own line. Verify 13 holds the rounds inside the Fire button.
+7. The book line holds one line, not two (the brief allowed "one or two lines").
+8. Steady and Fire are 52 px tall, from 56. They are still the largest controls on the page.
 
 ## Verify results
 
-1. **The measure**, before (`docs/reports/line-layout-before-nine-b.txt`, the live page 38b5702) and after (`docs/reports/line-layout-after.txt`, #24). For each sight and size:
+1. **The measure.** Three files:
+   - `docs/reports/line-layout-before.txt`: the original `main` before any change, 4f4ebc8.
+   - `docs/reports/line-layout-before-nine-b.txt`: the live page before #24, 38b5702.
+   - `docs/reports/line-layout-after.txt`: #24.
+
+   The original `main` at 4f4ebc8, before range-day-nine, measured at 412×915 and 1280×800 only:
+   - **412×915, all three sights:** not within reach. The sight's glass control, the result and the six strip items (both settings and the four one-click buttons) were below the screen's edge. The bar was fixed at the bottom from 838. The view was 380×380.
+   - **1280×800, all three sights:** not within reach. The view ran to 917 of 800, and everything below it was off screen. The bar stood beside the view (990–1190 × 628–776). The view was 640×640.
+
+   The live page before #24, and #24 itself:
 
    | Size | Sight | Before | After | Bar before → after | View before → after |
    | - | - | - | - | - | - |
@@ -217,7 +236,12 @@ It held the layout at 412×915 only and gave 412×800 "as a figure only". The re
    | 412×830 | AK irons | no: book line (778.6) under the bar | all within reach (723.6) | 753 → 761 | 380×380 → 380×380 |
    | 1280×800 | all three | all within reach, bar beside the view | the same | 694–776 → 706–776, beside the view covering none of it | 640×640 → 640×640 |
 
-   At 412×760 (figure only), the book line falls under the bar after the change (bottom 755.8, 751.8 and 723.6 against 691). Before the change, the strip's buttons fell under it as well.
+   At **412×800** (figure only, as the brief asks), after #24 the bar's top is at 731:
+   - Vepr: the book line's bottom is at 755.8, under the bar; everything else is within reach.
+   - Tavor SAR: the book line's bottom is at 751.8, under the bar; everything else is within reach.
+   - AK: everything is within reach.
+
+   At 412×760 (figure only), the book line falls under the bar (bottom 755.8, 751.8 and 723.6 against 691). Before #24, the strip's buttons fell under it as well.
 2. **Same shots and same picture:** `git diff origin/main -- public/engine.js data src/scene` is empty.
 3. **Nothing shifts** (`test/day.test.js`, "nothing shifts under the thumb", run on #24; places are left, top, width, height in pixels):
    - 412x915 before (left, top, width, height): view [16, 146.5, 380, 380], strip [16, 589.5, 380, 130], bar [0, 846, 412, 69]
@@ -253,9 +277,11 @@ It held the layout at 412×915 only and gave 412×800 "as a figure only". The re
    - [44841130824](https://github.com/isleofdan/range-day/actions/runs/44841130824) on b7ef52e: **green, all ten jobs**.
      - Tests: rest 38 s, day 1 min 23 s, browser 1 min 25 s, scene-scale 4 min 34 s, scene-shots 8 min 7 s, scene-rest 8 min 52 s.
      - Screenshots: shard 1 5 min 54 s, shard 2 6 min 49 s, shard 3 8 min 26 s, shard 4 7 min 17 s.
-   - Commit f774c87 then added only the before-measure file (`docs/reports/`). Its run, [44842823187](https://github.com/isleofdan/range-day/actions/runs/44842823187), is **green, all ten jobs**; the slowest job was tests scene-rest at 8 min 56 s.
-   - Counts: tests 111 and screenshot states 73, unchanged by #24.
-7. **Size:** `git diff origin/main...range-day-nine-b | wc -c` gives 81124 bytes, under 400,000.
+   - Commit f774c87, the pull request's latest, added only the before-measure file. Its run, [44842823187](https://github.com/isleofdan/range-day/actions/runs/44842823187), is **green, all ten jobs**:
+     - tests: rest 23 s, browser 1 min 27 s, day 2 min 2 s, scene-scale 4 min 34 s, scene-shots 7 min 48 s, scene-rest 8 min 56 s;
+     - screenshots: shard 1 5 min 51 s, shard 2 6 min 57 s, shard 3 6 min 49 s, shard 4 6 min 57 s.
+   - Counts: tests 111 before #24 and 111 after; screenshot states 73 before and 73 after. Before range-day-nine they were 109 and 68.
+7. **Size:** the pull request's own diff, `gh pr diff 24 | wc -c` (fetched here as the same diff from GitHub's API, since this container has no `gh`), is 81,173 bytes, under 400,000.
 8. **The deploy result:** filed on the card after the deploy.
 
 What this cannot prove: the session cannot hold Dan's phone. 830 is measured from his screenshots; a browser with more of its own bars showing leaves less room.
@@ -279,6 +305,13 @@ Close-out order, by `CLAUDE.md` "Field reports":
 1. Job 20261121-001558-e62c3f (card event 2888): FINDINGS, 11.
    - 1–5 read #24 against the whole brief. Answered by "Where each task item of the brief stands" and the new before-measure, commit f774c87.
    - 6–11 asked for full figures. Answered in verify 1, 3, 4, 5 and 7 and in the UI review.
+2. Job 20261121-002727-643ec9 (card event 2890): FINDINGS, 10.
+   - 1–5: named as deliberate divergences 1–5.
+   - 6: the original `main` figures were added to verify 1.
+   - 7: the 412×800 figure was added.
+   - 8: every job's time on the latest run, and the before counts, were added.
+   - 9: the pull request's own diff size was added.
+   - 10: this check is run again, and the closing message is sent only once the newest verdict is PASS.
 
 ## Closing message to Dan
 
