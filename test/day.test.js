@@ -110,13 +110,18 @@ test('verify 5: the box and the zeroing supply: the bench fires from its own sup
   // The bench: the supply empties, the bench stays, another box for zeroing.
   await page.goto(`${base}/zero?${AR}`); await page.waitForSelector('#fire5');
   assert.equal(await page.textContent('#rounds'), 'zeroing supply: 15 of 20 left', 'the supply is where the bench left it');
+  // range-day-thirteen: the paper shows the day's bench shots at this distance since the last fresh paper, read from the day, so the
+  // five fired earlier in the day are on it still; three groups add fifteen
+  const before = await page.evaluate(() => RangeDayZero.holes.length);
   for (let i = 0; i < 3; i++) await page.click('#fire5');
   const holes = await page.evaluate(() => RangeDayZero.holes.length);
-  assert.equal(holes, 15, 'three groups: the last "Fire five" fired the five that were left');
+  assert.equal(holes - before, 15, 'three groups: the last "Fire five" fired the five that were left');
   assert.equal(await page.textContent('#rounds'), 'zeroing supply: the box of 20 is empty');
   assert.match(await page.textContent('#group'), /last round of the zeroing supply.*the day is not over/);
   assert.ok(await page.isDisabled('#fire5') && await page.isDisabled('#fire1'), 'the bench stops firing');
-  await page.click('#fire1', { force: true }).catch(() => {});
+  // range-day-thirteen: Open another box now stands over the Fire row, so a press at Fire's place would open a box; the disabled
+  // button itself is pressed instead
+  await page.$eval('#fire1', (b) => b.click());
   assert.equal(await page.evaluate(() => RangeDayZero.holes.length), holes, 'no more holes');
   assert.equal(page.url().includes('/day'), false, 'the bench stays where it is');
   assert.ok(await page.isVisible('#another-box'));
