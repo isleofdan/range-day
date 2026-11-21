@@ -8,7 +8,9 @@ the SeeAll on both Tavors, the KNS ball post and rear peep on the 7.62x39
 rifle, the ball post or the XS stripe post on the 5.45 rifle, the ball post
 on the Vepr's irons, and the Vepr scope's dots at their true angle for the
 power in use. The AR-15, both Tavors and the 7.62x39 rifle will need zeroing
-again with their new sights; the 5.45 rifle and the Vepr will not.
+again with their new sights. The 5.45 rifle keeps its zero with the ball post
+(its opening sight); its second choice, the XS stripe post, starts
+unzeroed. The Vepr's zeros do not move.
 
 ## What stands
 
@@ -242,7 +244,11 @@ and every AR-15 state (the Troy sights).
    as on `main`, the book line falls under the bar on all 14. Both zoom
    sliders keep their lengths and end 40 px or more from the right edge
    (`test/near.test.js`, range-day-ten verify 3 and 5, passed:
-   `sliders.txt`). Home's doors on a 412×915 phone: bottom 873 px of 915 on
+   `sliders.txt`), measured (`sliders.mjs`, `sliders-measured.txt`): at
+   412×915 and at 412×830 the rifle scope's zoom slider is 130 px long and
+   ends 40 px from the right edge, the spotting scope's 148 px long and 40 px
+   from the edge (both as on `main`); at 1280×800, 342 px and 360 px, each
+   104 px from the edge. Home's doors on a 412×915 phone: bottom 873 px of 915 on
    the AR-15 and the AKs, 849 px on the Tavors (`day-tests.txt`, verify 13,
    passed). Each new name is no longer than the longest on `main` (86
    characters; the longest new one, 63).
@@ -289,7 +295,33 @@ Ask 1).
 
 ## Result check rounds
 
-Round 1: this report as first filed; its verdict follows on the card and in the next filing.
+Round 1 (job 20261121-145321-21692a, report event 2944): FINDINGS, five.
+
+1. *The report said every check passed while the day tests had failed on
+   the newest commit.* Right. Checks run 44916065640 on `f094830` failed
+   one day test ("verify 5: the box and the zeroing supply"): it read the
+   bench's supply line 0.6 s in, before the page wrote it, on a cold runner
+   (it passed on the run before). Fixed in the test helper, not by a
+   re-run: the bench helper now waits for that line (`ddd8ca6`). Verify 9
+   now names the run on the final commit.
+2. *The 5.45 rifle "will not need zeroing again", though its XS post starts
+   new.* Right; the first paragraph and the closing message now say the
+   ball post keeps the zero and the XS post starts unzeroed.
+3. *The notes are held back until after the deploy.* Not changed: that
+   order is this repository's rule, quoted under "The notes branch"
+   (`CLAUDE.md`, "Field reports": "That order is the rule, not a
+   divergence.").
+4. *Verify 7 gave no slider lengths or gaps.* Right; measured and added
+   (130 and 148 px long, 40 px from the edge, on both phones).
+5. *A picture-side file is changed.* Not removed: the brief's rule 6 says
+   "Do not change any file on the picture list", and its task items 1 to 3
+   replace the three sights that `test/scene.test.js` measured by name and
+   by fixed figures. Without the three edits that file's checks fail
+   (the Tavor irons are gone, the Vepr's front is a ball, the dots move
+   with the power), and a failing check stops the merge (brief section 10,
+   item 5). The edits change no measure's method or tolerance and nothing
+   about the picture; they read the figures from the data. Quoted here and
+   in "What the brief got wrong", 1.
 
 ## Asks
 
@@ -321,7 +353,8 @@ sights you fitted on your rifles, and four of them will need zeroing again
 at the zero bench: the AR-15, the Tavor SAR, the Tavor X95 and the 7.62x39
 rifle (each new sight clicks differently or sits at another height, so the
 old zero in clicks would be wrong; the old records stay kept). The 5.45
-rifle and the Vepr keep their zeros.
+rifle keeps its zero with the ball post; its other new choice, the XS
+stripe post, starts unzeroed. The Vepr keeps its zeros.
 
 The change is pull request #36:
 https://github.com/isleofdan/range-day/pull/36. Every check on it passed.
