@@ -87,12 +87,42 @@ test('the plates stand apart: no two centers within 5 MOA of each other as seen 
   const MOA = Math.PI / (180 * 60);
   for (const [id, c] of Object.entries(flat.courses)) {
     if (id.startsWith('_')) continue;
-    const ang = c.plates.map((p) => ({ yards: p.yards, up: Math.atan2(p.riseFt, p.yards * 3) / MOA, right: Math.atan2(p.lateralYd, p.yards) / MOA }));
+    // range-day-ten: the near targets (paper at 50 and 100 yards, and the canyon's 100-yard steel) stand apart from every plate too.
+    const ang = [...(c.near || []), ...c.plates].map((p) => ({ yards: `${p.yards} ${p.kind || 'steel'}`, up: Math.atan2(p.riseFt, p.yards * 3) / MOA, right: Math.atan2(p.lateralYd, p.yards) / MOA }));
     for (let i = 0; i < ang.length; i++) for (let j = i + 1; j < ang.length; j++) {
       const sep = Math.hypot(ang[i].up - ang[j].up, ang[i].right - ang[j].right);
       assert.ok(sep >= 5, `${id}: ${ang[i].yards} and ${ang[j].yards} yd are ${sep.toFixed(1)} MOA apart`);
     }
   }
+});
+
+test('range-day-ten: each course has paper at 50 and 100 yards, the canyon a 12 by 18 in steel plate at 100; every near target says paper or steel, carries its own surveyed height and place, and a target without the word reads as steel', () => {
+  const kindOf = (t) => t.kind || 'steel';
+  for (const [id, c] of Object.entries(flat.courses)) {
+    if (id.startsWith('_')) continue;
+    assert.ok(Array.isArray(c.near), `${id}: a list of near targets`);
+    const paper = c.near.filter((t) => t.kind === 'paper').map((t) => t.yards);
+    assert.deepEqual(paper, [50, 100], `${id}: paper at 50 and 100 yards`);
+    for (const t of c.near) {
+      assert.ok(['paper', 'steel'].includes(t.kind), `${id} ${t.yards}: kind is paper or steel, not ${t.kind}`);
+      for (const f of ['yards', 'widthIn', 'heightIn', 'riseFt', 'lateralYd']) assert.equal(typeof t[f], 'number', `${id} ${t.yards} ${t.kind}: ${f}`);
+      assert.equal(t.widthIn, 12); assert.equal(t.heightIn, 18);
+    }
+    // every steel 100-yard target on the course, near or plate: the canyon gains one, the rifle line already had one
+    const steel100 = [...c.near.filter((t) => t.kind === 'steel'), ...c.plates.filter((p) => kindOf(p) === 'steel')].filter((t) => t.yards === 100);
+    assert.equal(steel100.length, 1, `${id}: one steel plate at 100 yards`);
+    assert.equal(steel100[0].widthIn, 12); assert.equal(steel100[0].heightIn, 18);
+    for (const p of c.plates) assert.equal(kindOf(p), 'steel', `${id} ${p.yards}: a plate without the word reads as steel`);
+  }
+  for (const [id, c] of Object.entries(raw.courses)) {
+    if (id.startsWith('_')) continue;
+    for (const t of c.near) { assert.match(t.riseFt.source.note, /surveyed ground/, `${id} ${t.yards.value} ${t.kind}: riseFt is surveyed`); assert.match(t.lateralYd.source.note, /line of sight/, `${id} ${t.yards.value} ${t.kind}: lateralYd says why it stands there`); }
+  }
+  // the paper's own figures and the spotting scope's, each in the data
+  for (const k of ['gridIn', 'centreMarkIn', 'cornerMarkIn', 'cornerMarkRightIn', 'cornerMarkUpIn', 'burstRifleIn', 'burstRimfireIn', 'boardFootAboveGroundM', 'sheetCentreAboveBoardFootIn', 'nearGroupMoundM']) assert.equal(typeof flat.look.paper[k], 'number', `look.paper.${k}`);
+  assert.deepEqual(flat.spotting.zoom, { low: 20, high: 60 });
+  assert.ok(flat.spotting.fovFtAt1000.low > flat.spotting.fovFtAt1000.high, 'the field narrows as the power rises');
+  assert.match(raw.spotting.fovFtAt1000.low.source.url, /^https:\/\//);
 });
 
 test('every sliding leaf names its settings, its service load and a derived angle per setting; every notch sight has a notch width', () => {

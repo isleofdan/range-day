@@ -675,6 +675,93 @@ window.RD = (function () {
     const h = Math.abs(rightIn) < 0.5 ? 'centered' : `${Math.abs(rightIn).toFixed(Math.abs(rightIn) > 10 ? 0 : 1)} in ${rightIn > 0 ? 'right' : 'left'}`;
     return `${v}, ${h}`;
   }
+  // "dead on the center", "2.1 in high from the center", "2.1 in high, 0.8 in left from the center": where a hit sits against a mark (range-day-ten: a hit within half an inch
+  // both ways used to read "level, centered of center").
+  function offText(upIn, rightIn, mark = 'center') {
+    const f = (v) => Math.abs(v).toFixed(Math.abs(v) > 10 ? 0 : 1);
+    const parts = [Math.abs(upIn) >= 0.5 ? `${f(upIn)} in ${upIn > 0 ? 'high' : 'low'}` : null, Math.abs(rightIn) >= 0.5 ? `${f(rightIn)} in ${rightIn > 0 ? 'right' : 'left'}` : null].filter(Boolean);
+    return parts.length ? `${parts.join(', ')} from the ${mark}` : `dead on the ${mark}`;
+  }
+
+  // --- the near targets' paper (range-day-ten) -------------------------------------------------
+  // A target is paper or steel; a target without the word (every plate before range-day-ten, and every shot row before it) is steel.
+  const kindOf = (t) => (t && t.kind === 'paper' ? 'paper' : 'steel');
+  // A bullet's hole across, in inches, by the load's calibre (the zero bench's figures).
+  const holeIn = (load) => (load.caliber.startsWith('7.62') ? 0.31 : load.caliber.startsWith('.22') ? 0.22 : 0.224);
+  const burstIn = (load, P) => (load.caliber.startsWith('.22') ? P.burstRimfireIn : P.burstRifleIn);
+  // The sheet's aiming marks, inches from its centre: the centre mark and four smaller ones toward the corners (data/look.json, paper).
+  const paperMarks = (P) => [{ upIn: 0, rightIn: 0, name: 'center mark', sizeIn: P.centreMarkIn }, ...[[1, -1], [1, 1], [-1, -1], [-1, 1]].map(([u, r]) => ({ upIn: u * P.cornerMarkUpIn, rightIn: r * P.cornerMarkRightIn, name: `${u > 0 ? 'upper' : 'lower'} ${r > 0 ? 'right' : 'left'} mark`, sizeIn: P.cornerMarkIn }))];
+  // Where a hole is against the nearest aiming mark: { mark, upIn, rightIn } (inches from that mark).
+  function nearestMark(upIn, rightIn, P) {
+    let best = null;
+    for (const m of paperMarks(P)) { const dIn = Math.hypot(upIn - m.upIn, rightIn - m.rightIn); if (!best || dIn < best.dIn) best = { mark: m.name, upIn: upIn - m.upIn, rightIn: rightIn - m.rightIn, dIn }; }
+    return best;
+  }
+  const onSheet = (t, upIn, rightIn) => Math.abs(upIn) <= t.heightIn / 2 && Math.abs(rightIn) <= t.widthIn / 2;
+  // Draws one sheet with its holes on a 2D canvas: centred at (x, y), `ppi` pixels to the inch, the sheet `w` by `h` inches. Every
+  // picture draws the paper with this one function: the plain drawing on the view, the 3D picture on the sheet's own texture.
+  // holes: [{ upIn, rightIn, holeIn, burstIn, seed }]. Nothing else is printed on it: no score, no group size.
+  function drawPaper(g, x, y, ppi, w, h, holes, P) {
+    const W = w * ppi, H = h * ppi, x0 = x - W / 2, y0 = y - H / 2;
+    g.save();
+    g.beginPath(); g.rect(x0, y0, W, H); g.clip();
+    g.fillStyle = '#1d1f1e'; g.fillRect(x0, y0, W, H);
+    // the 1-inch grid, fine and pale, the centre lines a little heavier
+    if (ppi >= 1.2) {
+      g.strokeStyle = 'rgba(214, 218, 210, 0.32)'; g.lineWidth = Math.max(0.5, ppi * 0.03);
+      g.beginPath();
+      for (let i = -Math.floor(w / 2 / P.gridIn); i <= Math.floor(w / 2 / P.gridIn); i++) { const gx = x + i * P.gridIn * ppi; g.moveTo(gx, y0); g.lineTo(gx, y0 + H); }
+      for (let i = -Math.floor(h / 2 / P.gridIn); i <= Math.floor(h / 2 / P.gridIn); i++) { const gy = y - i * P.gridIn * ppi; g.moveTo(x0, gy); g.lineTo(x0 + W, gy); }
+      g.stroke();
+      g.strokeStyle = 'rgba(214, 218, 210, 0.55)'; g.lineWidth = Math.max(0.6, ppi * 0.05);
+      g.beginPath(); g.moveTo(x, y0); g.lineTo(x, y0 + H); g.moveTo(x0, y); g.lineTo(x0 + W, y); g.stroke();
+    }
+    // the aiming marks: pale squares with a dark middle
+    for (const m of paperMarks(P)) {
+      const s = m.sizeIn * ppi, mx = x + m.rightIn * ppi, my = y - m.upIn * ppi;
+      g.fillStyle = '#ecebe4'; g.fillRect(mx - s / 2, my - s / 2, s, s);
+      g.fillStyle = '#1d1f1e'; g.fillRect(mx - s / 6, my - s / 6, s / 3, s / 3);
+    }
+    // the holes: a ragged bright yellow burst where the dark layer flaked off, the hole itself dark in its middle
+    for (const hole of holes) {
+      const hx = x + hole.rightIn * ppi, hy = y - hole.upIn * ppi;
+      const br = (hole.burstIn / 2) * ppi;
+      let s = (hole.seed || 1) >>> 0; const rnd = () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
+      g.fillStyle = '#e8f52a';
+      g.beginPath();
+      for (let k = 0; k <= 18; k++) { const a = (k / 18) * Math.PI * 2, r = br * (0.72 + rnd() * 0.4); if (k) g.lineTo(hx + Math.cos(a) * r, hy + Math.sin(a) * r); else g.moveTo(hx + Math.cos(a) * r, hy + Math.sin(a) * r); }
+      g.closePath(); g.fill();
+      g.fillStyle = 'rgba(250, 255, 120, 0.85)'; g.beginPath(); g.arc(hx, hy, br * 0.55, 0, Math.PI * 2); g.fill();
+      g.fillStyle = '#121110'; g.beginPath(); g.arc(hx, hy, Math.max(0.6, (hole.holeIn / 2) * ppi), 0, Math.PI * 2); g.fill();
+    }
+    g.restore();
+    g.strokeStyle = 'rgba(0, 0, 0, 0.55)'; g.lineWidth = Math.max(0.5, ppi * 0.04); g.strokeRect(x0, y0, W, H);
+  }
+  // The shots of a day at one target, read from the day's own record (so a reload, or a look at another page, loses none): each
+  // line shot at that kind and distance, landed, in firing order. A shot row from before range-day-ten has no target and reads as steel.
+  const shotsAt = (day, kind, yards) => ((day && day.shots) || []).filter((s) => s.place === 'line' && s.yards === yards && kindOf({ kind: s.target }) === kind && s.reached && typeof s.upIn === 'number');
+  // The holes on a paper: its shots on the sheet since the last fresh paper was hung there.
+  function paperHoles(day, t) {
+    const since = (day && day.freshPaper && day.freshPaper[String(t.yards)]) || 0;
+    return shotsAt(day, 'paper', t.yards).filter((s) => s.n > since && onSheet(t, s.upIn, s.rightIn));
+  }
+  // The marks on a steel plate: the day's hits on it.
+  const steelMarks = (day, t) => shotsAt(day, 'steel', t.yards).filter((s) => s.hit);
+  // "Hang a fresh paper": from now the sheet shows only later shots. A marker in the open day (the last shot number before it);
+  // no shot is deleted. Answers { saved, before } where before is the marker it replaced, for "Put the old paper back".
+  function hangFreshPaper(day, yards) {
+    if (!day) return { saved: false, before: undefined };
+    day.freshPaper = day.freshPaper || {};
+    const before = day.freshPaper[String(yards)];
+    day.freshPaper[String(yards)] = day.shots.reduce((m, s) => Math.max(m, s.n || 0), 0);
+    return { saved: saveOpenDay(day), before };
+  }
+  function putOldPaperBack(day, yards, before) {
+    if (!day || !day.freshPaper) return false;
+    if (before === undefined) delete day.freshPaper[String(yards)]; else day.freshPaper[String(yards)] = before;
+    return saveOpenDay(day);
+  }
+
   // "0.5 high, 1.2 right (MOA)" from a hold in minutes of angle
   const heldText = (up, right) => ((Math.abs(up) < 0.3 && Math.abs(right) < 0.3) ? 'center' : `${Math.abs(up).toFixed(1)} ${up > 0 ? 'high' : 'low'}, ${Math.abs(right).toFixed(1)} ${right > 0 ? 'right' : 'left'} (MOA)`);
   // "17 Nov 2026" from a date string
@@ -717,5 +804,6 @@ window.RD = (function () {
     setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
   }
 
-  return { E, data, rifleIds, store, getSight, sightReadFailed, setSight, getZero, setZero, getLog, setLog, zeroCount, getLast, setLast, getLastFor, setLastFor, getWhen, setWhen, thisMonth, TIMES, MONTHS, getWindCall, setWindCall, windCallText, wireWindCall, chooseFrom, params, remember, leafOf, holdRepeat, wireKnobs, settingLine, roundsText, leafText, showConditions, setShowConditions, PICTURES, getPicture, pictureReadFailed, setPicture, drawDay, conditionsOf, dayWords, localDate, openDay, dayReadFailed, hasShots, finishedDays, dayById, startDay, enterDay, takeRounds, openAnotherBox, boxesOpened, roundsFired, boxesText, getSupply, supplyReadFailed, takeSupply, openSupplyBox, supplyText, recordShot, finishDay, packUp, packedDayId, restorePacked, bookKey, getBook, bookReadFailed, addBookLine, changeBookLine, bookAt, bookNeighbours, newestFirst, comeUpMoa, comeUpText, getColdBore, addColdBore, makeCopy, checkCopy, loadCopy, COPY_KIND, audio, shotSound, ringSound, thudSound, clickSound, qs, esc, sign, moaOf, clicksText, whereText, heldText, dateText, windWord, crosswindMph, fovMoa, fitCanvas, hash, download };
+  return { kindOf, holeIn, burstIn, paperMarks, nearestMark, onSheet, drawPaper, shotsAt, paperHoles, steelMarks, hangFreshPaper, putOldPaperBack, offText,
+    E, data, rifleIds, store, getSight, sightReadFailed, setSight, getZero, setZero, getLog, setLog, zeroCount, getLast, setLast, getLastFor, setLastFor, getWhen, setWhen, thisMonth, TIMES, MONTHS, getWindCall, setWindCall, windCallText, wireWindCall, chooseFrom, params, remember, leafOf, holdRepeat, wireKnobs, settingLine, roundsText, leafText, showConditions, setShowConditions, PICTURES, getPicture, pictureReadFailed, setPicture, drawDay, conditionsOf, dayWords, localDate, openDay, dayReadFailed, hasShots, finishedDays, dayById, startDay, enterDay, takeRounds, openAnotherBox, boxesOpened, roundsFired, boxesText, getSupply, supplyReadFailed, takeSupply, openSupplyBox, supplyText, recordShot, finishDay, packUp, packedDayId, restorePacked, bookKey, getBook, bookReadFailed, addBookLine, changeBookLine, bookAt, bookNeighbours, newestFirst, comeUpMoa, comeUpText, getColdBore, addColdBore, makeCopy, checkCopy, loadCopy, COPY_KIND, audio, shotSound, ringSound, thudSound, clickSound, qs, esc, sign, moaOf, clicksText, whereText, heldText, dateText, windWord, crosswindMph, fovMoa, fitCanvas, hash, download };
 }());

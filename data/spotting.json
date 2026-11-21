@@ -1,0 +1,52 @@
+{
+ "_about": "The tripod spotting scope on the firing line (range-day-ten): a common 20-60x scope with a large front lens, looked through between shots to read where bullets landed. It has no reticle and does not move with the rifle. Its field of view at each end of its zoom comes from the maker's page; between the two ends the view's width follows a power of the magnification fitted through both published figures.",
+ "name": "Tripod spotting scope, 20-60x, 85 mm front lens (modeled on the Vortex Diamondback HD 20-60x85)",
+ "zoom": {
+  "low": {
+   "value": 20,
+   "source": {
+    "url": "https://vortexoptics.com/diamondback-hd-20-60x85-angled.html",
+    "read": "2026-11-21",
+    "note": "the maker's page: magnification 20-60x, objective 85 mm. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches from the maker's site (CONNECT 403)"
+   }
+  },
+  "high": {
+   "value": 60,
+   "source": {
+    "url": "https://vortexoptics.com/diamondback-hd-20-60x85-angled.html",
+    "read": "2026-11-21",
+    "note": "the same page, the top of the zoom"
+   }
+  }
+ },
+ "objectiveMm": {
+  "value": 85,
+  "source": {
+   "url": "https://vortexoptics.com/diamondback-hd-20-60x85-angled.html",
+   "read": "2026-11-21",
+   "note": "the same page, the front lens's diameter"
+  }
+ },
+ "fovFtAt1000": {
+  "low": {
+   "value": 108,
+   "source": {
+    "url": "https://vortexoptics.com/diamondback-hd-20-60x85-angled.html",
+    "read": "2026-11-21",
+    "note": "the maker's page: \"Linear Field of View: 108' - 60' @ 1000 yds\" and \"Angular Field of View: 2.1º - 1.1º\": 108 ft across at 1,000 yards at 20x. Read from the search engine's indexed text of this page on the date given"
+   }
+  },
+  "high": {
+   "value": 60,
+   "source": {
+    "url": "https://vortexoptics.com/diamondback-hd-20-60x85-angled.html",
+    "read": "2026-11-21",
+    "note": "the same figure at 60x: 60 ft across at 1,000 yards"
+   }
+  }
+ },
+ "zoomStep": {
+  "value": 1,
+  "estimate": "the zoom control moves in steps of one power, finer than the zoom ring's printed marks (20, 30, 40, 50, 60)"
+ }
+}

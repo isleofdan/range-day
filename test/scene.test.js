@@ -412,7 +412,8 @@ test('verify 7 (range-day-seven): every board\'s two posts and every plate\'s po
   let least = Infinity;
   for (const b of g.boards) { assert.equal(b.behind.length, 2, `a board at x ${b.x.toFixed(2)} z ${b.z.toFixed(1)} has ${b.behind.length} posts`); for (const d of b.behind) least = Math.min(least, d); }
   assert.ok(least >= D.boardPostStandOffM - 1e-4, `a board's post's nearest face is ${(least * 100).toFixed(2)} cm behind its sheet, under the data's ${D.boardPostStandOffM * 100} cm`);
-  assert.equal(g.plates.length, flat.courses['cta-piru'].plates.length);
+  // every steel target the picture holds: the plates and, since range-day-ten, the near steel (the canyon's 100-yard plate); each one's post is held to the stand-off below
+  assert.equal(g.plates.length, flat.courses['cta-piru'].plates.length + flat.courses['cta-piru'].near.filter((t) => t.kind === 'steel').length);
   const leastPlate = Math.min(...g.plates.map((p) => p.behind));
   assert.ok(leastPlate >= D.platePostStandOffM - 1e-4, `a plate's post's nearest face is ${(leastPlate * 100).toFixed(2)} cm behind the plate's back, under the data's ${D.platePostStandOffM * 100} cm`);
   console.log(`  ${g.boards.length} boards, each with two posts, the nearest face at least ${(least * 100).toFixed(2)} cm behind its sheet (was 0.5 cm); ${g.plates.length} plates, the post's nearest face at least ${(leastPlate * 100).toFixed(1)} cm behind the plate's back (was 0.14 cm behind its front face, inside the steel)`);

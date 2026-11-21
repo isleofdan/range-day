@@ -64,8 +64,9 @@ clicks, then works out the drop and the wind for each distance himself.
   choice on this device is picked when the page opens. While a day with
   shots is open, home shows that day first, with the doors back into it:
   the rifle, load and course are fixed, the sight can be changed. Two courses: the canyon course (steel every 100 yards from
-  200 to 1,000, up the slope) and the rifle line (100 to 600, up a
-  gentle rise).
+  200 to 1,000, up the slope, and since range-day-ten paper at 50 and 100
+  yards and a plate at 100) and the rifle line (100 to 600, up a gentle
+  rise, and paper at 50 and 100).
 - **Zero bench** (`/zero`): a 36-inch paper with a 1-inch grid at 25, 50,
   100 or 200 yards. Fire a group, read where it lands, turn the sight's
   elevation and windage in its real clicks (a press is one click, holding
@@ -94,13 +95,46 @@ clicks, then works out the drop and the wind for each distance himself.
   conditions**, prints the true wind, temperature and the engine's drop,
   for learning.
 
+  **Paper at 50 and 100 yards, and the spotting scope** (range-day-ten).
+  Both courses have paper at 50 and 100 yards, and the canyon course a 12 ×
+  18 inch steel plate at 100 yards; the target picker lists them first, as
+  "50 yards (paper)", "100 yards (paper)" and "100 yards (12 × 18 in
+  steel)". Each stands at its own place on the surveyed ground
+  (`data/courses.json`, `near`; `scripts/place-near.mjs` works
+  the places out): on the canyon the paper hangs on a board of the
+  50-yard group and of the 100-yard row, where the picture already drew
+  boards. The paper is the game's own drawing of a dark sight-in sheet: a
+  1-inch grid, a center aiming mark and four smaller marks toward the
+  corners; a bullet through it leaves its hole with a bright yellow burst
+  around it (`data/look.json`, `paper`), drawn by one function for every
+  picture. A shot at paper flies through the engine like any other; on the
+  sheet it says where, in inches from the nearest aiming mark ("On paper
+  at 50 yards, 1.2 in high, 0.4 in left from the center mark"); paper
+  does not ring, writes no book line (the book holds hits on steel), and
+  the day's first shot at paper still goes in the cold-bore record (hit
+  meaning on the sheet). The holes on a sheet are that day's shots at it,
+  rebuilt from the open day, so a reload loses none; **Hang a fresh
+  paper**, a short scroll below and shown only for paper, clears the sheet
+  from that moment (no shot is deleted), and its message offers **Put the
+  old paper back**. **Spotting scope**, beside the sight's glass control,
+  turns the view to a tripod scope (20 to 60 power, its field of view from
+  the maker's page, `data/spotting.json`) pointed at the chosen target: no
+  reticle, the view still, a drag moves it, its zoom in the glass control's
+  place; the sight strip still turns the rifle's sight. Steady and Fire
+  give way to **Back to the rifle** in the same place, so nothing is fired
+  from the scope. It shows the day's holes on paper and the marks each hit
+  left on steel, rebuilt from the day, and a shot still in the air lands
+  in its view; it prints no group size, circle or caption. A hit within
+  half an inch both ways now reads "dead on the center".
+
   **How the firing line is arranged** (range-day-nine). What a shooter
   needs between shots is within reach without scrolling; what is set
   before a shot, or read after a string, is a short scroll below. On a
   phone, from the top: one short line (the rifle, the load's weight, the
   course and the day, temperature first; a tap opens the full description
-  over the page, a second tap closes it); the plate picker with the
-  sight's own glass beside it (the zoom, the magnifier, or the rear leaf);
+  over the page, a second tap closes it); the target picker with the
+  sight's own glass beside it (the zoom, the magnifier, or the rear leaf)
+  and **Spotting scope**;
   the view, the same size as before; **where the last shot went**, held to
   two lines (a longer one is marked ▾ and opens over the page on a tap;
   "Open another box" stands beside it when the box is empty); **the sight

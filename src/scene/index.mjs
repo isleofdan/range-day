@@ -11,7 +11,7 @@ import { sunPosition, noonElevation, sunVector } from './sun.mjs';
 import { loadHeights } from './heights.mjs';
 import { buildTerrain, frameOf, YD, FT } from './terrain.mjs';
 import { loadMaterials } from './surfaces.mjs';
-import { buildPlates, buildBoards, buildShelter, buildBrush } from './things.mjs';
+import { buildPlates, buildBoards, buildPapers, buildShelter, buildBrush } from './things.mjs';
 import { makePost } from './post.mjs';
 
 const VERSION = 2;
@@ -30,7 +30,7 @@ const loadImage = (url) => new Promise((resolve, reject) => { const im = new Ima
 const hex = (h) => new THREE.Color(h);
 
 async function create(opts) {
-  const { canvas, size, dpr = 1, course, terrain, surfaces, look, physics, weather, month, timeOfDay, quality = 'full', eyeFt } = opts;
+  const { canvas, size, dpr = 1, course, terrain, surfaces, look, physics, weather, month, timeOfDay, quality = 'full', eyeFt, paintPaper } = opts;
   const full = quality === 'full';
   const eyeM = (eyeFt ?? look.eyeHeightFt) * FT;
   const frame = frameOf(course.firing);
@@ -122,7 +122,11 @@ async function create(opts) {
   // The things on the range.
   const platesBuilt = buildPlates({ plates: course.plates, eyeM, look, physics, groundAt, full });
   scene.add(platesBuilt.group);
-  scene.add(buildBoards({ look, groundAt, full }));
+  // range-day-ten: course.papers are the shootable sheets, each on its own board (the row's board in that place is left out)
+  const papers = course.papers || [];
+  scene.add(buildBoards({ look, groundAt, full, skip: papers.map((p) => p.board).filter(Boolean) }));
+  const papersBuilt = buildPapers({ papers, eyeM, look, groundAt, full, paint: paintPaper || (() => {}) });
+  scene.add(papersBuilt.group);
   scene.add(buildShelter({ look, full }));
   const brush = buildBrush({ look, physics, photoImage, photo: photoRec, frame, groundAt, month, full, sunDir });
   scene.add(brush.mesh);
@@ -169,7 +173,9 @@ async function create(opts) {
       renderer.render(scene, camera);
       post.draw();
     },
-    strike(ix, upIn, rightIn) { platesBuilt.strike(ix, upIn, rightIn); },
+    strike(ix, upIn, rightIn, quiet) { platesBuilt.strike(ix, upIn, rightIn, quiet); },
+    setPaper(j, holes) { papersBuilt.setPaper(j, holes); },
+    paperWorld(j) { const p = papers[j]; return { x: p.lateralYd * YD, y: eyeM + p.riseFt * FT, z: -p.yards * YD }; },
     // Where a world point lands on the canvas, in CSS pixels.
     project(x, y, z) { const v = new THREE.Vector3(x, y, z).project(camera); return [((v.x + 1) / 2) * size, ((1 - v.y) / 2) * size]; },
     plateWorld(ix) { const p = course.plates[ix]; return { x: p.lateralYd * YD, y: eyeM + p.riseFt * FT, z: -p.yards * YD }; },

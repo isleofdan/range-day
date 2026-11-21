@@ -32,8 +32,19 @@
   const loadId = c.loadId;
   RD.remember(c);
   const weather = day.weather;
+  // The targets (range-day-ten): the steel plates every 100 yards (course.plates, in their order: the 3D picture and the tests count
+  // them by index) and the near targets (course.near: paper at 50 and 100 yards, and on the canyon a 100-yard plate). The picker
+  // lists the near ones first; each option's value is the target's key: a plate keeps its index ("0", "1", …), a near target is
+  // "near-0", "near-1", …. A target says paper or steel; one without the word is steel.
   const plates = course.plates;
-  let plateIx = 0;
+  const P = d.look.paper;
+  const targets = [...(course.near || []).map((t, i) => ({ ...t, kind: RD.kindOf(t), key: `near-${i}` })), ...plates.map((p, i) => ({ ...p, kind: 'steel', key: String(i) }))];
+  // The 3D picture's steel: the plates in their order, then the near steel; its paper: the near paper.
+  const steelTargets = [...targets.filter((t) => t.kind === 'steel' && !t.key.startsWith('near')), ...targets.filter((t) => t.kind === 'steel' && t.key.startsWith('near'))];
+  steelTargets.forEach((t, i) => { t.steelIx = i; });
+  const paperTargets = targets.filter((t) => t.kind === 'paper');
+  paperTargets.forEach((t, j) => { t.paperIx = j; });
+  let target = targets.find((t) => t.key === '0'); // the first plate, as before the near targets
   let mag = sight.zoom.low;
   let setting = RD.getSight(rifleId, sightId);
   // The magnifier behind the dot (the Tavor SAR): flipped in or out. It has no
@@ -63,7 +74,8 @@
     btn.hidden = at;
   }
 
-  $('intro').textContent = `${course.name.replace(/ \(modeled on.*\)$/, '')}, steel ${plates[0].yards} to ${plates[plates.length - 1].yards} yards. ${rifle.name} with ${sight.name.replace(/ \(.*\)$/, '')}, ${d.loads[loadId].name.replace(/ \(.*\)$/, '')}.`;
+  const steelYards = steelTargets.map((t) => t.yards), paperYards = paperTargets.map((t) => t.yards);
+  $('intro').textContent = `${course.name.replace(/ \(modeled on.*\)$/, '')}, ${paperYards.length ? `paper at ${paperYards.join(' and ')} yards, ` : ''}steel ${Math.min(...steelYards)} to ${Math.max(...steelYards)} yards. ${rifle.name} with ${sight.name.replace(/ \(.*\)$/, '')}, ${d.loads[loadId].name.replace(/ \(.*\)$/, '')}.`;
   // The day in words and one number: the month, the time of day, the temperature. Never the wind.
   const dayLine = () => {
     let t = RD.dayWords(weather, d.weather);
@@ -84,7 +96,8 @@
     $('line-full').hidden = !open; $('line-head').setAttribute('aria-expanded', String(open));
   });
   dayLine();
-  $('plate').innerHTML = plates.map((p, i) => `<option value="${i}">${p.yards} yards (${p.widthIn} × ${p.heightIn} in steel)</option>`).join('');
+  $('plate').innerHTML = targets.map((t) => `<option value="${t.key}">${t.yards} yards (${t.kind === 'paper' ? 'paper' : `${t.widthIn} × ${t.heightIn} in steel`})</option>`).join('');
+  $('plate').value = target.key;
   const zeroHref = () => `/zero${RD.params(c)}`;
   $('to-zero').href = zeroHref();
   $('to-book').href = `/book${RD.params(c)}`;
@@ -101,7 +114,7 @@
   let steady = false, lastShotAt = -10, now = 0, last = performance.now() / 1000;
   const dust = [];                         // {rightMoa, upMoa, bornAt, yards}
   const pending = [];                      // shots in flight
-  const marks = [];                        // {plateIx, rightIn, upIn, at} paint splashes on plates
+  // The marks on the steel and the holes in the paper are read from the open day (RD.steelMarks, RD.paperHoles), so a reload loses none.
   let log = RD.getLog(rifleId, sightId, loadId);
   let flash = 0;
   let lastShotInput = null;
@@ -110,7 +123,7 @@
   const canvas = $('view');
   let view = RD.fitCanvas(canvas, 640);
   window.addEventListener('resize', () => { view = RD.fitCanvas(canvas, 640); if (typeof fitScene === 'function') fitScene(); });
-  const plate = () => plates[plateIx];
+  const plate = () => target;
   const inchPerMoa = (y) => E.inchesPerMoa(y);
   // Each plate's own height above the firing line (data/courses.json, riseFt):
   // the engine is given it (targetRiseFt) and the drawing uses the same figure.
@@ -141,13 +154,23 @@
   const mix = (a, b, f) => `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * f)).join(',')})`;
   const HAZE = [205, 200, 190];
   // The field of view across the drawn view, in MOA: the sight's at this zoom; the magnifier's when it is flipped in.
-  const fovMoa = () => (magnifierIn() ? (magnifier.fovFtAt100.high * 12) / E.inchesPerMoa(100) : RD.fovMoa(sight, mag));
-  const viewMag = () => (magnifierIn() ? magnifier.magnification : mag);
+  // --- the spotting scope (range-day-ten) ---------------------------------------------------------------------
+  // A tripod scope beside the rifle, looked through between shots: no reticle, the view still (no wander, no breathing, no recoil),
+  // pointed at the chosen target and moved by a drag, its zoom across its whole range. Its field of view at each end is the maker's
+  // (data/spotting.json); between them the width follows a power of the magnification through both figures (the rifle scopes'
+  // rule, width × power constant, is the same rule with the power 1; the maker's figures for this scope give about 0.54).
+  const SP = d.spotting;
+  let spotting = false, spotMag = SP.zoom.low;
+  const spotAim = { up: 0, right: 0 };
+  const spotPower = Math.log(SP.fovFtAt1000.low / SP.fovFtAt1000.high) / Math.log(SP.zoom.high / SP.zoom.low);
+  const spotFovMoa = (m) => (SP.fovFtAt1000.low * Math.pow(m / SP.zoom.low, -spotPower) * 12) / E.inchesPerMoa(1000);
+  const fovMoa = () => (spotting ? spotFovMoa(spotMag) : magnifierIn() ? (magnifier.fovFtAt100.high * 12) / E.inchesPerMoa(100) : RD.fovMoa(sight, mag));
+  const viewMag = () => (spotting ? spotMag : magnifierIn() ? magnifier.magnification : mag);
   const pxPerMoa = () => view.size / fovMoa();
   // Where the reticle points right now: the hold, the wander, the breathing
   // and the recoil. The view is drawn from this and the shot is fired from
   // this, the same state, so the bullet goes where the sight showed.
-  const center = () => ({ up: hold.up + wander.up + wander.breath + recoil.up, right: hold.right + wander.right + recoil.right });
+  const center = () => (spotting ? { up: spotAim.up, right: spotAim.right } : { up: hold.up + wander.up + wander.breath + recoil.up, right: hold.right + wander.right + recoil.right });
   const toScreen = (rightMoa, upMoa) => { const c = center(), k = pxPerMoa(); return [view.size / 2 + (rightMoa - c.right) * k, view.size / 2 - (upMoa - c.up) * k]; };
 
   // --- the aim's wander: slow, small, worse after a shot, calmer when held steady ----------
@@ -181,6 +204,10 @@
   const crossMph = () => RD.crosswindMph(weather.wind[Math.min(2, Math.floor((plate().yards / course.steelTo) * 3))]);
   // The sideways angle of the aimed plate, so the scene's own azimuths (from straight downrange) line up with the view.
   const azOf = (sideMoa) => sideMoa - toMoa(sideAngle(plate()));
+  const drawnPaper = {}; // the plain drawing's last frame: each sheet's centre on the canvas
+  // The holes shown on a paper, as the drawing takes them.
+  const load = d.loads[loadId];
+  const holesOf = (t) => RD.paperHoles(day, t).map((s) => ({ upIn: s.upIn, rightIn: s.rightIn, holeIn: RD.holeIn(load), burstIn: RD.burstIn(load, P), seed: RD.hash(`${day.id}:${s.n}`) }));
 
   // --- the picture: Full, Light or Plain ---------------------------------------------------------
   // Full and Light are the 3D scene (public/scene.min.js) on the surveyed
@@ -203,9 +230,12 @@
       await loadSceneScript();
       if (!window.RangeDayScene.canDraw()) throw new Error('no 3D context');
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const next = await window.RangeDayScene.create({ canvas: sceneCanvas, size: view.size, dpr, course, terrain: d.terrain[courseId], surfaces: d.terrain.surfaces, look: d.look, physics: d.physics, weather, month: day.month, timeOfDay: day.timeOfDay, quality });
+      const next = await window.RangeDayScene.create({ canvas: sceneCanvas, size: view.size, dpr, course: { ...course, plates: steelTargets, papers: paperTargets }, paintPaper: (g, wPx, hPx, t, holes) => RD.drawPaper(g, wPx / 2, hPx / 2, wPx / t.widthIn, t.widthIn, t.heightIn, holes, P), terrain: d.terrain[courseId], surfaces: d.terrain.surfaces, look: d.look, physics: d.physics, weather, month: day.month, timeOfDay: day.timeOfDay, quality });
       if (scene) scene.dispose();
       scene = next;
+      // the day's marks on the steel and holes in the paper, as they stand: the picture is new, the day is not
+      for (const t of steelTargets) for (const m of RD.steelMarks(day, t)) scene.strike(t.steelIx, m.upIn, m.rightIn, true);
+      for (const t of paperTargets) scene.setPaper(t.paperIx, holesOf(t));
       sceneCanvas.hidden = false; canvas.parentElement.classList.add('scene-on');
       pictureNote('');
     } catch (e) {
@@ -247,7 +277,7 @@
   function syncScene() {
     if (!scene) return;
     const c = center(), a = plate();
-    scene.setView({ yawDeg: (toMoa(sideAngle(a)) + c.right) / 60, pitchDeg: (toMoa(losAngle(a)) + c.up) / 60, fovDeg: fovMoa() / 60, glass: sight.kind === 'scope' || magnifierIn(), windMph: crossMph() });
+    scene.setView({ yawDeg: (toMoa(sideAngle(a)) + c.right) / 60, pitchDeg: (toMoa(losAngle(a)) + c.up) / 60, fovDeg: fovMoa() / 60, glass: spotting || sight.kind === 'scope' || magnifierIn(), windMph: crossMph() });
   }
 
   function draw() {
@@ -299,7 +329,7 @@
     }
     const wind = crossMph();
     // each plate's bare dirt berm, behind the plate, at its own distance
-    plates.forEach((p) => {
+    steelTargets.forEach((p) => {
       const at = plateAt(p), ipm = inchPerMoa(p.yards), m = plateMoa(p);
       const bermW = (S.bermWidthFt * 12) / ipm, bermH = (S.bermHeightFt * 12) / ipm;
       const foot = at.up - m.h / 2 - m.h * S.postHeightShareOfPlate; // the post's foot, where the plate's ground is
@@ -317,12 +347,12 @@
       g.fillStyle = mix([79, 90, 47], HAZE, hazeOf(b.yards)); g.beginPath(); g.ellipse(x, y, r * 1.1, r * 0.8, 0, 0, 7); g.fill();
     }
     // the plates on their posts, each at its real angular size, with a yardage board beside each
-    plates.forEach((p, i) => {
+    steelTargets.forEach((p) => {
       const at = plateAt(p), m = plateMoa(p), ipm = inchPerMoa(p.yards), haze = hazeOf(p.yards);
       const [x, y] = toScreen(at.right, at.up);
       const w = Math.max(1, m.w * k), h = Math.max(1, m.h * k);
       g.fillStyle = mix([90, 74, 58], HAZE, haze); g.fillRect(x - Math.max(0.5, w * 0.06), y + h / 2, Math.max(1, w * 0.12), h * S.postHeightShareOfPlate);
-      g.fillStyle = mix(i === plateIx ? [217, 214, 207] : [185, 181, 173], HAZE, haze); g.fillRect(x - w / 2, y - h / 2, w, h);
+      g.fillStyle = mix(p === target ? [217, 214, 207] : [185, 181, 173], HAZE, haze); g.fillRect(x - w / 2, y - h / 2, w, h);
       g.strokeStyle = mix([58, 58, 58], HAZE, haze); g.lineWidth = Math.min(1.5, w * 0.05); g.strokeRect(x - w / 2, y - h / 2, w, h);
       // the yardage board, at its real size, beside the plate
       const bw = (S.boardWidthIn / ipm) * k, bh = (S.boardHeightIn / ipm) * k;
@@ -330,7 +360,25 @@
       g.fillStyle = mix([245, 242, 232], HAZE, haze); g.fillRect(bx, by - bh / 2, bw, bh);
       g.strokeStyle = mix([40, 40, 40], HAZE, haze); g.lineWidth = Math.min(1, bw * 0.03); g.strokeRect(bx, by - bh / 2, bw, bh);
       if (bh >= 7) { g.fillStyle = mix([20, 20, 20], HAZE, haze); g.font = `bold ${bh * 0.72}px system-ui, sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(String(p.yards), bx + bw / 2, by + bh * 0.04); }
-      for (const mk of marks) if (mk.plateIx === i) { const [mx, my] = toScreen(at.right + mk.rightIn / ipm, at.up + mk.upIn / ipm); g.fillStyle = '#f3f1ea'; g.beginPath(); g.arc(mx, my, Math.max(1, 0.5 * k / 1.047), 0, 7); g.fill(); }
+      for (const mk of RD.steelMarks(day, p)) { const [mx, my] = toScreen(at.right + mk.rightIn / ipm, at.up + mk.upIn / ipm); g.fillStyle = '#f3f1ea'; g.beginPath(); g.arc(mx, my, Math.max(1, 0.5 * k / 1.047), 0, 7); g.fill(); }
+    });
+    // the paper (range-day-ten): each sheet on its white board, the board on two dark posts down to its ground, the sheet drawn by
+    // the one paper drawing (game.js, drawPaper) with the day's holes, at the view's scale
+    paperTargets.forEach((p) => {
+      const at = plateAt(p), ipm = inchPerMoa(p.yards), ppi = k / ipm, haze = hazeOf(p.yards);
+      const T = d.look.things;
+      const footUp = at.up - (P.sheetCentreAboveBoardFootIn / ipm); // the board's foot, MOA
+      const groundUp = footUp - ((P.boardFootAboveGroundM + (p.onMoundM || 0)) / 0.0254) / ipm;
+      const [bx, bFoot] = toScreen(at.right, footUp);
+      const [, gy] = toScreen(at.right, groundUp);
+      const bw = T.boardWidthIn * ppi, bh = T.boardHeightIn * ppi;
+      if (bx < -bw || bx > size + bw) return;
+      g.fillStyle = mix([74, 63, 54], HAZE, haze);
+      for (const sx of [-0.35, 0.35]) g.fillRect(bx + sx * bw - Math.max(0.5, ppi), bFoot, Math.max(1, 2 * ppi), Math.max(1, gy - bFoot));
+      g.fillStyle = mix([238, 234, 222], HAZE, haze); g.fillRect(bx - bw / 2, bFoot - bh, bw, bh);
+      const [sx, sy] = toScreen(at.right, at.up);
+      RD.drawPaper(g, sx, sy, ppi, p.widthIn, p.heightIn, holesOf(p), P);
+      drawnPaper[p.key] = { x: sx, y: sy, aimRight: c.right, aimUp: c.up, pxPerMoa: k, size }; // where this frame drew the sheet's centre, and the aim it drew from (the tests compare it with the angles)
     });
     drawDust(g, size, k);
     // heat shimmer leaning with the wind (seen through magnification)
@@ -359,6 +407,7 @@
     const wind = crossMph();
     for (const p of dust) {
       const age = now - p.bornAt;
+      const off = p.t ? plateAt(p.t) : { up: 0, right: 0 }; // where the dust's target stands from the one aimed at now
       if (age > D.lifeS) continue;
       const f = age / D.lifeS;
       const ipm = inchPerMoa(p.yards);
@@ -368,7 +417,7 @@
       const alpha = Math.max(0, 0.85 * (1 - f) * (1 - f * 0.3));
       for (let j = 0; j < 9; j++) {
         const jr = (((j * 37) % 11) / 11 - 0.5) * (0.5 + 0.5 * f), ju = (((j * 53) % 7) / 7) * 0.6 - 0.15;
-        const [x, y] = toScreen(p.rightMoa + jr * widthMoa + drift, p.upMoa + riseMoa + ju * widthMoa * 0.7);
+        const [x, y] = toScreen(off.right + p.rightMoa + jr * widthMoa + drift, off.up + p.upMoa + riseMoa + ju * widthMoa * 0.7);
         const r = Math.max(1.5, widthMoa * k * (0.18 + 0.08 * ((j * 29) % 5) / 5));
         const puff = g.createRadialGradient(x, y, 0, x, y, r);
         puff.addColorStop(0, `rgba(222, 200, 160, ${alpha})`); puff.addColorStop(1, 'rgba(222, 200, 160, 0)');
@@ -382,14 +431,15 @@
   // The bullet still flies through the engine from the sight's setting.
   function drawSight(g, size, k) {
     const cx = size / 2, cy = size / 2;
-    if (sight.kind === 'dot') return drawDot(g, size, k, cx, cy);
-    if (sight.kind === 'scope') {
+    if (!spotting && sight.kind === 'dot') return drawDot(g, size, k, cx, cy);
+    if (spotting || sight.kind === 'scope') {
       // the tube: black outside the circle
       g.save(); g.beginPath(); g.rect(0, 0, size, size); g.arc(cx, cy, cx - 4, 0, Math.PI * 2, true); g.fillStyle = '#050505'; g.fill('evenodd'); g.restore();
       const tube = g.createRadialGradient(cx, cy, (cx - 4) * 0.93, cx, cy, cx - 4);
       tube.addColorStop(0, 'rgba(0,0,0,0)'); tube.addColorStop(1, 'rgba(0,0,0,0.6)');
       g.fillStyle = tube; g.beginPath(); g.arc(cx, cy, cx - 4, 0, Math.PI * 2); g.fill();
       g.strokeStyle = 'rgba(0,0,0,0.85)'; g.lineWidth = 2; g.beginPath(); g.arc(cx, cy, cx - 4, 0, Math.PI * 2); g.stroke();
+      if (spotting) return; // the spotting scope has no reticle
       if (sight.reticle && sight.reticle.kind === 'mil-dot') return drawMilDot(g, size, k, cx, cy);
       if (sight.reticle && sight.reticle.marksMoaBelowZero) return drawDropReticle(g, size, k, cx, cy);
       return;
@@ -542,6 +592,7 @@
   const boxEmpty = () => Boolean(day.endedAt) || day.box.left <= 0;
   const rounds = () => { $('rounds').textContent = RD.roundsText(day); $('fire').classList.toggle('spent', boxEmpty()); $('another-box-row').hidden = !boxEmpty(); };
   function fire(seed) {
+    if (spotting) return; // at the spotting scope the rifle is not fired: Fire is not there, and no other door fires it
     if (pending.length > 2) return;
     if (boxEmpty()) { $('result').textContent = `The box of ${day.box.size} is empty. Open another box to go on, or pack up; the day's page has every shot.`; return; }
     if (!RD.takeRounds(day, 1)) { rounds(); return; }
@@ -569,50 +620,58 @@
     recoil.up += 14 * rifle.recoilFactor * (0.8 + Math.random() * 0.4); recoil.right += 4 * rifle.recoilFactor * (0.5 + Math.random());
     lastShotAt = now;
     const ipm = inchPerMoa(p.yards);
-    const entry = { n: log.length + 1, yards: p.yards, el: setAt.elevationClicks, wd: setAt.windageClicks, leaf: leaf ? leaf.settingsMeters[setAt.leafIx || 0] : undefined, zoom: mag, heldUp: Math.round(aimUp * 10) / 10, heldRight: Math.round(aimRight * 10) / 10, day: day.id, tempF: weather.tempF, call: call.from == null ? null : { from: call.from, mph: call.from === 'none' ? 0 : call.mph }, conditionsShown: shown };
+    const entry = { n: log.length + 1, yards: p.yards, target: p.kind, el: setAt.elevationClicks, wd: setAt.windageClicks, leaf: leaf ? leaf.settingsMeters[setAt.leafIx || 0] : undefined, zoom: mag, heldUp: Math.round(aimUp * 10) / 10, heldRight: Math.round(aimRight * 10) / 10, day: day.id, tempF: weather.tempF, call: call.from == null ? null : { from: call.from, mph: call.from === 'none' ? 0 : call.mph }, conditionsShown: shown };
     // The shot's number in the day is given now, at the trigger pull, so two bullets in the air keep the order they were fired in.
-    const shot = { n: day.shots.length + pending.length + 1, place: 'line', yards: p.yards, sight: sightId, elevationClicks: setAt.elevationClicks, windageClicks: setAt.windageClicks, elevationMoa: Math.round((setAt.elevationClicks * sight.clickMoa + leafMoa()) * 100) / 100, windageMoa: Math.round(setAt.windageClicks * sight.windageClickMoa * 100) / 100, leaf: entry.leaf ?? null, zero: zeroAt && zeroAt !== RD.store.FAILED ? { zeroYards: zeroAt.zeroYards, elevationClicks: zeroAt.elevationClicks, windageClicks: zeroAt.windageClicks, leafIx: leaf ? (zeroAt.leafIx || 0) : null, leaf: leaf ? leaf.settingsMeters[zeroAt.leafIx || 0] : null, elevationMoa: Math.round((zeroAt.elevationClicks * sight.clickMoa + (leaf ? leaf.moaAbove100[zeroAt.leafIx || 0].moaAbove100 : 0)) * 100) / 100 } : null, heldUpMoa: entry.heldUp, heldRightMoa: entry.heldRight, windCall: entry.call, conditionsShown: shown, first };
+    const shot = { n: day.shots.length + pending.length + 1, place: 'line', yards: p.yards, target: p.kind, sight: sightId, elevationClicks: setAt.elevationClicks, windageClicks: setAt.windageClicks, elevationMoa: Math.round((setAt.elevationClicks * sight.clickMoa + leafMoa()) * 100) / 100, windageMoa: Math.round(setAt.windageClicks * sight.windageClickMoa * 100) / 100, leaf: entry.leaf ?? null, zero: zeroAt && zeroAt !== RD.store.FAILED ? { zeroYards: zeroAt.zeroYards, elevationClicks: zeroAt.elevationClicks, windageClicks: zeroAt.windageClicks, leafIx: leaf ? (zeroAt.leafIx || 0) : null, leaf: leaf ? leaf.settingsMeters[zeroAt.leafIx || 0] : null, elevationMoa: Math.round((zeroAt.elevationClicks * sight.clickMoa + (leaf ? leaf.moaAbove100[zeroAt.leafIx || 0].moaAbove100 : 0)) * 100) / 100 } : null, heldUpMoa: entry.heldUp, heldRightMoa: entry.heldRight, windCall: entry.call, conditionsShown: shown, first };
     $('cold-line').hidden = true;
     if (!r.reached) {
-      entry.where = 'into the ground before the plate'; entry.hit = false;
-      pending.push({ at: now + r.timeS, entry, shot, rightMoa: aimRight, upMoa: -(p.heightIn / ipm) * 2, yards: p.yards, hit: false, dist: p.yards });
+      entry.where = `into the ground before the ${p.kind === 'paper' ? 'paper' : 'plate'}`; entry.hit = false;
+      pending.push({ at: now + r.timeS, entry, shot, t: p, rightMoa: aimRight, upMoa: -(p.heightIn / ipm) * 2, yards: p.yards, hit: false, dist: p.yards });
     } else {
       // The bullet lands where the reticle pointed plus the engine's offset.
       const upIn = r.hit.upIn + aimUp * ipm, rightIn = r.hit.rightIn + aimRight * ipm;
+      // On steel, a hit is on the plate; on paper, `hit` means on the sheet (the same rectangle test).
       const hit = Math.abs(upIn) <= p.heightIn / 2 && Math.abs(rightIn) <= p.widthIn / 2;
-      entry.hit = hit; entry.where = hit ? `hit (${RD.whereText(upIn, rightIn)} of center)` : `miss: ${RD.whereText(upIn, rightIn)}`;
+      const near = p.kind === 'paper' ? RD.nearestMark(upIn, rightIn, P) : null;
+      entry.hit = hit;
+      entry.where = p.kind === 'paper' ? (hit ? `on paper (${RD.offText(near.upIn, near.rightIn, near.mark)})` : `miss: off the paper, ${RD.whereText(upIn, rightIn)}`) : hit ? `hit (${RD.offText(upIn, rightIn)})` : `miss: ${RD.whereText(upIn, rightIn)}`;
       entry.upIn = upIn; entry.rightIn = rightIn; // full precision: the hit test and the tests use these; the words above are what the screen shows
-      pending.push({ at: now + r.timeS, entry, shot, rightMoa: rightIn / ipm, upMoa: upIn / ipm, yards: p.yards, hit, upIn, rightIn, dist: p.yards, mach: r.mach });
+      pending.push({ at: now + r.timeS, entry, shot, t: p, near, rightMoa: rightIn / ipm, upMoa: upIn / ipm, yards: p.yards, hit, upIn, rightIn, dist: p.yards, mach: r.mach });
     }
     $('result').textContent = `Shot ${entry.n} away at ${p.yards} yards…${day.box.left === 0 ? ' That was the last round in the box.' : ''}`;
   }
   function land(s) {
     const soundBack = (s.dist * 3) / E.speedOfSound(weather.tempF);
-    if (s.hit) { marks.push({ plateIx, rightIn: s.rightIn, upIn: s.upIn, at: now }); if (scene) scene.strike(plateIx, s.upIn, s.rightIn); RD.ringSound(soundBack, Math.max(0.15, 1 - s.dist / 1300)); }
-    else { dust.push({ rightMoa: s.rightMoa, upMoa: s.upMoa, bornAt: now, yards: s.yards }); RD.thudSound(soundBack, Math.max(0.05, 0.5 - s.dist / 2500)); }
+    const paper = s.t.kind === 'paper';
+    // A hit on steel marks the plate and rings; a bullet through paper makes no ring, only the thud of the bank behind it.
+    if (s.hit && !paper) { if (scene) scene.strike(s.t.steelIx, s.upIn, s.rightIn); RD.ringSound(soundBack, Math.max(0.15, 1 - s.dist / 1300)); }
+    else if (s.hit) RD.thudSound(soundBack, 0.08);
+    else { dust.push({ t: s.t, rightMoa: s.rightMoa, upMoa: s.upMoa, bornAt: now, yards: s.yards }); RD.thudSound(soundBack, Math.max(0.05, 0.5 - s.dist / 2500)); }
     log.push(s.entry);
     if (!RD.setLog(rifleId, sightId, loadId, log)) $('zero-note').textContent = 'Shot log not saved on this device (storage is off); it holds for this page only.';
     // The day's record of the shot, the book line for a hit, the cold-bore line for the day's first shot at a plate.
     const shot = { ...s.shot, hit: Boolean(s.hit), reached: s.upIn != null, upIn: s.upIn != null ? Math.round(s.upIn * 100) / 100 : null, rightIn: s.rightIn != null ? Math.round(s.rightIn * 100) / 100 : null, book: false, coldBore: false };
     const n = s.shot.n;
     const id = `${day.id}:${n}`;
-    const base = { id, day: day.id, n, at: new Date().toISOString(), on: day.date, course: courseId, yards: shot.yards, elevationClicks: shot.elevationClicks, windageClicks: shot.windageClicks, leaf: shot.leaf, windCall: shot.windCall, tempF: weather.tempF, upIn: shot.upIn, rightIn: shot.rightIn };
+    const base = { id, day: day.id, n, at: new Date().toISOString(), on: day.date, course: courseId, yards: shot.yards, target: shot.target, elevationClicks: shot.elevationClicks, windageClicks: shot.windageClicks, leaf: shot.leaf, windCall: shot.windCall, tempF: weather.tempF, upIn: shot.upIn, rightIn: shot.rightIn };
     let notes = [];
-    if (shot.hit && !shot.conditionsShown) {
+    // The book holds hits on steel: a shot on paper writes no line there.
+    if (shot.hit && !paper && !shot.conditionsShown) {
       shot.book = RD.addBookLine(rifleId, sightId, loadId, { ...base, sight: undefined, elevationMoa: shot.elevationMoa, windageMoa: shot.windageMoa, zero: shot.zero, heldUpMoa: shot.heldUpMoa, heldRightMoa: shot.heldRightMoa });
       notes.push(shot.book ? 'Written in the book.' : 'Not written in the book: the browser refused its storage.');
-    } else if (shot.hit) notes.push('Not in the book: the conditions were shown.');
+    } else if (shot.hit && !paper) notes.push('Not in the book: the conditions were shown.');
     if (shot.first && !shot.conditionsShown) {
       shot.coldBore = RD.addColdBore(rifleId, loadId, { ...base, sight: sightId, load: loadId, hit: shot.hit });
       notes.push(shot.coldBore ? 'The day\'s first shot: in the cold-bore record.' : 'Not in the cold-bore record: the browser refused its storage.');
     } else if (shot.first) notes.push('The day\'s first shot, but the conditions were shown: not in the cold-bore record.');
     delete shot.first;
     const rec = RD.recordShot(day, shot);
+    if (paper && scene) scene.setPaper(s.t.paperIx, holesOf(s.t));
     if (!rec.saved) notes.push('The day is not saved on this device (the browser refused its storage).');
     if (day.box.left <= 0 && !pending.length) notes.push(`The box of ${day.box.size} is empty: open another box to go on, or pack up.`);
     rounds(); bookLine();
     const sub = s.mach != null && s.mach < 1.2 ? ` The bullet arrived at Mach ${s.mach.toFixed(2)}${s.mach < 1 ? ', below the speed of sound' : ', nearly down to the speed of sound'}.` : '';
-    $('result').innerHTML = (s.hit ? `<strong>Hit</strong> at ${s.dist} yards, ${RD.esc(RD.whereText(s.upIn, s.rightIn))} of center. The ring comes back ${soundBack.toFixed(1)} s later.${sub}` : `<strong>Miss</strong> at ${s.dist} yards: ${RD.esc(s.entry.where.replace('miss: ', ''))}. Watch the dust.${sub}`) + (notes.length ? ` ${RD.esc(notes.join(' '))}` : '');
+    $('result').innerHTML = (paper && s.hit ? `<strong>On paper</strong> at ${s.dist} yards, ${RD.esc(RD.offText(s.near.upIn, s.near.rightIn, s.near.mark))}.${sub}` : s.hit ? `<strong>Hit</strong> at ${s.dist} yards, ${RD.esc(RD.offText(s.upIn, s.rightIn))}. The ring comes back ${soundBack.toFixed(1)} s later.${sub}` : `<strong>Miss</strong> at ${s.dist} yards: ${RD.esc(s.entry.where.replace('miss: ', ''))}. Watch the dust.${sub}`) + (notes.length ? ` ${RD.esc(notes.join(' '))}` : '');
     renderLog();
   }
   // A shot in flight is already decided (the engine flew it at the trigger
@@ -629,6 +688,7 @@
   // with lines are. It only shows his own hits; it never turns a knob.
   function bookLine() {
     const y = plate().yards;
+    if (plate().kind === 'paper') { $('book-line').innerHTML = `<a href="/book${RD.params(c)}">Book</a>: paper is read on the sheet; the book holds hits on steel.`; return; }
     const href = `/book${RD.params(c)}&yards=${y}`;
     if (RD.bookReadFailed(rifleId, sightId, loadId)) { $('book-line').innerHTML = `<a href="${href}">Book</a>: not saved on this device (the browser refused its storage).`; return; }
     const lines = RD.bookAt(rifleId, sightId, loadId, y).slice(0, 1); // the newest line only; the rest stay in the book
@@ -649,7 +709,7 @@
   }
   function renderLog() {
     const body = $('log').querySelector('tbody');
-    body.innerHTML = log.slice().reverse().map((e) => `<tr class="${e.hit ? 'hit' : 'miss'}"><td>${e.n}</td><td>${e.yards}</td><td>${RD.sign(e.el)}</td><td>${RD.sign(e.wd)}${e.leaf != null ? ` · leaf ${e.leaf / 100}` : ''}</td><td>${e.zoom}×</td><td>${RD.heldText(e.heldUp, e.heldRight)}</td><td>${e.call === undefined ? '' : RD.esc(RD.windCallText(e.call))}</td><td>${RD.esc(e.where)}${e.conditionsShown ? ' (conditions shown)' : ''}</td></tr>`).join('');
+    body.innerHTML = log.slice().reverse().map((e) => `<tr class="${e.hit ? 'hit' : 'miss'}"><td>${e.n}</td><td>${e.yards}${e.target === 'paper' ? ' paper' : ''}</td><td>${RD.sign(e.el)}</td><td>${RD.sign(e.wd)}${e.leaf != null ? ` · leaf ${e.leaf / 100}` : ''}</td><td>${e.zoom}×</td><td>${RD.heldText(e.heldUp, e.heldRight)}</td><td>${e.call === undefined ? '' : RD.esc(RD.windCallText(e.call))}</td><td>${RD.esc(e.where)}${e.conditionsShown ? ' (conditions shown)' : ''}</td></tr>`).join('');
   }
 
   // --- the setting: Show the conditions -----------------------------------------------------------
@@ -664,7 +724,7 @@
       `Air: ${weather.tempF} F, ${weather.pressureInHg} inHg at ${weather.altitudeFt} ft, humidity ${Math.round(weather.humidity * 100)}%${weather.santaAna ? ', a Santa Ana day' : ''}. Muzzle speed today ${still.muzzleFps.toFixed(0)} fps (the load's ${load.muzzleFps} at ${d.physics.powderTemperature.referenceTempF} F).`,
       ...weather.wind.map((w, i) => `Wind, ${['near', 'middle', 'far'][i]} stretch (${Math.round(w.fromYards)}–${Math.min(Math.round(w.toYards), course.steelTo)} yd): ${w.speedMph} mph ${RD.windWord(w.fromDegrees)}, gusting ${w.gustMph} mph every ${w.periodS} s.`),
       still.reached ? `Engine, ${p.yards} yd, this sight setting, no spread: ${RD.whereText(still.hit.upIn, still.hit.rightIn)} of the aim with no wind; with the wind ${RD.whereText(windy.hit.upIn, windy.hit.rightIn)} (drift ${(windy.hit.rightIn - still.hit.rightIn).toFixed(1)} in). Flight ${still.timeS.toFixed(2)} s, ${still.speedFps.toFixed(0)} fps at the plate (Mach ${still.mach.toFixed(2)}).` : `Engine: with this sight setting the bullet does not reach ${p.yards} yards.`,
-      `Plate ${p.yards} yd sits ${riseOf(p).toFixed(0)} ft above the line (${((losAngle(p) * 180) / Math.PI).toFixed(1)}°); 1 MOA there is ${inchPerMoa(p.yards).toFixed(1)} in.`,
+      `${p.kind === 'paper' ? 'Paper' : 'Plate'} ${p.yards} yd sits ${riseOf(p).toFixed(0)} ft above the line (${((losAngle(p) * 180) / Math.PI).toFixed(1)}°); 1 MOA there is ${inchPerMoa(p.yards).toFixed(1)} in.`,
     ];
     $('conditions').textContent = lines.join('\n');
   }
@@ -701,7 +761,44 @@
     setting = { ...setting, [which]: next };
     RD.clickSound(); showSetting(); zeroNote(); storeSetting();
   }, (text) => { $('result').textContent = text; });
-  $('plate').addEventListener('change', (e) => { plateIx = Number(e.target.value); hold.up = 0; hold.right = 0; conditions(); bookLine(); });
+  $('plate').addEventListener('change', (e) => { target = targets.find((t) => t.key === e.target.value) || target; hold.up = 0; hold.right = 0; spotAim.up = 0; spotAim.right = 0; conditions(); bookLine(); paperRow(); });
+  // Going to the spotting scope and back. Nothing on the page moves: the scope's zoom takes the glass control's cell, the button
+  // keeps its size, and "Back to the rifle" stands in the bar where Steady and Fire stood (they are hidden and cannot be pressed).
+  const spotZoomText = () => { $('spot-zoom-text').textContent = `${spotMag}×`; };
+  $('spot-zoom').min = SP.zoom.low; $('spot-zoom').max = SP.zoom.high; $('spot-zoom').step = SP.zoomStep; $('spot-zoom').value = spotMag; spotZoomText();
+  function setSpotting(on) {
+    spotting = Boolean(on);
+    if (spotting) { spotAim.up = 0; spotAim.right = 0; steadyOff(); }
+    $('spotting').textContent = spotting ? 'Back to the rifle' : 'Spotting scope';
+    $('spotting').setAttribute('aria-pressed', String(spotting));
+    $('plate').closest('.pick').classList.toggle('spotting', spotting);
+    $('spotrow').setAttribute('aria-hidden', String(!spotting)); $('spot-zoom').tabIndex = spotting ? 0 : -1;
+    for (const id of ['steady', 'fire']) { $(id).classList.toggle('away', spotting); $(id).setAttribute('aria-hidden', String(spotting)); $(id).tabIndex = spotting ? -1 : 0; }
+    $('back-to-rifle').hidden = !spotting;
+  }
+  $('spotting').addEventListener('click', () => setSpotting(!spotting));
+  $('back-to-rifle').addEventListener('click', () => setSpotting(false));
+  $('spot-zoom').addEventListener('input', (e) => { spotMag = Number(e.target.value); spotZoomText(); });
+  // "Hang a fresh paper" (range-day-ten): shown only when a paper is chosen, a short scroll below. It clears the holes shown on that
+  // sheet from now on (a marker in the open day; no shot is deleted); the message that confirms it offers to put the old paper back.
+  function paperRow(message) {
+    const t = plate();
+    $('paper-row').hidden = t.kind !== 'paper';
+    $('paper-note').innerHTML = message || '';
+    if (t.kind === 'paper') $('fresh-paper').textContent = `Hang a fresh paper at ${t.yards} yards`;
+  }
+  $('fresh-paper').addEventListener('click', () => {
+    const t = plate(), shown = RD.paperHoles(day, t).length;
+    const r = RD.hangFreshPaper(day, t.yards);
+    if (scene) scene.setPaper(t.paperIx, holesOf(t));
+    paperRow(`${r.saved ? `A fresh paper hangs at ${t.yards} yards; the old one had ${shown} hole${shown === 1 ? '' : 's'}, and every shot stays in the day.` : 'The fresh paper is not saved on this device (the browser refused its storage); it holds while this page is open.'} <button id="old-paper" type="button" class="btn inline secondary">Put the old paper back</button>`);
+    $('old-paper').addEventListener('click', () => {
+      const saved = RD.putOldPaperBack(day, t.yards, r.before);
+      if (scene) scene.setPaper(t.paperIx, holesOf(t));
+      const n = RD.paperHoles(day, t).length;
+      paperRow(saved ? `The old paper is back at ${t.yards} yards, with its ${n} hole${n === 1 ? '' : 's'}.` : 'The old paper is back while this page is open, but not saved on this device (the browser refused its storage).');
+    });
+  });
   $('pack-up').addEventListener('click', () => { landAll(); const packed = RD.packUp(); location.href = packed ? `/day?id=${encodeURIComponent(packed.id)}` : '/'; });
   $('another-box').addEventListener('click', () => {
     if (!RD.openAnotherBox(day)) { $('result').textContent = 'The box could not be saved on this device (the browser refused its storage).'; return; }
@@ -719,15 +816,16 @@
   const steadyOn = () => { steady = true; $('steady').classList.add('on'); };
   const steadyOff = () => { steady = false; $('steady').classList.remove('on'); };
   let steadyPointer = null;
-  $('steady').addEventListener('pointerdown', (e) => { e.preventDefault(); steadyPointer = e.pointerId; steadyOn(); try { $('steady').setPointerCapture(e.pointerId); } catch {} });
+  $('steady').addEventListener('pointerdown', (e) => { e.preventDefault(); if (spotting) return; steadyPointer = e.pointerId; steadyOn(); try { $('steady').setPointerCapture(e.pointerId); } catch {} });
   for (const ev of ['pointerup', 'pointercancel', 'lostpointercapture']) $('steady').addEventListener(ev, (e) => { if (steadyPointer == null || e.pointerId === steadyPointer) { steadyPointer = null; steadyOff(); } });
-  $('fire').addEventListener('pointerdown', (e) => { if (e.button !== 0 && e.pointerType === 'mouse') return; e.preventDefault(); RD.audio(); fire(); });
+  $('fire').addEventListener('pointerdown', (e) => { if (e.button !== 0 && e.pointerType === 'mouse') return; e.preventDefault(); if (spotting) return; RD.audio(); fire(); });
   $('fire').addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); RD.audio(); fire(); } });
   for (const id of ['steady', 'fire']) $(id).addEventListener('contextmenu', (e) => e.preventDefault());
   // Dragging the view moves the hold.
   let drag = null;
-  canvas.addEventListener('pointerdown', (e) => { drag = { x: e.clientX, y: e.clientY, up: hold.up, right: hold.right }; canvas.setPointerCapture(e.pointerId); });
-  canvas.addEventListener('pointermove', (e) => { if (!drag) return; const k = pxPerMoa(); hold.right = drag.right - (e.clientX - drag.x) / k; hold.up = drag.up + (e.clientY - drag.y) / k; });
+  // At the spotting scope a drag moves the scope's view, not the rifle's hold.
+  canvas.addEventListener('pointerdown', (e) => { const a = spotting ? spotAim : hold; drag = { x: e.clientX, y: e.clientY, up: a.up, right: a.right, a }; canvas.setPointerCapture(e.pointerId); });
+  canvas.addEventListener('pointermove', (e) => { if (!drag) return; const k = pxPerMoa(); drag.a.right = drag.right - (e.clientX - drag.x) / k; drag.a.up = drag.up + (e.clientY - drag.y) / k; });
   for (const ev of ['pointerup', 'pointercancel']) canvas.addEventListener(ev, () => { drag = null; });
   window.addEventListener('keydown', (e) => { if (e.key === ' ' && document.activeElement === document.body) { e.preventDefault(); fire(); } });
 
@@ -752,7 +850,7 @@
     el.addEventListener('click', (e) => { if (e.target.closest('a')) return; if (el.classList.contains('open')) el.classList.remove('open'); else if (el.classList.contains('long')) el.classList.add('open'); });
     measure();
   }
-  applyZero(); renderLog(); conditions(); rounds(); bookLine(); coldLine();
+  applyZero(); renderLog(); conditions(); rounds(); bookLine(); coldLine(); paperRow();
   fitScene(); choosePicture();
   requestAnimationFrame(frame);
   // For the screenshot run and tests: a way to read the state without guessing.
@@ -761,8 +859,21 @@
     get plateAngles() { return plates.map((p) => ({ yards: p.yards, riseFt: riseOf(p), lateralYd: p.lateralYd, upMoa: toMoa(losAngle(p)), rightMoa: toMoa(sideAngle(p)) })); },
     get lastShotInput() { return lastShotInput; },
     get fovMoa() { return fovMoa(); },
+    // how far the last shot's recoil still holds the view off, in MOA (the screenshot states wait for it to settle)
+    drawnPaper(key) { return drawnPaper[key] || null; },
+    get recoilMoa() { return Math.hypot(recoil.up, recoil.right); },
+    // the spotting scope: whether the view is at it, going there and back, its zoom, and its field of view in MOA at a power
+    get spotting() { return spotting; }, setSpotting(on) { setSpotting(on); }, setSpotZoom(m) { spotMag = m; $('spot-zoom').value = m; spotZoomText(); }, get spotZoom() { return spotMag; },
+    spotFovMoa(m) { return spotFovMoa(m); }, setSpotAim(up, right) { spotAim.up = up; spotAim.right = right; },
     // The picture in force, the scene (or null), and for a plate: where the plain drawing puts its centre and where the scene does, from the same aim at the same instant.
     get picture() { return scene ? scene.quality : 'plain'; }, get scene() { return scene; }, get sceneLoading() { return sceneLoading; }, get sceneFailed() { return sceneFailed; },
+    // range-day-ten: every target (near first, then the plates), the one chosen, and where any target's centre is drawn under both pictures.
+    get targets() { return targets.map((t) => ({ key: t.key, kind: t.kind, yards: t.yards, widthIn: t.widthIn, heightIn: t.heightIn, riseFt: t.riseFt, lateralYd: t.lateralYd, steelIx: t.steelIx ?? null, paperIx: t.paperIx ?? null })); },
+    get target() { return { key: target.key, kind: target.kind, yards: target.yards }; },
+    setTarget(key) { $('plate').value = key; $('plate').dispatchEvent(new Event('change')); },
+    holes(key) { const t = targets.find((x) => x.key === key); return t && t.kind === 'paper' ? holesOf(t) : []; },
+    steelMarks(key) { const t = targets.find((x) => x.key === key); return t && t.kind === 'steel' ? RD.steelMarks(day, t) : []; },
+    targetOnScreen(key) { const t = targets.find((x) => x.key === key), at = plateAt(t); const plain = toScreen(at.right, at.up); if (!scene) return { plain, scene: null }; syncScene(); const w = t.kind === 'paper' ? scene.paperWorld(t.paperIx) : scene.plateWorld(t.steelIx); return { plain, scene: scene.project(w.x, w.y, w.z) }; },
     plateOnScreen(ix) { const p = plates[ix], at = plateAt(p); const plain = toScreen(at.right, at.up); if (!scene) return { plain, scene: null }; syncScene(); const w = scene.plateWorld(ix); return { plain, scene: scene.project(w.x, w.y, w.z) }; },
     setPicture(v) { picture = v; measuring = null; if (v === 'plain') showPlain(''); else return startScene(v); },
     // The drawn geometry, in pixels at the view's scale: what the tests compare with the data's angles.
