@@ -289,7 +289,7 @@ Ask 1).
 
 ## Result check rounds
 
-RESULTS-RC
+Round 1: this report as first filed; its verdict follows on the card and in the next filing.
 
 ## Asks
 
