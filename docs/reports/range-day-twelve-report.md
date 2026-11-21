@@ -439,3 +439,21 @@ green in 87 s: "alive: status 200", "signed in: yes (sample screen: HTTP
 - Divergence 2 above (one rear ring per sight) no longer holds.
 - Also merged: pull request #38 (`cf8d38a`), the check that fails a report
   whose line for Dan to type is not in a fenced block.
+
+## Addendum: range-day-twelve-c, the Troy's round hood (21 Nov 2026)
+
+Ask 2 answered by Dan: "I think it was round". Pull request
+[#41](https://github.com/isleofdan/range-day/pull/41), merged as `66b6bbf`
+on his typed line after all checks passed (run 44931491523); Deploy run
+[44933020940](https://github.com/isleofdan/range-day/actions/runs/44933020940)
+green in 82 s: "alive: status 200", "signed in: yes (sample screen: HTTP
+200, "This is Range Day")", "picture file: /scene.min.js answered 200 with
+617204 bytes".
+
+- The Troy front is the HK-style SSIG-FBS-FHBT-00: the A2 post in a round
+  hood (`frontHood`: 0.5 in inside, 0.07 in wall, estimates), drawn centred
+  on the post's tip; the two guards are gone. The post, clicks and height
+  are unchanged, so no record changes.
+- Verify 3: the hood's inside read from the canvas, 90.27 px against the
+  data's 90.47 at 412 px wide, 152.55 against 152.38 at 1280.
+- Ask 2 above is answered.

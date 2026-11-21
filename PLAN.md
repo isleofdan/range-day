@@ -661,3 +661,8 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
 - **Stands:** pull request #39 merged as `9241fe2`, deployed by Deploy run 44922340703 (green, 87 s): the Troy and FAB rear sights flip between their large and small peeps on the firing line, kept on the device, no shot moved. Pull request #38 (`cf8d38a`): a report's line for Dan to type must be a fenced block, checked by `test/report-shape.test.js`. 140 tests, 94 screenshot states.
 - **Next session needs:** as range-day-twelve; Dan's look at the flip on his phone. Report addendum in `docs/reports/range-day-twelve-report.md`.
 
+### range-day-twelve-c — 21 Nov 2026 (same session, on Dan's word)
+
+- **Stands:** pull request #41 merged as `66b6bbf`, deployed by Deploy run 44933020940 (green, 82 s): the Troy front sight is the HK-style round hood around the A2 post (Dan: "I think it was round"); no record changes.
+- **Next session needs:** as range-day-twelve. Report addendum in `docs/reports/range-day-twelve-report.md`.
+
