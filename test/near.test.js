@@ -141,6 +141,11 @@ test('range-day-ten verify 4: records: a paper shot\'s row and a steel shot\'s r
   assert.match(steel.where, /^hit \(dead on the center\)$/, `a dead-center hit reads "dead on the center", not "level, centered of center": ${steel.where}`);
   const c2 = await counts();
   assert.equal(c2.book, c1.book + 1, 'a steel hit writes one book line');
+  // every new record names its target, steel as well as paper: the log row, the day's shot, the book line and the cold-bore line
+  const steelDay = await page.evaluate(() => RangeDayLine.day.shots[RangeDayLine.day.shots.length - 1]);
+  assert.equal(steelDay.target, 'steel', 'the day\'s steel shot says steel');
+  const bookLine = (await page.evaluate(() => RD.getBook('bcm-ar15', 'ar-irons', 'imi-m193')))[0];
+  assert.equal(bookLine.target, 'steel', 'the book line says steel');
   assert.equal(c2.cold, c1.cold);
   const rows = await page.evaluate(() => RangeDayLine.day.shots.map((s) => ({ n: s.n, target: s.target, yards: s.yards, hit: s.hit })));
   // an old row without a target reads as steel: a day shot written before range-day-ten is a steel mark, never a hole

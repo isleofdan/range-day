@@ -173,9 +173,10 @@ names of the gun record's `measured.cold_bore` section.
    "hit": false, "upIn": -9.4, "rightIn": 2.1 }]
 ```
 
-A cold-bore line written at paper (range-day-ten) carries `"target":
-"paper"`, and its `hit` means on the sheet; a line without `target` was at
-steel.
+Since range-day-ten a cold-bore line, and a book line, carries `target`:
+`"paper"` or `"steel"` (a book line is always steel: the book holds hits
+on steel). A cold-bore line at paper has `hit` meaning on the sheet. A line
+without `target` is from before range-day-ten and was at steel.
 
 ### Small records
 
