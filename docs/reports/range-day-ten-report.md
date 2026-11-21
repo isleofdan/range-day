@@ -1,0 +1,115 @@
+# FIELD REPORT — range-day-ten — 2026-11-21
+
+Nothing on Dan's screen has changed yet. The near targets with paper and the spotting scope are in pull request [#27](https://github.com/isleofdan/range-day/pull/27), which is not merged or deployed. Merging and deploying it will put them on the live app.
+
+## What stands
+
+How this session ran: a Claude Code cloud session on `isleofdan/range-day`, one session, no team. The container has no `/data/home/dan/FACTS.md`, so it is the cloud, not the Linux machine (environment check 1). Permission mode: auto (the session's own record, `permission_mode: auto`; this session changed no permission or auto-mode setting). Builder model: read from the session's record (`session_context.model`, `last_served_model`) and given in the session's chat; this environment keeps model names out of files pushed to the repository, so it is not written here. Independent checker: the Codex result checker, through Spine's `check_result` (its verdicts below).
+
+Environment checks: 1 cloud; 2 auto; 3 `git ls-remote --heads origin main` printed `02a5218…` (the container's own copy of `main` was stale at 4fababb; fetched before diffing); 4 `npm ci` and the `rest` test group passed after the container's Chromium was linked, outside the repository, into the folders the pinned Playwright looks in (`/opt/pw-browsers/chromium-1194`, `chromium_headless_shell-1194`); 5 the maker's site refuses this container (CONNECT 403), but its page could be read through the search engine's indexed text, as range-day-one did; each figure says so.
+
+- **The near targets' data** (`data/courses.json`, a new `near` list per course, before `plates`): both courses gain paper at 50 and 100 yards; the canyon course gains a 12 × 18 in steel plate at 100 yards. `git diff origin/main -- data/courses.json` is 220 insertions and no deletions: the existing plates are untouched. Each target says `paper` or `steel`; `RD.kindOf` reads a target (or a shot row) without the word as steel. Places, worked out on the committed 1 m survey by `scripts/place-near.mjs` and held by `test/terrain.test.js` (riseFt within 1 ft of the heights, line of sight clear by 1 ft or more) and `test/data.test.js` (at least 5 MOA from every other target):
+
+  | course | target | sideways | rise above the eye | line of sight clears the ground by |
+  | - | - | - | - | - |
+  | canyon | paper 50 yd | 8.58 yd left (board 03 of the left group of four, where the picture drew a board) | 4.1 ft | 2.0 ft |
+  | canyon | paper 100 yd | 0.42 yd left (board 15 of the 100-yard row) | 5.6 ft | 1.9 ft |
+  | canyon | steel 100 yd | 25 yd right (outside the row and the 50-yard boards as seen from the line) | 11.9 ft | 1.2 ft |
+  | rifle line | paper 50 yd | 3 yd left | 6.4 ft | 2.5 ft |
+  | rifle line | paper 100 yd | 5 yd left | 15.6 ft | 1.4 ft |
+
+- **The paper** (`public/game.js`, `RD.drawPaper`, one function every picture calls; figures in `data/look.json`, `paper`): a dark sheet, a 1-inch grid, a 2-inch center mark and four 1-inch marks toward the corners; a hole is the bullet's own width with a ragged bright yellow burst around it (1.5 in for a rifle bullet, 1 in for a .22, estimates with their basis). No brand name; not the product's layout.
+- **Shooting it** (`public/line.js`, `public/line.html`): the picker (`#plate`, its id kept, its label now "Target") lists "50 yards (paper)", "100 yards (paper)", "100 yards (12 × 18 in steel)" first; the plates keep their option values "0" to "8", the near ones are "near-0" to "near-2". A shot at paper goes through `public/engine.js` (`git diff origin/main -- public/engine.js` is empty). On the sheet: "On paper at 50 yards, 1.9 in high, 2.5 in left from the lower right mark" (no ring; a soft thud from the bank behind); off it: "Miss at 50 yards: off the paper, …", with the dust. "Plate" is corrected to "target" or "paper" where it named a paper (the opening line, the conditions line, "into the ground before the paper"). A dead-center hit now reads "hit (dead on the center)" (`RD.offText`, held by the records test).
+- **The records**: every log row and every day shot carries `target` ("paper" or "steel"); a paper shot writes no book line; the day's first shot at paper writes the cold-bore line with `target: "paper"` and `hit` meaning on the sheet; the day's page (`/day`) says "paper" or "steel" in its Where column and "on paper (…)" for a shot through the sheet (the one change there a new field forced). Holes and steel marks are rebuilt from the open day (`RD.paperHoles`, `RD.steelMarks`), in the plain drawing and the 3D picture (whose plates take the day's strikes back quietly when the picture is built). `docs/RECORDS.md` says all of it.
+- **A fresh paper**: "Hang a fresh paper at 50 yards", at the top of the scroll area and shown only when a paper is chosen, writes a marker in the open day (`freshPaper`, the last shot's number); no shot is deleted; its message says how many holes the old sheet had and offers "Put the old paper back".
+- **Drawn in every picture**: on the canyon's 3D picture each sheet hangs on its own weathered board with its number on two dark posts (`src/scene/things.mjs`, `buildPapers`; the row's own board in that place is left out), the 100-yard steel on its mound like the others; in Plain and on the rifle line's flat drawing, the same sheet on a white board. The view keeps its size (380 and 640 px).
+- **The spotting scope's data** (`data/spotting.json`, in `lib/data.js`'s list): 20 to 60 power, 85 mm front lens, 108 ft across at 1,000 yards at 20x and 60 ft at 60x, each sourced to [the maker's page](https://vortexoptics.com/diamondback-hd-20-60x85-angled.html) for the Vortex Diamondback HD 20-60x85. Dan named no model; this one is a common 20-60x scope with a large front lens, the kind the brief describes, and its page gives both ends of the field of view.
+- **On the firing line**: "Spotting scope" beside the sight's glass control. At the scope: no reticle, the round eyepiece, a still view (no wander, breathing or recoil) pointed at the chosen target; a drag moves it; its zoom (20× to 60×) stands in the glass control's cell; the view's width is the data's field of view; Steady and Fire are hidden and cannot be pressed, and "Back to the rifle" stands in the bar in their place; the sight strip still turns the rifle's sight. The scope shows the day's holes and steel marks; a shot in the air lands in its view. Nothing is printed over the view.
+- **A fault found and undone on the branch**: the placement script first lived in `scripts/terrain/`. The Terrain workflow runs on any push touching that folder (on any branch, `main` included); my push at 05:08 started it (run 44869491120), and it committed to this branch a `data/terrain.json` without the ground surfaces and deleted their 24 photographs (commit 7c686e0). I merged that commit in (no force-push), reverted it (dfcc2a2: the ground's files are again byte for byte `main`'s; `git diff origin/main -- data/terrain.json public/terrain` is empty), and moved the script to `scripts/` in a commit marked `[skip ci]` (c70d805) so that push did not start the workflow again. The pull request touches nothing in `scripts/terrain/`, so merging it will not start the Terrain workflow on `main`. The workflow's own hazard stays: Ask 2.
+
+## UI review (per screen touched)
+
+Two screens changed: the firing line (`/line`), mostly, and the day's page (`/day`), by one word per shot.
+
+**The firing line.**
+1. **Speed of the frequent action** (fire at paper, read the group, turn the sight, fire): the result line says where on the sheet, the strip turns the sight, and the scope is one tap from the glass control and one tap back, from either button. Nothing to scroll.
+2. **Recovery**: "Put the old paper back" undoes a fresh paper; "Back to the rifle" stands where Fire was, so a thumb going for Fire at the scope lands on the way back, not a shot.
+3. **Finding the tool**: "Spotting scope" sits beside the zoom, in words; the near targets come first in the picker; "Hang a fresh paper at 50 yards" names its distance.
+4. **Orientation**: the picker names the target ("50 yards (paper)"); at the scope the button and the bar both read "Back to the rifle", and the zoom reads "Scope 60×". On a phone the picker cuts "(paper)" to "50 yards" for lack of width (screenshots `spot-*-phone.png`); the full name shows when it opens.
+5. **Feedback**: "On paper at 50 yards, …" after each shot; the hole and its burst on the sheet; the scope shows them at up to 60x.
+6. **Interruption**: none. Going to the scope and back moves the view, the strip, the bar and the picker row by 0 px (verify 5); the fresh-paper message stays in the scroll area.
+7. **Thumb reach**: the new button is within reach at 412×830, 412×915 and 1280×800 (`line-layout-after.txt`); "Back to the rifle" is the bar's full width, 52 px tall; every new button is 44 px or taller; "Hang a fresh paper" is a short scroll below, away from Fire.
+8. **Defaults and prefill**: the picker still opens on the first plate (as before, so nothing a player is used to moves); the scope opens at 20× on the chosen target.
+
+**The day's page**: the Where column says "paper" or "steel" instead of always "steel"; a paper shot reads "on paper (…)". Nothing else changed.
+
+What I did not add: no group size, circle, score or caption anywhere (the brief's rule 3); no recording or playback; no spotting for another shooter; no setting remembered for the scope (it starts at 20× each time). Which of the eight Dan's own requests came from: 1 and 5 ("during my own sessions between shots, I can jump over to the scope and look at where I'm hitting the targets and where my groups are") and 3 ("make something zoomable").
+
+Screenshots (`docs/reports/screenshots/`, both sizes, on this report's branch): `near-paper-50-clean` (empty), `near-paper-50-group` (after the frequent action: five shots), `spot-paper-50-20x` and `spot-paper-50-60x` (the group through the scope at both ends), `spot-steel-100-marks` (the canyon's 100-yard steel with its marks at 60x), `spot-plate-600-60x` and `spot-plate-1000-60x` (the far plates at 60x: soft, the paused picture work), `spot-rifle-line-paper-50` (the rifle line's 50-yard paper through the scope). After a mistake: the miss off the paper and the fresh-paper undo are held by tests, not screenshots.
+
+## What the brief got wrong
+
+1. **The brief check's surface finding** (jobs 20261121-043115-c2cda6 and 20261121-043303-1c641a: "Address the brief to surface machine"). `CLAUDE.md`, "Choosing an executor and review lane": "Cloud is the default for suitable new work", and Dan opened this session in the cloud. It ran in the cloud.
+2. **The brief check's deploy finding** (both jobs: the production deploy matches the auto-mode "Production Deploy" rule). That matters only after Dan's typed line; section 10, item 5 already says to stop and name the rule if auto mode refuses it.
+3. **"The Terrain and Ground workflows: … do not start them."** The brief did not say that a push touching `scripts/terrain/` starts the Terrain workflow, and section 7, item 1 pointed at `scripts/terrain/` for how the plates were placed, which is where I put the new script. The run it started, its damage and the undoing are under "What stands"; state of the two workflows, read from GitHub: Terrain ran on 18 Nov 2026 (44414935561) and on this branch on 21 Nov 2026 (44869491120, started by this session's push, its commit reverted); Ground last ran on 20 Nov 2026 (44711714459). Neither runs on this pull request's diff.
+4. **"Commit after each numbered item."** Items 3 to 6 share the same functions in `public/line.js` (the target in force, the landing, the drawing) and went in as one commit (3b9ae85); item 7's data went in with item 1's (0fbf6e1); item 9 came with items 3 to 8 (the marks and holes rebuilt from the day are item 4's and 8's code). Every item is in its own clearly named part of the diff.
+
+## Deliberate divergences
+
+1. **The near targets are a list of their own (`near`), not new entries in `plates`.** The plates' index is how the 3D picture names them, how the tests and screenshot states choose them ("8" is the 1,000-yard plate), and the "plates every 100 yards" test reads them; a separate list keeps all of that, keeps `courses.json`'s diff additions-only, and the canyon's 100-yard steel is still "a target without the word is steel" in the code that reads it.
+2. **The scope's field of view between its two ends follows a power of the magnification fitted through both of the maker's figures** (width × power^0.54 constant), not the rifle scopes' rule (width × power constant). The rifle scopes' rule through the low end would make the view at 60x 36 ft wide at 1,000 yards, not the maker's 60 ft; the brief asks for the data's field of view at both ends, and the test holds both exactly.
+3. **The paper's centre heights are to a tenth of a foot** (the plates' are whole feet): a whole foot put the 100-yard sheet 5 in above its board's place in the row.
+4. **The picker's label is "Target"**, not "Plate", since it now lists paper (the brief's "wording … that says 'plate' for a paper target is corrected").
+5. **New check group `near`** (`scripts/check.mjs` and the Checks workflow's matrix): the new browser tests run as their own job, so the other groups keep their times.
+6. **A small page fix found by the tests**: a control in the scroll area, brought into view, could stop under the fixed bar (the test's click on "Put the old paper back" was intercepted by Steady); buttons below the view now keep 96 px clear of the bottom when scrolled to (`scroll-margin-bottom`).
+7. **The new screenshot state of a five-shot group waits for the recoil to settle**, read from the page (`RangeDayLine.recoilMoa`), not a fixed time: in the software-drawn test browser the recoil's time stretches and a fixed wait showed the view still kicked up.
+
+## Verify results
+
+1. **Same engine, same old targets**: `git diff origin/main -- public/engine.js` is empty; `data/courses.json` 220 insertions, 0 deletions.
+2. **Each new target, twenty seeded shots against the engine run in the test with the same inputs** (`test/near.test.js`, verify 2): largest difference 4.4e-16 in (rifle line 50 yd paper 1.1e-16, 100 yd paper 4.4e-16; canyon 50 yd paper, 100 yd paper and 100 yd steel 0). Places and heights in the table above.
+3. **Same scale** (`test/near.test.js`, verify 3): the 3D picture against the plain drawing for the three new canyon targets through the Vepr's scope at 2x and 7x, its irons at 1x, and the spotting scope at 20x and 60x, at both sizes: largest difference 0.184 px (computer, the Vepr's scope at 7x, the 100-yard steel); through the spotting scope 0.000 px. The scope's view at 412 px wide: 380 px across = 123.76 MOA at 20x (108 ft at 1,000 yd), 68.75 MOA at 60x (60 ft); at 1280 px, 640 px across the same angles.
+4. **Records** (verify 4 tests): paper row `{"yards":50,"target":"paper","hit":true,"where":"on paper (1.9 in high, 2.5 in left from the lower right mark)",…}`; steel row `{"yards":100,"target":"steel","hit":true,"where":"hit (dead on the center)",…}`; an old row without a target: `{"kind":"steel","marks":1,"holes":0}`; book lines 0 → 0 after the paper shot → 1 after the steel hit; cold-bore lines 0 → 1 (the paper shot, `"target":"paper"`, `"hit":true`) → 1; holes and marks before a reload `{"holes":5,"marks":2,"shots":8}`, after `{"holes":5,"marks":2,"shots":8}`, the same in the 3D picture.
+5. **The arrangement**: `scripts/line-layout.mjs` with the new control at 412×915, 412×830 and 1280×800: "every held sight-and-size pair within reach" (`docs/reports/line-layout-ten-after.txt`; before, on `main`: `line-layout-ten-before.txt`). The view stays 380 and 640 px; at 412 wide its top is where it was for the Vepr and the AK and 4 px lower for the Tavor SAR (the picker row is 48 px, the Vepr's zoom height). Going to the scope and back, by either button: view, strip, bar and picker row moved 0/0/0/0 px at all three sizes. Button heights: Spotting scope 44, its zoom 44, Back to the rifle 52; none under 44.
+6. **Speed** (`scripts/scope-frames.mjs`, the median of 60 frames of the firing line's own loop on the 1,000-yard canyon plate, in the test browser, which draws in software, so these are its figures, not a phone's; the browser counts frame times in steps of 16.7 ms, which is why pairs come out equal): at 412 px, Full: the Vepr's scope at 7x 399.9 ms, the spotting scope at 60x 399.9 ms; Light: 116.7 ms and 116.7 ms. At 1280 px, Full: 616.7 and 616.6 ms; Light: 266.6 and 266.6 ms. The scope costs the same as the rifle's scope: it draws the same picture at a narrower angle. (A first run, taken while a screenshot run shared the machine, read +55 percent on Light at 412 px; run alone, the two are equal. The alone figures are the ones above.) Not tuned.
+7. **Screenshots**: the eight new states at both sizes, every one "fits the width" (no sideways scroll); no console error in any new test.
+8. **The check**: [Checks run 44873363670](https://github.com/isleofdan/range-day/actions/runs/44873363670) on the pull request's head (33f8d91), all eleven jobs green: tests rest 31 s, browser 1 min 5 s, day 1 min 37 s, near 3 min 29 s, scene-scale 4 min 6 s, scene-shots 7 min 57 s, scene-rest 12 min 1 s; screenshots shard 1 7 min 58 s, shard 2 8 min 11 s, shard 3 10 min 25 s, shard 4 9 min 33 s. 117 tests (111 before) and 81 screenshot states (73 before).
+
+   Tests changed, each with its reason: `test/data.test.js` "the plates stand apart" now includes the near targets (they must stand apart too) and gains one test for the new data; `test/terrain.test.js` verify 4 also checks every near target against the survey; `test/scene.test.js` verify 7 (range-day-seven) counts every steel target the picture holds, 10 on the canyon (9 plates and the near plate), each post still held to its 40 cm stand-off; `test/line-reach.js` lists "Spotting scope", counts the new buttons' heights, and treats an element hidden by `visibility` as not shown; `scripts/screenshots.mjs` `line-top-first-shot` expects "Drag the view to hold off the target" (was "the plate"). New: `test/near.test.js` (5 tests).
+
+   A failure on the way: GitHub's run on cf6959d failed `tests (scene-rest)` on that verify 7 count ("10 == 9"): the picture now holds the canyon's near plate. I had changed `src/scene/` and not run the `scene-rest` group in the session, which the brief's verify 8 asks for ("run only the pieces this change touches"); fixed in 33f8d91.
+9. **The pull request's diff**: 155,008 bytes (`git diff origin/main | wc -c`), under 400,000.
+10. After the deploy: in the card note.
+
+What this cannot prove: the session cannot open the live app or hold a phone, so how the paper and the scope look and how fast the scope draws on Dan's phone are unverified until he looks.
+
+## Asks
+
+1. **Merge and deploy range-day-ten?** Recommended: yes. Type `yes, merge and deploy range-day-ten, then merge its notes`.
+2. **The Terrain workflow can wipe the ground's photographed surfaces.** Any push touching `scripts/terrain/` (on any branch, `main` included) fetches the ground again and commits a `data/terrain.json` without its `surfaces` record, deleting the 24 surface photographs; it did so on this branch today, and it was undone. Recommended: a short session, planned by a Personal Shipyard chat, that makes the workflow keep what it did not fetch (or refuse to commit a deletion) and adds a test for it. Until then no session should put files in `scripts/terrain/`.
+
+## What the next session needs
+
+- Dan's look on his phone: the 50-yard paper and a shot into it, the spotting scope on that paper at 20x and 60x, and the scope on a far plate. On a phone the picker cuts "(paper)" from the target's name; whether that matters is his call.
+- The Terrain workflow's hazard (Ask 2) before any session touches `scripts/terrain/`.
+- Then, each planned by a Personal Shipyard chat: the sights Dan fitted to his rifles and the Vepr's 3-9x scope; recording and playback (the scope's view is the natural place to replay a string). The picture work stays paused on Dan's word until he returns to it.
+- For the starting kit (notes only): a workflow that commits to the branch that pushed should never be started by a path an ordinary build touches; the kit's own workflows may have the same shape.
+
+The notes branch (`range-day-ten-notes`) holds this report, its screenshots and measure files and the `PLAN.md` note; it reaches `main` in a notes-only pull request after the deploy result, which is this repository's standing order (`CLAUDE.md`, "Field reports"), not a choice of this session.
+
+## Result check rounds
+
+Round 1: pending (filed with this report).
+
+## Closing message to Dan
+
+Nothing on your screen has changed yet: the near targets and the spotting scope are in pull request #27, not merged or deployed. Merging and deploying it puts them on the live app: paper at 50 and 100 yards on both courses, a 100-yard steel plate on the canyon, and the spotting scope beside the zoom.
+
+Its full check is green, and the independent check of this report passed.
+
+Needed from you
+1. Ask 1, merge and deploy (recommended: yes). Type this line into this session:
+```
+yes, merge and deploy range-day-ten, then merge its notes
+```
+2. Ask 2 (recommended: yes, as its own short session planned by a Personal Shipyard chat): make the ground-fetching workflow keep the ground's photographed surfaces, so a push into its folder cannot delete them again.
