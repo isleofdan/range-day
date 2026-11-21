@@ -655,6 +655,13 @@ function readSight() {
     const B = row(cy + G.ringPx), mid = B[Math.round(cx + G.ringPx)], side = Math.max(B[2], B[size - 3]);
     out.leafW = run(B, cx + G.ringPx, (mid + side) / 2).width;
   }
+  if (G.hoodPx) {
+    // a round hood: the light inside it on the row 2 px above the post's top (nearly its full inside diameter there)
+    const H = row(cy - 2), inside = H[Math.round(cx)], wall = H[Math.round(cx + G.hoodPx / 2 + G.hoodWallPx / 2)];
+    const w = run(H, cx, (inside + wall) / 2, false).width, rr = G.hoodPx / 2;
+    out.hood = 2 * Math.sqrt((w / 2) ** 2 + 2 * 2); // back from the chord 2 px above the centre to the diameter
+    out.hoodChord = w; void rr;
+  }
   if (G.earGapPx) {
     // the guards: the light between them on the row 2 px above the post's top (below the guards' tops)
     const E2 = row(cy - 2), lightGap = E2[Math.round(cx)], dark = E2[Math.round(cx + G.earGapPx / 2 + G.earPx / 2)];
@@ -691,6 +698,7 @@ test('range-day-twelve verify 3: each new sight as drawn, read from the canvas a
         // the guards are read where the ring shows them; a guard outside the ring is hidden by it, as through the real peep
         if (r.earGap != null && S.frontEars.gapMoa < S.apertureMoa * 0.8) pairs.push(['gap between the guards', r.earGap, S.frontEars.gapMoa * k, 1.5]);
         else if (r.earGap != null) lines.push(`${sizeName} ${rifle} ${sight}: the guards (${(S.frontEars.gapMoa * k).toFixed(2)} px apart) stand outside the ring (${(S.apertureMoa * k).toFixed(2)} px): hidden by it`);
+        if (r.hood != null) pairs.push(['inside of the round hood', r.hood, S.frontHood.innerMoa * k, 1.5]);
         if (r.stripe != null) pairs.push(['glowing stripe', r.stripe, S.frontStripeMoa * k, 1.5]);
       }
       for (const [what, drawn, data, tol] of pairs) {

@@ -469,6 +469,11 @@
       const e = sight.frontEars, gap = e.gapMoa * k, w = e.widthMoa * k, top = cy - e.topAboveMoa * k;
       faces(cx - gap / 2 - w, w, top); faces(cx + gap / 2, w, top);
     }
+    if (sight.frontHood) {
+      // a round hood (range-day-twelve-b: the Troy's HK-style front), centred on the post's tip, its inside diameter and wall the data's
+      const h = sight.frontHood, wall = h.wallMoa * k, rIn = (h.innerMoa * k) / 2;
+      g.strokeStyle = '#161615'; g.lineWidth = wall; g.beginPath(); g.arc(cx, cy, rIn + wall / 2, 0, Math.PI * 2); g.stroke();
+    }
     if (sight.frontBead) {
       const stemW = sight.stemWidthMoa * k;
       faces(cx - stemW / 2, stemW, cy + postW * 0.45);
@@ -619,7 +624,7 @@
       g.fillRect(cx - w / 2, top, w, size - top);
     } else g.fillRect(0, 0, size, size);
     const w = sight.frontPostMoa * k;
-    if (sight.frontEars) return drawFront(g, size, k, cx, cy); // the guards at their own gap and width (range-day-twelve)
+    if (sight.frontEars || sight.frontHood) return drawFront(g, size, k, cx, cy); // the guards or hood at their own sizes (range-day-twelve)
     drawFront(g, size, k, cx, cy);
     // a sight without measured guards: the post's protective wings, blurred by nearness to the eye
     g.save();
@@ -936,7 +941,7 @@
         leafMoa: leaf ? leafMoa() : null, magnifierIn: magnifierIn(),
         // range-day-twelve: each iron front's widths, the ring, the guards and the stripe; the SeeAll's triangle; the mil-dots' drawn spacing
         frontPx: sight.frontPostMoa ? sight.frontPostMoa * k : null, stemPx: sight.stemWidthMoa ? sight.stemWidthMoa * k : null, ringPx: sight.apertureMoa ? ringMoa() * k : null, aperture: apertures ? apertures[apertureIx()].name : null,
-        earGapPx: sight.frontEars ? sight.frontEars.gapMoa * k : null, rearBodyPx: sight.rearBody ? sight.rearBody.widthMoa * k : null, earPx: sight.frontEars ? sight.frontEars.widthMoa * k : null, stripePx: sight.frontStripeMoa ? sight.frontStripeMoa * k : null,
+        earGapPx: sight.frontEars ? sight.frontEars.gapMoa * k : null, rearBodyPx: sight.rearBody ? sight.rearBody.widthMoa * k : null, hoodPx: sight.frontHood ? sight.frontHood.innerMoa * k : null, hoodWallPx: sight.frontHood ? sight.frontHood.wallMoa * k : null, earPx: sight.frontEars ? sight.frontEars.widthMoa * k : null, stripePx: sight.frontStripeMoa ? sight.frontStripeMoa * k : null,
         triangle: sight.kind === 'seeall' ? { widthPx: sight.reticle.triangleWidthMoa * k, heightPx: sight.reticle.triangleHeightMoa * k, linePx: sight.reticle.lineBelowTipMoa * k, fieldPx: sight.reticle.fieldWidthMoa * k } : null,
         milDotPx: sight.reticle && sight.reticle.kind === 'mil-dot' ? milDotMoa() * k : null, zoom: mag, aim: center() };
     } };

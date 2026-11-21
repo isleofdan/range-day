@@ -317,7 +317,7 @@ constraint azxfbwouwp9lt6jhny8n. 139 tests.
 sights, at 412 and 1280 px, the ring drawn with each peep up is read from
 the canvas against that peep's `apertureMoa`; the choice survives a
 reload; the same seeded shot lands in the same place with either peep; a
-sight with one peep shows no flip. `lib/data.js` refuses a peep without its
+sight with one peep shows no flip. The Troy's front is the HK-style round hood (Dan: "I think it was round"); verify 3 reads the hood's inside from the canvas against `frontHood.innerMoa`. `lib/data.js` refuses a peep without its
 name or angle. The reach list holds the flip (`#aperturerow`) for both
 sights; screenshot state `line-troy-100-small` shows the small peep. 140
 tests (with the fenced-lines check) and 94 screenshot states on this change.
