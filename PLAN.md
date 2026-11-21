@@ -530,3 +530,15 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
   with paper and the spotting scope; the sights Dan fitted; recording.
   The picture work stays paused on Dan's word. Report:
   `docs/reports/range-day-nine-report.md`.
+
+### range-day-nine-b — 21 Nov 2026 (same session, from Dan's phone)
+
+- **Stands:** pull request #24: the firing line fits a phone 830 pixels
+  tall (Dan's own, from his screenshots). The rounds left are under the
+  word Fire, each setting takes one line, the book line holds one line,
+  and no third line peeks under it.
+- **Decided:** the within-reach test holds 412×830 as well as 412×915;
+  the text slots carry no vertical padding (tested).
+- **Next session needs:** Dan's look again. At 412×760 the book line
+  still falls under the bar; the next lever is the view's size on short
+  screens, which only Dan can open (the picture work is paused).
