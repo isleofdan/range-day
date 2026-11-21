@@ -215,7 +215,7 @@ It held the layout at 412×915 only and gave 412×800 "as a figure only". The re
    | 412×830 | Vepr scope | no: rounds left (771.3) and book line (810.7) under the bar | all within reach (book line bottom 755.8) | 753 → 761 | 380×380 → 380×380 |
    | 412×830 | Tavor SAR dot | no: rounds left (767.3) and book line (806.7) under the bar | all within reach (751.8) | 753 → 761 | 380×380 → 380×380 |
    | 412×830 | AK irons | no: book line (778.6) under the bar | all within reach (723.6) | 753 → 761 | 380×380 → 380×380 |
-   | 1280×800 | all three | all within reach, bar beside the view | the same | 628–776 → 706–776, beside the view covering none of it | 640×640 → 640×640 |
+   | 1280×800 | all three | all within reach, bar beside the view | the same | 694–776 → 706–776, beside the view covering none of it | 640×640 → 640×640 |
 
    At 412×760 (figure only), the book line falls under the bar after the change (bottom 755.8, 751.8 and 723.6 against 691). Before the change, the strip's buttons fell under it as well.
 2. **Same shots and same picture:** `git diff origin/main -- public/engine.js data src/scene` is empty.
