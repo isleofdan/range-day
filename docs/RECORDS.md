@@ -40,7 +40,9 @@ only for a sight with a leaf.
 
 An older form, `zero:<rifle>:<load>` (from before every sight could be
 chosen), is still read for the sight it names and written forward to the
-new key; the old record is left in place.
+new key; the old record is left in place. (Since range-day-twelve a record
+naming a sight the rifle no longer offers, and not carried, is left where
+it is: below, "The sights fitted to the rifles".)
 
 ### A sight that took another's place (range-day-eleven)
 
@@ -69,6 +71,42 @@ a zero in clicks is as true on the new scope, so:
 carries anything; `test/day.test.js` ("range-day-eleven verify 5") proves
 it with a device seeded under the old name.
 
+### The sights fitted to the rifles (range-day-twelve)
+
+The iron sights of five rifles were replaced by the ones fitted to them,
+and one rifle's irons changed in place. The rule is the one above, sight
+by sight on each rifle, decided by the same two figures (the click on both
+adjustments, and the height over the bore):
+
+| Rifle | Old sight | New sight | Click (elevation / windage, MOA) | Height over the bore | Records |
+| - | - | - | - | - | - |
+| the AR-15 | `ar-irons` | `troy-battlesights` | 1.75 / 0.75 then, 1.33 / 0.5 now | 2.6 in, 2.6 in | not carried: start unzeroed |
+| the Tavor SAR | `tavor-irons` | `fab-flipup` | 1.5 / 1 then, 1 / 1 now | 3.0 in, 3.65 in | not carried: start unzeroed |
+| the Tavor X95 | `tavor-irons` | `fab-flipup` | the same | 3.0 in, 3.65 in | not carried: start unzeroed |
+| the 7.62x39 rifle | `ak-irons` | `ak762-kns-peep` | 2 / 2 then, 0.5 / 0.5 now | 1.9 in, 1.9 in | not carried: start unzeroed |
+| the 5.45 rifle | `ak-irons` | `ak545-ball` | 2 / 2, 2 / 2 | 1.9 in, 1.9 in | carried (`carriesRecordsOf`) |
+| the 5.45 rifle | — | `ak545-xs` | 2 / 2 | 1.9 in | new: starts unzeroed (one sight carries the old records: the ball post that took their place) |
+| the Vepr | `vepr-irons` | `vepr-irons` (the ball post, the same id) | 2 / 2, unchanged | 2.0 in, unchanged | nothing moves |
+
+Where nothing is carried, a zero in clicks would be untrue on the new
+sight, so the new sight starts unzeroed and the old records stay stored
+under the old sight's name: nothing is written forward. They stay
+readable: the book page lists a sight the rifle no longer offers, marked
+"(no longer on this rifle)", when this device holds book lines under it;
+the copy file lists them under the old name; the cold-bore record and the
+days keep the sight they name (`ar-irons`, `tavor-irons` and `ak-irons`
+stay in the data, marked `retired`). An address or a last-used record
+naming an old sight opens the rifle's sight now.
+
+A record from before every sight could be chosen (`zero:<rifle>:<load>`
+without a sight, `log:<rifle>:<load>`) belongs to the sight the rifle had
+then. Where the default sight has since been replaced, that is the sight
+the replacement names: `carriesRecordsOf` where it carries, else
+`tookThePlaceOf` (`public/game.js`, `oldRecordsSightOf`). So the AR-15's
+range-day-one zero and log, made with the old irons, are not read as the
+Troy sights'. `test/day.test.js` ("range-day-twelve verify 5") proves each
+case with a device seeded under each old sight.
+
 ### The shot log: `log:<rifle>:<sight>:<load>`
 
 Every shot on the firing line with that rifle, sight and load, in order:
@@ -89,8 +127,10 @@ apart by it); a row without it is read as steel. On paper `hit` means on
 the sheet and `where` says where from the nearest aiming mark ("on paper
 (1.2 in high from the center mark)"); off it, "miss: off the paper, …".
 
-The older form `log:<rifle>:<load>` is read for the rifle's default
-sight and written forward, the old record left in place. "Clear the log"
+The older form `log:<rifle>:<load>` is read for the sight the rifle had
+when it was written (its default then; since range-day-twelve, where that
+sight was replaced, only for a sight that carries its records) and written
+forward, the old record left in place. "Clear the log"
 clears only this record.
 
 ### The open day: `day:open`
@@ -265,7 +305,7 @@ anywhere. `game` is, field for field, one entry of `data/rifles.json`:
 | `defaultSight` | one of its sights: the one an address without a sight opens |
 | `loads` | a list of load ids from `data/loads.json` |
 | `firstCourse` | a course id from `data/courses.json`: the course the rifle opens on the first time on a device |
-| `sightLeaf` | optional: an object, sight id to the name of a leaf table on that sight (for example `{ "ak-irons": "leaf545" }`); a sight not named uses its own `leaf` |
+| `sightLeaf` | optional: an object, sight id to the name of a leaf table on that sight (for example `{ "ak-irons": "leaf545" }`, the 5.45 rifle's until range-day-twelve, whose two sights now carry that leaf as their own); a sight not named uses its own `leaf` |
 
 A figure is `{ "value": <number>, "source": { "url": "...", "read": "YYYY-MM-DD" } }`
 or `{ "value": <number>, "estimate": "<its basis>" }`; a bare number is
@@ -278,12 +318,12 @@ value), or throws a `RecordError` naming the gun, the fault and the
 valid values, for example:
 
 - `gun 'x': game.barrelIn: a bare number; wrap it as {value, source} or {value, estimate}`
-- `gun 'x': sight 'foo' is not in the game's data: ar-irons, tavor-irons, …`
-- `gun 'x': defaultSight 'pa-md25' is not one of its sights: ar-irons`
-- `gun 'x': no sightHeightIn for sight 'ar-irons'; it carries: ar-irons`
+- `gun 'x': sight 'foo' is not in the game's data: ar-irons, tavor-irons, …, troy-battlesights, fab-flipup, seeall-gen1, ak762-kns-peep, ak545-ball, ak545-xs`
+- `gun 'x': defaultSight 'pa-md25' is not one of its sights: troy-battlesights`
+- `gun 'x': no sightHeightIn for sight 'troy-battlesights'; it carries: troy-battlesights`
 - `gun 'x': load 'sb-124' is 7.62x39, not the gun's 5.56x45`
 - `gun 'x': firstCourse 'moon' is not a course: cta-piru, angeles-sylmar`
-- `gun 'x': sightLeaf for 'ar-irons' names 'leaf', which is not a leaf table on that sight: it has none`
+- `gun 'x': sightLeaf for 'troy-battlesights' names 'leaf', which is not a leaf table on that sight: it has none`
 
 It also refuses a missing or unknown `game` field, a record that appears
 twice, an empty list, and a set with no playable gun.

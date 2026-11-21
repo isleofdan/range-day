@@ -256,6 +256,49 @@ run of 20 Nov 2026 (44739943613) the slowest job, tests scene-shots, took
 the runner varies), over the 11 minutes at which the limit is set to twice
 the slowest job seen.
 
+## The sights fitted to the rifles (range-day-twelve, 21 Nov 2026)
+
+137 tests (130 before) and 93 screenshot states (82 before); none dropped.
+
+- `lib/data.js` checks each sight's **kind** (`iron`, `dot`, `magnifier`,
+  `scope`, `seeall`) and what that kind needs to be drawn: a SeeAll has a
+  triangle, a line and a glowing block and no post or ring; a ball front
+  has a stem; a second-focal-plane reticle names the power it is true at.
+  A bad sight stops the server, as a bare number does.
+- `test/data.test.js`, two tests: each new sight's figures against their
+  sources (Troy's 0.190 and 0.070 in peeps, the SeeAll's sixteenth of a
+  turn, the KNS 0.034 in ball, the XS 0.105 in post, each post's angle
+  being its width over the sight radius); which rifle carries which sight;
+  the two figures that decide each rifle's records, against `main` at
+  `fd94354`; and the BugBuster's focal plane and true power, with the
+  maker's words.
+- `test/browser.test.js`, four tests, each sight on the plain picture
+  with the frame loop stopped and the aim held in open sky: **verify 3**
+  reads each new sight's widths (post or ball, stem, ring, the guards,
+  the stripe; the SeeAll's tip and width) from the canvas's pixels at 412
+  and 1280 px wide against the data's angles; **verify 4** puts the near
+  paper and the farthest plate through each new sight where the angles
+  put them; **verify 6** reads the BugBuster's dots down the crosshair at
+  3x, 6x and 9x against 3.44 MOA × 10 / power; **task items 3 and 4**:
+  the SeeAll shows no zoom, magnifier or leaf, the KNS peep no leaf, the
+  bench names where each sight adjusts, a Tavor's chooser lists its
+  three.
+- `test/day.test.js`, **verify 5**: a device seeded with a zero, a
+  setting, a log row and a book line under each old sight, on each rifle
+  whose sight changed; prints the stored keys before and after and the
+  rifles that need zeroing again.
+- Moved, not dropped: the tests and screenshot states that named
+  `ar-irons`, `tavor-irons` or `ak-irons` now name the sight that replaced
+  each (the AK leaf state and test are the 5.45 rifle's, behind its ball
+  post: the 7.62x39 rifle's KNS rear peep has no leaf). `test/line-reach.js`
+  now holds every sight of every rifle to the firing line's reach list
+  (three sights before).
+- `test/scene.test.js` (the picture side's file) changed in three places
+  only, each to read the figure from the data it already measured against:
+  the Vepr's front is a ball on a stem (the stem is what its row crosses),
+  the Tavor's irons are the FAB sights, and the BugBuster's dots at the old
+  7x test view stand at the data's spacing for that power.
+
 ## What runs when
 
 | When | What runs | Where it is set |
