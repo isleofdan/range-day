@@ -117,7 +117,7 @@ Round 4 (job 20261121-064803-730fc2): FINDINGS, one: the same point as round 3's
 
 Nothing on your screen has changed yet: the near targets and the spotting scope are in pull request #27, not merged or deployed. Merging and deploying it puts them on the live app: paper at 50 and 100 yards on both courses, a 100-yard steel plate on the canyon, and the spotting scope beside the zoom.
 
-Its full check is green (run 44875918450, eleven jobs). The independent result checker raised 9 points over four rounds; 8 are fixed. The last one asks that this report reach `main` before the deploy, which this repository's rules forbid (the report goes in after the deploy result), so it is your call.
+Its full check is green (run 44875918450, eleven jobs). The independent result checker raised 9 findings over four rounds: 7 are fixed, and the other 2 are one point raised twice. That point asks that this report reach `main` before the deploy, which this repository's rules forbid (the report goes in after the deploy result), so it is your call.
 
 Needed from you
 1. Ask 1, keep the repository's order and merge and deploy (recommended: yes). Type this line into this session:
