@@ -104,11 +104,14 @@ clicks, then works out the drop and the wind for each distance himself.
   the view, the same size as before; **where the last shot went**, held to
   two lines (a longer one is marked ▾ and opens over the page on a tap;
   "Open another box" stands beside it when the box is empty); **the sight
-  strip**: elevation and windage, each with its setting, its two one-click
-  buttons and its two 1 MOA buttons, every button at least 44 pixels tall,
-  with the rounds left under it; the book's newest line for this distance
-  (the rest are in the book, one tap on its link); then **Steady** and
-  **Fire**, fixed at the bottom, the lowest and largest controls. Below,
+  strip**: elevation and windage, each named on its box's top edge, with
+  its setting on one line, its two one-click buttons and its two 1 MOA
+  buttons, every button at least 44 pixels tall; the book's newest line
+  for this distance, on one line (▾ opens the rest of it; older lines are
+  in the book, one tap on its link); then **Steady** and **Fire**, fixed
+  at the bottom, the lowest and largest controls, with the rounds left
+  under the word Fire (range-day-nine-b: so the list fits a phone 830
+  pixels tall, the height of Dan's own). Below,
   in this order: the wind call, the cold-bore note, the zero note and "Set
   the sight to this load's saved zero", "The day" (the book, the day so
   far, Pack up), the shot log with "Clear the log", and the settings

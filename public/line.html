@@ -45,17 +45,17 @@
     <div class="strip">
       <div class="knobs">
         <div class="knob">
-          <span class="kh"><span class="muted">Elevation</span> <span id="el-text" class="mono"></span></span>
+          <span class="legend muted">Elevation</span><span class="kh"><span id="el-text"></span></span>
           <div class="pair"><button id="el-down" type="button" class="btn inline">▼ down</button><button id="el-up" type="button" class="btn inline">▲ up</button></div>
           <div class="pair coarse"><button id="el-down-moa" type="button" class="btn inline secondary">▼ 1 MOA</button><button id="el-up-moa" type="button" class="btn inline secondary">▲ 1 MOA</button></div>
         </div>
         <div class="knob">
-          <span class="kh"><span class="muted">Windage</span> <span id="wd-text" class="mono"></span></span>
+          <span class="legend muted">Windage</span><span class="kh"><span id="wd-text"></span></span>
           <div class="pair"><button id="wd-left" type="button" class="btn inline">◀ left</button><button id="wd-right" type="button" class="btn inline">right ▶</button></div>
           <div class="pair coarse"><button id="wd-left-moa" type="button" class="btn inline secondary">◀ 1 MOA</button><button id="wd-right-moa" type="button" class="btn inline secondary">1 MOA ▶</button></div>
         </div>
       </div>
-      <p class="setting small"><span id="rounds"></span><span class="vh"> · <span id="setting-line"></span></span></p>
+      <p class="vh"><span id="setting-line"></span></p>
     </div>
     <div class="slot book"><p id="book-line" class="bookline small fold"></p></div>
   </div>
@@ -94,7 +94,7 @@
 </main>
 <div class="firebar">
   <button id="steady" type="button" class="btn">Steady (hold)</button>
-  <button id="fire" type="button" class="btn fire">Fire</button>
+  <button id="fire" type="button" class="btn fire">Fire<span id="rounds" class="rounds"></span></button>
 </div>
 <script src="/engine.js"></script>
 <script src="/game.js"></script>
