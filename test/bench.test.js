@@ -110,6 +110,10 @@ test('range-day-thirteen item 4: nothing shifts: every button, the paper and the
     assert.equal(await page.textContent('#fresh'), 'Fresh paper');
     assert.match(await page.textContent('#pair-note'), /The old paper is back at 100 yards, with its 5 holes\./);
     await same('the old paper put back');
+    await page.click('#fresh'); await page.click('#fire1');
+    assert.equal(await page.textContent('#fresh'), 'Fresh paper', 'the way back lasts until the next shot');
+    assert.equal(await page.evaluate(() => RangeDayZero.holes.length), 1, 'the new paper has the one hole');
+    await same('a shot on a fresh paper: the button is Fresh paper again');
     if (await page.evaluate(() => document.getElementById('group').classList.contains('long'))) { await page.click('#group'); await same('with the group line opened over what is below it', true); await page.click('#group'); await same('the group line closed again'); }
     for (let i = 0; i < 3; i++) await page.click('#fire5');
     assert.ok(await page.isVisible('#another-box'));

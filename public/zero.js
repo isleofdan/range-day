@@ -130,7 +130,7 @@
     supply = took.supply;
     const out = took.out;
     if (!took.saved) $('saved').textContent = 'The zeroing supply is not saved on this device (the browser refused its storage); it holds while this page is open.';
-    paperBack = null; pairNote('');
+    if (paperBack) { paperBack = null; freshButton(); pairNote(''); } // the way back lasts until the next shot
     if (!out) { rounds(); return; }
     const load = d.loads[loadId];
     RD.shotSound(0.5);
