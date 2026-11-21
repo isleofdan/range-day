@@ -411,3 +411,31 @@ Needed from you
 2. The AR-15's Troy front sight: the game draws the kind with two guards
    either side of the post. If yours had the round hood instead, say so;
    otherwise nothing to do.
+
+## Addendum: range-day-twelve-b, the rear aperture flip (21 Nov 2026)
+
+On Dan's word, after he noted the Troy rear sight has a small and a large
+aperture: "yes, add the rear aperture flip". Pull request
+[#39](https://github.com/isleofdan/range-day/pull/39), merged as `9241fe2`
+on his typed line after all twelve checks passed (run 44921126072);
+Deploy run [44922340703](https://github.com/isleofdan/range-day/actions/runs/44922340703)
+green in 87 s: "alive: status 200", "signed in: yes (sample screen: HTTP
+200, "This is Range Day")", "picture file: /scene.min.js answered 200 with
+617204 bytes", "Live at https://range-day-dan.fly.dev".
+
+- The Troy (0.190 and 0.070 in) and the FAB (3 mm and 1.5 mm) rear sights
+  flip between their peeps with a button in the sight's glass cell on the
+  firing line; each peep's angle is in `data/sights.json` (an estimate with
+  its basis: the diameter over the eye's distance); the choice is kept on
+  the device (`aperture` in the sight setting, `docs/RECORDS.md`). Both
+  peeps stand in the same plane, so the flip moves no shot.
+- Verify (`test/browser.test.js`, "range-day-twelve-b"): drawn ring against
+  the data, phone and computer: Troy large 253.6 px against 247.5, small
+  93.4 against 91.2; FAB large 111.0 against 109.8, small 57.3 against 54.9
+  (the soft edge's half-dark point, as in verify 3); the same seeded shot
+  lands at the same place with either peep (Troy -9.02 in up, 1.01 in right
+  both ways); the choice survives a reload; a one-peep sight shows no flip.
+  140 tests, 94 screenshot states (`line-troy-100-small`).
+- Divergence 2 above (one rear ring per sight) no longer holds.
+- Also merged: pull request #38 (`cf8d38a`), the check that fails a report
+  whose line for Dan to type is not in a fenced block.
