@@ -677,7 +677,7 @@
       sight: { clickMoa: sight.clickMoa, windageClickMoa: sight.windageClickMoa, elevationClicks: setting.elevationClicks, windageClicks: setting.windageClicks },
       targetYards: p.yards, targetRiseFt: riseOf(p), conditions: RD.conditionsOf(weather), wind: weather.wind, t0: seed == null ? now : 0,
     });
-    lastShotInput = { targetYards: p.yards, targetRiseFt: riseOf(p), sightHeightIn: rifle.sightHeightIn[sightId], muzzleFps: r.muzzleFps, tempF: weather.tempF };
+    lastShotInput = { targetYards: p.yards, targetRiseFt: riseOf(p), sightHeightIn: rifle.sightHeightIn[sightId], muzzleFps: r.muzzleFps, tempF: weather.tempF, timeS: r.timeS };
     RD.shotSound(1);
     flash = 0.9;
     recoil.up += 14 * rifle.recoilFactor * (0.8 + Math.random() * 0.4); recoil.right += 4 * rifle.recoilFactor * (0.5 + Math.random());
