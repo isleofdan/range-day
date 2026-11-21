@@ -150,7 +150,11 @@ form:
   there; "Back to the rifle" stands in the bar; a shot in the air lands
   while at the scope; going there and back moves the view, the sight
   strip, the bar and the picker row by 0 pixels at 412×830, 412×915 and
-  1280×800; every new button is 44 pixels tall or more;
+  1280×800; every new button is 44 pixels tall or more; and (range-day-ten-b, after
+  Dan found the zoom cramped on his phone) the spotting scope's zoom slider is
+  at least 100 px wide and the rifle scope's at least 110 px (they were 57 and
+  70 px with the scope's button beside them; it now stands in the short line's
+  row);
 - **same scale**: the 3D picture puts each new canyon target's center
   within 1 pixel of the plain drawing through the Vepr's scope at 2x and
   7x, its irons, and the spotting scope at 20x and 60x, at both sizes.

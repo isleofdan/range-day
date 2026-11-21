@@ -22,7 +22,11 @@
   <!-- Within reach without scrolling, in this order from the top (range-day-nine): the short line, the plate and the sight's glass, the view, where the last shot went, the sight strip, the book's line; Steady and Fire fixed below. -->
   <div class="reach">
     <div class="head">
-      <button id="line-head" type="button" class="linehead" aria-expanded="false" aria-controls="line-full"><span id="line-short">Loading…</span><span class="caret" aria-hidden="true">▾</span></button>
+      <div class="headrow">
+        <button id="line-head" type="button" class="linehead" aria-expanded="false" aria-controls="line-full"><span id="line-short">Loading…</span><span class="caret" aria-hidden="true">▾</span></button>
+        <!-- The spotting scope's door (range-day-ten-b: moved here from the target row, which it cramped): reads "Back to the rifle" at the scope. -->
+        <button id="spotting" type="button" class="btn inline secondary spotbtn" aria-pressed="false">Spotting scope</button>
+      </div>
       <div id="line-full" class="linefull" hidden>
         <p class="dayline"><span id="intro">Loading…</span> <span id="day-line"></span></p>
         <p id="leaf-words" class="muted small" hidden>Rear leaf: the sliding range setting; the number is hundreds of meters.</p>
@@ -36,9 +40,8 @@
         <span class="small"><span class="muted">Rear leaf</span> <span id="leaf-text" class="mono"></span></span>
         <div class="pair"><button id="leaf-down" type="button" class="btn inline">◀ nearer</button><button id="leaf-up" type="button" class="btn inline">farther ▶</button></div>
       </div>
-      <!-- The spotting scope (range-day-ten): its zoom stands where the sight's glass control stands, shown only at the scope; the button beside it goes there and back. -->
+      <!-- The spotting scope (range-day-ten): its zoom stands where the sight's glass control stands, shown only at the scope; the button that goes there and back is in the short line's row above. -->
       <div id="spotrow" class="field spotzoom" aria-hidden="true"><label for="spot-zoom">Scope <span id="spot-zoom-text" class="mono"></span></label><input id="spot-zoom" type="range" min="20" max="60" step="1" value="20" tabindex="-1"></div>
-      <button id="spotting" type="button" class="btn inline secondary spotbtn" aria-pressed="false">Spotting scope</button>
     </div>
     <div class="viewwrap"><canvas id="scene" width="400" height="400" hidden></canvas><canvas id="view" width="400" height="400"></canvas></div>
     <div class="slot result">
