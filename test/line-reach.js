@@ -20,7 +20,7 @@ const FIRST = [
   { name: 'Tavor SAR with its dot (magnifier)', q: 'course=angeles-sylmar&rifle=iwi-tavor-sar&sight=pa-md25&load=imi-m193', glass: '#magrow' },
   { name: 'AK with its irons (rear leaf)', q: 'course=angeles-sylmar&rifle=ak-545&sight=ak545-ball&load=hornady-545-60', glass: '#leafrow' },
 ];
-const glassOf = (rifle, sightId) => { const s = data.sights[sightId]; return s.kind === 'dot' && rifle.sights.some((x) => data.sights[x].kind === 'magnifier') ? '#magrow' : s.leaf ? '#leafrow' : s.zoom.high > s.zoom.low ? '#zoomrow' : null; };
+const glassOf = (rifle, sightId) => { const s = data.sights[sightId]; return s.kind === 'dot' && rifle.sights.some((x) => data.sights[x].kind === 'magnifier') ? '#magrow' : s.leaf ? '#leafrow' : s.apertures && s.apertures.length > 1 ? '#aperturerow' : s.zoom.high > s.zoom.low ? '#zoomrow' : null; };
 const SIGHTS = [...FIRST];
 for (const [rifleId, rifle] of Object.entries(data.rifles)) {
   if (rifleId.startsWith('_') || !rifle.playable) continue;
@@ -76,7 +76,7 @@ function measure(glass) {
     ? { besideView: !(bar.left < view.right && bar.right > view.left && bar.top < view.bottom && bar.bottom > view.top), inside: bar.top >= 0 && bar.bottom <= h && bar.left >= 0 && bar.right <= w }
     : { fixedAtBottom: fixed && Math.abs(bar.bottom - h) <= 1 && bar.top >= 0, inside: bar.top >= 0 && bar.bottom <= h && bar.left >= 0 && bar.right <= w };
   // Every button and control a thumb uses in the within-reach list, with its height.
-  const touch = ['#plate', '#zoom', '#magnifier', '#leaf-down', '#leaf-up', '#el-down', '#el-up', '#wd-left', '#wd-right', '#el-down-moa', '#el-up-moa', '#wd-left-moa', '#wd-right-moa', '#line-head', '#another-box', '#steady', '#fire', '#spotting', '#spot-zoom', '#back-to-rifle', '#fresh-paper', '#old-paper']
+  const touch = ['#plate', '#zoom', '#magnifier', '#aperture', '#leaf-down', '#leaf-up', '#el-down', '#el-up', '#wd-left', '#wd-right', '#el-down-moa', '#el-up-moa', '#wd-left-moa', '#wd-right-moa', '#line-head', '#another-box', '#steady', '#fire', '#spotting', '#spot-zoom', '#back-to-rifle', '#fresh-paper', '#old-paper']
     .map((s) => q(s)).filter(shown).map((el) => ({ id: el.id, height: Math.round(el.getBoundingClientRect().height * 10) / 10 }));
   return { w, h, wide, scrollY: window.scrollY, view: { width: view.width, height: view.height, top: view.top }, bar, barChecks, items, coarse: coarseBoxes, coarseInStrip, touch };
 }

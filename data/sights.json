@@ -1,5 +1,5 @@
 {
- "_about": "The sights. clickMoa is what one click of elevation moves the strike, windageClickMoa one click of windage, in minutes of angle; clicks is the travel each way from the middle. zoom is the magnification range; fovFtAt100 the field of view in feet at 100 yards at the lowest and highest zoom. frontPostMoa is the front post's width over the sight radius (how wide it looks against the target); apertureMoa the rear ring's lit circle and notchMoa the rear notch's width as the eye sees them; dotMoa a red dot's size. leaf is a sliding rear leaf: its marked settings, the service load it was cut for, and each setting's angle above the 100 m setting, derived with the engine (leaf545: the same leaf on the 5.45x39 rifle, cut for its own load). notchDepthMoa is the rear notch's depth as the eye sees it; stemWidthMoa a bead's stem; a drop reticle's chevronHalfWidthMoa and markHalfWidthMoa are its drawn widths. aimWanderFactor scales the drawn wander of the aim through this sight (1 where absent). frontBead marks a front sight that is a round bead on a stem rather than a flat post. range-day-twelve: sightRadiusIn is the distance between the front and rear sight, the radius the front post's width is seen over; frontPostIn and apertures (each peep's diameterIn) are the parts' own sizes; frontEars draws the front sight's guards (their inner gap, each one's width, and how far their tops stand above the post); frontStripeMoa and frontStripeTopMoa a glowing stripe on a front post; adjustWords says in plain words where each adjustment is; kind \"seeall\" is the SeeAll Open Sight, its reticle a triangle whose tip is the aim point, standing across a line that tops a glowing field; a reticle's focalPlane and trueAtPower say where a second-focal-plane reticle's marks are true (at another power p they stand trueAtPower / p times as far apart in angle). tookThePlaceOf names the sight a new one replaced on its rifles without carrying its records (they click differently or sit at another height): a record from before any sight could be chosen, made with the old sight, is never read as the new one's. rearBody is a rear peep's leaf, where it stands far from the eye (its width and how far its top stands above the peep): only the leaf is dark around the peep; a sight without it has its ring close to the eye, dark to the edges of the view.",
+ "_about": "The sights. clickMoa is what one click of elevation moves the strike, windageClickMoa one click of windage, in minutes of angle; clicks is the travel each way from the middle. zoom is the magnification range; fovFtAt100 the field of view in feet at 100 yards at the lowest and highest zoom. frontPostMoa is the front post's width over the sight radius (how wide it looks against the target); apertureMoa the rear ring's lit circle and notchMoa the rear notch's width as the eye sees them; dotMoa a red dot's size. leaf is a sliding rear leaf: its marked settings, the service load it was cut for, and each setting's angle above the 100 m setting, derived with the engine (leaf545: the same leaf on the 5.45x39 rifle, cut for its own load). notchDepthMoa is the rear notch's depth as the eye sees it; stemWidthMoa a bead's stem; a drop reticle's chevronHalfWidthMoa and markHalfWidthMoa are its drawn widths. aimWanderFactor scales the drawn wander of the aim through this sight (1 where absent). frontBead marks a front sight that is a round bead on a stem rather than a flat post. range-day-twelve: sightRadiusIn is the distance between the front and rear sight, the radius the front post's width is seen over; frontPostIn and apertures (each peep's diameterIn) are the parts' own sizes; frontEars draws the front sight's guards (their inner gap, each one's width, and how far their tops stand above the post); frontStripeMoa and frontStripeTopMoa a glowing stripe on a front post; adjustWords says in plain words where each adjustment is; kind \"seeall\" is the SeeAll Open Sight, its reticle a triangle whose tip is the aim point, standing across a line that tops a glowing field; a reticle's focalPlane and trueAtPower say where a second-focal-plane reticle's marks are true (at another power p they stand trueAtPower / p times as far apart in angle). tookThePlaceOf names the sight a new one replaced on its rifles without carrying its records (they click differently or sit at another height): a record from before any sight could be chosen, made with the old sight, is never read as the new one's. rearBody is a rear peep's leaf, where it stands far from the eye (its width and how far its top stands above the peep): only the leaf is dark around the peep; a sight without it has its ring close to the eye, dark to the edges of the view. range-day-twelve-b: a rear sight with two peeps (apertures, each with its diameterIn and the apertureMoa it covers seen from the eye) flips between them on the firing line; both stand in the same plane, so the flip moves no shot.",
  "ar-irons": {
   "name": "AR-15 iron sights (front post, rear aperture)",
   "kind": "iron",
@@ -1022,6 +1022,10 @@
       "read": "2026-11-21",
       "note": "Troy's instructions: \"flip the same-plane aperture between .190\" and .070\" diameter peeps\"; a user review says the folding rear's peeps are the same. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches (CONNECT 403)"
      }
+    },
+    "apertureMoa": {
+     "value": 261.27,
+     "estimate": "the large peep, 0.19 in across, seen about 2.5 in from the eye (the AR's rear sight sits at the back of the receiver, a cheek-weld from the eye): 0.19 / 2.5 radians, 261.27 MOA; the dark ring around it is drawn from this"
     }
    },
    {
@@ -1033,12 +1037,16 @@
       "read": "2026-11-21",
       "note": "the same sentence: the small peep is .070 in. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches (CONNECT 403)"
      }
+    },
+    "apertureMoa": {
+     "value": 96.26,
+     "estimate": "the small peep, 0.07 in across, seen about 2.5 in from the eye (the AR's rear sight sits at the back of the receiver, a cheek-weld from the eye): 0.07 / 2.5 radians, 96.26 MOA; the dark ring around it is drawn from this"
     }
    }
   ],
   "apertureMoa": {
    "value": 261.27,
-   "estimate": "the large (0.190 in) peep, the one drawn: seen at about 2.5 in from the eye (the AR's rear sight sits at the back of the receiver, a cheek-weld from the eye) it covers 0.190 / 2.5 radians, 261.27 MOA. The small peep (0.070 in, 96.26 MOA) is recorded but not offered: the game has one rear ring per sight"
+   "estimate": "the large (0.190 in) peep, the one drawn: seen at about 2.5 in from the eye (the AR's rear sight sits at the back of the receiver, a cheek-weld from the eye) it covers 0.190 / 2.5 radians, 261.27 MOA. The rear flips between its two peeps on the firing line (range-day-twelve-b, the aperture control); the large is where it starts"
   },
   "frontEars": {
    "gapMoa": {
@@ -1115,6 +1123,10 @@
       "read": "2026-11-21",
       "note": "a retailer's listing of the FAB RBS: \"Apertures: 3mm and 1.5mm\"; 3 mm is 0.118 in. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches (CONNECT 403)"
      }
+    },
+    "apertureMoa": {
+     "value": 115.9,
+     "estimate": "the large peep, 0.118 in across, seen about 3.5 in in front of the eye (a bullpup's rear sight): 0.118 / 3.5 radians, 115.9 MOA; the dark ring around it is drawn from this"
     }
    },
    {
@@ -1126,12 +1138,16 @@
       "read": "2026-11-21",
       "note": "the same listing: 1.5 mm, 0.059 in. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches (CONNECT 403)"
      }
+    },
+    "apertureMoa": {
+     "value": 57.95,
+     "estimate": "the small peep, 0.059 in across, seen about 3.5 in in front of the eye (a bullpup's rear sight): 0.059 / 3.5 radians, 57.95 MOA; the dark ring around it is drawn from this"
     }
    }
   ],
   "apertureMoa": {
    "value": 115.9,
-   "estimate": "the large (3 mm) peep, the one drawn (the photographs show the large peep up): on a bullpup the rear sight sits about 3.5 in in front of the eye, so it covers 0.118 / 3.5 radians, 115.9 MOA. The small peep (1.5 mm, 57.95 MOA) is recorded but not offered: the game has one rear ring per sight"
+   "estimate": "the large (3 mm) peep, the one drawn (the photographs show the large peep up): on a bullpup the rear sight sits about 3.5 in in front of the eye, so it covers 0.118 / 3.5 radians, 115.9 MOA. The rear flips between its two peeps on the firing line (range-day-twelve-b, the aperture control); the large is where it starts"
   },
   "frontEars": {
    "gapMoa": {

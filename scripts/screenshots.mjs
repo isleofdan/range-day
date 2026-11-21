@@ -182,6 +182,7 @@ const SCREENS = [
   // browser outside the page and is not in a screenshot, so the list is shown at full length for the picture); the Vepr's scope at
   // 3x and 9x on the same plate, its dots further apart at 3x (second focal plane, true at 10x).
   { name: 'line-troy-100', path: `${SYLMAR}&rifle=bcm-ar15&sight=troy-battlesights&load=imi-m193`, expect: 'Troy folding BattleSights', act: (page) => plate(page, 0) },
+  { name: 'line-troy-100-small', path: `${SYLMAR}&rifle=bcm-ar15&sight=troy-battlesights&load=imi-m193`, expect: 'Small rear aperture', act: async (page) => { await ready(page); await fresh(page, 'bcm-ar15', 'troy-battlesights'); await page.reload(); await plate(page, 0); await page.click('#aperture'); await settle(page, 300); } }, // range-day-twelve-b: the small peep up
   { name: 'line-fab-100', path: `${SYLMAR}&rifle=iwi-tavor-sar&sight=fab-flipup&load=imi-m193`, expect: 'FAB Defense flip-up sights', act: (page) => plate(page, 0) },
   { name: 'line-seeall-100', path: `${SYLMAR}&rifle=iwi-tavor-sar&sight=seeall-gen1&load=imi-m193`, expect: 'SeeAll Open Sight', act: (page) => plate(page, 0) },
   { name: 'line-seeall-paper-50', path: `${SYLMAR}&rifle=iwi-tavor-sar&sight=seeall-gen1&load=imi-m193`, expect: '50 yards (paper)', act: (page) => target(page, 'near-0') },

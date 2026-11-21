@@ -311,6 +311,16 @@ copy button. Its second test holds the four shapes that reached Dan (the
 range-day-one and range-day-twelve closing messages among them). Reports
 before range-day-twelve are records and are not rewritten. Taste
 constraint azxfbwouwp9lt6jhny8n. 139 tests.
+## The rear aperture flip (range-day-twelve-b, 21 Nov 2026)
+
+`test/browser.test.js`, "range-day-twelve-b": on the Troy and the FAB rear
+sights, at 412 and 1280 px, the ring drawn with each peep up is read from
+the canvas against that peep's `apertureMoa`; the choice survives a
+reload; the same seeded shot lands in the same place with either peep; a
+sight with one peep shows no flip. `lib/data.js` refuses a peep without its
+name or angle. The reach list holds the flip (`#aperturerow`) for both
+sights; screenshot state `line-troy-100-small` shows the small peep. 140
+tests (with the fenced-lines check) and 94 screenshot states on this change.
 
 ## What runs when
 

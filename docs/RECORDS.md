@@ -29,6 +29,14 @@ with a magnifier, whether the magnifier is flipped in.
 { "elevationClicks": 12, "windageClicks": -3, "leafIx": 2, "magnifier": false }
 ```
 
+Since range-day-twelve-b, on a rear sight with two peeps (the Troy and the
+FAB), `aperture` says which is up: `0` the large, `1` the small; absent is
+the large. Both stand in the same plane, so it changes no shot.
+
+```json
+{ "elevationClicks": 4, "windageClicks": -2, "aperture": 1 }
+```
+
 ### The saved zero: `zero:<rifle>:<sight>:<load>`
 
 Saved at the zero bench. `sight` repeats the sight; `leafIx` is present
