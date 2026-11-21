@@ -81,14 +81,15 @@ test('verify 4: zero the Vepr at 100 yards, reload, the zero is still there; cha
   assert.match(savedText, /Saved zero for Sellier & Bellot 174 gr.*100 yards/);
   const el = await page.textContent('#el-text');
   // Reload: still there, on the bench and on the home screen.
-  await page.reload(); await page.waitForSelector('#fire5');
+  // range-day-thirteen: with the zeroing supply empty, Open another box stands where Fire stands, so Fire is in the page but not seen
+  await page.reload(); await page.waitForSelector('#fire5', { state: 'attached' }); await page.waitForFunction(() => window.RangeDayZero);
   assert.equal(await page.textContent('#el-text'), el, 'the sight setting survives a reload');
   assert.match(await page.textContent('#saved'), /Saved zero for Sellier & Bellot 174 gr.*100 yards/);
   await noDay(page); // home shows the picks and the zero line when no day is open (the day stays open now that the box does not end it)
   await page.goto(`${base}/?rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('.rifle');
   assert.match(await page.textContent('#zero'), /Zeroed at 100 yards/);
   // Change the load (a day is one load, so the other load is a new day from home): the sight stays, and each group lands where the engine puts its load in its day's air.
-  await page.goto(`${base}/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('#fire5');
+  await page.goto(`${base}/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('#fire5', { state: 'attached' }); await page.waitForFunction(() => window.RangeDayZero);
   assert.equal(await page.textContent('#el-text'), el, 'changing nothing keeps the sight');
   assert.match(await page.textContent('#intro'), /Sellier & Bellot 174 gr/, 'the load is the day\'s: named, not chosen, while the day is open');
   assert.equal(await page.$('#load'), null, 'no load select on the bench: one box, one load');
@@ -209,7 +210,8 @@ test('a browser that reads but refuses to write: the zero bench and the firing l
   await page.goto(`${base}/login`); await page.fill('#passphrase', PASS); await page.click('button[type=submit]'); await page.waitForURL(`${base}/`);
   await page.goto(`${base}/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('#fire5');
   await page.click('#el-up');
-  assert.match(await page.textContent('#saved'), /Sight setting not saved on this device/);
+  // range-day-thirteen: the knobs' words stand by their rows, on the first screen
+  assert.match(await page.textContent('#knob-note'), /Sight setting not saved on this device/);
   await page.click('#save');
   assert.match(await page.textContent('#saved'), /Zero not saved on this device/);
   await page.goto(`${base}/line?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('#fire');
@@ -797,7 +799,9 @@ test('range-day-twelve task items 3 and 4: a control that does not apply is not 
   await noDay(page);
   await page.goto(`${base}/?rifle=iwi-tavor-sar`); await page.waitForSelector('.rifle.picked[data-rifle="iwi-tavor-sar"]');
   const opts = await page.$$eval('#sight option', (o) => o.map((x) => x.textContent));
-  assert.equal(opts.length, 3, 'the irons, the dot (with its magnifier behind it) and the SeeAll');
+  // range-day-thirteen: then the scope collection's three, under their own heading
+  assert.equal(opts.length, 6, 'the irons, the dot (with its magnifier behind it) and the SeeAll; then the collection\'s three');
+  assert.deepEqual(await page.$$eval('#sight > option', (o) => o.map((x) => x.value)), ['fab-flipup', 'pa-md25', 'seeall-gen1'], 'its own three first');
   assert.match(opts.join(' | '), /FAB Defense flip-up sights.*Primary Arms SLx MD-25.*SeeAll Open Sight/);
   console.log('  ' + helps.join('\n  ') + '\n  Tavor SAR sight chooser: ' + opts.join(' | '));
   assert.deepEqual(errors, []);

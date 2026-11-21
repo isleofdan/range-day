@@ -378,5 +378,5 @@ body.bench .more .knob.leaf { margin: 10px 0; }
 .brow .btn.coarse { font-size: 12.5px; letter-spacing: -0.2px; }
 /* range-day-thirteen: the collection's zooms read up to "12.5×" and "25×"; the power stands under the word "Zoom", as the spotting
    scope's does, so the label keeps one width at every power and the slider never changes length while it is dragged. */
-.reach .pick #zoomrow label { line-height: 1.15; }
-.reach .pick #zoomrow #zoom-text { display: block; }
+.reach .pick #zoomrow label { line-height: 1.15; min-width: 41px; }
+.reach .pick #zoomrow #zoom-text { display: block; font-size: 13px; }
