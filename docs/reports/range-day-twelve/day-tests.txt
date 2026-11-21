@@ -1,0 +1,40 @@
+TAP version 13
+#   bcm-ar15: When bottom 713, zero line bottom 811, doors bottom 873 of 915
+#   iwi-tavor-sar: When bottom 713, zero line bottom 787, doors bottom 849 of 915
+#   iwi-x95: When bottom 713, zero line bottom 787, doors bottom 849 of 915
+#   ak-762: When bottom 713, zero line bottom 811, doors bottom 873 of 915
+#   ak-545: When bottom 713, zero line bottom 811, doors bottom 873 of 915
+#   molot-vepr-54r: When bottom 713, zero line bottom 811, doors bottom 873 of 915
+#   remington-22: When bottom 713, zero line bottom 787, doors bottom 849 of 915
+#   firing line: view 147-527, result bottom 583, setting and buttons bottom 665, rounds bottom 898, book line bottom 756, the Steady/Fire bar from 846, of 915
+#   home with a day open: card bottom 232, doors bottom 365, Pack up bottom 499 of 915
+# Subtest: verify 13: the phone: home with no day open shows the picks, When and both doors without scrolling for each rifle; home with a day open shows the day and its doors; the line shows the rounds, the setting and the book line with the view
+ok 1 - verify 13: the phone: home with no day open shows the picks, When and both doors without scrolling for each rifle; home with a day open shows the day and its doors; the line shows the rounds, the setting and the book line with the view
+  ---
+  duration_ms: 1060.29364
+  type: 'test'
+  ...
+#   bcm-ar15: troy-battlesights starts unzeroed; ar-irons's records stay readable under its name (click 1.75/0.75 MOA before, 1.33/0.5 now; height over the bore 2.6 in before, 2.6 in now)
+#   iwi-tavor-sar: fab-flipup starts unzeroed; tavor-irons's records stay readable under its name (click 1.5/1 MOA before, 1/1 now; height over the bore 3 in before, 3.65 in now)
+#   iwi-x95: fab-flipup starts unzeroed; tavor-irons's records stay readable under its name (click 1.5/1 MOA before, 1/1 now; height over the bore 3 in before, 3.65 in now)
+#   ak-762: ak762-kns-peep starts unzeroed; ak-irons's records stay readable under its name (click 2/2 MOA before, 0.5/0.5 now; height over the bore 1.9 in before, 1.9 in now)
+#   ak-545: ak545-ball carries ak-irons (click 2/2 MOA before, 2/2 now; height over the bore 1.9 in before, 1.9 in now)
+#   molot-vepr-54r: vepr-irons kept its id: nothing moves (click 2/2 MOA before, 2/2 now; height over the bore 2 in before, 2 in now)
+#   stored keys before: range-day:book:ak-545:ak-irons:hornady-545-60, range-day:book:ak-762:ak-irons:silver-bear-123, range-day:book:bcm-ar15:ar-irons:imi-m193, range-day:book:iwi-tavor-sar:tavor-irons:imi-m193, range-day:book:iwi-x95:tavor-irons:imi-m193, range-day:book:molot-vepr-54r:vepr-irons:sb-174-hpbt, range-day:log:ak-545:ak-irons:hornady-545-60, range-day:log:ak-762:ak-irons:silver-bear-123, range-day:log:bcm-ar15:ar-irons:imi-m193, range-day:log:iwi-tavor-sar:tavor-irons:imi-m193, range-day:log:iwi-x95:tavor-irons:imi-m193, range-day:log:molot-vepr-54r:vepr-irons:sb-174-hpbt, range-day:sight:ak-545:ak-irons, range-day:sight:ak-762:ak-irons, range-day:sight:bcm-ar15:ar-irons, range-day:sight:iwi-tavor-sar:tavor-irons, range-day:sight:iwi-x95:tavor-irons, range-day:sight:molot-vepr-54r:vepr-irons, range-day:zero:ak-545:ak-irons:hornady-545-60, range-day:zero:ak-762:ak-irons:silver-bear-123, range-day:zero:bcm-ar15:ar-irons:imi-m193, range-day:zero:iwi-tavor-sar:tavor-irons:imi-m193, range-day:zero:iwi-x95:tavor-irons:imi-m193, range-day:zero:molot-vepr-54r:vepr-irons:sb-174-hpbt
+#   stored keys after:  range-day:book:ak-545:ak-irons:hornady-545-60, range-day:book:ak-545:ak545-ball:hornady-545-60, range-day:book:ak-762:ak-irons:silver-bear-123, range-day:book:bcm-ar15:ar-irons:imi-m193, range-day:book:iwi-tavor-sar:tavor-irons:imi-m193, range-day:book:iwi-x95:tavor-irons:imi-m193, range-day:book:molot-vepr-54r:vepr-irons:sb-174-hpbt, range-day:log:ak-545:ak-irons:hornady-545-60, range-day:log:ak-545:ak545-ball:hornady-545-60, range-day:log:ak-762:ak-irons:silver-bear-123, range-day:log:bcm-ar15:ar-irons:imi-m193, range-day:log:iwi-tavor-sar:tavor-irons:imi-m193, range-day:log:iwi-x95:tavor-irons:imi-m193, range-day:log:molot-vepr-54r:vepr-irons:sb-174-hpbt, range-day:sight:ak-545:ak-irons, range-day:sight:ak-545:ak545-ball, range-day:sight:ak-762:ak-irons, range-day:sight:bcm-ar15:ar-irons, range-day:sight:iwi-tavor-sar:tavor-irons, range-day:sight:iwi-x95:tavor-irons, range-day:sight:molot-vepr-54r:vepr-irons, range-day:zero:ak-545:ak-irons:hornady-545-60, range-day:zero:ak-545:ak545-ball:hornady-545-60, range-day:zero:ak-762:ak-irons:silver-bear-123, range-day:zero:bcm-ar15:ar-irons:imi-m193, range-day:zero:iwi-tavor-sar:tavor-irons:imi-m193, range-day:zero:iwi-x95:tavor-irons:imi-m193, range-day:zero:molot-vepr-54r:vepr-irons:sb-174-hpbt
+#   rifles that need zeroing again: bcm-ar15, iwi-tavor-sar, iwi-x95, ak-762
+# Subtest: range-day-twelve verify 5: for each rifle whose sight changed, a device that kept a zero, a sight setting, a shot log and a book line under the old sight: where the new sight clicks alike and sits at the same height they are its own (the 5.45 rifle's ball post); where it does not they stay readable under the old name and the new sight starts unzeroed (the BCM, both Tavors, the 7.62x39 rifle); where the sight kept its id nothing moves (the Vepr's irons). Old records stay stored, byte for byte.
+ok 2 - range-day-twelve verify 5: for each rifle whose sight changed, a device that kept a zero, a sight setting, a shot log and a book line under the old sight: where the new sight clicks alike and sits at the same height they are its own (the 5.45 rifle's ball post); where it does not they stay readable under the old name and the new sight starts unzeroed (the BCM, both Tavors, the 7.62x39 rifle); where the sight kept its id nothing moves (the Vepr's irons). Old records stay stored, byte for byte.
+  ---
+  duration_ms: 738.993968
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2047.291618

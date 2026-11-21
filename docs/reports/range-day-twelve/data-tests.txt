@@ -1,0 +1,23 @@
+TAP version 13
+#   records: bcm-ar15 starts unzeroed; iwi-tavor-sar starts unzeroed; iwi-x95 starts unzeroed; ak-762 starts unzeroed; ak-545 carries; molot-vepr-54r kept its id
+# Subtest: range-day-twelve: the sights fitted to the rifles: each figure from a page or an estimate with its basis; each rifle opens with a sight of the kind it opened with; a sight carries the records of the one it replaced only where both click alike and sit at the same height over the bore
+ok 1 - range-day-twelve: the sights fitted to the rifles: each figure from a page or an estimate with its basis; each rifle opens with a sight of the kind it opened with; a sight carries the records of the one it replaced only where both click alike and sit at the same height over the bore
+  ---
+  duration_ms: 2.251598
+  type: 'test'
+  ...
+# Subtest: range-day-twelve: the BugBuster's dots: the maker states a second-focal-plane reticle true at 10x, so at each power p the dots stand 10 / p milliradians apart
+ok 2 - range-day-twelve: the BugBuster's dots: the maker states a second-focal-plane reticle true at 10x, so at each power p the dots stand 10 / p milliradians apart
+  ---
+  duration_ms: 0.173201
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 49.521982
