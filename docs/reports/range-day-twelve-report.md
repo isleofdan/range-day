@@ -257,11 +257,14 @@ and every AR-15 state (the Troy sights).
    the KNS peep's state retaken after its fix (1 of 93, passed). The new and
    moved states' images (68) are on the notes branch.
 9. The check: Checks run
-   [44914324233](https://github.com/isleofdan/range-day/actions/runs/44914324233)
-   on `ec26924`, every job green: who works on what 18 s; tests (rest)
-   30 s, (browser) 79 s, (day) 125 s, (near) 288 s, (scene-scale) 280 s,
-   (scene-rest) 559 s, (scene-shots) 549 s; screenshots shard 1 544 s, 2
-   987 s, 3 728 s, 4 668 s. Tests 130 → 137; states 82 → 93. Changed tests
+   [44916458101](https://github.com/isleofdan/range-day/actions/runs/44916458101)
+   on `ddd8ca6`, the pull request's final commit, every job green: who works
+   on what 15 s; tests (rest) 37 s, (browser) 92 s, (day) 136 s, (near)
+   266 s, (scene-scale) 456 s, (scene-rest) 556 s, (scene-shots) 545 s;
+   screenshots shard 1 547 s, 2 729 s, 3 721 s, 4 665 s. (Run 44916065640
+   on `f094830` failed one day test on a race, fixed in `ddd8ca6`: Result
+   check rounds, round 1, finding 1; run 44914324233 on `ec26924` was green.)
+   Tests 130 → 137; states 82 → 93. Changed tests
    and why: `test/guns.test.js` (the AR's sight is the Troy's; the 5.45's
    leaf is its sights' own); `test/browser.test.js` verify 6, old-form records (the
    AR's range-day-one zero and log are not the Troy's; renamed to say so), home remembers a sight (the
@@ -272,7 +275,7 @@ and every AR-15 state (the Troy sights).
    `test/scene.test.js` (What the brief got wrong, 1). In the session the
    pieces were run one at a time; the run on the pull request is the
    proof.
-10. The pull request's diff: 18 files, 175,524 bytes (under 400,000).
+10. The pull request's diff: 18 files, 176,793 bytes (under 400,000).
 11. After the deploy: in the card note.
 
 What this cannot prove: the session cannot open the live app or hold a
@@ -357,7 +360,8 @@ rifle keeps its zero with the ball post; its other new choice, the XS
 stripe post, starts unzeroed. The Vepr keeps its zeros.
 
 The change is pull request #36:
-https://github.com/isleofdan/range-day/pull/36. Every check on it passed.
+https://github.com/isleofdan/range-day/pull/36. Every check on its final
+commit passed (run 44916458101).
 
 Needed from you
 1. Merge and deploy? If yes, type: `yes, merge and deploy range-day-twelve, then merge its notes`
