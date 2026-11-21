@@ -558,7 +558,7 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
   the maker's field of view at both ends): beside the glass control, no
   reticle, a still view, a drag moves it; "Back to the rifle" replaces
   Steady and Fire in the bar. 118 tests, 81 screenshot states (111 and 73
-  before).
+  before). Merged as `dddb27c` on Dan's typed line after four result checks (seven findings fixed; one point, raised twice, conflicts with this file's notes order and was put to Dan as Ask 1, who kept the order) and deployed by Deploy run 44877510234 (green, 79 s; the picture file answered 200 with 617,204 bytes, sign-in 303, crash test 500).
 - **Decided:** the near targets are their own list so the plates keep
   their indices; the scope's width between its ends follows a power of
   the magnification through both published figures; the picker's label
