@@ -795,3 +795,47 @@ test('range-day-twelve task items 3 and 4: a control that does not apply is not 
   assert.deepEqual(errors, []);
   await context.close();
 });
+
+test('range-day-twelve-b: the Troy and the FAB rear sights flip between their two peeps: the drawn ring is each peep\'s data, read from the canvas at 412 and 1280 px; the choice is kept on the device; the same seeded shot lands in the same place with either peep', { skip }, async () => {
+  const lines = [];
+  for (const [sizeName, viewport] of [['phone', { width: 412, height: 915 }], ['computer', { width: 1280, height: 800 }]]) {
+    const { page, context, errors } = await signedIn(viewport);
+    for (const [rifle, sight] of [['bcm-ar15', 'troy-battlesights'], ['iwi-tavor-sar', 'fab-flipup']]) {
+      const q = `course=angeles-sylmar&rifle=${rifle}&sight=${sight}&load=imi-m193`;
+      await noDay(page); // the shots on the rifle before opened a day, which would keep the line on that rifle
+      await page.goto(`${base}/line?${q}`); await page.waitForSelector('#fire');
+      await page.evaluate(([r, s]) => { localStorage.removeItem(`range-day:sight:${r}:${s}`); }, [rifle, sight]);
+      await page.reload(); await page.waitForSelector('#fire');
+      assert.ok(await page.isVisible('#aperture'), `${sight}: the flip is shown`);
+      assert.match(await page.textContent('#aperture'), /^Large rear aperture/);
+      await page.selectOption('#plate', '0'); await page.evaluate(() => RangeDayLine.setHold(0, 0));
+      const a = await seededShot(page, 21);
+      const S = flat.sights[sight];
+      for (const [ix, name] of [[0, 'large'], [1, 'small']]) {
+        // the frame loop was stopped for the first measure: a fresh page, then the flip
+        if (ix === 1) { await page.reload(); await page.waitForSelector('#fire'); await page.click('#aperture'); assert.match(await page.textContent('#aperture'), /^Small rear aperture/); assert.match(await page.textContent('#setting-line'), /Small rear aperture/); }
+        await still(page);
+        const r = await page.evaluate(readSight);
+        const data = S.apertures[ix].apertureMoa * r.k;
+        lines.push(`${sizeName} ${sight} ${name} peep: ring drawn ${r.ring.toFixed(2)} px, data ${data.toFixed(2)} px`);
+        assert.equal(r.G.aperture, name);
+        assert.ok(Math.abs(r.ring - data) <= Math.max(2, data * 0.06), lines[lines.length - 1]);
+      }
+      // kept on the device, and the shot does not move with the peep
+      await page.reload(); await page.waitForSelector('#fire');
+      assert.match(await page.textContent('#aperture'), /^Small rear aperture/, 'the small peep is still up after a reload');
+      assert.equal((await page.evaluate(([r, s]) => JSON.parse(localStorage.getItem(`range-day:sight:${r}:${s}`)), [rifle, sight])).aperture, 1);
+      await page.selectOption('#plate', '0'); await page.evaluate(() => RangeDayLine.setHold(0, 0));
+      const b = await seededShot(page, 21);
+      lines.push(`${sizeName} ${sight}: the same seeded shot, large peep ${a.upIn.toFixed(2)} in up ${a.rightIn.toFixed(2)} in right; small peep ${b.upIn.toFixed(2)}, ${b.rightIn.toFixed(2)}`);
+      assert.equal(b.upIn, a.upIn); assert.equal(b.rightIn, a.rightIn);
+    }
+    // a sight with one rear peep has no flip
+    await noDay(page);
+    await page.goto(`${base}/line?course=angeles-sylmar&rifle=ak-762&sight=ak762-kns-peep&load=silver-bear-123`); await page.waitForSelector('#fire');
+    assert.equal(await page.isVisible('#aperture'), false);
+    assert.deepEqual(errors, []);
+    await context.close();
+  }
+  console.log('  ' + lines.join('\n  '));
+});

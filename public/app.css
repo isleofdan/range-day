@@ -286,7 +286,7 @@ body.line .more .windcall { margin-top: 0; }
    "Back to the rifle"; in the bar, "Back to the rifle" stands where Steady and Fire stood, the same height, and they cannot be pressed. */
 .reach .pick { grid-template-areas: "plate glass"; }
 .reach .pick .plate { grid-area: plate; }
-.reach .pick > #zoomrow, .reach .pick > #magrow, .reach .pick > #leafrow, .reach .pick > #spotrow { grid-area: glass; }
+.reach .pick > #zoomrow, .reach .pick > #magrow, .reach .pick > #aperturerow, .reach .pick > #leafrow, .reach .pick > #spotrow { grid-area: glass; }
 .reach .pick:not(.spotting):not(:has(> .zoom:not([hidden]), > .glass:not([hidden]))) .plate { grid-column: 1 / -1; }
 .reach .pick.spotting:not(:has(> .zoom:not([hidden]), > .glass:not([hidden]))) .plate { grid-column: 1 / 2; }
 .reach .pick #spotrow { visibility: hidden; }

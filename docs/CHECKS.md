@@ -299,6 +299,17 @@ the slowest job seen.
   the Tavor's irons are the FAB sights, and the BugBuster's dots at the old
   7x test view stand at the data's spacing for that power.
 
+## The rear aperture flip (range-day-twelve-b, 21 Nov 2026)
+
+`test/browser.test.js`, "range-day-twelve-b": on the Troy and the FAB rear
+sights, at 412 and 1280 px, the ring drawn with each peep up is read from
+the canvas against that peep's `apertureMoa`; the choice survives a
+reload; the same seeded shot lands in the same place with either peep; a
+sight with one peep shows no flip. `lib/data.js` refuses a peep without its
+name or angle. The reach list holds the flip (`#aperturerow`) for both
+sights; screenshot state `line-troy-100-small` shows the small peep. 138
+tests and 94 screenshot states on this change.
+
 ## What runs when
 
 | When | What runs | Where it is set |

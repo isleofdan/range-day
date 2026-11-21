@@ -51,6 +51,11 @@
   // adjustments and no zero of its own; it only magnifies the dot's view.
   const magnifier = c.magnifierId && sight.kind === 'dot' ? d.sights[c.magnifierId] : null;
   const magnifierIn = () => Boolean(magnifier && setting.magnifier);
+  // A rear sight with two peeps (range-day-twelve-b: the Troy and the FAB): which one is up, large (0) or small (1), kept in the
+  // sight's setting; both stand in the same plane, so the flip changes only the ring the eye sees, never the shot.
+  const apertures = sight.apertures && sight.apertures.length > 1 ? sight.apertures : null;
+  const apertureIx = () => (apertures ? Math.min(apertures.length - 1, Math.max(0, setting.aperture || 0)) : 0);
+  const ringMoa = () => (apertures ? apertures[apertureIx()].apertureMoa : sight.apertureMoa);
   const seed = RD.hash(courseId);
   const terrainRand = E.seeded(seed);
   const $ = (id) => document.getElementById(id);
@@ -602,7 +607,7 @@
 
   // Iron sights with a ring: the rear aperture's circle, dark and soft around it; the front post rising to the center.
   function drawRingAndPost(g, size, k, cx, cy) {
-    const r = (sight.apertureMoa * k) / 2;
+    const r = (ringMoa() * k) / 2;
     // the aperture's disc: the ring is right at the eye, so its edge is a soft dark fade, its inner edge faintly paler where the sky reaches the metal
     const ring = g.createRadialGradient(cx, cy, r * 0.9, cx, cy, r * 1.25);
     ring.addColorStop(0, 'rgba(0,0,0,0)'); ring.addColorStop(0.3, 'rgba(25,26,28,0.55)'); ring.addColorStop(1, 'rgba(8,8,8,0.97)');
@@ -777,9 +782,10 @@
   function showSetting() {
     $('el-text').textContent = RD.clicksText(setting.elevationClicks, sight.clickMoa, 'up', 'down');
     $('wd-text').textContent = RD.clicksText(setting.windageClicks, sight.windageClickMoa, 'right', 'left');
-    const extra = leaf ? `Leaf ${RD.leafText(leaf, setting.leafIx || 0)}` : magnifier ? (magnifierIn() ? `Magnifier in (${magnifier.magnification}×)` : 'Magnifier out (1×)') : '';
+    const extra = leaf ? `Leaf ${RD.leafText(leaf, setting.leafIx || 0)}` : magnifier ? (magnifierIn() ? `Magnifier in (${magnifier.magnification}×)` : 'Magnifier out (1×)') : apertures ? `${apertures[apertureIx()].name === 'small' ? 'Small' : 'Large'} rear aperture` : '';
     $('setting-line').textContent = RD.settingLine(setting, sight, extra);
     if (magnifier) $('magnifier').textContent = magnifierIn() ? `Magnifier is in (${magnifier.magnification}×): flip it out` : 'Magnifier is out (1×): flip it in';
+    if (apertures) $('aperture').textContent = apertureIx() === 0 ? 'Large rear aperture: flip to the small one' : 'Small rear aperture: flip to the large one';
     if (leaf) $('leaf-text').textContent = RD.leafText(leaf, setting.leafIx || 0);
     conditions();
   }
@@ -793,6 +799,10 @@
     };
     $('leaf-up').addEventListener('click', () => moveLeaf(1));
     $('leaf-down').addEventListener('click', () => moveLeaf(-1));
+  }
+  if (apertures) {
+    $('aperturerow').hidden = false;
+    $('aperture').addEventListener('click', () => { setting = { ...setting, aperture: (apertureIx() + 1) % apertures.length }; RD.clickSound(); showSetting(); storeSetting(); });
   }
   if (magnifier) {
     $('magrow').hidden = false;
@@ -925,7 +935,7 @@
         marksPx: sight.reticle && sight.reticle.marksMoaBelowZero ? sight.reticle.marksMoaBelowZero.map((m) => ({ yards: m.yards, px: m.moaBelowZero * k })) : null,
         leafMoa: leaf ? leafMoa() : null, magnifierIn: magnifierIn(),
         // range-day-twelve: each iron front's widths, the ring, the guards and the stripe; the SeeAll's triangle; the mil-dots' drawn spacing
-        frontPx: sight.frontPostMoa ? sight.frontPostMoa * k : null, stemPx: sight.stemWidthMoa ? sight.stemWidthMoa * k : null, ringPx: sight.apertureMoa ? sight.apertureMoa * k : null,
+        frontPx: sight.frontPostMoa ? sight.frontPostMoa * k : null, stemPx: sight.stemWidthMoa ? sight.stemWidthMoa * k : null, ringPx: sight.apertureMoa ? ringMoa() * k : null, aperture: apertures ? apertures[apertureIx()].name : null,
         earGapPx: sight.frontEars ? sight.frontEars.gapMoa * k : null, rearBodyPx: sight.rearBody ? sight.rearBody.widthMoa * k : null, earPx: sight.frontEars ? sight.frontEars.widthMoa * k : null, stripePx: sight.frontStripeMoa ? sight.frontStripeMoa * k : null,
         triangle: sight.kind === 'seeall' ? { widthPx: sight.reticle.triangleWidthMoa * k, heightPx: sight.reticle.triangleHeightMoa * k, linePx: sight.reticle.lineBelowTipMoa * k, fieldPx: sight.reticle.fieldWidthMoa * k } : null,
         milDotPx: sight.reticle && sight.reticle.kind === 'mil-dot' ? milDotMoa() * k : null, zoom: mag, aim: center() };
