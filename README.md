@@ -134,7 +134,9 @@ clicks, then works out the drop and the wind for each distance himself.
   course and the day, temperature first; a tap opens the full description
   over the page, a second tap closes it); the target picker with the
   sight's own glass beside it (the zoom, the magnifier, or the rear leaf)
-  and **Spotting scope** at the right end of the short line above;
+  and **Spotting scope** at the right end of the short line above (on a
+  phone the picker has a fixed width and the zoom sliders end 40 pixels in
+  from the screen's edge, clear of Android's edge-swipe back gesture);
   the view, the same size as before; **where the last shot went**, held to
   two lines (a longer one is marked ▾ and opens over the page on a tap;
   "Open another box" stands beside it when the box is empty); **the sight

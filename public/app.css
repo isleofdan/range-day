@@ -308,3 +308,14 @@ body.line .more .windcall { margin-top: 0; }
 .reach .pick #spotrow input[type=range] { height: 44px; padding: 0 8px; }
 /* A control a short scroll below, brought into view (by the keyboard or a script), stops above the fixed bar, not under it. */
 body.line .more button, body.line .more a, body.line .more select, body.line .more input { scroll-margin-bottom: 96px; }
+/* range-day-ten-c (Dan's phone): Android's back gesture is an inward swipe from either screen edge, and a slider dragged near the
+   right edge was read as one. The target picker takes a fixed width (its word "Target" is kept for screen readers only), the glass
+   control the rest of the row, and the zoom sliders end 40 px in from the screen's edge (the gutter and the slider's own padding, measured by test/near.test.js),
+   about twice the gesture zone's usual 20 dp width. */
+.reach .pick { grid-template-columns: 150px minmax(0, 1fr); }
+.reach .pick .field.plate { grid-template-columns: minmax(0, 1fr); }
+.reach .pick > #zoomrow, .reach .pick > #spotrow { padding-right: 26px; }
+@media (min-width: 1100px) {
+  .reach .pick { grid-template-columns: 1fr; }
+  .reach .pick > #zoomrow, .reach .pick > #spotrow { padding-right: 0; }
+}
