@@ -6,6 +6,11 @@
 # branch named …-fetch that touches scripts/ground/ (range-day-eight's one
 # download run, on Dan's yes of 19 Nov 2026: one run, no standing
 # permission). The survey's Terrain workflow and its files are not touched.
+# Its fetch empties ground-fetch/ before writing, so a second run on the
+# same branch could drop the first run's files: the commit step stages
+# without removals and the guard (node scripts/terrain/keep.mjs guard)
+# refuses the run, naming the files, if the staged change removes any
+# (range-day-eleven).
 name: Ground
 
 on:
@@ -49,7 +54,8 @@ jobs:
           git config user.name "ground workflow"
           git config user.email "ground-workflow@users.noreply.github.com"
           [ -d ground-fetch ] || { echo "nothing written"; exit 0; }
-          git add -A ground-fetch
+          git add --ignore-removal ground-fetch
+          node scripts/terrain/keep.mjs guard ground-fetch public/terrain data/terrain.json
           if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
           git commit -q -m "Ground: candidate surfaces fetched by the Ground workflow (run ${{ github.run_id }})"
           git push origin HEAD:${{ github.ref_name }}

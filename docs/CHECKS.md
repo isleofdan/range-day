@@ -213,6 +213,38 @@ The download ran once, on GitHub's runner, by the Ground workflow
 `main` ever starts it, and it commits only to that scratch branch. A new
 download needs Dan's yes first.
 
+## The ground-fetching workflows cannot delete what they did not fetch (range-day-eleven, 21 Nov 2026)
+
+On range-day-ten's branch a Terrain run, started by a push, committed a
+`data/terrain.json` without its `surfaces` part and deleted the 24 surface
+photographs, because its commit step staged the whole folder, deletions
+included. On Dan's yes (Ask 2 of range-day-ten):
+
+- **Terrain starts only by hand**: the Actions page, "Run workflow", on a
+  named branch; it refuses to run on `main`. No push starts it.
+- **It writes only what it fetched** (`scripts/terrain/keep.mjs`): the two
+  ranges' parts of `data/terrain.json` and `_about` are replaced; every
+  other part (`surfaces` among them) and every other file in
+  `public/terrain` is kept byte for byte. It removes no file; a file an
+  earlier run wrote that nothing names any more is removed only by a
+  reviewed pull request.
+- **It stages by name and refuses a deletion**: the commit step stages
+  the paths the fetch listed, with `git add --ignore-removal`, never a
+  whole folder; then `node scripts/terrain/keep.mjs guard` reads the staged
+  change against the branch and fails the run, naming each item, if it
+  removes any file or drops any top-level part of `data/terrain.json`.
+- **Ground** empties `ground-fetch/` before it writes, so a second run on
+  the same scratch branch could drop the first run's files: it too stages
+  without removals and runs the same guard before its commit.
+- **The tests** (`test/terrain-keep.test.js`, 5, no network, in a
+  throwaway git repository): the committed record and its 24 surface
+  photographs are there to keep; keeping (a stand-in fetch without the
+  surfaces leaves every kept file and part byte for byte, and the guard
+  passes); refusing (a staged change that removes two surface photographs
+  and drops `surfaces` fails the guard, which names all three); the same
+  for Ground's folder; the workflows' triggers, their staging and the
+  guard's place before the commit, read from the workflow files.
+
 The jobs' limit is 28 minutes since range-day-eight: on its pull request's
 run of 20 Nov 2026 (44739943613) the slowest job, tests scene-shots, took
 13 min 52 s (the same piece took 8 min 21 s on the run before, 44737304008:
