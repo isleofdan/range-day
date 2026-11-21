@@ -1,7 +1,7 @@
 // The spotting scope's speed (range-day-ten, verify 6): the median time of
 // 60 frames of the firing line's own loop on the 1,000-yard canyon plate,
 // through the spotting scope at its highest power and through the Vepr's
-// scope at 7x, under Full and Light, at 412 and 1280 pixels wide. Signs in
+// scope at its highest power (range-day-eleven: the 25-125x at 125x and the Vepr's BugBuster at 9x; 60x and 7x before), under Full and Light, at 412 and 1280 pixels wide. Signs in
 // through the form. The test browser draws in software: its frame times are
 // its own, not a phone's; the figures compare the two views, they do not
 // predict a phone.
@@ -25,15 +25,15 @@ for (const width of [412, 1280]) {
   await page.goto(`${base}/login`); await page.fill('#passphrase', PASS); await page.click('button[type=submit]'); await page.waitForURL(`${base}/`);
   for (const picture of ['full', 'light']) {
     await page.evaluate((p) => { localStorage.clear(); localStorage.setItem('range-day:picture', JSON.stringify(p)); }, picture);
-    await page.goto(`${base}/line?course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt`, { timeout: 120000 });
+    await page.goto(`${base}/line?course=cta-piru&rifle=molot-vepr-54r&sight=utg-bugbuster-3-9x32&load=sb-174-hpbt`, { timeout: 120000 });
     await page.waitForFunction(() => window.RangeDayLine && RangeDayLine.scene && RangeDayLine.scene.materials && RangeDayLine.scene.materials.settled, null, { timeout: 180000 });
-    await page.evaluate(() => { RangeDayLine.setTarget('8'); RangeDayLine.setZoom(7); });
+    await page.evaluate(() => { RangeDayLine.setTarget('8'); RangeDayLine.setZoom(9); });
     await page.waitForTimeout(1500);
     const rifle = await median(page);
-    await page.evaluate(() => { RangeDayLine.setSpotting(true); RangeDayLine.setSpotZoom(60); });
+    await page.evaluate(() => { RangeDayLine.setSpotting(true); RangeDayLine.setSpotZoom(Number(document.getElementById('spot-zoom').max)); });
     await page.waitForTimeout(1500);
     const spot = await median(page);
-    console.log(`${width} px, ${picture}, the 1,000-yard plate: median frame through the Vepr's scope at 7x ${rifle.toFixed(1)} ms; through the spotting scope at 60x ${spot.toFixed(1)} ms (${spot > rifle ? '+' : ''}${(((spot - rifle) / rifle) * 100).toFixed(0)} percent)`);
+    console.log(`${width} px, ${picture}, the 1,000-yard plate: median frame through the Vepr's scope at 9x ${rifle.toFixed(1)} ms; through the spotting scope at 125x ${spot.toFixed(1)} ms (${spot > rifle ? '+' : ''}${(((spot - rifle) / rifle) * 100).toFixed(0)} percent)`);
   }
   await context.close();
 }

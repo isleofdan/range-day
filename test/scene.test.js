@@ -289,9 +289,10 @@ test('verify 4 (range-day-six): the sights\' angles are unchanged: for the Vepr\
   console.log(`  Vepr irons: drawn notch ${r.notch.toFixed(1)} px (data ${v.notchMoa} MOA × ${r.k.toFixed(3)} px/MOA = ${(v.notchMoa * r.k).toFixed(1)} px), drawn post ${r.post.toFixed(1)} px (data ${v.frontPostMoa} MOA = ${(v.frontPostMoa * r.k).toFixed(1)} px); threshold ${r.thr} between the notch's lightest ${r.la} and the steel ${r.ls}`);
   assert.ok(Math.abs(r.notch - v.notchMoa * r.k) <= 2.5, `notch ${r.notch.toFixed(1)} vs ${(v.notchMoa * r.k).toFixed(1)}`);
   assert.ok(Math.abs(r.post - v.frontPostMoa * r.k) <= 1.5, `post ${r.post.toFixed(1)} vs ${(v.frontPostMoa * r.k).toFixed(1)}`);
-  // the Vepr's scope at 9x (7x on the 2-7x44 before range-day-eleven): the mil-dot reticle's dot spacing
+  // the Vepr's scope at the old 7x view (a test view since range-day-eleven: at the BugBuster's own 9x the dots are 8 to 14 px apart
+  // and drawn 1.2 px in radius, too small for this row's measure; the spacing is dotSpacingMoa × the view's scale at every power)
   await page.goto(`${base}${PIRU}&sight=utg-bugbuster-3-9x32`); await page.waitForSelector('#fire'); await sceneReady(page);
-  await page.evaluate(() => { window.__raf = window.__raf || window.requestAnimationFrame.bind(window); window.requestAnimationFrame = () => 0; RangeDayLine.setZoom(9); RangeDayLine.setHold(0, 0); }); await wait(300); await framesPassed(page);
+  await page.evaluate((z) => { window.__raf = window.__raf || window.requestAnimationFrame.bind(window); window.requestAnimationFrame = () => 0; RangeDayLine.setZoom(z); RangeDayLine.setHold(0, 0); }, OLD7); await wait(300); await framesPassed(page);
   r = await page.evaluate(() => {
     const c = document.getElementById('view'), g = c.getContext('2d'), size = RangeDayLine.geometry.viewPx, cx = size / 2, cy = size / 2;
     const lum = (d, x) => 0.299 * d[x * 4] + 0.587 * d[x * 4 + 1] + 0.114 * d[x * 4 + 2];
@@ -301,7 +302,7 @@ test('verify 4 (range-day-six): the sights\' angles are unchanged: for the Vepr\
     return { k: RangeDayLine.geometry.pxPerMoa, first: right[0] - cx, firstLeft: cx - left[left.length - 1], spacing: right.length > 1 ? right[1] - right[0] : null };
   });
   const dot = S['utg-bugbuster-3-9x32'].reticle.dotSpacingMoa;
-  console.log(`  Vepr scope at 9x: first mil-dot ${r.first.toFixed(1)} px right and ${r.firstLeft.toFixed(1)} px left of the centre, the next ${r.spacing && r.spacing.toFixed(1)} px on (data ${dot} MOA × ${r.k.toFixed(3)} = ${(dot * r.k).toFixed(1)} px)`);
+  console.log(`  Vepr scope at the old 7x view (${OLD7.toFixed(1)}x on the BugBuster's rule): first mil-dot ${r.first.toFixed(1)} px right and ${r.firstLeft.toFixed(1)} px left of the centre, the next ${r.spacing && r.spacing.toFixed(1)} px on (data ${dot} MOA × ${r.k.toFixed(3)} = ${(dot * r.k).toFixed(1)} px)`);
   assert.ok(Math.abs(r.first - dot * r.k) <= 1.5 && Math.abs(r.firstLeft - dot * r.k) <= 1.5, `mil-dot spacing ${r.first}/${r.firstLeft} vs ${(dot * r.k).toFixed(1)}`);
   // the Tavor's iron sights (ring and post) on the rifle line: the post's width at the row just under the centre
   await page.goto(`${base}/line?course=angeles-sylmar&rifle=iwi-tavor-sar&sight=tavor-irons&load=imi-m193`); await page.waitForSelector('#fire'); await sceneReady(page);
