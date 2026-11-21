@@ -276,7 +276,13 @@ and every AR-15 state (the Troy sights).
    pieces were run one at a time; the run on the pull request is the
    proof.
 10. The pull request's diff: 18 files, 176,793 bytes (under 400,000).
-11. After the deploy: in the card note.
+11. After the deploy: on Dan's typed line (21 Nov 2026), pull request #36
+    merged as `a7e1abc`; Deploy run
+    [44919146708](https://github.com/isleofdan/range-day/actions/runs/44919146708)
+    green in 62 s: "alive: status 200" (a7e1abc), "signed in: yes (sample
+    screen: HTTP 200, "This is Range Day")", "picture file: /scene.min.js
+    answered 200 with 617204 bytes", "crash-test: 500" (as the chain
+    expects), "Live at https://range-day-dan.fly.dev".
 
 What this cannot prove: the session cannot open the live app or hold a
 phone, and it has not seen the real sights, so whether each drawn sight
@@ -326,6 +332,14 @@ Round 1 (job 20261121-145321-21692a, report event 2944): FINDINGS, five.
    about the picture; they read the figures from the data. Quoted here and
    in "What the brief got wrong", 1.
 
+Dan's correction after the closing message (21 Nov 2026): "Fenced block
+with copy button god fucking damn it. Repetitive mistake." The closing
+message (and Ask 1 above) carried the line to type as inline code. Both now
+carry it in a fenced block, and `test/report-shape.test.js` (its own pull
+request) fails any report whose Asks or closing message carry a line to
+type inline; it runs on every edit in a session (the after-edit hook) and
+in Checks. Taste constraint azxfbwouwp9lt6jhny8n.
+
 Round 2 (job 20261121-151004-37bac2, report event 2946): FINDINGS, two,
 both the rule conflicts of round 1: (1) `test/scene.test.js` is changed
 (the brief's rule 6, quoted above); (2) the notes wait for the deploy
@@ -343,9 +357,14 @@ still stand are Ask 1, in place of the plain merge question.
    checks fail and nothing can merge. (b) The report and its notes reach
    `main` after the deploy, as `CLAUDE.md` ("Field reports") fixes the
    order; the checker wants them sooner. Recommended: yes to both, as
-   range-day-eleven's same order was kept. Type `yes, merge and deploy
-   range-day-twelve, then merge its notes`. To refuse (a) instead, say so:
-   the picture-side edits then go to Codex first, and this change waits.
+   range-day-eleven's same order was kept. If yes, type this line:
+
+   ```
+   yes, merge and deploy range-day-twelve, then merge its notes
+   ```
+
+   To refuse (a) instead, say so: the picture-side edits then go to Codex
+   first, and this change waits.
 2. **The AR-15's Troy front sight: the one with two guards (M4-style) or
    the round hood (HK-style)?** The game draws the two guards. Recommended:
    keep the two guards unless the round hood is what you remember.
@@ -384,8 +403,11 @@ picture side (without them its checks fail), and the report reaches the
 main copy after the deploy, as the repository's own rule orders.
 
 Needed from you
-1. Merge and deploy anyway, with those two as they are? If yes, type:
-   `yes, merge and deploy range-day-twelve, then merge its notes`
+1. Merge and deploy anyway, with those two as they are? If yes, type this line:
+
+   ```
+   yes, merge and deploy range-day-twelve, then merge its notes
+   ```
 2. The AR-15's Troy front sight: the game draws the kind with two guards
    either side of the post. If yours had the round hood instead, say so;
    otherwise nothing to do.

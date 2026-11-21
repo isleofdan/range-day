@@ -629,7 +629,7 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
 
 ### range-day-twelve — 21 Nov 2026 (cloud session, from the Wall card `range-day`)
 
-- **Stands:** pull request #36 (not merged at this note): the sights fitted
+- **Stands:** pull request #36, merged as `a7e1abc` on Dan's typed line and deployed by Deploy run 44919146708 (green, 62 s; the alive line, sign-in through the form and the picture file checked by the run): the sights fitted
   to the rifles, each figure in `data/sights.json` with its page or an
   estimate with its basis: the Troy folding BattleSights on the AR-15; the
   FAB Defense flip-ups and the SeeAll Open Sight (first generation,
