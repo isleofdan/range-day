@@ -7,7 +7,7 @@
     "value": 34.4395947,
     "source": {
      "url": "https://www.google.com/maps/search/?api=1&query=34.4395947%2C-118.7355103",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the range's public map position (Google Places, read 19 Nov 2026 by the chat that wrote the brief)"
     }
    },
@@ -15,7 +15,7 @@
     "value": -118.7355103,
     "source": {
      "url": "https://www.google.com/maps/search/?api=1&query=34.4395947%2C-118.7355103",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the same"
     }
    },
@@ -23,7 +23,7 @@
     "value": 340550.8,
     "source": {
      "url": "https://pubs.usgs.gov/pp/1395/report.pdf",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "NAD83 / UTM zone 11N easting of the map position, by Snyder's series (scripts/terrain/lib.mjs, toUtm)"
     }
    },
@@ -31,7 +31,7 @@
     "value": 3812265.1,
     "source": {
      "url": "https://pubs.usgs.gov/pp/1395/report.pdf",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the same, northing"
     }
    },
@@ -52,11 +52,11 @@
     "value": 25,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "how many 500-pixel tiles the square was fetched in; the request shown is the first"
     }
    },
-   "fetched": "2026-11-18",
+   "fetched": "2026-11-21",
    "dataset": "USGS 1 Meter 11 x34y382 CA_LosAngeles_B23",
    "datasetName": "CA_LosAngeles_B23",
    "catalogRequest": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/query?f=json&geometry=%7B%22xmin%22%3A339300.8328685842%2C%22ymin%22%3A3811015.071294408%2C%22xmax%22%3A341800.8328685842%2C%22ymax%22%3A3813515.071294408%2C%22spatialReference%22%3A%7B%22wkid%22%3A26911%7D%7D&geometryType=esriGeometryEnvelope&inSR=26911&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=false",
@@ -68,7 +68,7 @@
     "value": 2500,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "pixels across"
     }
    },
@@ -76,7 +76,7 @@
     "value": 2500,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "pixels down"
     }
    },
@@ -84,7 +84,7 @@
     "value": 1,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/query?f=json&geometry=%7B%22xmin%22%3A339300.8328685842%2C%22ymin%22%3A3811015.071294408%2C%22xmax%22%3A341800.8328685842%2C%22ymax%22%3A3813515.071294408%2C%22spatialReference%22%3A%7B%22wkid%22%3A26911%7D%7D&geometryType=esriGeometryEnvelope&inSR=26911&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=false",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the service's LowPS for this dataset, the finest it holds over the square (1 m)"
     }
    },
@@ -92,7 +92,7 @@
     "value": 339300.8328685842,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the TIFF's ModelTiepoint: the top-left corner of the square, easting"
     }
    },
@@ -100,7 +100,7 @@
     "value": 3813515.071294408,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the same, northing"
     }
    },
@@ -108,7 +108,7 @@
     "value": 0.02,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "metres per pixel count in the PNG (chosen so the span fits 16 bits with 2 cm steps)"
     }
    },
@@ -116,7 +116,7 @@
     "value": 268,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "metres added to pixel × stepM: one below the lowest height in the square"
     }
    },
@@ -124,7 +124,7 @@
     "value": 269.76,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the lowest height in the square"
     }
    },
@@ -132,7 +132,7 @@
     "value": 592.85,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the highest"
     }
    },
@@ -140,7 +140,7 @@
     "value": 0,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "pixels the service marked as no data, filled with the lowest height"
     }
    },
@@ -148,7 +148,7 @@
     "value": 4396799,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3813015.071294408%2C339800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the PNG's size"
     }
    }
@@ -161,18 +161,18 @@
     "value": 4,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "how many 500-pixel tiles the square was fetched in; the request shown is the first"
     }
    },
-   "fetched": "2026-11-18",
+   "fetched": "2026-11-21",
    "dataset": "the service's own mosaic (its default \"Best\" ordering over every dataset it holds here)",
    "license": "US government work, public domain (USGS 3DEP and USDA NAIP, distributed by The National Map without restriction)",
    "width": {
     "value": 1000,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "pixels across"
     }
    },
@@ -180,7 +180,7 @@
     "value": 1000,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "pixels down"
     }
    },
@@ -188,7 +188,7 @@
     "value": 10,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the requested spacing: 10 km across 1,000 pixels"
     }
    },
@@ -196,7 +196,7 @@
     "value": 335550.8328685842,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the top-left corner, easting"
     }
    },
@@ -204,7 +204,7 @@
     "value": 3817265.071294408,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the same, northing"
     }
    },
@@ -212,7 +212,7 @@
     "value": 0.1,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "metres per pixel count"
     }
    },
@@ -220,7 +220,7 @@
     "value": 190,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "metres added to pixel × stepM"
     }
    },
@@ -228,7 +228,7 @@
     "value": 191.86,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the lowest height"
     }
    },
@@ -236,7 +236,7 @@
     "value": 973.25,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the highest"
     }
    },
@@ -244,7 +244,7 @@
     "value": 0,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "no-data pixels, filled with the lowest height"
     }
    },
@@ -252,7 +252,7 @@
     "value": 932481,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=335550.8328685842%2C3812265.071294408%2C340550.8328685842%2C3817265.071294408&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the PNG's size"
     }
    }
@@ -261,7 +261,7 @@
    "file": "terrain/cta-piru-photo-749e5d91.jpg",
    "service": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer",
    "request": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-   "fetched": "2026-11-18",
+   "fetched": "2026-11-21",
    "tiles": [
     "m_3411834_ne_11_060_20220513",
     "m_3411834_se_11_060_20220513",
@@ -275,7 +275,7 @@
     "value": 4000,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "pixels across"
     }
    },
@@ -283,7 +283,7 @@
     "value": 4000,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "pixels down"
     }
    },
@@ -291,7 +291,7 @@
     "value": 0.625,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the square's 2,500 m across the service's largest answer, 4000 pixels (its native spacing is 0.6 METER; maxImageWidth is 4000)"
     }
    },
@@ -299,7 +299,7 @@
     "value": 0.6,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/query?f=json&geometry=%7B%22xmin%22%3A339300.8328685842%2C%22ymin%22%3A3811015.071294408%2C%22xmax%22%3A341800.8328685842%2C%22ymax%22%3A3813515.071294408%2C%22spatialReference%22%3A%7B%22wkid%22%3A26911%7D%7D&geometryType=esriGeometryEnvelope&inSR=26911&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=false",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "resolution_value of the tiles, as the catalog reports it"
     }
    },
@@ -307,7 +307,7 @@
     "value": 339300.8328685842,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the top-left corner, easting (the requested bbox)"
     }
    },
@@ -315,7 +315,7 @@
     "value": 3813515.071294408,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the same, northing"
     }
    },
@@ -323,7 +323,7 @@
     "value": 2867223,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the JPEG's size"
     }
    }
@@ -332,7 +332,7 @@
    "file": "terrain/cta-piru-photo-light-7cc547bf.jpg",
    "service": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer",
    "request": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-   "fetched": "2026-11-18",
+   "fetched": "2026-11-21",
    "tiles": [
     "m_3411834_ne_11_060_20220513",
     "m_3411834_se_11_060_20220513",
@@ -346,7 +346,7 @@
     "value": 1024,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "pixels across"
     }
    },
@@ -354,7 +354,7 @@
     "value": 1024,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "pixels down"
     }
    },
@@ -362,7 +362,7 @@
     "value": 2.44140625,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "a small copy for the Light picture"
     }
    },
@@ -370,7 +370,7 @@
     "value": 0.6,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/query?f=json&geometry=%7B%22xmin%22%3A339300.8328685842%2C%22ymin%22%3A3811015.071294408%2C%22xmax%22%3A341800.8328685842%2C%22ymax%22%3A3813515.071294408%2C%22spatialReference%22%3A%7B%22wkid%22%3A26911%7D%7D&geometryType=esriGeometryEnvelope&inSR=26911&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=false",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "resolution_value of the tiles, as the catalog reports it"
     }
    },
@@ -378,7 +378,7 @@
     "value": 339300.8328685842,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the top-left corner, easting (the requested bbox)"
     }
    },
@@ -386,7 +386,7 @@
     "value": 3813515.071294408,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the same, northing"
     }
    },
@@ -394,7 +394,7 @@
     "value": 204193,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=339300.8328685842%2C3811015.071294408%2C341800.8328685842%2C3813515.071294408&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the JPEG's size"
     }
    }
@@ -407,7 +407,7 @@
     "value": 34.3072886,
     "source": {
      "url": "https://www.google.com/maps/search/?api=1&query=34.3072886%2C-118.3632613",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the range's public map position (Google Places, read 19 Nov 2026 by the chat that wrote the brief)"
     }
    },
@@ -415,7 +415,7 @@
     "value": -118.3632613,
     "source": {
      "url": "https://www.google.com/maps/search/?api=1&query=34.3072886%2C-118.3632613",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the same"
     }
    },
@@ -423,7 +423,7 @@
     "value": 374556.6,
     "source": {
      "url": "https://pubs.usgs.gov/pp/1395/report.pdf",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "NAD83 / UTM zone 11N easting of the map position, by Snyder's series (scripts/terrain/lib.mjs, toUtm)"
     }
    },
@@ -431,7 +431,7 @@
     "value": 3797069.6,
     "source": {
      "url": "https://pubs.usgs.gov/pp/1395/report.pdf",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the same, northing"
     }
    },
@@ -452,11 +452,11 @@
     "value": 25,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "how many 500-pixel tiles the square was fetched in; the request shown is the first"
     }
    },
-   "fetched": "2026-11-18",
+   "fetched": "2026-11-21",
    "dataset": "USGS 1 Meter 11 x37y380 CA_LosAngeles_B23",
    "datasetName": "CA_LosAngeles_B23",
    "catalogRequest": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/query?f=json&geometry=%7B%22xmin%22%3A373306.5586924935%2C%22ymin%22%3A3795819.6187626147%2C%22xmax%22%3A375806.5586924935%2C%22ymax%22%3A3798319.6187626147%2C%22spatialReference%22%3A%7B%22wkid%22%3A26911%7D%7D&geometryType=esriGeometryEnvelope&inSR=26911&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=false",
@@ -468,7 +468,7 @@
     "value": 2500,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "pixels across"
     }
    },
@@ -476,7 +476,7 @@
     "value": 2500,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "pixels down"
     }
    },
@@ -484,7 +484,7 @@
     "value": 1,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/query?f=json&geometry=%7B%22xmin%22%3A373306.5586924935%2C%22ymin%22%3A3795819.6187626147%2C%22xmax%22%3A375806.5586924935%2C%22ymax%22%3A3798319.6187626147%2C%22spatialReference%22%3A%7B%22wkid%22%3A26911%7D%7D&geometryType=esriGeometryEnvelope&inSR=26911&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=false",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the service's LowPS for this dataset, the finest it holds over the square (1 m)"
     }
    },
@@ -492,7 +492,7 @@
     "value": 373306.5586924935,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the TIFF's ModelTiepoint: the top-left corner of the square, easting"
     }
    },
@@ -500,7 +500,7 @@
     "value": 3798319.6187626147,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the same, northing"
     }
    },
@@ -508,7 +508,7 @@
     "value": 0.02,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "metres per pixel count in the PNG (chosen so the span fits 16 bits with 2 cm steps)"
     }
    },
@@ -516,7 +516,7 @@
     "value": 396,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "metres added to pixel × stepM: one below the lowest height in the square"
     }
    },
@@ -524,7 +524,7 @@
     "value": 397.49,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the lowest height in the square"
     }
    },
@@ -532,7 +532,7 @@
     "value": 910.93,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the highest"
     }
    },
@@ -540,7 +540,7 @@
     "value": 0,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "pixels the service marked as no data, filled with the lowest height"
     }
    },
@@ -548,7 +548,7 @@
     "value": 4418896,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3797819.6187626147%2C373806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicLockRaster%22%2C%22lockRasterIds%22%3A%5B138694%5D%2C%22ascending%22%3Atrue%2C%22mosaicOperation%22%3A%22MT_FIRST%22%7D",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the PNG's size"
     }
    }
@@ -561,18 +561,18 @@
     "value": 4,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "how many 500-pixel tiles the square was fetched in; the request shown is the first"
     }
    },
-   "fetched": "2026-11-18",
+   "fetched": "2026-11-21",
    "dataset": "the service's own mosaic (its default \"Best\" ordering over every dataset it holds here)",
    "license": "US government work, public domain (USGS 3DEP and USDA NAIP, distributed by The National Map without restriction)",
    "width": {
     "value": 1000,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "pixels across"
     }
    },
@@ -580,7 +580,7 @@
     "value": 1000,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "pixels down"
     }
    },
@@ -588,7 +588,7 @@
     "value": 10,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the requested spacing: 10 km across 1,000 pixels"
     }
    },
@@ -596,7 +596,7 @@
     "value": 369556.5586924935,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the top-left corner, easting"
     }
    },
@@ -604,7 +604,7 @@
     "value": 3802069.6187626147,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the same, northing"
     }
    },
@@ -612,7 +612,7 @@
     "value": 0.1,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "metres per pixel count"
     }
    },
@@ -620,7 +620,7 @@
     "value": 295,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "metres added to pixel × stepM"
     }
    },
@@ -628,7 +628,7 @@
     "value": 296.55,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the lowest height"
     }
    },
@@ -636,7 +636,7 @@
     "value": 1413.71,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the highest"
     }
    },
@@ -644,7 +644,7 @@
     "value": 0,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "no-data pixels, filled with the lowest height"
     }
    },
@@ -652,7 +652,7 @@
     "value": 945523,
     "source": {
      "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=image&bbox=369556.5586924935%2C3797069.6187626147%2C374556.5586924935%2C3802069.6187626147&bboxSR=26911&imageSR=26911&size=500%2C500&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noDataInterpretation=esriNoDataMatchAny",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the PNG's size"
     }
    }
@@ -661,7 +661,7 @@
    "file": "terrain/angeles-sylmar-photo-5aea9f68.jpg",
    "service": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer",
    "request": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-   "fetched": "2026-11-18",
+   "fetched": "2026-11-21",
    "tiles": [
     "m_3411845_ne_11_060_20220504",
     "m_3411845_se_11_060_20220504",
@@ -675,7 +675,7 @@
     "value": 4000,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "pixels across"
     }
    },
@@ -683,7 +683,7 @@
     "value": 4000,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "pixels down"
     }
    },
@@ -691,7 +691,7 @@
     "value": 0.625,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the square's 2,500 m across the service's largest answer, 4000 pixels (its native spacing is 0.6 METER; maxImageWidth is 4000)"
     }
    },
@@ -699,7 +699,7 @@
     "value": 0.6,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/query?f=json&geometry=%7B%22xmin%22%3A373306.5586924935%2C%22ymin%22%3A3795819.6187626147%2C%22xmax%22%3A375806.5586924935%2C%22ymax%22%3A3798319.6187626147%2C%22spatialReference%22%3A%7B%22wkid%22%3A26911%7D%7D&geometryType=esriGeometryEnvelope&inSR=26911&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=false",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "resolution_value of the tiles, as the catalog reports it"
     }
    },
@@ -707,7 +707,7 @@
     "value": 373306.5586924935,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the top-left corner, easting (the requested bbox)"
     }
    },
@@ -715,7 +715,7 @@
     "value": 3798319.6187626147,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the same, northing"
     }
    },
@@ -723,7 +723,7 @@
     "value": 3203777,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=4000%2C4000&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the JPEG's size"
     }
    }
@@ -732,7 +732,7 @@
    "file": "terrain/angeles-sylmar-photo-light-0dd86fcc.jpg",
    "service": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer",
    "request": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-   "fetched": "2026-11-18",
+   "fetched": "2026-11-21",
    "tiles": [
     "m_3411845_ne_11_060_20220504",
     "m_3411845_se_11_060_20220504",
@@ -746,7 +746,7 @@
     "value": 1024,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "pixels across"
     }
    },
@@ -754,7 +754,7 @@
     "value": 1024,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "pixels down"
     }
    },
@@ -762,7 +762,7 @@
     "value": 2.44140625,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "a small copy for the Light picture"
     }
    },
@@ -770,7 +770,7 @@
     "value": 0.6,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/query?f=json&geometry=%7B%22xmin%22%3A373306.5586924935%2C%22ymin%22%3A3795819.6187626147%2C%22xmax%22%3A375806.5586924935%2C%22ymax%22%3A3798319.6187626147%2C%22spatialReference%22%3A%7B%22wkid%22%3A26911%7D%7D&geometryType=esriGeometryEnvelope&inSR=26911&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=false",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "resolution_value of the tiles, as the catalog reports it"
     }
    },
@@ -778,7 +778,7 @@
     "value": 373306.5586924935,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the top-left corner, easting (the requested bbox)"
     }
    },
@@ -786,7 +786,7 @@
     "value": 3798319.6187626147,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the same, northing"
     }
    },
@@ -794,539 +794,8 @@
     "value": 240503,
     "source": {
      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?f=image&bbox=373306.5586924935%2C3795819.6187626147%2C375806.5586924935%2C3798319.6187626147&bboxSR=26911&imageSR=26911&size=1024%2C1024&renderingRule=%7B%22rasterFunction%22%3A%22NaturalColor%22%7D&format=jpg&compressionQuality=80&interpolation=RSP_BilinearInterpolation",
-     "read": "2026-11-18",
+     "read": "2026-11-21",
      "note": "the JPEG's size"
-    }
-   }
-  }
- },
- "surfaces": {
-  "_about": "The photographed ground surfaces (range-day-eight): CC0 material scans from Poly Haven and ambientCG, fetched once by scripts/ground/fetch.mjs on GitHub's runner (the Ground workflow, run linked in each record) onto the scratch branch range-day-eight-fetch, where every candidate stays with its own record (ground-fetch/manifest.json). One material per surface was chosen in the session and prepared there: resized with Lanczos, saved as JPEG, a colour picture and a relief picture (red and green: the scan's OpenGL normal map, x east and y north; blue: its height map), named with the content hash and served under /terrain/ with a one-year cache header. Full uses the 1,024-pixel set, Light the 512-pixel set. license is the library's license page's own sentences as the run fetched them.",
-  "floor": {
-   "words": "pale tan packed dirt with clods and crumbs",
-   "library": "Poly Haven",
-   "asset": "dry_ground_rocks",
-   "page": "https://polyhaven.com/a/dry_ground_rocks",
-   "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
-   "licensePage": "https://polyhaven.com/license",
-   "apiTerms": "https://raw.githubusercontent.com/Poly-Haven/Public-API/master/ToS.md",
-   "fetched": "2026-11-20",
-   "run": "https://github.com/isleofdan/range-day/actions/runs/44711714459",
-   "scratchBranch": "range-day-eight-fetch",
-   "candidates": [
-    "polyhaven dry_ground_rocks",
-    "polyhaven dirt",
-    "polyhaven dry_mud_field_001",
-    "polyhaven dirt_aerial_03",
-    "polyhaven aerial_ground_rock",
-    "ambientcg Ground111",
-    "ambientcg Ground110"
-   ],
-   "why": "Pale packed dirt with clods, crumbs and scattered small stones over a cracked crust, lit flat: the closest to the photographs' 'pale tan packed dirt' and the spotting scope's 'clods and crumbs with hard small shadows'. Not chosen: dirt and dry_mud_field_001 (dark wet-looking mud), dirt_aerial_03 and aerial_ground_rock (drone captures whose metre-wide stains would repeat recognisably), Ground111 (red bands), Ground110 (dark gravel).",
-   "sources": {
-    "color": {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dry_ground_rocks/dry_ground_rocks_diff_2k.jpg",
-     "md5": "3106a1157ea4c6823b78494988ac0269",
-     "md5MatchesListing": true,
-     "resolution": "2k"
-    },
-    "normal": {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dry_ground_rocks/dry_ground_rocks_nor_gl_2k.jpg",
-     "md5": "26584932ec2393a45cc7a6a596ba7c19",
-     "md5MatchesListing": true,
-     "resolution": "2k"
-    },
-    "height": {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dry_ground_rocks/dry_ground_rocks_disp_2k.jpg",
-     "md5": "a9c72cb0108f1ac54b611798cddc1422",
-     "md5MatchesListing": true,
-     "resolution": "2k"
-    }
-   },
-   "full": {
-    "color": {
-     "file": "terrain/ground-floor-color-3fd58ff3.jpg",
-     "bytes": {
-      "value": 350498,
-      "source": {
-       "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dry_ground_rocks/dry_ground_rocks_diff_2k.jpg",
-       "read": "2026-11-20",
-       "note": "the shipped JPEG's size: 1024 pixels, quality 80, made in the session from the scan's colour map"
-      }
-     }
-    },
-    "relief": {
-     "file": "terrain/ground-floor-relief-c51e35fb.jpg",
-     "bytes": {
-      "value": 570318,
-      "source": {
-       "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dry_ground_rocks/dry_ground_rocks_diff_2k.jpg",
-       "read": "2026-11-20",
-       "note": "the shipped JPEG's size: 1024 pixels, quality 80, made in the session from the scan's normal and height maps"
-      }
-     }
-    }
-   },
-   "light": {
-    "color": {
-     "file": "terrain/ground-floor-color-light-63548bea.jpg",
-     "bytes": {
-      "value": 103569,
-      "source": {
-       "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dry_ground_rocks/dry_ground_rocks_diff_2k.jpg",
-       "read": "2026-11-20",
-       "note": "the shipped JPEG's size: 512 pixels, quality 85, made in the session from the scan's colour map"
-      }
-     }
-    },
-    "relief": {
-     "file": "terrain/ground-floor-relief-light-ff5aca89.jpg",
-     "bytes": {
-      "value": 165124,
-      "source": {
-       "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dry_ground_rocks/dry_ground_rocks_diff_2k.jpg",
-       "read": "2026-11-20",
-       "note": "the shipped JPEG's size: 512 pixels, quality 85, made in the session from the scan's normal and height maps"
-      }
-     }
-    }
-   }
-  },
-  "dry-grass": {
-   "words": "dry straw grass on a slope",
-   "library": "Poly Haven",
-   "asset": "withered_grass",
-   "page": "https://polyhaven.com/a/withered_grass",
-   "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
-   "licensePage": "https://polyhaven.com/license",
-   "apiTerms": "https://raw.githubusercontent.com/Poly-Haven/Public-API/master/ToS.md",
-   "fetched": "2026-11-20",
-   "run": "https://github.com/isleofdan/range-day/actions/runs/44711714459",
-   "scratchBranch": "range-day-eight-fetch",
-   "candidates": [
-    "polyhaven grass_ground",
-    "polyhaven sparse_grass",
-    "polyhaven withered_grass",
-    "polyhaven riet_01",
-    "ambientcg Grass005",
-    "ambientcg Grass004"
-   ],
-   "why": "Pale straw-coloured dead grass flat on soil, evenly lit, nothing in it a viewer would recognise when repeated: the summer slopes' 'straw and tan'. Not chosen: grass_ground and sparse_grass (green-brown and dark), riet_01 (reed thatch), Grass005 and Grass004 (green lawn).",
-   "sources": {
-    "color": {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/withered_grass/withered_grass_diff_2k.jpg",
-     "md5": "503d5c7262c46351e5b0acdcc90dd30b",
-     "md5MatchesListing": true,
-     "resolution": "2k"
-    },
-    "normal": {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/withered_grass/withered_grass_nor_gl_2k.jpg",
-     "md5": "dd239e55b44c9b9bb0e9f1e145bf3a22",
-     "md5MatchesListing": true,
-     "resolution": "2k"
-    },
-    "height": {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/withered_grass/withered_grass_disp_2k.jpg",
-     "md5": "79a099429fb43c8557d223ba4fed887b",
-     "md5MatchesListing": true,
-     "resolution": "2k"
-    }
-   },
-   "full": {
-    "color": {
-     "file": "terrain/ground-dry-grass-color-a7c667ae.jpg",
-     "bytes": {
-      "value": 327091,
-      "source": {
-       "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/withered_grass/withered_grass_diff_2k.jpg",
-       "read": "2026-11-20",
-       "note": "the shipped JPEG's size: 1024 pixels, quality 80, made in the session from the scan's colour map"
-      }
-     }
-    },
-    "relief": {
-     "file": "terrain/ground-dry-grass-relief-f98a65c8.jpg",
-     "bytes": {
-      "value": 590072,
-      "source": {
-       "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/withered_grass/withered_grass_diff_2k.jpg",
-       "read": "2026-11-20",
-       "note": "the shipped JPEG's size: 1024 pixels, quality 80, made in the session from the scan's normal and height maps"
-      }
-     }
-    }
-   },
-   "light": {
-    "color": {
-     "file": "terrain/ground-dry-grass-color-light-ec5c5609.jpg",
-     "bytes": {
-      "value": 93635,
-      "source": {
-       "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/withered_grass/withered_grass_diff_2k.jpg",
-       "read": "2026-11-20",
-       "note": "the shipped JPEG's size: 512 pixels, quality 85, made in the session from the scan's colour map"
-      }
-     }
-    },
-    "relief": {
-     "file": "terrain/ground-dry-grass-relief-light-1bd06513.jpg",
-     "bytes": {
-      "value": 157196,
-      "source": {
-       "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/withered_grass/withered_grass_diff_2k.jpg",
-       "read": "2026-11-20",
-       "note": "the shipped JPEG's size: 512 pixels, quality 85, made in the session from the scan's normal and height maps"
-      }
-     }
-    }
-   }
-  },
-  "green-grass": {
-   "words": "short green grass on a slope",
-   "library": "ambientCG",
-   "asset": "Grass001",
-   "page": "https://ambientcg.com/view?id=Grass001",
-   "license": "Creative Commons CC0 1.0 Universal License . The Creative Commons CC0 license gives you near limitless freedom to use the materials, models and other assets: Creative Commons CC0 License licensed under the Creative Commons CC0 1.0 Universal License.",
-   "licensePage": "https://docs.ambientcg.com/license/",
-   "fetched": "2026-11-20",
-   "run": "https://github.com/isleofdan/range-day/actions/runs/44711714459",
-   "scratchBranch": "range-day-eight-fetch",
-   "candidates": [
-    "polyhaven grass_ground",
-    "polyhaven leafy_grass",
-    "polyhaven sparse_grass",
-    "polyhaven withered_grass",
-    "ambientcg Grass001",
-    "ambientcg Ground037"
-   ],
-   "why": "Dense short green grass, evenly lit: the winter and spring slopes' 'vivid green grass', and the strongest pattern of the green candidates (its brightness varies about twice as much, against its mean, as grass_ground's, which was tried first and measured as less detail on the February hillside than the code-made ground it replaced). Not chosen: grass_ground (soft, low contrast), leafy_grass (broad leaves), sparse_grass and withered_grass (dead grass), Ground037 (moss).",
-   "sources": {
-    "color": {
-     "url": "https://ambientcg.com/get?file=Grass001_2K-JPG.zip",
-     "inZip": "Grass001_2K-JPG_Color.jpg",
-     "zipMd5": "e80ac9bf7cc4e81ee1802ed68d03a8a5"
-    },
-    "normal": {
-     "url": "https://ambientcg.com/get?file=Grass001_2K-JPG.zip",
-     "inZip": "Grass001_2K-JPG_NormalGL.jpg",
-     "zipMd5": "e80ac9bf7cc4e81ee1802ed68d03a8a5"
-    },
-    "height": {
-     "url": "https://ambientcg.com/get?file=Grass001_2K-JPG.zip",
-     "inZip": "Grass001_2K-JPG_Displacement.jpg",
-     "zipMd5": "e80ac9bf7cc4e81ee1802ed68d03a8a5"
-    }
-   },
-   "full": {
-    "color": {
-     "file": "terrain/ground-green-grass-color-d0ac1bdd.jpg",
-     "bytes": {
-      "value": 233469,
-      "source": {
-       "url": "https://ambientcg.com/get?file=Grass001_2K-JPG.zip",
-       "read": "2026-11-20",
-       "note": "the shipped JPEG's size: 1024 pixels, quality 80, made in the session from the scan's colour map"
-      }
-     }
-    },
-    "relief": {
-     "file": "terrain/ground-green-grass-relief-48c2cfdd.jpg",
-     "bytes": {
-      "value": 663268,
-      "source": {
-       "url": "https://ambientcg.com/get?file=Grass001_2K-JPG.zip",
-       "read": "2026-11-20",
-       "note": "the shipped JPEG's size: 1024 pixels, quality 80, made in the session from the scan's normal and height maps"
-      }
-     }
-    }
-   },
-   "light": {
-    "color": {
-     "file": "terrain/ground-green-grass-color-light-81becd09.jpg",
-     "bytes": {
-      "value": 71574,
-      "source": {
-       "url": "https://ambientcg.com/get?file=Grass001_2K-JPG.zip",
-       "read": "2026-11-20",
-       "note": "the shipped JPEG's size: 512 pixels, quality 85, made in the session from the scan's colour map"
-      }
-     }
-    },
-    "relief": {
-     "file": "terrain/ground-green-grass-relief-light-b9a54e36.jpg",
-     "bytes": {
-      "value": 190282,
-      "source": {
-       "url": "https://ambientcg.com/get?file=Grass001_2K-JPG.zip",
-       "read": "2026-11-20",
-       "note": "the shipped JPEG's size: 512 pixels, quality 85, made in the session from the scan's normal and height maps"
-      }
-     }
-    }
-   }
-  },
-  "scrub-litter": {
-   "words": "the litter and bare soil under grey-green sage scrub",
-   "library": "ambientCG",
-   "asset": "Ground106",
-   "page": "https://ambientcg.com/view?id=Ground106",
-   "license": "Creative Commons CC0 1.0 Universal License . The Creative Commons CC0 license gives you near limitless freedom to use the materials, models and other assets: Creative Commons CC0 License licensed under the Creative Commons CC0 1.0 Universal License.",
-   "licensePage": "https://docs.ambientcg.com/license/",
-   "fetched": "2026-11-20",
-   "run": "https://github.com/isleofdan/range-day/actions/runs/44711714459",
-   "scratchBranch": "range-day-eight-fetch",
-   "candidates": [
-    "polyhaven dry_decay_leaves",
-    "polyhaven forest_ground_05",
-    "polyhaven forest_ground_06",
-    "polyhaven forest_leaves_03",
-    "ambientcg Ground106",
-    "ambientcg ScatteredLeaves009"
-   ],
-   "why": "Bare dry soil with small scattered leaves and dark crumbs: the ground under chaparral sage. Not chosen: dry_decay_leaves and forest_leaves_03 (a carpet of forest leaves), forest_ground_05 and forest_ground_06 (dark forest humus), ScatteredLeaves009 (orange leaves).",
-   "sources": {
-    "color": {
-     "url": "https://ambientcg.com/get?file=Ground106_2K-JPG.zip",
-     "inZip": "Ground106_2K-JPG_Color.jpg",
-     "zipMd5": "61ac496b9461573181a25d408fd50fb5"
-    },
-    "normal": {
-     "url": "https://ambientcg.com/get?file=Ground106_2K-JPG.zip",
-     "inZip": "Ground106_2K-JPG_NormalGL.jpg",
-     "zipMd5": "61ac496b9461573181a25d408fd50fb5"
-    },
-    "height": {
-     "url": "https://ambientcg.com/get?file=Ground106_2K-JPG.zip",
-     "inZip": "Ground106_2K-JPG_Displacement.jpg",
-     "zipMd5": "61ac496b9461573181a25d408fd50fb5"
-    }
-   },
-   "full": {
-    "color": {
-     "file": "terrain/ground-scrub-litter-color-aef32fe5.jpg",
-     "bytes": {
-      "value": 247731,
-      "source": {
-       "url": "https://ambientcg.com/get?file=Ground106_2K-JPG.zip",
-       "read": "2026-11-20",
-       "note": "the shipped JPEG's size: 1024 pixels, quality 80, made in the session from the scan's colour map"
-      }
-     }
-    },
-    "relief": {
-     "file": "terrain/ground-scrub-litter-relief-3bedf20b.jpg",
-     "bytes": {
-      "value": 440269,
-      "source": {
-       "url": "https://ambientcg.com/get?file=Ground106_2K-JPG.zip",
-       "read": "2026-11-20",
-       "note": "the shipped JPEG's size: 1024 pixels, quality 80, made in the session from the scan's normal and height maps"
-      }
-     }
-    }
-   },
-   "light": {
-    "color": {
-     "file": "terrain/ground-scrub-litter-color-light-547b6854.jpg",
-     "bytes": {
-      "value": 80413,
-      "source": {
-       "url": "https://ambientcg.com/get?file=Ground106_2K-JPG.zip",
-       "read": "2026-11-20",
-       "note": "the shipped JPEG's size: 512 pixels, quality 85, made in the session from the scan's colour map"
-      }
-     }
-    },
-    "relief": {
-     "file": "terrain/ground-scrub-litter-relief-light-1711fbe6.jpg",
-     "bytes": {
-      "value": 125741,
-      "source": {
-       "url": "https://ambientcg.com/get?file=Ground106_2K-JPG.zip",
-       "read": "2026-11-20",
-       "note": "the shipped JPEG's size: 512 pixels, quality 85, made in the session from the scan's normal and height maps"
-      }
-     }
-    }
-   }
-  },
-  "rock": {
-   "words": "pale grey-tan eroded bare rock",
-   "library": "Poly Haven",
-   "asset": "rock_face_03",
-   "page": "https://polyhaven.com/a/rock_face_03",
-   "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
-   "licensePage": "https://polyhaven.com/license",
-   "apiTerms": "https://raw.githubusercontent.com/Poly-Haven/Public-API/master/ToS.md",
-   "fetched": "2026-11-20",
-   "run": "https://github.com/isleofdan/range-day/actions/runs/44711714459",
-   "scratchBranch": "range-day-eight-fetch",
-   "candidates": [
-    "polyhaven rock_face_03",
-    "polyhaven dark_rock_02",
-    "polyhaven rock_01",
-    "polyhaven rock_06",
-    "polyhaven rocky_terrain_03",
-    "ambientcg Rock064",
-    "ambientcg Rock063"
-   ],
-   "why": "A pale, weathered rock face with cracks and flaking plates: the headwall's 'pale grey-tan eroded rock'. Not chosen: rock_01 (reads as concrete), dark_rock_02 (dark), rock_06 (strong shading of its own), rocky_terrain_03 (a mossy drone capture), Rock064 (a stone wall), Rock063 (mossy).",
-   "sources": {
-    "color": {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rock_face_03/rock_face_03_diff_2k.jpg",
-     "md5": "657add9e8a8dffaeed19bdfc58078b59",
-     "md5MatchesListing": true,
-     "resolution": "2k"
-    },
-    "normal": {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rock_face_03/rock_face_03_nor_gl_2k.jpg",
-     "md5": "279b33e71ae6275cafa24e6597024c98",
-     "md5MatchesListing": true,
-     "resolution": "2k"
-    },
-    "height": {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rock_face_03/rock_face_03_disp_2k.jpg",
-     "md5": "e7629af66fe9420fe3e73b937f3eba40",
-     "md5MatchesListing": true,
-     "resolution": "2k"
-    }
-   },
-   "full": {
-    "color": {
-     "file": "terrain/ground-rock-color-64cdb4d8.jpg",
-     "bytes": {
-      "value": 199912,
-      "source": {
-       "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rock_face_03/rock_face_03_diff_2k.jpg",
-       "read": "2026-11-20",
-       "note": "the shipped JPEG's size: 1024 pixels, quality 80, made in the session from the scan's colour map"
-      }
-     }
-    },
-    "relief": {
-     "file": "terrain/ground-rock-relief-5cf7c707.jpg",
-     "bytes": {
-      "value": 370405,
-      "source": {
-       "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rock_face_03/rock_face_03_diff_2k.jpg",
-       "read": "2026-11-20",
-       "note": "the shipped JPEG's size: 1024 pixels, quality 80, made in the session from the scan's normal and height maps"
-      }
-     }
-    }
-   },
-   "light": {
-    "color": {
-     "file": "terrain/ground-rock-color-light-e1e20270.jpg",
-     "bytes": {
-      "value": 63953,
-      "source": {
-       "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rock_face_03/rock_face_03_diff_2k.jpg",
-       "read": "2026-11-20",
-       "note": "the shipped JPEG's size: 512 pixels, quality 85, made in the session from the scan's colour map"
-      }
-     }
-    },
-    "relief": {
-     "file": "terrain/ground-rock-relief-light-8e37ff55.jpg",
-     "bytes": {
-      "value": 119371,
-      "source": {
-       "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rock_face_03/rock_face_03_diff_2k.jpg",
-       "read": "2026-11-20",
-       "note": "the shipped JPEG's size: 512 pixels, quality 85, made in the session from the scan's normal and height maps"
-      }
-     }
-    }
-   }
-  },
-  "scree": {
-   "words": "loose scree or gravel",
-   "library": "Poly Haven",
-   "asset": "gravel_ground_01",
-   "page": "https://polyhaven.com/a/gravel_ground_01",
-   "license": "Our assets are all licensed as CC0 , which is effectively Public Domain even in jurisdictions that do not support the Public Domain. Here's an excerpt from the CC0 FAQ page to clarify: Once the creator or a subsequent owner of a work applies CC0 to a work, the work is no longer his or hers in any meaningful sense under copyright law. Anyone can then use the work in any way and for any purpose, including commercial purposes [...] Think of CC0 as the \"no rights reserved\" option. CC0 is a useful tool for clarifying that you do not claim copyright in a work anywhere in the world. More info: CC0 summary , CC0 wiki , CC0 FAQ .",
-   "licensePage": "https://polyhaven.com/license",
-   "apiTerms": "https://raw.githubusercontent.com/Poly-Haven/Public-API/master/ToS.md",
-   "fetched": "2026-11-20",
-   "run": "https://github.com/isleofdan/range-day/actions/runs/44711714459",
-   "scratchBranch": "range-day-eight-fetch",
-   "candidates": [
-    "polyhaven sandy_gravel",
-    "polyhaven sandy_gravel_02",
-    "polyhaven gravel_floor_04",
-    "polyhaven gravel_ground_01",
-    "ambientcg Ground108",
-    "ambientcg Gravel043"
-   ],
-   "why": "Loose small stones and grit with sandier patches, evenly lit: the loose scree on the lower steep faces. Not chosen: sandy_gravel (almost plain), sandy_gravel_02 (fine and reddish), gravel_floor_04 (uniform), Ground108 (large flat stones a viewer would recognise when repeated), Gravel043 (grey road gravel).",
-   "sources": {
-    "color": {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/gravel_ground_01/gravel_ground_01_diff_2k.jpg",
-     "md5": "3157af7d0cb76c72efaab07061a46876",
-     "md5MatchesListing": true,
-     "resolution": "2k"
-    },
-    "normal": {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/gravel_ground_01/gravel_ground_01_nor_gl_2k.jpg",
-     "md5": "9267ce17723cb3a7cac84dbef986dcbf",
-     "md5MatchesListing": true,
-     "resolution": "2k"
-    },
-    "height": {
-     "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/gravel_ground_01/gravel_ground_01_disp_2k.jpg",
-     "md5": "5c7b571a4807942956144e4e0d9ebc4a",
-     "md5MatchesListing": true,
-     "resolution": "2k"
-    }
-   },
-   "full": {
-    "color": {
-     "file": "terrain/ground-scree-color-a3bc5fb5.jpg",
-     "bytes": {
-      "value": 344240,
-      "source": {
-       "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/gravel_ground_01/gravel_ground_01_diff_2k.jpg",
-       "read": "2026-11-20",
-       "note": "the shipped JPEG's size: 1024 pixels, quality 80, made in the session from the scan's colour map"
-      }
-     }
-    },
-    "relief": {
-     "file": "terrain/ground-scree-relief-2635603c.jpg",
-     "bytes": {
-      "value": 477677,
-      "source": {
-       "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/gravel_ground_01/gravel_ground_01_diff_2k.jpg",
-       "read": "2026-11-20",
-       "note": "the shipped JPEG's size: 1024 pixels, quality 80, made in the session from the scan's normal and height maps"
-      }
-     }
-    }
-   },
-   "light": {
-    "color": {
-     "file": "terrain/ground-scree-color-light-ab36e2c6.jpg",
-     "bytes": {
-      "value": 90012,
-      "source": {
-       "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/gravel_ground_01/gravel_ground_01_diff_2k.jpg",
-       "read": "2026-11-20",
-       "note": "the shipped JPEG's size: 512 pixels, quality 85, made in the session from the scan's colour map"
-      }
-     }
-    },
-    "relief": {
-     "file": "terrain/ground-scree-relief-light-42def4ee.jpg",
-     "bytes": {
-      "value": 107509,
-      "source": {
-       "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/gravel_ground_01/gravel_ground_01_diff_2k.jpg",
-       "read": "2026-11-20",
-       "note": "the shipped JPEG's size: 512 pixels, quality 85, made in the session from the scan's normal and height maps"
-      }
-     }
     }
    }
   }
