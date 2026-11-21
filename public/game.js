@@ -81,12 +81,16 @@ window.RD = (function () {
   const logKey = (rifle, sight, load) => `log:${rifle}:${sight}:${load}`;
   const oldLogKey = (rifle, load) => `log:${rifle}:${load}`;
   let defaultSightOf = () => null; // set once the data is loaded (data() below)
+  // The sight a range-day-one record without a sight was made with: the rifle's default then. Where the default has since been
+  // replaced (range-day-eleven, range-day-twelve), that is the sight its replacement names (carriesRecordsOf, or tookThePlaceOf
+  // where it carries nothing), so an old record is never read as a sight that clicks differently.
+  const oldRecordsSightOf = (rifle) => { const id = defaultSightOf(rifle), s = DATA && DATA.sights[id]; return (s && ((s.carriesRecordsOf && s.carriesRecordsOf.sight) || s.tookThePlaceOf)) || id; };
   function getZero(rifle, sight, load) {
     const v = carried((s) => zeroKey(rifle, s, load), rifle, sight, Boolean);
     if (v) return v; // a record, or FAILED
     const old = store.get(oldZeroKey(rifle, load));
     if (!old || old === FAILED) return old === FAILED ? FAILED : null;
-    const madeWith = old.sight || defaultSightOf(rifle);
+    const madeWith = old.sight || oldRecordsSightOf(rifle);
     if (madeWith !== sight && carriedFrom(rifle, sight) !== madeWith) return null;
     store.set(zeroKey(rifle, sight, load), old); // forward; the old record stays
     return old;
@@ -96,7 +100,8 @@ window.RD = (function () {
     const v = carried((s) => logKey(rifle, s, load), rifle, sight, Array.isArray);
     if (Array.isArray(v)) return v;
     if (v === FAILED) return [];
-    if (sight !== defaultSightOf(rifle)) return [];
+    const madeWith = oldRecordsSightOf(rifle);
+    if (sight !== madeWith && carriedFrom(rifle, sight) !== madeWith) return [];
     const old = store.get(oldLogKey(rifle, load));
     if (!Array.isArray(old)) return [];
     store.set(logKey(rifle, sight, load), old);

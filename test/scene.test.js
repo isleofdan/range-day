@@ -286,9 +286,11 @@ test('verify 4 (range-day-six): the sights\' angles are unchanged: for the Vepr\
     return { k: RangeDayLine.geometry.pxPerMoa, post: postRight - postLeft, notch: notchRight - notchLeft, thr: thr2.toFixed(0), la: lightest.toFixed(0), ls: steelRow.toFixed(0) };
   });
   const v = S['vepr-irons'];
-  console.log(`  Vepr irons: drawn notch ${r.notch.toFixed(1)} px (data ${v.notchMoa} MOA × ${r.k.toFixed(3)} px/MOA = ${(v.notchMoa * r.k).toFixed(1)} px), drawn post ${r.post.toFixed(1)} px (data ${v.frontPostMoa} MOA = ${(v.frontPostMoa * r.k).toFixed(1)} px); threshold ${r.thr} between the notch's lightest ${r.la} and the steel ${r.ls}`);
+  // range-day-twelve: the Vepr's front is a ball on a stem; this row, half way down the notch, crosses the stem
+  const postMoa = v.frontBead ? v.stemWidthMoa : v.frontPostMoa;
+  console.log(`  Vepr irons: drawn notch ${r.notch.toFixed(1)} px (data ${v.notchMoa} MOA × ${r.k.toFixed(3)} px/MOA = ${(v.notchMoa * r.k).toFixed(1)} px), drawn ${v.frontBead ? 'stem' : 'post'} ${r.post.toFixed(1)} px (data ${postMoa} MOA = ${(postMoa * r.k).toFixed(1)} px); threshold ${r.thr} between the notch's lightest ${r.la} and the steel ${r.ls}`);
   assert.ok(Math.abs(r.notch - v.notchMoa * r.k) <= 2.5, `notch ${r.notch.toFixed(1)} vs ${(v.notchMoa * r.k).toFixed(1)}`);
-  assert.ok(Math.abs(r.post - v.frontPostMoa * r.k) <= 1.5, `post ${r.post.toFixed(1)} vs ${(v.frontPostMoa * r.k).toFixed(1)}`);
+  assert.ok(Math.abs(r.post - postMoa * r.k) <= 1.5, `post ${r.post.toFixed(1)} vs ${(postMoa * r.k).toFixed(1)}`);
   // the Vepr's scope at the old 7x view (a test view since range-day-eleven: at the BugBuster's own 9x the dots are 8 to 14 px apart
   // and drawn 1.2 px in radius, too small for this row's measure; the spacing is dotSpacingMoa × the view's scale at every power)
   await page.goto(`${base}${PIRU}&sight=utg-bugbuster-3-9x32`); await page.waitForSelector('#fire'); await sceneReady(page);
@@ -299,13 +301,15 @@ test('verify 4 (range-day-six): the sights\' angles are unchanged: for the Vepr\
     const d = g.getImageData(0, cy + 2, size, 1).data; // just under the crosshair: the dots' lower halves
     const dots = []; let start = -1; for (let x = 0; x <= size; x++) { const dark = x < size && lum(d, x) < 70; if (dark && start < 0) start = x; if (!dark && start >= 0) { dots.push((start + x - 1) / 2); start = -1; } }
     const right = dots.filter((x) => x > cx + 2 && x < cx + size * 0.4), left = dots.filter((x) => x < cx - 2 && x > cx - size * 0.4);
-    return { k: RangeDayLine.geometry.pxPerMoa, first: right[0] - cx, firstLeft: cx - left[left.length - 1], spacing: right.length > 1 ? right[1] - right[0] : null };
+    return { k: RangeDayLine.geometry.pxPerMoa, first: right[0] - cx, firstLeft: cx - left[left.length - 1], spacing: right.length > 1 ? right[1] - right[0] : null, milDotPx: RangeDayLine.geometry.milDotPx };
   });
-  const dot = S['utg-bugbuster-3-9x32'].reticle.dotSpacingMoa;
+  // range-day-twelve: the dots are true at 10x (second focal plane, the maker's manual), so at this view's power they stand 10 / power milliradians apart
+  const ret = S['utg-bugbuster-3-9x32'].reticle, dot = ret.dotSpacingMoa * ret.trueAtPower / OLD7;
+  assert.ok(Math.abs(r.milDotPx - dot * r.k) < 1e-6, 'the drawn spacing is the data\'s at this power');
   console.log(`  Vepr scope at the old 7x view (${OLD7.toFixed(1)}x on the BugBuster's rule): first mil-dot ${r.first.toFixed(1)} px right and ${r.firstLeft.toFixed(1)} px left of the centre, the next ${r.spacing && r.spacing.toFixed(1)} px on (data ${dot} MOA × ${r.k.toFixed(3)} = ${(dot * r.k).toFixed(1)} px)`);
   assert.ok(Math.abs(r.first - dot * r.k) <= 1.5 && Math.abs(r.firstLeft - dot * r.k) <= 1.5, `mil-dot spacing ${r.first}/${r.firstLeft} vs ${(dot * r.k).toFixed(1)}`);
   // the Tavor's iron sights (ring and post) on the rifle line: the post's width at the row just under the centre
-  await page.goto(`${base}/line?course=angeles-sylmar&rifle=iwi-tavor-sar&sight=tavor-irons&load=imi-m193`); await page.waitForSelector('#fire'); await sceneReady(page);
+  await page.goto(`${base}/line?course=angeles-sylmar&rifle=iwi-tavor-sar&sight=fab-flipup&load=imi-m193`); // range-day-twelve: the FAB sights took the Tavor irons' place await page.waitForSelector('#fire'); await sceneReady(page);
   await page.evaluate(() => { window.__raf = window.__raf || window.requestAnimationFrame.bind(window); window.requestAnimationFrame = () => 0; RangeDayLine.setHold(0, 0); }); await wait(300); await framesPassed(page);
   r = await page.evaluate(() => {
     const c = document.getElementById('view'), g = c.getContext('2d'), size = RangeDayLine.geometry.viewPx, cx = size / 2, cy = size / 2;
@@ -317,8 +321,8 @@ test('verify 4 (range-day-six): the sights\' angles are unchanged: for the Vepr\
     const cross = (from, step) => { let x = from; while (x > 0 && x < size - 1 && L[x] < thr) x += step; const a = L[x - step], b = L[x]; return x - step + step * ((thr - a) / (b - a)); };
     return { k: RangeDayLine.geometry.pxPerMoa, post: cross(cx, 1) - cross(cx, -1) };
   });
-  console.log(`  Tavor irons: drawn post ${r.post.toFixed(1)} px (data ${S['tavor-irons'].frontPostMoa} MOA × ${r.k.toFixed(3)} = ${(S['tavor-irons'].frontPostMoa * r.k).toFixed(1)} px)`);
-  assert.ok(Math.abs(r.post - S['tavor-irons'].frontPostMoa * r.k) <= 1.5, `Tavor post ${r.post.toFixed(1)} vs ${(S['tavor-irons'].frontPostMoa * r.k).toFixed(1)}`);
+  console.log(`  Tavor FAB sights: drawn post ${r.post.toFixed(1)} px (data ${S['fab-flipup'].frontPostMoa} MOA × ${r.k.toFixed(3)} = ${(S['fab-flipup'].frontPostMoa * r.k).toFixed(1)} px)`);
+  assert.ok(Math.abs(r.post - S['fab-flipup'].frontPostMoa * r.k) <= 1.5, `Tavor post ${r.post.toFixed(1)} vs ${(S['fab-flipup'].frontPostMoa * r.k).toFixed(1)}`);
   // the Tavor's red dot at 300 yards on the rifle line
   await page.goto(`${base}/line?course=angeles-sylmar&rifle=iwi-tavor-sar&sight=pa-md25&load=imi-m193`); await page.waitForSelector('#fire'); await sceneReady(page);
   await page.evaluate(() => { window.__raf = window.__raf || window.requestAnimationFrame.bind(window); window.requestAnimationFrame = () => 0; RangeDayLine.setHold(0, 0); }); await wait(300); await framesPassed(page);

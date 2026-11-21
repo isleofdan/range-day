@@ -1,5 +1,5 @@
 {
- "_about": "The sights. clickMoa is what one click of elevation moves the strike, windageClickMoa one click of windage, in minutes of angle; clicks is the travel each way from the middle. zoom is the magnification range; fovFtAt100 the field of view in feet at 100 yards at the lowest and highest zoom. frontPostMoa is the front post's width over the sight radius (how wide it looks against the target); apertureMoa the rear ring's lit circle and notchMoa the rear notch's width as the eye sees them; dotMoa a red dot's size. leaf is a sliding rear leaf: its marked settings, the service load it was cut for, and each setting's angle above the 100 m setting, derived with the engine (leaf545: the same leaf on the 5.45x39 rifle, cut for its own load). notchDepthMoa is the rear notch's depth as the eye sees it; stemWidthMoa a bead's stem; a drop reticle's chevronHalfWidthMoa and markHalfWidthMoa are its drawn widths. aimWanderFactor scales the drawn wander of the aim through this sight (1 where absent). frontBead marks a front sight that is a round bead on a stem rather than a flat post. range-day-twelve: sightRadiusIn is the distance between the front and rear sight, the radius the front post's width is seen over; frontPostIn and apertures (each peep's diameterIn) are the parts' own sizes; frontEars draws the front sight's guards (their inner gap, each one's width, and how far their tops stand above the post); frontStripeMoa and frontStripeTopMoa a glowing stripe on a front post; adjustWords says in plain words where each adjustment is; kind \"seeall\" is the SeeAll Open Sight, its reticle a triangle whose tip is the aim point, standing across a line that tops a glowing field; a reticle's focalPlane and trueAtPower say where a second-focal-plane reticle's marks are true (at another power p they stand trueAtPower / p times as far apart in angle).",
+ "_about": "The sights. clickMoa is what one click of elevation moves the strike, windageClickMoa one click of windage, in minutes of angle; clicks is the travel each way from the middle. zoom is the magnification range; fovFtAt100 the field of view in feet at 100 yards at the lowest and highest zoom. frontPostMoa is the front post's width over the sight radius (how wide it looks against the target); apertureMoa the rear ring's lit circle and notchMoa the rear notch's width as the eye sees them; dotMoa a red dot's size. leaf is a sliding rear leaf: its marked settings, the service load it was cut for, and each setting's angle above the 100 m setting, derived with the engine (leaf545: the same leaf on the 5.45x39 rifle, cut for its own load). notchDepthMoa is the rear notch's depth as the eye sees it; stemWidthMoa a bead's stem; a drop reticle's chevronHalfWidthMoa and markHalfWidthMoa are its drawn widths. aimWanderFactor scales the drawn wander of the aim through this sight (1 where absent). frontBead marks a front sight that is a round bead on a stem rather than a flat post. range-day-twelve: sightRadiusIn is the distance between the front and rear sight, the radius the front post's width is seen over; frontPostIn and apertures (each peep's diameterIn) are the parts' own sizes; frontEars draws the front sight's guards (their inner gap, each one's width, and how far their tops stand above the post); frontStripeMoa and frontStripeTopMoa a glowing stripe on a front post; adjustWords says in plain words where each adjustment is; kind \"seeall\" is the SeeAll Open Sight, its reticle a triangle whose tip is the aim point, standing across a line that tops a glowing field; a reticle's focalPlane and trueAtPower say where a second-focal-plane reticle's marks are true (at another power p they stand trueAtPower / p times as far apart in angle). tookThePlaceOf names the sight a new one replaced on its rifles without carrying its records (they click differently or sit at another height): a record from before any sight could be chosen, made with the old sight, is never read as the new one's.",
  "ar-irons": {
   "name": "AR-15 iron sights (front post, rear aperture)",
   "kind": "iron",
@@ -1074,7 +1074,8 @@
     "estimate": "the same: iron sights magnify nothing"
    }
   },
-  "adjustWords": "Elevation is the front post (an A2 post, turned with a tool); windage is the rear sight's drum."
+  "adjustWords": "Elevation is the front post (an A2 post, turned with a tool); windage is the rear sight's drum.",
+  "tookThePlaceOf": "ar-irons"
  },
  "fab-flipup": {
   "name": "FAB Defense flip-up sights (FBS front, RBS rear)",
@@ -1166,7 +1167,8 @@
     "estimate": "the same: iron sights magnify nothing"
    }
   },
-  "adjustWords": "Elevation is the front post (its dial); windage is the rear sight's side knob."
+  "adjustWords": "Elevation is the front post (its dial); windage is the rear sight's side knob.",
+  "tookThePlaceOf": "tavor-irons"
  },
  "seeall-gen1": {
   "name": "SeeAll Open Sight, first generation (triangle)",
@@ -1298,7 +1300,8 @@
     "estimate": "the same: iron sights magnify nothing"
    }
   },
-  "adjustWords": "Elevation and windage are both on the rear peep (its wheel and its knob), in clicks; the front ball post was set once with the AK tool."
+  "adjustWords": "Elevation and windage are both on the rear peep (its wheel and its knob), in clicks; the front ball post was set once with the AK tool.",
+  "tookThePlaceOf": "ak-irons"
  },
  "ak545-ball": {
   "name": "AK ball front post (KNS 0.034 in), rear notch, sliding leaf",

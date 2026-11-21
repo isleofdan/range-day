@@ -247,7 +247,8 @@ test('verify 6: a zero and a log written in the old form (per rifle and load) fo
   // Home: the Vepr's rifle button says a zero is saved; the zero line shows it for its scope.
   await page.goto(`${base}/?rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('.rifle');
   assert.match(await page.textContent('.rifle[data-rifle="molot-vepr-54r"] .rmark'), /zeroed/);
-  assert.match(await page.textContent('.rifle[data-rifle="bcm-ar15"] .rmark'), /zeroed/);
+  // range-day-twelve: the AR's old zero was made with its old iron sights; the Troy sights that took their place click differently, so it is not theirs.
+  assert.match(await page.textContent('.rifle[data-rifle="bcm-ar15"] .rmark'), /no zero saved/);
   assert.match(await page.textContent('.rifle[data-rifle="iwi-x95"] .rmark'), /no zero saved/);
   assert.match(await page.textContent('#zero'), /Zeroed at 100 yards with the UTG.*\+31 clicks/);
   // The bench and the line, by the old address form (no sight): the Vepr opens with its scope at that zero.
@@ -258,12 +259,15 @@ test('verify 6: a zero and a log written in the old form (per rifle and load) fo
   assert.match(await page.textContent('#intro'), /UTG BugBuster 3-9x32/);
   assert.match(await page.textContent('#el-text'), /\+31 clicks/);
   assert.match(await page.textContent('#log tbody'), /9\.0 in low/);
-  // The AR too, and the old records are still in place beside the new ones.
+  // The AR: its old zero and log were made with the old iron sights, so the Troy sights open unzeroed with an empty log (range-day-twelve);
+  // the old records are still in place, read as nothing else's.
   await page.goto(`${base}/line?course=angeles-sylmar&rifle=bcm-ar15&load=federal-gmm-69`); await page.waitForSelector('#fire');
-  assert.match(await page.textContent('#el-text'), /\+2 clicks/);
-  assert.match(await page.textContent('#log tbody'), /hit \(level, centered/);
+  assert.match(await page.textContent('#intro'), /Troy folding BattleSights/);
+  assert.match(await page.textContent('#zero-note'), /No zero saved/);
+  assert.doesNotMatch(await page.textContent('#log'), /hit \(level, centered/);
   const keys = await page.evaluate(() => Object.keys(localStorage).sort());
-  for (const k of ['range-day:zero:molot-vepr-54r:sb-174-hpbt', 'range-day:zero:molot-vepr-54r:utg-bugbuster-3-9x32:sb-174-hpbt', 'range-day:log:molot-vepr-54r:utg-bugbuster-3-9x32:sb-174-hpbt', 'range-day:zero:bcm-ar15:ar-irons:federal-gmm-69', 'range-day:log:bcm-ar15:ar-irons:federal-gmm-69', 'range-day:log:bcm-ar15:federal-gmm-69']) assert.ok(keys.includes(k), `${k} is stored`);
+  for (const k of ['range-day:zero:molot-vepr-54r:sb-174-hpbt', 'range-day:zero:molot-vepr-54r:utg-bugbuster-3-9x32:sb-174-hpbt', 'range-day:log:molot-vepr-54r:utg-bugbuster-3-9x32:sb-174-hpbt', 'range-day:zero:bcm-ar15:federal-gmm-69', 'range-day:log:bcm-ar15:federal-gmm-69']) assert.ok(keys.includes(k), `${k} is stored`);
+  for (const k of ['range-day:zero:bcm-ar15:troy-battlesights:federal-gmm-69', 'range-day:log:bcm-ar15:troy-battlesights:federal-gmm-69']) assert.ok(!keys.includes(k), `nothing of the old irons is written forward as ${k}`);
   // The old Vepr zero was made with the scope: the Vepr's irons have no zero.
   await page.goto(`${base}/line?course=cta-piru&rifle=molot-vepr-54r&sight=vepr-irons&load=sb-174-hpbt`); await page.waitForSelector('#fire');
   assert.match(await page.textContent('#zero-note'), /No zero saved/);
@@ -287,23 +291,23 @@ test('verify 7: the old addresses without a sight open the Vepr with its scope o
   await context.close();
 });
 
-test('home remembers each rifle\'s sight: pick the Tavor SAR, choose its irons, pick another rifle, pick the SAR again, the irons are still chosen', { skip }, async () => {
+test('home remembers each rifle\'s sight: pick the Tavor SAR, choose a sight that is not its first (range-day-twelve: the SeeAll; it was the irons, which are now its first), pick another rifle, pick the SAR again, that sight is still chosen', { skip }, async () => {
   const { page, context, errors } = await signedIn();
   await page.goto(`${base}/`); await page.waitForSelector('.rifle');
   await page.click('.rifle[data-rifle="iwi-tavor-sar"]'); await page.waitForSelector('.rifle.picked[data-rifle="iwi-tavor-sar"]');
-  await page.selectOption('#sight', 'tavor-irons');
+  await page.selectOption('#sight', 'seeall-gen1');
   await page.selectOption('#load', 'federal-gmm-69');
   await page.click('.rifle[data-rifle="molot-vepr-54r"]'); await page.waitForSelector('.rifle.picked[data-rifle="molot-vepr-54r"]');
   assert.equal(await page.inputValue('#sight'), 'utg-bugbuster-3-9x32', 'the Vepr opens with its own last sight (its default on a new device)');
   await page.click('.rifle[data-rifle="iwi-tavor-sar"]'); await page.waitForSelector('.rifle.picked[data-rifle="iwi-tavor-sar"]');
-  assert.equal(await page.inputValue('#sight'), 'tavor-irons', 'the SAR comes back with the irons it was left with');
+  assert.equal(await page.inputValue('#sight'), 'seeall-gen1', 'the SAR comes back with the sight it was left with');
   assert.equal(await page.inputValue('#load'), 'federal-gmm-69', 'and its load');
-  assert.match(await page.getAttribute('#go-line', 'href'), /sight=tavor-irons/);
+  assert.match(await page.getAttribute('#go-line', 'href'), /sight=seeall-gen1/);
   // A reload keeps it too; an old-style address for the same rifle still opens its default sight.
   await page.reload(); await page.waitForSelector('.rifle.picked[data-rifle="iwi-tavor-sar"]');
-  assert.equal(await page.inputValue('#sight'), 'tavor-irons');
+  assert.equal(await page.inputValue('#sight'), 'seeall-gen1');
   await page.goto(`${base}/line?course=angeles-sylmar&rifle=iwi-tavor-sar&load=imi-m193`); await page.waitForSelector('#fire');
-  assert.match(await page.textContent('#intro'), /Tavor folding iron sights/);
+  assert.match(await page.textContent('#intro'), /FAB Defense flip-up sights/);
   assert.deepEqual(errors, []);
   await context.close();
 });
@@ -412,9 +416,9 @@ test('verify 5: zero the Tavor SAR with the dot at 50 yd; its irons are not zero
   const el = await page.textContent('#el-text');
   // The iron sights on the same rifle: not zeroed. (The bench's day is closed first: home shows an open day with shots instead of the picks.)
   await noDay(page);
-  await page.goto(`${base}/?rifle=iwi-tavor-sar&sight=tavor-irons&load=imi-m193`); await page.waitForSelector('.rifle');
-  assert.match(await page.textContent('#zero'), /Not zeroed yet with the Tavor folding iron sights/);
-  await page.goto(`${base}/line?${SAR}&sight=tavor-irons`); await page.waitForSelector('#fire');
+  await page.goto(`${base}/?rifle=iwi-tavor-sar&sight=fab-flipup&load=imi-m193`); await page.waitForSelector('.rifle');
+  assert.match(await page.textContent('#zero'), /Not zeroed yet with the FAB Defense flip-up sights/);
+  await page.goto(`${base}/line?${SAR}&sight=fab-flipup`); await page.waitForSelector('#fire');
   assert.match(await page.textContent('#zero-note'), /No zero saved/);
   // The dot again: the zero is there, on home and on the line.
   await noDay(page);
@@ -505,8 +509,9 @@ test('verify 8: drawn angles are true: the dot\'s width, each drop-reticle mark\
     });
   }
   // 3. The leaf: the same seeded shot with the leaf at 1 and at 2 moves by the setting's angle, at the view's scale.
-  await page.goto(`${base}/line?course=angeles-sylmar&rifle=ak-762&sight=ak-irons&load=silver-bear-123`); await page.waitForSelector('#fire');
-  await page.evaluate(() => { localStorage.removeItem('range-day:sight:ak-762:ak-irons'); });
+  // (range-day-twelve: on the 5.45 rifle's ball post; the 7.62x39 rifle's KNS rear peep replaced its sliding leaf)
+  await page.goto(`${base}/line?course=angeles-sylmar&rifle=ak-545&sight=ak545-ball&load=hornady-545-60`); await page.waitForSelector('#fire');
+  await page.evaluate(() => { localStorage.removeItem('range-day:sight:ak-545:ak545-ball'); });
   await page.reload(); await page.waitForSelector('#fire');
   await page.selectOption('#plate', '1');
   await page.evaluate(() => RangeDayLine.setHold(0, 0));
@@ -516,7 +521,7 @@ test('verify 8: drawn angles are true: the dot\'s width, each drop-reticle mark\
   const geom = await page.evaluate(() => RangeDayLine.geometry);
   const b = await seededShot(page, 9);
   const movedMoa = (b.upIn - a.upIn) / E.inchesPerMoa(a.yards);
-  const leafMoa = flat.sights['ak-irons'].leaf.moaAbove100[1].moaAbove100;
+  const leafMoa = flat.sights['ak545-ball'].leaf.moaAbove100[1].moaAbove100;
   lines.push(`leaf 1 to 2 at ${a.yards} yd: the strike moved ${(b.upIn - a.upIn).toFixed(1)} in, ${movedMoa.toFixed(2)} MOA, ${(movedMoa * geom.pxPerMoa).toFixed(2)} px at the view's scale; data ${leafMoa} MOA, ${(leafMoa * geom.pxPerMoa).toFixed(2)} px`);
   assert.equal(geom.leafMoa, leafMoa);
   assert.ok(Math.abs(movedMoa - leafMoa) * geom.pxPerMoa <= 1, lines[lines.length - 1]);
@@ -529,7 +534,7 @@ test('verify 8: drawn angles are true: the dot\'s width, each drop-reticle mark\
 test('verify 12: on both courses the plates stand apart through the widest view, and the engine is given the height the drawing uses', { skip }, async () => {
   const { page, context, errors } = await signedIn();
   const lines = [];
-  for (const [path, rifle] of [['/line?course=cta-piru&rifle=molot-vepr-54r&sight=utg-bugbuster-3-9x32&load=sb-174-hpbt', 'Vepr, scope at 3x'], ['/line?course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193', 'AR-15, iron sights']]) {
+  for (const [path, rifle] of [['/line?course=cta-piru&rifle=molot-vepr-54r&sight=utg-bugbuster-3-9x32&load=sb-174-hpbt', 'Vepr, scope at 3x'], ['/line?course=angeles-sylmar&rifle=bcm-ar15&sight=troy-battlesights&load=imi-m193', 'AR-15, Troy iron sights']]) {
     await noDay(page);
     await page.goto(`${base}${path}`); await page.waitForSelector('#fire');
     await page.evaluate(() => { if (document.getElementById('zoom').min) RangeDayLine.setZoom(Number(document.getElementById('zoom').min)); });
@@ -568,8 +573,8 @@ test('on a phone, Fire works from a second finger while the first holds Steady, 
   const errors = [];
   page.on('pageerror', (e) => errors.push(e.message));
   await page.goto(`${base}/login`); await page.fill('#passphrase', PASS); await page.click('button[type=submit]'); await page.waitForURL(`${base}/`);
-  await page.goto(`${base}/line?course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193`); await page.waitForSelector('#fire');
-  await page.evaluate(() => { localStorage.removeItem('range-day:log:bcm-ar15:ar-irons:imi-m193'); });
+  await page.goto(`${base}/line?course=angeles-sylmar&rifle=bcm-ar15&sight=troy-battlesights&load=imi-m193`); await page.waitForSelector('#fire');
+  await page.evaluate(() => { localStorage.removeItem('range-day:log:bcm-ar15:troy-battlesights:imi-m193'); });
   await page.reload(); await page.waitForSelector('#fire');
   // Finger one lands on Steady and stays; finger two taps Fire. A phone gives the second finger pointer events but no click.
   const result = await page.evaluate(async () => {
@@ -595,6 +600,192 @@ test('on a phone, Fire works from a second finger while the first holds Steady, 
   await wait(300);
   const after = await page.evaluate(() => RangeDayLine.log.length + RangeDayLine.pending);
   assert.equal(after - before, 1, 'one tap, one shot');
+  assert.deepEqual(errors, []);
+  await context.close();
+});
+
+// --- range-day-twelve: the sights fitted to the rifles --------------------------------------------------------------------
+// Each new sight on the firing line, the plain picture under it, the frame loop stopped so the aim holds still: what is drawn,
+// read from the canvas's own pixels, against the data's angles at the view's scale (k pixels per MOA).
+const NEW_SIGHTS = [
+  ['bcm-ar15', 'troy-battlesights', 'imi-m193', 'angeles-sylmar'], ['iwi-tavor-sar', 'fab-flipup', 'imi-m193', 'angeles-sylmar'], ['iwi-x95', 'fab-flipup', 'imi-m193', 'angeles-sylmar'],
+  ['iwi-tavor-sar', 'seeall-gen1', 'imi-m193', 'angeles-sylmar'], ['ak-762', 'ak762-kns-peep', 'silver-bear-123', 'angeles-sylmar'], ['ak-545', 'ak545-ball', 'hornady-545-60', 'angeles-sylmar'],
+  ['ak-545', 'ak545-xs', 'hornady-545-60', 'angeles-sylmar'], ['molot-vepr-54r', 'vepr-irons', 'sb-174-hpbt', 'cta-piru'],
+];
+// The aim held well above the first plate, in open sky, so each part of the sight is read against an even light (a plate or a
+// hillside behind the centre would be read as part of the sight); the frame loop stopped so the aim holds still.
+const SKY_UP = 260;
+const still = (page) => page.evaluate(async (up) => { RangeDayLine.setHold(up, 0); await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))); window.requestAnimationFrame = () => 0; }, SKY_UP);
+// Measures the drawn sight in the page: the runs of dark (or bright) pixels on rows of the canvas, to a fraction of a pixel.
+function readSight() {
+  const c = document.getElementById('view'), g = c.getContext('2d'), G = RangeDayLine.geometry, size = G.viewPx, cx = size / 2, cy = size / 2;
+  const lum = (d, x) => 0.299 * d[x * 4] + 0.587 * d[x * 4 + 1] + 0.114 * d[x * 4 + 2];
+  const row = (y) => { const d = g.getImageData(0, Math.round(y), size, 1).data; const L = []; for (let x = 0; x < size; x++) L.push(lum(d, x)); return L; };
+  const col = (x) => { const d = g.getImageData(Math.round(x), 0, 1, size).data; const L = []; for (let y = 0; y < size; y++) L.push(lum(d, y)); return L; };
+  // the width of the run around `at` on the far side of thr (dark: below it), each edge where L crosses thr, to a fraction of a pixel
+  const run = (L, at, thr, dark = true) => {
+    const inside = (v) => (dark ? v < thr : v > thr);
+    const edge = (step) => { let x = Math.round(at); while (x > 0 && x < L.length - 1 && inside(L[x])) x += step; const a = L[x - step], b = L[x]; return x - step + step * ((thr - a) / (b - a)); };
+    const r = edge(1), l = edge(-1); return { width: r - l, mid: (r + l) / 2 };
+  };
+  const span = (L, a, b) => L.slice(Math.max(0, Math.round(a)), Math.min(L.length, Math.round(b)));
+  const out = { k: G.pxPerMoa, size, G, sky: row(cy - 6)[Math.round(cx)] };
+  if (G.triangle) {
+    // the SeeAll: the first dark row down the centre column (the tip), and the triangle's width on a row inside the glowing block
+    const C = col(cx), bg = C[Math.round(cy - 20)];
+    let tip = null; for (let y = Math.round(cy - 15); y < cy + 15; y++) if (C[y] < bg / 2) { tip = y; break; }
+    const L = row(cy + G.triangle.heightPx * 0.8), green = L[Math.round(cx + G.triangle.fieldPx * 0.3)];
+    const w = run(L, cx, green / 2);
+    return { ...out, tipY: tip, triW: w.width, triMid: w.mid };
+  }
+  // the front: a post's or a ball's width on the row through it, against the light either side of it (inside the ring, or in the notch)
+  const frontRow = G.stemPx ? cy + G.frontPx / 2 : cy + Math.min(8, (G.notchDepthPx || 16) * 0.4);
+  const F = row(frontRow), window = Math.max(G.frontPx * 1.4, 4);
+  const light = Math.max(...span(F, cx - window, cx + window)), darkest = Math.min(...span(F, cx - 1, cx + 2));
+  out.front = run(F, cx, (light + darkest) / 2).width;
+  out.frontLight = light;
+  if (G.stemPx) { const T = row(cy + Math.max(G.frontPx * 1.5, (G.notchDepthPx || 0) * 0.5)); const tl = Math.max(...span(T, cx - window, cx + window)); out.stem = run(T, cx, (tl + Math.min(...span(T, cx - 1, cx + 2))) / 2).width; }
+  if (G.ringPx) {
+    // the ring: on the row 0.6 of its radius above the centre, the chord between the half-dark points is 1.6 times the radius
+    const R = G.ringPx / 2, A = row(cy - 0.6 * R), inner = A[Math.round(cx)], outer = Math.min(A[1], A[size - 2]);
+    out.ring = (2 * run(A, cx, (inner + outer) / 2, false).width) / 1.6; // the diameter
+  }
+  if (G.earGapPx) {
+    // the guards: the light between them on the row 2 px above the post's top (below the guards' tops)
+    const E2 = row(cy - 2), lightGap = E2[Math.round(cx)], dark = E2[Math.round(cx + G.earGapPx / 2 + G.earPx / 2)];
+    out.earGap = run(E2, cx, (lightGap + dark) / 2, false).width;
+  }
+  if (G.stripePx) { const S2 = row(cy + (G.notchDepthPx || 16) * 0.5); out.stripe = run(S2, cx, (S2[Math.round(cx)] + S2[Math.round(cx - G.frontPx * 0.35)]) / 2, false).width; }
+  if (G.notchDepthPx && !G.ringPx) {
+    // the notch: whether any light shows beside the front in it (a front as wide as the notch fills it)
+    const N = row(cy + G.notchDepthPx * 0.5), half = (G.notchDepthPx * 24) / 22 / 2; // the notch's half-width: notchMoa is 24 to notchDepthMoa's 22
+    const clear = (G.stripePx || 0) / 2 + 2; // the glowing stripe is bright by design: left out
+    out.notchLight = Math.max(...span(N, cx - half, cx - clear), ...span(N, cx + clear, cx + half));
+  }
+  return out;
+}
+
+test('range-day-twelve verify 3: each new sight as drawn, read from the canvas at 412 and 1280 px wide, against the data\'s angles at the view\'s scale', { skip }, async () => {
+  const lines = []; let worst = 0;
+  for (const [sizeName, viewport] of [['phone', { width: 412, height: 915 }], ['computer', { width: 1280, height: 800 }]]) {
+    const { page, context, errors } = await signedIn(viewport);
+    for (const [rifle, sight, load, course] of NEW_SIGHTS) {
+      await page.goto(`${base}/line?course=${course}&rifle=${rifle}&sight=${sight}&load=${load}`); await page.waitForSelector('#fire');
+      await still(page);
+      const r = await page.evaluate(readSight);
+      const S = flat.sights[sight], k = r.k, half = r.G.viewPx / 2;
+      const pairs = [];
+      if (r.triW != null) pairs.push(['the triangle\'s tip, below the aim point', r.tipY - half, 0, 1], ['the triangle\'s width at 0.8 of its height', r.triW, S.reticle.triangleWidthMoa * 0.8 * k, 1], ['the triangle\'s middle, beside the aim point', r.triMid - half, 0, 1]);
+      else {
+        const filled = S.notchMoa && S.frontPostMoa >= S.notchMoa;
+        if (filled) { lines.push(`${sizeName} ${rifle} ${sight}: the post (${(S.frontPostMoa * k).toFixed(2)} px) fills the notch (${(S.notchMoa * k).toFixed(2)} px): no light beside it, the brightest pixel there ${r.notchLight.toFixed(0)} against the sky's ${r.sky.toFixed(0)}`); assert.ok(r.notchLight < r.sky / 2, `${sight}: no light beside the post in the notch`); }
+        else pairs.push([S.frontBead ? 'ball' : 'post', r.front, S.frontPostMoa * k, 1.5]);
+        if (r.stem != null) pairs.push(['stem', r.stem, S.stemWidthMoa * k, 1.5]);
+        if (r.ring != null) pairs.push(['ring', r.ring, S.apertureMoa * k, Math.max(2, S.apertureMoa * k * 0.06)]);
+        // the guards are read where the ring shows them; a guard outside the ring is hidden by it, as through the real peep
+        if (r.earGap != null && S.frontEars.gapMoa < S.apertureMoa * 0.8) pairs.push(['gap between the guards', r.earGap, S.frontEars.gapMoa * k, 1.5]);
+        else if (r.earGap != null) lines.push(`${sizeName} ${rifle} ${sight}: the guards (${(S.frontEars.gapMoa * k).toFixed(2)} px apart) stand outside the ring (${(S.apertureMoa * k).toFixed(2)} px): hidden by it`);
+        if (r.stripe != null) pairs.push(['glowing stripe', r.stripe, S.frontStripeMoa * k, 1.5]);
+      }
+      for (const [what, drawn, data, tol] of pairs) {
+        const diff = Math.abs(drawn - data);
+        lines.push(`${sizeName} ${rifle} ${sight}: ${what} drawn ${drawn.toFixed(2)} px, data ${data.toFixed(2)} px, difference ${diff.toFixed(2)} px`);
+        assert.ok(diff <= tol, lines[lines.length - 1]);
+        if (!/ring/.test(what)) worst = Math.max(worst, diff);
+      }
+    }
+    assert.deepEqual(errors, []);
+    await context.close();
+  }
+  console.log(`  largest difference, fronts, guards, stripe and triangle: ${worst.toFixed(2)} px\n  ` + lines.join('\n  '));
+});
+
+test('range-day-twelve verify 4: same scale through each new sight: where the drawing puts the near paper and a far plate, against the angles from the data at the drawn aim, at 412 and 1280 px wide', { skip }, async () => {
+  const MOA = Math.PI / (180 * 60);
+  const ang = (t) => ({ up: Math.atan2(t.riseFt, t.yards * 3) / MOA, right: Math.atan2(t.lateralYd, t.yards) / MOA });
+  const lines = []; let worst = 0, checked = 0;
+  for (const [sizeName, viewport] of [['phone', { width: 412, height: 915 }], ['computer', { width: 1280, height: 800 }]]) {
+    const { page, context, errors } = await signedIn(viewport);
+    for (const [rifle, sight, load, course] of NEW_SIGHTS) {
+      const c = flat.courses[course], far = c.plates.length - 1;
+      await page.goto(`${base}/line?course=${course}&rifle=${rifle}&sight=${sight}&load=${load}`); await page.waitForSelector('#fire');
+      for (const [aimed, key, t, a] of [['near-0', 'near-0', c.near[0], c.near[0]], [String(far), String(far), c.plates[far], c.plates[far]]]) {
+        await page.evaluate((kk) => { RangeDayLine.setTarget(kk); RangeDayLine.setHold(0, 0); }, aimed);
+        await page.waitForTimeout(250);
+        const r = await page.evaluate((kk) => { const g = RangeDayLine.geometry; return { on: RangeDayLine.targetOnScreen(kk).plain, k: g.pxPerMoa, size: g.viewPx, aim: g.aim, paper: RangeDayLine.drawnPaper(kk) }; }, key);
+        // a paper sheet: where the frame that drew it put its centre, at that frame's aim; a plate: where the drawing places it now
+        const at = key.startsWith('near') && r.paper ? { x: r.paper.x, y: r.paper.y, aim: { right: r.paper.aimRight, up: r.paper.aimUp }, k: r.paper.pxPerMoa } : { x: r.on[0], y: r.on[1], aim: r.aim, k: r.k };
+        const A = ang(a), T = ang(t);
+        const ex = r.size / 2 + (T.right - A.right - at.aim.right) * at.k, ey = r.size / 2 - (T.up - A.up - at.aim.up) * at.k;
+        const off = Math.hypot(at.x - ex, at.y - ey);
+        lines.push(`${sizeName} ${sight} on ${rifle}, ${t.yards} yd ${key.startsWith('near') ? 'paper' : 'plate'}: drawn ${at.x.toFixed(2)}, ${at.y.toFixed(2)}; angles ${ex.toFixed(2)}, ${ey.toFixed(2)}; ${off.toFixed(3)} px`);
+        assert.ok(off <= 1, lines[lines.length - 1]);
+        worst = Math.max(worst, off); checked++;
+      }
+    }
+    assert.deepEqual(errors, []);
+    await context.close();
+  }
+  assert.equal(checked, NEW_SIGHTS.length * 2 * 2);
+  console.log(`  ${checked} targets checked, largest difference ${worst.toFixed(3)} px\n  ` + lines.join('\n  '));
+});
+
+test('range-day-twelve verify 6: the BugBuster\'s dots stand at their true angle for the power in use (second focal plane, true at 10x): drawn spacing in pixels at 3x, 6x and 9x, read from the canvas, against the data', { skip }, async () => {
+  const ret = flat.sights['utg-bugbuster-3-9x32'].reticle;
+  const lines = [];
+  for (const [sizeName, viewport] of [['phone', { width: 412, height: 915 }], ['computer', { width: 1280, height: 800 }]]) {
+    const { page, context, errors } = await signedIn(viewport);
+    await page.goto(`${base}/line?course=cta-piru&rifle=molot-vepr-54r&sight=utg-bugbuster-3-9x32&load=sb-174-hpbt`); await page.waitForSelector('#fire');
+    const spacing = {};
+    for (const power of [3, 6, 9]) {
+      await page.evaluate(([p, up]) => { RangeDayLine.setZoom(p); RangeDayLine.setHold(up, 0); }, [power, 400 / power]);
+      await page.waitForTimeout(300);
+      const r = await page.evaluate(() => {
+        const c = document.getElementById('view'), g = c.getContext('2d'), G = RangeDayLine.geometry, size = G.viewPx, cx = size / 2, cy = size / 2;
+        // down the vertical line of the crosshair: the line is a thin grey there, each dot a darker spot on it
+        const d = g.getImageData(Math.round(cx), 0, 1, size).data, L = [];
+        for (let y = 0; y < size; y++) L.push(0.299 * d[y * 4] + 0.587 * d[y * 4 + 1] + 0.114 * d[y * 4 + 2]);
+        const seg = L.slice(Math.round(cy + 3), Math.round(cy + 5 * G.milDotPx)).sort((a, b) => a - b), sky = seg[Math.floor(seg.length / 2)]; // the line's own grey, inside the five dots: the middle value
+        const dots = []; let start = -1;
+        for (let y = Math.round(cy + 3); y < size; y++) { const dark = L[y] < sky * 0.6; if (dark && start < 0) start = y; if (!dark && start >= 0) { dots.push((start + y - 1) / 2); start = -1; } }
+        return { k: G.pxPerMoa, milDotPx: G.milDotPx, dots: dots.slice(0, 3), cy };
+      });
+      const want = ((ret.dotSpacingMoa * ret.trueAtPower) / power) * r.k;
+      const first = r.dots[0] - r.cy, next = r.dots[1] - r.dots[0];
+      lines.push(`${sizeName} ${power}x: dots drawn ${first.toFixed(2)} px below the centre and ${next.toFixed(2)} px apart; data ${(ret.dotSpacingMoa * ret.trueAtPower / power).toFixed(2)} MOA × ${r.k.toFixed(3)} px/MOA = ${want.toFixed(2)} px`);
+      assert.ok(Math.abs(r.milDotPx - want) < 1e-6, 'the drawing is asked for the data\'s spacing');
+      assert.ok(Math.abs(first - want) <= 1 && Math.abs(next - want) <= 1, lines[lines.length - 1]);
+      spacing[power] = (ret.dotSpacingMoa * ret.trueAtPower) / power;
+    }
+    assert.ok(Math.abs(spacing[3] - 3 * spacing[9]) < 1e-9, 'at 3x three times as far apart in angle as at 9x');
+    assert.deepEqual(errors, []);
+    await context.close();
+  }
+  console.log('  ' + lines.join('\n  '));
+});
+
+test('range-day-twelve task items 3 and 4: a control that does not apply is not shown (the SeeAll: no leaf, no zoom, no magnifier; the KNS rear peep: no leaf); the bench says where each new sight adjusts and by how much; the sight chooser on a Tavor lists its four', { skip }, async () => {
+  const { page, context, errors } = await signedIn();
+  const shown = (sel) => page.evaluate((s) => { const el = document.querySelector(s); return Boolean(el && !el.hidden && el.offsetParent !== null); }, sel);
+  await page.goto(`${base}/line?course=angeles-sylmar&rifle=iwi-tavor-sar&sight=seeall-gen1&load=imi-m193`); await page.waitForSelector('#fire');
+  assert.deepEqual([await shown('#zoomrow'), await shown('#magrow'), await shown('#leafrow')], [false, false, false], 'the SeeAll: no zoom, no magnifier, no leaf');
+  await page.goto(`${base}/line?course=angeles-sylmar&rifle=ak-762&sight=ak762-kns-peep&load=silver-bear-123`); await page.waitForSelector('#fire');
+  assert.equal(await shown('#leafrow'), false, 'the KNS rear peep replaced the leaf');
+  await page.goto(`${base}/line?course=angeles-sylmar&rifle=ak-545&sight=ak545-xs&load=hornady-545-60`); await page.waitForSelector('#fire');
+  assert.equal(await shown('#leafrow'), true, 'the 5.45 rifle keeps its sliding leaf behind the XS post');
+  const helps = [];
+  for (const [rifle, sight, load, words] of [['iwi-tavor-sar', 'seeall-gen1', 'imi-m193', /One step \(a sixteenth of a turn of its screw\) of elevation moves the strike 0\.95 MOA.*two screws on the sight, no clicks/],
+    ['bcm-ar15', 'troy-battlesights', 'imi-m193', /One click of elevation moves the strike 1\.33 MOA.*windage 0\.5 MOA.*front post \(an A2 post/], ['ak-762', 'ak762-kns-peep', 'silver-bear-123', /both on the rear peep/]]) {
+    await page.goto(`${base}/zero?course=angeles-sylmar&rifle=${rifle}&sight=${sight}&load=${load}`); await page.waitForSelector('#fire5');
+    const t = await page.textContent('#click-help'); helps.push(`${sight}: ${t}`);
+    assert.match(t, words);
+  }
+  await noDay(page);
+  await page.goto(`${base}/?rifle=iwi-tavor-sar`); await page.waitForSelector('.rifle.picked[data-rifle="iwi-tavor-sar"]');
+  const opts = await page.$$eval('#sight option', (o) => o.map((x) => x.textContent));
+  assert.equal(opts.length, 3, 'the irons, the dot (with its magnifier behind it) and the SeeAll');
+  assert.match(opts.join(' | '), /FAB Defense flip-up sights.*Primary Arms SLx MD-25.*SeeAll Open Sight/);
+  console.log('  ' + helps.join('\n  ') + '\n  Tavor SAR sight chooser: ' + opts.join(' | '));
   assert.deepEqual(errors, []);
   await context.close();
 });
