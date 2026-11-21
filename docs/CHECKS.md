@@ -224,8 +224,9 @@ included. On Dan's yes (Ask 2 of range-day-ten):
   named branch; it refuses to run on `main`. No push starts it.
 - **It writes only what it fetched** (`scripts/terrain/keep.mjs`): the two
   ranges' parts of `data/terrain.json` and `_about` are replaced; every
-  other part (`surfaces` among them) and every other file in
-  `public/terrain` is kept byte for byte. It removes no file; a file an
+  other part (`surfaces` among them) is copied from the old file's own
+  text, and every other file in `public/terrain` is left alone, so both
+  stay byte for byte. It removes no file; a file an
   earlier run wrote that nothing names any more is removed only by a
   reviewed pull request.
 - **It stages by name and refuses a deletion**: the commit step stages
@@ -236,11 +237,13 @@ included. On Dan's yes (Ask 2 of range-day-ten):
 - **Ground** empties `ground-fetch/` before it writes, so a second run on
   the same scratch branch could drop the first run's files: it too stages
   without removals and runs the same guard before its commit.
-- **The tests** (`test/terrain-keep.test.js`, 5, no network, in a
+- **The tests** (`test/terrain-keep.test.js`, 6, no network, in a
   throwaway git repository): the committed record and its 24 surface
   photographs are there to keep; keeping (a stand-in fetch without the
   surfaces leaves every kept file and part byte for byte, and the guard
-  passes); refusing (a staged change that removes two surface photographs
+  passes); keeping in any layout (a part the run did not fetch is copied
+  from the old file's own text, so an oddly laid-out part, an escaped
+  character or a number spelled 1.50 stays exactly as written); refusing (a staged change that removes two surface photographs
   and drops `surfaces` fails the guard, which names all three); the same
   for Ground's folder; the workflows' triggers, their staging and the
   guard's place before the commit, read from the workflow files.
