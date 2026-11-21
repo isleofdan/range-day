@@ -331,7 +331,7 @@ Branches and the close-out order: the change is on `range-day-nine-b` (#24); the
    - 7: the 412×800 figure was added.
    - 8: every job's time on the latest run, and the before counts, were added.
    - 9: the pull request's own diff size was added.
-   - 10: this check is run again, and the closing message is sent only once the newest verdict is PASS.
+   - 10: answered by running the check again (round 3).
 3. Job 20261121-002945-690da1 (card event 2892): FINDINGS, 3.
    - 1: the original measure is now given element by element in verify 1.
    - 2: the deploy line comes after the deploy, by the brief's close-out item 5, quoted in verify 8.
