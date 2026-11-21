@@ -281,3 +281,25 @@ body.line .more .windcall { margin-top: 0; }
 .paperrow .row { margin-top: 0; }
 .paperrow #paper-note:empty { display: none; }
 .paperrow #paper-note .btn.inline { display: inline-block; width: auto; margin: 6px 0 0; padding: 0 14px; min-height: 44px; line-height: 40px; }
+/* The spotting scope (range-day-ten). Beside the sight's glass control stands "Spotting scope"; at the scope its zoom takes the glass
+   control's place (the same grid cell, so nothing moves: the cell keeps the height of the taller of the two) and the button reads
+   "Back to the rifle"; in the bar, "Back to the rifle" stands where Steady and Fire stood, the same height, and they cannot be pressed. */
+.reach .pick { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 92px; grid-template-areas: "plate glass spot"; }
+.reach .pick .plate { grid-area: plate; }
+.reach .pick > #zoomrow, .reach .pick > #magrow, .reach .pick > #leafrow, .reach .pick > #spotrow { grid-area: glass; }
+.reach .pick:not(.spotting):not(:has(> .zoom:not([hidden]), > .glass:not([hidden]))) .plate { grid-column: 1 / 3; }
+.reach .pick.spotting:not(:has(> .zoom:not([hidden]), > .glass:not([hidden]))) .plate { grid-column: 1 / 2; }
+.reach .pick #spotrow { visibility: hidden; }
+.reach .pick.spotting #spotrow { visibility: visible; }
+.reach .pick.spotting > #zoomrow, .reach .pick.spotting > #magrow, .reach .pick.spotting > #leafrow { visibility: hidden; }
+.reach .pick .spotbtn { grid-area: spot; display: block; width: 100%; margin: 0; min-height: 44px; padding: 2px 4px; font-size: 14px; line-height: 1.2; white-space: normal; }
+.reach .pick.spotting .spotbtn { background: var(--accent); color: #fff; }
+.firebar > .btn { grid-row: 1; }
+.firebar #steady { grid-column: 1; } .firebar #fire { grid-column: 2; }
+.firebar .btn.away { visibility: hidden; }
+.firebar #back-to-rifle { grid-column: 1 / -1; }
+@media (min-width: 1100px) {
+  .reach .pick { grid-template-columns: 1fr; grid-template-areas: "plate" "glass" "spot"; }
+  .reach .pick:not(.spotting):not(:has(> .zoom:not([hidden]), > .glass:not([hidden]))) .plate { grid-column: auto; }
+}
+.reach .pick #spotrow input[type=range] { height: 44px; padding: 0 8px; }

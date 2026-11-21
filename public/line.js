@@ -154,13 +154,23 @@
   const mix = (a, b, f) => `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * f)).join(',')})`;
   const HAZE = [205, 200, 190];
   // The field of view across the drawn view, in MOA: the sight's at this zoom; the magnifier's when it is flipped in.
-  const fovMoa = () => (magnifierIn() ? (magnifier.fovFtAt100.high * 12) / E.inchesPerMoa(100) : RD.fovMoa(sight, mag));
-  const viewMag = () => (magnifierIn() ? magnifier.magnification : mag);
+  // --- the spotting scope (range-day-ten) ---------------------------------------------------------------------
+  // A tripod scope beside the rifle, looked through between shots: no reticle, the view still (no wander, no breathing, no recoil),
+  // pointed at the chosen target and moved by a drag, its zoom across its whole range. Its field of view at each end is the maker's
+  // (data/spotting.json); between them the width follows a power of the magnification through both figures (the rifle scopes'
+  // rule, width × power constant, is the same rule with the power 1; the maker's figures for this scope give about 0.54).
+  const SP = d.spotting;
+  let spotting = false, spotMag = SP.zoom.low;
+  const spotAim = { up: 0, right: 0 };
+  const spotPower = Math.log(SP.fovFtAt1000.low / SP.fovFtAt1000.high) / Math.log(SP.zoom.high / SP.zoom.low);
+  const spotFovMoa = (m) => (SP.fovFtAt1000.low * Math.pow(m / SP.zoom.low, -spotPower) * 12) / E.inchesPerMoa(1000);
+  const fovMoa = () => (spotting ? spotFovMoa(spotMag) : magnifierIn() ? (magnifier.fovFtAt100.high * 12) / E.inchesPerMoa(100) : RD.fovMoa(sight, mag));
+  const viewMag = () => (spotting ? spotMag : magnifierIn() ? magnifier.magnification : mag);
   const pxPerMoa = () => view.size / fovMoa();
   // Where the reticle points right now: the hold, the wander, the breathing
   // and the recoil. The view is drawn from this and the shot is fired from
   // this, the same state, so the bullet goes where the sight showed.
-  const center = () => ({ up: hold.up + wander.up + wander.breath + recoil.up, right: hold.right + wander.right + recoil.right });
+  const center = () => (spotting ? { up: spotAim.up, right: spotAim.right } : { up: hold.up + wander.up + wander.breath + recoil.up, right: hold.right + wander.right + recoil.right });
   const toScreen = (rightMoa, upMoa) => { const c = center(), k = pxPerMoa(); return [view.size / 2 + (rightMoa - c.right) * k, view.size / 2 - (upMoa - c.up) * k]; };
 
   // --- the aim's wander: slow, small, worse after a shot, calmer when held steady ----------
@@ -266,7 +276,7 @@
   function syncScene() {
     if (!scene) return;
     const c = center(), a = plate();
-    scene.setView({ yawDeg: (toMoa(sideAngle(a)) + c.right) / 60, pitchDeg: (toMoa(losAngle(a)) + c.up) / 60, fovDeg: fovMoa() / 60, glass: sight.kind === 'scope' || magnifierIn(), windMph: crossMph() });
+    scene.setView({ yawDeg: (toMoa(sideAngle(a)) + c.right) / 60, pitchDeg: (toMoa(losAngle(a)) + c.up) / 60, fovDeg: fovMoa() / 60, glass: spotting || sight.kind === 'scope' || magnifierIn(), windMph: crossMph() });
   }
 
   function draw() {
@@ -419,14 +429,15 @@
   // The bullet still flies through the engine from the sight's setting.
   function drawSight(g, size, k) {
     const cx = size / 2, cy = size / 2;
-    if (sight.kind === 'dot') return drawDot(g, size, k, cx, cy);
-    if (sight.kind === 'scope') {
+    if (!spotting && sight.kind === 'dot') return drawDot(g, size, k, cx, cy);
+    if (spotting || sight.kind === 'scope') {
       // the tube: black outside the circle
       g.save(); g.beginPath(); g.rect(0, 0, size, size); g.arc(cx, cy, cx - 4, 0, Math.PI * 2, true); g.fillStyle = '#050505'; g.fill('evenodd'); g.restore();
       const tube = g.createRadialGradient(cx, cy, (cx - 4) * 0.93, cx, cy, cx - 4);
       tube.addColorStop(0, 'rgba(0,0,0,0)'); tube.addColorStop(1, 'rgba(0,0,0,0.6)');
       g.fillStyle = tube; g.beginPath(); g.arc(cx, cy, cx - 4, 0, Math.PI * 2); g.fill();
       g.strokeStyle = 'rgba(0,0,0,0.85)'; g.lineWidth = 2; g.beginPath(); g.arc(cx, cy, cx - 4, 0, Math.PI * 2); g.stroke();
+      if (spotting) return; // the spotting scope has no reticle
       if (sight.reticle && sight.reticle.kind === 'mil-dot') return drawMilDot(g, size, k, cx, cy);
       if (sight.reticle && sight.reticle.marksMoaBelowZero) return drawDropReticle(g, size, k, cx, cy);
       return;
@@ -579,6 +590,7 @@
   const boxEmpty = () => Boolean(day.endedAt) || day.box.left <= 0;
   const rounds = () => { $('rounds').textContent = RD.roundsText(day); $('fire').classList.toggle('spent', boxEmpty()); $('another-box-row').hidden = !boxEmpty(); };
   function fire(seed) {
+    if (spotting) return; // at the spotting scope the rifle is not fired: Fire is not there, and no other door fires it
     if (pending.length > 2) return;
     if (boxEmpty()) { $('result').textContent = `The box of ${day.box.size} is empty. Open another box to go on, or pack up; the day's page has every shot.`; return; }
     if (!RD.takeRounds(day, 1)) { rounds(); return; }
@@ -747,7 +759,24 @@
     setting = { ...setting, [which]: next };
     RD.clickSound(); showSetting(); zeroNote(); storeSetting();
   }, (text) => { $('result').textContent = text; });
-  $('plate').addEventListener('change', (e) => { target = targets.find((t) => t.key === e.target.value) || target; hold.up = 0; hold.right = 0; conditions(); bookLine(); paperRow(); });
+  $('plate').addEventListener('change', (e) => { target = targets.find((t) => t.key === e.target.value) || target; hold.up = 0; hold.right = 0; spotAim.up = 0; spotAim.right = 0; conditions(); bookLine(); paperRow(); });
+  // Going to the spotting scope and back. Nothing on the page moves: the scope's zoom takes the glass control's cell, the button
+  // keeps its size, and "Back to the rifle" stands in the bar where Steady and Fire stood (they are hidden and cannot be pressed).
+  const spotZoomText = () => { $('spot-zoom-text').textContent = `${spotMag}×`; };
+  $('spot-zoom').min = SP.zoom.low; $('spot-zoom').max = SP.zoom.high; $('spot-zoom').step = SP.zoomStep; $('spot-zoom').value = spotMag; spotZoomText();
+  function setSpotting(on) {
+    spotting = Boolean(on);
+    if (spotting) { spotAim.up = 0; spotAim.right = 0; steadyOff(); }
+    $('spotting').textContent = spotting ? 'Back to the rifle' : 'Spotting scope';
+    $('spotting').setAttribute('aria-pressed', String(spotting));
+    $('plate').closest('.pick').classList.toggle('spotting', spotting);
+    $('spotrow').setAttribute('aria-hidden', String(!spotting)); $('spot-zoom').tabIndex = spotting ? 0 : -1;
+    for (const id of ['steady', 'fire']) { $(id).classList.toggle('away', spotting); $(id).setAttribute('aria-hidden', String(spotting)); $(id).tabIndex = spotting ? -1 : 0; }
+    $('back-to-rifle').hidden = !spotting;
+  }
+  $('spotting').addEventListener('click', () => setSpotting(!spotting));
+  $('back-to-rifle').addEventListener('click', () => setSpotting(false));
+  $('spot-zoom').addEventListener('input', (e) => { spotMag = Number(e.target.value); spotZoomText(); });
   // "Hang a fresh paper" (range-day-ten): shown only when a paper is chosen, a short scroll below. It clears the holes shown on that
   // sheet from now on (a marker in the open day; no shot is deleted); the message that confirms it offers to put the old paper back.
   function paperRow(message) {
@@ -785,15 +814,16 @@
   const steadyOn = () => { steady = true; $('steady').classList.add('on'); };
   const steadyOff = () => { steady = false; $('steady').classList.remove('on'); };
   let steadyPointer = null;
-  $('steady').addEventListener('pointerdown', (e) => { e.preventDefault(); steadyPointer = e.pointerId; steadyOn(); try { $('steady').setPointerCapture(e.pointerId); } catch {} });
+  $('steady').addEventListener('pointerdown', (e) => { e.preventDefault(); if (spotting) return; steadyPointer = e.pointerId; steadyOn(); try { $('steady').setPointerCapture(e.pointerId); } catch {} });
   for (const ev of ['pointerup', 'pointercancel', 'lostpointercapture']) $('steady').addEventListener(ev, (e) => { if (steadyPointer == null || e.pointerId === steadyPointer) { steadyPointer = null; steadyOff(); } });
-  $('fire').addEventListener('pointerdown', (e) => { if (e.button !== 0 && e.pointerType === 'mouse') return; e.preventDefault(); RD.audio(); fire(); });
+  $('fire').addEventListener('pointerdown', (e) => { if (e.button !== 0 && e.pointerType === 'mouse') return; e.preventDefault(); if (spotting) return; RD.audio(); fire(); });
   $('fire').addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); RD.audio(); fire(); } });
   for (const id of ['steady', 'fire']) $(id).addEventListener('contextmenu', (e) => e.preventDefault());
   // Dragging the view moves the hold.
   let drag = null;
-  canvas.addEventListener('pointerdown', (e) => { drag = { x: e.clientX, y: e.clientY, up: hold.up, right: hold.right }; canvas.setPointerCapture(e.pointerId); });
-  canvas.addEventListener('pointermove', (e) => { if (!drag) return; const k = pxPerMoa(); hold.right = drag.right - (e.clientX - drag.x) / k; hold.up = drag.up + (e.clientY - drag.y) / k; });
+  // At the spotting scope a drag moves the scope's view, not the rifle's hold.
+  canvas.addEventListener('pointerdown', (e) => { const a = spotting ? spotAim : hold; drag = { x: e.clientX, y: e.clientY, up: a.up, right: a.right, a }; canvas.setPointerCapture(e.pointerId); });
+  canvas.addEventListener('pointermove', (e) => { if (!drag) return; const k = pxPerMoa(); drag.a.right = drag.right - (e.clientX - drag.x) / k; drag.a.up = drag.up + (e.clientY - drag.y) / k; });
   for (const ev of ['pointerup', 'pointercancel']) canvas.addEventListener(ev, () => { drag = null; });
   window.addEventListener('keydown', (e) => { if (e.key === ' ' && document.activeElement === document.body) { e.preventDefault(); fire(); } });
 
@@ -827,6 +857,9 @@
     get plateAngles() { return plates.map((p) => ({ yards: p.yards, riseFt: riseOf(p), lateralYd: p.lateralYd, upMoa: toMoa(losAngle(p)), rightMoa: toMoa(sideAngle(p)) })); },
     get lastShotInput() { return lastShotInput; },
     get fovMoa() { return fovMoa(); },
+    // the spotting scope: whether the view is at it, going there and back, its zoom, and its field of view in MOA at a power
+    get spotting() { return spotting; }, setSpotting(on) { setSpotting(on); }, setSpotZoom(m) { spotMag = m; $('spot-zoom').value = m; spotZoomText(); }, get spotZoom() { return spotMag; },
+    spotFovMoa(m) { return spotFovMoa(m); }, setSpotAim(up, right) { spotAim.up = up; spotAim.right = right; },
     // The picture in force, the scene (or null), and for a plate: where the plain drawing puts its centre and where the scene does, from the same aim at the same instant.
     get picture() { return scene ? scene.quality : 'plain'; }, get scene() { return scene; }, get sceneLoading() { return sceneLoading; }, get sceneFailed() { return sceneFailed; },
     // range-day-ten: every target (near first, then the plates), the one chosen, and where any target's centre is drawn under both pictures.

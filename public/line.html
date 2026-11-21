@@ -36,6 +36,9 @@
         <span class="small"><span class="muted">Rear leaf</span> <span id="leaf-text" class="mono"></span></span>
         <div class="pair"><button id="leaf-down" type="button" class="btn inline">◀ nearer</button><button id="leaf-up" type="button" class="btn inline">farther ▶</button></div>
       </div>
+      <!-- The spotting scope (range-day-ten): its zoom stands where the sight's glass control stands, shown only at the scope; the button beside it goes there and back. -->
+      <div id="spotrow" class="field spotzoom" aria-hidden="true"><label for="spot-zoom">Scope <span id="spot-zoom-text" class="mono"></span></label><input id="spot-zoom" type="range" min="20" max="60" step="1" value="20" tabindex="-1"></div>
+      <button id="spotting" type="button" class="btn inline secondary spotbtn" aria-pressed="false">Spotting scope</button>
     </div>
     <div class="viewwrap"><canvas id="scene" width="400" height="400" hidden></canvas><canvas id="view" width="400" height="400"></canvas></div>
     <div class="slot result">
@@ -99,6 +102,7 @@
 <div class="firebar">
   <button id="steady" type="button" class="btn">Steady (hold)</button>
   <button id="fire" type="button" class="btn fire">Fire<span id="rounds" class="rounds"></span></button>
+  <button id="back-to-rifle" type="button" class="btn back" hidden>Back to the rifle</button>
 </div>
 <script src="/engine.js"></script>
 <script src="/game.js"></script>
