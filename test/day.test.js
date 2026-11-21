@@ -533,7 +533,7 @@ test('verify 4 (browser): with GUN_RECORDS_FILE naming a file with an eighth gun
 
 // range-day-nine: the firing line arranged for shooting (brief range-day-nine, task items 2, 4 and 5).
 const { PHONES, SIGHTS, measure: measureReach, meets } = require('./line-reach');
-test('the firing line within reach: for the Vepr\'s scope, the Tavor SAR\'s dot and the AK\'s irons, at 412x915 every item of the within-reach list is inside the screen above the Steady and Fire bar, and at 1280x800 inside the screen with the bar beside the view; the view keeps its size', { skip }, async () => {
+test('the firing line within reach: for the Vepr\'s scope, the Tavor SAR\'s dot and the AK\'s irons (range-day-twelve: and every other sight of every rifle), at 412x915 every item of the within-reach list is inside the screen above the Steady and Fire bar, and at 1280x800 inside the screen with the bar beside the view; the view keeps its size', { skip }, async () => {
   const lines = [];
   for (const [w, h, viewPx] of [...PHONES.map(([pw, ph]) => [pw, ph, 380]), [1280, 800, 640]]) {
     const { page, context, errors } = await signedIn({ width: w, height: h });
@@ -545,7 +545,7 @@ test('the firing line within reach: for the Vepr\'s scope, the Tavor SAR\'s dot 
       const bad = meets(m);
       lines.push(`${w}x${h} ${s.name}: view ${m.view.width}x${m.view.height}; ${m.items.filter((i) => i.shown).length} items; ${bad.length ? bad.join('; ') : 'all within reach'}`);
       assert.deepEqual(bad, [], `${w}x${h}, ${s.name}`);
-      assert.equal(m.items.find((i) => i.name === 'sight\'s glass control').shown, true, `${s.name}: its glass control is shown`);
+      if (s.glass) assert.equal(m.items.find((i) => i.name === 'sight\'s glass control').shown, true, `${s.name}: its glass control is shown`);
       assert.equal(m.view.width, viewPx); assert.equal(m.view.height, viewPx);
       assert.equal(m.scrollY, 0);
       if (w === 412) for (const t of m.touch) assert.ok(t.height >= 44, `${s.name}: #${t.id} is ${t.height} px tall, under 44`);
