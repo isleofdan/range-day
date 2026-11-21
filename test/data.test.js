@@ -120,7 +120,10 @@ test('range-day-ten: each course has paper at 50 and 100 yards, the canyon a 12 
   }
   // the paper's own figures and the spotting scope's, each in the data
   for (const k of ['gridIn', 'centreMarkIn', 'cornerMarkIn', 'cornerMarkRightIn', 'cornerMarkUpIn', 'burstRifleIn', 'burstRimfireIn', 'boardFootAboveGroundM', 'sheetCentreAboveBoardFootIn', 'nearGroupMoundM']) assert.equal(typeof flat.look.paper[k], 'number', `look.paper.${k}`);
-  assert.deepEqual(flat.spotting.zoom, { low: 20, high: 60 });
+  // range-day-eleven: a stronger scope, 25-125x: its top at 100x or more, its bottom at 30x or lower so near paper is easy to find
+  assert.deepEqual(flat.spotting.zoom, { low: 25, high: 125 });
+  assert.ok(flat.spotting.zoom.high >= 100 && flat.spotting.zoom.low <= 30);
+  for (const end of ['low', 'high']) for (const k of ['zoom', 'fovFtAt1000']) assert.match(raw.spotting[k][end].source.url, /^https:\/\/shop\.barska\.com\//, `spotting.${k}.${end} is the maker's figure`);
   assert.ok(flat.spotting.fovFtAt1000.low > flat.spotting.fovFtAt1000.high, 'the field narrows as the power rises');
   assert.match(raw.spotting.fovFtAt1000.low.source.url, /^https:\/\//);
 });
@@ -162,4 +165,26 @@ test('the raw data keeps the page address and the date read beside every sourced
   assert.match(s.url, /^https:\/\/www\.sellierbellot\.us\//);
   assert.equal(s.read, '2026-11-16');
   assert.match(raw.loads['imi-m193'].bc.estimate, /IMI publishes no ballistic coefficient/);
+});
+
+test('range-day-eleven: the Vepr carries its real scope, the UTG BugBuster 3-9x32, each figure from the maker or an estimate with its basis; the 2-7x44 stays in the data for old records, offered by no rifle; the new scope carries the old one\'s records only because both click alike and sit at the same height', () => {
+  const s = flat.sights['utg-bugbuster-3-9x32'], r = raw.sights['utg-bugbuster-3-9x32'];
+  assert.equal(s.kind, 'scope');
+  assert.deepEqual(s.zoom, { low: 3, high: 9 });
+  assert.deepEqual(s.fovFtAt100, { low: 37.7, high: 14 });
+  assert.equal(s.clickMoa, 0.25); assert.equal(s.windageClickMoa, 0.25); assert.equal(s.clicks, 120);
+  for (const f of [r.clickMoa, r.windageClickMoa, r.zoom.low, r.zoom.high, r.fovFtAt100.low, r.fovFtAt100.high]) assert.match(f.source.url, /^https:\/\/www\.leapers\.com\//, 'from the maker\'s page');
+  assert.match(r.clicks.source.note, /30 MOA up and 30 MOA down/);
+  assert.equal(s.reticle.kind, 'mil-dot');
+  const v = flat.rifles['molot-vepr-54r'];
+  assert.deepEqual(v.sights, ['vepr-irons', 'utg-bugbuster-3-9x32']);
+  assert.equal(v.defaultSight, 'utg-bugbuster-3-9x32');
+  assert.match(raw.rifles['molot-vepr-54r'].sightHeightIn['utg-bugbuster-3-9x32'].estimate, /side-rail mount/);
+  assert.ok(flat.sights['utg-2-7x44'], 'the old scope stays in the data');
+  assert.match(flat.sights['utg-2-7x44'].retired, /no rifle offers/);
+  for (const [id, rifle] of Object.entries(flat.rifles)) if (!id.startsWith('_')) assert.ok(!rifle.sights.includes('utg-2-7x44'), `${id} does not offer the 2-7x44`);
+  // the carry-forward's two deciding figures: the same click on both turrets, and the same height over the bore (3.0 in before, data/rifles.json at main 270fdea)
+  assert.equal(s.carriesRecordsOf.sight, 'utg-2-7x44');
+  assert.equal(flat.sights['utg-2-7x44'].clickMoa, s.clickMoa); assert.equal(flat.sights['utg-2-7x44'].windageClickMoa, s.windageClickMoa);
+  assert.equal(v.sightHeightIn['utg-bugbuster-3-9x32'], 3);
 });

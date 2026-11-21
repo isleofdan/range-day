@@ -13,6 +13,7 @@ window.RD = (function () {
   async function data() {
     if (!DATA) DATA = await (await fetch('/api/data', { headers: { accept: 'application/json' } })).json();
     defaultSightOf = (rifle) => (DATA.rifles[rifle] ? DATA.rifles[rifle].defaultSight : null);
+    carriedFrom = (rifle, sight) => carriedSight(DATA, rifle, sight);
     return DATA;
   }
   const rifleIds = (d) => Object.keys(d.rifles).filter((k) => !k.startsWith('_') && d.rifles[k].playable);
@@ -32,11 +33,39 @@ window.RD = (function () {
     keys() { try { return Object.keys(localStorage).filter((k) => k.startsWith('range-day:')).map((k) => k.slice('range-day:'.length)); } catch { return FAILED; } },
   };
   const ok = (v) => v && v !== FAILED;
+  // A sight that took another's place on a rifle (data/sights.json,
+  // carriesRecordsOf: range-day-eleven, the Vepr's UTG BugBuster 3-9x32 in
+  // place of the 2-7x44 the game modeled before) carries that sight's records
+  // on this device when the two click alike, so a zero in clicks stays true:
+  // a record missing under the new sight is read from the old one's key,
+  // written forward under the new name, and the old record stays stored.
+  // Answers the old sight's id, or null.
+  function carriedSight(d, rifle, sight) {
+    const s = d.sights[sight], r = d.rifles[rifle];
+    const from = s && s.carriesRecordsOf && s.carriesRecordsOf.sight;
+    const old = from && d.sights[from];
+    if (!old || !r || !r.sights.includes(sight) || r.sights.includes(from)) return null;
+    return old.clickMoa === s.clickMoa && old.windageClickMoa === s.windageClickMoa ? from : null;
+  }
+  let carriedFrom = () => null; // set once the data is loaded (data() above)
+  // The sight a rifle offers now for a sight id an address or an old record names: its replacement, where it has one.
+  const sightNow = (d, rifle, sight) => (d.rifles[rifle] ? d.rifles[rifle].sights.find((s) => carriedSight(d, rifle, s) === sight) : null) || sight;
+  // The record under key(sight), else the carried sight's record written forward (isRecord says what counts as one).
+  function carried(key, rifle, sight, isRecord) {
+    const v = store.get(key(sight));
+    if (v === FAILED || isRecord(v)) return v;
+    const from = carriedFrom(rifle, sight);
+    if (!from) return v;
+    const old = store.get(key(from));
+    if (old === FAILED || !isRecord(old)) return v;
+    store.set(key(sight), old); // forward; the old record stays
+    return old;
+  }
   // The sight as it is physically set on the rifle (clicks from the middle;
   // on a sight with a sliding leaf, which setting the leaf is at; on the dot
   // with a magnifier behind it, whether the magnifier is flipped in).
   const sightKey = (rifle, sight) => `sight:${rifle}:${sight}`;
-  const getSight = (rifle, sight) => { const v = store.get(sightKey(rifle, sight)); return ok(v) ? { elevationClicks: 0, windageClicks: 0, ...v } : { elevationClicks: 0, windageClicks: 0 }; };
+  const getSight = (rifle, sight) => { const v = carried((s) => sightKey(rifle, s), rifle, sight, ok); return ok(v) ? { elevationClicks: 0, windageClicks: 0, ...v } : { elevationClicks: 0, windageClicks: 0 }; };
   const sightReadFailed = (rifle, sight) => store.get(sightKey(rifle, sight)) === FAILED;
   const setSight = (rifle, sight, v) => store.set(sightKey(rifle, sight), v);
 
@@ -53,7 +82,7 @@ window.RD = (function () {
   const oldLogKey = (rifle, load) => `log:${rifle}:${load}`;
   let defaultSightOf = () => null; // set once the data is loaded (data() below)
   function getZero(rifle, sight, load) {
-    const v = store.get(zeroKey(rifle, sight, load));
+    const v = carried((s) => zeroKey(rifle, s, load), rifle, sight, Boolean);
     if (v) return v; // a record, or FAILED
     const old = store.get(oldZeroKey(rifle, load));
     if (!old || old === FAILED) return old === FAILED ? FAILED : null;
@@ -64,7 +93,7 @@ window.RD = (function () {
   }
   const setZero = (rifle, sight, load, v) => store.set(zeroKey(rifle, sight, load), v);
   function getLog(rifle, sight, load) {
-    const v = store.get(logKey(rifle, sight, load));
+    const v = carried((s) => logKey(rifle, s, load), rifle, sight, Array.isArray);
     if (Array.isArray(v)) return v;
     if (v === FAILED) return [];
     if (sight !== defaultSightOf(rifle)) return [];
@@ -312,7 +341,7 @@ window.RD = (function () {
   // be struck out and restored, and takes a note. Nothing here comes from the
   // engine's prediction: only what the player's own hits were.
   const bookKey = (rifle, sight, load) => `book:${rifle}:${sight}:${load}`;
-  const getBook = (rifle, sight, load) => { const v = store.get(bookKey(rifle, sight, load)); return Array.isArray(v) ? v : []; };
+  const getBook = (rifle, sight, load) => { const v = carried((s) => bookKey(rifle, s, load), rifle, sight, Array.isArray); return Array.isArray(v) ? v : []; };
   const bookReadFailed = (rifle, sight, load) => store.get(bookKey(rifle, sight, load)) === FAILED;
   function addBookLine(rifle, sight, load, line) {
     const lines = getBook(rifle, sight, load);
@@ -382,8 +411,11 @@ window.RD = (function () {
     const keys = store.keys();
     const out = { kind: COPY_KIND, version: 1, savedAt: new Date().toISOString(), zeros: [], book: [], cold_bore: [], days: finishedDays() };
     if (keys === FAILED) return out;
+    // A record under a sight another now carries is left out where the carrying sight holds its own copy (it was written forward).
+    const forwarded = (p) => p.length === 4 && DATA && keys.includes([p[0], p[1], sightNow(DATA, p[1], p[2]), p[3]].join(':')) && sightNow(DATA, p[1], p[2]) !== p[2];
     for (const k of keys) {
       const p = k.split(':');
+      if ((p[0] === 'zero' || p[0] === 'book') && forwarded(p)) continue;
       if (p[0] === 'zero' && p.length === 4) { const z = store.get(k); if (ok(z)) out.zeros.push({ rifle: p[1], sight: p[2], load: p[3], zeroYards: z.zeroYards, elevationClicks: z.elevationClicks, windageClicks: z.windageClicks, leafIx: z.leafIx ?? null, saved_on: z.savedAt || null }); }
       if (p[0] === 'zero' && p.length === 3) { const z = store.get(k); if (ok(z) && z.sight && !keys.includes(`zero:${p[1]}:${z.sight}:${p[2]}`)) out.zeros.push({ rifle: p[1], sight: z.sight, load: p[2], zeroYards: z.zeroYards, elevationClicks: z.elevationClicks, windageClicks: z.windageClicks, leafIx: z.leafIx ?? null, saved_on: z.savedAt || null }); }
       if (p[0] === 'book' && p.length === 4) { const b = store.get(k); if (Array.isArray(b)) for (const l of b) out.book.push({ rifle: p[1], sight: p[2], load: p[3], ...l }); }
@@ -557,6 +589,9 @@ window.RD = (function () {
     const rifle = d.rifles[rifleId];
     const lastFor = getLastFor(rifleId) || {};
     const playableSights = rifle.sights.filter((s) => d.sights[s].kind !== 'magnifier');
+    // A sight the rifle no longer offers opens the sight that took its place (range-day-eleven).
+    q = { ...q, sight: q.sight && sightNow(d, rifleId, q.sight) };
+    if (lastFor.sight) lastFor.sight = sightNow(d, rifleId, lastFor.sight);
     // An address naming a rifle but no sight (an old link, a bookmark) opens the rifle's default sight;
     // a pick on home (q.remembered) opens the sight last used with that rifle on this device.
     const sightId = playableSights.includes(q.sight) ? q.sight
@@ -780,9 +815,15 @@ window.RD = (function () {
   // The crosswind part, in mph, positive pushing the bullet right (wind from the left).
   const crosswindMph = (stretch) => -stretch.speedMph * Math.sin((stretch.fromDegrees * Math.PI) / 180);
   // Field of view, in MOA across the view, at a magnification between the sight's low and high.
+  // A scope's field of view at a power: the maker's figure at each end of the
+  // zoom, and between them a power of the magnification fitted through both
+  // (range-day-eleven; the spotting scope's rule since range-day-ten), so the
+  // view's width equals the published figure at both ends.
   function fovMoa(sight, mag) {
     const lo = sight.zoom.low, hi = sight.zoom.high;
-    const ft = hi === lo ? sight.fovFtAt100.low : sight.fovFtAt100.low * (lo / mag); // a scope's field shrinks with magnification
+    const fLo = sight.fovFtAt100.low, fHi = sight.fovFtAt100.high;
+    const p = hi === lo || fHi === fLo ? 0 : Math.log(fLo / fHi) / Math.log(hi / lo);
+    const ft = hi === lo ? fLo : fLo * Math.pow(mag / lo, -p); // beyond the ends only for a test view through the page's zoom door
     return (ft * 12) / E.inchesPerMoa(100);
   }
   // Fits a square canvas to its container, at the device's pixel ratio.
@@ -805,5 +846,5 @@ window.RD = (function () {
   }
 
   return { kindOf, holeIn, burstIn, paperMarks, nearestMark, onSheet, drawPaper, shotsAt, paperHoles, steelMarks, hangFreshPaper, putOldPaperBack, offText,
-    E, data, rifleIds, store, getSight, sightReadFailed, setSight, getZero, setZero, getLog, setLog, zeroCount, getLast, setLast, getLastFor, setLastFor, getWhen, setWhen, thisMonth, TIMES, MONTHS, getWindCall, setWindCall, windCallText, wireWindCall, chooseFrom, params, remember, leafOf, holdRepeat, wireKnobs, settingLine, roundsText, leafText, showConditions, setShowConditions, PICTURES, getPicture, pictureReadFailed, setPicture, drawDay, conditionsOf, dayWords, localDate, openDay, dayReadFailed, hasShots, finishedDays, dayById, startDay, enterDay, takeRounds, openAnotherBox, boxesOpened, roundsFired, boxesText, getSupply, supplyReadFailed, takeSupply, openSupplyBox, supplyText, recordShot, finishDay, packUp, packedDayId, restorePacked, bookKey, getBook, bookReadFailed, addBookLine, changeBookLine, bookAt, bookNeighbours, newestFirst, comeUpMoa, comeUpText, getColdBore, addColdBore, makeCopy, checkCopy, loadCopy, COPY_KIND, audio, shotSound, ringSound, thudSound, clickSound, qs, esc, sign, moaOf, clicksText, whereText, heldText, dateText, windWord, crosswindMph, fovMoa, fitCanvas, hash, download };
+    E, data, rifleIds, store, getSight, sightReadFailed, setSight, getZero, setZero, getLog, setLog, zeroCount, getLast, setLast, getLastFor, setLastFor, getWhen, setWhen, thisMonth, TIMES, MONTHS, getWindCall, setWindCall, windCallText, wireWindCall, chooseFrom, params, remember, leafOf, holdRepeat, wireKnobs, settingLine, roundsText, leafText, showConditions, setShowConditions, PICTURES, getPicture, pictureReadFailed, setPicture, drawDay, conditionsOf, dayWords, localDate, openDay, dayReadFailed, hasShots, finishedDays, dayById, startDay, enterDay, takeRounds, openAnotherBox, boxesOpened, roundsFired, boxesText, getSupply, supplyReadFailed, takeSupply, openSupplyBox, supplyText, recordShot, finishDay, packUp, packedDayId, restorePacked, bookKey, getBook, bookReadFailed, addBookLine, changeBookLine, bookAt, bookNeighbours, newestFirst, comeUpMoa, comeUpText, getColdBore, addColdBore, makeCopy, checkCopy, loadCopy, COPY_KIND, audio, shotSound, ringSound, thudSound, clickSound, qs, esc, sign, moaOf, clicksText, whereText, heldText, dateText, windWord, crosswindMph, fovMoa, fitCanvas, hash, download, carriedSight, sightNow };
 }());

@@ -38,7 +38,7 @@ test('a bare number, an unknown sight, a defaultSight it does not carry, a missi
   ];
   console.log('  ' + messages.join('\n  '));
   assert.match(messages[0], /^gun 'x': game\.barrelIn: a bare number; wrap it as \{value, source\} or \{value, estimate\}$/);
-  assert.match(messages[1], /^gun 'x': sight 'foo' is not in the game's data: ar-irons, tavor-irons, ak-irons, vepr-irons, rem-irons, pa-md25, pa-magnifier, pa-3x-acss, utg-2-7x44$/);
+  assert.match(messages[1], /^gun 'x': sight 'foo' is not in the game's data: ar-irons, tavor-irons, ak-irons, vepr-irons, rem-irons, pa-md25, pa-magnifier, pa-3x-acss, utg-2-7x44, utg-bugbuster-3-9x32$/);
   assert.match(messages[2], /^gun 'x': defaultSight 'pa-md25' is not one of its sights: ar-irons$/);
   assert.match(messages[3], /^gun 'x': no sightHeightIn for sight 'ar-irons'; it carries: ar-irons$/);
   // And the rest of the shape: an unknown load, a wrong caliber, a course that does not exist, a leaf table the sight lacks, a duplicate.

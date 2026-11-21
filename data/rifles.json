@@ -261,9 +261,9 @@
     "value": 2,
     "estimate": "not published by Molot or FIME; AK-pattern irons sit 1.9 in over the bore (https://en.wikipedia.org/wiki/AK-47), and one review of the .308 Vepr says about 4 in, which does not fit an AK receiver; 2.0 used"
    },
-   "utg-2-7x44": {
+   "utg-bugbuster-3-9x32": {
     "value": 3,
-    "estimate": "a scope on the Vepr's side rail mount sits about an inch above the irons; no maker figure"
+    "estimate": "no maker figure: the BugBuster sits on the Vepr's side-rail mount, about an inch above the irons (2.0 in), as the 2-7x44 was modeled before it (3.0 in); the mount, not the scope, sets the height, and the BugBuster's 32 mm front lens needs no taller rings than a 44 mm one, so 3.0 in is kept"
    }
   },
   "boreOffsetMoa": {
@@ -282,9 +282,9 @@
   },
   "sights": [
    "vepr-irons",
-   "utg-2-7x44"
+   "utg-bugbuster-3-9x32"
   ],
-  "defaultSight": "utg-2-7x44",
+  "defaultSight": "utg-bugbuster-3-9x32",
   "loads": [
    "sb-174-hpbt",
    "ppu-182",
