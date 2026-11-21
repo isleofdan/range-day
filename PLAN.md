@@ -584,3 +584,16 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
 - **Next session needs:** Dan's three items, on the card: Ask 2 (the
   Terrain workflow keeps what it did not fetch), a more powerful spotting
   scope, the UTG scope's strength; each planned by a Personal Shipyard chat.
+
+### range-day-ten-c — 21 Nov 2026 (same session, from Dan's phone)
+
+- **Stands:** pull request #31, merged as `ed25048`, deployed by Deploy
+  run 44887696828: on a phone both zoom sliders end at least 40 px from
+  the screen's right edge, clear of Android's edge-swipe back gesture, and
+  are longer (130 and 117 px, were 120 and 107).
+- **Decided:** the gap and the lengths are held by `test/near.test.js`.
+  The work is split between Claude (the real rifles' figures) and Codex
+  (the picture): pull request #32, `CLAUDE.md` "Who works on what".
+- **Next session needs:** the plate-flicker bug (on the card; Codex's
+  side), with Dan's screen recording if he has sent one; Dan's items
+  already on the card.
