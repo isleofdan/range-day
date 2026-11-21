@@ -296,9 +296,12 @@ Then the changes #24 makes on purpose:
    - Commit f774c87 added only the before-measure file. Its run, [44842823187](https://github.com/isleofdan/range-day/actions/runs/44842823187), is **green, all ten jobs**:
      - tests: rest 23 s, browser 1 min 27 s, day 2 min 2 s, scene-scale 4 min 34 s, scene-shots 7 min 48 s, scene-rest 8 min 56 s;
      - screenshots: shard 1 5 min 51 s, shard 2 6 min 57 s, shard 3 6 min 49 s, shard 4 6 min 57 s.
-   - Commit 9ee1e68, the pull request's latest, takes the picture tests' wait fix back out (it is in #25). Its run: CHECKS9EE_PLACEHOLDER
+   - Commit 9ee1e68, the pull request's latest, takes the picture tests' wait fix back out (it is in #25). Its run, [44844321697](https://github.com/isleofdan/range-day/actions/runs/44844321697), is **green, all ten jobs**:
+     - tests: rest 1 min 49 s, browser 1 min 11 s, day 1 min 33 s, scene-scale 4 min 20 s, scene-shots 8 min 25 s, scene-rest 11 min 19 s;
+     - screenshots: shard 1 6 min 0 s, shard 2 9 min 3 s, shard 3 6 min 53 s, shard 4 6 min 5 s.
+   - #25's own run, [44844341913](https://github.com/isleofdan/range-day/actions/runs/44844341913) on 0623aff, is **green, all ten jobs** (slowest: tests scene-rest, 8 min 59 s).
    - Counts: tests 111 before #24 and 111 after; screenshot states 73 before and 73 after. Before range-day-nine they were 109 and 68.
-7. **Size:** the pull request's own diff, `gh pr diff 24 | wc -c` (fetched here as the same diff from GitHub's API, since this container has no `gh`): SIZE9EE_PLACEHOLDER bytes on 9ee1e68, under 400,000.
+7. **Size:** the pull request's own diff, `gh pr diff 24 | wc -c` (fetched here as the same diff from GitHub's API, since this container has no `gh`): 69,015 bytes on 9ee1e68, under 400,000.
 8. **The deploy result:** not in this report, by the brief's own order. Its close-out item 5 runs the Deploy workflow only on Dan's typed line, and then says: "Then file one short note on the card as `session:range-day-nine` (what was merged, the Deploy run's result line)". The line goes in that note after the deploy, as #22's did (card event 2887: "Deploy run 44836938388: completed, success").
 
 What this cannot prove: the session cannot hold Dan's phone. 830 is measured from his screenshots; a browser with more of its own bars showing leaves less room.
