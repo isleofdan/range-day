@@ -234,7 +234,7 @@ test('every screen renders at 412x915 and 1280x800 with no sideways scroll and n
   }
 });
 
-test('verify 6: a zero and a log written in the old form (per rifle and load) for the Vepr and the AR-15 show on home, the bench and the line', { skip }, async () => {
+test('verify 6: a zero and a log written in the old form (per rifle and load) for the Vepr show on home, the bench and the line; the AR-15\'s, made with its old iron sights, stay stored and are not the Troy sights\' (range-day-twelve)', { skip }, async () => {
   const { page, context, errors } = await signedIn();
   // Records as range-day-one wrote them: zero:<rifle>:<load> naming its sight, log:<rifle>:<load>.
   await page.evaluate(() => {
