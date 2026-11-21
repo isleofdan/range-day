@@ -95,7 +95,7 @@ test('verify 4: each course\'s altitudeFt is the surveyed ground at the firing p
 });
 
 test('verify 4: the engine\'s elevation for the 1,000-yard canyon plate and the 600-yard rifle-line plate on the old figures and on the new, same load and air', () => {
-  const cases = [['cta-piru', 1000, 'molot-vepr-54r', 'utg-2-7x44', 'sb-174-hpbt', { riseFt: 200, altitudeFt: 850 }], ['angeles-sylmar', 600, 'bcm-ar15', 'ar-irons', 'imi-m193', { riseFt: 36, altitudeFt: 1500 }]];
+  const cases = [['cta-piru', 1000, 'molot-vepr-54r', 'utg-bugbuster-3-9x32', 'sb-174-hpbt', { riseFt: 200, altitudeFt: 850 }], ['angeles-sylmar', 600, 'bcm-ar15', 'ar-irons', 'imi-m193', { riseFt: 36, altitudeFt: 1500 }]];
   for (const [id, yards, rifleId, sightId, loadId, old] of cases) {
     const c = flat.courses[id], p = c.plates.find((x) => x.yards === yards), rifle = flat.rifles[rifleId], load = flat.loads[loadId];
     const air = { tempF: 70, pressureInHg: 29.92 - (c.altitudeFt / 1000) * 1.0, humidity: 0.4 };

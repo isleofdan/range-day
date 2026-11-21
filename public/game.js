@@ -87,7 +87,7 @@ window.RD = (function () {
     const old = store.get(oldZeroKey(rifle, load));
     if (!old || old === FAILED) return old === FAILED ? FAILED : null;
     const madeWith = old.sight || defaultSightOf(rifle);
-    if (madeWith !== sight) return null;
+    if (madeWith !== sight && carriedFrom(rifle, sight) !== madeWith) return null;
     store.set(zeroKey(rifle, sight, load), old); // forward; the old record stays
     return old;
   }

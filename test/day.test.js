@@ -152,7 +152,7 @@ test('verify 5: the box and the zeroing supply: the bench fires from its own sup
 
 test('verify 6: a day stays open across a reload with the same rounds and weather; a day with no shot leaves no record; Pack up, then "Back to the range" restores it', { skip }, async () => {
   const { page, context, errors } = await signedIn();
-  await line(page, 'course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt');
+  await line(page, 'course=cta-piru&rifle=molot-vepr-54r&sight=utg-bugbuster-3-9x32&load=sb-174-hpbt');
   await page.selectOption('#plate', '0');
   await seededShot(page, 5); await seededShot(page, 6);
   const day = await page.evaluate(() => RangeDayLine.day);
@@ -175,7 +175,7 @@ test('verify 6: a day stays open across a reload with the same rounds and weathe
   assert.equal(await page2.textContent('#rounds'), 'zeroing supply: 20 of 20 left');
   await page2.goto(`${base}/`); await page2.waitForSelector('.rifle');
   assert.ok(await page2.isHidden('#open-day'), 'home shows the picks: a day with no shot is nothing yet');
-  await line(page2, 'course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt');
+  await line(page2, 'course=cta-piru&rifle=molot-vepr-54r&sight=utg-bugbuster-3-9x32&load=sb-174-hpbt');
   assert.equal((await page2.evaluate(() => RangeDayLine.day)).rifle, 'molot-vepr-54r', 'another choice simply replaces the shotless day');
   assert.equal(await page2.evaluate(() => RD.finishedDays().length), daysBefore, 'no record was kept');
   // An address naming another rifle (and a sight the open rifle does not carry) opens the open day, with a sight the open rifle carries, and says so.
@@ -183,13 +183,13 @@ test('verify 6: a day stays open across a reload with the same rounds and weathe
   await line(page2, 'course=angeles-sylmar&rifle=iwi-tavor-sar&sight=pa-md25&load=imi-m193');
   const redirected = await page2.evaluate(() => RangeDayLine.day);
   assert.equal(redirected.rifle, 'molot-vepr-54r', 'the open day wins over the address');
-  assert.match(await page2.textContent('#intro'), /Molot Vepr.*UTG AccuShot/, 'with a sight the Vepr carries, not the Tavor\'s dot');
+  assert.match(await page2.textContent('#intro'), /Molot Vepr.*UTG BugBuster/, 'with a sight the Vepr carries, not the Tavor\'s dot');
   assert.match(await page2.textContent('#day-line'), /A day is already open with the Molot Vepr/);
   assert.ok(await page2.isHidden('#magrow'), 'no magnifier control: the Vepr has none');
   const given = await page2.evaluate(async () => { RangeDayLine.setHold(0, 0); RangeDayLine.fire(8); await new Promise((r) => setTimeout(r, 1500)); return RangeDayLine.lastShotInput; });
-  assert.equal(given.sightHeightIn, flat.rifles['molot-vepr-54r'].sightHeightIn['utg-2-7x44'], 'the engine is given the open rifle\'s own sight height');
+  assert.equal(given.sightHeightIn, flat.rifles['molot-vepr-54r'].sightHeightIn['utg-bugbuster-3-9x32'], 'the engine is given the open rifle\'s own sight height');
   // Two bullets in the air at once keep the order they were fired in: the far plate's bullet (nearly two seconds) is fired first, the near plate's lands first.
-  await line(page2, 'course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt');
+  await line(page2, 'course=cta-piru&rifle=molot-vepr-54r&sight=utg-bugbuster-3-9x32&load=sb-174-hpbt');
   const nBefore = (await page2.evaluate(() => RangeDayLine.day)).shots.length;
   await page2.evaluate(async () => { RangeDayLine.setHold(0, 0); document.getElementById('plate').value = '8'; document.getElementById('plate').dispatchEvent(new Event('change')); RangeDayLine.fire(31); document.getElementById('plate').value = '0'; document.getElementById('plate').dispatchEvent(new Event('change')); RangeDayLine.fire(32); });
   for (let i = 0; i < 60; i++) { await wait(100); if ((await page2.evaluate(() => RangeDayLine.pending)) === 0) break; }
@@ -197,7 +197,7 @@ test('verify 6: a day stays open across a reload with the same rounds and weathe
   assert.deepEqual(ordered.map((s) => s.yards), [1000, 200], 'the day keeps the firing order, not the landing order');
   assert.deepEqual(ordered.map((s) => s.n), [nBefore + 1, nBefore + 2]);
   // A shot still in the air when Pack up is pressed is kept, with its result: the far plate's flight is nearly two seconds.
-  await line(page2, 'course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt');
+  await line(page2, 'course=cta-piru&rifle=molot-vepr-54r&sight=utg-bugbuster-3-9x32&load=sb-174-hpbt');
   await page2.selectOption('#plate', '8');
   const shotsBefore = (await page2.evaluate(() => RangeDayLine.day)).shots.length;
   await page2.evaluate(() => { RangeDayLine.setHold(0, 0); RangeDayLine.fire(9); });
@@ -455,11 +455,11 @@ test('verify 11: "Save a copy" after a day with hits, then "Load a copy" on an e
 test('verify 12: the old addresses still open the Vepr with its scope, and start a day', { skip }, async () => {
   const { page, context, errors } = await signedIn();
   await line(page, 'course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt');
-  assert.match(await page.textContent("#intro"), /Molot Vepr, 7.62x54R with UTG AccuShot 2-7x44/);
+  assert.match(await page.textContent("#intro"), /Molot Vepr, 7.62x54R with UTG BugBuster 3-9x32/);
   const day = await page.evaluate(() => RangeDayLine.day);
   assert.equal(day.rifle, 'molot-vepr-54r'); assert.equal(day.load, 'sb-174-hpbt'); assert.equal(day.course, 'cta-piru'); assert.equal(day.box.size, 20);
   await bench(page, 'course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt');
-  assert.match(await page.textContent('#intro'), /Molot Vepr, 7.62x54R, UTG AccuShot 2-7x44/);
+  assert.match(await page.textContent('#intro'), /Molot Vepr, 7.62x54R, UTG BugBuster 3-9x32/);
   assert.equal((await page.evaluate(() => RangeDayZero.day)).id, day.id, 'the same day');
   assert.deepEqual(errors, []);
   await context.close();
@@ -599,14 +599,14 @@ test('the firing line: nothing shifts under the thumb: the view, the sight strip
       assert.equal(await page.evaluate(() => document.getElementById('result').classList.contains('open')), false);
     }
     // A seeded hit that writes a book line.
-    const before = (await book(page, 'molot-vepr-54r', 'utg-2-7x44', 'sb-174-hpbt')).length;
+    const before = (await book(page, 'molot-vepr-54r', 'utg-bugbuster-3-9x32', 'sb-174-hpbt')).length;
     await seededHit(page, 82);
-    assert.ok((await book(page, 'molot-vepr-54r', 'utg-2-7x44', 'sb-174-hpbt')).length > before, 'a book line was written');
+    assert.ok((await book(page, 'molot-vepr-54r', 'utg-bugbuster-3-9x32', 'sb-174-hpbt')).length > before, 'a book line was written');
     assert.match(await page.textContent('#book-line'), /^Book, 200 yards: /);
     await same('after a seeded hit that wrote a book line');
     // The short line opened, then closed.
     await page.click('#line-head');
-    assert.ok(await page.isVisible('#line-full')); assert.match(await page.textContent('#line-full'), /Molot Vepr, 7.62x54R with UTG AccuShot/);
+    assert.ok(await page.isVisible('#line-full')); assert.match(await page.textContent('#line-full'), /Molot Vepr, 7.62x54R with UTG BugBuster/);
     await same('with the full description opened');
     await page.click('#line-head');
     assert.ok(await page.isHidden('#line-full'));
@@ -624,4 +624,60 @@ test('the firing line: nothing shifts under the thumb: the view, the sight strip
     await context.close();
   }
   console.log('  ' + lines.join('\n  '));
+});
+
+test('range-day-eleven verify 5: a device that kept a zero, a sight setting, a shot log and a book line under the Vepr\'s old scope (the 2-7x44) finds them all under the BugBuster that took its place, by the old address and the new; the old records stay stored, byte for byte; a copy of the book holds each once', { skip }, async () => {
+  const { page, context, errors } = await signedIn();
+  const OLD = 'utg-2-7x44', NEW = 'utg-bugbuster-3-9x32', R = 'molot-vepr-54r', L = 'sb-174-hpbt';
+  const bookLine = { id: 'old-day:1', day: 'old-day', on: '2026-11-20', at: '2026-11-20T17:00:00.000Z', n: 1, course: 'cta-piru', yards: 600, target: 'steel', elevationClicks: 52, windageClicks: 3, elevationMoa: 13, windageMoa: 0.75, leaf: null, zero: { zeroYards: 100, elevationClicks: 31, windageClicks: -13 }, heldUpMoa: 0, heldRightMoa: 0, tempF: 61, windCall: null, upIn: 1.2, rightIn: -0.8, struck: false, note: 'kept under the old scope' };
+  const seeded = {
+    [`range-day:sight:${R}:${OLD}`]: { elevationClicks: 47, windageClicks: -9 },
+    [`range-day:zero:${R}:${OLD}:${L}`]: { elevationClicks: 31, windageClicks: -13, zeroYards: 100, sight: OLD, savedAt: '2026-11-20T16:00:00.000Z' },
+    [`range-day:log:${R}:${OLD}:${L}`]: [{ n: 1, yards: 600, el: 52, wd: 3, zoom: 7, heldUp: 0, heldRight: 0, hit: true, where: 'hit (1.2 in high, 0.8 in left of center)', upIn: 1.2, rightIn: -0.8 }],
+    [`range-day:book:${R}:${OLD}:${L}`]: [bookLine],
+  };
+  await page.evaluate((s) => { localStorage.clear(); for (const [k, v] of Object.entries(s)) localStorage.setItem(k, JSON.stringify(v)); }, seeded);
+  const before = await page.evaluate(() => Object.keys(localStorage).sort());
+  // The sight setting as it was left on the old scope is the BugBuster's (read before the line opens, which starts the sight at the zero).
+  await page.goto(`${base}/`); await page.waitForSelector('.rifle');
+  assert.deepEqual(await page.evaluate(async ([r, s]) => { await RD.data(); return RD.getSight(r, s); }, [R, NEW]), { elevationClicks: 47, windageClicks: -9 });
+  const carriedSetting = await page.evaluate((k) => localStorage.getItem(k), `range-day:sight:${R}:${NEW}`);
+  assert.equal(carriedSetting, JSON.stringify(seeded[`range-day:sight:${R}:${OLD}`]), 'written forward under the BugBuster');
+  // The old address, naming the old scope: the line opens the BugBuster, its sight at the old zero (as the line always starts a saved zero), and the old log.
+  await line(page, `course=cta-piru&rifle=${R}&sight=${OLD}&load=${L}`);
+  assert.match(await page.textContent('#intro'), /UTG BugBuster 3-9x32/);
+  assert.match(await page.textContent('#el-text'), /\+31 clicks/, 'the sight starts at the saved zero');
+  assert.match(await page.textContent('#wd-text'), /−13 clicks \(3\.25 MOA left\)/);
+  assert.match(await page.textContent('#zero-note'), /saved 100-yard zero/, 'the saved zero');
+  assert.match(await page.textContent('#log tbody'), /1\.2 in high/, 'the log');
+  // The new address too, and the bench.
+  await line(page, `course=cta-piru&rifle=${R}&sight=${NEW}&load=${L}`);
+  assert.match(await page.textContent('#el-text'), /\+31 clicks/);
+  assert.match(await page.textContent('#log tbody'), /1\.2 in high/);
+  await bench(page, `course=cta-piru&rifle=${R}&sight=${NEW}&load=${L}`);
+  assert.match(await page.textContent('#saved'), /100 yards, elevation \+31 clicks/);
+  // The book page, by the old address: the old line is on the BugBuster's page.
+  await page.goto(`${base}/book?course=cta-piru&rifle=${R}&sight=${OLD}&load=${L}`); await page.waitForSelector('#pages');
+  assert.equal(await page.inputValue('#sight'), NEW);
+  assert.equal(await page.locator('#pages .entry').count(), 1, 'the old book line');
+  assert.deepEqual((await book(page, R, NEW, L)).map((l) => l.id), [bookLine.id]);
+  // Every old record is still stored as it was; the new ones hold the same.
+  const after = await page.evaluate(() => Object.fromEntries(Object.keys(localStorage).sort().map((k) => [k, localStorage.getItem(k)])));
+  for (const [k, v] of Object.entries(seeded)) {
+    assert.equal(after[k], JSON.stringify(v), `${k} is stored, unchanged`);
+    // the sight setting has since moved to the zero on the line, as a setting does; the rest still hold what was carried
+    if (!k.startsWith('range-day:sight:')) assert.equal(after[k.replace(`:${OLD}`, `:${NEW}`)], JSON.stringify(v), `${k.replace(`:${OLD}`, `:${NEW}`)} carries it`);
+    else assert.ok(after[k.replace(`:${OLD}`, `:${NEW}`)], 'the BugBuster\'s setting is stored');
+  }
+  console.log(`  stored keys before: ${before.join(', ')}`);
+  console.log(`  stored keys after:  ${Object.keys(after).join(', ')}`);
+  // The copy file: the zero and the book line once each, under the BugBuster.
+  const copy = await page.evaluate(() => RD.makeCopy());
+  assert.deepEqual(copy.zeros.filter((z) => z.rifle === R).map((z) => z.sight), [NEW]);
+  assert.deepEqual(copy.book.filter((l) => l.rifle === R).map((l) => `${l.sight} ${l.id}`), [`${NEW} ${bookLine.id}`]);
+  // The Vepr's irons are not the old scope: nothing is carried to them.
+  await line(page, `course=cta-piru&rifle=${R}&sight=vepr-irons&load=${L}`);
+  assert.match(await page.textContent('#zero-note'), /No zero saved/);
+  assert.deepEqual(errors, []);
+  await context.close();
 });

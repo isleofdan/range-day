@@ -319,3 +319,8 @@ body.line .more button, body.line .more a, body.line .more select, body.line .mo
   .reach .pick { grid-template-columns: 1fr; }
   .reach .pick > #zoomrow, .reach .pick > #spotrow { padding-right: 0; }
 }
+/* range-day-eleven: the stronger spotting scope's power reads up to "125×", a digit more than "60×", which took 9 px from its
+   slider on a phone (117 to 108 px, under the 110 px floor). The power stands under the word "Scope", two short lines inside the
+   row's 44 px, so the label is narrower than before and the slider longer, at every power; the row's height is unchanged. */
+.reach .pick #spotrow label { line-height: 1.15; }
+.reach .pick #spotrow #spot-zoom-text { display: block; }

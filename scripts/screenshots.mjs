@@ -17,7 +17,7 @@
 // An app adds its own screens to SCREENS.
 import { chromium } from 'playwright';
 import { spawn } from 'node:child_process';
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -35,6 +35,12 @@ const SIZES = { phone: { width: 412, height: 915 }, computer: { width: 1280, hei
 // Range Day's screens. `act` drives the screen into the state the brief asks
 // to see before the screenshot; `expect` is text the screen must show.
 const PIRU = '/line?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt';
+// range-day-eleven: the ground states below keep the views they were made at, the old 2-7x44's 7x view (4 ft at 100 yards)
+// and its 21x test view (1.33 ft), reached through the page's zoom door on the BugBuster's own field-of-view rule (test/scene.test.js
+// verify 6 measures the same views against docs/reports/ground-before.txt). Test views, not a sight in the game.
+const VEPR_SCOPE = JSON.parse(readFileSync(join(root, 'data', 'sights.json'), 'utf8'))['utg-bugbuster-3-9x32'];
+const powerFor = (ftAt100) => { const z = VEPR_SCOPE.zoom, f = VEPR_SCOPE.fovFtAt100, p = Math.log(f.low.value / f.high.value) / Math.log(z.high.value / z.low.value); return z.low.value * Math.pow(f.low.value / ftAt100, 1 / p); };
+const OLD7 = powerFor((14 * 2) / 7), OLD21 = powerFor((14 * 2) / 21);
 const ZERO = '/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt';
 const SYLMAR = '/line?course=angeles-sylmar';
 const settle = (page, ms) => page.waitForTimeout(ms);
@@ -104,27 +110,27 @@ const SCREENS = [
     await page.goto(`${base}/book?course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193`); await page.waitForSelector('#cold table');
   } },
   // A January morning and a July afternoon on the canyon course through the Vepr's scope.
-  { name: 'line-january-morning', path: `${PIRU}&sight=utg-2-7x44&month=1&time=morning`, expect: 'January morning', act: (page) => plate(page, 4) },
-  { name: 'line-july-afternoon', path: `${PIRU}&sight=utg-2-7x44&month=7&time=afternoon`, expect: 'July afternoon', act: (page) => plate(page, 4) },
-  // The canyon course's picture (range-day-five): through the Vepr's scope at 2x and 7x and through its irons at 1x, in February at midday and in September in the afternoon.
-  { name: 'line-feb-midday-2x', path: `${PIRU}&sight=utg-2-7x44&month=2&time=midday`, expect: 'February midday', act: async (page) => { await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(2)); await settle(page, 400); } },
-  { name: 'line-feb-midday-7x', path: `${PIRU}&sight=utg-2-7x44&month=2&time=midday`, expect: 'February midday', act: async (page) => { await plate(page, 8); await page.evaluate(() => RangeDayLine.setZoom(7)); await settle(page, 400); } },
+  { name: 'line-january-morning', path: `${PIRU}&sight=utg-bugbuster-3-9x32&month=1&time=morning`, expect: 'January morning', act: (page) => plate(page, 4) },
+  { name: 'line-july-afternoon', path: `${PIRU}&sight=utg-bugbuster-3-9x32&month=7&time=afternoon`, expect: 'July afternoon', act: (page) => plate(page, 4) },
+  // The canyon course's picture (range-day-five): through the Vepr's scope at 3x and 9x (2x and 7x on the 2-7x44 before range-day-eleven) and through its irons at 1x, in February at midday and in September in the afternoon.
+  { name: 'line-feb-midday-3x', path: `${PIRU}&sight=utg-bugbuster-3-9x32&month=2&time=midday`, expect: 'February midday', act: async (page) => { await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(3)); await settle(page, 400); } },
+  { name: 'line-feb-midday-9x', path: `${PIRU}&sight=utg-bugbuster-3-9x32&month=2&time=midday`, expect: 'February midday', act: async (page) => { await plate(page, 8); await page.evaluate(() => RangeDayLine.setZoom(9)); await settle(page, 400); } },
   { name: 'line-feb-midday-irons', path: `${PIRU}&sight=vepr-irons&month=2&time=midday`, expect: 'February midday', act: (page) => plate(page, 4) },
-  { name: 'line-sep-afternoon-2x', path: `${PIRU}&sight=utg-2-7x44&month=9&time=afternoon`, expect: 'September afternoon', act: async (page) => { await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(2)); await settle(page, 400); } },
-  { name: 'line-sep-afternoon-7x', path: `${PIRU}&sight=utg-2-7x44&month=9&time=afternoon`, expect: 'September afternoon', act: async (page) => { await plate(page, 8); await page.evaluate(() => RangeDayLine.setZoom(7)); await settle(page, 400); } },
+  { name: 'line-sep-afternoon-3x', path: `${PIRU}&sight=utg-bugbuster-3-9x32&month=9&time=afternoon`, expect: 'September afternoon', act: async (page) => { await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(3)); await settle(page, 400); } },
+  { name: 'line-sep-afternoon-9x', path: `${PIRU}&sight=utg-bugbuster-3-9x32&month=9&time=afternoon`, expect: 'September afternoon', act: async (page) => { await plate(page, 8); await page.evaluate(() => RangeDayLine.setZoom(9)); await settle(page, 400); } },
   { name: 'line-sep-afternoon-irons', path: `${PIRU}&sight=vepr-irons&month=9&time=afternoon`, expect: 'September afternoon', act: (page) => plate(page, 4) },
-  // range-day-six: the other two of each day's measured states (2x on the 1,000-yard plate, 7x on the 600-yard plate), and the 200-yard plate among the numbered boards at 4x.
-  { name: 'line-feb-midday-2x-1000', path: `${PIRU}&sight=utg-2-7x44&month=2&time=midday`, expect: 'February midday', act: async (page) => { await plate(page, 8); await page.evaluate(() => RangeDayLine.setZoom(2)); await settle(page, 400); } },
-  { name: 'line-feb-midday-7x-600', path: `${PIRU}&sight=utg-2-7x44&month=2&time=midday`, expect: 'February midday', act: async (page) => { await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(7)); await settle(page, 400); } },
-  { name: 'line-sep-afternoon-2x-1000', path: `${PIRU}&sight=utg-2-7x44&month=9&time=afternoon`, expect: 'September afternoon', act: async (page) => { await plate(page, 8); await page.evaluate(() => RangeDayLine.setZoom(2)); await settle(page, 400); } },
-  { name: 'line-sep-afternoon-7x-600', path: `${PIRU}&sight=utg-2-7x44&month=9&time=afternoon`, expect: 'September afternoon', act: async (page) => { await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(7)); await settle(page, 400); } },
-  { name: 'line-sep-boards-200', path: `${PIRU}&sight=utg-2-7x44&month=9&time=midday`, expect: 'September midday', act: async (page) => { await plate(page, 0); await page.evaluate(() => RangeDayLine.setZoom(4)); await settle(page, 400); } },
+  // range-day-six: the other two of each day's measured states (3x on the 1,000-yard plate, 9x on the 600-yard plate; 2x and 7x before range-day-eleven), and the 200-yard plate among the numbered boards at 4x.
+  { name: 'line-feb-midday-3x-1000', path: `${PIRU}&sight=utg-bugbuster-3-9x32&month=2&time=midday`, expect: 'February midday', act: async (page) => { await plate(page, 8); await page.evaluate(() => RangeDayLine.setZoom(3)); await settle(page, 400); } },
+  { name: 'line-feb-midday-9x-600', path: `${PIRU}&sight=utg-bugbuster-3-9x32&month=2&time=midday`, expect: 'February midday', act: async (page) => { await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(9)); await settle(page, 400); } },
+  { name: 'line-sep-afternoon-3x-1000', path: `${PIRU}&sight=utg-bugbuster-3-9x32&month=9&time=afternoon`, expect: 'September afternoon', act: async (page) => { await plate(page, 8); await page.evaluate(() => RangeDayLine.setZoom(3)); await settle(page, 400); } },
+  { name: 'line-sep-afternoon-9x-600', path: `${PIRU}&sight=utg-bugbuster-3-9x32&month=9&time=afternoon`, expect: 'September afternoon', act: async (page) => { await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(9)); await settle(page, 400); } },
+  { name: 'line-sep-boards-200', path: `${PIRU}&sight=utg-bugbuster-3-9x32&month=9&time=midday`, expect: 'September midday', act: async (page) => { await plate(page, 0); await page.evaluate(() => RangeDayLine.setZoom(4)); await settle(page, 400); } },
   // range-day-seven: the same boards through the scope at its highest power, where the posts' dotted lines showed on Dan's phone.
-  { name: 'line-sep-boards-200-7x', path: `${PIRU}&sight=utg-2-7x44&month=9&time=midday`, expect: 'September midday', act: async (page) => { await plate(page, 0); await page.evaluate(() => RangeDayLine.setZoom(7)); await settle(page, 400); } },
-  // A hit with its strike mark on the plate, at 7x.
+  { name: 'line-sep-boards-200-9x', path: `${PIRU}&sight=utg-bugbuster-3-9x32&month=9&time=midday`, expect: 'September midday', act: async (page) => { await plate(page, 0); await page.evaluate(() => RangeDayLine.setZoom(9)); await settle(page, 400); } },
+  // A hit with its strike mark on the plate, at 9x.
   // (the sight is dialled onto the probe shot with the knobs, as a shooter would, so the plate stays at the reticle when the second shot chips it)
-  { name: 'line-hit-strike', path: `${PIRU}&sight=utg-2-7x44&month=9&time=midday`, expect: 'Hit', act: async (page) => {
-    await ready(page); await fresh(page, 'molot-vepr-54r', 'utg-2-7x44'); await page.reload(); await plate(page, 0); await page.evaluate(() => RangeDayLine.setZoom(7));
+  { name: 'line-hit-strike', path: `${PIRU}&sight=utg-bugbuster-3-9x32&month=9&time=midday`, expect: 'Hit', act: async (page) => {
+    await ready(page); await fresh(page, 'molot-vepr-54r', 'utg-bugbuster-3-9x32'); await page.reload(); await plate(page, 0); await page.evaluate(() => RangeDayLine.setZoom(9));
     await page.evaluate(() => RangeDayLine.setHold(0, 0));
     const probe = await seededShot(page, 21);
     const ipm = 200 * 36 * (Math.PI / (180 * 60));
@@ -135,12 +141,12 @@ const SCREENS = [
     await press(page, wd > 0 ? '#wd-right' : '#wd-left', Math.round((Math.abs(wd) % 1) / 0.25));
     await seededShot(page, 21); await page.evaluate(() => window.scrollTo(0, 0)); await settle(page, 3500);
   } },
-  // The Light picture beside the Full one (the same view as line-sep-afternoon-2x).
-  { name: 'line-light-2x', path: `${PIRU}&sight=utg-2-7x44&month=9&time=afternoon`, expect: 'September afternoon', act: async (page) => { await picture(page, 'light'); await page.reload(); await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(2)); await settle(page, 400); } },
+  // The Light picture beside the Full one (the same view as line-sep-afternoon-3x).
+  { name: 'line-light-3x', path: `${PIRU}&sight=utg-bugbuster-3-9x32&month=9&time=afternoon`, expect: 'September afternoon', act: async (page) => { await picture(page, 'light'); await page.reload(); await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(3)); await settle(page, 400); } },
   // The Plain fallback: a browser without 3D shows the plain picture and the one line (its own browser context, with 3D switched off).
-  { name: 'line-plain-fallback', path: `${PIRU}&sight=utg-2-7x44&month=9&time=afternoon`, expect: 'could not draw the full picture', no3d: true, act: async (page) => { await page.evaluate(() => localStorage.removeItem('range-day:picture')); await page.reload(); await plate(page, 4); } },
+  { name: 'line-plain-fallback', path: `${PIRU}&sight=utg-bugbuster-3-9x32&month=9&time=afternoon`, expect: 'could not draw the full picture', no3d: true, act: async (page) => { await page.evaluate(() => localStorage.removeItem('range-day:picture')); await page.reload(); await plate(page, 4); } },
   // The setting: Picture, with the conditions switch.
-  { name: 'line-picture-setting', path: `${PIRU}&sight=utg-2-7x44`, expect: 'Picture', act: async (page) => { await ready(page); await page.evaluate(() => document.getElementById('picture').scrollIntoView()); await settle(page, 200); } },
+  { name: 'line-picture-setting', path: `${PIRU}&sight=utg-bugbuster-3-9x32`, expect: 'Picture', act: async (page) => { await ready(page); await page.evaluate(() => document.getElementById('picture').scrollIntoView()); await settle(page, 200); } },
   { name: 'status', path: '/status', expect: 'alive since ' },
   { name: 'zero-before', path: ZERO, expect: 'center of the group', act: async (page) => { await page.waitForSelector('#fire5'); await page.click('#fire5'); await settle(page, 200); } },
   { name: 'zero-after', path: ZERO, expect: 'Saved zero', act: async (page) => {
@@ -171,23 +177,25 @@ const SCREENS = [
   { name: 'line-vepr-irons-600', path: '/line?course=cta-piru&rifle=molot-vepr-54r&sight=vepr-irons&load=sb-174-hpbt', expect: 'Vepr iron sights', act: (page) => plate(page, 4) },
   { name: 'line-tavor-irons-200', path: `${SYLMAR}&rifle=iwi-x95&sight=tavor-irons&load=imi-m193`, expect: 'Tavor folding iron sights', act: (page) => plate(page, 1) },
   { name: 'line-22-100', path: `${SYLMAR}&rifle=remington-22&sight=rem-irons&load=cci-sv-40`, expect: 'Open rimfire sights', act: (page) => plate(page, 0) },
-  { name: 'line-knob-stop', path: `${PIRU}&sight=utg-2-7x44`, expect: 'end of its travel', act: async (page) => { await ready(page); await fresh(page, 'molot-vepr-54r', 'utg-2-7x44'); await page.reload(); await ready(page); await press(page, '#el-up-moa', 41); await settle(page, 200); } },
-  { name: 'line-scope-2x', path: PIRU, expect: 'Firing line', act: async (page) => { await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(2)); await settle(page, 400); } },
-  { name: 'line-scope-7x', path: PIRU, expect: 'Zoom 7', act: async (page) => { await ready(page); await page.evaluate(() => RangeDayLine.setZoom(7)); await settle(page, 400); } },
+  { name: 'line-knob-stop', path: `${PIRU}&sight=utg-bugbuster-3-9x32`, expect: 'end of its travel', act: async (page) => { await ready(page); await fresh(page, 'molot-vepr-54r', 'utg-bugbuster-3-9x32'); await page.reload(); await ready(page); await press(page, '#el-up-moa', 41); await settle(page, 200); } },
+  { name: 'line-scope-3x', path: PIRU, expect: 'Firing line', act: async (page) => { await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(3)); await settle(page, 400); } },
+  { name: 'line-scope-9x', path: PIRU, expect: 'Zoom 9', act: async (page) => { await ready(page); await page.evaluate(() => RangeDayLine.setZoom(9)); await settle(page, 400); } },
+  // range-day-eleven: the Vepr's BugBuster at its highest power on the 600-yard plate (at 3x it is line-scope-3x).
+  { name: 'line-scope-9x-600', path: PIRU, expect: 'Zoom 9', act: async (page) => { await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(9)); await settle(page, 400); } },
   { name: 'line-canyon-irons', path: '/line?course=cta-piru&rifle=molot-vepr-54r&sight=vepr-irons&load=sb-174-hpbt', expect: 'Canyon course', act: (page) => plate(page, 4) },
   { name: 'line-irons-600', path: `${SYLMAR}&rifle=bcm-ar15&load=federal-gmm-69`, expect: '600 yards', act: (page) => plate(page, 5) },
   { name: 'line-rifle-line-irons', path: `${SYLMAR}&rifle=bcm-ar15&sight=ar-irons&load=imi-m193`, expect: 'Rifle line', act: (page) => plate(page, 2) },
-  // Unzeroed, the first shot at 200 yards lands well low: a miss, with its dust, at 2x and at 7x.
-  { name: 'line-miss-dust-2x', path: PIRU, expect: 'Miss', act: async (page) => {
-    await ready(page); await fresh(page, 'molot-vepr-54r', 'utg-2-7x44');
-    await page.reload(); await ready(page); await page.evaluate(() => RangeDayLine.setZoom(2)); await page.click('#fire'); await landed(page); await settle(page, 300);
+  // Unzeroed, the first shot at 200 yards lands well low: a miss, with its dust, at 3x and at 9x.
+  { name: 'line-miss-dust-3x', path: PIRU, expect: 'Miss', act: async (page) => {
+    await ready(page); await fresh(page, 'molot-vepr-54r', 'utg-bugbuster-3-9x32');
+    await page.reload(); await ready(page); await page.evaluate(() => RangeDayLine.setZoom(3)); await page.click('#fire'); await landed(page); await settle(page, 300);
   } },
   { name: 'line-miss-dust', path: PIRU, expect: 'Miss', act: async (page) => {
-    await ready(page); await fresh(page, 'molot-vepr-54r', 'utg-2-7x44');
-    await page.reload(); await ready(page); await page.evaluate(() => RangeDayLine.setZoom(7)); await page.click('#fire'); await landed(page); await settle(page, 300);
+    await ready(page); await fresh(page, 'molot-vepr-54r', 'utg-bugbuster-3-9x32');
+    await page.reload(); await ready(page); await page.evaluate(() => RangeDayLine.setZoom(9)); await page.click('#fire'); await landed(page); await settle(page, 300);
   } },
   // The shot log with a miss in it: the state fires its own unzeroed shot (it used to show the miss an earlier state had left in the rifle's log, which a shard running alone has not).
-  { name: 'line-shot-log', path: PIRU, expect: 'miss:', act: async (page) => { await ready(page); await fresh(page, 'molot-vepr-54r', 'utg-2-7x44'); await page.reload(); await ready(page); await seededShot(page, 31); await page.evaluate(() => document.getElementById('log').scrollIntoView()); await settle(page, 200); } },
+  { name: 'line-shot-log', path: PIRU, expect: 'miss:', act: async (page) => { await ready(page); await fresh(page, 'molot-vepr-54r', 'utg-bugbuster-3-9x32'); await page.reload(); await ready(page); await seededShot(page, 31); await page.evaluate(() => document.getElementById('log').scrollIntoView()); await settle(page, 200); } },
   { name: 'line-conditions-on', path: PIRU, expect: 'Wind, near stretch', act: async (page) => { await ready(page); await page.check('#show-conditions'); await page.evaluate(() => document.getElementById('conditions').scrollIntoView()); await settle(page, 200); } },
   // range-day-nine: the firing line arranged for shooting, with the page at its top: before the first shot, after a miss, after a
   // hit, with the short line opened over the page, and scrolled down to the wind call.
@@ -211,13 +219,13 @@ async function groupOn(page, key, seeds) {
 }
 const spot = async (page, power) => { await page.click('#spotting'); await page.evaluate((m) => RangeDayLine.setSpotZoom(m), power); await page.evaluate(() => window.scrollTo(0, 0)); await settle(page, 1500); };
 SCREENS.push(
-  { name: 'near-paper-50-clean', path: `${PIRU}&sight=utg-2-7x44`, expect: '50 yards (paper)', act: async (page) => { await target(page, 'near-0'); await page.evaluate(() => RangeDayLine.setZoom(7)); await page.evaluate(() => window.scrollTo(0, 0)); await settle(page, 800); } },
-  { name: 'near-paper-50-group', path: `${PIRU}&sight=utg-2-7x44`, expect: 'On paper at 50 yards', act: async (page) => { await ready(page); await page.evaluate(() => RangeDayLine.setZoom(7)); await groupOn(page, 'near-0', [501, 502, 503, 504, 505]); await page.evaluate(() => window.scrollTo(0, 0)); await page.waitForFunction(() => RangeDayLine.recoilMoa < 0.2, null, { timeout: 120000 }); await settle(page, 400); } },
-  { name: 'spot-paper-50-20x', path: `${PIRU}&sight=utg-2-7x44`, expect: 'Back to the rifle', act: async (page) => { await groupOn(page, 'near-0', [501, 502, 503, 504, 505]); await spot(page, 20); } },
-  { name: 'spot-paper-50-60x', path: `${PIRU}&sight=utg-2-7x44`, expect: 'Back to the rifle', act: async (page) => { await groupOn(page, 'near-0', [501, 502, 503, 504, 505]); await spot(page, 60); } },
-  { name: 'spot-steel-100-marks', path: `${PIRU}&sight=utg-2-7x44`, expect: 'Back to the rifle', act: async (page) => { await groupOn(page, 'near-2', [511, 512]); await spot(page, 60); } },
-  { name: 'spot-plate-600-60x', path: `${PIRU}&sight=utg-2-7x44`, expect: 'Back to the rifle', act: async (page) => { await target(page, '4'); await spot(page, 60); } },
-  { name: 'spot-plate-1000-60x', path: `${PIRU}&sight=utg-2-7x44`, expect: 'Back to the rifle', act: async (page) => { await target(page, '8'); await spot(page, 60); } },
+  { name: 'near-paper-50-clean', path: `${PIRU}&sight=utg-bugbuster-3-9x32`, expect: '50 yards (paper)', act: async (page) => { await target(page, 'near-0'); await page.evaluate(() => RangeDayLine.setZoom(9)); await page.evaluate(() => window.scrollTo(0, 0)); await settle(page, 800); } },
+  { name: 'near-paper-50-group', path: `${PIRU}&sight=utg-bugbuster-3-9x32`, expect: 'On paper at 50 yards', act: async (page) => { await ready(page); await page.evaluate(() => RangeDayLine.setZoom(9)); await groupOn(page, 'near-0', [501, 502, 503, 504, 505]); await page.evaluate(() => window.scrollTo(0, 0)); await page.waitForFunction(() => RangeDayLine.recoilMoa < 0.2, null, { timeout: 120000 }); await settle(page, 400); } },
+  { name: 'spot-paper-50-25x', path: `${PIRU}&sight=utg-bugbuster-3-9x32`, expect: 'Back to the rifle', act: async (page) => { await groupOn(page, 'near-0', [501, 502, 503, 504, 505]); await spot(page, 25); } },
+  { name: 'spot-paper-50-125x', path: `${PIRU}&sight=utg-bugbuster-3-9x32`, expect: 'Back to the rifle', act: async (page) => { await groupOn(page, 'near-0', [501, 502, 503, 504, 505]); await spot(page, 125); } },
+  { name: 'spot-steel-100-marks', path: `${PIRU}&sight=utg-bugbuster-3-9x32`, expect: 'Back to the rifle', act: async (page) => { await groupOn(page, 'near-2', [511, 512]); await spot(page, 125); } },
+  { name: 'spot-plate-600-125x', path: `${PIRU}&sight=utg-bugbuster-3-9x32`, expect: 'Back to the rifle', act: async (page) => { await target(page, '4'); await spot(page, 125); } },
+  { name: 'spot-plate-1000-125x', path: `${PIRU}&sight=utg-bugbuster-3-9x32`, expect: 'Back to the rifle', act: async (page) => { await target(page, '8'); await spot(page, 125); } },
   { name: 'spot-rifle-line-paper-50', path: AR, expect: 'Back to the rifle', act: async (page) => { await groupOn(page, 'near-0', [521, 522, 523, 524, 525]); await spot(page, 40); } },
 );
 // range-day-eight: the ground, on Full and on Light, February midday and September afternoon: the floor through the
@@ -228,9 +236,9 @@ for (const pic of ['full', 'light']) for (const [day, q, words] of [['feb', 'mon
   const set = async (page) => { await picture(page, pic); await page.reload(); };
   SCREENS.push(
     { name: `ground-${pic}-${day}-floor-irons`, path: `${PIRU}&sight=vepr-irons&${q}`, expect: words, act: async (page) => { await set(page); await plate(page, 0); } },
-    { name: `ground-${pic}-${day}-600-7x`, path: `${PIRU}&sight=utg-2-7x44&${q}`, expect: words, act: async (page) => { await set(page); await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(7)); await settle(page, 400); } },
-    { name: `ground-${pic}-${day}-1000-7x`, path: `${PIRU}&sight=utg-2-7x44&${q}`, expect: words, act: async (page) => { await set(page); await plate(page, 8); await page.evaluate(() => RangeDayLine.setZoom(7)); await settle(page, 400); } },
-    { name: `ground-${pic}-${day}-600-21x`, path: `${PIRU}&sight=utg-2-7x44&${q}`, expect: words, act: async (page) => { await set(page); await plate(page, 4); await page.evaluate(() => RangeDayLine.setZoom(21)); await settle(page, 400); } },
+    { name: `ground-${pic}-${day}-600-7x`, path: `${PIRU}&sight=utg-bugbuster-3-9x32&${q}`, expect: words, act: async (page) => { await set(page); await plate(page, 4); await page.evaluate((z) => RangeDayLine.setZoom(z), OLD7); await settle(page, 400); } },
+    { name: `ground-${pic}-${day}-1000-7x`, path: `${PIRU}&sight=utg-bugbuster-3-9x32&${q}`, expect: words, act: async (page) => { await set(page); await plate(page, 8); await page.evaluate((z) => RangeDayLine.setZoom(z), OLD7); await settle(page, 400); } },
+    { name: `ground-${pic}-${day}-600-21x`, path: `${PIRU}&sight=utg-bugbuster-3-9x32&${q}`, expect: words, act: async (page) => { await set(page); await plate(page, 4); await page.evaluate((z) => RangeDayLine.setZoom(z), OLD21); await settle(page, 400); } },
   );
 }
 
