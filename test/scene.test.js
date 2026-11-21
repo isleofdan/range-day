@@ -294,7 +294,7 @@ test('verify 4 (range-day-six): the sights\' angles are unchanged: for the Vepr\
   // the Vepr's scope at the old 7x view (a test view since range-day-eleven: at the BugBuster's own 9x the dots are 8 to 14 px apart
   // and drawn 1.2 px in radius, too small for this row's measure; the spacing is dotSpacingMoa × the view's scale at every power)
   await page.goto(`${base}${PIRU}&sight=utg-bugbuster-3-9x32`); await page.waitForSelector('#fire'); await sceneReady(page);
-  await page.evaluate((z) => { window.__raf = window.__raf || window.requestAnimationFrame.bind(window); window.requestAnimationFrame = () => 0; RangeDayLine.setZoom(z); RangeDayLine.setHold(0, 0); }, OLD7); await wait(300); await framesPassed(page);
+  await page.evaluate((z) => { window.__raf = window.__raf || window.requestAnimationFrame.bind(window); window.requestAnimationFrame = () => 0; RangeDayLine.setZoom(z); RangeDayLine.setHold(8, 0); }, OLD7); await wait(300); await framesPassed(page); // range-day-twelve: held 8 MOA over the plate, so the dots (closer at this view since they stand at their true angle) are read against the hillside, not the steel
   r = await page.evaluate(() => {
     const c = document.getElementById('view'), g = c.getContext('2d'), size = RangeDayLine.geometry.viewPx, cx = size / 2, cy = size / 2;
     const lum = (d, x) => 0.299 * d[x * 4] + 0.587 * d[x * 4 + 1] + 0.114 * d[x * 4 + 2];
