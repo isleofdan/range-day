@@ -191,7 +191,7 @@ const SCREENS = [
   { name: 'line-conditions-on', path: PIRU, expect: 'Wind, near stretch', act: async (page) => { await ready(page); await page.check('#show-conditions'); await page.evaluate(() => document.getElementById('conditions').scrollIntoView()); await settle(page, 200); } },
   // range-day-nine: the firing line arranged for shooting, with the page at its top: before the first shot, after a miss, after a
   // hit, with the short line opened over the page, and scrolled down to the wind call.
-  { name: 'line-top-first-shot', path: AR, expect: 'Drag the view to hold off the plate', act: async (page) => { await plate(page, 0); await page.evaluate(() => window.scrollTo(0, 0)); await settle(page, 200); } },
+  { name: 'line-top-first-shot', path: AR, expect: 'Drag the view to hold off the target', act: async (page) => { await plate(page, 0); await page.evaluate(() => window.scrollTo(0, 0)); await settle(page, 200); } },
   { name: 'line-top-after-miss', path: AR, expect: 'Miss', act: async (page) => { await plate(page, 0); await page.evaluate(() => RangeDayLine.setHold(0, 60)); await seededShot(page, 41); await page.evaluate(() => window.scrollTo(0, 0)); await settle(page, 300); } },
   { name: 'line-top-after-hit', path: AR, expect: 'Written in the book', act: async (page) => { await plate(page, 0); await seededHit(page, 42); await page.evaluate(() => window.scrollTo(0, 0)); await settle(page, 300); } },
   { name: 'line-top-short-opened', path: AR, expect: 'BCM AR-15 carbine, 5.56 with', act: async (page) => { await plate(page, 0); await page.evaluate(() => window.scrollTo(0, 0)); await page.click('#line-head'); await page.waitForSelector('#line-full:not([hidden])'); await settle(page, 200); } },

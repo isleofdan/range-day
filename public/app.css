@@ -278,3 +278,6 @@ body.line .more .windcall { margin-top: 0; }
   /* Below the view the page keeps to the view's width, so the bar at the foot of the column beside it covers nothing. */
   body.line .more { max-width: 640px; }
 }
+.paperrow .row { margin-top: 0; }
+.paperrow #paper-note:empty { display: none; }
+.paperrow #paper-note .btn.inline { display: inline-block; width: auto; margin: 6px 0 0; padding: 0 14px; min-height: 44px; line-height: 40px; }

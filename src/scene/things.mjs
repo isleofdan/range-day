@@ -96,8 +96,9 @@ export function buildPlates({ plates, eyeM, look, physics, groundAt, full }) {
     group.add(mound);
     out.push({ pivot, plate, canvas: cv, g, tex, w, h, swing: 0, paint, strikes: [] });
   });
-  // a strike mark: a pale chip at the hit's place on the plate (inches up and right of the centre)
-  const strike = (ix, upIn, rightIn) => {
+  // a strike mark: a pale chip at the hit's place on the plate (inches up and right of the centre); `quiet` paints it without the
+  // swing (the day's earlier hits, put back when the picture is built)
+  const strike = (ix, upIn, rightIn, quiet) => {
     const s = out[ix]; if (!s) return;
     s.strikes.push({ upIn, rightIn });
     s.paint();
@@ -109,7 +110,7 @@ export function buildPlates({ plates, eyeM, look, physics, groundAt, full }) {
       s.g.fillStyle = 'rgba(80,70,65,0.5)'; s.g.beginPath(); s.g.arc(px + r * 0.3, py + r * 0.3, Math.max(0.8, r * 0.45), 0, 7); s.g.fill(); s.g.fillStyle = P.strikeMark;
     }
     s.tex.needsUpdate = true;
-    s.swing = 1;
+    if (!quiet) s.swing = 1;
   };
   const step = (dt) => { for (const s of out) { if (s.swing > 0) { s.swing = Math.max(0, s.swing - dt / 1.4); s.pivot.rotation.x = -0.35 * s.swing * Math.sin((1 - s.swing) * 14) * Math.exp(-(1 - s.swing) * 2); } } };
   return { group, strike, step, plates: out };
@@ -120,7 +121,7 @@ export function buildPlates({ plates, eyeM, look, physics, groundAt, full }) {
 // two dark posts, with its blue stencilled number at its foot and a paper
 // target stapled on, peppered with holes, as scenery: one geometry, one
 // atlas; the frames one instanced mesh.
-export function buildBoards({ look, groundAt, full }) {
+export function buildBoards({ look, groundAt, full, skip = [] }) {
   const T = look.things, P = look.palette['cta-piru'];
   const rows = T.boardRowsYards;
   const per = T.boardsPerRow;
@@ -155,7 +156,9 @@ export function buildBoards({ look, groundAt, full }) {
   const frames = [];
   const POST_W = 0.05; // a board's frame post, 5 cm square
   let k = 0, label = 0;
-  const addBoard = (x, z, dropM) => {
+  // `skip` (range-day-ten): the boards that carry a shootable paper are drawn by buildPapers instead, at the paper's own place
+  const addBoard = (x, z, dropM, name) => {
+    if (skip.includes(name)) { label++; return; }
     const ground = groundAt(x, z) - dropM;
     const y0 = ground + 0.15, y1 = y0 + bh;
     const u0 = ((label % cols) * cellW) / atlas.width, u1 = u0 + cellW / atlas.width;
@@ -172,10 +175,10 @@ export function buildBoards({ look, groundAt, full }) {
   for (const yd of rows) {
     const z = -yd * YD, drop = 0; // the first line sits in its notch (the terrace is in the ground); the others stand on the ground
     const total = per * bw + (per - 1) * gap;
-    for (let i = 0; i < per; i++) addBoard(-total / 2 + bw / 2 + i * (bw + gap), z, drop);
+    for (let i = 0; i < per; i++) addBoard(-total / 2 + bw / 2 + i * (bw + gap), z, drop, `row-${yd}-${i + 1}`);
   }
   // the two nearer groups of four, on low mounds, left and right
-  for (const side of [-1, 1]) for (let i = 0; i < T.nearGroupBoards; i++) addBoard(side * 9 * YD + (i - 1.5) * (bw + gap), -T.nearGroupYards * YD, -0.4);
+  for (const side of [-1, 1]) for (let i = 0; i < T.nearGroupBoards; i++) addBoard(side * 9 * YD + (i - 1.5) * (bw + gap), -T.nearGroupYards * YD, -0.4, `near-${side < 0 ? 'left' : 'right'}-${i + 1}`);
   const geo = new THREE.BufferGeometry();
   geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
   geo.setAttribute('normal', new THREE.Float32BufferAttribute(nrm, 3));
@@ -194,6 +197,50 @@ export function buildBoards({ look, groundAt, full }) {
   posts.castShadow = full; posts.frustumCulled = false; posts.name = 'board-posts';
   group.add(posts);
   return group;
+}
+
+// --- the near paper (range-day-ten) ---------------------------------------------------------------
+// Each shootable sheet at exactly the place the course data gives it (lateralYd, riseFt above the eye, yards downrange; the same
+// figures the engine and the plain picture use), on its own weathered white board (data/look.json things and paper: the board's
+// size, the sheet's centre above the board's foot), the board on two dark posts down to the ground's mesh. The sheet is painted by
+// the page's one paper drawing (`paint`, game.js drawPaper) on its own canvas, repainted when its holes change. The sheet stands in
+// front of the board, and the posts behind it, by the data's stand-off (data/look.json, depth), as the other boards do.
+export function buildPapers({ papers, eyeM, look, groundAt, full, paint }) {
+  const T = look.things, P = look.paper, D = look.depth;
+  const group = new THREE.Group();
+  const out = [];
+  const boardTex = (() => { const c = document.createElement('canvas'); c.width = 96; c.height = 144; const g = c.getContext('2d'); const rnd = seeded(77); g.fillStyle = look.palette['cta-piru'].boardWhite; g.fillRect(0, 0, 96, 144); for (let i = 0; i < 9; i++) { const x = rnd() * 96, w = 1 + rnd() * 4; const gr = g.createLinearGradient(0, 0, 0, 144); gr.addColorStop(0, 'rgba(120,118,110,0)'); gr.addColorStop(1, `rgba(120,118,110,${0.1 + rnd() * 0.25})`); g.fillStyle = gr; g.fillRect(x, 0, w, 144); } g.fillStyle = 'rgba(100,95,85,0.25)'; g.fillRect(0, 134, 96, 10); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; })();
+  const postMat = new THREE.MeshLambertMaterial({ color: 0x4a3f36 });
+  papers.forEach((p, j) => {
+    const x = p.lateralYd * YD, y = eyeM + p.riseFt * FT, z = -p.yards * YD;
+    const bw = T.boardWidthIn * IN, bh = T.boardHeightIn * IN;
+    const foot = y - P.sheetCentreAboveBoardFootIn * IN;
+    // the board's own number at its foot, as the row's boards carry theirs (the board it stands in for: "row-100-15" is 15, "near-left-3" is 03)
+    const num = /^row-100-(\d+)$/.exec(p.board || '') ? String(Number(p.board.split('-')[2])).padStart(2, '0') : /^near-\w+-(\d)$/.exec(p.board || '') ? String(Number(p.board.split('-')[2])).padStart(2, '0') : '';
+    const bt = boardTex.clone(); bt.image = (() => { const c = document.createElement('canvas'); c.width = 96; c.height = 144; const g2 = c.getContext('2d'); g2.drawImage(boardTex.image, 0, 0); if (num) { g2.fillStyle = look.palette['cta-piru'].boardNumberBlue; g2.font = 'bold 30px system-ui, sans-serif'; g2.textAlign = 'center'; g2.textBaseline = 'middle'; g2.fillText(num, 48, 120); } return c; })(); bt.needsUpdate = true;
+    const board = new THREE.Mesh(new THREE.PlaneGeometry(bw, bh), new THREE.MeshLambertMaterial({ map: bt, side: THREE.DoubleSide }));
+    board.position.set(x, foot + bh / 2, z - D.boardPostStandOffM);
+    board.castShadow = full; board.receiveShadow = full; board.name = `paper-board-${j}`;
+    group.add(board);
+    const ground = groundAt(x, z);
+    for (const sx of [-0.35, 0.35]) {
+      const hgt = Math.max(0.05, foot + bh - 0.1 - ground);
+      const post = new THREE.Mesh(new THREE.BoxGeometry(0.05, hgt, 0.05), postMat);
+      post.position.set(x + sx * bw, ground + hgt / 2, z - 2 * D.boardPostStandOffM - 0.025);
+      post.castShadow = full; group.add(post);
+    }
+    const cv = document.createElement('canvas'); const ppi = 24; cv.width = Math.round(p.widthIn * ppi); cv.height = Math.round(p.heightIn * ppi);
+    const g = cv.getContext('2d');
+    const tex = new THREE.CanvasTexture(cv); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = full ? 8 : 2;
+    const sheet = new THREE.Mesh(new THREE.PlaneGeometry(p.widthIn * IN, p.heightIn * IN), new THREE.MeshLambertMaterial({ map: tex }));
+    sheet.position.set(x, y, z); sheet.name = `paper-${j}`;
+    sheet.receiveShadow = full;
+    group.add(sheet);
+    const set = (holes) => { g.clearRect(0, 0, cv.width, cv.height); paint(g, cv.width, cv.height, p, holes || []); tex.needsUpdate = true; };
+    set([]);
+    out.push({ sheet, set, world: { x, y, z } });
+  });
+  return { group, setPaper: (j, holes) => { if (out[j]) out[j].set(holes); }, world: (j) => out[j].world, papers: out };
 }
 
 // --- the shelter --------------------------------------------------------------------------------
