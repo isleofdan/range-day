@@ -47,9 +47,15 @@ const sceneReady = async (page) => { await page.waitForFunction(() => RangeDayLi
 async function seededShot(page, seed) {
   const before = await page.evaluate(() => RangeDayLine.log.length);
   await page.evaluate((s) => RangeDayLine.fire(s), seed);
-  for (let i = 0; i < 200; i++) { await wait(50); if ((await page.evaluate(() => RangeDayLine.log.length)) > before) break; }
+  // Waits until the shot has landed (up to 90 s), not a fixed 10 s: on a slow runner a flight under the Full picture took longer,
+  // the next shots were refused while three were in the air, and the box never emptied (range-day-nine-b, Checks run 44839550566).
+  await page.waitForFunction((b) => RangeDayLine.log.length > b && RangeDayLine.pending === 0, before, { timeout: 90000 });
   const log = await page.evaluate(() => RangeDayLine.log); return log[log.length - 1];
 }
+// After the frame loop is stopped (requestAnimationFrame replaced), two real frames pass, so the loop's last frame, already
+// scheduled, has drawn the state just set. A fixed wait of 300 ms was not always enough on a slow runner: verify 4 read a
+// blank view there ("mil-dot spacing NaN/NaN", Checks run 44776316081).
+const framesPassed = (page) => page.evaluate(() => new Promise((r) => { const raf = window.__raf || window.requestAnimationFrame.bind(window); raf(() => raf(() => r())); }));
 const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
 
 test.before(async () => {
@@ -131,7 +137,7 @@ test('verify 6: the look: the rendered sky, a sunlit hillside, the dirt floor in
     await page.evaluate(() => localStorage.removeItem('range-day:day:open')); // a new day for the new month and time (a day with no shot stays open otherwise)
     await page.goto(`${base}${path}`); await page.waitForSelector('#fire'); await sceneReady(page);
     assert.ok(await page.evaluate(() => Boolean(RangeDayLine.scene)), `${day}: the scene is up`);
-    await page.evaluate(() => { window.requestAnimationFrame = () => 0; }); await wait(300);
+    await page.evaluate(() => { window.__raf = window.__raf || window.requestAnimationFrame.bind(window); window.requestAnimationFrame = () => 0; }); await wait(300); await framesPassed(page);
     console.log(`  ${day}:`);
     for (const [name, v, target, must, why] of samples) {
       const rgb = await page.evaluate(([v]) => {
@@ -221,7 +227,7 @@ test('verify 9: nothing new tells the wind: with "Show the conditions" off the p
 test('the first visit: with no picture chosen yet the line draws Full, counts frames for two seconds and keeps Full or Light on the device; the setting shows it', { skip }, async () => {
   const { page, context } = await signedIn({ width: 412, height: 915 });
   await page.goto(`${base}${PIRU}&sight=utg-2-7x44`); await page.waitForSelector('#fire'); await sceneReady(page);
-  await page.waitForFunction(() => JSON.parse(localStorage.getItem('range-day:picture') || 'null') !== null, null, { timeout: 30000 });
+  await page.waitForFunction(() => JSON.parse(localStorage.getItem('range-day:picture') || 'null') !== null, null, { timeout: 90000 }); // 90 s, not 30: two seconds of the picture's own clock took longer than 30 on a slow runner (Checks run 44776316081)
   const chosen = await page.evaluate(() => JSON.parse(localStorage.getItem('range-day:picture')));
   assert.ok(['full', 'light'].includes(chosen), `chose ${chosen}`);
   await page.waitForFunction((c) => RangeDayLine.picture === c && !RangeDayLine.sceneLoading, chosen, { timeout: 60000 });
@@ -249,7 +255,7 @@ test('verify 4 (range-day-six): the sights\' angles are unchanged: for the Vepr\
   const S = flat.sights;
   // the Vepr's iron sights: notch and post
   await page.goto(`${base}${PIRU}&sight=vepr-irons`); await page.waitForSelector('#fire'); await sceneReady(page);
-  await page.evaluate(() => { window.requestAnimationFrame = () => 0; }); await wait(300);
+  await page.evaluate(() => { window.__raf = window.__raf || window.requestAnimationFrame.bind(window); window.requestAnimationFrame = () => 0; }); await wait(300); await framesPassed(page);
   await page.evaluate(() => RangeDayLine.setHold(0, 0));
   let r = await page.evaluate(() => {
     const c = document.getElementById('view'), g = c.getContext('2d'), size = RangeDayLine.geometry.viewPx, cx = size / 2, cy = size / 2;
@@ -276,7 +282,7 @@ test('verify 4 (range-day-six): the sights\' angles are unchanged: for the Vepr\
   assert.ok(Math.abs(r.post - v.frontPostMoa * r.k) <= 1.5, `post ${r.post.toFixed(1)} vs ${(v.frontPostMoa * r.k).toFixed(1)}`);
   // the Vepr's scope at 7x: the mil-dot reticle's dot spacing
   await page.goto(`${base}${PIRU}&sight=utg-2-7x44`); await page.waitForSelector('#fire'); await sceneReady(page);
-  await page.evaluate(() => { window.requestAnimationFrame = () => 0; RangeDayLine.setZoom(7); RangeDayLine.setHold(0, 0); }); await wait(300);
+  await page.evaluate(() => { window.__raf = window.__raf || window.requestAnimationFrame.bind(window); window.requestAnimationFrame = () => 0; RangeDayLine.setZoom(7); RangeDayLine.setHold(0, 0); }); await wait(300); await framesPassed(page);
   r = await page.evaluate(() => {
     const c = document.getElementById('view'), g = c.getContext('2d'), size = RangeDayLine.geometry.viewPx, cx = size / 2, cy = size / 2;
     const lum = (d, x) => 0.299 * d[x * 4] + 0.587 * d[x * 4 + 1] + 0.114 * d[x * 4 + 2];
@@ -290,7 +296,7 @@ test('verify 4 (range-day-six): the sights\' angles are unchanged: for the Vepr\
   assert.ok(Math.abs(r.first - dot * r.k) <= 1.5 && Math.abs(r.firstLeft - dot * r.k) <= 1.5, `mil-dot spacing ${r.first}/${r.firstLeft} vs ${(dot * r.k).toFixed(1)}`);
   // the Tavor's iron sights (ring and post) on the rifle line: the post's width at the row just under the centre
   await page.goto(`${base}/line?course=angeles-sylmar&rifle=iwi-tavor-sar&sight=tavor-irons&load=imi-m193`); await page.waitForSelector('#fire'); await sceneReady(page);
-  await page.evaluate(() => { window.requestAnimationFrame = () => 0; RangeDayLine.setHold(0, 0); }); await wait(300);
+  await page.evaluate(() => { window.__raf = window.__raf || window.requestAnimationFrame.bind(window); window.requestAnimationFrame = () => 0; RangeDayLine.setHold(0, 0); }); await wait(300); await framesPassed(page);
   r = await page.evaluate(() => {
     const c = document.getElementById('view'), g = c.getContext('2d'), size = RangeDayLine.geometry.viewPx, cx = size / 2, cy = size / 2;
     const lum = (d, x) => 0.299 * d[x * 4] + 0.587 * d[x * 4 + 1] + 0.114 * d[x * 4 + 2];
@@ -305,7 +311,7 @@ test('verify 4 (range-day-six): the sights\' angles are unchanged: for the Vepr\
   assert.ok(Math.abs(r.post - S['tavor-irons'].frontPostMoa * r.k) <= 1.5, `Tavor post ${r.post.toFixed(1)} vs ${(S['tavor-irons'].frontPostMoa * r.k).toFixed(1)}`);
   // the Tavor's red dot at 300 yards on the rifle line
   await page.goto(`${base}/line?course=angeles-sylmar&rifle=iwi-tavor-sar&sight=pa-md25&load=imi-m193`); await page.waitForSelector('#fire'); await sceneReady(page);
-  await page.evaluate(() => { window.requestAnimationFrame = () => 0; RangeDayLine.setHold(0, 0); }); await wait(300);
+  await page.evaluate(() => { window.__raf = window.__raf || window.requestAnimationFrame.bind(window); window.requestAnimationFrame = () => 0; RangeDayLine.setHold(0, 0); }); await wait(300); await framesPassed(page);
   r = await page.evaluate(() => {
     const c = document.getElementById('view'), g = c.getContext('2d'), size = RangeDayLine.geometry.viewPx, cx = size / 2, cy = size / 2;
     const d = g.getImageData(0, cy, size, 1).data;
@@ -344,7 +350,7 @@ test('verify 5 (range-day-six): sharpness through the scope at 7x on the 600- an
       await page.evaluate(() => localStorage.removeItem('range-day:day:open'));
       await page.goto(`${base}${PIRU}&sight=utg-2-7x44&${q}`); await page.waitForSelector('#fire'); await sceneReady(page);
       assert.equal(await page.evaluate(() => RangeDayLine.picture), 'full');
-      await page.evaluate(() => { window.requestAnimationFrame = () => 0; }); await wait(300);
+      await page.evaluate(() => { window.__raf = window.__raf || window.requestAnimationFrame.bind(window); window.requestAnimationFrame = () => 0; }); await wait(300); await framesPassed(page);
       for (const [name, ix] of [['scope 7x, 600 yd', 4], ['scope 7x, 1000 yd', 8]]) {
         const now = await sharpness(page, ix, 7), old = was(width, day, name);
         console.log(`  ${width} px, ${day}, ${name}: sharpness ${now.toFixed(2)}, was ${old === null ? 'unmeasured' : old.toFixed(2)}${old === null ? '' : now >= 2 * old ? ' (at least double: the aim met)' : ` (${(now / old).toFixed(2)} times: the aim of double missed)`}`);
@@ -458,7 +464,7 @@ test('verify 8 (range-day-seven): through the Vepr\'s scope at 7x on each board 
     await setPicture(page, picture);
     await page.goto(`${base}${PIRU}&sight=utg-2-7x44&month=9&time=midday`); await page.waitForSelector('#fire'); await sceneReady(page);
     assert.equal(await page.evaluate(() => RangeDayLine.picture), picture);
-    await page.evaluate(() => { window.requestAnimationFrame = () => 0; RangeDayLine.setZoom(7); }); await wait(300);
+    await page.evaluate(() => { window.__raf = window.__raf || window.requestAnimationFrame.bind(window); window.requestAnimationFrame = () => 0; RangeDayLine.setZoom(7); }); await wait(300); await framesPassed(page);
     for (const rowYd of flat.look.things.boardRowsYards) {
       const r = await darkInBoards(page, rowYd, 12);
       const share = r.all ? r.dark / r.all : 0;
@@ -500,7 +506,7 @@ test('verify 5 (range-day-eight): no visible repeat: on the floor and on a hills
   for (const [day, q, grass] of [['February midday', 'month=2&time=midday', 'green-grass'], ['September afternoon', 'month=9&time=afternoon', 'dry-grass']]) {
     await page.evaluate(() => localStorage.removeItem('range-day:day:open'));
     await page.goto(`${base}${PIRU}&sight=utg-2-7x44&${q}`); await page.waitForSelector('#fire'); await sceneReady(page);
-    await page.evaluate(() => { window.requestAnimationFrame = () => 0; window.RD_SCENE_DEBUG = 'noshimmer'; RangeDayLine.setZoom(7); }); await wait(300);
+    await page.evaluate(() => { window.__raf = window.__raf || window.requestAnimationFrame.bind(window); window.requestAnimationFrame = () => 0; window.RD_SCENE_DEBUG = 'noshimmer'; RangeDayLine.setZoom(7); }); await wait(300); await framesPassed(page);
     const fov7 = await page.evaluate(() => RangeDayLine.fovMoa / 60);
     const beside = await page.evaluate(() => { const w = RangeDayLine.scene.plateWorld(4); return [w.x + 20, w.z]; });
     // each material is laid twice, at its own size and at macroScale times it: each copy is slid by its own width while the other stays put (sliding both at once, the one not at its own width diluted the plain grid's match: 0.29 and 0.45 on the runner)
@@ -527,7 +533,7 @@ test('verify 6 (range-day-eight): detail on the ground: the local contrast on th
     for (const [day, q] of [['February midday', 'month=2&time=midday'], ['September afternoon', 'month=9&time=afternoon']]) {
       await page.evaluate(() => localStorage.removeItem('range-day:day:open'));
       await page.goto(`${base}${PIRU}&sight=utg-2-7x44&${q}`); await page.waitForSelector('#fire'); await sceneReady(page);
-      await page.evaluate(() => { window.requestAnimationFrame = () => 0; window.RD_SCENE_DEBUG = 'noshimmer'; }); await wait(300);
+      await page.evaluate(() => { window.__raf = window.__raf || window.requestAnimationFrame.bind(window); window.requestAnimationFrame = () => 0; window.RD_SCENE_DEBUG = 'noshimmer'; }); await wait(300); await framesPassed(page);
       const fovAt = (z) => page.evaluate((m) => { RangeDayLine.setZoom(m); return RangeDayLine.fovMoa / 60; }, z);
       const fov7 = await fovAt(7), fov21 = await fovAt(21);
       const beside = await page.evaluate(() => { const w = RangeDayLine.scene.plateWorld(4); return [w.x + 20, w.z]; });
