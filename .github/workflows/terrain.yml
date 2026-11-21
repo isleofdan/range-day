@@ -12,8 +12,8 @@
 # (scripts/terrain/keep.mjs). The commit step stages the fetched paths by
 # name, never a whole folder, and before it the guard
 # (node scripts/terrain/keep.mjs guard) refuses the run, naming the items,
-# if the staged change removes any file or drops any top-level part of
-# data/terrain.json.
+# if the staged change removes any file anywhere in the repository or drops
+# any top-level part of data/terrain.json.
 name: Terrain
 
 on:
@@ -59,7 +59,7 @@ jobs:
           git config user.email "terrain-workflow@users.noreply.github.com"
           # Only the paths the fetch listed, by name; a removal is never staged.
           xargs -r git add --ignore-removal -- < "$RUNNER_TEMP/terrain-written.txt"
-          node scripts/terrain/keep.mjs guard public/terrain data/terrain.json
+          node scripts/terrain/keep.mjs guard
           if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
           git commit -m "Terrain: surveyed heights and aerial photographs fetched by the Terrain workflow (run ${{ github.run_id }})"
           git push origin HEAD:${{ github.ref_name }}

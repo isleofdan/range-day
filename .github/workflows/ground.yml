@@ -9,8 +9,8 @@
 # Its fetch empties ground-fetch/ before writing, so a second run on the
 # same branch could drop the first run's files: the commit step stages
 # without removals and the guard (node scripts/terrain/keep.mjs guard)
-# refuses the run, naming the files, if the staged change removes any
-# (range-day-eleven).
+# refuses the run, naming the files, if the staged change removes any file
+# anywhere in the repository (range-day-eleven).
 name: Ground
 
 on:
@@ -55,7 +55,7 @@ jobs:
           git config user.email "ground-workflow@users.noreply.github.com"
           [ -d ground-fetch ] || { echo "nothing written"; exit 0; }
           git add --ignore-removal ground-fetch
-          node scripts/terrain/keep.mjs guard ground-fetch public/terrain data/terrain.json
+          node scripts/terrain/keep.mjs guard
           if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
           git commit -q -m "Ground: candidate surfaces fetched by the Ground workflow (run ${{ github.run_id }})"
           git push origin HEAD:${{ github.ref_name }}

@@ -231,13 +231,14 @@ included. On Dan's yes (Ask 2 of range-day-ten):
   reviewed pull request.
 - **It stages by name and refuses a deletion**: the commit step stages
   the paths the fetch listed, with `git add --ignore-removal`, never a
-  whole folder; then `node scripts/terrain/keep.mjs guard` reads the staged
-  change against the branch and fails the run, naming each item, if it
-  removes any file or drops any top-level part of `data/terrain.json`.
+  whole folder; then `node scripts/terrain/keep.mjs guard` reads the whole
+  staged change against the branch and fails the run, naming each item, if
+  it removes any file anywhere in the repository or drops any top-level
+  part of `data/terrain.json`.
 - **Ground** empties `ground-fetch/` before it writes, so a second run on
   the same scratch branch could drop the first run's files: it too stages
   without removals and runs the same guard before its commit.
-- **The tests** (`test/terrain-keep.test.js`, 6, no network, in a
+- **The tests** (`test/terrain-keep.test.js`, 7, no network, in a
   throwaway git repository): the committed record and its 24 surface
   photographs are there to keep; keeping (a stand-in fetch without the
   surfaces leaves every kept file and part byte for byte, and the guard
@@ -245,7 +246,8 @@ included. On Dan's yes (Ask 2 of range-day-ten):
   from the old file's own text, so an oddly laid-out part, an escaped
   character or a number spelled 1.50 stays exactly as written); refusing (a staged change that removes two surface photographs
   and drops `surfaces` fails the guard, which names all three); the same
-  for Ground's folder; the workflows' triggers, their staging and the
+  for Ground's folder; refusing anywhere (a file removed outside the ground
+  folders, or the record removed outright, is refused and named); the workflows' triggers, their staging and the
   guard's place before the commit, read from the workflow files.
 
 The jobs' limit is 28 minutes since range-day-eight: on its pull request's

@@ -62,11 +62,11 @@ test('terrain keep (keeping): a fetch result without the surfaces leaves every k
 
   // The commit step as the workflow runs it: the listed paths by name, no removals, then the guard.
   git(dir, 'add', '--ignore-removal', '--', ...paths);
-  const problems = keep.guard(dir, ['public/terrain', 'data/terrain.json']);
+  const problems = keep.guard(dir);
   console.log(`  keeping: guard problems ${JSON.stringify(problems)}; staged ${git(dir, 'diff', '--cached', '--name-status').trim().split('\n').join('; ')}`);
   assert.deepEqual(problems, []);
-  const cli = execFileSync(process.execPath, [path.join(root, 'scripts', 'terrain', 'keep.mjs'), 'guard', 'public/terrain', 'data/terrain.json'], { cwd: dir, encoding: 'utf8' });
-  assert.match(cli, /^guard: no file removed/);
+  const cli = execFileSync(process.execPath, [path.join(root, 'scripts', 'terrain', 'keep.mjs'), 'guard'], { cwd: dir, encoding: 'utf8' });
+  assert.match(cli, /^guard: no file removed anywhere/);
   fs.rmSync(dir, { recursive: true, force: true });
 });
 
@@ -102,13 +102,13 @@ test('terrain keep (refusing): a staged change that removes a surface photograph
   const gone = surfaceFiles.slice(0, 2);
   for (const f of gone) fs.unlinkSync(path.join(dir, 'public', f));
   git(dir, 'add', '-A', 'public/terrain', 'data/terrain.json');
-  const problems = keep.guard(dir, ['public/terrain', 'data/terrain.json']);
+  const problems = keep.guard(dir);
   console.log(`  refusing: ${problems.join('; ')}`);
   for (const f of gone) assert.ok(problems.includes(`removes the file public/${f}`), f);
   assert.ok(problems.includes('drops the part "surfaces" of data/terrain.json'));
   assert.equal(problems.length, gone.length + 1);
   let failed = null;
-  try { execFileSync(process.execPath, [path.join(root, 'scripts', 'terrain', 'keep.mjs'), 'guard', 'public/terrain', 'data/terrain.json'], { cwd: dir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }); } catch (e) { failed = e; }
+  try { execFileSync(process.execPath, [path.join(root, 'scripts', 'terrain', 'keep.mjs'), 'guard'], { cwd: dir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }); } catch (e) { failed = e; }
   assert.ok(failed, 'the guard exits non-zero');
   assert.equal(failed.status, 1);
   assert.match(failed.stderr, /REFUSED/);
@@ -128,10 +128,26 @@ test('terrain keep (refusing, Ground): the guard fails a staged removal under gr
   fs.writeFileSync(path.join(dir, 'ground-fetch', 'manifest.json'), '{"second":true}\n');
   // The workflow's own staging keeps the first run's file …
   git(dir, 'add', '--ignore-removal', 'ground-fetch');
-  assert.deepEqual(keep.guard(dir, ['ground-fetch', 'public/terrain', 'data/terrain.json']), []);
+  assert.deepEqual(keep.guard(dir), []);
   // … and a blanket add that stages the removal is refused.
   git(dir, 'add', '-A', 'ground-fetch');
-  assert.deepEqual(keep.guard(dir, ['ground-fetch', 'public/terrain', 'data/terrain.json']), ['removes the file ground-fetch/first-run.jpg']);
+  assert.deepEqual(keep.guard(dir), ['removes the file ground-fetch/first-run.jpg']);
+  fs.rmSync(dir, { recursive: true, force: true });
+});
+
+test('terrain keep (refusing, anywhere): the guard reads the whole staged change: a file removed outside the ground folders, or the record removed outright, is refused and named', () => {
+  const dir = scratchRepo();
+  fs.writeFileSync(path.join(dir, 'README.md'), 'kept\n');
+  git(dir, 'add', '-A'); git(dir, 'commit', '-q', '-m', 'a file elsewhere');
+  fs.unlinkSync(path.join(dir, 'README.md'));
+  git(dir, 'add', '-A');
+  assert.deepEqual(keep.guard(dir), ['removes the file README.md']);
+  git(dir, 'reset', '-q'); git(dir, 'checkout', '-q', '--', 'README.md');
+  fs.unlinkSync(path.join(dir, 'data', 'terrain.json'));
+  git(dir, 'add', '-A');
+  const problems = keep.guard(dir);
+  assert.ok(problems.includes('removes the file data/terrain.json'));
+  for (const k of Object.keys(record)) assert.ok(problems.includes(`drops the part "${k}" of data/terrain.json`), k);
   fs.rmSync(dir, { recursive: true, force: true });
 });
 
@@ -146,7 +162,7 @@ test('terrain keep: the workflows start as stated and stage nothing with a blank
     const run = text.split('\n').filter((l) => !l.trim().startsWith('#')).join('\n');
     assert.doesNotMatch(run, /git add (-A|--all|\.)/, `${name} has no blanket add`);
     assert.match(run, /git add --ignore-removal/, `${name} stages without removals`);
-    assert.match(run, /node scripts\/terrain\/keep\.mjs guard/, `${name} runs the guard`);
+    assert.match(run, /node scripts\/terrain\/keep\.mjs guard\s*\n/, `${name} runs the guard over the whole staged change`);
     assert.ok(run.indexOf('keep.mjs guard') < run.indexOf('git commit'), `${name} runs the guard before the commit`);
   }
   assert.match(ground.slice(ground.indexOf('\non:'), ground.indexOf('\npermissions:')), /'\*-fetch'/, 'Ground still runs only on a …-fetch branch');

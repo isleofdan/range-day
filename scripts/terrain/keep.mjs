@@ -18,9 +18,9 @@
 //       every file the staged change removes and every top-level part of
 //       data/terrain.json it drops, by name.
 //
-//   node scripts/terrain/keep.mjs guard <path>...   run between the fetch and
-//       the commit: reads the staged change against HEAD under the paths
-//       given and fails, naming the items, if it removes any file or drops
+//   node scripts/terrain/keep.mjs guard   run between the fetch and the
+//       commit: reads the whole staged change against HEAD and fails, naming
+//       the items, if it removes any file anywhere in the repository or drops
 //       any top-level part of data/terrain.json. The Terrain and the Ground
 //       workflows both run it.
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
@@ -101,22 +101,23 @@ export function deletionProblems({ deleted = [], beforeKeys = [], afterKeys = nu
 const git = (args, cwd) => execFileSync('git', args, { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
 const keysAt = (cwd, spec) => { try { return Object.keys(JSON.parse(git(['show', spec], cwd))); } catch { return null; } };
 
-// The staged change in the repository at cwd, under paths, read against HEAD.
-export function guard(cwd, paths) {
-  const deleted = git(['diff', '--cached', '--name-only', '--diff-filter=D', 'HEAD', '--', ...paths], cwd).split('\n').filter(Boolean);
+// The whole staged change in the repository at cwd, read against HEAD: every
+// file it removes, anywhere, and every top-level part of data/terrain.json it
+// drops (a record the change removes outright counts as dropping them all).
+export function guard(cwd) {
+  const deleted = git(['diff', '--cached', '--name-only', '--diff-filter=D', 'HEAD'], cwd).split('\n').filter(Boolean);
   const beforeKeys = keysAt(cwd, 'HEAD:data/terrain.json') || [];
-  const watchesRecord = paths.some((p) => p === 'data/terrain.json' || p === 'data' || p === 'data/' || p === '.');
-  const afterKeys = watchesRecord ? keysAt(cwd, ':data/terrain.json') || [] : null;
+  const afterKeys = keysAt(cwd, ':data/terrain.json') || [];
   return deletionProblems({ deleted, beforeKeys, afterKeys });
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const [cmd, ...paths] = process.argv.slice(2);
-  if (cmd !== 'guard' || !paths.length) { console.error('usage: node scripts/terrain/keep.mjs guard <path>...'); process.exit(2); }
-  const problems = guard(process.cwd(), paths);
+  const [cmd, ...rest] = process.argv.slice(2);
+  if (cmd !== 'guard' || rest.length) { console.error('usage: node scripts/terrain/keep.mjs guard'); process.exit(2); }
+  const problems = guard(process.cwd());
   if (problems.length) {
     console.error(`REFUSED: the staged change would delete what this run did not fetch:\n  ${problems.join('\n  ')}`);
     process.exit(1);
   }
-  console.log(`guard: no file removed and no part of data/terrain.json dropped under ${paths.join(', ')}`);
+  console.log('guard: no file removed anywhere and no part of data/terrain.json dropped');
 }
