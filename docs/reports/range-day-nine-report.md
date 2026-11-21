@@ -176,7 +176,7 @@ The lasting fix:
 - `test/line-reach.js` holds the within-reach list at **412×830, Dan's phone**, as well as 412×915.
 - The "within reach" test asserts that neither text slot has vertical padding.
 - `scripts/line-layout.mjs` measures 412×830.
-- Commit b7ef52e makes three picture tests wait for what they read, not a fixed time (verify 6 below).
+- Three picture tests that failed on fixed waits on slow runners are fixed in their own pull request, [#25](https://github.com/isleofdan/range-day/pull/25) (verify 6 below). #24 carried that fix in commit b7ef52e until result check round 3, finding 3, found `test/scene.test.js` outside this brief's scope. Commit 9ee1e68 took it out of #24.
 
 ## UI review (the firing line)
 
@@ -220,9 +220,25 @@ Then the changes #24 makes on purpose:
    - `docs/reports/line-layout-before-nine-b.txt`: the live page before #24, 38b5702.
    - `docs/reports/line-layout-after.txt`: #24.
 
-   The original `main` at 4f4ebc8, before range-day-nine, measured at 412×915 and 1280×800 only:
-   - **412×915, all three sights:** not within reach. The sight's glass control, the result and the six strip items (both settings and the four one-click buttons) were below the screen's edge. The bar was fixed at the bottom from 838. The view was 380×380.
-   - **1280×800, all three sights:** not within reach. The view ran to 917 of 800, and everything below it was off screen. The bar stood beside the view (990–1190 × 628–776). The view was 640×640.
+   The original `main` at 4f4ebc8, before range-day-nine (`line-layout-before.txt`), element by element. The yes and no are the same for all three sights (the Vepr's scope, the Tavor SAR's dot, the AK's irons); the file gives each sight's pixel places.
+
+   | Element | 412×915: inside the screen | 412×915: above the bar | 1280×800: inside the screen |
+   | - | - | - | - |
+   | short line (then the description) | yes | yes | yes |
+   | plate picker | yes | yes | yes |
+   | sight's glass control | no | no | no |
+   | view | yes | yes | no (277–917 of 800) |
+   | where the last shot went | no | no | no |
+   | elevation setting, down, up | no | no | no |
+   | windage setting, left, right | no | no | no |
+   | rounds left | yes | yes | no |
+   | book line | yes | yes | no |
+   | 1 MOA buttons (scope and dot) | no | no | no |
+
+   The bar's own checks before:
+   - 412×915: fixed at the bottom inside the screen, yes, from 838, for all three sights.
+   - 1280×800: beside the view covering none of it, yes, and inside the screen, yes (990–1190 × 628–776), for all three sights.
+   - The view: 380×380 and 640×640.
 
    The live page before #24, and #24 itself:
 
@@ -277,18 +293,19 @@ Then the changes #24 makes on purpose:
    - [44841130824](https://github.com/isleofdan/range-day/actions/runs/44841130824) on b7ef52e: **green, all ten jobs**.
      - Tests: rest 38 s, day 1 min 23 s, browser 1 min 25 s, scene-scale 4 min 34 s, scene-shots 8 min 7 s, scene-rest 8 min 52 s.
      - Screenshots: shard 1 5 min 54 s, shard 2 6 min 49 s, shard 3 8 min 26 s, shard 4 7 min 17 s.
-   - Commit f774c87, the pull request's latest, added only the before-measure file. Its run, [44842823187](https://github.com/isleofdan/range-day/actions/runs/44842823187), is **green, all ten jobs**:
+   - Commit f774c87 added only the before-measure file. Its run, [44842823187](https://github.com/isleofdan/range-day/actions/runs/44842823187), is **green, all ten jobs**:
      - tests: rest 23 s, browser 1 min 27 s, day 2 min 2 s, scene-scale 4 min 34 s, scene-shots 7 min 48 s, scene-rest 8 min 56 s;
      - screenshots: shard 1 5 min 51 s, shard 2 6 min 57 s, shard 3 6 min 49 s, shard 4 6 min 57 s.
+   - Commit 9ee1e68, the pull request's latest, takes the picture tests' wait fix back out (it is in #25). Its run: CHECKS9EE_PLACEHOLDER
    - Counts: tests 111 before #24 and 111 after; screenshot states 73 before and 73 after. Before range-day-nine they were 109 and 68.
-7. **Size:** the pull request's own diff, `gh pr diff 24 | wc -c` (fetched here as the same diff from GitHub's API, since this container has no `gh`), is 81,173 bytes, under 400,000.
-8. **The deploy result:** filed on the card after the deploy.
+7. **Size:** the pull request's own diff, `gh pr diff 24 | wc -c` (fetched here as the same diff from GitHub's API, since this container has no `gh`): SIZE9EE_PLACEHOLDER bytes on 9ee1e68, under 400,000.
+8. **The deploy result:** not in this report, by the brief's own order. Its close-out item 5 runs the Deploy workflow only on Dan's typed line, and then says: "Then file one short note on the card as `session:range-day-nine` (what was merged, the Deploy run's result line)". The line goes in that note after the deploy, as #22's did (card event 2887: "Deploy run 44836938388: completed, success").
 
 What this cannot prove: the session cannot hold Dan's phone. 830 is measured from his screenshots; a browser with more of its own bars showing leaves less room.
 
 ## Asks
 
-1. Merge and deploy range-day-nine-b? Recommended: yes. Type `yes, merge and deploy range-day-nine-b, then merge its notes`.
+1. Merge and deploy range-day-nine-b (#24), and merge the picture tests' wait fix (#25, test code only, no deploy of its own)? Recommended: yes to both. Type `yes, merge and deploy range-day-nine-b, merge the test-wait fix, then merge its notes`.
 
 ## What the next session needs
 
@@ -296,7 +313,7 @@ What this cannot prove: the session cannot hold Dan's phone. 830 is measured fro
 - Otherwise as in the range-day-nine report.
 
 Close-out order, by `CLAUDE.md` "Field reports":
-1. Merge #24.
+1. Merge #24, then #25 (test code only).
 2. The Deploy run.
 3. A notes-only pull request from `range-day-nine-b-notes` (this addendum and the `PLAN.md` note), merged.
 
@@ -312,10 +329,16 @@ Close-out order, by `CLAUDE.md` "Field reports":
    - 8: every job's time on the latest run, and the before counts, were added.
    - 9: the pull request's own diff size was added.
    - 10: this check is run again, and the closing message is sent only once the newest verdict is PASS.
+3. Job 20261121-002945-690da1 (card event 2892): FINDINGS, 3.
+   - 1: the original measure is now given element by element in verify 1.
+   - 2: the deploy line comes after the deploy, by the brief's close-out item 5, quoted in verify 8.
+   - 3: `test/scene.test.js` is out of #24 (commit 9ee1e68) and in its own pull request, #25.
 
 ## Closing message to Dan
 
 Nothing on your screen has changed yet: the fix is ready in pull request #24, and merging and deploying it will put it on the live app. On a screen your phone's height, everything now fits above Steady and Fire, and the third line no longer peeks out. The rounds left show under the word Fire, and your book line is one line (tap ▾ for the rest). All the automatic checks pass.
 
+A separate small fix makes three picture tests wait properly on slow test machines; it's test code only.
+
 Needed from you
-1. Type: `yes, merge and deploy range-day-nine-b, then merge its notes`.
+1. Type: `yes, merge and deploy range-day-nine-b, merge the test-wait fix, then merge its notes`.
