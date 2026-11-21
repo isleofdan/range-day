@@ -12,16 +12,19 @@
 //   - the USGS NAIP photograph at the service's largest answer, 4,000
 //     pixels (0.625 m), as JPEG, and a 1,024-pixel copy for the Light
 //     picture.
+// It writes only what it fetched: every other file in public/terrain and
+// every other part of data/terrain.json is left as it was (keep.mjs).
 // data/terrain.json records every file: the service, the exact request,
 // the date fetched, the data's own spacing and capture date as the service
 // reports them, the license and the bytes. Files are named with their
 // content hash, so a browser can keep them for a year.
-import { mkdirSync, writeFileSync, readdirSync, unlinkSync, existsSync } from 'node:fs';
+import { mkdirSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { RANGES, SERVICES, toUtm, get, getJson } from './lib.mjs';
 import { readTiff, png16, readPng16, jpegSize } from './image.mjs';
+import { writeResults } from './keep.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const outDir = join(root, 'public', 'terrain');
@@ -177,9 +180,15 @@ for (const r of RANGES) {
   summary.push(`${r.id}: heights ${spacing} m (${chosen[0].Name}, ${dateOf(chosen[0].AcquisitionDate)}), far ${FAR_SPACING_M} m, photo ${SIDE_M / PHOTO_MAX_PX} m (${dates.join(', ')})`);
 }
 
-// Old files of ours that nothing names any more are removed, so the folder holds one set.
-for (const f of readdirSync(outDir)) if (!written.includes(f)) { unlinkSync(join(outDir, f)); console.log(`  removed stale ${f}`); }
-writeFileSync(join(root, 'data', 'terrain.json'), JSON.stringify(terrain, null, 1) + '\n');
+// Nothing this run did not fetch is touched (range-day-eleven): the parts of
+// data/terrain.json it fetched (the two ranges and _about) replace theirs and
+// every other part ("surfaces" among them) is kept as it was; no file is
+// removed. A file an earlier run wrote that nothing names any more stays until
+// a reviewed pull request removes it. The paths written are listed in
+// TERRAIN_WRITTEN for the workflow's commit step, which stages them by name.
+const { paths } = writeResults({ root, fetched: terrain, written: written.map((f) => join(outDir, f)), listFile: process.env.TERRAIN_WRITTEN || null });
+for (const f of readdirSync(outDir)) if (!written.includes(f)) console.log(`  kept, not named by this run: ${f}`);
+console.log(`listed for the commit: ${paths.length} path(s)`);
 let total = 0;
 for (const f of readdirSync(outDir)) total += (await import('node:fs')).statSync(join(outDir, f)).size;
 console.log(`\nwritten: ${written.join(', ')}\ntotal ${total} bytes (${(total / 1048576).toFixed(1)} MB) in public/terrain\n${summary.join('\n')}`);

@@ -42,6 +42,33 @@ An older form, `zero:<rifle>:<load>` (from before every sight could be
 chosen), is still read for the sight it names and written forward to the
 new key; the old record is left in place.
 
+### A sight that took another's place (range-day-eleven)
+
+The Vepr's scope was modeled as the UTG 2-7x44 (`utg-2-7x44`) until Dan
+said it is a UTG BugBuster 3-9x32 (`utg-bugbuster-3-9x32`). The new
+sight's entry in `data/sights.json` names the old one in
+`carriesRecordsOf`. Because the two click alike (1/4 MOA on both turrets)
+and sit at the same height over the bore (3.0 in, the side-rail mount's),
+a zero in clicks is as true on the new scope, so:
+
+- the sight setting, the saved zero, the shot log and the book page kept
+  under `…:utg-2-7x44…` are read as the BugBuster's when nothing is
+  stored under `…:utg-bugbuster-3-9x32…`, and written forward under that
+  name; the old records stay stored as they were;
+- a range-day-one zero (`zero:<rifle>:<load>`) naming `utg-2-7x44` is read
+  for the BugBuster the same way;
+- an address, a last-used record or a day naming `utg-2-7x44` on the Vepr
+  opens the BugBuster;
+- the copy file lists each such zero and book line once, under the
+  BugBuster, where the forwarded copy is stored;
+- the cold-bore record and the day's shots keep the sight they name; the
+  2-7x44 stays in the data (offered by no rifle), so they still name a
+  sight the game knows.
+
+`public/game.js` (`carriedSight`) checks the two click values before it
+carries anything; `test/day.test.js` ("range-day-eleven verify 5") proves
+it with a device seeded under the old name.
+
 ### The shot log: `log:<rifle>:<sight>:<load>`
 
 Every shot on the firing line with that rifle, sight and load, in order:

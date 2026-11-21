@@ -77,7 +77,7 @@ clicks, then works out the drop and the wind for each distance himself.
 - **Firing line** (`/line`): the view through the sight. On the canyon
   course the view is a 3D picture of the real place (below, "The
   picture"); on the rifle line it is still the flat drawing. A scope zooms
-  across its real range with its mil-dot reticle; the 3x prism sight
+  across its real range with its mil-dot reticle (the Vepr's is its real UTG BugBuster 3-9x32 since range-day-eleven; the game modeled a 2-7x44 before; a scope's view is the maker's field of view at each end of its zoom, and between them a power of the magnification fitted through both); the 3x prism sight
   shows its drop reticle (chevron and hold marks, drawn from the data);
   the red dot is an unmagnified window with a 2 MOA dot, and on the Tavor
   SAR a magnifier flips in behind it; the iron sights show a ring and
@@ -117,7 +117,7 @@ clicks, then works out the drop and the wind for each distance himself.
   paper**, a short scroll below and shown only for paper, clears the sheet
   from that moment (no shot is deleted), and its message offers **Put the
   old paper back**. **Spotting scope**, at the right end of the short line's row at the top (range-day-ten-b: beside the sight's glass control it cramped the zoom slider),
-  turns the view to a tripod scope (20 to 60 power, its field of view from
+  turns the view to a tripod scope (25 to 125 power since range-day-eleven, modeled on the Barska Benchmark 25-125x88; 20 to 60 before; its field of view from
   the maker's page, `data/spotting.json`) pointed at the chosen target: no
   reticle, the view still, a drag moves it, its zoom in the glass control's
   place; the sight strip still turns the rifle's sight. Steady and Fire

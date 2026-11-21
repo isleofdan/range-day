@@ -46,7 +46,7 @@ async function signedIn(viewport) {
 }
 const setPicture = (page, p) => page.evaluate((v) => { localStorage.removeItem('range-day:day:open'); localStorage.setItem('range-day:picture', JSON.stringify(v)); }, p);
 const AR = 'course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193';
-const VEPR = 'course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt';
+const VEPR = 'course=cta-piru&rifle=molot-vepr-54r&sight=utg-bugbuster-3-9x32&load=sb-174-hpbt';
 const line = async (page, q) => {
   await page.goto(`${base}/line?${q}`, { timeout: 120000 }); await page.waitForSelector('#fire', { timeout: 120000 });
   await page.waitForFunction(() => window.RangeDayLine && (RangeDayLine.scene || RangeDayLine.sceneFailed || (!RangeDayLine.sceneLoading && RangeDayLine.picture === 'plain')), null, { timeout: 120000 });
@@ -79,7 +79,7 @@ test.after(async () => { if (browser) await browser.close(); if (server) server.
 test('range-day-ten verify 2: twenty seeded shots at each new target (paper at 50 and 100 yards on both courses, the canyon\'s 100-yard steel) land where the engine says, and each row names its target', { skip }, async () => {
   const { page, context, errors } = await signedIn({ width: 1280, height: 800 });
   const lines = [];
-  for (const [courseId, q, rifleId, sightId, loadId] of [['angeles-sylmar', AR, 'bcm-ar15', 'ar-irons', 'imi-m193'], ['cta-piru', VEPR, 'molot-vepr-54r', 'utg-2-7x44', 'sb-174-hpbt']]) {
+  for (const [courseId, q, rifleId, sightId, loadId] of [['angeles-sylmar', AR, 'bcm-ar15', 'ar-irons', 'imi-m193'], ['cta-piru', VEPR, 'molot-vepr-54r', 'utg-bugbuster-3-9x32', 'sb-174-hpbt']]) {
     await setPicture(page, 'plain');
     await line(page, q);
     const targets = (await page.evaluate(() => RangeDayLine.targets)).filter((t) => t.key.startsWith('near-'));
@@ -205,7 +205,7 @@ test('range-day-ten verify 4: the holes in the paper and the marks on the steel 
   console.log(`  holes and marks before a reload ${JSON.stringify(before)}, after ${JSON.stringify(after)}`);
 });
 
-test('range-day-ten verify 3 and 5: the spotting scope: its view is the data\'s field of view at its lowest and highest power; Fire, Steady and the keyboard do nothing there; a shot in the air lands in its view; going to the scope and back moves the view, the sight strip and the bar by 0 pixels at 412x830, 412x915 and 1280x800, and every new button is at least 44 pixels tall', { skip }, async () => {
+test('range-day-ten verify 3 and 5: the spotting scope: its view is the data\'s field of view at its lowest and highest power (range-day-eleven: 25x and 125x), and so is the Vepr\'s scope\'s at 3x and 9x; Fire, Steady and the keyboard do nothing there; a shot in the air lands in its view; going to the scope and back moves the view, the sight strip and the bar by 0 pixels at 412x830, 412x915 and 1280x800, and every new button is at least 44 pixels tall', { skip }, async () => {
   const lines = [];
   const S = flat.spotting;
   for (const [w, h] of [...PHONES, [1280, 800]]) {
@@ -229,7 +229,7 @@ test('range-day-ten verify 3 and 5: the spotting scope: its view is the data\'s 
       const dataMoa = ((m === S.zoom.low ? S.fovFtAt1000.low : S.fovFtAt1000.high) * 12) / E.inchesPerMoa(1000);
       assert.ok(Math.abs(g.fov - dataMoa) < 1e-9, `${m}x: the view spans ${g.fov} MOA, the data's ${dataMoa}`);
       assert.ok(Math.abs(g.k * dataMoa - g.px) < 1e-6, `${m}x: the data's field of view is ${g.k * dataMoa} px, the view ${g.px} px`);
-      widths.push(`${m}x: ${g.px} px across = ${dataMoa.toFixed(2)} MOA (${m === S.zoom.low ? S.fovFtAt1000.low : S.fovFtAt1000.high} ft at 1,000 yards), ${g.k.toFixed(3)} px per MOA`);
+      widths.push(`spotting ${m}x: ${g.px} px across = ${dataMoa.toFixed(2)} MOA (${m === S.zoom.low ? S.fovFtAt1000.low : S.fovFtAt1000.high} ft at 1,000 yards), ${g.k.toFixed(3)} px per MOA, off by ${Math.abs(g.k * dataMoa - g.px).toExponential(1)} px`);
     }
     // Fire, Steady and the keyboard do nothing at the scope; "Back to the rifle" stands in the bar where they stood
     const rounds0 = await page.evaluate(() => [RangeDayLine.log.length, RangeDayLine.day.box.left, RangeDayLine.pending]);
@@ -252,6 +252,17 @@ test('range-day-ten verify 3 and 5: the spotting scope: its view is the data\'s 
     // back by the bar's button, then there and back by the control beside the glass
     await page.click('#back-to-rifle');
     assert.equal(await page.evaluate(() => RangeDayLine.spotting), false);
+    // range-day-eleven: the Vepr's scope too: its view's width at 3x and 9x is the data's field of view at 100 yards.
+    const V = flat.sights['utg-bugbuster-3-9x32'];
+    for (const m of [V.zoom.low, V.zoom.high]) {
+      await page.evaluate((z) => RangeDayLine.setZoom(z), m);
+      const g = await page.evaluate(() => ({ k: RangeDayLine.geometry.pxPerMoa, px: RangeDayLine.geometry.viewPx, fov: RangeDayLine.fovMoa }));
+      const ft = m === V.zoom.low ? V.fovFtAt100.low : V.fovFtAt100.high, dataMoa = (ft * 12) / E.inchesPerMoa(100);
+      assert.ok(Math.abs(g.fov - dataMoa) < 1e-9, `rifle scope ${m}x: the view spans ${g.fov} MOA, the data's ${dataMoa}`);
+      assert.ok(Math.abs(g.k * dataMoa - g.px) < 1e-6, `rifle scope ${m}x: the data's field of view is ${g.k * dataMoa} px, the view ${g.px} px`);
+      widths.push(`Vepr scope ${m}x: ${g.px} px across = ${dataMoa.toFixed(2)} MOA (${ft} ft at 100 yards), ${g.k.toFixed(3)} px per MOA, off by ${Math.abs(g.k * dataMoa - g.px).toExponential(1)} px`);
+    }
+    await page.evaluate((z) => RangeDayLine.setZoom(z), V.zoom.low);
     const zoomW = await page.evaluate(() => document.getElementById('zoom').getBoundingClientRect().width);
     assert.ok(zoomW >= 125, `${w}x${h}: the rifle scope's zoom slider is ${zoomW.toFixed(0)} px wide`);
     const zoomGap = await page.evaluate(() => window.innerWidth - document.getElementById('zoom').getBoundingClientRect().right);
@@ -273,12 +284,12 @@ test('range-day-ten verify 3 and 5: the spotting scope: its view is the data\'s 
   console.log('  ' + lines.join('\n  '));
 });
 
-test('range-day-ten verify 3: same scale: the scene puts each new canyon target\'s centre within 1 pixel of the plain drawing through the Vepr\'s scope at 2x and 7x, its irons at 1x, and the spotting scope at 20x and 60x, at both sizes', { skip }, async () => {
+test('range-day-ten verify 3: same scale: the scene puts each new canyon target\'s centre within 1 pixel of the plain drawing through the Vepr\'s scope at 3x and 9x, its irons at 1x, and the spotting scope at 25x and 125x (range-day-eleven: the BugBuster and the 25-125x; 2x, 7x, 20x and 60x before), at both sizes', { skip }, async () => {
   const lines = [];
   let worst = 0;
   for (const [sizeName, viewport] of [['phone', { width: 412, height: 915 }], ['computer', { width: 1280, height: 800 }]]) {
     const { page, context, errors } = await signedIn(viewport);
-    for (const [name, sight, zoom, spot] of [['scope 2x', 'utg-2-7x44', 2, null], ['scope 7x', 'utg-2-7x44', 7, null], ['irons 1x', 'vepr-irons', null, null], ['spotting scope 20x', 'utg-2-7x44', null, 20], ['spotting scope 60x', 'utg-2-7x44', null, 60]]) {
+    for (const [name, sight, zoom, spot] of [['scope 3x', 'utg-bugbuster-3-9x32', 3, null], ['scope 9x', 'utg-bugbuster-3-9x32', 9, null], ['irons 1x', 'vepr-irons', null, null], ['spotting scope 25x', 'utg-bugbuster-3-9x32', null, 25], ['spotting scope 125x', 'utg-bugbuster-3-9x32', null, 125]]) {
       await setPicture(page, 'full');
       await line(page, `course=cta-piru&rifle=molot-vepr-54r&sight=${sight}&load=sb-174-hpbt`);
       assert.equal(await page.evaluate(() => RangeDayLine.picture), 'full');
@@ -299,7 +310,7 @@ test('range-day-ten verify 3: same scale: the scene puts each new canyon target\
   console.log(`  largest difference ${worst.toFixed(3)} px\n  ` + lines.join('\n  '));
 });
 
-test('range-day-ten verify 3: same scale on the rifle line (its flat drawing): where the drawing put each new paper sheet\'s centre, read from the frame that drew it, is within 1 pixel of the angles from the data at that frame\'s aim, through the AR\'s irons and through the spotting scope at 20x and 60x, aimed at each paper and at the 100-yard plate, at both sizes', { skip }, async () => {
+test('range-day-ten verify 3: same scale on the rifle line (its flat drawing): where the drawing put each new paper sheet\'s centre, read from the frame that drew it, is within 1 pixel of the angles from the data at that frame\'s aim, through the AR\'s irons and through the spotting scope at 25x and 125x (20x and 60x before range-day-eleven), aimed at each paper and at the 100-yard plate, at both sizes', { skip }, async () => {
   const MOA = Math.PI / (180 * 60);
   const c = flat.courses['angeles-sylmar'];
   const ang = (t) => ({ up: Math.atan2(t.riseFt, t.yards * 3) / MOA, right: Math.atan2(t.lateralYd, t.yards) / MOA });
@@ -310,7 +321,7 @@ test('range-day-ten verify 3: same scale on the rifle line (its flat drawing): w
     const { page, context, errors } = await signedIn(viewport);
     await setPicture(page, 'plain');
     await line(page, AR);
-    for (const [name, spot] of [['irons', null], ['spotting scope 20x', 20], ['spotting scope 60x', 60]]) {
+    for (const [name, spot] of [['irons', null], ['spotting scope 25x', 25], ['spotting scope 125x', 125]]) {
       await page.evaluate((z) => { RangeDayLine.setSpotting(Boolean(z)); if (z) RangeDayLine.setSpotZoom(z); }, spot);
       for (const aimed of ['near-0', 'near-1', '0']) {
         await page.evaluate((k) => RangeDayLine.setTarget(k), aimed);

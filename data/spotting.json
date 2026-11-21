@@ -1,52 +1,52 @@
 {
- "_about": "The tripod spotting scope on the firing line (range-day-ten): a common 20-60x scope with a large front lens, looked through between shots to read where bullets landed. It has no reticle and does not move with the rifle. Its field of view at each end of its zoom comes from the maker's page; between the two ends the view's width follows a power of the magnification fitted through both published figures.",
- "name": "Tripod spotting scope, 20-60x, 85 mm front lens (modeled on the Vortex Diamondback HD 20-60x85)",
+ "_about": "The tripod spotting scope on the firing line: looked through between shots to read where bullets landed. It has no reticle and does not move with the rifle. range-day-ten modeled a 20-60x (Vortex Diamondback HD 20-60x85); range-day-eleven, on Dan's word (\"I would like a more powerful spotting scope\"), models a 25-125x. Its field of view at each end of its zoom comes from the maker's page; between the two ends the view's width follows a power of the magnification fitted through both published figures. Chosen as the strongest tripod spotting scope found whose maker publishes the field of view at both ends of the zoom: Swarovski's ATX 95 with its ME 1.7x extender (about 51-120x) and Kowa's TSN-99 with the TE-11WZ II and the TSN-EX16 1.6x extender (48-112x) reach further than 100x, but neither maker publishes the field of view with the extender fitted (searched 21 Nov 2026), so neither could be drawn from published figures; the Barska reaches 125x and starts at 25x, low enough to find near paper.",
+ "name": "Tripod spotting scope, 25-125x, 88 mm front lens (modeled on the Barska Benchmark 25-125x88, AD11182)",
  "zoom": {
   "low": {
-   "value": 20,
+   "value": 25,
    "source": {
-    "url": "https://vortexoptics.com/diamondback-hd-20-60x85-angled.html",
+    "url": "https://shop.barska.com/products/25-125x-88mm-wp-benchmark-high-power-spotting-scope",
     "read": "2026-11-21",
-    "note": "the maker's page: magnification 20-60x, objective 85 mm. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches from the maker's site (CONNECT 403)"
+    "note": "the maker's page: 25-125x magnification, 88 mm objective, sold as a high-power spotting scope with a tripod. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches (CONNECT 403)"
    }
   },
   "high": {
-   "value": 60,
+   "value": 125,
    "source": {
-    "url": "https://vortexoptics.com/diamondback-hd-20-60x85-angled.html",
+    "url": "https://shop.barska.com/products/25-125x-88mm-wp-benchmark-high-power-spotting-scope",
     "read": "2026-11-21",
     "note": "the same page, the top of the zoom"
    }
   }
  },
  "objectiveMm": {
-  "value": 85,
+  "value": 88,
   "source": {
-   "url": "https://vortexoptics.com/diamondback-hd-20-60x85-angled.html",
+   "url": "https://shop.barska.com/products/25-125x-88mm-wp-benchmark-high-power-spotting-scope",
    "read": "2026-11-21",
-   "note": "the same page, the front lens's diameter"
+   "note": "the same page, the front lens's diameter. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches (CONNECT 403)"
   }
  },
  "fovFtAt1000": {
   "low": {
-   "value": 108,
+   "value": 54,
    "source": {
-    "url": "https://vortexoptics.com/diamondback-hd-20-60x85-angled.html",
+    "url": "https://shop.barska.com/products/25-125x-88mm-wp-benchmark-high-power-spotting-scope",
     "read": "2026-11-21",
-    "note": "the maker's page: \"Linear Field of View: 108' - 60' @ 1000 yds\" and \"Angular Field of View: 2.1º - 1.1º\": 108 ft across at 1,000 yards at 20x. Read from the search engine's indexed text of this page on the date given"
+    "note": "the maker's page: field of view \"54ft/18m @25x, 24ft/8m @125x\" at 1,000 yards (the same figures on its second page, https://barska.com/25-125x88-wp-benchmark-spotting-scope-by-barska): 54 ft across at 1,000 yards at 25x. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches (CONNECT 403)"
    }
   },
   "high": {
-   "value": 60,
+   "value": 24,
    "source": {
-    "url": "https://vortexoptics.com/diamondback-hd-20-60x85-angled.html",
+    "url": "https://shop.barska.com/products/25-125x-88mm-wp-benchmark-high-power-spotting-scope",
     "read": "2026-11-21",
-    "note": "the same figure at 60x: 60 ft across at 1,000 yards"
+    "note": "the same figure at 125x: 24 ft across at 1,000 yards"
    }
   }
  },
  "zoomStep": {
   "value": 1,
-  "estimate": "the zoom control moves in steps of one power, finer than the zoom ring's printed marks (20, 30, 40, 50, 60)"
+  "estimate": "the zoom control moves in steps of one power, finer than any zoom ring's printed marks"
  }
 }

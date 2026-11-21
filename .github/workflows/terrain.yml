@@ -1,15 +1,23 @@
 # Fetches the surveyed ground (USGS 3DEP heights) and the aerial photograph
 # (USGS NAIP) for each range on GitHub's own runner, because a cloud
 # session's network refuses both services, and commits the compact results
-# to the branch that pushed. It deploys nothing and spends nothing. It runs
-# on a push that touches scripts/terrain/**.
+# to the branch it was started on. It deploys nothing and spends nothing.
+#
+# It starts only by hand (range-day-eleven, on Dan's yes to Ask 2 of
+# range-day-ten): from the Actions page, "Run workflow", on a named branch
+# other than main. No push starts it, so no ordinary build can.
+# It writes only what it fetched: the two ranges' files and their parts of
+# data/terrain.json; every other file in public/terrain and every other
+# part of the record ("surfaces" among them) is kept byte for byte
+# (scripts/terrain/keep.mjs). The commit step stages the fetched paths by
+# name, never a whole folder, and before it the guard
+# (node scripts/terrain/keep.mjs guard) refuses the run, naming the items,
+# if the staged change removes any file anywhere in the repository or drops
+# any top-level part of data/terrain.json.
 name: Terrain
 
 on:
-  push:
-    paths:
-      - 'scripts/terrain/**'
-      - '.github/workflows/terrain.yml'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -20,6 +28,8 @@ concurrency:
 
 jobs:
   terrain:
+    # It commits to the branch it runs on; main takes changes only through a reviewed pull request.
+    if: github.ref_name != 'main'
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
@@ -36,6 +46,8 @@ jobs:
 
       - name: Fetch the terrain
         if: hashFiles('scripts/terrain/fetch.mjs') != ''
+        env:
+          TERRAIN_WRITTEN: ${{ runner.temp }}/terrain-written.txt
         run: |
           npm ci --no-audit --no-fund
           node scripts/terrain/fetch.mjs
@@ -45,8 +57,9 @@ jobs:
         run: |
           git config user.name "terrain workflow"
           git config user.email "terrain-workflow@users.noreply.github.com"
-          mkdir -p public/terrain
-          git add -A public/terrain data/terrain.json
+          # Only the paths the fetch listed, by name; a removal is never staged.
+          xargs -r git add --ignore-removal -- < "$RUNNER_TEMP/terrain-written.txt"
+          node scripts/terrain/keep.mjs guard
           if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
           git commit -m "Terrain: surveyed heights and aerial photographs fetched by the Terrain workflow (run ${{ github.run_id }})"
           git push origin HEAD:${{ github.ref_name }}

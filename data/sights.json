@@ -871,6 +871,82 @@
     "value": 3.44,
     "estimate": "a mil-dot reticle's dots are one milliradian apart, 3.44 MOA, by definition"
    }
+  },
+  "retired": "range-day-eleven: no rifle offers this scope any more (the Vepr carries the UTG BugBuster 3-9x32, utg-bugbuster-3-9x32); its entry stays so records that name it still name a sight the game knows"
+ },
+ "utg-bugbuster-3-9x32": {
+  "name": "UTG BugBuster 3-9x32 compact scope, lit mil-dot (SCP-M392AOLWQ)",
+  "kind": "scope",
+  "clickMoa": {
+   "value": 0.25,
+   "source": {
+    "url": "https://www.leapers.com/products-utg-scp-m392aolwq.html",
+    "read": "2026-11-21",
+    "note": "the maker's page: 1/4 MOA per click, zero-lockable and zero-resettable target turrets. Chosen as the model of the Vepr's scope: a UTG BugBuster, 3-9x, 32 mm front lens, 1-inch tube, mil-dot reticle lit in red, green and blue is the \"AO RGB Mil-Dot\" BugBuster, SCP-M392AOLWQ (retailers' name for it; the maker's indexed text calls its lighting red/green); its 36-colour sibling SCP-M392AOIEWQ gives the same 37.7 to 14 ft field of view, so the game's figures do not depend on which of the two it was. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches (CONNECT 403)"
+   }
+  },
+  "windageClickMoa": {
+   "value": 0.25,
+   "source": {
+    "url": "https://www.leapers.com/products-utg-scp-m392aolwq.html",
+    "read": "2026-11-21",
+    "note": "the same page: the same 1/4 MOA click on both turrets. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches (CONNECT 403)"
+   }
+  },
+  "clicks": {
+   "value": 120,
+   "source": {
+    "url": "https://www.gunbuyer.com/utg-3-9x32-bugbuster-ao-rgb-mdot-utgscp-m392aolwq-b.html",
+    "read": "2026-11-21",
+    "note": "a retailer's listing of the maker's specification (the maker's indexed text gives no travel): elevation 30 MOA up and 30 MOA down; at 1/4 MOA a click that is 120 clicks each way from the middle. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches (CONNECT 403)"
+   }
+  },
+  "zoom": {
+   "low": {
+    "value": 3,
+    "source": {
+     "url": "https://www.leapers.com/products-utg-scp-m392aolwq.html",
+     "read": "2026-11-21",
+     "note": "the maker's page: 3-9x magnification, 32 mm objective, 1-inch tube, parallax adjustable from 3 yards to infinity. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches (CONNECT 403)"
+    }
+   },
+   "high": {
+    "value": 9,
+    "source": {
+     "url": "https://www.leapers.com/products-utg-scp-m392aolwq.html",
+     "read": "2026-11-21",
+     "note": "the same page, the top of the zoom"
+    }
+   }
+  },
+  "fovFtAt100": {
+   "low": {
+    "value": 37.7,
+    "source": {
+     "url": "https://www.leapers.com/products-utg-scp-m392aolwq.html",
+     "read": "2026-11-21",
+     "note": "the maker's page: \"Field of View @ 100 yards: 37.7' - 14'\": 37.7 ft across at 100 yards at 3x. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches (CONNECT 403)"
+    }
+   },
+   "high": {
+    "value": 14,
+    "source": {
+     "url": "https://www.leapers.com/products-utg-scp-m392aolwq.html",
+     "read": "2026-11-21",
+     "note": "the same figure at 9x: 14 ft across at 100 yards"
+    }
+   }
+  },
+  "reticle": {
+   "kind": "mil-dot",
+   "dotSpacingMoa": {
+    "value": 3.44,
+    "estimate": "a mil-dot reticle's dots are one milliradian apart, 3.44 MOA, by definition"
+   }
+  },
+  "carriesRecordsOf": {
+   "sight": "utg-2-7x44",
+   "basis": "range-day-eleven: the game modeled the Vepr's scope as the UTG 2-7x44 until Dan said it was a BugBuster 3-9x32. Both scopes click 1/4 MOA on both turrets and sit at the same height over the bore on the Vepr (3.0 in, the side-rail mount's; data/rifles.json), so a zero, a sight setting, a shot log and data-book lines kept under the 2-7x44 on this device are as true on the BugBuster: they are read as its own, written forward under its name, and the old records stay stored. public/game.js checks the two click values before it carries anything."
   }
  }
 }

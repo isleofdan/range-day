@@ -15,6 +15,7 @@ const { spawn } = require('node:child_process');
 const { existsSync } = require('node:fs');
 const path = require('node:path');
 const { flat } = require('../lib/data').load();
+const E = require('../public/engine.js');
 
 const root = path.join(__dirname, '..');
 const PORT = Number(process.env.TEST_PORT) || 8961; // scripts/check.mjs gives each piece of this file its own port
@@ -25,6 +26,14 @@ try { ({ chromium } = require('playwright')); if (!existsSync(chromium.executabl
 const skip = chromium ? false : "Playwright's browser is missing on this machine; the Checks workflow runs these";
 
 const PIRU = '/line?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt';
+// range-day-eleven: the Vepr carries the UTG BugBuster 3-9x32 in place of the 2-7x44 the game modeled before. The picture
+// measures below that compare with a stored before-file (docs/reports/picture-before.txt, ground-before.txt) or that look for a
+// flaw at the old scope's highest power keep the view they were measured at: the old 7x view (14 ft × 2/7 = 4 ft at 100 yards,
+// 45.8 minutes of angle across) and the old 21x test view (14 ft × 2/21 = 1.33 ft), reached through the
+// page's zoom door on the new scope's own field-of-view rule, as the 21x test view always was. A test view, not a sight in the game.
+const VEPR_SCOPE = flat.sights['utg-bugbuster-3-9x32'];
+const powerFor = (ftAt100) => { const z = VEPR_SCOPE.zoom, f = VEPR_SCOPE.fovFtAt100, p = Math.log(f.low / f.high) / Math.log(z.high / z.low); return z.low * Math.pow(f.low / ftAt100, 1 / p); };
+const OLD7 = powerFor((14 * 2) / 7), OLD21 = powerFor((14 * 2) / 21);
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 async function up() { for (let i = 0; i < 100; i++) { try { await fetch(`${base}/alive`); return; } catch { await wait(50); } } throw new Error('server never answered'); }
 async function signedIn(viewport, init) {
@@ -66,12 +75,12 @@ test.before(async () => {
 });
 test.after(async () => { if (browser) await browser.close(); if (server) server.kill(); });
 
-test('verify 2: same scale: for every canyon plate at 2x and 7x through the Vepr\'s scope and at 1x through its irons, the scene puts the plate\'s centre within 1 pixel of the plain drawing, at both sizes', { skip }, async () => {
+test('verify 2: same scale: for every canyon plate at 3x and 9x through the Vepr\'s scope (range-day-eleven: its BugBuster 3-9x32; 2x and 7x before) and at 1x through its irons, the scene puts the plate\'s centre within 1 pixel of the plain drawing, at both sizes', { skip }, async () => {
   let worstOn = 0, worstAll = 0, worstWhere = '';
   for (const [sizeName, viewport] of [['phone', { width: 412, height: 915 }], ['computer', { width: 1280, height: 800 }]]) {
     const { page, context, errors } = await signedIn(viewport);
     await setPicture(page, 'full');
-    for (const [name, path, zoom] of [['scope 2x', `${PIRU}&sight=utg-2-7x44`, 2], ['scope 7x', `${PIRU}&sight=utg-2-7x44`, 7], ['irons 1x', `${PIRU}&sight=vepr-irons`, null]]) {
+    for (const [name, path, zoom] of [['scope 3x', `${PIRU}&sight=utg-bugbuster-3-9x32`, 3], ['scope 9x', `${PIRU}&sight=utg-bugbuster-3-9x32`, 9], ['irons 1x', `${PIRU}&sight=vepr-irons`, null]]) {
       await page.goto(`${base}${path}`); await page.waitForSelector('#fire');
       await sceneReady(page);
       assert.equal(await page.evaluate(() => RangeDayLine.picture), 'full', `${sizeName} ${name}: the Full picture is up`);
@@ -96,7 +105,7 @@ test('verify 3: same shots under every picture: twenty seeded shots at the 600-y
   const results = {};
   for (const [i, picture] of ['full', 'light', 'plain'].entries()) {
     await setPicture(page, picture);
-    await page.goto(`${base}${PIRU}&sight=utg-2-7x44`); await page.waitForSelector('#fire');
+    await page.goto(`${base}${PIRU}&sight=utg-bugbuster-3-9x32`); await page.waitForSelector('#fire');
     await sceneReady(page);
     assert.equal(await page.evaluate(() => RangeDayLine.picture), picture, `the ${picture} picture is up`);
     if (i) { await page.click('#another-box'); await wait(100); }
@@ -116,14 +125,14 @@ test('verify 3: same shots under every picture: twenty seeded shots at the 600-y
 test('verify 6: the look: the rendered sky, a sunlit hillside, the dirt floor in sun and the plate\'s red paint through the scope, beside the measured colours (docs/LOOK.md)', { skip }, async () => {
   const P = flat.look.palette['cta-piru'];
   const STATES = [
-    ['February midday', `${PIRU}&sight=utg-2-7x44&month=2&time=midday`, [
+    ['February midday', `${PIRU}&sight=utg-bugbuster-3-9x32&month=2&time=midday`, [
       ['sky, as high as the roof lets the view go (18 degrees up)', { yaw: 0, pitch: 18, fov: 4 }, P.green.sky, true],
       ['sunlit hillside (the headwall, 700 m, facing the noon sun; a 50 m patch)', { aim: [0, -700], fov: 4 }, P.green.sunlitSlope, true],
       ['dirt floor in sun (60 m out)', { aim: [3, -60], fov: 6 }, P.green.floor, true],
       ['scrub on the left wall (450 m)', { aim: [-140, -450], fov: 2.5 }, P.green.scrub, false, 'the measured scrub is a grey-green; the drawn scrub keeps more of the photograph\'s warmth, so its blue channel runs darker'],
       ['sunlit brush (the three bushes nearest the line of fire, 250 to 350 m out, each at 0.3 degrees)', { brush: true, fov: 0.3 }, P.green.scrub, false, 'a bush is lit on one side and shaded on the other; the measured scrub colour is a whole hillside\'s'],
       ['the 600-yard plate\'s red paint through the scope at 7x', { plate: 4, fov: 45.8 / 60, glass: true }, P.paintRedInSun, true]]],
-    ['September afternoon', `${PIRU}&sight=utg-2-7x44&month=9&time=afternoon`, [
+    ['September afternoon', `${PIRU}&sight=utg-bugbuster-3-9x32&month=9&time=afternoon`, [
       ['sky, as high as the roof lets the view go (18 degrees up)', { yaw: 0, pitch: 18, fov: 4 }, P.dry.sky, true],
       ['sunlit dry slope (the right wall, 600 m, facing the afternoon sun; a 40 m patch)', { aim: [150, -600], fov: 4 }, P.dry.sunlitSlope, true],
       ['dirt floor in sun (60 m out)', { aim: [3, -60], fov: 6 }, P.dry.floor, false, 'at half past three the floor is lit at a low angle; the photograph it was measured from was taken at 15:43 with the floor in fuller sun'],
@@ -178,7 +187,7 @@ test('verify 7: weight: what the canyon course downloads on Light and on Full, a
     const got = [];
     page.on('response', async (r) => { const u = new URL(r.url()).pathname; if (u.startsWith('/terrain/') || u === '/scene.min.js') { try { got.push({ path: u, bytes: (await r.body()).length, cache: r.headers()['cache-control'], type: r.headers()['content-type'] }); } catch {} } });
     await setPicture(page, picture);
-    await page.goto(`${base}${PIRU}&sight=utg-2-7x44`); await page.waitForSelector('#fire'); await sceneReady(page);
+    await page.goto(`${base}${PIRU}&sight=utg-bugbuster-3-9x32`); await page.waitForSelector('#fire'); await sceneReady(page);
     assert.equal(await page.evaluate(() => RangeDayLine.picture), picture);
     const total = got.reduce((s, g) => s + g.bytes, 0);
     console.log(`  ${picture}: ${total} bytes (${(total / 1048576).toFixed(2)} MB) downloaded for the canyon course:`);
@@ -196,7 +205,7 @@ test('verify 7: weight: what the canyon course downloads on Light and on Full, a
 
 test('verify 8: fallback: with 3D switched off in the browser the firing line shows the Plain picture and the one line, and a seeded shot still lands and is recorded', { skip }, async () => {
   const { page, context } = await signedIn({ width: 412, height: 915 }, () => { const orig = HTMLCanvasElement.prototype.getContext; HTMLCanvasElement.prototype.getContext = function (type, ...rest) { if (type === 'webgl2' || type === 'webgl') return null; return orig.call(this, type, ...rest); }; });
-  await page.goto(`${base}${PIRU}&sight=utg-2-7x44`); await page.waitForSelector('#fire'); await sceneReady(page);
+  await page.goto(`${base}${PIRU}&sight=utg-bugbuster-3-9x32`); await page.waitForSelector('#fire'); await sceneReady(page);
   assert.equal(await page.evaluate(() => RangeDayLine.picture), 'plain');
   assert.equal(await page.textContent('#picture-note'), 'This device could not draw the full picture; showing the plain one.');
   assert.equal(await page.$eval('#scene', (el) => el.hidden), true, 'the scene canvas is hidden');
@@ -212,7 +221,7 @@ test('verify 8: fallback: with 3D switched off in the browser the firing line sh
 test('verify 9: nothing new tells the wind: with "Show the conditions" off the page holds no wind figure under the Full picture, beyond the wind call the player stated', { skip }, async () => {
   const { page, context } = await signedIn({ width: 412, height: 915 });
   await setPicture(page, 'full');
-  await page.goto(`${base}${PIRU}&sight=utg-2-7x44&month=7&time=afternoon`); await page.waitForSelector('#fire'); await sceneReady(page);
+  await page.goto(`${base}${PIRU}&sight=utg-bugbuster-3-9x32&month=7&time=afternoon`); await page.waitForSelector('#fire'); await sceneReady(page);
   assert.equal(await page.evaluate(() => RangeDayLine.picture), 'full');
   assert.equal(await page.isChecked('#show-conditions'), false);
   const text = await page.evaluate(() => { const call = document.getElementById('windcall').textContent; return document.body.textContent.replace(call, ''); });
@@ -226,7 +235,7 @@ test('verify 9: nothing new tells the wind: with "Show the conditions" off the p
 
 test('the first visit: with no picture chosen yet the line draws Full, counts frames for two seconds and keeps Full or Light on the device; the setting shows it', { skip }, async () => {
   const { page, context } = await signedIn({ width: 412, height: 915 });
-  await page.goto(`${base}${PIRU}&sight=utg-2-7x44`); await page.waitForSelector('#fire'); await sceneReady(page);
+  await page.goto(`${base}${PIRU}&sight=utg-bugbuster-3-9x32`); await page.waitForSelector('#fire'); await sceneReady(page);
   await page.waitForFunction(() => JSON.parse(localStorage.getItem('range-day:picture') || 'null') !== null, null, { timeout: 90000 }); // 90 s, not 30: two seconds of the picture's own clock took longer than 30 on a slow runner (Checks run 44776316081)
   const chosen = await page.evaluate(() => JSON.parse(localStorage.getItem('range-day:picture')));
   assert.ok(['full', 'light'].includes(chosen), `chose ${chosen}`);
@@ -280,9 +289,10 @@ test('verify 4 (range-day-six): the sights\' angles are unchanged: for the Vepr\
   console.log(`  Vepr irons: drawn notch ${r.notch.toFixed(1)} px (data ${v.notchMoa} MOA × ${r.k.toFixed(3)} px/MOA = ${(v.notchMoa * r.k).toFixed(1)} px), drawn post ${r.post.toFixed(1)} px (data ${v.frontPostMoa} MOA = ${(v.frontPostMoa * r.k).toFixed(1)} px); threshold ${r.thr} between the notch's lightest ${r.la} and the steel ${r.ls}`);
   assert.ok(Math.abs(r.notch - v.notchMoa * r.k) <= 2.5, `notch ${r.notch.toFixed(1)} vs ${(v.notchMoa * r.k).toFixed(1)}`);
   assert.ok(Math.abs(r.post - v.frontPostMoa * r.k) <= 1.5, `post ${r.post.toFixed(1)} vs ${(v.frontPostMoa * r.k).toFixed(1)}`);
-  // the Vepr's scope at 7x: the mil-dot reticle's dot spacing
-  await page.goto(`${base}${PIRU}&sight=utg-2-7x44`); await page.waitForSelector('#fire'); await sceneReady(page);
-  await page.evaluate(() => { window.__raf = window.__raf || window.requestAnimationFrame.bind(window); window.requestAnimationFrame = () => 0; RangeDayLine.setZoom(7); RangeDayLine.setHold(0, 0); }); await wait(300); await framesPassed(page);
+  // the Vepr's scope at the old 7x view (a test view since range-day-eleven: at the BugBuster's own 9x the dots are 8 to 14 px apart
+  // and drawn 1.2 px in radius, too small for this row's measure; the spacing is dotSpacingMoa × the view's scale at every power)
+  await page.goto(`${base}${PIRU}&sight=utg-bugbuster-3-9x32`); await page.waitForSelector('#fire'); await sceneReady(page);
+  await page.evaluate((z) => { window.__raf = window.__raf || window.requestAnimationFrame.bind(window); window.requestAnimationFrame = () => 0; RangeDayLine.setZoom(z); RangeDayLine.setHold(0, 0); }, OLD7); await wait(300); await framesPassed(page);
   r = await page.evaluate(() => {
     const c = document.getElementById('view'), g = c.getContext('2d'), size = RangeDayLine.geometry.viewPx, cx = size / 2, cy = size / 2;
     const lum = (d, x) => 0.299 * d[x * 4] + 0.587 * d[x * 4 + 1] + 0.114 * d[x * 4 + 2];
@@ -291,8 +301,8 @@ test('verify 4 (range-day-six): the sights\' angles are unchanged: for the Vepr\
     const right = dots.filter((x) => x > cx + 2 && x < cx + size * 0.4), left = dots.filter((x) => x < cx - 2 && x > cx - size * 0.4);
     return { k: RangeDayLine.geometry.pxPerMoa, first: right[0] - cx, firstLeft: cx - left[left.length - 1], spacing: right.length > 1 ? right[1] - right[0] : null };
   });
-  const dot = S['utg-2-7x44'].reticle.dotSpacingMoa;
-  console.log(`  Vepr scope at 7x: first mil-dot ${r.first.toFixed(1)} px right and ${r.firstLeft.toFixed(1)} px left of the centre, the next ${r.spacing && r.spacing.toFixed(1)} px on (data ${dot} MOA × ${r.k.toFixed(3)} = ${(dot * r.k).toFixed(1)} px)`);
+  const dot = S['utg-bugbuster-3-9x32'].reticle.dotSpacingMoa;
+  console.log(`  Vepr scope at the old 7x view (${OLD7.toFixed(1)}x on the BugBuster's rule): first mil-dot ${r.first.toFixed(1)} px right and ${r.firstLeft.toFixed(1)} px left of the centre, the next ${r.spacing && r.spacing.toFixed(1)} px on (data ${dot} MOA × ${r.k.toFixed(3)} = ${(dot * r.k).toFixed(1)} px)`);
   assert.ok(Math.abs(r.first - dot * r.k) <= 1.5 && Math.abs(r.firstLeft - dot * r.k) <= 1.5, `mil-dot spacing ${r.first}/${r.firstLeft} vs ${(dot * r.k).toFixed(1)}`);
   // the Tavor's iron sights (ring and post) on the rifle line: the post's width at the row just under the centre
   await page.goto(`${base}/line?course=angeles-sylmar&rifle=iwi-tavor-sar&sight=tavor-irons&load=imi-m193`); await page.waitForSelector('#fire'); await sceneReady(page);
@@ -340,7 +350,7 @@ async function sharpness(page, plateIx, zoom) {
   });
 }
 
-test('verify 5 (range-day-six): sharpness through the scope at 7x on the 600- and 1,000-yard plates, Full, both widths, against docs/reports/picture-before.txt: no state lower than it started (the aim of at least double is printed, met or missed); and the gain is ground, not grain: with the aim moved 2 minutes of angle the same patch of hillside, re-found by its ground position, differs by less than 8 of 255 in median brightness', { skip }, async () => {
+test('verify 5 (range-day-six): sharpness through the scope at 7x (since range-day-eleven the old 2-7x44\'s 7x view, 4 ft at 100 yards, as a test view on the BugBuster) on the 600- and 1,000-yard plates, Full, both widths, against docs/reports/picture-before.txt: no state lower than it started (the aim of at least double is printed, met or missed); and the gain is ground, not grain: with the aim moved 2 minutes of angle the same patch of hillside, re-found by its ground position, differs by less than 8 of 255 in median brightness', { skip }, async () => {
   const before = require('node:fs').readFileSync(path.join(root, 'docs', 'reports', 'picture-before.txt'), 'utf8');
   const was = (width, day, state) => { const m = new RegExp(`^${width} px, full, ${day}, ${state}: sharpness ([\\d.]+)`, 'm').exec(before); return m ? Number(m[1]) : null; };
   for (const [width, viewport] of [[412, { width: 412, height: 915 }], [1280, { width: 1280, height: 800 }]]) {
@@ -348,11 +358,11 @@ test('verify 5 (range-day-six): sharpness through the scope at 7x on the 600- an
     await setPicture(page, 'full');
     for (const [day, q] of [['February midday', 'month=2&time=midday'], ['September afternoon', 'month=9&time=afternoon']]) {
       await page.evaluate(() => localStorage.removeItem('range-day:day:open'));
-      await page.goto(`${base}${PIRU}&sight=utg-2-7x44&${q}`); await page.waitForSelector('#fire'); await sceneReady(page);
+      await page.goto(`${base}${PIRU}&sight=utg-bugbuster-3-9x32&${q}`); await page.waitForSelector('#fire'); await sceneReady(page);
       assert.equal(await page.evaluate(() => RangeDayLine.picture), 'full');
       await page.evaluate(() => { window.__raf = window.__raf || window.requestAnimationFrame.bind(window); window.requestAnimationFrame = () => 0; }); await wait(300); await framesPassed(page);
       for (const [name, ix] of [['scope 7x, 600 yd', 4], ['scope 7x, 1000 yd', 8]]) {
-        const now = await sharpness(page, ix, 7), old = was(width, day, name);
+        const now = await sharpness(page, ix, OLD7), old = was(width, day, name);
         console.log(`  ${width} px, ${day}, ${name}: sharpness ${now.toFixed(2)}, was ${old === null ? 'unmeasured' : old.toFixed(2)}${old === null ? '' : now >= 2 * old ? ' (at least double: the aim met)' : ` (${(now / old).toFixed(2)} times: the aim of double missed)`}`);
         if (old !== null) assert.ok(now >= old, `${width} px, ${day}, ${name}: ${now.toFixed(2)} is lower than it started (${old.toFixed(2)})`);
       }
@@ -400,7 +410,7 @@ test('verify 7 (range-day-seven): every board\'s two posts and every plate\'s po
   const D = flat.look.depth, T = flat.look.things;
   const { page, context } = await signedIn({ width: 412, height: 915 });
   await setPicture(page, 'full');
-  await page.goto(`${base}${PIRU}&sight=utg-2-7x44`); await page.waitForSelector('#fire'); await sceneReady(page);
+  await page.goto(`${base}${PIRU}&sight=utg-bugbuster-3-9x32`); await page.waitForSelector('#fire'); await sceneReady(page);
   const g = await postsBehind(page);
   assert.equal(g.near, D.cameraNearM, 'the camera\'s near plane is the data\'s'); assert.equal(g.far, D.cameraFarM, 'the camera\'s far plane is the data\'s');
   const farRowM = Math.max(...T.boardRowsYards) * 0.9144, farPlateM = Math.max(...flat.courses['cta-piru'].plates.map((p) => p.yards)) * 0.9144;
@@ -458,14 +468,14 @@ async function darkInBoards(page, rowYd, frames) {
   }, [rowYd, frames]);
 }
 
-test('verify 8 (range-day-seven): through the Vepr\'s scope at 7x on each board row (100, 200 and 400 yards), over twelve frames with the aim wandering, on Full and on Light at both sizes, no dark column shows inside a board\'s face where its post stands', { skip }, async () => {
+test('verify 8 (range-day-seven): through the Vepr\'s scope at 7x (since range-day-eleven the old scope\'s 7x view as a test view) on each board row (100, 200 and 400 yards), over twelve frames with the aim wandering, on Full and on Light at both sizes, no dark column shows inside a board\'s face where its post stands', { skip }, async () => {
   const bad = [];
   for (const picture of ['full', 'light']) for (const [sizeName, viewport] of [['phone', { width: 412, height: 915 }], ['computer', { width: 1280, height: 800 }]]) {
     const { page, context } = await signedIn(viewport);
     await setPicture(page, picture);
-    await page.goto(`${base}${PIRU}&sight=utg-2-7x44&month=9&time=midday`); await page.waitForSelector('#fire'); await sceneReady(page);
+    await page.goto(`${base}${PIRU}&sight=utg-bugbuster-3-9x32&month=9&time=midday`); await page.waitForSelector('#fire'); await sceneReady(page);
     assert.equal(await page.evaluate(() => RangeDayLine.picture), picture);
-    await page.evaluate(() => { window.__raf = window.__raf || window.requestAnimationFrame.bind(window); window.requestAnimationFrame = () => 0; RangeDayLine.setZoom(7); }); await wait(300); await framesPassed(page);
+    await page.evaluate((z) => { window.__raf = window.__raf || window.requestAnimationFrame.bind(window); window.requestAnimationFrame = () => 0; RangeDayLine.setZoom(z); }, OLD7); await wait(300); await framesPassed(page);
     for (const rowYd of flat.look.things.boardRowsYards) {
       const r = await darkInBoards(page, rowYd, 12);
       const share = r.all ? r.dark / r.all : 0;
@@ -488,7 +498,7 @@ test('verify 8 (range-day-eight): a material that fails to load: with the floor\
   const floorFile = `/${flat.terrain.surfaces.floor.light.color.file}`;
   await page.route(`**${floorFile}`, (r) => r.fulfill({ status: 404, contentType: 'application/json', body: '{"error":"not found"}' }));
   await setPicture(page, 'light');
-  await page.goto(`${base}${PIRU}&sight=utg-2-7x44&month=9&time=afternoon`); await page.waitForSelector('#fire'); await sceneReady(page);
+  await page.goto(`${base}${PIRU}&sight=utg-bugbuster-3-9x32&month=9&time=afternoon`); await page.waitForSelector('#fire'); await sceneReady(page);
   assert.equal(await page.evaluate(() => RangeDayLine.picture), 'light', 'the scene drew');
   const m = await page.evaluate(() => RangeDayLine.scene.materials);
   console.log(`  materials: loaded ${m.loaded.join(', ')}; failed ${m.failed.join('; ')}`);
@@ -501,13 +511,13 @@ test('verify 8 (range-day-eight): a material that fails to load: with the floor\
   await context.close();
 });
 
-test('verify 5 (range-day-eight): no visible repeat: on the floor and on a hillside at 7x the picture matches itself shifted by one material width hardly more than at other shifts, as laid; laid in a plain grid it matches clearly more (the measure fails a plain grid); both copies of each material, each at its own width', { skip }, async () => {
+test('verify 5 (range-day-eight): no visible repeat: on the floor and on a hillside at 7x (the old scope\'s 7x view, a test view since range-day-eleven) the picture matches itself shifted by one material width hardly more than at other shifts, as laid; laid in a plain grid it matches clearly more (the measure fails a plain grid); both copies of each material, each at its own width', { skip }, async () => {
   const { page, context } = await signedIn({ width: 1280, height: 800 });
   await setPicture(page, 'full');
   for (const [day, q, grass] of [['February midday', 'month=2&time=midday', 'green-grass'], ['September afternoon', 'month=9&time=afternoon', 'dry-grass']]) {
     await page.evaluate(() => localStorage.removeItem('range-day:day:open'));
-    await page.goto(`${base}${PIRU}&sight=utg-2-7x44&${q}`); await page.waitForSelector('#fire'); await sceneReady(page);
-    await page.evaluate(() => { window.__raf = window.__raf || window.requestAnimationFrame.bind(window); window.requestAnimationFrame = () => 0; window.RD_SCENE_DEBUG = 'noshimmer'; RangeDayLine.setZoom(7); }); await wait(300); await framesPassed(page);
+    await page.goto(`${base}${PIRU}&sight=utg-bugbuster-3-9x32&${q}`); await page.waitForSelector('#fire'); await sceneReady(page);
+    await page.evaluate((z) => { window.__raf = window.__raf || window.requestAnimationFrame.bind(window); window.requestAnimationFrame = () => 0; window.RD_SCENE_DEBUG = 'noshimmer'; RangeDayLine.setZoom(z); }, OLD7); await wait(300); await framesPassed(page);
     const fov7 = await page.evaluate(() => RangeDayLine.fovMoa / 60);
     const beside = await page.evaluate(() => { const w = RangeDayLine.scene.plateWorld(4); return [w.x + 20, w.z]; });
     // each material is laid twice, at its own size and at macroScale times it: each copy is slid by its own width while the other stays put (sliding both at once, the one not at its own width diluted the plain grid's match: 0.29 and 0.45 on the runner)
@@ -525,7 +535,7 @@ test('verify 5 (range-day-eight): no visible repeat: on the floor and on a hills
   await context.close();
 });
 
-test('verify 6 (range-day-eight): detail on the ground: the local contrast on the floor at 1x and on a hillside at 7x and at 21x, Full and Light, both days, at both widths, against docs/reports/ground-before.txt: none lower than before', { skip }, async () => {
+test('verify 6 (range-day-eight): detail on the ground: the local contrast on the floor at 1x and on a hillside at 7x and at 21x (the old scope\'s views, test views since range-day-eleven), Full and Light, both days, at both widths, against docs/reports/ground-before.txt: none lower than before', { skip }, async () => {
   const before = require('node:fs').readFileSync(path.join(root, 'docs', 'reports', 'ground-before.txt'), 'utf8');
   const was = (width, picture, day, name) => { const m = new RegExp(`^${width} px, ${picture}, ${day}, detail ${name.replace(/[()']/g, '.')}: local contrast ([\\d.]+)`, 'm').exec(before); return m ? Number(m[1]) : null; };
   for (const [width, viewport] of [[412, { width: 412, height: 915 }], [1280, { width: 1280, height: 800 }]]) for (const picture of ['full', 'light']) {
@@ -533,10 +543,11 @@ test('verify 6 (range-day-eight): detail on the ground: the local contrast on th
     await setPicture(page, picture);
     for (const [day, q] of [['February midday', 'month=2&time=midday'], ['September afternoon', 'month=9&time=afternoon']]) {
       await page.evaluate(() => localStorage.removeItem('range-day:day:open'));
-      await page.goto(`${base}${PIRU}&sight=utg-2-7x44&${q}`); await page.waitForSelector('#fire'); await sceneReady(page);
+      await page.goto(`${base}${PIRU}&sight=utg-bugbuster-3-9x32&${q}`); await page.waitForSelector('#fire'); await sceneReady(page);
       await page.evaluate(() => { window.__raf = window.__raf || window.requestAnimationFrame.bind(window); window.requestAnimationFrame = () => 0; window.RD_SCENE_DEBUG = 'noshimmer'; }); await wait(300); await framesPassed(page);
       const fovAt = (z) => page.evaluate((m) => { RangeDayLine.setZoom(m); return RangeDayLine.fovMoa / 60; }, z);
-      const fov7 = await fovAt(7), fov21 = await fovAt(21);
+      const fov7 = await fovAt(OLD7), fov21 = await fovAt(OLD21);
+      assert.ok(Math.abs(fov7 * 60 - (4 * 12) / E.inchesPerMoa(100)) < 1e-6 && Math.abs(fov21 * 60 - ((28 / 21) * 12) / E.inchesPerMoa(100)) < 1e-6, `the old views: ${fov7 * 60} and ${fov21 * 60} MOA`);
       const beside = await page.evaluate(() => { const w = RangeDayLine.scene.plateWorld(4); return [w.x + 20, w.z]; });
       for (const [name, P, fov] of [['floor at 1x, 25 m out (the irons\' field)', [2, -25], 6.68], ['hillside 20 m right of the 600-yard plate at 7x', beside, fov7], ['the same hillside at 21x (the test view)', beside, fov21]]) {
         const now = await page.evaluate(([src, P, f]) => { const contrast = eval(src); const s = RangeDayLine.scene, eye = 4 * 0.3048, g = s.groundAt(P[0], P[1]); s.setView({ yawDeg: (Math.atan2(P[0], -P[1]) * 180) / Math.PI, pitchDeg: (Math.atan2(g - eye, -P[1]) * 180) / Math.PI, fovDeg: f, glass: f < 3, windMph: 0 }); s.render(3); return contrast(); }, [inPage(GM.contrast.toString()), P, fov]);

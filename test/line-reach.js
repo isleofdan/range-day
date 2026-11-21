@@ -12,7 +12,7 @@ const PHONES = [[412, 915], [412, 830]];
 // magnifier, irons with a rear leaf (the screenshot states line-scope-7x,
 // line-magnifier-300 and line-ak-leaf).
 const SIGHTS = [
-  { name: 'Vepr with its scope (zoom)', q: 'course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt', glass: '#zoomrow' },
+  { name: 'Vepr with its scope (zoom)', q: 'course=cta-piru&rifle=molot-vepr-54r&sight=utg-bugbuster-3-9x32&load=sb-174-hpbt', glass: '#zoomrow' },
   { name: 'Tavor SAR with its dot (magnifier)', q: 'course=angeles-sylmar&rifle=iwi-tavor-sar&sight=pa-md25&load=imi-m193', glass: '#magrow' },
   { name: 'AK with its irons (rear leaf)', q: 'course=angeles-sylmar&rifle=ak-762&sight=ak-irons&load=silver-bear-123', glass: '#leafrow' },
 ];

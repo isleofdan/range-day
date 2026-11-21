@@ -106,9 +106,9 @@ test('verify 4: zero the Vepr at 100 yards, reload, the zero is still there; cha
   const other = await groupCenter(page);
   const day2 = await page.evaluate(() => RangeDayZero.day.weather);
   // The engine's own figure for the difference, with the same sight, each load in its own day's air, no spread.
-  const setting = await page.evaluate(() => JSON.parse(localStorage.getItem('range-day:sight:molot-vepr-54r:utg-2-7x44')));
-  const rifle = flat.rifles['molot-vepr-54r'], sight = flat.sights['utg-2-7x44'];
-  const common = { drag: flat.physics.dragTables, powder: flat.physics.powderTemperature, sightHeightIn: rifle.sightHeightIn['utg-2-7x44'], elevationMoa: setting.elevationClicks * sight.clickMoa + rifle.boreOffsetMoa.up, windageMoa: setting.windageClicks * sight.windageClickMoa + rifle.boreOffsetMoa.right, targetYards: 200 };
+  const setting = await page.evaluate(() => JSON.parse(localStorage.getItem('range-day:sight:molot-vepr-54r:utg-bugbuster-3-9x32')));
+  const rifle = flat.rifles['molot-vepr-54r'], sight = flat.sights['utg-bugbuster-3-9x32'];
+  const common = { drag: flat.physics.dragTables, powder: flat.physics.powderTemperature, sightHeightIn: rifle.sightHeightIn['utg-bugbuster-3-9x32'], elevationMoa: setting.elevationClicks * sight.clickMoa + rifle.boreOffsetMoa.up, windageMoa: setting.windageClicks * sight.windageClickMoa + rifle.boreOffsetMoa.right, targetYards: 200 };
   const cond = (w) => ({ altitudeFt: w.altitudeFt, tempF: w.tempF, pressureInHg: w.pressureInHg, humidity: w.humidity });
   const a = E.fly({ ...common, load: flat.loads['sb-174-hpbt'], conditions: cond(day1), wind: day1.wind }), b = E.fly({ ...common, load: flat.loads['wolf-203-sp'], conditions: cond(day2), wind: day2.wind });
   const predicted = b.hit.upIn - a.hit.upIn;
@@ -222,7 +222,7 @@ test('a browser that reads but refuses to write: the zero bench and the firing l
 test('every screen renders at 412x915 and 1280x800 with no sideways scroll and no console error', { skip }, async () => {
   for (const viewport of [{ width: 412, height: 915 }, { width: 1280, height: 800 }]) {
     const { page, context, errors } = await signedIn(viewport);
-    for (const p of ['/', '/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt', '/line?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt', '/line?course=angeles-sylmar&rifle=bcm-ar15&load=imi-m193', '/day', '/book?course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt']) {
+    for (const p of ['/', '/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt', '/line?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt', '/line?course=angeles-sylmar&rifle=bcm-ar15&load=imi-m193', '/day', '/book?course=cta-piru&rifle=molot-vepr-54r&sight=utg-bugbuster-3-9x32&load=sb-174-hpbt']) {
       await page.goto(`${base}${p}`);
       await page.waitForSelector(p === '/' ? '.rifle' : p === '/day' ? '#facts' : p.startsWith('/book') ? '#pages' : '#el-up');
       // the firing line's script fits its canvas to the screen when it runs (the HTML's canvas is 400 px wide until then); the width is read once the page's own script has run, not between the HTML and the script (with other checks loading the machine, range-day-seven saw the read land in that gap)
@@ -254,7 +254,8 @@ test('verify 6: a zero and a log written in the old form (per rifle and load) fo
   await page.goto(`${base}/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('#fire5');
   assert.match(await page.textContent('#saved'), /Saved zero for Sellier & Bellot 174 gr.*100 yards, elevation \+31 clicks/);
   await page.goto(`${base}/line?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('#fire');
-  assert.match(await page.textContent('#intro'), /UTG AccuShot 2-7x44/);
+  // range-day-eleven: the zero was made with the 2-7x44 the game modeled before; the BugBuster that took its place carries it.
+  assert.match(await page.textContent('#intro'), /UTG BugBuster 3-9x32/);
   assert.match(await page.textContent('#el-text'), /\+31 clicks/);
   assert.match(await page.textContent('#log tbody'), /9\.0 in low/);
   // The AR too, and the old records are still in place beside the new ones.
@@ -262,7 +263,7 @@ test('verify 6: a zero and a log written in the old form (per rifle and load) fo
   assert.match(await page.textContent('#el-text'), /\+2 clicks/);
   assert.match(await page.textContent('#log tbody'), /hit \(level, centered/);
   const keys = await page.evaluate(() => Object.keys(localStorage).sort());
-  for (const k of ['range-day:zero:molot-vepr-54r:sb-174-hpbt', 'range-day:zero:molot-vepr-54r:utg-2-7x44:sb-174-hpbt', 'range-day:log:molot-vepr-54r:utg-2-7x44:sb-174-hpbt', 'range-day:zero:bcm-ar15:ar-irons:federal-gmm-69', 'range-day:log:bcm-ar15:ar-irons:federal-gmm-69', 'range-day:log:bcm-ar15:federal-gmm-69']) assert.ok(keys.includes(k), `${k} is stored`);
+  for (const k of ['range-day:zero:molot-vepr-54r:sb-174-hpbt', 'range-day:zero:molot-vepr-54r:utg-bugbuster-3-9x32:sb-174-hpbt', 'range-day:log:molot-vepr-54r:utg-bugbuster-3-9x32:sb-174-hpbt', 'range-day:zero:bcm-ar15:ar-irons:federal-gmm-69', 'range-day:log:bcm-ar15:ar-irons:federal-gmm-69', 'range-day:log:bcm-ar15:federal-gmm-69']) assert.ok(keys.includes(k), `${k} is stored`);
   // The old Vepr zero was made with the scope: the Vepr's irons have no zero.
   await page.goto(`${base}/line?course=cta-piru&rifle=molot-vepr-54r&sight=vepr-irons&load=sb-174-hpbt`); await page.waitForSelector('#fire');
   assert.match(await page.textContent('#zero-note'), /No zero saved/);
@@ -273,15 +274,15 @@ test('verify 6: a zero and a log written in the old form (per rifle and load) fo
 test('verify 7: the old addresses without a sight open the Vepr with its scope on the line and the bench', { skip }, async () => {
   const { page, context, errors } = await signedIn();
   await page.goto(`${base}/line?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('#fire');
-  assert.match(await page.textContent("#intro"), /Molot Vepr, 7.62x54R with UTG AccuShot 2-7x44/);
+  assert.match(await page.textContent("#intro"), /Molot Vepr, 7.62x54R with UTG BugBuster 3-9x32/);
   assert.ok(await page.isVisible('#zoom'), 'the scope has its zoom');
   await page.goto(`${base}/zero?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt`); await page.waitForSelector('#fire5');
-  assert.match(await page.textContent('#intro'), /Molot Vepr, 7.62x54R, UTG AccuShot 2-7x44/);
+  assert.match(await page.textContent('#intro'), /Molot Vepr, 7.62x54R, UTG BugBuster 3-9x32/);
   assert.match(await page.textContent('#click-help'), /0\.25 MOA/);
   // The installed app's start page, bare: it opens, with the last rifle picked.
   await page.goto(`${base}/`); await page.waitForSelector('.rifle.picked');
   assert.equal(await page.getAttribute('.rifle.picked', 'data-rifle'), 'molot-vepr-54r');
-  assert.match(await page.getAttribute('#go-line', 'href'), /sight=utg-2-7x44/);
+  assert.match(await page.getAttribute('#go-line', 'href'), /sight=utg-bugbuster-3-9x32/);
   assert.deepEqual(errors, []);
   await context.close();
 });
@@ -293,7 +294,7 @@ test('home remembers each rifle\'s sight: pick the Tavor SAR, choose its irons, 
   await page.selectOption('#sight', 'tavor-irons');
   await page.selectOption('#load', 'federal-gmm-69');
   await page.click('.rifle[data-rifle="molot-vepr-54r"]'); await page.waitForSelector('.rifle.picked[data-rifle="molot-vepr-54r"]');
-  assert.equal(await page.inputValue('#sight'), 'utg-2-7x44', 'the Vepr opens with its own last sight (its default on a new device)');
+  assert.equal(await page.inputValue('#sight'), 'utg-bugbuster-3-9x32', 'the Vepr opens with its own last sight (its default on a new device)');
   await page.click('.rifle[data-rifle="iwi-tavor-sar"]'); await page.waitForSelector('.rifle.picked[data-rifle="iwi-tavor-sar"]');
   assert.equal(await page.inputValue('#sight'), 'tavor-irons', 'the SAR comes back with the irons it was left with');
   assert.equal(await page.inputValue('#load'), 'federal-gmm-69', 'and its load');
@@ -309,7 +310,7 @@ test('home remembers each rifle\'s sight: pick the Tavor SAR, choose its irons, 
 
 test('on a wide screen the Steady and Fire bar stands beside the view and covers none of it', { skip }, async () => {
   const { page, context, errors } = await signedIn({ width: 1280, height: 800 });
-  await page.goto(`${base}/line?course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt`); await page.waitForSelector('#fire');
+  await page.goto(`${base}/line?course=cta-piru&rifle=molot-vepr-54r&sight=utg-bugbuster-3-9x32&load=sb-174-hpbt`); await page.waitForSelector('#fire');
   const r = await page.evaluate(() => { const b = (s) => document.querySelector(s).getBoundingClientRect().toJSON(); return { view: b('#view'), bar: b('.firebar'), fire: b('#fire'), w: window.innerWidth, h: window.innerHeight }; });
   const overlap = !(r.bar.left >= r.view.right || r.bar.right <= r.view.left || r.bar.top >= r.view.bottom || r.bar.bottom <= r.view.top);
   console.log(`  1280x800: view ${r.view.left.toFixed(0)}-${r.view.right.toFixed(0)} x ${r.view.top.toFixed(0)}-${r.view.bottom.toFixed(0)}; bar ${r.bar.left.toFixed(0)}-${r.bar.right.toFixed(0)} x ${r.bar.top.toFixed(0)}-${r.bar.bottom.toFixed(0)}`);
@@ -342,25 +343,25 @@ test('verify 11: home at 412x915, each of the seven rifles chosen in turn: both 
   await context.close();
 });
 
-test('verify 10: turning the Vepr\'s scope 40 MOA: the coarse buttons in 40 presses, a held fine button in seconds; the limit stops it and the screen says so', { skip }, async () => {
+test('verify 10: turning the Vepr\'s scope 30 MOA, its full travel (range-day-eleven: the BugBuster\'s 120 clicks each way; it was 40 MOA on the 2-7x44): the coarse buttons in 30 presses, a held fine button in seconds; the limit stops it and the screen says so', { skip }, async () => {
   const { page, context, errors } = await signedIn();
-  await page.goto(`${base}/line?course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt`); await page.waitForSelector('#fire');
-  await page.evaluate(() => { localStorage.removeItem('range-day:sight:molot-vepr-54r:utg-2-7x44'); localStorage.removeItem('range-day:zero:molot-vepr-54r:utg-2-7x44:sb-174-hpbt'); localStorage.removeItem('range-day:zero:molot-vepr-54r:sb-174-hpbt'); });
+  await page.goto(`${base}/line?course=cta-piru&rifle=molot-vepr-54r&sight=utg-bugbuster-3-9x32&load=sb-174-hpbt`); await page.waitForSelector('#fire');
+  await page.evaluate(() => { localStorage.removeItem('range-day:sight:molot-vepr-54r:utg-bugbuster-3-9x32'); localStorage.removeItem('range-day:zero:molot-vepr-54r:utg-bugbuster-3-9x32:sb-174-hpbt'); localStorage.removeItem('range-day:zero:molot-vepr-54r:sb-174-hpbt'); });
   await page.reload(); await page.waitForSelector('#fire');
   const clicks = async () => page.evaluate(() => RangeDayLine.setting.elevationClicks);
   assert.equal(await clicks(), 0);
   // The coarse pair: one whole MOA a press (4 clicks on this scope).
   let presses = 0;
-  while ((await clicks()) < 160) { await page.click('#el-up-moa'); presses++; if (presses > 200) break; }
-  assert.equal(presses, 40, '40 MOA in 40 presses of the coarse button');
-  assert.equal(await clicks(), 160, 'the data\'s limit: 160 clicks each way');
+  while ((await clicks()) < 120) { await page.click('#el-up-moa'); presses++; if (presses > 200) break; }
+  assert.equal(presses, 30, '30 MOA in 30 presses of the coarse button');
+  assert.equal(await clicks(), 120, 'the data\'s limit: 120 clicks each way');
   assert.match(await page.textContent('#result'), /end of its travel/);
   await page.click('#el-up-moa');
-  assert.equal(await clicks(), 160, 'the limit stops the knob');
-  assert.match(await page.textContent('#result'), /end of its travel \(160 clicks/);
-  assert.match(await page.textContent('#setting-line'), /Elevation \+160 clicks \(40 MOA up\)/);
+  assert.equal(await clicks(), 120, 'the limit stops the knob');
+  assert.match(await page.textContent('#result'), /end of its travel \(120 clicks/);
+  assert.match(await page.textContent('#setting-line'), /Elevation \+120 clicks \(30 MOA up\)/);
   // Back to the middle, then hold the fine button and time it.
-  await page.evaluate(() => { localStorage.removeItem('range-day:sight:molot-vepr-54r:utg-2-7x44'); });
+  await page.evaluate(() => { localStorage.removeItem('range-day:sight:molot-vepr-54r:utg-bugbuster-3-9x32'); });
   await page.reload(); await page.waitForSelector('#fire');
   assert.equal(await clicks(), 0);
   const box = await page.locator('#el-up').boundingBox();
@@ -368,16 +369,16 @@ test('verify 10: turning the Vepr\'s scope 40 MOA: the coarse buttons in 40 pres
   const t0 = Date.now();
   await page.mouse.down();
   let held = 0;
-  for (let i = 0; i < 300; i++) { await wait(50); if ((await clicks()) >= 160) { held = (Date.now() - t0) / 1000; break; } }
+  for (let i = 0; i < 300; i++) { await wait(50); if ((await clicks()) >= 120) { held = (Date.now() - t0) / 1000; break; } }
   await page.mouse.up();
   const after = await clicks();
-  console.log(`  Vepr scope, 40 MOA up: ${presses} presses of the 1-MOA button; a held click button reached 160 clicks in ${held.toFixed(1)} s`);
-  assert.equal(after, 160, 'the held button ran to the limit and stopped there');
+  console.log(`  Vepr scope, 30 MOA up: ${presses} presses of the 1-MOA button; a held click button reached 120 clicks in ${held.toFixed(1)} s`);
+  assert.equal(after, 120, 'the held button ran to the limit and stopped there');
   assert.ok(held > 2 && held < 15, `held ${held} s`);
   assert.match(await page.textContent('#result'), /end of its travel/);
   // A single tap is one click, never two.
   await page.click('#el-down');
-  assert.equal(await clicks(), 159);
+  assert.equal(await clicks(), 119);
   assert.deepEqual(errors, []);
   await context.close();
 });
@@ -528,7 +529,7 @@ test('verify 8: drawn angles are true: the dot\'s width, each drop-reticle mark\
 test('verify 12: on both courses the plates stand apart through the widest view, and the engine is given the height the drawing uses', { skip }, async () => {
   const { page, context, errors } = await signedIn();
   const lines = [];
-  for (const [path, rifle] of [['/line?course=cta-piru&rifle=molot-vepr-54r&sight=utg-2-7x44&load=sb-174-hpbt', 'Vepr, scope at 2x'], ['/line?course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193', 'AR-15, iron sights']]) {
+  for (const [path, rifle] of [['/line?course=cta-piru&rifle=molot-vepr-54r&sight=utg-bugbuster-3-9x32&load=sb-174-hpbt', 'Vepr, scope at 3x'], ['/line?course=angeles-sylmar&rifle=bcm-ar15&sight=ar-irons&load=imi-m193', 'AR-15, iron sights']]) {
     await noDay(page);
     await page.goto(`${base}${path}`); await page.waitForSelector('#fire');
     await page.evaluate(() => { if (document.getElementById('zoom').min) RangeDayLine.setZoom(Number(document.getElementById('zoom').min)); });
