@@ -190,7 +190,7 @@ and every AR-15 state (the Troy sights).
    | BugBuster dots | SCP-M392AOLWQ | second focal plane, true at 10x (maker's manual) | — | a model-specific mil-dot table |
 
 3. Drawn against data (canvas pixels, `test/browser.test.js` "range-day-twelve
-   verify 3"; full lines in `docs/reports/range-day-twelve/sights-drawn.txt`):
+   verify 3"; full lines in `docs/reports/range-day-twelve/browser-tests.txt`):
    for each new sight on each rifle, at 412 and 1280 px wide: the post or
    ball, the stem, the guards' gap, the XS stripe and the SeeAll's triangle
    drawn within 1.07 px of the data (largest: the KNS peep's stem at
@@ -208,7 +208,7 @@ and every AR-15 state (the Troy sights).
    the eight sight-and-rifle pairs, at both sizes): drawn where the angles
    put them, largest difference 0.000 px.
 5. Records (`test/day.test.js` "range-day-twelve verify 5", full keys in
-   `docs/reports/range-day-twelve/records.txt`):
+   `docs/reports/range-day-twelve/day-tests.txt`):
    per rifle, the two deciding figures (click elevation/windage; height
    over the bore) and the case:
    - the AR-15: 1.75/0.75 MOA, 2.6 in before; 1.33/0.5 MOA, 2.6 in now:
