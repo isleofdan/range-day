@@ -641,7 +641,7 @@ window.RD = (function () {
     const limit = sight.clicks;
     const perMoa = (which) => Math.round(1 / (which === 'elevationClicks' ? sight.clickMoa : sight.windageClickMoa));
     const coarse = sight.clickMoa < 1 || sight.windageClickMoa < 1;
-    for (const el of doc.querySelectorAll('.pair.coarse')) el.hidden = !coarse;
+    for (const el of doc.querySelectorAll('.pair.coarse, .btn.coarse')) el.hidden = !coarse; // the bench's coarse buttons stand singly in its rows (range-day-thirteen)
     const turn = (which, delta) => {
       const cur = getSetting()[which] || 0;
       let next = Math.max(-limit, Math.min(limit, cur + delta));

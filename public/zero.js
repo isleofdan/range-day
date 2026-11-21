@@ -24,10 +24,23 @@
   const weather = day.weather;
   let distance = 100;
   let setting = RD.getSight(rifleId, sightId);
-  let holes = []; // {upIn, rightIn, loadId}
+  // The holes in the paper at the chosen distance (range-day-thirteen): read from the day's own record, which holds every bench shot
+  // with its distance, its sight and where it struck, so a reload or a return to the page mid-group shows them again. They are the
+  // bench shots at this distance with this sight since the last fresh paper there (the day's freshPaper marker "bench:<yards>", the
+  // same marker the firing line's paper keeps under "<yards>": RD.hangFreshPaper).
+  const paperKey = () => `bench:${distance}`;
+  const benchHoles = () => {
+    const since = (day && day.freshPaper && day.freshPaper[paperKey()]) || 0;
+    return ((day && day.shots) || []).filter((s) => s.place === 'bench' && s.yards === distance && s.sight === sightId && s.reached && typeof s.upIn === 'number' && (s.n || 0) > since)
+      .map((s) => ({ upIn: s.upIn, rightIn: s.rightIn, loadId }));
+  };
+  let holes = benchHoles(); // {upIn, rightIn, loadId}
 
   const $ = (id) => document.getElementById(id);
   $('intro').textContent = `${rifle.name}, ${sight.name}, ${d.loads[loadId].name}. Aim is the center of the paper (36 inches square); the grid is 1 inch.`;
+  // The short line at the top: the rifle, the sight and the load in a few words (their full names are in the words below).
+  const grains = /(\d+ gr)\b/.exec(d.loads[loadId].name);
+  $('bench-short').innerHTML = `<span>${RD.esc(`${rifle.name.split(',')[0]} · ${sight.name.replace(/ \(.*\)$/, '').replace(/, .*$/, '')} · ${grains ? `${d.loads[loadId].name.split(' ')[0]} ${grains[1]}` : d.loads[loadId].name.replace(/ \(.*\)$/, '')}`)}</span>`;
   const dayLine = () => {
     let t = RD.dayWords(weather, d.weather);
     if (entered.redirected) t += ` A day is already open with the ${rifle.name} and ${d.loads[loadId].name} on the ${course.name.replace(/ \(modeled on.*\)$/, '')}, so that day is shown, not the one the address asked for.`;
@@ -44,9 +57,29 @@
   $('to-line').href = `/line${RD.params(c)}`;
   $('to-day').href = `/day?id=${encodeURIComponent(day.id)}`;
 
+  // The paper is square and as large as the screen leaves it once everything else within reach is in place: on a phone the
+  // width, or less on a short screen; on a computer the height beside the column. Never under 240 px or over 640 px.
   const canvas = $('view');
-  let view = RD.fitCanvas(canvas, 560);
-  window.addEventListener('resize', () => { view = RD.fitCanvas(canvas, 560); draw(); });
+  function fitPaper() {
+    const reach = document.querySelector('.benchreach'), wrap = canvas.parentElement;
+    const wide = window.matchMedia('(min-width: 900px)').matches;
+    const top = reach.getBoundingClientRect().top + window.scrollY;
+    let w;
+    if (wide) w = Math.min(640, window.innerHeight - top - 12, reach.clientWidth - 380 - 20);
+    else {
+      const others = reach.offsetHeight - wrap.offsetHeight;
+      w = Math.min(wrap.clientWidth, window.innerHeight - top - others - 6 - 8);
+    }
+    w = Math.round(Math.max(240, Math.min(640, w)));
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.style.width = `${w}px`; canvas.style.height = `${w}px`;
+    canvas.width = Math.round(w * dpr); canvas.height = Math.round(w * dpr);
+    const g = canvas.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { g, size: w };
+  }
+  canvas.style.width = '240px'; canvas.style.height = '240px';
+  let view = fitPaper();
+  window.addEventListener('resize', () => { view = fitPaper(); draw(); });
 
   // The paper: 36 inches square, 1-inch grid, a 2-inch black square at the
   // center and heavier lines every 6 inches. Scale: the paper fills the view.
@@ -97,6 +130,7 @@
     supply = took.supply;
     const out = took.out;
     if (!took.saved) $('saved').textContent = 'The zeroing supply is not saved on this device (the browser refused its storage); it holds while this page is open.';
+    paperBack = null; pairNote('');
     if (!out) { rounds(); return; }
     const load = d.loads[loadId];
     RD.shotSound(0.5);
@@ -107,10 +141,11 @@
         sight: { clickMoa: sight.clickMoa, windageClickMoa: sight.windageClickMoa, elevationClicks: setting.elevationClicks, windageClicks: setting.windageClicks },
         targetYards: distance, targetRiseFt: 0, conditions: RD.conditionsOf(weather), wind: weather.wind, t0: performance.now() / 1000,
       });
-      if (r.reached) holes.push({ upIn: r.hit.upIn, rightIn: r.hit.rightIn, loadId });
       const shot = { place: 'bench', yards: distance, sight: sightId, elevationClicks: setting.elevationClicks, windageClicks: setting.windageClicks, leaf: leaf ? leaf.settingsMeters[setting.leafIx || 0] : null, reached: r.reached, upIn: r.reached ? Math.round(r.hit.upIn * 100) / 100 : null, rightIn: r.reached ? Math.round(r.hit.rightIn * 100) / 100 : null };
       const rec = RD.recordShot(day, shot);
       if (!rec.saved) $('saved').textContent = 'The day is not saved on this device (the browser refused its storage); it holds while this page is open.';
+      // the hole as the day holds it (rounded to a hundredth of an inch), so the paper shown now is the paper a reload shows
+      if (r.reached) holes.push({ upIn: shot.upIn, rightIn: shot.rightIn, loadId });
     }
     draw(); readout(); rounds();
     if (supplyEmpty()) $('group').textContent += ` That was the last round of the zeroing supply's box of ${supply.size}. Open another box to go on; the day is not over.`;
@@ -137,9 +172,9 @@
   RD.wireKnobs(document, sight, () => setting, (which, next) => {
     setting = { ...setting, [which]: next };
     RD.clickSound();
-    if (!RD.setSight(rifleId, sightId, setting)) $('saved').textContent = 'Sight setting not saved on this device (storage is off); it holds for this page only.';
+    $('knob-note').textContent = RD.setSight(rifleId, sightId, setting) ? '' : 'Sight setting not saved on this device (storage is off); it holds for this page only.';
     showSetting();
-  }, (text) => { $('saved').textContent = text; });
+  }, (text) => { $('knob-note').textContent = text; });
   if (leaf) {
     $('leafrow').hidden = false;
     const moveLeaf = (delta) => {
@@ -153,12 +188,35 @@
   }
   $('fire1').addEventListener('click', () => fire(1));
   $('fire5').addEventListener('click', () => fire(5));
-  $('fresh').addEventListener('click', () => { holes = []; draw(); readout(); });
-  $('distance').addEventListener('change', (e) => { distance = Number(e.target.value); holes = []; draw(); readout(); });
+  // Fresh paper, and its one-tap way back (the firing line's: RD.hangFreshPaper and RD.putOldPaperBack, a marker in the day; no
+  // shot is deleted). The way back stands where Fresh paper stood, until the next shot or another distance.
+  let paperBack = null; // the marker Fresh paper replaced, while the old paper can be put back
+  const pairNote = (t) => { $('pair-note').textContent = t; };
+  function freshButton() { $('fresh').textContent = paperBack ? 'Put the old paper back' : 'Fresh paper'; }
+  $('fresh').addEventListener('click', () => {
+    if (paperBack) {
+      const saved = RD.putOldPaperBack(day, paperKey(), paperBack.before);
+      paperBack = null; holes = benchHoles(); draw(); readout(); freshButton();
+      pairNote(saved ? `The old paper is back at ${distance} yards, with its ${holes.length} hole${holes.length === 1 ? '' : 's'}.` : 'The old paper is back while this page is open, not saved on this device.');
+      return;
+    }
+    const shown = holes.length;
+    const r = RD.hangFreshPaper(day, paperKey());
+    paperBack = { before: r.before };
+    holes = benchHoles(); draw(); readout(); freshButton();
+    pairNote(r.saved ? `A fresh paper at ${distance} yards; the old one had ${shown} hole${shown === 1 ? '' : 's'}, every shot kept in the day.` : 'The fresh paper is not saved on this device (storage refused); it holds while this page is open.');
+  });
+  $('distance').addEventListener('change', (e) => { distance = Number(e.target.value); paperBack = null; freshButton(); pairNote(''); holes = benchHoles(); draw(); readout(); });
   $('save').addEventListener('click', () => {
     const z = { elevationClicks: setting.elevationClicks, windageClicks: setting.windageClicks, zeroYards: distance, sight: sightId, savedAt: new Date().toISOString() };
     if (leaf) z.leafIx = setting.leafIx || 0;
-    if (RD.setZero(rifleId, sightId, loadId, z)) showSaved(); else $('saved').textContent = 'Zero not saved on this device: the browser refused to store it. The sight setting still holds while this page is open.';
+    if (RD.setZero(rifleId, sightId, loadId, z)) {
+      showSaved();
+      pairNote(`Zero saved at ${distance} yards: elevation ${RD.sign(z.elevationClicks) || '0'}, windage ${RD.sign(z.windageClicks) || '0'} clicks${leaf ? `, leaf ${leaf.settingsMeters[z.leafIx] / 100}` : ''}.`);
+    } else {
+      $('saved').textContent = 'Zero not saved on this device: the browser refused to store it. The sight setting still holds while this page is open.';
+      pairNote('Zero not saved on this device: the browser refused to store it.');
+    }
   });
   $('pack-up').addEventListener('click', () => {
     const packed = RD.packUp();
@@ -179,8 +237,18 @@
     const w = weather.wind[0];
     $('conditions').textContent = `Conditions (the setting "Show the conditions" is on): ${weather.tempF} F, ${weather.pressureInHg} inHg, humidity ${Math.round(weather.humidity * 100)}%, wind at the bench ${w.speedMph} mph ${RD.windWord(w.fromDegrees)}${weather.santaAna ? ', a Santa Ana day' : ''}.`;
   }
-  showSetting(); showSaved(); conditions(); draw(); readout(); rounds();
+  showSetting(); showSaved(); conditions(); rounds(); view = fitPaper(); draw(); readout();
   if (RD.sightReadFailed(rifleId, sightId)) $('group').textContent = 'The browser refused to read its storage: the sight starts at its middle and nothing saves on this device while that lasts.';
+  // Where the last group landed holds two lines in a slot of fixed height; a longer text is marked and opens on a tap over what is
+  // below it, so nothing under the thumb moves (the firing line's way, range-day-nine). New text closes it again.
+  {
+    const el = $('group');
+    const measure = () => { const open = el.classList.contains('open'); el.classList.remove('open'); el.classList.toggle('long', el.scrollHeight > el.clientHeight + 1); if (open && el.classList.contains('long')) el.classList.add('open'); };
+    new MutationObserver(() => { el.classList.remove('open'); measure(); }).observe(el, { childList: true, characterData: true, subtree: true });
+    window.addEventListener('resize', measure);
+    el.addEventListener('click', () => { if (el.classList.contains('open')) el.classList.remove('open'); else if (el.classList.contains('long')) el.classList.add('open'); });
+    measure();
+  }
   // For the tests: the day as this page holds it.
-  window.RangeDayZero = { get day() { return day; }, get setting() { return setting; }, get holes() { return holes; } };
+  window.RangeDayZero = { get day() { return day; }, get setting() { return setting; }, get holes() { return holes; }, get distance() { return distance; }, get paperPx() { return view.size; } };
 }());
