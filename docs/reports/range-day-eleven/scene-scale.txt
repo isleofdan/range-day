@@ -1,0 +1,18 @@
+TAP version 13
+#   largest difference for a plate in the view: 0.020 px (phone, scope 9x, 700 yd); largest for any plate, on screen or far outside it: 0.0 px
+# Subtest: verify 2: same scale: for every canyon plate at 3x and 9x through the Vepr's scope (range-day-eleven: its BugBuster 3-9x32; 2x and 7x before) and at 1x through its irons, the scene puts the plate's centre within 1 pixel of the plain drawing, at both sizes
+ok 1 - verify 2: same scale: for every canyon plate at 3x and 9x through the Vepr's scope (range-day-eleven: its BugBuster 3-9x32; 2x and 7x before) and at 1x through its irons, the scene puts the plate's centre within 1 pixel of the plain drawing, at both sizes
+  ---
+  duration_ms: 256234.994284
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 256549.372745
+EXIT 0

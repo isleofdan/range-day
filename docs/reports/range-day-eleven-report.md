@@ -1,0 +1,125 @@
+# FIELD REPORT — range-day-eleven — 2026-11-21
+
+Nothing on Dan's screen has changed yet. The work is in pull request [#34](https://github.com/isleofdan/range-day/pull/34), which is not merged or deployed. Merging and deploying it will put the Vepr's real UTG BugBuster 3-9x32 scope and the stronger 25-125x spotting scope on the live app. The Vepr does **not** need zeroing again: its zeros carry over (see "What stands", item 2).
+
+## What stands
+
+How this session ran: a Claude Code cloud session on `isleofdan/range-day`, one session, no team. The container has no `/data/home/dan/FACTS.md`, so it is the cloud, not the Linux machine (environment check 1). Permission mode: auto (the session's own record: `permission_mode: auto`); this session changed no permission or auto-mode setting. Builder model: read from the session's own record (its configured model and the model that served its turns agree); the name is on the wall card's copy of this report, not here, because this environment forbids model names in files pushed to the repository. Independent checker: the Codex result checker through the wall's `check_result`.
+
+Environment checks: 1 cloud; 2 auto; 3 `git ls-remote --heads origin main` printed `270fdea…`, as the brief expected (the container's own copy of `main` was stale at `4fababb`; fetched before every count and diff); 4 `npm ci` passed and `npm run check -- --only tests --group rest` passed ("check: all passed: syntax, tests (rest)") before any change; the browser pieces needed the container's Chromium linked, outside the repository, into the folders the pinned Playwright looks in (`/opt/pw-browsers/chromium-1194`, `chromium_headless_shell-1194`), as range-day-ten did; 5 the makers' sites refuse this container (`curl` to leapers.com: "CONNECT tunnel failed, response 403"; the page-reading helper: "getaddrinfo ENOTFOUND" for leapers.com, swarovskioptik.com and kowa-usa.com), so every figure was read from the search engine's indexed text of the page named, and each figure's note says so.
+
+Before touching the ground workflow's files the open pull requests were listed: none (rule 6).
+
+1. **The ground-fetching workflows cannot delete what they did not fetch** (commit `2f23792`, pushed alone with `[skip ci]`).
+   - `.github/workflows/terrain.yml`: the push trigger is gone; it starts only by hand (`on: workflow_dispatch`), and its job carries `if: github.ref_name != 'main'`.
+   - `scripts/terrain/keep.mjs` (new): `mergeTerrain` keeps every top-level part of the old `data/terrain.json` and puts in only the parts the run fetched (the two ranges and `_about`); `writeResults` writes the merged record, removes nothing and lists the paths the run wrote; `node scripts/terrain/keep.mjs guard <paths>` reads the staged change against the branch and fails, naming each item, if it removes a file or drops a top-level part of `data/terrain.json`.
+   - `scripts/terrain/fetch.mjs`: its old last step (`unlinkSync` every file it did not write, then overwrite the whole record) is replaced by `writeResults`; files an earlier run wrote stay until a reviewed pull request removes them.
+   - The commit steps: Terrain stages the listed paths by name (`xargs -r git add --ignore-removal -- < "$RUNNER_TEMP/terrain-written.txt"`), then runs the guard; Ground (`.github/workflows/ground.yml`, whose fetch empties `ground-fetch/` first, so a second run on the same scratch branch could drop the first run's files) stages with `git add --ignore-removal ground-fetch` and runs the same guard. Neither has a blanket add any more.
+   - The tests, `test/terrain-keep.test.js` (5, no network, in a throwaway git repository with the real record and its 24 surface photographs); quoted from the run:
+     - keeping: `keeping: guard problems []; staged M\tdata/terrain.json; A\tpublic/terrain/cta-piru-heights-00000000.png` (and every kept photograph and the `surfaces` part byte for byte as before);
+     - refusing: `refusing: removes the file public/terrain/ground-floor-color-3fd58ff3.jpg; removes the file public/terrain/ground-floor-relief-c51e35fb.jpg; drops the part "surfaces" of data/terrain.json` (the guard exits 1 with "REFUSED");
+     - Ground's folder: a blanket add of a second run is refused, `['removes the file ground-fetch/first-run.jpg']`; the workflow's own staging passes;
+     - the workflow files: Terrain starts by hand only and never on `main`; neither has a blanket add; both stage without removals and run the guard before the commit.
+   - `docs/CHECKS.md`, a new section, and both workflows' headers say how Terrain is started now and what the guard refuses.
+   - No workflow run started on the branch: the Actions list for `claude/range-day-card-brief-t0goqt` read `{"total_count":0,"workflow_runs":[]}` after the push; later pushes touched none of those files.
+2. **The Vepr carries its real scope** (commit `d0ead38`, name shortened in `007c1c0`).
+   - `data/sights.json`, `utg-bugbuster-3-9x32`: "UTG BugBuster 3-9x32 compact scope, lit mil-dot (SCP-M392AOLWQ)". Why that model: a UTG BugBuster, 3-9x, 32 mm front lens, 1-inch tube, mil-dot lit in red, green and blue is the one sold as the "AO RGB Mil-Dot" BugBuster, SCP-M392AOLWQ; its 36-colour sibling SCP-M392AOIEWQ gives the same 37.7 to 14 ft field of view, so the game's figures do not depend on which of the two it was. Figures in the table under verify 3.
+   - `data/rifles.json`, the Vepr: sights `vepr-irons` and `utg-bugbuster-3-9x32`, default the BugBuster, height over the bore 3.0 in (an estimate: the side-rail mount sets it, as it did for the 2-7x44 before; no maker figure).
+   - The old `utg-2-7x44` entry stays, with `retired` saying why; no rifle offers it (a data test checks every rifle).
+   - **Dan's stored records**: both scopes click 1/4 MOA on both turrets and sit at 3.0 in, so the carry-forward case applies. `public/game.js` (`carriedSight`, `carried`, `sightNow`): a sight setting, saved zero, shot log or book page missing under the BugBuster is read from the 2-7x44's key, written forward under the BugBuster's, and the old record stays; a range-day-one zero naming the 2-7x44 is read the same way; an address, a last-used record or a day naming the 2-7x44 opens the BugBuster; the copy file lists each forwarded zero and book line once. `carriedSight` compares the two click values before carrying anything. The cold-bore record and a day's shots keep naming the sight they were made with.
+   - **The gun records**: the server reads records from the file `GUN_RECORDS_FILE` names, else from `data/rifles.json`; `fly.toml` sets no `GUN_RECORDS_FILE` (its `[env]` holds `PORT` and `SENTRY_DSN` only), so the Vepr's live record is its `data/rifles.json` entry, changed here; `lib/guns.js` accepts it (`test/guns.test.js` passes; its list of known sights now names the BugBuster too).
+   - **A scope's view between its ends** (`RD.fovMoa`): the maker's field of view at each end and a power of the magnification fitted through both, the spotting scope's rule since range-day-ten. The old rule (width shrinking in proportion to power from the low end) would draw the BugBuster's 9x end 12.6 ft wide, not the maker's 14 (deliberate divergence 1).
+   - The zoom runs 3 to 9 on the line and the bench (`public/line.html` defaults too).
+3. **A stronger spotting scope** (commit `c2f4f2d`). `data/spotting.json`: 25 to 125 power, 88 mm front lens, 54 ft at 1,000 yards at 25x and 24 ft at 125x, modeled on the Barska Benchmark 25-125x88 (AD11182), each figure from [the maker's page](https://shop.barska.com/products/25-125x-88mm-wp-benchmark-high-power-spotting-scope). What I looked at: the Swarovski ATX 95 with its ME 1.7x extender reaches about 51-120x and the Kowa TSN-99 with the TE-11WZ II and the TSN-EX16 1.6x extender 48-112x, but neither maker publishes the field of view with the extender fitted, so neither could be drawn from published figures; the Barska reaches 125x with both ends published and starts at 25x, low enough to find near paper. Its name on the page stays "Spotting scope"; it opens at its lowest power on the chosen target, has no reticle and cannot fire (`test/near.test.js`, unchanged in those checks).
+4. **Tests, states and words** (commits `f9b9b35`, `dbfa088`). Every test and screenshot state that named the old scope or its powers moved to the new ones; the picture measures that compare with a stored before-file keep their old view as a test view (deliberate divergence 2). On a phone the spotting scope's power now stands under the word "Scope" (`public/app.css`), because "125×" took 9 px from its slider (117 to 108, under the 110 px floor; the first run of `test/near.test.js` failed on it). `README.md`, `docs/RECORDS.md` (a new section, "A sight that took another's place") and `docs/CHECKS.md` say what changed.
+
+Unchanged: `git diff origin/main -- public/engine.js data/courses.json data/terrain.json public/terrain` is empty (0 bytes).
+
+## UI review (per screen touched)
+
+One screen changed: the firing line (`/line`), and through the data the zero bench (`/zero`, the BugBuster's 3-9 zoom and its 120 clicks) and home (the Vepr's scope name).
+
+1. **Speed of the frequent action** (fire, look, turn the sight): unchanged; the spotting scope is one tap away and its slider is longer (148 px on a phone, was 117).
+2. **Recovery**: unchanged; "Back to the rifle" stands where Fire was.
+3. **Finding the tool**: unchanged: "Spotting scope" at the right end of the top row.
+4. **Orientation**: the readouts say "Zoom 9×" and "Scope 125×" (the power under the word on the scope's row).
+5. **Feedback**: unchanged; the knob still says "end of its travel (120 clicks…)" at the BugBuster's 30 MOA stop.
+6. **Interruption**: none added.
+7. **Thumb reach**: everything within reach at 412×830, 412×915 and 1280×800 (`scripts/line-layout.mjs`, "verdict: everything within reach" for all nine size-and-sight cases; the 412×760 "figure only" lines are as on `main`); both sliders end 40 px from a phone's right edge.
+8. **Defaults**: the Vepr opens with the BugBuster at 3x; the spotting scope at 25x.
+
+What I did not add: no new control or word. What a shooter will notice: through the BugBuster at 9x the view is 14 ft across at 100 yards (the maker's figure), much wider than the old model's 7x (4 ft), so a far plate is small: the 600-yard plate is about 7 px wide on a phone at 9x (24 px through the old 7x); the spotting scope at 125x is the way to read a far plate (screenshot `spot-plate-1000-125x-phone.png`). Which of the eight came from Dan: 1 and 7 (the sliders, from range-day-ten-b and -c), and the request itself ("a more powerful spotting scope", "adjust the strength of the UTG").
+
+Screenshots, both sizes, each state passed the screenshot script's own checks (no sideways scroll, no console error): `line-scope-3x`, `line-scope-9x`, `line-scope-9x-600` (new), `spot-paper-50-25x`, `spot-paper-50-125x`, `spot-steel-100-marks`, `spot-plate-600-125x`, `spot-plate-1000-125x`, `spot-rifle-line-paper-50`, in `docs/reports/screenshots/` (`-phone.png`, `-computer.png`).
+
+## What the brief got wrong
+
+1. **The branch name.** The brief names `range-day-eleven`; this environment allows pushes only to `claude/range-day-card-brief-t0goqt`, so the change is on that branch and the notes on `claude/range-day-card-brief-t0goqt-notes`.
+2. **"By the rule the other scopes follow."** That rule (the width shrinks in proportion to the power, from the low end) does not give the maker's figure at the high end: 12.6 ft at 9x against the maker's 14. Only the Vepr's scope zooms, so the fitted rule the spotting scope already used replaces it with no effect on any other rifle (divergence 1).
+3. **The brief's own pre-check** (job 20261121-093748-d8b976) asked for the Linux machine and flagged the deploy. The surface is the cloud on Dan's instruction for this app ("Performance on the Linux machine has been pretty bad, so I'm thinking maybe your cloud environment is a better idea."), and `CLAUDE.md` now makes the cloud the default ("Default new coding work to a verified native ChatGPT/Codex cloud environment"; "Cloud is the default for suitable new work; cloud means a hosted coding environment, not specifically Claude Code"). The deploy stays behind Dan's typed line.
+4. **The builder model's name** cannot go in a repository file here (the environment's rule); it is on the card's copy of this report.
+
+## Deliberate divergences
+
+1. **A scope's view follows a fitted power** through both published widths (`RD.fovMoa`), not the old proportional rule (above, item 2). Beyond the ends it carries on by the same rule, only for a test view through the page's zoom door.
+2. **The picture measures keep their old views.** `test/scene.test.js` verify 5 (range-day-six, sharpness against `docs/reports/picture-before.txt`), verify 5 and 6 (range-day-eight, repeat and contrast against `docs/reports/ground-before.txt`), verify 8 (range-day-seven, the boards' posts) and verify 4's reticle measure ran through the old 2-7x44 at 7x (4 ft at 100 yards) and its 21x test view. Through the BugBuster at 9x the view is 3.5 times wider, so those stored figures would no longer describe the same view. They now use the same views as test views (36.1x and 122.1x on the BugBuster's own rule, the test asserting the widths are the old 45.8 and 15.3 MOA), so they measure exactly what they measured before and the picture is untouched (rule 5). The same-scale tests moved to the real ends, 3x and 9x, and 25x and 125x (as the brief asks). The `ground-…-7x` and `…-21x` screenshot states keep their views the same way. `scripts/picture-measure.mjs`, a by-hand measure on the picture side, still names the old scope and 7x; it resolves to the BugBuster, whose 7x is a different view: Codex's side, listed for the next session.
+3. **Terrain refuses to run on `main`** (`if: github.ref_name != 'main'`): a workflow that commits to the branch it runs on must not commit to `main`.
+4. **The Terrain fetch removes no file any more**, stale ones included: removing what nothing names is now a reviewed pull request's job, so the guard can refuse every removal without exceptions.
+5. **The spotting scope's power stands under its word** on its row, to keep its slider's length with a three-digit power.
+6. **The BugBuster's display name is as long as the old one's** (63 characters): the first name (118 characters, naming the tube and each light colour) pushed home's doors below a phone's screen on the Checks runner (`browser` verify 11 and `day` verify 13 failed there, passed here, where the fonts are narrower). The tube and the colours are in the figures' source notes.
+7. **The cold-bore record and a day's shots keep naming the 2-7x44**, as made; the old entry stays so they still name a sight the game knows (the brief's own rule).
+
+## Verify results
+
+1. `git diff origin/main -- public/engine.js data/courses.json data/terrain.json public/terrain`: empty (0 bytes).
+2. The workflow: the keeping and refusing tests' output is quoted under "What stands", item 1. Actions list for the branch after this session's pushes: `{"total_count":0,"workflow_runs":[]}` (no Terrain, no Ground run; the Checks run is the pull request's). After the merge: AFTER-MERGE-TERRAIN.
+3. Each scope's figures:
+
+   | scope | figure | value | source |
+   | - | - | - | - |
+   | UTG BugBuster 3-9x32 (SCP-M392AOLWQ) | zoom | 3 to 9 | [maker](https://www.leapers.com/products-utg-scp-m392aolwq.html) (indexed text) |
+   | | click, elevation and windage | 1/4 MOA | maker (indexed text) |
+   | | field of view at 100 yards | 37.7 ft at 3x, 14 ft at 9x | maker (indexed text): "Field of View @ 100 yards: 37.7' - 14'" |
+   | | travel | 120 clicks each way (30 MOA up, 30 down) | [retailer's listing of the maker's specification](https://www.gunbuyer.com/utg-3-9x32-bugbuster-ao-rgb-mdot-utgscp-m392aolwq-b.html) (indexed text; the maker's indexed text gives none) |
+   | | mil-dot spacing | 3.44 MOA | estimate: one milliradian by definition |
+   | | height over the Vepr's bore | 3.0 in | estimate: the side-rail mount's, as the 2-7x44's |
+   | Barska Benchmark 25-125x88 (AD11182) | zoom | 25 to 125 | [maker](https://shop.barska.com/products/25-125x-88mm-wp-benchmark-high-power-spotting-scope) (indexed text) |
+   | | front lens | 88 mm | maker (indexed text) |
+   | | field of view at 1,000 yards | 54 ft at 25x, 24 ft at 125x | maker (indexed text): "54ft/18m @25x, 24ft/8m @125x" |
+
+   The view's width against the data (`test/near.test.js`, quoted): at 412 px wide (412×915 and 412×830 alike) spotting 25x "380 px across = 61.88 MOA (54 ft at 1,000 yards) … off by 0.0e+0 px", 125x "380 px across = 27.50 MOA (24 ft at 1,000 yards) … off by 0.0e+0 px", Vepr scope 3x "380 px across = 432.01 MOA (37.7 ft at 100 yards) … off by 0.0e+0 px", 9x "380 px across = 160.43 MOA (14 ft at 100 yards) … off by 5.7e-14 px"; at 1280 px wide the same at 640 px, the largest difference 1.1e-13 px. Largest difference: 1.1e-13 px.
+4. Same scale: the canyon's near targets through the BugBuster at 3x and 9x, its irons and the spotting scope at 25x and 125x, both sizes: "largest difference 0.033 px"; the rifle line's paper through the irons and the spotting scope at 25x and 125x: "18 sheet centres checked, largest difference 0.000 px" (`test/near.test.js`); every canyon plate at 3x and 9x and through the irons: "largest difference for a plate in the view: 0.020 px (phone, scope 9x, 700 yd)" (`test/scene.test.js` verify 2).
+5. Records (`test/day.test.js`, "range-day-eleven verify 5", printed): the case is **carry forward**, decided by the click (1/4 MOA on both scopes, both turrets) and the height over the bore (3.0 in on both).
+   - stored keys before: `range-day:book:molot-vepr-54r:utg-2-7x44:sb-174-hpbt, range-day:log:molot-vepr-54r:utg-2-7x44:sb-174-hpbt, range-day:sight:molot-vepr-54r:utg-2-7x44, range-day:zero:molot-vepr-54r:utg-2-7x44:sb-174-hpbt`
+   - stored keys after: `range-day:book:molot-vepr-54r:utg-2-7x44:sb-174-hpbt, range-day:book:molot-vepr-54r:utg-bugbuster-3-9x32:sb-174-hpbt, range-day:day:open, range-day:last, range-day:last:bcm-ar15, range-day:last:molot-vepr-54r, range-day:log:molot-vepr-54r:utg-2-7x44:sb-174-hpbt, range-day:log:molot-vepr-54r:utg-bugbuster-3-9x32:sb-174-hpbt, range-day:sight:molot-vepr-54r:utg-2-7x44, range-day:sight:molot-vepr-54r:utg-bugbuster-3-9x32, range-day:when, range-day:zero:molot-vepr-54r:utg-2-7x44:sb-174-hpbt, range-day:zero:molot-vepr-54r:utg-bugbuster-3-9x32:sb-174-hpbt`
+   - The setting (+47 / −9 clicks), the zero (+31 / −13 at 100 yards), the log row and the book line read under the BugBuster by the old address and the new; every old record byte for byte as seeded; the copy file holds the zero and the book line once each, under the BugBuster; the Vepr's irons carry nothing. The range-day-one zero form naming the 2-7x44 also reaches the BugBuster (`test/browser.test.js` verify 6).
+6. The arrangement (`scripts/line-layout.mjs`, `docs/reports/range-day-eleven/line-layout.txt`): "verdict: everything within reach" at 412×915, 412×830 and 1280×800 for the Vepr's scope, the Tavor's dot and the AK's irons; the three 412×760 "figure only" lines read as on `main`. The sliders (`docs/reports/range-day-eleven/sliders.txt`): at 412×830 and 412×915 the rifle scope's 130 px long, 40 px from the right edge, at 3x and 9x; the spotting scope's 148 px long, 40 px from the edge, its row 44 px tall, at 25x and 125x; at 1280×800 342 and 360 px.
+7. Speed (`scripts/scope-frames.mjs`, the 1,000-yard plate, median of 60 frames, the test browser drawing in software, so these are its own times, not a phone's): 412 px, Full: BugBuster at 9x 383.3 ms, spotting scope at 125x 383.2 ms; 412 px, Light: 133.2 and 116.7 ms; 1280 px, Full: 633.3 and 549.9 ms; 1280 px, Light: 250.0 and 233.4 ms. The spotting scope at its new top power draws no slower than the rifle's scope.
+8. Screenshots: the nine states above at both sizes, "all checks passed (9 of 82 states)", no sideways scroll, no console error. At 125x the 1,000-yard plate looks soft (`spot-plate-1000-125x`); the picture is not retuned (rule 5).
+9. The check: CHECKS-RUN. Tests 121 on `main` (by file: browser 15, crash 11, data 13, day 12, engine 16, ground-fetch 4, guns 4, near 6, owners 3, scene 14, server 9, terrain 6, upstream 1, weather 7) and 128 here (data 14, day 13, terrain-keep 5, the rest the same); screenshot states 81 and 82. Every changed test, with its reason: `test/browser.test.js` (the Vepr's scope by its new id; verify 10's travel 40 → 30 MOA, 160 → 120 clicks, the BugBuster's figure; verify 6's old-form zero now carried to the BugBuster, its forwarded keys under the new name); `test/day.test.js` (the new id; one new test, the records); `test/data.test.js` (the spotting scope's ends 25 and 125, its top at 100 or more and bottom at 30 or less; one new test, the BugBuster's figures and the carry's two deciding figures); `test/guns.test.js` (the list of known sights names the BugBuster); `test/near.test.js` (the new id; 2x/7x → 3x/9x; 20x/60x → 25x/125x; the rifle scope's width at 3x and 9x added to the spotting scope's test); `test/scene.test.js` (same scale at 3x and 9x; the picture measures at their old views as test views, divergence 2); `test/terrain.test.js` (verify 4's sight height read from the BugBuster's entry); `test/line-reach.js` (the new id); `test/terrain-keep.test.js` (new, item 1). Screenshot states renamed with their powers (`…-2x` → `…-3x`, `…-7x` → `…-9x`, `…-20x` → `…-25x`, `…-60x` → `…-125x`), one added (`line-scope-9x-600`), none dropped.
+10. The pull request's diff: 150,536 bytes before the name fix (under 400,000).
+11. The Deploy run's result line: DEPLOY-RESULT.
+
+What this cannot prove: the session cannot open the live app or hold a phone, so how the two scopes look and how fast the spotting scope draws at its new power on Dan's phone are unverified until he looks.
+
+## Result check rounds
+
+RESULT-ROUNDS
+
+## Asks
+
+1. **Merge and deploy?** Recommended: yes. The line to type: `yes, merge and deploy range-day-eleven, then merge its notes`.
+2. **Should the BugBuster's reticle behave like the real one's?** The listings call it a second-focal-plane scope: on the real scope the mil-dots are one milliradian apart only at 9x, and further apart in angle at lower powers. The game draws the dots one milliradian apart at every power, as it did on the 2-7x44. Recommended: yes, in the next build on the sights Dan fitted, once the maker's manual confirms the plane and the power the dots are true at; not here, where it would change what a hold-off means at 3x.
+
+## What the next session needs
+
+- Dan's look on his phone: the BugBuster at 3x and 9x on the canyon course (a far plate is small at 9x: that is the maker's field of view), the spotting scope at 125x on the 50-yard paper and a far plate.
+- Then, each planned by a Personal Shipyard chat: the sights Dan fitted to his rifles (the Troy, FAB, SeeAll, KNS and XS sights), with Ask 2; recording and playback.
+- Codex's side: the plate flicker during recoil (with Dan's screen recording); `scripts/picture-measure.mjs` still names the 2-7x44 and 7x (divergence 2); the picture work stays paused on Dan's word.
+- The Terrain workflow now starts only from the Actions page on a named branch; a run commits only what it fetched.
+
+Notes branch: `claude/range-day-card-brief-t0goqt-notes`. It reaches `main` in a notes-only pull request after the deploy result, because this repository's rule says so: `CLAUDE.md`, "Field reports": "When the session merges and deploys, the order is fixed: the change's pull request first (the report links it); after the deploy result, a notes-only close-out pull request carrying the field report and the `PLAN.md` note. That order is the rule, not a divergence."
+
+## Closing message to Dan
+
+CLOSING-MESSAGE

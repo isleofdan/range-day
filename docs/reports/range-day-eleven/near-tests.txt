@@ -1,0 +1,111 @@
+TAP version 13
+#   angeles-sylmar paper 50 yd (12 x 18 in, rise 6.4 ft, -3 yd sideways): 20 seeded shots, largest difference from the engine 1.1e-16 in, 20 on the sheet
+#   angeles-sylmar paper 100 yd (12 x 18 in, rise 15.6 ft, -5 yd sideways): 20 seeded shots, largest difference from the engine 2.2e-16 in, 20 on the sheet
+#   cta-piru paper 50 yd (12 x 18 in, rise 4.1 ft, -8.5833 yd sideways): 20 seeded shots, largest difference from the engine 0.0e+0 in, 20 on the sheet
+#   cta-piru paper 100 yd (12 x 18 in, rise 5.6 ft, -0.4167 yd sideways): 20 seeded shots, largest difference from the engine 0.0e+0 in, 0 on the sheet
+#   cta-piru steel 100 yd (12 x 18 in, rise 11.9 ft, 25 yd sideways): 20 seeded shots, largest difference from the engine 0.0e+0 in, 0 on the plate
+# Subtest: range-day-ten verify 2: twenty seeded shots at each new target (paper at 50 and 100 yards on both courses, the canyon's 100-yard steel) land where the engine says, and each row names its target
+ok 1 - range-day-ten verify 2: twenty seeded shots at each new target (paper at 50 and 100 yards on both courses, the canyon's 100-yard steel) land where the engine says, and each row names its target
+  ---
+  duration_ms: 17483.983355
+  type: 'test'
+  ...
+#   paper row: {"n":1,"yards":50,"target":"paper","el":0,"wd":0,"zoom":1,"heldUp":0,"heldRight":0,"day":"2026-11-21-mwq9u9ha","tempF":50,"call":null,"conditionsShown":false,"hit":true,"where":"on paper (1.9 in high, 2.6 in left from the lower right mark)","upIn":-3.5808207560973164,"rightIn":0.8668114217539981}
+#   steel row: {"n":3,"yards":100,"target":"steel","el":0,"wd":0,"zoom":1,"heldUp":8.7,"heldRight":-1.4,"day":"2026-11-21-mwq9u9ha","tempF":50,"call":null,"conditionsShown":false,"hit":true,"where":"hit (dead on the center)","upIn":0,"rightIn":0}
+#   the day's shots: [{"n":1,"target":"paper","yards":50,"hit":true},{"n":2,"target":"steel","yards":100,"hit":false},{"n":3,"target":"steel","yards":100,"hit":true}]
+#   book lines 0 → 0 (paper shot) → 1 (steel hit); cold-bore lines 0 → 1 → 1; cold-bore line: {"id":"2026-11-21-mwq9u9ha:1","day":"2026-11-21-mwq9u9ha","n":1,"at":"2026-11-21T10:34:54.084Z","on":"2026-11-21","course":"angeles-sylmar","yards":50,"target":"paper","elevationClicks":0,"windageClicks":0,"leaf":null,"windCall":null,"tempF":50,"upIn":-3.58,"rightIn":0.87,"sight":"ar-irons","load":"imi-m193","hit":true}
+#   an old row without a target: {"kind":"steel","marks":1,"holes":0}
+# Subtest: range-day-ten verify 4: records: a paper shot's row and a steel shot's row name their target, an old row without one reads as steel; a paper shot writes no book line; the day's first shot, at paper, writes the cold-bore line with hit meaning on the sheet; a steel hit writes its book line
+ok 2 - range-day-ten verify 4: records: a paper shot's row and a steel shot's row name their target, an old row without one reads as steel; a paper shot writes no book line; the day's first shot, at paper, writes the cold-bore line with hit meaning on the sheet; a steel hit writes its book line
+  ---
+  duration_ms: 616.682666
+  type: 'test'
+  ...
+#   holes and marks before a reload {"holes":5,"marks":2,"shots":8}, after {"holes":5,"marks":2,"shots":8}
+# Subtest: range-day-ten verify 4: the holes in the paper and the marks on the steel are rebuilt from the day: the same count after a reload, in the plain drawing and the 3D picture alike; a fresh paper clears the sheet, keeps every shot, and its undo puts the old paper back, also across a reload
+ok 3 - range-day-ten verify 4: the holes in the paper and the marks on the steel are rebuilt from the day: the same count after a reload, in the plain drawing and the 3D picture alike; a fresh paper clears the sheet, keeps every shot, and its undo puts the old paper back, also across a reload
+  ---
+  duration_ms: 46831.69208
+  type: 'test'
+  ...
+#   412x915: to the scope and back, moved view/strip/bar/picker 0/0/0/0 px; spotting 25x: 380 px across = 61.88 MOA (54 ft at 1,000 yards), 6.141 px per MOA, off by 0.0e+0 px; spotting 125x: 380 px across = 27.50 MOA (24 ft at 1,000 yards), 13.817 px per MOA, off by 0.0e+0 px; Vepr scope 3x: 380 px across = 432.01 MOA (37.7 ft at 100 yards), 0.880 px per MOA, off by 0.0e+0 px; Vepr scope 9x: 380 px across = 160.43 MOA (14 ft at 100 yards), 2.369 px per MOA, off by 5.7e-14 px; buttons \#spotting 44, \#spot-zoom 44, \#back-to-rifle 52
+#   412x830: to the scope and back, moved view/strip/bar/picker 0/0/0/0 px; spotting 25x: 380 px across = 61.88 MOA (54 ft at 1,000 yards), 6.141 px per MOA, off by 0.0e+0 px; spotting 125x: 380 px across = 27.50 MOA (24 ft at 1,000 yards), 13.817 px per MOA, off by 0.0e+0 px; Vepr scope 3x: 380 px across = 432.01 MOA (37.7 ft at 100 yards), 0.880 px per MOA, off by 0.0e+0 px; Vepr scope 9x: 380 px across = 160.43 MOA (14 ft at 100 yards), 2.369 px per MOA, off by 5.7e-14 px; buttons \#spotting 44, \#spot-zoom 44, \#back-to-rifle 52
+#   1280x800: to the scope and back, moved view/strip/bar/picker 0/0/0/0 px; spotting 25x: 640 px across = 61.88 MOA (54 ft at 1,000 yards), 10.343 px per MOA, off by 0.0e+0 px; spotting 125x: 640 px across = 27.50 MOA (24 ft at 1,000 yards), 23.271 px per MOA, off by 0.0e+0 px; Vepr scope 3x: 640 px across = 432.01 MOA (37.7 ft at 100 yards), 1.481 px per MOA, off by 0.0e+0 px; Vepr scope 9x: 640 px across = 160.43 MOA (14 ft at 100 yards), 3.989 px per MOA, off by 1.1e-13 px; buttons \#spotting 44, \#spot-zoom 44, \#back-to-rifle 52
+# Subtest: range-day-ten verify 3 and 5: the spotting scope: its view is the data's field of view at its lowest and highest power (range-day-eleven: 25x and 125x), and so is the Vepr's scope's at 3x and 9x; Fire, Steady and the keyboard do nothing there; a shot in the air lands in its view; going to the scope and back moves the view, the sight strip and the bar by 0 pixels at 412x830, 412x915 and 1280x800, and every new button is at least 44 pixels tall
+ok 4 - range-day-ten verify 3 and 5: the spotting scope: its view is the data's field of view at its lowest and highest power (range-day-eleven: 25x and 125x), and so is the Vepr's scope's at 3x and 9x; Fire, Steady and the keyboard do nothing there; a shot in the air lands in its view; going to the scope and back moves the view, the sight strip and the bar by 0 pixels at 412x830, 412x915 and 1280x800, and every new button is at least 44 pixels tall
+  ---
+  duration_ms: 8000.284807
+  type: 'test'
+  ...
+#   largest difference 0.033 px
+#   phone scope 3x near-0: 0.002 px
+#   phone scope 3x near-1: 0.000 px
+#   phone scope 3x near-2: 0.006 px
+#   phone scope 9x near-0: 0.006 px
+#   phone scope 9x near-1: 0.000 px
+#   phone scope 9x near-2: 0.015 px
+#   phone irons 1x near-0: 0.002 px
+#   phone irons 1x near-1: 0.000 px
+#   phone irons 1x near-2: 0.005 px
+#   phone spotting scope 25x near-0: 0.000 px
+#   phone spotting scope 25x near-1: 0.000 px
+#   phone spotting scope 25x near-2: 0.000 px
+#   phone spotting scope 125x near-0: 0.000 px
+#   phone spotting scope 125x near-1: 0.000 px
+#   phone spotting scope 125x near-2: 0.000 px
+#   computer scope 3x near-0: 0.004 px
+#   computer scope 3x near-1: 0.000 px
+#   computer scope 3x near-2: 0.010 px
+#   computer scope 9x near-0: 0.010 px
+#   computer scope 9x near-1: 0.000 px
+#   computer scope 9x near-2: 0.033 px
+#   computer irons 1x near-0: 0.005 px
+#   computer irons 1x near-1: 0.000 px
+#   computer irons 1x near-2: 0.010 px
+#   computer spotting scope 25x near-0: 0.000 px
+#   computer spotting scope 25x near-1: 0.000 px
+#   computer spotting scope 25x near-2: 0.000 px
+#   computer spotting scope 125x near-0: 0.000 px
+#   computer spotting scope 125x near-1: 0.000 px
+#   computer spotting scope 125x near-2: 0.000 px
+# Subtest: range-day-ten verify 3: same scale: the scene puts each new canyon target's centre within 1 pixel of the plain drawing through the Vepr's scope at 3x and 9x, its irons at 1x, and the spotting scope at 25x and 125x (range-day-eleven: the BugBuster and the 25-125x; 2x, 7x, 20x and 60x before), at both sizes
+ok 5 - range-day-ten verify 3: same scale: the scene puts each new canyon target's centre within 1 pixel of the plain drawing through the Vepr's scope at 3x and 9x, its irons at 1x, and the spotting scope at 25x and 125x (range-day-eleven: the BugBuster and the 25-125x; 2x, 7x, 20x and 60x before), at both sizes
+  ---
+  duration_ms: 147311.695466
+  type: 'test'
+  ...
+#   18 sheet centres checked, largest difference 0.000 px
+#   phone irons, aimed at near-0: near-0 0.000 px
+#   phone irons, aimed at near-0: near-1 0.000 px
+#   phone irons, aimed at near-1: near-0 0.000 px
+#   phone irons, aimed at near-1: near-1 0.000 px
+#   phone irons, aimed at 0: near-1 0.000 px
+#   phone spotting scope 25x, aimed at near-0: near-0 0.000 px
+#   phone spotting scope 25x, aimed at near-1: near-1 0.000 px
+#   phone spotting scope 125x, aimed at near-0: near-0 0.000 px
+#   phone spotting scope 125x, aimed at near-1: near-1 0.000 px
+#   computer irons, aimed at near-0: near-0 0.000 px
+#   computer irons, aimed at near-0: near-1 0.000 px
+#   computer irons, aimed at near-1: near-0 0.000 px
+#   computer irons, aimed at near-1: near-1 0.000 px
+#   computer irons, aimed at 0: near-1 0.000 px
+#   computer spotting scope 25x, aimed at near-0: near-0 0.000 px
+#   computer spotting scope 25x, aimed at near-1: near-1 0.000 px
+#   computer spotting scope 125x, aimed at near-0: near-0 0.000 px
+#   computer spotting scope 125x, aimed at near-1: near-1 0.000 px
+# Subtest: range-day-ten verify 3: same scale on the rifle line (its flat drawing): where the drawing put each new paper sheet's centre, read from the frame that drew it, is within 1 pixel of the angles from the data at that frame's aim, through the AR's irons and through the spotting scope at 25x and 125x (20x and 60x before range-day-eleven), aimed at each paper and at the 100-yard plate, at both sizes
+ok 6 - range-day-ten verify 3: same scale on the rifle line (its flat drawing): where the drawing put each new paper sheet's centre, read from the frame that drew it, is within 1 pixel of the angles from the data at that frame's aim, through the AR's irons and through the spotting scope at 25x and 125x (20x and 60x before range-day-eleven), aimed at each paper and at the 100-yard plate, at both sizes
+  ---
+  duration_ms: 6311.880184
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 226928.622926
+EXIT 0
