@@ -1,0 +1,5 @@
+412 px, full, the 1,000-yard plate: median frame through the Vepr's scope at 9x 383.3 ms; through the spotting scope at 125x 383.2 ms (-0 percent)
+412 px, light, the 1,000-yard plate: median frame through the Vepr's scope at 9x 133.2 ms; through the spotting scope at 125x 116.7 ms (-12 percent)
+1280 px, full, the 1,000-yard plate: median frame through the Vepr's scope at 9x 633.3 ms; through the spotting scope at 125x 549.9 ms (-13 percent)
+1280 px, light, the 1,000-yard plate: median frame through the Vepr's scope at 9x 250.0 ms; through the spotting scope at 125x 233.4 ms (-7 percent)
+EXIT 0

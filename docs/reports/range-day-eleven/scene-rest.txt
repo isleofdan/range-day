@@ -1,0 +1,242 @@
+TAP version 13
+#   February midday:
+#     sky, as high as the roof lets the view go (18 degrees up): rendered 102,169,208, measured \#51a4e6 = 81,164,230, difference +21,+5,-22
+#     sunlit hillside (the headwall, 700 m, facing the noon sun; a 50 m patch): rendered 142,151,112, measured \#83965f = 131,150,95, difference +11,+1,+17
+#     dirt floor in sun (60 m out): rendered 160,165,146, measured \#bdb3a7 = 189,179,167, difference -29,-14,-21
+#     scrub on the left wall (450 m): rendered 102,112,78, measured \#435044 = 67,80,68, difference +35,+32,+10
+#     sunlit brush (the three bushes nearest the line of fire, 250 to 350 m out, each at 0.3 degrees): rendered 140,150,111, measured \#435044 = 67,80,68, difference +73,+70,+43 — not within 40: a bush is lit on one side and shaded on the other; the measured scrub colour is a whole hillside's
+#     the 600-yard plate's red paint through the scope at 7x: rendered 190,113,114, measured \#af787b = 175,120,123, difference +15,-7,-9
+#   September afternoon:
+#     sky, as high as the roof lets the view go (18 degrees up): rendered 97,169,211, measured \#429ae4 = 66,154,228, difference +31,+15,-17
+#     sunlit dry slope (the right wall, 600 m, facing the afternoon sun; a 40 m patch): rendered 139,127,103, measured \#988161 = 152,129,97, difference -13,-2,+6
+#     dirt floor in sun (60 m out): rendered 151,146,133, measured \#c9bda1 = 201,189,161, difference -50,-43,-28 — not within 40: at half past three the floor is lit at a low angle; the photograph it was measured from was taken at 15:43 with the floor in fuller sun
+#     scrub on the left wall (450 m): rendered 72,68,56, measured \#4a4f33 = 74,79,51, difference -2,-11,+5
+#     sunlit brush (the three bushes nearest the line of fire, 250 to 350 m out, each at 0.3 degrees): rendered 143,128,104, measured \#4a4f33 = 74,79,51, difference +69,+49,+53 — not within 40: a bush is lit on one side and shaded on the other; the dry scrub colour is itself an estimate
+#     the 600-yard plate's red paint through the scope at 7x: rendered 141,71,75, measured \#af787b = 175,120,123, difference -34,-49,-48 — not within 40: the plate faces the shooter and the afternoon sun stands almost beside it, so it is side-lit, not in strong sun as the measured paint was
+# Subtest: verify 6: the look: the rendered sky, a sunlit hillside, the dirt floor in sun and the plate's red paint through the scope, beside the measured colours (docs/LOOK.md)
+ok 1 - verify 6: the look: the rendered sky, a sunlit hillside, the dirt floor in sun and the plate's red paint through the scope, beside the measured colours (docs/LOOK.md)
+  ---
+  duration_ms: 39610.031796
+  type: 'test'
+  ...
+#   light: 7723249 bytes (7.37 MB) downloaded for the canyon course:
+#     /scene.min.js: 617204 bytes, text/javascript; charset=utf-8, cache-control: no-cache
+#     /terrain/cta-piru-photo-light-7cc547bf.jpg: 204193 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/cta-piru-heights-far-f9e0f24a.png: 932481 bytes, image/png, cache-control: public, max-age=31536000, immutable
+#     /terrain/cta-piru-heights-348e2072.png: 4396799 bytes, image/png, cache-control: public, max-age=31536000, immutable
+#     /terrain/cta-piru-photo-light-7cc547bf.jpg: 204193 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/ground-floor-color-light-63548bea.jpg: 103569 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/ground-floor-relief-light-ff5aca89.jpg: 165124 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/ground-dry-grass-color-light-ec5c5609.jpg: 93635 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/ground-dry-grass-relief-light-1bd06513.jpg: 157196 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/ground-green-grass-color-light-81becd09.jpg: 71574 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/ground-green-grass-relief-light-b9a54e36.jpg: 190282 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/ground-scrub-litter-color-light-547b6854.jpg: 80413 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/ground-scrub-litter-relief-light-1711fbe6.jpg: 125741 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/ground-rock-color-light-e1e20270.jpg: 63953 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/ground-rock-relief-light-8e37ff55.jpg: 119371 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/ground-scree-relief-light-42def4ee.jpg: 107509 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/ground-scree-color-light-ab36e2c6.jpg: 90012 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     second load /terrain/cta-piru-heights-348e2072.png: transferred 0 bytes (body 4396799)
+#     second load /terrain/cta-piru-heights-far-f9e0f24a.png: transferred 0 bytes (body 932481)
+#     second load /terrain/cta-piru-photo-light-7cc547bf.jpg: transferred 0 bytes (body 204193)
+#     second load /terrain/cta-piru-photo-light-7cc547bf.jpg: transferred 0 bytes (body 204193)
+#     second load /terrain/ground-floor-color-light-63548bea.jpg: transferred 0 bytes (body 103569)
+#     second load /terrain/ground-floor-relief-light-ff5aca89.jpg: transferred 0 bytes (body 165124)
+#     second load /terrain/ground-dry-grass-color-light-ec5c5609.jpg: transferred 0 bytes (body 93635)
+#     second load /terrain/ground-dry-grass-relief-light-1bd06513.jpg: transferred 0 bytes (body 157196)
+#     second load /terrain/ground-green-grass-color-light-81becd09.jpg: transferred 0 bytes (body 71574)
+#     second load /terrain/ground-green-grass-relief-light-b9a54e36.jpg: transferred 0 bytes (body 190282)
+#     second load /terrain/ground-scrub-litter-color-light-547b6854.jpg: transferred 0 bytes (body 80413)
+#     second load /terrain/ground-scrub-litter-relief-light-1711fbe6.jpg: transferred 0 bytes (body 125741)
+#     second load /terrain/ground-rock-color-light-e1e20270.jpg: transferred 0 bytes (body 63953)
+#     second load /terrain/ground-rock-relief-light-8e37ff55.jpg: transferred 0 bytes (body 119371)
+#     second load /terrain/ground-scree-color-light-ab36e2c6.jpg: transferred 0 bytes (body 90012)
+#     second load /terrain/ground-scree-relief-light-42def4ee.jpg: transferred 0 bytes (body 107509)
+#   full: 16495880 bytes (15.73 MB) downloaded for the canyon course:
+#     /scene.min.js: 617204 bytes, text/javascript; charset=utf-8, cache-control: no-cache
+#     /terrain/cta-piru-photo-749e5d91.jpg: 2867223 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/cta-piru-heights-far-f9e0f24a.png: 932481 bytes, image/png, cache-control: public, max-age=31536000, immutable
+#     /terrain/cta-piru-heights-348e2072.png: 4396799 bytes, image/png, cache-control: public, max-age=31536000, immutable
+#     /terrain/cta-piru-photo-749e5d91.jpg: 2867223 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/ground-floor-color-3fd58ff3.jpg: 350498 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/ground-floor-relief-c51e35fb.jpg: 570318 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/ground-dry-grass-color-a7c667ae.jpg: 327091 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/ground-green-grass-color-d0ac1bdd.jpg: 233469 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/ground-dry-grass-relief-f98a65c8.jpg: 590072 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/ground-green-grass-relief-48c2cfdd.jpg: 663268 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/ground-scrub-litter-color-aef32fe5.jpg: 247731 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/ground-scrub-litter-relief-3bedf20b.jpg: 440269 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/ground-rock-color-64cdb4d8.jpg: 199912 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/ground-rock-relief-5cf7c707.jpg: 370405 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/ground-scree-color-a3bc5fb5.jpg: 344240 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     /terrain/ground-scree-relief-2635603c.jpg: 477677 bytes, image/jpeg, cache-control: public, max-age=31536000, immutable
+#     second load /terrain/cta-piru-heights-348e2072.png: transferred 0 bytes (body 4396799)
+#     second load /terrain/cta-piru-heights-far-f9e0f24a.png: transferred 0 bytes (body 932481)
+#     second load /terrain/cta-piru-photo-749e5d91.jpg: transferred 0 bytes (body 2867223)
+#     second load /terrain/cta-piru-photo-749e5d91.jpg: transferred 0 bytes (body 2867223)
+#     second load /terrain/ground-floor-color-3fd58ff3.jpg: transferred 0 bytes (body 350498)
+#     second load /terrain/ground-floor-relief-c51e35fb.jpg: transferred 0 bytes (body 570318)
+#     second load /terrain/ground-dry-grass-color-a7c667ae.jpg: transferred 0 bytes (body 327091)
+#     second load /terrain/ground-dry-grass-relief-f98a65c8.jpg: transferred 0 bytes (body 590072)
+#     second load /terrain/ground-green-grass-color-d0ac1bdd.jpg: transferred 0 bytes (body 233469)
+#     second load /terrain/ground-green-grass-relief-48c2cfdd.jpg: transferred 0 bytes (body 663268)
+#     second load /terrain/ground-scrub-litter-color-aef32fe5.jpg: transferred 0 bytes (body 247731)
+#     second load /terrain/ground-scrub-litter-relief-3bedf20b.jpg: transferred 0 bytes (body 440269)
+#     second load /terrain/ground-rock-color-64cdb4d8.jpg: transferred 0 bytes (body 199912)
+#     second load /terrain/ground-rock-relief-5cf7c707.jpg: transferred 0 bytes (body 370405)
+#     second load /terrain/ground-scree-color-a3bc5fb5.jpg: transferred 0 bytes (body 344240)
+#     second load /terrain/ground-scree-relief-2635603c.jpg: transferred 0 bytes (body 477677)
+# Subtest: verify 7: weight: what the canyon course downloads on Light and on Full, and a second load in the same browser transfers no terrain bytes
+ok 2 - verify 7: weight: what the canyon course downloads on Light and on Full, and a second load in the same browser transfers no terrain bytes
+  ---
+  duration_ms: 28314.344285
+  type: 'test'
+  ...
+#   no 3D: plain picture, the line shown, a seeded shot at 400 yd landed (miss: 85.4 in low, 16 in right) and was recorded
+# Subtest: verify 8: fallback: with 3D switched off in the browser the firing line shows the Plain picture and the one line, and a seeded shot still lands and is recorded
+ok 3 - verify 8: fallback: with 3D switched off in the browser the firing line shows the Plain picture and the one line, and a seeded shot still lands and is recorded
+  ---
+  duration_ms: 1480.034174
+  type: 'test'
+  ...
+#   a July afternoon with the wind 5.2/5.3/4.1 mph in its three stretches: none of it on the page
+# Subtest: verify 9: nothing new tells the wind: with "Show the conditions" off the page holds no wind figure under the Full picture, beyond the wind call the player stated
+ok 4 - verify 9: nothing new tells the wind: with "Show the conditions" off the page holds no wind figure under the Full picture, beyond the wind call the player stated
+  ---
+  duration_ms: 10895.77141
+  type: 'test'
+  ...
+#   the first visit chose light on this machine (fewer 28 frames a second over 2 s in the test browser's software 3D)
+# Subtest: the first visit: with no picture chosen yet the line draws Full, counts frames for two seconds and keeps Full or Light on the device; the setting shows it
+ok 5 - the first visit: with no picture chosen yet the line draws Full, counts frames for two seconds and keeps Full or Light on the device; the setting shows it
+  ---
+  duration_ms: 40197.597326
+  type: 'test'
+  ...
+#   Vepr irons: drawn notch 39.9 px (data 24 MOA × 1.596 px/MOA = 38.3 px), drawn post 19.4 px (data 12 MOA = 19.1 px); threshold 75 between the notch's lightest 107 and the steel 43
+#   Vepr scope at 9x: first mil-dot NaN px right and NaN px left of the centre, the next null px on (data 3.44 MOA × 3.989 = 13.7 px)
+# Subtest: verify 4 (range-day-six): the sights' angles are unchanged: for the Vepr's irons and scope and the Tavor's red dot, the drawn notch, post, reticle spacing and dot in pixels equal the data's minutes of angle times the view's pixels per minute, within 1.5 px (the blurred notch within 2.5)
+not ok 6 - verify 4 (range-day-six): the sights' angles are unchanged: for the Vepr's irons and scope and the Tavor's red dot, the drawn notch, post, reticle spacing and dot in pixels equal the data's minutes of angle times the view's pixels per minute, within 1.5 px (the blurred notch within 2.5)
+  ---
+  duration_ms: 1751.337032
+  type: 'test'
+  location: '/home/user/range-day/test/scene.test.js:261:1'
+  failureType: 'testCodeFailure'
+  error: 'mil-dot spacing NaN/NaN vs 13.7'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (/home/user/range-day/test/scene.test.js:305:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+#   412 px, February midday, scope 7x, 600 yd: sharpness 4.73, was 1.50 (at least double: the aim met)
+#   412 px, February midday, scope 7x, 1000 yd: sharpness 4.12, was 1.28 (at least double: the aim met)
+#   412 px, February midday: the hillside patch below the 1,000-yard plate: median brightness 170.7 at the centre, 170.6 re-found 17 px left after moving the aim 2 MOA right (difference 0.1)
+#   412 px, September afternoon, scope 7x, 600 yd: sharpness 4.70, was 1.64 (at least double: the aim met)
+#   412 px, September afternoon, scope 7x, 1000 yd: sharpness 4.25, was 1.63 (at least double: the aim met)
+#   412 px, September afternoon: the hillside patch below the 1,000-yard plate: median brightness 157.0 at the centre, 155.1 re-found 17 px left after moving the aim 2 MOA right (difference 1.9)
+#   1280 px, February midday, scope 7x, 600 yd: sharpness 4.44, was 0.96 (at least double: the aim met)
+#   1280 px, February midday, scope 7x, 1000 yd: sharpness 4.13, was 0.79 (at least double: the aim met)
+#   1280 px, February midday: the hillside patch below the 1,000-yard plate: median brightness 171.6 at the centre, 171.8 re-found 28 px left after moving the aim 2 MOA right (difference 0.3)
+#   1280 px, September afternoon, scope 7x, 600 yd: sharpness 4.93, was 1.02 (at least double: the aim met)
+#   1280 px, September afternoon, scope 7x, 1000 yd: sharpness 4.78, was 1.00 (at least double: the aim met)
+#   1280 px, September afternoon: the hillside patch below the 1,000-yard plate: median brightness 157.7 at the centre, 155.7 re-found 28 px left after moving the aim 2 MOA right (difference 2.0)
+# Subtest: verify 5 (range-day-six): sharpness through the scope at 7x (since range-day-eleven the old 2-7x44's 7x view, 4 ft at 100 yards, as a test view on the BugBuster) on the 600- and 1,000-yard plates, Full, both widths, against docs/reports/picture-before.txt: no state lower than it started (the aim of at least double is printed, met or missed); and the gain is ground, not grain: with the aim moved 2 minutes of angle the same patch of hillside, re-found by its ground position, differs by less than 8 of 255 in median brightness
+ok 7 - verify 5 (range-day-six): sharpness through the scope at 7x (since range-day-eleven the old 2-7x44's 7x view, 4 ft at 100 yards, as a test view on the BugBuster) on the 600- and 1,000-yard plates, Full, both widths, against docs/reports/picture-before.txt: no state lower than it started (the aim of at least double is printed, met or missed); and the gain is ground, not grain: with the aim moved 2 minutes of angle the same patch of hillside, re-found by its ground position, differs by less than 8 of 255 in median brightness
+  ---
+  duration_ms: 53370.367463
+  type: 'test'
+  ...
+#   one depth step (24 bits, near 0.5 m, far 20000 m): 1.59 cm at the farthest board row (365.8 m), 10.0 cm at the farthest plate (914.4 m); 4 steps: 6.4 cm and 39.9 cm; the data's stand-offs 6.5 cm and 40 cm
+#   96 boards, each with two posts, the nearest face at least 6.50 cm behind its sheet (was 0.5 cm); 10 plates, the post's nearest face at least 40.0 cm behind the plate's back (was 0.14 cm behind its front face, inside the steel)
+# Subtest: verify 7 (range-day-seven): every board's two posts and every plate's post stand behind what they hold by at least the data's stand-off, which is at least stepsApart depth steps at the farthest row and the farthest plate for the camera's own near and far
+ok 8 - verify 7 (range-day-seven): every board's two posts and every plate's post stand behind what they hold by at least the data's stand-off, which is at least stepsApart depth steps at the farthest row and the farthest plate for the camera's own near and far
+  ---
+  duration_ms: 8516.087856
+  type: 'test'
+  ...
+#   full, phone, 100-yard row: 1 boards in the view, 157 px read down each post's column, 12 frames: 0.00 percent dark only with the posts (worst board and frame 0.0 percent)
+#   full, phone, 200-yard row: 3 boards in the view, 78 px read down each post's column, 12 frames: 0.00 percent dark only with the posts (worst board and frame 0.0 percent)
+#   full, phone, 400-yard row: 6 boards in the view, 39 px read down each post's column, 12 frames: 0.00 percent dark only with the posts (worst board and frame 0.0 percent)
+#   full, computer, 100-yard row: 1 boards in the view, 264 px read down each post's column, 12 frames: 0.00 percent dark only with the posts (worst board and frame 0.0 percent)
+#   full, computer, 200-yard row: 3 boards in the view, 132 px read down each post's column, 12 frames: 0.00 percent dark only with the posts (worst board and frame 0.0 percent)
+#   full, computer, 400-yard row: 6 boards in the view, 65 px read down each post's column, 12 frames: 0.00 percent dark only with the posts (worst board and frame 0.0 percent)
+#   light, phone, 100-yard row: 1 boards in the view, 157 px read down each post's column, 12 frames: 0.00 percent dark only with the posts (worst board and frame 0.0 percent)
+#   light, phone, 200-yard row: 3 boards in the view, 78 px read down each post's column, 12 frames: 0.00 percent dark only with the posts (worst board and frame 0.0 percent)
+#   light, phone, 400-yard row: 6 boards in the view, 39 px read down each post's column, 12 frames: 0.00 percent dark only with the posts (worst board and frame 0.0 percent)
+#   light, computer, 100-yard row: 1 boards in the view, 264 px read down each post's column, 12 frames: 0.00 percent dark only with the posts (worst board and frame 0.0 percent)
+#   light, computer, 200-yard row: 3 boards in the view, 132 px read down each post's column, 12 frames: 0.00 percent dark only with the posts (worst board and frame 0.0 percent)
+#   light, computer, 400-yard row: 6 boards in the view, 65 px read down each post's column, 12 frames: 0.00 percent dark only with the posts (worst board and frame 0.0 percent)
+# Subtest: verify 8 (range-day-seven): through the Vepr's scope at 7x (since range-day-eleven the old scope's 7x view as a test view) on each board row (100, 200 and 400 yards), over twelve frames with the aim wandering, on Full and on Light at both sizes, no dark column shows inside a board's face where its post stands
+ok 9 - verify 8 (range-day-seven): through the Vepr's scope at 7x (since range-day-eleven the old scope's 7x view as a test view) on each board row (100, 200 and 400 yards), over twelve frames with the aim wandering, on Full and on Light at both sizes, no dark column shows inside a board's face where its post stands
+  ---
+  duration_ms: 159307.424355
+  type: 'test'
+  ...
+#   materials: loaded dry-grass, green-grass, scrub-litter, rock, scree; failed floor: /terrain/ground-floor-color-light-63548bea.jpg did not load
+#   console errors: Failed to load resource: the server responded with a status of 404 (Not Found)
+# Subtest: verify 8 (range-day-eight): a material that fails to load: with the floor's colour picture answering 404, the scene still draws, the floor is drawn with its plain palette colour (the other five materials loaded), and no console error is thrown but that request's
+ok 10 - verify 8 (range-day-eight): a material that fails to load: with the floor's colour picture answering 404, the scene still draws, the floor is drawn with its plain palette colour (the other five materials loaded), and no console error is thrown but that request's
+  ---
+  duration_ms: 4729.631766
+  type: 'test'
+  ...
+#   February midday, the floor, 40 m out at 1x: plain grid 0.932 (0.994 at one width, 0.918 elsewhere); as laid -0.028 (0.907, 0.909)
+#   February midday, the floor, 40 m out at 1x, the larger copy: plain grid 0.810 (0.979 at one width, 0.887 elsewhere); as laid 0.069 (0.907, 0.900)
+#   February midday, the hillside beside the 600-yard plate at 7x: plain grid 1.000 (1.000 at one width, 0.716 elsewhere); as laid 0.001 (0.674, 0.674)
+#   February midday, the hillside beside the 600-yard plate at 7x, the larger copy: plain grid 1.000 (1.000 at one width, 0.400 elsewhere); as laid 0.005 (0.364, 0.361)
+#   September afternoon, the floor, 40 m out at 1x: plain grid 1.000 (1.000 at one width, 0.880 elsewhere); as laid -0.034 (0.848, 0.853)
+#   September afternoon, the floor, 40 m out at 1x, the larger copy: plain grid 1.000 (1.000 at one width, 0.869 elsewhere); as laid 0.058 (0.877, 0.869)
+#   September afternoon, the hillside beside the 600-yard plate at 7x: plain grid 1.000 (1.000 at one width, 0.457 elsewhere); as laid 0.009 (0.441, 0.436)
+#   September afternoon, the hillside beside the 600-yard plate at 7x, the larger copy: plain grid 1.000 (1.000 at one width, 0.542 elsewhere); as laid 0.005 (0.568, 0.566)
+# Subtest: verify 5 (range-day-eight): no visible repeat: on the floor and on a hillside at 7x (the old scope's 7x view, a test view since range-day-eleven) the picture matches itself shifted by one material width hardly more than at other shifts, as laid; laid in a plain grid it matches clearly more (the measure fails a plain grid); both copies of each material, each at its own width
+ok 11 - verify 5 (range-day-eight): no visible repeat: on the floor and on a hillside at 7x (the old scope's 7x view, a test view since range-day-eleven) the picture matches itself shifted by one material width hardly more than at other shifts, as laid; laid in a plain grid it matches clearly more (the measure fails a plain grid); both copies of each material, each at its own width
+  ---
+  duration_ms: 151722.016017
+  type: 'test'
+  ...
+#   412 px, full, February midday, floor at 1x, 25 m out (the irons' field): local contrast 3.39, was 2.02
+#   412 px, full, February midday, hillside 20 m right of the 600-yard plate at 7x: local contrast 2.56, was 1.97
+#   412 px, full, February midday, the same hillside at 21x (the test view): local contrast 6.48, was 1.30
+#   412 px, full, September afternoon, floor at 1x, 25 m out (the irons' field): local contrast 3.61, was 2.37
+#   412 px, full, September afternoon, hillside 20 m right of the 600-yard plate at 7x: local contrast 3.39, was 2.42
+#   412 px, full, September afternoon, the same hillside at 21x (the test view): local contrast 5.16, was 2.28
+#   412 px, light, February midday, floor at 1x, 25 m out (the irons' field): local contrast 3.61, was 2.16
+#   412 px, light, February midday, hillside 20 m right of the 600-yard plate at 7x: local contrast 2.78, was 2.30
+#   412 px, light, February midday, the same hillside at 21x (the test view): local contrast 4.73, was 1.87
+#   412 px, light, September afternoon, floor at 1x, 25 m out (the irons' field): local contrast 3.76, was 2.61
+#   412 px, light, September afternoon, hillside 20 m right of the 600-yard plate at 7x: local contrast 2.76, was 2.55
+#   412 px, light, September afternoon, the same hillside at 21x (the test view): local contrast 5.09, was 2.29
+#   1280 px, full, February midday, floor at 1x, 25 m out (the irons' field): local contrast 4.10, was 2.03
+#   1280 px, full, February midday, hillside 20 m right of the 600-yard plate at 7x: local contrast 3.84, was 1.93
+#   1280 px, full, February midday, the same hillside at 21x (the test view): local contrast 7.46, was 1.36
+#   1280 px, full, September afternoon, floor at 1x, 25 m out (the irons' field): local contrast 4.36, was 2.45
+#   1280 px, full, September afternoon, hillside 20 m right of the 600-yard plate at 7x: local contrast 4.34, was 2.38
+#   1280 px, full, September afternoon, the same hillside at 21x (the test view): local contrast 5.74, was 2.21
+#   1280 px, light, February midday, floor at 1x, 25 m out (the irons' field): local contrast 4.52, was 2.31
+#   1280 px, light, February midday, hillside 20 m right of the 600-yard plate at 7x: local contrast 3.68, was 2.29
+#   1280 px, light, February midday, the same hillside at 21x (the test view): local contrast 5.26, was 1.95
+#   1280 px, light, September afternoon, floor at 1x, 25 m out (the irons' field): local contrast 4.69, was 2.86
+#   1280 px, light, September afternoon, hillside 20 m right of the 600-yard plate at 7x: local contrast 3.86, was 2.44
+#   1280 px, light, September afternoon, the same hillside at 21x (the test view): local contrast 3.80, was 2.33
+# Subtest: verify 6 (range-day-eight): detail on the ground: the local contrast on the floor at 1x and on a hillside at 7x and at 21x (the old scope's views, test views since range-day-eleven), Full and Light, both days, at both widths, against docs/reports/ground-before.txt: none lower than before
+ok 12 - verify 6 (range-day-eight): detail on the ground: the local contrast on the floor at 1x and on a hillside at 7x and at 21x (the old scope's views, test views since range-day-eleven), Full and Light, both days, at both widths, against docs/reports/ground-before.txt: none lower than before
+  ---
+  duration_ms: 70393.293214
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 11
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 570633.953917
+EXIT 1

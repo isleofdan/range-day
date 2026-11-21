@@ -597,3 +597,32 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
 - **Next session needs:** the plate-flicker bug (on the card; Codex's
   side), with Dan's screen recording if he has sent one; Dan's items
   already on the card.
+
+### range-day-eleven — 21 Nov 2026
+
+- **Stands:** pull request #34, merged as `0793892` on Dan's typed line and deployed by Deploy run 44902508221 (green, 72 s; the alive line, sign-in through the form, the picture file and crash reporting all checked by the run): the ground-fetching
+  workflows cannot delete what they did not fetch (Terrain starts only by
+  hand, never on `main`; the fetch keeps every part and file it did not
+  fetch, `scripts/terrain/keep.mjs`; both workflows stage by name without
+  removals, and a guard refuses any staged deletion, naming it;
+  `test/terrain-keep.test.js`). The Vepr carries its real scope, the UTG
+  BugBuster 3-9x32 (SCP-M392AOLWQ: 1/4 MOA clicks, 120 each way, 37.7 to
+  14 ft at 100 yards, the maker's figures); the 2-7x44 stays in the data,
+  offered by no rifle. The spotting scope is 25-125x, modeled on the
+  Barska Benchmark 25-125x88 (54 to 24 ft at 1,000 yards). 130 tests, 82
+  screenshot states (121 and 81 before).
+- **Decided:** the BugBuster carries the 2-7x44's zeros, settings, logs
+  and book lines (same click, same height over the bore), so the Vepr
+  needs no new zero; old records stay stored. A scope's view follows a
+  power fitted through both published widths (the old proportional rule
+  missed the 9x figure). The picture measures compared with a stored
+  before-file keep their old view as a test view. The spotting scope's
+  power stands under its word, keeping its slider 148 px on a phone.
+- **Next session needs:** Dan's look on his phone (the BugBuster at 3x
+  and 9x: a far plate is small at 9x, the maker's field of view; the
+  spotting scope at 125x); then, each planned by a Personal Shipyard
+  chat: the sights Dan fitted, with the reticle question (Ask 2);
+  recording and playback. Codex's side: the plate flicker;
+  `scripts/picture-measure.mjs` still names the 2-7x44. The picture work
+  stays paused on Dan's word. Report:
+  `docs/reports/range-day-eleven-report.md`.

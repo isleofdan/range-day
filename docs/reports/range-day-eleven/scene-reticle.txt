@@ -1,0 +1,21 @@
+TAP version 13
+#   Vepr irons: drawn notch 39.9 px (data 24 MOA × 1.596 px/MOA = 38.3 px), drawn post 19.4 px (data 12 MOA = 19.1 px); threshold 75 between the notch's lightest 107 and the steel 43
+#   Vepr scope at the old 7x view (36.1x on the BugBuster's rule): first mil-dot 47.5 px right and 48.5 px left of the centre, the next 48.0 px on (data 3.44 MOA × 13.963 = 48.0 px)
+#   Tavor irons: drawn post 21.6 px (data 14 MOA × 1.596 = 22.3 px)
+#   Tavor red dot: drawn 2 px across (data 2 MOA × 1.117 = 2.2 px; the dot's thin bloom adds up to 2.4 px)
+# Subtest: verify 4 (range-day-six): the sights' angles are unchanged: for the Vepr's irons and scope and the Tavor's red dot, the drawn notch, post, reticle spacing and dot in pixels equal the data's minutes of angle times the view's pixels per minute, within 1.5 px (the blurred notch within 2.5)
+ok 1 - verify 4 (range-day-six): the sights' angles are unchanged: for the Vepr's irons and scope and the Tavor's red dot, the drawn notch, post, reticle spacing and dot in pixels equal the data's minutes of angle times the view's pixels per minute, within 1.5 px (the blurred notch within 2.5)
+  ---
+  duration_ms: 2911.848549
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3237.863586
+EXIT 0
