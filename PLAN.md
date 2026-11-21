@@ -557,7 +557,7 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
   paper back". The tripod spotting scope (`data/spotting.json`, 20–60x,
   the maker's field of view at both ends): beside the glass control, no
   reticle, a still view, a drag moves it; "Back to the rifle" replaces
-  Steady and Fire in the bar. 117 tests, 81 screenshot states (111 and 73
+  Steady and Fire in the bar. 118 tests, 81 screenshot states (111 and 73
   before).
 - **Decided:** the near targets are their own list so the plates keep
   their indices; the scope's width between its ends follows a power of
