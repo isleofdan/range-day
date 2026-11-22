@@ -276,14 +276,13 @@ branch.
    (`zero:bcm-ar15:<scope>:imi-m193`, elevation +2, +3 and +4); the X95
    with the same scope reads "No zero saved yet", its sight at the middle,
    nothing written under its key; each BCM zero saved so far byte for byte
-   the same. The records the device held before (a zero and a setting of
-   the Troy on the BCM) are compared byte for byte after each scope and are
-   unchanged. Left out of that comparison, by design and named in the
-   test: the open day (`day:open`) and what was last used (`last`,
-   `last:<rifle>`), which every page writes whenever it opens a rifle;
-   they are not a sight's records. Keys after: `day:open`, `last`,
-   `last:bcm-ar15`, `last:iwi-x95`, `picture`, the four BCM sight settings,
-   `when`, the four BCM zeros.
+   the same. Every key the device held before (`picture`, the Troy's
+   setting `sight:bcm-ar15:troy-battlesights` and its zero
+   `zero:bcm-ar15:troy-battlesights:imi-m193`) is compared byte for byte
+   after each scope, none left out, and is unchanged (commit `1fa922c`).
+   Keys the visits added: `day:open`, `last`, `last:bcm-ar15`,
+   `last:iwi-x95`, `when` (written by every visit to a page, as on
+   `main`), and the three BCM scope settings and three BCM scope zeros.
 9. **The firing line's arrangement** (`docs/reports/range-day-thirteen/line-layout-after.txt`):
    32 sights × 3 held sizes, "every held sight-and-size pair within reach"
    (the 412×760 figure-only rows fall under the bar as on `main`). Zoom
@@ -300,15 +299,17 @@ branch.
    no console error (the screenshot run's checks and every browser test's
    error list).
 11. **The check.** Checks run
-   [44966258237](https://github.com/isleofdan/range-day/actions/runs/44966258237)
-   on the pull request's head `f60b2b9`, green, 11 min 45 s: who works on
-   what 16 s; tests rest 34 s, bench 44 s, browser 1 min 31 s, day 1 min
-   50 s, near 3 min 48 s, scene-scale 4 min 35 s, scene-rest 9 min 17 s,
-   scene-shots 9 min 18 s; screenshots shard 1 8 min 51 s, shard 2 10 min
-   31 s, shard 3 11 min 42 s, shard 4 11 min 6 s. (The earlier head
-   `1d6f8a2` passed run
-   [44943854160](https://github.com/isleofdan/range-day/actions/runs/44943854160)
-   in 12 min 12 s.)
+   [44967679014](https://github.com/isleofdan/range-day/actions/runs/44967679014)
+   on the pull request's head `1fa922c`, green, 17 min 51 s: who works on
+   what 11 s; tests rest 34 s, bench 52 s, browser 1 min 33 s, day 1 min
+   51 s, scene-scale 4 min 44 s, near 5 min 50 s, scene-shots 9 min 1 s,
+   scene-rest 12 min 40 s; screenshots shard 1 8 min 44 s, shard 2 13 min
+   59 s, shard 3 12 min 4 s, shard 4 17 min 47 s. (Earlier heads passed
+   too: `f60b2b9`, run
+   [44966258237](https://github.com/isleofdan/range-day/actions/runs/44966258237),
+   11 min 45 s; `1d6f8a2`, run
+   [44943854160](https://github.com/isleofdan/range-day/actions/runs/44943854160),
+   12 min 12 s.)
    Tests 140 → 151 (eight in `test/bench.test.js`, three in
    `test/guns.test.js`); screenshot states 94 → 105. Changed tests: in
    `test/guns.test.js` the figure-for-figure test (the collection is added
@@ -316,14 +317,14 @@ branch.
    three new sights); in `test/browser.test.js` verify 4 (Fire is not seen
    while Open another box stands over it), the storage-refusal test (the
    knobs' words stand by the rows) and the Tavor chooser (six options, its
-   own three first); in `test/bench.test.js` itself, after round 2, test 7
-   (all three scopes, not the Vortex alone) and test 8 (the flight time
+   own three first); in `test/bench.test.js` itself, after rounds 2 and 4, test 7
+   (all three scopes, not the Vortex alone, and every earlier key compared) and test 8 (the flight time
    compared exactly); in `test/day.test.js` verify 5 (the paper keeps the
    day's earlier holes, and Fire's place now holds Open another box). In
    this session, each run on its own: rest, bench, browser, near, day and
    scene-rest passed; scene-scale and scene-shots were still running when
    this report was filed and passed on the Checks run.
-12. **The diff:** 148,699 bytes (`git diff origin/main...HEAD`).
+12. **The diff:** 148,520 bytes (`git diff origin/main...HEAD`).
 13. After the deploy: in the card note.
 
 What this cannot prove: the session cannot open the live app or hold a
@@ -362,7 +363,13 @@ scope looks to him like the real one, is unverified until he looks.
    still standing, so it is Ask 1, as the brief orders, and not changed.
    (2) The reticle work was put off to a later session: fixed, Ask 3 now
    states what remains of it plainly.
-4. (Next round below when it answers.)
+4. Job `20261122-003807-65bb6d` (19 s, on report event 2972): FINDINGS,
+   two. (1) The notes pull request waits for the deploy result: the same
+   point a third time, against the same rule; it stays Ask 1. (2) The
+   byte-for-byte comparison left the open day and last-used keys out:
+   fixed, test 7 now compares every key the device held before, none left
+   out, and lists the keys the visits added (Verify 8).
+5. (Next round below when it answers.)
 
 ## Asks
 
