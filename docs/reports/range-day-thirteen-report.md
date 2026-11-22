@@ -300,11 +300,15 @@ branch.
    no console error (the screenshot run's checks and every browser test's
    error list).
 11. **The check.** Checks run
-   [44943854160](https://github.com/isleofdan/range-day/actions/runs/44943854160),
-   green, 12 min 12 s: who works on what 20 s; tests rest 26 s, bench 48 s,
-   browser 1 min 32 s, day 2 min 8 s, near 3 min 48 s, scene-scale 7 min
-   34 s, scene-shots 9 min 10 s, scene-rest 12 min 0 s; screenshots shard 1
-   8 min 11 s, shard 2 11 min 49 s, shard 3 12 min 9 s, shard 4 11 min 4 s.
+   [44966258237](https://github.com/isleofdan/range-day/actions/runs/44966258237)
+   on the pull request's head `f60b2b9`, green, 11 min 45 s: who works on
+   what 16 s; tests rest 34 s, bench 44 s, browser 1 min 31 s, day 1 min
+   50 s, near 3 min 48 s, scene-scale 4 min 35 s, scene-rest 9 min 17 s,
+   scene-shots 9 min 18 s; screenshots shard 1 8 min 51 s, shard 2 10 min
+   31 s, shard 3 11 min 42 s, shard 4 11 min 6 s. (The earlier head
+   `1d6f8a2` passed run
+   [44943854160](https://github.com/isleofdan/range-day/actions/runs/44943854160)
+   in 12 min 12 s.)
    Tests 140 → 151 (eight in `test/bench.test.js`, three in
    `test/guns.test.js`); screenshot states 94 → 105. Changed tests: in
    `test/guns.test.js` the figure-for-figure test (the collection is added
