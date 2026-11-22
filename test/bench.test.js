@@ -266,15 +266,13 @@ test('range-day-thirteen: same scale through each scope: where the drawing puts 
   console.log(`  ${checked} targets checked, largest difference ${worst.toFixed(3)} px\n  ` + lines.join('\n  '));
 });
 
-test('range-day-thirteen verify 8: for each of the three collection scopes, a zero saved with it on the BCM is not read on the X95: the X95 starts unzeroed with it, the BCM\'s zero untouched; every record the device held before (a zero and a setting of the BCM\'s own sight) is unchanged, byte for byte; each scope clicks by its own click over its own travel on the bench', { skip }, async () => {
+test('range-day-thirteen verify 8: for each of the three collection scopes, a zero saved with it on the BCM is not read on the X95: the X95 starts unzeroed with it, the BCM\'s zero untouched; every key the device held before (a zero and a setting of the BCM\'s own sight) is unchanged, byte for byte, none left out; each scope clicks by its own click over its own travel on the bench', { skip }, async () => {
   const { page, context, errors } = await signedIn();
   // a device as main left it: a zero and a setting of the BCM's own sight
   await page.evaluate(() => { localStorage.setItem('range-day:zero:bcm-ar15:troy-battlesights:imi-m193', JSON.stringify({ elevationClicks: 2, windageClicks: -1, zeroYards: 100, sight: 'troy-battlesights', savedAt: '2026-11-20T10:00:00.000Z' })); localStorage.setItem('range-day:sight:bcm-ar15:troy-battlesights', JSON.stringify({ elevationClicks: 2, windageClicks: -1 })); });
   const old = await page.evaluate(() => Object.fromEntries(Object.keys(localStorage).map((k) => [k, localStorage.getItem(k)])));
-  // Left out of the byte-for-byte comparison, by design: the open day (day:open) and what was last used (last, last:<rifle>),
-  // which every page writes whenever it opens a rifle; they are not records of a sight. Every other key is compared.
-  const written = (k) => k === 'range-day:day:open' || k === 'range-day:last' || k.startsWith('range-day:last:');
-  const lines = [`left out of the comparison, written by every visit: ${Object.keys(old).filter(written).join(', ') || 'none held before'}`];
+  // Every key the device held before is compared byte for byte after each scope, none left out; the keys the visits add are listed.
+  const lines = [`keys held before, each compared byte for byte: ${Object.keys(old).sort().join(', ')}`];
   const zeros = {};
   for (const [i, id] of COLLECTION.entries()) {
     await page.evaluate(() => { localStorage.removeItem('range-day:day:open'); });
@@ -290,11 +288,11 @@ test('range-day-thirteen verify 8: for each of the three collection scopes, a ze
     const keys = await page.evaluate(() => Object.fromEntries(Object.keys(localStorage).map((k) => [k, localStorage.getItem(k)])));
     assert.equal(keys[`range-day:zero:iwi-x95:${id}:imi-m193`], undefined, `${id}: nothing written for the X95`);
     for (const done of COLLECTION.slice(0, i + 1)) assert.equal(keys[`range-day:zero:bcm-ar15:${done}:imi-m193`], zeros[done], `${done}: the BCM's zero untouched`);
-    for (const [k, v] of Object.entries(old)) if (!written(k)) assert.equal(keys[k], v, `${k} unchanged`);
+    for (const [k, v] of Object.entries(old)) assert.equal(keys[k], v, `${k} unchanged, byte for byte`);
     lines.push(`${id}: zero saved on the BCM (elevation +${i + 2}); on the X95 "No zero saved yet", at its middle, no key written; the BCM's zeros and every earlier record unchanged`);
   }
   const keys = await page.evaluate(() => Object.keys(localStorage).sort());
-  lines.push(`stored keys after: ${keys.join(', ')}`);
+  lines.push(`stored keys after: ${keys.join(', ')}`, `keys added by the visits: ${keys.filter((k) => !(k in old)).join(', ')}`);
   // each scope's own click on the bench: one press moves its setting's words by its own click in MOA
   for (const id of COLLECTION) {
     const S = flat.sights[id];
