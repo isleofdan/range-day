@@ -47,7 +47,7 @@ test('a bare number, an unknown sight, a defaultSight it does not carry, a missi
   ];
   console.log('  ' + messages.join('\n  '));
   assert.match(messages[0], /^gun 'x': game\.barrelIn: a bare number; wrap it as \{value, source\} or \{value, estimate\}$/);
-  assert.match(messages[1], /^gun 'x': sight 'foo' is not in the game's data: ar-irons, tavor-irons, ak-irons, vepr-irons, rem-irons, pa-md25, pa-magnifier, pa-3x-acss, utg-2-7x44, utg-bugbuster-3-9x32, troy-battlesights, fab-flipup, seeall-gen1, ak762-kns-peep, ak545-ball, ak545-xs, trijicon-acog-ta31f, vortex-razor-1-10, leupold-mark5hd-5-25$/); // range-day-thirteen: the three collection scopes are in the data
+  assert.match(messages[1], /^gun 'x': sight 'foo' is not in the game's data: ar-irons, tavor-irons, ak-irons, vepr-irons, rem-irons, pa-md25, pa-magnifier, pa-3x-acss, utg-2-7x44, utg-bugbuster-3-9x32, troy-battlesights, fab-flipup, seeall-gen1, ak762-kns-peep, ak545-ball, ak545-xs, trijicon-acog-ta31f, trijicon-acog-ta31f-g, vortex-razor-1-10, leupold-mark5hd-5-25$/); // range-day-thirteen: the collection scopes are in the data (range-day-fourteen: and the green ACOG)
   assert.match(messages[2], /^gun 'x': defaultSight 'pa-md25' is not one of its sights: troy-battlesights$/);
   assert.match(messages[3], /^gun 'x': no sightHeightIn for sight 'troy-battlesights'; it carries: troy-battlesights$/);
   // And the rest of the shape: an unknown load, a wrong caliber, a course that does not exist, a leaf table the sight lacks, a duplicate.
@@ -105,7 +105,7 @@ test('with GUN_RECORDS_FILE naming a file with an eighth gun, the server serves 
 });
 
 // range-day-thirteen: the scope collection, moved among the rifles (task items 6 and 7).
-const COLLECTION = ['trijicon-acog-ta31f', 'vortex-razor-1-10', 'leupold-mark5hd-5-25'];
+const COLLECTION = ['trijicon-acog-ta31f', 'trijicon-acog-ta31f-g', 'vortex-razor-1-10', 'leupold-mark5hd-5-25']; // range-day-fourteen: the green ACOG
 test('range-day-thirteen: each rifle offers the collection\'s scopes its scope mounting takes, each at its rail\'s height over the bore plus its mount\'s; the .22 offers none; no rifle\'s opening sight or own sights change', () => {
   const set = guns.fromFiles(raw);
   const lines = [];
@@ -114,7 +114,7 @@ test('range-day-thirteen: each rifle offers the collection\'s scopes its scope m
     assert.equal(r.defaultSight, f.defaultSight, `${id}: its opening sight is unchanged`);
     for (const s of f.sights) assert.ok(r.sights.includes(s), `${id}: still offers ${s}`);
     if (f.scopeMount.rail === 'rimfire-dovetail') { assert.deepEqual(r.collection, [], `${id}: a grooved rimfire receiver takes none of the collection's mounts`); lines.push(`${id}: none (${f.scopeMount.rail})`); continue; }
-    assert.deepEqual(r.collection, COLLECTION, `${id}: all three, in the file's order`);
+    assert.deepEqual(r.collection, COLLECTION, `${id}: every collection scope, in the file's order`);
     for (const c of COLLECTION) {
       const want = Math.round((f.scopeMount.railHeightOverBoreIn + flat.sights[c].mount.centerOverRailIn) * 1000) / 1000;
       assert.equal(r.sightHeightIn[c], want, `${id} ${c}`);
@@ -139,6 +139,7 @@ test('range-day-thirteen: the three scopes\' figures, each from its maker\'s pag
   const S = flat.sights;
   const want = {
     'trijicon-acog-ta31f': { clickMoa: 0.4776, windageClickMoa: 0.4776, clicks: 42, zoom: { low: 4, high: 4 }, fovFtAt100: { low: 36.69, high: 36.69 }, mount: 1.535, reticle: 'chevron' },
+    'trijicon-acog-ta31f-g': { clickMoa: 0.4776, windageClickMoa: 0.4776, clicks: 42, zoom: { low: 4, high: 4 }, fovFtAt100: { low: 36.69, high: 36.69 }, mount: 1.535, reticle: 'chevron' },
     'vortex-razor-1-10': { clickMoa: 0.25, windageClickMoa: 0.25, clicks: 240, zoom: { low: 1, high: 10 }, fovFtAt100: { low: 116, high: 11.7 }, mount: 1.574, reticle: 'crosshair' },
     'leupold-mark5hd-5-25': { clickMoa: 0.25, windageClickMoa: 0.25, clicks: 240, windageClicks: 120, zoom: { low: 5, high: 25 }, fovFtAt100: { low: 20.4, high: 4.2 }, mount: 1.5, reticle: 'tree' },
   };
@@ -159,6 +160,10 @@ test('range-day-thirteen: the three scopes\' figures, each from its maker\'s pag
   assert.deepEqual([A.chevronHeightMoa, A.chevronDepthMoa, A.chevronLineMoa, A.stemTopMoa, A.stemWidthMoa], [4.1, 2.0, 1.1, 4.4, 0.4]);
   assert.deepEqual(A.dropLines.map((l) => [l.meters, l.belowTipMoa, l.widthMoa, l.label || null]), [[400, 7.8, 4.2, '4'], [500, 12.6, 3.3, null], [600, 18.7, 2.8, '6'], [700, 26.4, 2.4, null], [800, 35.8, 2.1, null]]);
   assert.equal(A.marksNotDrawn, undefined, 'the ACOG\'s marks are in');
+  // the TA31F-G: the same sheet's drawing, every mark the TA31F's, lit green (Dan, 22 Nov 2026: "Green Trijicon too please")
+  const AG = S['trijicon-acog-ta31f-g'].reticle;
+  assert.deepEqual({ ...AG, lit: undefined, litColor: undefined }, { ...A, lit: undefined, litColor: undefined }, 'the TA31F-G\'s marks are the TA31F\'s');
+  assert.deepEqual([A.litColor, AG.litColor], ['red', 'green']);
   const P = S['leupold-mark5hd-5-25'].reticle;
   assert.deepEqual([P.lineMoa, P.centerDotMoa, P.openingMoa, P.breakMoa, P.hashSpacingMoa, P.shortHashMoa, P.longHashMoa, P.numberedEveryMoa, P.dotRowSmallMoa, P.dotRowLargeMoa, P.upperStem.midBarMoa, P.stemBars.everyFourMoa, P.stemBars.midMoa], [0.1, 0.2, 2.0, 0.25, 1.0, 0.5, 2.0, 4.0, 0.1, 0.2, 1.0, 2.0, 1.0]);
   for (const f of ['lineMoa', 'centerDotMoa', 'openingMoa', 'breakMoa', 'longHashMoa']) assert.match(raw.sights['leupold-mark5hd-5-25'].reticle[f].source.url, /leupold\.com\/.*FFP_PR2-MOA_Reticle_Spec_Sheet\.pdf/, f);
@@ -169,6 +174,7 @@ test('range-day-thirteen: the three scopes\' figures, each from its maker\'s pag
   assert.match(bad((s) => { delete s['vortex-razor-1-10'].mount; }).join(), /sights.vortex-razor-1-10: a scope of the collection needs mount.name, mount.fits and mount.centerOverRailIn/);
   assert.match(bad((s) => { delete s['trijicon-acog-ta31f'].reticle.chevronHeightMoa; }).join(), /a chevron needs chevronBaseWidthMoa and chevronHeightMoa/);
   assert.match(bad((s) => { delete s['vortex-razor-1-10'].reticle.marksNotDrawn; }).join(), /a crosshair says in marksNotDrawn/);
+  assert.match(bad((s) => { s['trijicon-acog-ta31f-g'].reticle.litColor = 'blue'; }).join(), /names its lit colour, litColor 'red' or 'green'/);
   assert.match(bad((s) => { delete s['leupold-mark5hd-5-25'].reticle.openingMoa; }).join(), /a tree reticle needs openingMoa/);
   assert.match(bad((s) => { delete s['trijicon-acog-ta31f'].reticle.dropLines[2].belowTipMoa; }).join(), /dropLines\[2\]: each drop line needs belowTipMoa/);
 });

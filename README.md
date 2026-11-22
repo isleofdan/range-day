@@ -113,7 +113,8 @@ clicks, then works out the drop and the wind for each distance himself.
   "6"; the PR2-MOA's open center and dot, its hashes every minute of angle
   (about 1 inch at 100 yards) numbered every 4, its holdover lines every 4
   minutes down to 40 with rows of dots between them, and its post numbered
-  to 128. The Leupold is first focal plane, so every mark keeps its true
+  to 128. The same ACOG with a green chevron (the TA31F-G, on the same
+  sheet, every mark the same) is its own scope in the collection. The Leupold is first focal plane, so every mark keeps its true
   angle at every power: small at 5 power, large at 25. The Vortex still
   shows only its fine crosshair: its maker's drawing could not be read
   (its entry's `marksNotDrawn` says why). Nothing says where to hold.

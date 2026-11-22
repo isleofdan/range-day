@@ -1931,7 +1931,285 @@
     "value": 2.0,
     "estimate": "the sheet gives no size for the numbers \"4\" and \"6\"; on it they stand about half the 4.2 MOA line's width high, taken as 2 MOA, set just right of the line's end."
    },
-   "lit": "The sheet shows the TA31F with its red illumination: the chevron, the post down past the 400 m line, that line and its \"4\" red, the rest black. Drawn in plain red and black; nothing glows."
+   "lit": "The sheet shows the TA31F with its red illumination: the chevron, the post down past the 400 m line, that line and its \"4\" red, the rest black. Drawn in plain red and black; nothing glows.",
+   "litColor": "red"
+  },
+  "mount": {
+   "name": "Trijicon TA51 flat-top mount",
+   "fits": [
+    "picatinny"
+   ],
+   "centerOverRailIn": {
+    "value": 1.535,
+    "source": {
+     "url": "https://www.trijicon.com/uploads/page_content/PML4103_Rev(0)_Trijicon_Mounts__Accessories_Guide.pdf",
+     "read": "2026-11-21",
+     "note": "the maker's Mounts and Accessories Guide: TA51 \"Height Above Rail: 1.535 in.\", the top of the rail to the optic's axis. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+    }
+   }
+  },
+  "eyeReliefIn": {
+   "value": 1.5,
+   "source": {
+    "url": "https://www.trijicon.com/products/details/ta31f",
+    "read": "2026-11-21",
+    "note": "the maker's TA31F page: eye relief \"1.5 in (38.1 mm)\". Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+   }
+  },
+  "adjustWords": "The ACOG's two adjusters under their caps: elevation on top, windage on the right side, half an inch at 100 yards a click."
+ },
+ "trijicon-acog-ta31f-g": {
+  "name": "Trijicon ACOG 4x32 (TA31F-G), green chevron, on the TA51 flat-top mount",
+  "kind": "scope",
+  "model": "Trijicon ACOG 4x32 TA31F-G: the TA31F with its chevron lit green instead of red, on the same TA51 flat-top mount. Trijicon's dimension sheet for the 4x32 .223 chevron reticle lists it beside the TA31F (\"BAC Models: TA31F, TA31F-G, TA31F-A\") under one drawing, so every figure here is the TA31F's, from the same pages. Added on Dan's word, 22 Nov 2026 (\"Green Trijicon too please\").",
+  "collection": true,
+  "clickMoa": {
+   "value": 0.4776,
+   "source": {
+    "url": "https://www.trijicon.com/uploads/page_content/MANUAL-4x32_3.5x35_BAC_.pdf",
+    "read": "2026-11-21",
+    "note": "the maker's manual for the ACOG 4x32 and 3.5x35: \"Adjustment increments are 1/2 inch per click at 100 yards. This means that 2 clicks (3 clicks internal adjuster) are required to move the bullet one inch on the target.\" Half an inch at 100 yards is 0.5 / 1.047 = 0.4776 minute of angle. (Retailers say 1/3 MOA or 1/2 MOA; the manual decides, as the brief said. Trijicon's other manuals give the same half inch \"at 100 meters\"; this model's manual says yards.) Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+   }
+  },
+  "windageClickMoa": {
+   "value": 0.4776,
+   "source": {
+    "url": "https://www.trijicon.com/uploads/page_content/MANUAL-4x32_3.5x35_BAC_.pdf",
+    "read": "2026-11-21",
+    "note": "the same manual: the same half inch per click at 100 yards for windage. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+   }
+  },
+  "clicks": {
+   "value": 42,
+   "estimate": "Trijicon publishes no travel figure that could be read. One retailer's listing gives \"Windage Adjustment 40 MOA Elevation Adjustment 40 MOA\"; taken as the whole travel, 20 MOA each way from the middle, which is 42 of the manual's half-inch clicks (20 / 0.4776 = 41.9)."
+  },
+  "zoom": {
+   "low": {
+    "value": 4,
+    "source": {
+     "url": "https://www.trijicon.com/products/details/ta31f",
+     "read": "2026-11-21",
+     "note": "the maker's TA31F page: an ACOG 4x32, fixed 4 power. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+    }
+   },
+   "high": {
+    "value": 4,
+    "source": {
+     "url": "https://www.trijicon.com/products/details/ta31f",
+     "read": "2026-11-21",
+     "note": "the same page: fixed power, so the top of the zoom is its bottom. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+    }
+   }
+  },
+  "fovFtAt100": {
+   "low": {
+    "value": 36.69,
+    "source": {
+     "url": "https://www.trijicon.com/products/details/ta31f",
+     "read": "2026-11-21",
+     "note": "the maker's TA31F page: \"Field of View (degrees) 7°\". 7 degrees across at 100 yards is 2 × 300 ft × tan(3.5°) = 36.69 ft (retailers give 36.8 ft and 36.7 ft at 100 m). Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+    }
+   },
+   "high": {
+    "value": 36.69,
+    "source": {
+     "url": "https://www.trijicon.com/products/details/ta31f",
+     "read": "2026-11-21",
+     "note": "the same figure: fixed power. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+    }
+   }
+  },
+  "reticle": {
+   "kind": "chevron",
+   "focalPlane": "fixed power: the ACOG has one power, so its chevron is true at it",
+   "zeroMeters": {
+    "value": 100,
+    "source": {
+     "url": "https://www.trijicon.com/products/details/ta31f-a",
+     "read": "2026-11-21",
+     "note": "the maker's TA31F-A page: the reticle is \"designed to be zeroed using the tip at 100 meters\"; the manual: zero at 100 meters on \"the tip of the illuminated reticle\". Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+    }
+   },
+   "chevronBaseWidthMoa": {
+    "value": 5.53,
+    "source": {
+     "url": "https://www.trijicon.com/products/details/ta31f-a",
+     "read": "2026-11-21",
+     "note": "the maker's TA31F-A page: the chevron's base is \"5.53 MOA which is 19 in. at 300 meters\"; the manual: \"The base of the reticle and the horizontal stadia lines represent 19\" at the indicated range\". Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches. Trijicon's dimension sheet (read 2026-11-22) prints the same width rounded: \"5.5\"."
+    }
+   },
+   "chevronHeightMoa": {
+    "value": 4.1,
+    "source": {
+     "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+     "read": "2026-11-22",
+     "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"4.1\" from the tip's line (\"ZERO at 100m\") down to the chevron's lower ends. It replaces range-day-thirteen's estimate, the same figure from a forum table."
+    }
+   },
+   "chevronDepthMoa": {
+    "value": 2.0,
+    "source": {
+     "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+     "read": "2026-11-22",
+     "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"2.0\" from the tip down to the inside corner of the chevron's point."
+    }
+   },
+   "chevronLineMoa": {
+    "value": 1.1,
+    "source": {
+     "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+     "read": "2026-11-22",
+     "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"1.1\" across one arm of the chevron, square to it."
+    }
+   },
+   "stemTopMoa": {
+    "value": 4.4,
+    "source": {
+     "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+     "read": "2026-11-22",
+     "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"4.4\" from the tip down to the top of the post below the chevron."
+    }
+   },
+   "stemWidthMoa": {
+    "value": 0.4,
+    "source": {
+     "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+     "read": "2026-11-22",
+     "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"0.4\" across the post."
+    }
+   },
+   "dropLines": [
+    {
+     "meters": {
+      "value": 400,
+      "source": {
+       "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+       "read": "2026-11-22",
+       "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: the line is labeled \"4\" (hundreds of meters) beside it."
+      }
+     },
+     "label": "4",
+     "belowTipMoa": {
+      "value": 7.8,
+      "source": {
+       "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+       "read": "2026-11-22",
+       "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"7.8\" from the tip's line down to this line."
+      }
+     },
+     "widthMoa": {
+      "value": 4.2,
+      "source": {
+       "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+       "read": "2026-11-22",
+       "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"4.2\" across this line."
+      }
+     }
+    },
+    {
+     "meters": {
+      "value": 500,
+      "estimate": "the sheet prints no number beside this line; it is the line between the ones labeled \"4\" and \"6\" or after \"6\", and its width is 19 inches at 500 meters, as the maker's manual says each line is (\"The base of the reticle and the horizontal stadia lines represent 19\\\" at the indicated range\"): 19 in at 500 m is 3.32 MOA against the sheet's 3.3."
+     },
+     "belowTipMoa": {
+      "value": 12.6,
+      "source": {
+       "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+       "read": "2026-11-22",
+       "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"12.6\" from the tip's line down to this line."
+      }
+     },
+     "widthMoa": {
+      "value": 3.3,
+      "source": {
+       "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+       "read": "2026-11-22",
+       "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"3.3\" across this line."
+      }
+     }
+    },
+    {
+     "meters": {
+      "value": 600,
+      "source": {
+       "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+       "read": "2026-11-22",
+       "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: the line is labeled \"6\" (hundreds of meters) beside it."
+      }
+     },
+     "label": "6",
+     "belowTipMoa": {
+      "value": 18.7,
+      "source": {
+       "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+       "read": "2026-11-22",
+       "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"18.7\" from the tip's line down to this line."
+      }
+     },
+     "widthMoa": {
+      "value": 2.8,
+      "source": {
+       "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+       "read": "2026-11-22",
+       "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"2.8\" across this line."
+      }
+     }
+    },
+    {
+     "meters": {
+      "value": 700,
+      "estimate": "the sheet prints no number beside this line; it is the line between the ones labeled \"4\" and \"6\" or after \"6\", and its width is 19 inches at 700 meters, as the maker's manual says each line is (\"The base of the reticle and the horizontal stadia lines represent 19\\\" at the indicated range\"): 19 in at 700 m is 2.37 MOA against the sheet's 2.4."
+     },
+     "belowTipMoa": {
+      "value": 26.4,
+      "source": {
+       "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+       "read": "2026-11-22",
+       "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"26.4\" from the tip's line down to this line."
+      }
+     },
+     "widthMoa": {
+      "value": 2.4,
+      "source": {
+       "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+       "read": "2026-11-22",
+       "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"2.4\" across this line."
+      }
+     }
+    },
+    {
+     "meters": {
+      "value": 800,
+      "estimate": "the sheet prints no number beside this line; it is the line between the ones labeled \"4\" and \"6\" or after \"6\", and its width is 19 inches at 800 meters, as the maker's manual says each line is (\"The base of the reticle and the horizontal stadia lines represent 19\\\" at the indicated range\"): 19 in at 800 m is 2.07 MOA against the sheet's 2.1."
+     },
+     "belowTipMoa": {
+      "value": 35.8,
+      "source": {
+       "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+       "read": "2026-11-22",
+       "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"35.8\" from the tip's line down to this line."
+      }
+     },
+     "widthMoa": {
+      "value": 2.1,
+      "source": {
+       "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+       "read": "2026-11-22",
+       "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"2.1\" across this line."
+      }
+     }
+    }
+   ],
+   "dropLineThicknessMoa": {
+    "value": 0.4,
+    "estimate": "the sheet gives no thickness for the drop lines and says \"Reticles not drawn to scale\"; taken as the post's own 0.4 MOA, which the lines look no thinner than on the sheet."
+   },
+   "labelHeightMoa": {
+    "value": 2.0,
+    "estimate": "the sheet gives no size for the numbers \"4\" and \"6\"; on it they stand about half the 4.2 MOA line's width high, taken as 2 MOA, set just right of the line's end."
+   },
+   "lit": "The sheet lists the TA31F-G under the same drawing as the TA31F, its illumination green where the TA31F's is red: the chevron, the post down past the 400 m line, that line and its \"4\". Drawn in plain green and black; nothing glows.",
+   "litColor": "green"
   },
   "mount": {
    "name": "Trijicon TA51 flat-top mount",
