@@ -369,7 +369,11 @@ scope looks to him like the real one, is unverified until he looks.
    byte-for-byte comparison left the open day and last-used keys out:
    fixed, test 7 now compares every key the device held before, none left
    out, and lists the keys the visits added (Verify 8).
-5. (Next round below when it answers.)
+5. Job `20261122-005905-80d9df` (19 s, on report event 2974): FINDINGS,
+   one: the notes pull request waits for the deploy result. The same point
+   a fourth time, against the same rule; nothing else is open. As the
+   brief orders, it is Ask 1 of the closing message, in place of the
+   merge alone, and not changed.
 
 ## Asks
 
