@@ -1,0 +1,4 @@
+full 25x: median frame 599.9 ms over 60 frames
+full 125x: median frame 583.3 ms over 60 frames
+light 25x: median frame 216.7 ms over 60 frames
+light 125x: median frame 233.4 ms over 60 frames

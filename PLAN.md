@@ -711,3 +711,31 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
   on his phone. Report: the addendum in
   `docs/reports/range-day-thirteen-report.md`.
 
+
+### range-day-fourteen — 22 Nov 2026 (cloud session, from the Wall card `range-day`)
+
+- **Stands:** pull request #47, merged as `288a0a6` and deployed (Deploy
+  run 44994870417, success, 82 s). The Claude and Codex work split retired
+  (its script, its three tests and its Checks job removed; `CLAUDE.md` and
+  `AGENTS.md` say every file is open). The ACOG's chevron, post and 400 to
+  800 m drop lines and the Leupold's whole PR2-MOA tree in
+  `data/sights.json` from the makers' own reticle sheets, read as
+  pictures, drawn by one marks drawing at the view's scale (the PR2-MOA
+  first focal plane). **Play this day back** on a day's page: the day's
+  firing-line shots replayed through the spotting scope on the firing
+  line's own page and drawing, read-only (`/playback`), with the recorded
+  flight, the trace, and the strike from the record. The firing line fits
+  Dan's phone (378×762): the view gives up the 29 px the list needed.
+  153 tests, 113 screenshot states (151 and 105 before).
+- **Decided:** playback is a mode of the firing line's page, not a second
+  drawing; it writes nothing and keeps no setting; a phone screen too
+  short for the firing line's list gets a smaller view, never a control
+  pushed under the bar; the PR2-MOA's outer posts and the sheets' number
+  sizes have no figure (posts left out, number sizes estimated).
+- **Next session needs:** Dan's look on his phone (the ACOG and the Leupold
+  on the BCM; a day played back; the firing line at his size); the Vortex's
+  marks from its maker's drawing, whose download the safety check refused
+  (the environment now reaches its host). Then, each planned by a Personal
+  Shipyard chat: pistols and their targets; the .22's own scope. The
+  picture work stays paused and the plate flicker set aside, on Dan's
+  word. Report: `docs/reports/range-day-fourteen-report.md`.
