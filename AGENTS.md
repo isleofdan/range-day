@@ -16,9 +16,6 @@ controls before relying on them; report an unsupported boundary rather than bypa
 
 ## Your side of this app
 
-Claude and Codex split this app's work: see `CLAUDE.md`, "Who works on what",
-and the lists in `scripts/owners.mjs`. Codex leads the picture (`PICTURE`) and
-may work on the shared files; it leaves the real-figure files (`REAL`) alone
-and names its branches `codex/…`, which the Checks workflow holds to. When a
-job needs a real figure changed, say what is needed on the `range-day` card
-and stop there.
+The split of this app's work between Claude and Codex was tried in November
+2026 and retired on Dan's word that same month. Every file is open to
+whichever session is briefed.

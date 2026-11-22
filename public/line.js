@@ -20,7 +20,33 @@
   const E = RD.E;
   const d = await RD.data();
   const q = RD.qs();
-  const entered = RD.enterDay(d, RD.chooseFrom(d, q), q);
+  // range-day-fourteen: a day played back through the spotting scope (/playback?id=<day>): this same page and drawing, read-only.
+  // The day's record is read and never written; the drawing is given a copy of the day whose shots are only those landed so far
+  // in the playback, so the marks, the holes, the swing and the dust are the firing line's own. Nothing on the device is written.
+  const PLAYBACK = location.pathname === '/playback';
+  let played = null;
+  if (PLAYBACK) {
+    document.body.classList.add('playback');
+    document.title = document.title.replace('firing line', 'a day played back');
+    played = q.id ? RD.dayById(q.id) : null;
+    const lineShots = played ? played.shots.filter((x) => x.place === 'line') : [];
+    if (!lineShots.length) {
+      // the states with nothing to show: one line and the way back
+      const refused = !played && (RD.dayReadFailed() || RD.daysReadFailed());
+      const bench = played ? played.shots.filter((x) => x.place === 'bench').length : 0;
+      document.body.classList.add('playback-empty');
+      document.getElementById('play-empty').hidden = false;
+      document.getElementById('play-empty-text').textContent = refused ? 'This day is not saved on this device: the browser refused to read its storage, so there is nothing to play back.'
+        : !played ? 'There is no such day on this device, so there is nothing to play back.'
+        : `No shots on the firing line that day${bench ? ` (${bench} at the bench, which are not played back)` : ''}, so there is nothing to play back.`;
+      document.getElementById('play-empty-back').href = played ? `/day?id=${encodeURIComponent(played.id)}` : '/day';
+      window.RangeDayLine = { playback: { empty: true } };
+      return;
+    }
+  }
+  const lastLineSight = played ? played.shots.filter((x) => x.place === 'line' && x.sight).map((x) => x.sight).pop() : null;
+  const entered = PLAYBACK ? { day: { ...JSON.parse(JSON.stringify(played)), shots: [] }, c: RD.chooseFrom(d, { course: played.course, rifle: played.rifle, load: played.load, sight: lastLineSight }), saved: true, redirected: false }
+    : RD.enterDay(d, RD.chooseFrom(d, q), q);
   const c = entered.c;
   let day = entered.day;
   const { courseId, rifleId, sightId } = c;
@@ -30,7 +56,7 @@
   // A sliding rear leaf (the AK-pattern rifles and the Vepr's irons): its settings and each one's angle, from the rifle's record.
   const leaf = RD.leafOf(d, rifleId, sightId);
   const loadId = c.loadId;
-  RD.remember(c);
+  if (!PLAYBACK) RD.remember(c);
   const weather = day.weather;
   // The targets (range-day-ten): the steel plates every 100 yards (course.plates, in their order: the 3D picture and the tests count
   // them by index) and the near targets (course.near: paper at 50 and 100 yards, and on the canyon a 100-yard plate). The picker
@@ -127,7 +153,17 @@
 
   const canvas = $('view');
   let view = RD.fitCanvas(canvas, 640);
-  window.addEventListener('resize', () => { view = RD.fitCanvas(canvas, 640); if (typeof fitScene === 'function') fitScene(); });
+  // range-day-fourteen: on a phone screen too short for the within-reach list (Dan's phone, 378x762, measured from his screenshot:
+  // the book line fell 29 px under Steady and Fire), the view gives up exactly the height that is missing, never below 280 px, so
+  // everything stays above the bar; where it all fits the view keeps the screen's width, as before.
+  function fitView() {
+    view = RD.fitCanvas(canvas, 640);
+    if (PLAYBACK || window.innerWidth >= 1100) return;
+    const bar = document.querySelector('.firebar').getBoundingClientRect(), book = document.querySelector('.reach .slot.book').getBoundingClientRect();
+    const over = book.bottom + window.scrollY - bar.top; // the book line's bottom with the page at its top, against the fixed bar's top
+    if (bar.height > 0 && over > 0) view = RD.fitCanvas(canvas, Math.max(280, Math.floor(view.size - over - 2)));
+  }
+  window.addEventListener('resize', () => { fitView(); if (typeof fitScene === 'function') fitScene(); });
   const plate = () => target;
   const inchPerMoa = (y) => E.inchesPerMoa(y);
   // Each plate's own height above the firing line (data/courses.json, riseFt):
@@ -210,6 +246,7 @@
   // The sideways angle of the aimed plate, so the scene's own azimuths (from straight downrange) line up with the view.
   const azOf = (sideMoa) => sideMoa - toMoa(sideAngle(plate()));
   const drawnPaper = {}; // the plain drawing's last frame: each sheet's centre on the canvas
+  let drawnStrikes = []; // range-day-fourteen, at playback: where the plain drawing put each landed shot's mark, hole or dust this frame (the tests read it)
   // The holes shown on a paper, as the drawing takes them.
   const load = d.loads[loadId];
   const holesOf = (t) => RD.paperHoles(day, t).map((s) => ({ upIn: s.upIn, rightIn: s.rightIn, holeIn: RD.holeIn(load), burstIn: RD.burstIn(load, P), seed: RD.hash(`${day.id}:${s.n}`) }));
@@ -287,6 +324,7 @@
 
   function draw() {
     const { g, size } = view;
+    drawnStrikes = [];
     const k = pxPerMoa();
     const c = center();
     g.save();
@@ -303,6 +341,7 @@
         g.clearRect(0, 0, size, size);
         if (measuring) { measuring.frames++; if (now >= measuring.until) measured(); }
         drawDust(g, size, k);
+        if (PLAYBACK) drawTrace(g, size);
         if (flash > 0) { g.fillStyle = `rgba(255, 230, 180, ${flash})`; g.fillRect(0, 0, size, size); }
         g.restore();
         drawSight(g, size, k);
@@ -365,7 +404,7 @@
       g.fillStyle = mix([245, 242, 232], HAZE, haze); g.fillRect(bx, by - bh / 2, bw, bh);
       g.strokeStyle = mix([40, 40, 40], HAZE, haze); g.lineWidth = Math.min(1, bw * 0.03); g.strokeRect(bx, by - bh / 2, bw, bh);
       if (bh >= 7) { g.fillStyle = mix([20, 20, 20], HAZE, haze); g.font = `bold ${bh * 0.72}px system-ui, sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(String(p.yards), bx + bw / 2, by + bh * 0.04); }
-      for (const mk of RD.steelMarks(day, p)) { const [mx, my] = toScreen(at.right + mk.rightIn / ipm, at.up + mk.upIn / ipm); g.fillStyle = '#f3f1ea'; g.beginPath(); g.arc(mx, my, Math.max(1, 0.5 * k / 1.047), 0, 7); g.fill(); }
+      for (const mk of RD.steelMarks(day, p)) { const [mx, my] = toScreen(at.right + mk.rightIn / ipm, at.up + mk.upIn / ipm); g.fillStyle = '#f3f1ea'; g.beginPath(); g.arc(mx, my, Math.max(1, 0.5 * k / 1.047), 0, 7); g.fill(); if (PLAYBACK) drawnStrikes.push({ n: mk.n, kind: 'mark', x: mx, y: my }); }
     });
     // the paper (range-day-ten): each sheet on its white board, the board on two dark posts down to its ground, the sheet drawn by
     // the one paper drawing (game.js, drawPaper) with the day's holes, at the view's scale
@@ -383,9 +422,11 @@
       g.fillStyle = mix([238, 234, 222], HAZE, haze); g.fillRect(bx - bw / 2, bFoot - bh, bw, bh);
       const [sx, sy] = toScreen(at.right, at.up);
       RD.drawPaper(g, sx, sy, ppi, p.widthIn, p.heightIn, holesOf(p), P);
+      if (PLAYBACK) for (const h of RD.paperHoles(day, p)) drawnStrikes.push({ n: h.n, kind: 'hole', x: sx + h.rightIn * ppi, y: sy - h.upIn * ppi });
       drawnPaper[p.key] = { x: sx, y: sy, aimRight: c.right, aimUp: c.up, pxPerMoa: k, size }; // where this frame drew the sheet's centre, and the aim it drew from (the tests compare it with the angles)
     });
     drawDust(g, size, k);
+    if (PLAYBACK) drawTrace(g, size);
     // heat shimmer leaning with the wind (seen through magnification)
     if (viewMag() >= 2.5) {
       g.strokeStyle = 'rgba(255,255,255,0.10)'; g.lineWidth = 1.2;
@@ -420,6 +461,7 @@
       const riseMoa = (D.riseFt * 12 * f) / ipm;
       const drift = (D.driftFraction * wind * 1.4667 * age) / (p.yards * 3) * 3438; // ft/s × s over the distance, in MOA
       const alpha = Math.max(0, 0.85 * (1 - f) * (1 - f * 0.3));
+      if (PLAYBACK && p.n != null) { const [bx, by] = toScreen(off.right + p.rightMoa, off.up + p.upMoa); drawnStrikes.push({ n: p.n, kind: 'dust', x: bx, y: by }); }
       for (let j = 0; j < 9; j++) {
         const jr = (((j * 37) % 11) / 11 - 0.5) * (0.5 + 0.5 * f), ju = (((j * 53) % 7) / 7) * 0.6 - 0.15;
         const [x, y] = toScreen(off.right + p.rightMoa + jr * widthMoa + drift, off.up + p.upMoa + riseMoa + ju * widthMoa * 0.7);
@@ -446,7 +488,7 @@
       g.strokeStyle = 'rgba(0,0,0,0.85)'; g.lineWidth = 2; g.beginPath(); g.arc(cx, cy, cx - 4, 0, Math.PI * 2); g.stroke();
       if (spotting) return; // the spotting scope has no reticle
       if (sight.reticle && sight.reticle.kind === 'mil-dot') return drawMilDot(g, size, k, cx, cy);
-      if (sight.reticle && (sight.reticle.marksMoaBelowZero || sight.reticle.kind === 'chevron')) return drawDropReticle(g, size, k, cx, cy);
+      if (sight.reticle && (sight.reticle.marksMoaBelowZero || sight.reticle.kind === 'chevron' || sight.reticle.kind === 'tree')) return drawReticle(g, size, k, cx, cy);
       if (sight.reticle && sight.reticle.kind === 'crosshair') return drawCrosshair(g, size, cx, cy);
       return;
     }
@@ -587,35 +629,150 @@
     g.beginPath(); g.moveTo(0, cy); g.lineTo(cx - post, cy); g.moveTo(cx + post, cy); g.lineTo(size, cy); g.moveTo(cx, 0); g.lineTo(cx, cy - post); g.moveTo(cx, cy + post); g.lineTo(cx, size); g.stroke();
   }
 
-  // The ACSS drop reticle (the 3x prism sight): drawn from data/sights.json
-  // and only what the manual's text supports: a chevron whose tip is the
-  // zero point (50 yards), its base the 200-yard hold, then a hold mark at
-  // each distance the manual names, each at its derived angle below the
-  // tip; the chevron's and the marks' widths are the data's figures too. Left out, because the text does not describe them: the ranging
-  // ladder, wind holds, numbers beside the marks, the outer crosshair and
-  // the illumination. The marks are angles for the manual's load; with the
-  // loads in the set the bullet lands where the engine says.
-  // range-day-thirteen: the ACOG's chevron is drawn by the same drawing: a chevron of kind "chevron" names its base's width and its
-  // height (tip to base) itself, and has no hold marks drawn (data/sights.json, marksNotDrawn says why).
-  function drawDropReticle(g, size, k, cx, cy) {
+  // A reticle as a list of marks in minutes of angle from the aim point (right and down positive), built once per sight from
+  // data/sights.json and drawn at the view's scale (k pixels per MOA), so a first-focal-plane reticle keeps every mark's true angle
+  // at every power. One drawing for every reticle with marks (range-day-fourteen extended the prism sight's drawing to it):
+  //   line  {x1, y1, x2, y2, w, minPx}  a straight mark w MOA thick, never thinner than minPx on the screen
+  //   path  {pts, w, minPx}             a stroked line through points (the prism sight's open chevron)
+  //   poly  {pts}                       a filled shape (the ACOG's solid chevron)
+  //   dot   {x, y, d}                   a round dot d MOA across
+  //   text  {x, y, s, h}                a printed number h MOA high, centred on x, y; left out when it would be under 7 px
+  // Each mark carries its colour: red for the parts the maker's sheet shows lit, near-black for the rest. Nothing glows.
+  const INK = '#111', LIT = 'rgb(214, 38, 30)';
+  //
+  // The ACSS drop reticle (the 3x prism sight): only what the manual's text supports: a chevron whose tip is the zero point
+  // (50 yards), its base the 200-yard hold, then a hold mark at each distance the manual names, each at its derived angle below
+  // the tip; the chevron's and the marks' widths are the data's figures too. Left out, because the text does not describe them:
+  // the ranging ladder, wind holds, numbers beside the marks, the outer crosshair and the illumination. The marks are angles for
+  // the manual's load; with the loads in the set the bullet lands where the engine says.
+  function acssMarks(r) {
+    const marks = r.marksMoaBelowZero;
+    const base = marks.find((m) => m.yards === r.marksYards[0]) || marks[0];
+    const w = 0.25, minPx = 1.2;
+    const out = [{ t: 'path', pts: [[-r.chevronHalfWidthMoa, base.moaBelowZero], [0, 0], [r.chevronHalfWidthMoa, base.moaBelowZero]], w, minPx, c: INK }];
+    for (const m of marks) if (m !== base) out.push({ t: 'line', x1: -r.markHalfWidthMoa, y1: m.moaBelowZero, x2: r.markHalfWidthMoa, y2: m.moaBelowZero, w, minPx, c: INK });
+    return out;
+  }
+  // The ACOG's chevron reticle (range-day-fourteen, from Trijicon's dimension sheet for the 4x32 .223 chevron): a solid chevron
+  // whose tip is the zero (100 m), chevronBaseWidthMoa wide at its lower ends chevronHeightMoa under the tip, chevronDepthMoa
+  // from the tip to the inside of its point (so each arm is chevronLineMoa thick); a post stemWidthMoa wide from stemTopMoa
+  // under the tip to the last drop line; each drop line widthMoa wide at belowTipMoa, with the sheet's "4" and "6" beside the
+  // 400 and 600 m lines. Lit as the sheet shows it (reticle.lit): the chevron, the post down to the first line, that line and
+  // its number in red.
+  function chevronMarks(r) {
+    const W = r.chevronBaseWidthMoa / 2, H = r.chevronHeightMoa, D = r.chevronDepthMoa;
+    const inner = (H - D) * (W / H); // the inside edges run parallel to the outside ones, from the inside corner down to the base's line
+    const out = [{ t: 'poly', pts: [[0, 0], [W, H], [inner, H], [0, D], [-inner, H], [-W, H]], c: LIT }];
+    const lines = r.dropLines || [];
+    if (!lines.length) return out;
+    const th = r.dropLineThicknessMoa, first = lines[0], last = lines[lines.length - 1];
+    const sw = r.stemWidthMoa, litEnd = first.belowTipMoa + th / 2;
+    out.push({ t: 'line', x1: 0, y1: r.stemTopMoa, x2: 0, y2: litEnd, w: sw, minPx: 1, c: LIT, vertical: true });
+    out.push({ t: 'line', x1: 0, y1: litEnd, x2: 0, y2: last.belowTipMoa + th / 2, w: sw, minPx: 1, c: INK, vertical: true });
+    for (const L of lines) {
+      const c = L === first ? LIT : INK;
+      out.push({ t: 'line', x1: -L.widthMoa / 2, y1: L.belowTipMoa, x2: L.widthMoa / 2, y2: L.belowTipMoa, w: th, minPx: 1, c });
+      if (L.label) out.push({ t: 'text', x: L.widthMoa / 2 + r.labelHeightMoa * 0.6, y: L.belowTipMoa, s: L.label, h: r.labelHeightMoa, c, align: 'left' });
+    }
+    return out;
+  }
+  // The PR2-MOA's tree (range-day-fourteen, from Leupold's sheet for the Mark 5HD's FFP PR2-MOA): every line lineMoa thick and
+  // broken breakMoa wide at each whole minute, where its hash stands. The main line from the open center (openingMoa across) to
+  // mainLineToMoa each side: a short hash (shortHashMoa, odd minutes below, even above) at each minute, a long one (longHashMoa
+  // across) and its number at each numberedEveryMoa. Above the center the post to upperStem.toMoa, a bar midBarMoa wide halfway and
+  // one stemBars.everyFourMoa wide at its end. Below, the post to stemToMoa, a bar at each numbered minute and a narrower one
+  // halfway between; a holdover line at each holdoverEveryMoa to holdoverToMoa, reaching holdoverHalfWidthPerMoa of its depth
+  // either side, hashed like the main line, numbered at both ends; halfway between two holdover lines a row of dots, one each
+  // minute, small at the odd minutes and large at the even, as wide as the line below it. The dot at the center.
+  function treeMarks(r) {
+    const out = [], w = r.lineMoa, gap = r.breakMoa / 2, sp = r.hashSpacingMoa, every = r.numberedEveryMoa, h = r.labelHeightMoa;
+    const seg = (a, b, at, vertical) => out.push(vertical ? { t: 'line', x1: at, y1: a, x2: at, y2: b, w, minPx: 1, c: INK, vertical: true } : { t: 'line', x1: a, y1: at, x2: b, y2: at, w, minPx: 1, c: INK });
+    const isNumbered = (j) => Math.abs(Math.abs(j) / every - Math.round(Math.abs(j) / every)) < 1e-9;
+    // a horizontal line at depth y from -half to +half (from the opening's edge outward when open), hashed and broken at each minute
+    const hLine = (y, half, open, ends) => {
+      const n = Math.round(half / sp), o = open ? Math.round(r.openingMoa / 2 / sp) : 0;
+      for (let side = -1; side <= 1; side += 2) {
+        for (let j = Math.max(o, open ? o : 0); j < n; j++) seg(side * (j * sp + gap), side * ((j + 1) * sp - gap), y);
+        for (let j = Math.max(o, 1); j <= n; j++) {
+          const x = side * j * sp;
+          if (isNumbered(j * sp)) out.push({ t: 'line', x1: x, y1: y - r.longHashMoa / 2, x2: x, y2: y + r.longHashMoa / 2, w, minPx: 1, c: INK, vertical: true });
+          else if (ends && j === n) out.push({ t: 'line', x1: x, y1: y - r.shortHashMoa, x2: x, y2: y + r.shortHashMoa, w, minPx: 1, c: INK, vertical: true });
+          else if (j % 2) out.push({ t: 'line', x1: x, y1: y, x2: x, y2: y + r.shortHashMoa, w, minPx: 1, c: INK, vertical: true });
+          else out.push({ t: 'line', x1: x, y1: y - r.shortHashMoa, x2: x, y2: y, w, minPx: 1, c: INK, vertical: true });
+        }
+      }
+    };
+    out.push({ t: 'dot', x: 0, y: 0, d: r.centerDotMoa, c: INK });
+    // the main line and its numbers
+    hLine(0, r.mainLineToMoa, true, false);
+    for (let x = every; x <= r.mainLineToMoa + 1e-9; x += every) for (const s of [-1, 1]) out.push({ t: 'text', x: s * x, y: r.longHashMoa / 2 + h * 0.8, s: String(x), h, c: INK });
+    // the post above: broken at each minute from the opening's edge, a narrower bar halfway, a bar across its end
+    const o = r.openingMoa / 2, U = r.upperStem;
+    for (let y = o; y < U.toMoa - 1e-9; y += sp) seg(-(y + gap), -(y + sp - gap), 0, true);
+    out.push({ t: 'line', x1: -U.midBarMoa / 2, y1: -U.toMoa / 2, x2: U.midBarMoa / 2, y2: -U.toMoa / 2, w, minPx: 1, c: INK });
+    out.push({ t: 'line', x1: -r.stemBars.everyFourMoa / 2, y1: -U.toMoa, x2: r.stemBars.everyFourMoa / 2, y2: -U.toMoa, w, minPx: 1, c: INK });
+    // the post below, its bars, and its numbers past the last holdover line
+    for (let y = o; y < r.stemToMoa - 1e-9; y += sp) seg(y + gap, y + sp - gap, 0, true);
+    for (let y = every / 2; y <= r.stemToMoa + 1e-9; y += every / 2) {
+      const numbered = isNumbered(y), bw = numbered ? r.stemBars.everyFourMoa : r.stemBars.midMoa;
+      if (numbered && y <= r.holdoverToMoa + 1e-9) continue; // the holdover line is the mark there
+      out.push({ t: 'line', x1: -bw / 2, y1: y, x2: bw / 2, y2: y, w, minPx: 1, c: INK });
+      if (numbered) out.push({ t: 'text', x: r.stemBars.everyFourMoa / 2 + h * 1.4, y, s: String(y), h, c: INK, align: 'left' });
+    }
+    // the holdover lines, their numbers, and the rows of dots between them
+    for (let y = r.holdoverEveryMoa; y <= r.holdoverToMoa + 1e-9; y += r.holdoverEveryMoa) {
+      const half = y * r.holdoverHalfWidthPerMoa;
+      hLine(y, half, false, true);
+      for (const s of [-1, 1]) out.push({ t: 'text', x: s * (half + h * 2.5), y, s: String(y), h, c: INK });
+      const dy = y - r.holdoverEveryMoa / 2;
+      for (let j = 1; j * sp <= half + 1e-9; j++) for (const s of [-1, 1]) out.push({ t: 'dot', x: s * j * sp, y: dy, d: j % 2 ? r.dotRowSmallMoa : r.dotRowLargeMoa, c: INK });
+    }
+    return out;
+  }
+  let reticleCache = null;
+  const reticleMarks = () => {
+    if (reticleCache) return reticleCache;
     const r = sight.reticle;
-    const marks = r.marksMoaBelowZero || [];
-    const base = r.kind === 'chevron' ? { moaBelowZero: r.chevronHeightMoa } : marks.find((m) => m.yards === r.marksYards[0]) || marks[0];
-    const baseY = cy + base.moaBelowZero * k;
-    const halfW = (r.kind === 'chevron' ? r.chevronBaseWidthMoa / 2 : r.chevronHalfWidthMoa) * k; // the chevron's half-width at its base (data/sights.json)
-    g.strokeStyle = '#111'; g.lineWidth = Math.max(1.2, 0.25 * k); g.lineJoin = 'miter';
-    g.beginPath(); g.moveTo(cx - halfW, baseY); g.lineTo(cx, cy); g.lineTo(cx + halfW, baseY); g.stroke();
-    // the hold marks below the chevron
-    const tick = sight.reticle.markHalfWidthMoa * k;
-    for (const m of marks) {
-      if (m === base) continue;
-      const y = cy + m.moaBelowZero * k;
-      g.beginPath(); g.moveTo(cx - tick, y); g.lineTo(cx + tick, y); g.stroke();
+    reticleCache = r.kind === 'tree' ? treeMarks(r) : r.kind === 'chevron' ? chevronMarks(r) : acssMarks(r);
+    return reticleCache;
+  };
+  // Draws the marks at the view's scale. A mark thinner than its minPx is drawn minPx wide, on whole pixels when it is that
+  // thin, so a fine line stays one crisp pixel; a dot is never under 0.6 px across its radius; a number under 7 px is left out.
+  function drawReticle(g, size, k, cx, cy) {
+    const X = (x) => cx + x * k, Y = (y) => cy + y * k;
+    for (const m of reticleMarks()) {
+      g.fillStyle = m.c; g.strokeStyle = m.c;
+      if (m.t === 'line') {
+        const lw = Math.max(m.minPx, m.w * k);
+        if (m.vertical) {
+          const y1 = Math.min(Y(m.y1), Y(m.y2)), y2 = Math.max(Y(m.y1), Y(m.y2));
+          if (y2 < 0 || y1 > size) continue;
+          let x = X(m.x1) - lw / 2; if (lw < 2) x = Math.round(X(m.x1) - 0.5);
+          g.fillRect(x, y1, lw < 2 ? Math.round(lw) : lw, Math.max(0.5, y2 - y1));
+        } else if (m.y1 === m.y2) {
+          const x1 = Math.min(X(m.x1), X(m.x2)), x2 = Math.max(X(m.x1), X(m.x2));
+          if (Y(m.y1) < -lw || Y(m.y1) > size + lw) continue;
+          let y = Y(m.y1) - lw / 2; if (lw < 2) y = Math.round(Y(m.y1) - 0.5);
+          g.fillRect(x1, y, Math.max(0.5, x2 - x1), lw < 2 ? Math.round(lw) : lw);
+        } else { g.lineWidth = lw; g.beginPath(); g.moveTo(X(m.x1), Y(m.y1)); g.lineTo(X(m.x2), Y(m.y2)); g.stroke(); }
+      } else if (m.t === 'path') {
+        g.lineWidth = Math.max(m.minPx, m.w * k); g.lineJoin = 'miter';
+        g.beginPath(); m.pts.forEach(([x, y], i) => (i ? g.lineTo(X(x), Y(y)) : g.moveTo(X(x), Y(y)))); g.stroke();
+      } else if (m.t === 'poly') {
+        g.beginPath(); m.pts.forEach(([x, y], i) => (i ? g.lineTo(X(x), Y(y)) : g.moveTo(X(x), Y(y)))); g.closePath(); g.fill();
+      } else if (m.t === 'dot') {
+        const x = X(m.x), y = Y(m.y); if (x < -4 || x > size + 4 || y < -4 || y > size + 4) continue;
+        g.beginPath(); g.arc(x, y, Math.max(0.6, (m.d * k) / 2), 0, Math.PI * 2); g.fill();
+      } else if (m.t === 'text') {
+        const px = m.h * k; if (px < 7) continue;
+        const x = X(m.x), y = Y(m.y); if (x < -40 || x > size + 40 || y < -20 || y > size + 20) continue;
+        g.font = `${px.toFixed(1)}px sans-serif`; g.textAlign = m.align || 'center'; g.textBaseline = 'middle'; g.fillText(m.s, x, y);
+      }
     }
   }
 
-  // A fine crosshair through the center and nothing more (range-day-thirteen: the Vortex's and the Leupold's reticles, whose marks
-  // the makers' documents could not be read for; data/sights.json, marksNotDrawn). The same fine line as the mil-dot's.
+  // A fine crosshair through the center and nothing more (range-day-thirteen: the Vortex's reticle, whose marks the maker's
+  // drawing could not be read for; data/sights.json, marksNotDrawn). The same fine line as the mil-dot's.
   function drawCrosshair(g, size, cx, cy) {
     g.strokeStyle = '#111'; g.lineWidth = 1;
     g.beginPath(); g.moveTo(0, cy); g.lineTo(size, cy); g.moveTo(cx, 0); g.lineTo(cx, size); g.stroke();
@@ -900,11 +1057,140 @@
   for (const ev of ['pointerup', 'pointercancel']) canvas.addEventListener(ev, () => { drag = null; });
   window.addEventListener('keydown', (e) => { if (e.key === ' ' && document.activeElement === document.body) { e.preventDefault(); fire(); } });
 
+  // --- a day played back (range-day-fourteen) -------------------------------------------------------------
+  // The day's firing-line shots in their firing order, each through the tripod spotting scope: the view on its target, the shot's
+  // sound, the wait while the bullet flies (its recorded flightS), then the strike where the record says it struck: on steel the
+  // plate's mark, its swing and the ring coming back; on paper the hole; for a miss the dust. All of it is the firing line's own
+  // drawing, given a copy of the day holding only the shots landed so far. Two paces: the day's own (the time between the records'
+  // moments) and one that skips the waits between shots (it opens on that one); the flight is waited out in both. A shot recorded
+  // before range-day-thirteen has neither flightS nor targetKey: its target is found by its kind and distance and its strike shown
+  // without the wait. The bullet's trace is a drawing of the record (a plain arc from the muzzle side to the recorded strike over
+  // the recorded flight time), not a new working-out of its path. Nothing is written to the device.
+  const PB = { shots: [], ev: [], end: 0, clock: 0, playing: false, pace: 'quick', sound: true, cur: -1, landedKey: '', wasPlaying: false };
+  const LEAD_S = 1.5, AFTER_S = 3; // the time on the target before a shot, and after its strike before the next (the pace without waits)
+  const pbTarget = (s) => targets.find((t) => t.key === s.targetKey) || targets.find((t) => t.kind === RD.kindOf({ kind: s.target }) && t.yards === s.yards) || null;
+  function pbTimeline(pace) {
+    const ev = []; let t = 0;
+    const ats = PB.shots.map((x) => Date.parse(x.at) / 1000);
+    const real = pace === 'real' && ats.every((a) => Number.isFinite(a));
+    if (real) {
+      const fire0 = ats[0] - (PB.shots[0].flightS || 0);
+      PB.shots.forEach((x, i) => {
+        const flight = x.flightS || 0, prev = ev[i - 1];
+        const strikeT = Math.max(prev ? prev.strikeT : 0, LEAD_S + ats[i] - fire0), fireT = strikeT - flight;
+        const viewT = prev ? Math.min(fireT, Math.max(prev.strikeT + AFTER_S, fireT - LEAD_S)) : 0;
+        ev.push({ s: x, t: pbTarget(x), viewT, fireT, strikeT });
+      });
+    } else {
+      for (const x of PB.shots) { const flight = x.flightS || 0; ev.push({ s: x, t: pbTarget(x), viewT: t, fireT: t + LEAD_S, strikeT: t + LEAD_S + flight }); t += LEAD_S + flight + AFTER_S; }
+    }
+    return { ev, end: ev[ev.length - 1].strikeT + AFTER_S };
+  }
+  const pbSoundBack = (t) => (t.yards * 3) / E.speedOfSound(weather.tempF);
+  // Where a shot struck, in MOA from its own target's centre, as the firing line puts its dust: a bullet that fell short lands
+  // below the target at the held line (land(), above).
+  const pbStrikeMoa = (e) => { const ipm = inchPerMoa(e.t.yards); return e.s.reached ? { right: e.s.rightIn / ipm, up: e.s.upIn / ipm } : { right: e.s.heldRightMoa || 0, up: -(e.t.heightIn / ipm) * 2 }; };
+  // The view: the target of the shot the clock is at; the drawing's copy of the day: the shots landed by the clock.
+  function pbSync(swingN) {
+    let cur = 0; PB.ev.forEach((e, i) => { if (e.viewT <= PB.clock + 1e-9) cur = i; });
+    const e = PB.ev[cur];
+    if (cur !== PB.cur && e.t) { target = e.t; $('plate').value = e.t.key; spotAim.up = 0; spotAim.right = 0; }
+    PB.cur = cur;
+    const landed = PB.ev.filter((x) => x.strikeT <= PB.clock + 1e-9);
+    const key = landed.map((x) => x.s.n).join(',');
+    if (key !== PB.landedKey) {
+      PB.landedKey = key;
+      day.shots = landed.map((x) => x.s);
+      if (scene) {
+        for (const t of steelTargets) scene.setStrikes(t.steelIx, RD.steelMarks(day, t), swingN != null && landed.some((x) => x.s.n === swingN && x.t === t));
+        for (const t of paperTargets) scene.setPaper(t.paperIx, holesOf(t));
+      }
+    }
+    pbWords();
+    $('play-line').value = String(Math.round((PB.clock / PB.end) * 1000));
+  }
+  function pbWords() {
+    const e = PB.ev[PB.cur], s = e.s, n = PB.cur + 1, of = PB.ev.length;
+    const where = e.t ? `${s.yards} yards, ${e.t.kind === 'paper' ? 'paper' : `${e.t.widthIn} × ${e.t.heightIn} in steel`}` : `${s.yards} yards`;
+    const state = PB.clock < e.fireT ? 'about to be fired' : PB.clock < e.strikeT ? 'on its way' : RD.shotWords(s);
+    const bench = PB.bench ? ` ${PB.bench} shot${PB.bench === 1 ? '' : 's'} at the bench that day, not played back.` : '';
+    const text = `Shot ${n} of ${of}: ${where}, ${state}.${PB.clock >= PB.end - 1e-9 ? ' The end of the day.' : ''}${bench}`;
+    if ($('play-words').textContent !== text) $('play-words').textContent = text;
+  }
+  // The clock moves on; a shot fired or landing in this step makes its sound and its strike as it happens.
+  function playStep(dt) {
+    if (!PB.playing) return;
+    const from = PB.clock;
+    PB.clock = Math.min(PB.end, PB.clock + dt);
+    let swingN = null;
+    for (const e of PB.ev) {
+      if (e.fireT > from && e.fireT <= PB.clock && PB.sound) RD.shotSound(1);
+      if (e.strikeT > from && e.strikeT <= PB.clock) {
+        const t = e.t; if (!t) continue;
+        const back = pbSoundBack(t), paper = t.kind === 'paper';
+        if (e.s.hit && !paper) { swingN = e.s.n; if (PB.sound) RD.ringSound(back, Math.max(0.15, 1 - t.yards / 1300)); }
+        else if (e.s.hit) { if (PB.sound) RD.thudSound(back, 0.08); }
+        else { const m = pbStrikeMoa(e); dust.push({ t, n: e.s.n, rightMoa: m.right, upMoa: m.up, bornAt: now, yards: t.yards }); if (PB.sound) RD.thudSound(back, Math.max(0.05, 0.5 - t.yards / 2500)); }
+      }
+    }
+    if (PB.clock >= PB.end) { PB.playing = false; pbButtons(); }
+    pbSync(swingN);
+  }
+  // A jump (the line dragged, a shot before or after, another pace): no sound, no swing, the dust of the shots before put away.
+  function pbSeek(t) { PB.clock = Math.max(0, Math.min(PB.end, t)); dust.length = 0; pbSync(null); pbButtons(); }
+  function pbButtons() { $('play-pause').textContent = PB.playing ? 'Pause' : PB.clock >= PB.end ? 'Play again' : 'Play'; $('play-pace').textContent = PB.pace === 'real' ? "Pace: the day's own" : 'Pace: waits skipped'; $('play-sound').textContent = PB.sound ? 'Sound on' : 'Sound off'; $('play-sound').setAttribute('aria-pressed', String(PB.sound)); }
+  // The bullet's trace: the brief wake of disturbed air the spotting scope shows, along a plain arc from the muzzle side (below
+  // the view, left) to the recorded strike, over the recorded flight time. Shots without flightS have none.
+  function drawTrace(g, size) {
+    PB.traceAt = null;
+    const e = PB.ev[PB.cur]; if (!e || !e.t || !e.s.flightS || PB.clock < e.fireT || PB.clock >= e.strikeT) return;
+    const f = (PB.clock - e.fireT) / e.s.flightS, m = pbStrikeMoa(e), at = plateAt(e.t);
+    const [x1, y1] = toScreen(at.right + m.right, at.up + m.up);
+    const x0 = size * 0.1, y0 = size * 1.05, cxp = (x0 + x1) / 2, cyp = Math.min(y0, y1) - size * 0.3;
+    const pt = (u) => [(1 - u) * (1 - u) * x0 + 2 * u * (1 - u) * cxp + u * u * x1, (1 - u) * (1 - u) * y0 + 2 * u * (1 - u) * cyp + u * u * y1];
+    g.save(); g.lineCap = 'round';
+    for (let j = 0; j < 12; j++) {
+      const u0 = Math.max(0, f - 0.14 + (j * 0.14) / 12), u1 = Math.max(0, f - 0.14 + ((j + 1) * 0.14) / 12);
+      const [ax, ay] = pt(u0), [bx, by] = pt(u1);
+      g.strokeStyle = `rgba(235, 235, 228, ${(0.05 + 0.3 * (j / 11)).toFixed(3)})`; g.lineWidth = Math.max(1.5, size * 0.006);
+      g.beginPath(); g.moveTo(ax, ay); g.lineTo(bx, by); g.stroke();
+    }
+    g.restore();
+    PB.traceAt = pt(f);
+  }
+  function startPlayback() {
+    PB.shots = played.shots.filter((x) => x.place === 'line').sort((a, b) => a.n - b.n);
+    PB.bench = played.shots.filter((x) => x.place === 'bench').length;
+    Object.assign(PB, pbTimeline(PB.pace));
+    setSpotting(true);
+    $('playpanel').hidden = false; $('play-title').hidden = false;
+    $('play-title').textContent = `${RD.dateText(played.date)}: ${rifle.name}, ${course.name.replace(/ \(modeled on.*\)$/, '')}, through the spotting scope`;
+    $('play-to-day').href = `/day?id=${encodeURIComponent(played.id)}`;
+    $('play-power').min = SP.zoom.low; $('play-power').max = SP.zoom.high; $('play-power').step = SP.zoomStep; $('play-power').value = spotMag;
+    const powerText = () => { $('play-power-text').textContent = `${spotMag}×`; };
+    powerText();
+    // the line's marks: where each shot lands along the day, filled for a hit
+    const ticks = () => { $('play-ticks').innerHTML = PB.ev.map((e) => `<i class="${e.s.hit ? 'hit' : ''}" style="left:${((e.strikeT / PB.end) * 100).toFixed(2)}%"></i>`).join(''); };
+    ticks();
+    $('play-power').addEventListener('input', (ev) => { spotMag = Number(ev.target.value); $('spot-zoom').value = spotMag; powerText(); });
+    $('play-pause').addEventListener('click', () => { RD.audio(); if (PB.playing) PB.playing = false; else { if (PB.clock >= PB.end) pbSeek(0); PB.playing = true; } pbButtons(); });
+    $('play-before').addEventListener('click', () => { const e = PB.ev[PB.cur]; pbSeek(PB.clock > e.viewT + 0.5 || PB.cur === 0 ? e.viewT : PB.ev[PB.cur - 1].viewT); });
+    $('play-next').addEventListener('click', () => { pbSeek(PB.cur + 1 < PB.ev.length ? PB.ev[PB.cur + 1].viewT : PB.end); });
+    $('play-line').addEventListener('input', (ev) => pbSeek((Number(ev.target.value) / 1000) * PB.end));
+    $('play-pace').addEventListener('click', () => { const ix = PB.cur; PB.pace = PB.pace === 'real' ? 'quick' : 'real'; Object.assign(PB, pbTimeline(PB.pace)); ticks(); pbSeek(PB.ev[ix].viewT); });
+    $('play-sound').addEventListener('click', () => { PB.sound = !PB.sound; if (PB.sound) RD.audio(); pbButtons(); });
+    // leaving the screen (another tab, the phone's home screen) pauses it; coming back while the page is open goes on from there
+    document.addEventListener('visibilitychange', () => { if (document.hidden) { PB.wasPlaying = PB.playing; PB.playing = false; } else if (PB.wasPlaying) { PB.playing = true; last = performance.now() / 1000; } pbButtons(); });
+    PB.playing = true;
+    pbSync(null); pbButtons();
+  }
+
   // --- the loop ------------------------------------------------------------------------------------------
   function frame() {
     const t = performance.now() / 1000;
     const dt = Math.min(0.05, t - last); last = t; now += dt;
     stepWander(dt);
+    if (PLAYBACK) playStep(dt);
     flash = Math.max(0, flash - dt * 4);
     for (let i = pending.length - 1; i >= 0; i--) if (now >= pending[i].at) land(pending.splice(i, 1)[0]);
     for (let i = dust.length - 1; i >= 0; i--) if (now - dust[i].bornAt > d.physics.dust.lifeS) dust.splice(i, 1);
@@ -921,11 +1207,20 @@
     el.addEventListener('click', (e) => { if (e.target.closest('a')) return; if (el.classList.contains('open')) el.classList.remove('open'); else if (el.classList.contains('long')) el.classList.add('open'); });
     measure();
   }
-  applyZero(); renderLog(); conditions(); rounds(); bookLine(); coldLine(); paperRow();
-  fitScene(); choosePicture();
+  if (!PLAYBACK) applyZero();
+  renderLog(); conditions(); rounds(); bookLine(); coldLine(); paperRow();
+  if (PLAYBACK && !picture) picture = 'plain'; // playback measures nothing and writes no setting: a device with none chosen yet sees Plain
+  fitView(); fitScene(); choosePicture();
+  if (PLAYBACK) startPlayback();
   requestAnimationFrame(frame);
   // For the screenshot run and tests: a way to read the state without guessing.
-  window.RangeDayLine = { fire, landAll, get log() { return log; }, get pending() { return pending.length; }, get setting() { return setting; }, setHold(up, right) { hold.up = up; hold.right = right; }, setZoom(m) { mag = m; $('zoom').value = m; zoomText(); }, get plate() { return plate(); }, get day() { return day; }, get weather() { return weather; }, get windCall() { return windCall(); },
+  window.RangeDayLine = {
+    // range-day-fourteen: the playback's state and its own controls, for the tests (the clock in seconds along the day)
+    playback: PLAYBACK ? { get clock() { return PB.clock; }, get end() { return PB.end; }, get playing() { return PB.playing; }, get pace() { return PB.pace; }, get current() { return PB.cur; },
+      get events() { return PB.ev.map((e) => ({ n: e.s.n, key: e.t ? e.t.key : null, viewT: e.viewT, fireT: e.fireT, strikeT: e.strikeT, flightS: e.s.flightS ?? null })); },
+      get drawn() { return drawnStrikes.slice(); }, get traceAt() { return PB.traceAt || null; }, seek(t) { pbSeek(t); }, pause() { PB.playing = false; pbButtons(); }, play() { PB.playing = true; pbButtons(); },
+      strikeOnScreen(n) { const e = PB.ev.find((x) => x.s.n === n); if (!e || !e.t) return null; const m = pbStrikeMoa(e), at = plateAt(e.t); return toScreen(at.right + m.right, at.up + m.up); } } : null,
+    fire, landAll, get log() { return log; }, get pending() { return pending.length; }, get setting() { return setting; }, setHold(up, right) { hold.up = up; hold.right = right; }, setZoom(m) { mag = m; $('zoom').value = m; zoomText(); }, get plate() { return plate(); }, get day() { return day; }, get weather() { return weather; }, get windCall() { return windCall(); },
     // Each plate's angle from the firing line (sideways and upward, in MOA) and the height the drawing uses; the last shot's inputs to the engine.
     get plateAngles() { return plates.map((p) => ({ yards: p.yards, riseFt: riseOf(p), lateralYd: p.lateralYd, upMoa: toMoa(losAngle(p)), rightMoa: toMoa(sideAngle(p)) })); },
     get lastShotInput() { return lastShotInput; },
@@ -947,6 +1242,9 @@
     targetOnScreen(key) { const t = targets.find((x) => x.key === key), at = plateAt(t); const plain = toScreen(at.right, at.up); if (!scene) return { plain, scene: null }; syncScene(); const w = t.kind === 'paper' ? scene.paperWorld(t.paperIx) : scene.plateWorld(t.steelIx); return { plain, scene: scene.project(w.x, w.y, w.z) }; },
     plateOnScreen(ix) { const p = plates[ix], at = plateAt(p); const plain = toScreen(at.right, at.up); if (!scene) return { plain, scene: null }; syncScene(); const w = scene.plateWorld(ix); return { plain, scene: scene.project(w.x, w.y, w.z) }; },
     setPicture(v) { picture = v; measuring = null; if (v === 'plain') showPlain(''); else return startScene(v); },
+    // range-day-fourteen: the reticle alone, drawn by the same drawing at the view's present scale onto a blank canvas the size of
+    // the view, so the tests can read its marks without the ground behind them.
+    reticleAlone() { const size = view.size, c = document.createElement('canvas'); c.width = size; c.height = size; const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, size, size); if (sight.reticle && (sight.reticle.marksMoaBelowZero || sight.reticle.kind === 'chevron' || sight.reticle.kind === 'tree')) drawReticle(g, size, pxPerMoa(), size / 2, size / 2); return c; },
     // The drawn geometry, in pixels at the view's scale: what the tests compare with the data's angles.
     get geometry() {
       const k = pxPerMoa();
@@ -960,6 +1258,8 @@
         milDotPx: sight.reticle && sight.reticle.kind === 'mil-dot' ? milDotMoa() * k : null, zoom: mag, aim: center(),
         // range-day-thirteen: the ACOG's chevron, its base's width and its height in pixels; whether the reticle is a plain crosshair
         chevronPx: sight.reticle && sight.reticle.kind === 'chevron' ? { widthPx: sight.reticle.chevronBaseWidthMoa * k, heightPx: sight.reticle.chevronHeightMoa * k } : null,
-        crosshair: Boolean(sight.reticle && sight.reticle.kind === 'crosshair') };
+        crosshair: Boolean(sight.reticle && sight.reticle.kind === 'crosshair'),
+        // range-day-fourteen: the reticle's kind (the tests read its marks from the canvas against the data themselves)
+        reticleKind: sight.reticle ? sight.reticle.kind : null };
     } };
 }());

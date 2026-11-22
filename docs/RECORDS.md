@@ -215,6 +215,17 @@ marker, read from `shots`, so a reload shows them again.
   "shots": [{ "n": 13, "place": "line", "yards": 300, "target": "steel", "targetKey": "2", "flightS": 0.36265192406949, "...": "the other fields as above" }] }
 ```
 
+A day played back (range-day-fourteen, `/playback?id=<day>`) reads the open
+day or a finished day by its `id` and writes nothing: no key is added,
+changed or removed, and the playback keeps nothing of its own (its pace,
+power and sound hold while the page is open). It uses each firing-line
+shot's `n` (the firing order), `at` (its moment, for the day's own pace),
+`target`, `yards`, `hit`, `reached`, `upIn`, `rightIn`, `heldRightMoa`
+(where a bullet that fell short shows its dust), and `flightS` and
+`targetKey` where present; a shot without those two is matched to its
+target by `target` and `yards` and shown landing without the wait. A
+device that refuses its storage sees "not saved on this device".
+
 ### The finished days: `days`
 
 A list of day records in the shape above, newest first, each with

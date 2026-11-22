@@ -174,6 +174,7 @@ async function create(opts) {
       post.draw();
     },
     strike(ix, upIn, rightIn, quiet) { platesBuilt.strike(ix, upIn, rightIn, quiet); },
+    setStrikes(ix, marks, swing) { platesBuilt.setStrikes(ix, marks, swing); },
     setPaper(j, holes) { papersBuilt.setPaper(j, holes); },
     paperWorld(j) { const p = papers[j]; return { x: p.lateralYd * YD, y: eyeM + p.riseFt * FT, z: -p.yards * YD }; },
     // Where a world point lands on the canvas, in CSS pixels.

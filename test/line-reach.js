@@ -6,7 +6,9 @@
 // The phone sizes the list is held at: 412×915 (the kit's phone), and 412×830, the height of Dan's own phone measured from
 // his screenshots of the firing line on 21 Nov 2026 (992×2000 pixels at 2.41 device pixels per CSS pixel), where the
 // book line fell under Steady and Fire.
-const PHONES = [[412, 915], [412, 830]];
+// range-day-fourteen: and 378×762, Dan's phone as measured from his screenshot of the zero bench (22 Nov 2026, 2.625 device
+// pixels per CSS pixel), where the view gives up the height the list needs (public/line.js, fitView).
+const PHONES = [[412, 915], [412, 830], [378, 762]];
 
 // The sights the measure runs for: first the three with a glass control (a scope with its zoom, a dot with its
 // magnifier, irons with a rear leaf: the screenshot states line-scope-7x, line-magnifier-300 and line-ak-leaf;

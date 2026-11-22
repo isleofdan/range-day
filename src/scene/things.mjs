@@ -112,8 +112,18 @@ export function buildPlates({ plates, eyeM, look, physics, groundAt, full }) {
     s.tex.needsUpdate = true;
     if (!quiet) s.swing = 1;
   };
+  // range-day-fourteen, for playing a day back: the plate's marks set to exactly these (a step back takes later ones off), the
+  // plate swinging when `swing` (the hit just landing), else still. The same chip drawing as strike's.
+  const setStrikes = (ix, marks, swing) => {
+    const s = out[ix]; if (!s) return;
+    s.strikes = [];
+    if (!marks.length) { s.paint(); s.tex.needsUpdate = true; if (!swing) s.swing = 0; return; }
+    marks.forEach((m, i) => { if (i < marks.length - 1) s.strikes.push({ upIn: m.upIn, rightIn: m.rightIn }); });
+    const last = marks[marks.length - 1];
+    strike(ix, last.upIn, last.rightIn, !swing);
+  };
   const step = (dt) => { for (const s of out) { if (s.swing > 0) { s.swing = Math.max(0, s.swing - dt / 1.4); s.pivot.rotation.x = -0.35 * s.swing * Math.sin((1 - s.swing) * 14) * Math.exp(-(1 - s.swing) * 2); } } };
-  return { group, strike, step, plates: out };
+  return { group, strike, setStrikes, step, plates: out };
 }
 
 // --- the boards ----------------------------------------------------------------------------------

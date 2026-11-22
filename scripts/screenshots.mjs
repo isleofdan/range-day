@@ -18,6 +18,7 @@
 import { chromium } from 'playwright';
 import { spawn } from 'node:child_process';
 import { mkdirSync, readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -274,6 +275,38 @@ for (const pic of ['full', 'light']) for (const [day, q, words] of [['feb', 'mon
     { name: `ground-${pic}-${day}-600-21x`, path: `${PIRU}&sight=utg-bugbuster-3-9x32&${q}`, expect: words, act: async (page) => { await set(page); await plate(page, 4); await page.evaluate((z) => RangeDayLine.setZoom(z), OLD21); await settle(page, 400); } },
   );
 }
+
+// range-day-fourteen: a day played back through the spotting scope. The seeded day (test/playback-seed.js: five shots on the firing
+// line, three on steel, one on paper, one miss, and one at the bench) is written into the day the firing line opens, then played
+// back under the Full picture; each state pauses the playback at its moment.
+const PB_SEED = createRequire(import.meta.url)('../test/playback-seed.js');
+const pbOpen = async (page, shots) => {
+  await page.goto(`${base}${PB_SEED.LINE}`); await page.waitForFunction(() => window.RangeDayLine && RangeDayLine.day);
+  const id = await page.evaluate(PB_SEED.seedInPage, shots || PB_SEED.seedShots(Date.now() - 300000));
+  await page.goto(`${base}/playback?id=${encodeURIComponent(id)}`);
+  return id;
+};
+const pbReady = async (page) => { await page.waitForFunction(() => window.RangeDayLine && RangeDayLine.playback && (RangeDayLine.scene || RangeDayLine.sceneFailed || (!RangeDayLine.sceneLoading && RangeDayLine.picture === 'plain')), null, { timeout: 90000 }); await page.waitForFunction(() => !RangeDayLine.scene || !RangeDayLine.scene.materials || RangeDayLine.scene.materials.settled, null, { timeout: 90000 }); };
+// paused at the moment `at(events)` (seconds along the day); `run` plays the last `run` seconds up to it, so a swing or dust is under way
+const pbAt = async (page, at, run = 0) => {
+  await pbReady(page);
+  const ev = await page.evaluate(() => RangeDayLine.playback.events);
+  const t = at(ev);
+  await page.evaluate(([t, run]) => { RangeDayLine.playback.pause(); RangeDayLine.playback.seek(t - run); if (run) RangeDayLine.playback.play(); }, [t, run]);
+  if (run) await page.waitForFunction((t) => RangeDayLine.playback.clock >= t, t, { timeout: 60000 });
+  await page.evaluate(() => { RangeDayLine.playback.pause(); window.scrollTo(0, 0); });
+  await settle(page, 600);
+};
+SCREENS.push(
+  { name: 'playback-empty', path: '/', expect: 'No shots on the firing line that day', act: async (page) => { await pbOpen(page, PB_SEED.seedShots(Date.now() - 300000).filter((x) => x.place === 'bench')); await page.waitForSelector('#play-empty:not([hidden])'); } },
+  { name: 'playback-steel', path: '/', expect: 'Shot 2 of 5: 300 yards', act: async (page) => { await pbOpen(page); await pbAt(page, (ev) => ev[1].strikeT + 0.4, 0.8); } },
+  { name: 'playback-paper', path: '/', expect: 'on paper', act: async (page) => { await pbOpen(page); await pbAt(page, (ev) => ev[2].strikeT + 0.5); } },
+  { name: 'playback-miss-dust', path: '/', expect: 'miss:', act: async (page) => { await pbOpen(page); await pbAt(page, (ev) => ev[3].strikeT + 0.5, 1.0); } },
+  { name: 'playback-trace', path: '/', expect: 'on its way', act: async (page) => { await pbOpen(page); await pbAt(page, (ev) => ev[4].fireT + ev[4].flightS * 0.55); } },
+  { name: 'playback-paused', path: '/', expect: 'Play', act: async (page) => { await pbOpen(page); await pbAt(page, (ev) => ev[0].viewT + 0.8); } },
+  { name: 'playback-end', path: '/', expect: 'The end of the day', act: async (page) => { await pbOpen(page); await pbAt(page, (ev) => 1e9); } },
+  { name: 'day-play-control', path: '/', expect: 'Play this day back', act: async (page) => { const id = await pbOpen(page); await page.goto(`${base}/day?id=${encodeURIComponent(id)}`); await page.waitForSelector('#play-back'); } },
+);
 
 const GREP = arg('--grep', null) ? new RegExp(arg('--grep')) : null; // --grep <pattern>: only the states whose names match (for a before-and-after pair by hand; the check runs every state)
 const SHARD = SCREENS.filter((_, i) => i % shardOf === shardIx - 1).filter((s) => !GREP || GREP.test(s.name));

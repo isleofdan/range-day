@@ -51,7 +51,7 @@ proof: `/scene.min.js` answers 200 with more than 300,000 bytes, or the run
 fails saying the picture file is missing from the image.
 
 The check runs **in pieces, side by side**; nothing is dropped. The tests
-are in six groups (`scripts/check.mjs`, `TEST_GROUPS`): `test/scene.test.js`
+are in groups (`scripts/check.mjs`, `TEST_GROUPS`; six in range-day-seven, nine since range-day-fourteen): `test/scene.test.js`
 in three pieces by test name (`scene-shots`, its verify 3; `scene-scale`,
 its verify 2; `scene-rest`, every other test in the file, by Node's skip
 pattern, so a new test there is never left out; each piece's server on its
@@ -346,6 +346,41 @@ heights, the refusals of a bad scope mounting, and each scope's figures.
 `test/line-reach.js` now reads the rifles as the server serves them, so
 the firing line's reach holds every collection scope too. 151 tests and
 105 screenshot states on this change (140 and 94 before).
+
+## The work split retired, the reticles' marks, and a day played back (range-day-fourteen, 22 Nov 2026)
+
+The Claude and Codex work split is retired on Dan's word: the script that
+listed each side's files, its test file with its three tests (every file of
+the split exists; a Codex branch is refused the real-figure files; the
+sides) and the Checks workflow's job that enforced it are gone.
+
+`test/bench.test.js` reads each collection scope's reticle from the canvas
+against its data at 412 and 1280 px wide at the lowest and highest power
+(the test that held the chevron's base and the crosshairs, replaced): the
+ACOG's chevron base and each drop line's width at its place, the
+PR2-MOA's open center, its long hash at 4 minutes and each holdover line's
+width in view, each within 2 px; the reticle is drawn alone by the same
+drawing at the same scale (`RangeDayLine.reticleAlone`) so the ground
+behind it does not confuse the reading, and the live view is checked to
+show the same marks. The Vortex's crosshair is checked as before.
+`test/guns.test.js` holds the sheets' figures and the refusals of a tree
+reticle without a figure and a drop line without its place.
+
+`test/playback.test.js` (its own check group, `playback`) plays a seeded
+day (`test/playback-seed.js`: five firing-line shots, three on steel, one
+on paper, one miss, and one at the bench) and checks every frame: each
+strike drawn within 1 px of the place its record gives (computed in the
+test from the targets' angles and the record's inches), nothing drawn for
+a shot before its moment, every landed hit in view drawn, the trace only in
+flight. It also holds every stored key byte for byte the same after a
+playback that was played, paused, stepped, dragged, slowed, zoomed and
+muted; every control wholly on the first screen and none touching another
+at 378×762 (Dan's phone), 412×830, 412×915 and 1280×800; the empty day,
+the refused storage and a shot recorded before range-day-thirteen; and the
+day page's **Play this day back**. Eight screenshot states:
+`playback-empty`, `playback-steel`, `playback-paper`, `playback-miss-dust`,
+`playback-trace`, `playback-paused`, `playback-end`, `day-play-control`.
+153 tests and 113 screenshot states on this change (151 and 105 before).
 
 ## What runs when
 

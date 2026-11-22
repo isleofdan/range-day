@@ -210,6 +210,7 @@ window.RD = (function () {
   const saveOpenDay = (day) => store.set('day:open', day);
   const hasShots = (day) => Boolean(day && day.shots && day.shots.length);
   const finishedDays = () => { const v = store.get('days'); return Array.isArray(v) ? v : []; };
+  const daysReadFailed = () => store.get('days') === FAILED;
   const dayById = (id) => (openDay() && openDay().id === id ? openDay() : finishedDays().find((x) => x.id === id) || null);
   function startDay(d, c, month, timeOfDay, rand) {
     const course = { id: c.courseId, ...d.courses[c.courseId] };
@@ -790,6 +791,9 @@ window.RD = (function () {
     const since = (day && day.freshPaper && day.freshPaper[String(t.yards)]) || 0;
     return shotsAt(day, 'paper', t.yards).filter((s) => s.n > since && onSheet(t, s.upIn, s.rightIn));
   }
+  // range-day-fourteen: where a firing-line shot landed, in the day page's own words (the day page's table and the playback screen
+  // both say it this way).
+  const shotWords = (s) => (s.hit ? (s.target === 'paper' ? `on paper (${offText(s.upIn, s.rightIn, 'sheet\'s center')})` : `hit (${offText(s.upIn, s.rightIn)})`) : s.target === 'paper' && s.reached ? `off the paper: ${whereText(s.upIn, s.rightIn)}` : s.reached ? `miss: ${whereText(s.upIn, s.rightIn)}` : 'into the ground before the plate');
   // The marks on a steel plate: the day's hits on it.
   const steelMarks = (day, t) => shotsAt(day, 'steel', t.yards).filter((s) => s.hit);
   // "Hang a fresh paper": from now the sheet shows only later shots. A marker in the open day (the last shot number before it);
@@ -855,6 +859,6 @@ window.RD = (function () {
     setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
   }
 
-  return { kindOf, holeIn, burstIn, paperMarks, nearestMark, onSheet, drawPaper, shotsAt, paperHoles, steelMarks, hangFreshPaper, putOldPaperBack, offText,
+  return { kindOf, holeIn, burstIn, paperMarks, nearestMark, onSheet, drawPaper, shotsAt, paperHoles, steelMarks, shotWords, daysReadFailed, hangFreshPaper, putOldPaperBack, offText,
     E, data, rifleIds, store, getSight, sightReadFailed, setSight, getZero, setZero, getLog, setLog, zeroCount, getLast, setLast, getLastFor, setLastFor, getWhen, setWhen, thisMonth, TIMES, MONTHS, getWindCall, setWindCall, windCallText, wireWindCall, chooseFrom, params, remember, leafOf, holdRepeat, wireKnobs, settingLine, roundsText, leafText, showConditions, setShowConditions, PICTURES, getPicture, pictureReadFailed, setPicture, drawDay, conditionsOf, dayWords, localDate, openDay, dayReadFailed, hasShots, finishedDays, dayById, startDay, enterDay, takeRounds, openAnotherBox, boxesOpened, roundsFired, boxesText, getSupply, supplyReadFailed, takeSupply, openSupplyBox, supplyText, recordShot, finishDay, packUp, packedDayId, restorePacked, bookKey, getBook, bookReadFailed, addBookLine, changeBookLine, bookAt, bookNeighbours, newestFirst, comeUpMoa, comeUpText, getColdBore, addColdBore, makeCopy, checkCopy, loadCopy, COPY_KIND, audio, shotSound, ringSound, thudSound, clickSound, qs, esc, sign, moaOf, clicksText, whereText, heldText, dateText, windWord, crosswindMph, fovMoa, fitCanvas, hash, download, carriedSight, sightNow };
 }());
