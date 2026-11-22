@@ -446,7 +446,7 @@
       g.strokeStyle = 'rgba(0,0,0,0.85)'; g.lineWidth = 2; g.beginPath(); g.arc(cx, cy, cx - 4, 0, Math.PI * 2); g.stroke();
       if (spotting) return; // the spotting scope has no reticle
       if (sight.reticle && sight.reticle.kind === 'mil-dot') return drawMilDot(g, size, k, cx, cy);
-      if (sight.reticle && (sight.reticle.marksMoaBelowZero || sight.reticle.kind === 'chevron')) return drawDropReticle(g, size, k, cx, cy);
+      if (sight.reticle && (sight.reticle.marksMoaBelowZero || sight.reticle.kind === 'chevron' || sight.reticle.kind === 'tree')) return drawReticle(g, size, k, cx, cy);
       if (sight.reticle && sight.reticle.kind === 'crosshair') return drawCrosshair(g, size, cx, cy);
       return;
     }
@@ -587,35 +587,150 @@
     g.beginPath(); g.moveTo(0, cy); g.lineTo(cx - post, cy); g.moveTo(cx + post, cy); g.lineTo(size, cy); g.moveTo(cx, 0); g.lineTo(cx, cy - post); g.moveTo(cx, cy + post); g.lineTo(cx, size); g.stroke();
   }
 
-  // The ACSS drop reticle (the 3x prism sight): drawn from data/sights.json
-  // and only what the manual's text supports: a chevron whose tip is the
-  // zero point (50 yards), its base the 200-yard hold, then a hold mark at
-  // each distance the manual names, each at its derived angle below the
-  // tip; the chevron's and the marks' widths are the data's figures too. Left out, because the text does not describe them: the ranging
-  // ladder, wind holds, numbers beside the marks, the outer crosshair and
-  // the illumination. The marks are angles for the manual's load; with the
-  // loads in the set the bullet lands where the engine says.
-  // range-day-thirteen: the ACOG's chevron is drawn by the same drawing: a chevron of kind "chevron" names its base's width and its
-  // height (tip to base) itself, and has no hold marks drawn (data/sights.json, marksNotDrawn says why).
-  function drawDropReticle(g, size, k, cx, cy) {
+  // A reticle as a list of marks in minutes of angle from the aim point (right and down positive), built once per sight from
+  // data/sights.json and drawn at the view's scale (k pixels per MOA), so a first-focal-plane reticle keeps every mark's true angle
+  // at every power. One drawing for every reticle with marks (range-day-fourteen extended the prism sight's drawing to it):
+  //   line  {x1, y1, x2, y2, w, minPx}  a straight mark w MOA thick, never thinner than minPx on the screen
+  //   path  {pts, w, minPx}             a stroked line through points (the prism sight's open chevron)
+  //   poly  {pts}                       a filled shape (the ACOG's solid chevron)
+  //   dot   {x, y, d}                   a round dot d MOA across
+  //   text  {x, y, s, h}                a printed number h MOA high, centred on x, y; left out when it would be under 7 px
+  // Each mark carries its colour: red for the parts the maker's sheet shows lit, near-black for the rest. Nothing glows.
+  const INK = '#111', LIT = 'rgb(214, 38, 30)';
+  //
+  // The ACSS drop reticle (the 3x prism sight): only what the manual's text supports: a chevron whose tip is the zero point
+  // (50 yards), its base the 200-yard hold, then a hold mark at each distance the manual names, each at its derived angle below
+  // the tip; the chevron's and the marks' widths are the data's figures too. Left out, because the text does not describe them:
+  // the ranging ladder, wind holds, numbers beside the marks, the outer crosshair and the illumination. The marks are angles for
+  // the manual's load; with the loads in the set the bullet lands where the engine says.
+  function acssMarks(r) {
+    const marks = r.marksMoaBelowZero;
+    const base = marks.find((m) => m.yards === r.marksYards[0]) || marks[0];
+    const w = 0.25, minPx = 1.2;
+    const out = [{ t: 'path', pts: [[-r.chevronHalfWidthMoa, base.moaBelowZero], [0, 0], [r.chevronHalfWidthMoa, base.moaBelowZero]], w, minPx, c: INK }];
+    for (const m of marks) if (m !== base) out.push({ t: 'line', x1: -r.markHalfWidthMoa, y1: m.moaBelowZero, x2: r.markHalfWidthMoa, y2: m.moaBelowZero, w, minPx, c: INK });
+    return out;
+  }
+  // The ACOG's chevron reticle (range-day-fourteen, from Trijicon's dimension sheet for the 4x32 .223 chevron): a solid chevron
+  // whose tip is the zero (100 m), chevronBaseWidthMoa wide at its lower ends chevronHeightMoa under the tip, chevronDepthMoa
+  // from the tip to the inside of its point (so each arm is chevronLineMoa thick); a post stemWidthMoa wide from stemTopMoa
+  // under the tip to the last drop line; each drop line widthMoa wide at belowTipMoa, with the sheet's "4" and "6" beside the
+  // 400 and 600 m lines. Lit as the sheet shows it (reticle.lit): the chevron, the post down to the first line, that line and
+  // its number in red.
+  function chevronMarks(r) {
+    const W = r.chevronBaseWidthMoa / 2, H = r.chevronHeightMoa, D = r.chevronDepthMoa;
+    const inner = (H - D) * (W / H); // the inside edges run parallel to the outside ones, from the inside corner down to the base's line
+    const out = [{ t: 'poly', pts: [[0, 0], [W, H], [inner, H], [0, D], [-inner, H], [-W, H]], c: LIT }];
+    const lines = r.dropLines || [];
+    if (!lines.length) return out;
+    const th = r.dropLineThicknessMoa, first = lines[0], last = lines[lines.length - 1];
+    const sw = r.stemWidthMoa, litEnd = first.belowTipMoa + th / 2;
+    out.push({ t: 'line', x1: 0, y1: r.stemTopMoa, x2: 0, y2: litEnd, w: sw, minPx: 1, c: LIT, vertical: true });
+    out.push({ t: 'line', x1: 0, y1: litEnd, x2: 0, y2: last.belowTipMoa + th / 2, w: sw, minPx: 1, c: INK, vertical: true });
+    for (const L of lines) {
+      const c = L === first ? LIT : INK;
+      out.push({ t: 'line', x1: -L.widthMoa / 2, y1: L.belowTipMoa, x2: L.widthMoa / 2, y2: L.belowTipMoa, w: th, minPx: 1, c });
+      if (L.label) out.push({ t: 'text', x: L.widthMoa / 2 + r.labelHeightMoa * 0.6, y: L.belowTipMoa, s: L.label, h: r.labelHeightMoa, c, align: 'left' });
+    }
+    return out;
+  }
+  // The PR2-MOA's tree (range-day-fourteen, from Leupold's sheet for the Mark 5HD's FFP PR2-MOA): every line lineMoa thick and
+  // broken breakMoa wide at each whole minute, where its hash stands. The main line from the open center (openingMoa across) to
+  // mainLineToMoa each side: a short hash (shortHashMoa, odd minutes below, even above) at each minute, a long one (longHashMoa
+  // across) and its number at each numberedEveryMoa. Above the center the post to upperStem.toMoa, a bar midBarMoa wide halfway and
+  // one stemBars.everyFourMoa wide at its end. Below, the post to stemToMoa, a bar at each numbered minute and a narrower one
+  // halfway between; a holdover line at each holdoverEveryMoa to holdoverToMoa, reaching holdoverHalfWidthPerMoa of its depth
+  // either side, hashed like the main line, numbered at both ends; halfway between two holdover lines a row of dots, one each
+  // minute, small at the odd minutes and large at the even, as wide as the line below it. The dot at the center.
+  function treeMarks(r) {
+    const out = [], w = r.lineMoa, gap = r.breakMoa / 2, sp = r.hashSpacingMoa, every = r.numberedEveryMoa, h = r.labelHeightMoa;
+    const seg = (a, b, at, vertical) => out.push(vertical ? { t: 'line', x1: at, y1: a, x2: at, y2: b, w, minPx: 1, c: INK, vertical: true } : { t: 'line', x1: a, y1: at, x2: b, y2: at, w, minPx: 1, c: INK });
+    const isNumbered = (j) => Math.abs(Math.abs(j) / every - Math.round(Math.abs(j) / every)) < 1e-9;
+    // a horizontal line at depth y from -half to +half (from the opening's edge outward when open), hashed and broken at each minute
+    const hLine = (y, half, open, ends) => {
+      const n = Math.round(half / sp), o = open ? Math.round(r.openingMoa / 2 / sp) : 0;
+      for (let side = -1; side <= 1; side += 2) {
+        for (let j = Math.max(o, open ? o : 0); j < n; j++) seg(side * (j * sp + gap), side * ((j + 1) * sp - gap), y);
+        for (let j = Math.max(o, 1); j <= n; j++) {
+          const x = side * j * sp;
+          if (isNumbered(j * sp)) out.push({ t: 'line', x1: x, y1: y - r.longHashMoa / 2, x2: x, y2: y + r.longHashMoa / 2, w, minPx: 1, c: INK, vertical: true });
+          else if (ends && j === n) out.push({ t: 'line', x1: x, y1: y - r.shortHashMoa, x2: x, y2: y + r.shortHashMoa, w, minPx: 1, c: INK, vertical: true });
+          else if (j % 2) out.push({ t: 'line', x1: x, y1: y, x2: x, y2: y + r.shortHashMoa, w, minPx: 1, c: INK, vertical: true });
+          else out.push({ t: 'line', x1: x, y1: y - r.shortHashMoa, x2: x, y2: y, w, minPx: 1, c: INK, vertical: true });
+        }
+      }
+    };
+    out.push({ t: 'dot', x: 0, y: 0, d: r.centerDotMoa, c: INK });
+    // the main line and its numbers
+    hLine(0, r.mainLineToMoa, true, false);
+    for (let x = every; x <= r.mainLineToMoa + 1e-9; x += every) for (const s of [-1, 1]) out.push({ t: 'text', x: s * x, y: r.longHashMoa / 2 + h * 0.8, s: String(x), h, c: INK });
+    // the post above: broken at each minute from the opening's edge, a narrower bar halfway, a bar across its end
+    const o = r.openingMoa / 2, U = r.upperStem;
+    for (let y = o; y < U.toMoa - 1e-9; y += sp) seg(-(y + gap), -(y + sp - gap), 0, true);
+    out.push({ t: 'line', x1: -U.midBarMoa / 2, y1: -U.toMoa / 2, x2: U.midBarMoa / 2, y2: -U.toMoa / 2, w, minPx: 1, c: INK });
+    out.push({ t: 'line', x1: -r.stemBars.everyFourMoa / 2, y1: -U.toMoa, x2: r.stemBars.everyFourMoa / 2, y2: -U.toMoa, w, minPx: 1, c: INK });
+    // the post below, its bars, and its numbers past the last holdover line
+    for (let y = o; y < r.stemToMoa - 1e-9; y += sp) seg(y + gap, y + sp - gap, 0, true);
+    for (let y = every / 2; y <= r.stemToMoa + 1e-9; y += every / 2) {
+      const numbered = isNumbered(y), bw = numbered ? r.stemBars.everyFourMoa : r.stemBars.midMoa;
+      if (numbered && y <= r.holdoverToMoa + 1e-9) continue; // the holdover line is the mark there
+      out.push({ t: 'line', x1: -bw / 2, y1: y, x2: bw / 2, y2: y, w, minPx: 1, c: INK });
+      if (numbered) out.push({ t: 'text', x: r.stemBars.everyFourMoa / 2 + h * 1.4, y, s: String(y), h, c: INK, align: 'left' });
+    }
+    // the holdover lines, their numbers, and the rows of dots between them
+    for (let y = r.holdoverEveryMoa; y <= r.holdoverToMoa + 1e-9; y += r.holdoverEveryMoa) {
+      const half = y * r.holdoverHalfWidthPerMoa;
+      hLine(y, half, false, true);
+      for (const s of [-1, 1]) out.push({ t: 'text', x: s * (half + h * 2.5), y, s: String(y), h, c: INK });
+      const dy = y - r.holdoverEveryMoa / 2;
+      for (let j = 1; j * sp <= half + 1e-9; j++) for (const s of [-1, 1]) out.push({ t: 'dot', x: s * j * sp, y: dy, d: j % 2 ? r.dotRowSmallMoa : r.dotRowLargeMoa, c: INK });
+    }
+    return out;
+  }
+  let reticleCache = null;
+  const reticleMarks = () => {
+    if (reticleCache) return reticleCache;
     const r = sight.reticle;
-    const marks = r.marksMoaBelowZero || [];
-    const base = r.kind === 'chevron' ? { moaBelowZero: r.chevronHeightMoa } : marks.find((m) => m.yards === r.marksYards[0]) || marks[0];
-    const baseY = cy + base.moaBelowZero * k;
-    const halfW = (r.kind === 'chevron' ? r.chevronBaseWidthMoa / 2 : r.chevronHalfWidthMoa) * k; // the chevron's half-width at its base (data/sights.json)
-    g.strokeStyle = '#111'; g.lineWidth = Math.max(1.2, 0.25 * k); g.lineJoin = 'miter';
-    g.beginPath(); g.moveTo(cx - halfW, baseY); g.lineTo(cx, cy); g.lineTo(cx + halfW, baseY); g.stroke();
-    // the hold marks below the chevron
-    const tick = sight.reticle.markHalfWidthMoa * k;
-    for (const m of marks) {
-      if (m === base) continue;
-      const y = cy + m.moaBelowZero * k;
-      g.beginPath(); g.moveTo(cx - tick, y); g.lineTo(cx + tick, y); g.stroke();
+    reticleCache = r.kind === 'tree' ? treeMarks(r) : r.kind === 'chevron' ? chevronMarks(r) : acssMarks(r);
+    return reticleCache;
+  };
+  // Draws the marks at the view's scale. A mark thinner than its minPx is drawn minPx wide, on whole pixels when it is that
+  // thin, so a fine line stays one crisp pixel; a dot is never under 0.6 px across its radius; a number under 7 px is left out.
+  function drawReticle(g, size, k, cx, cy) {
+    const X = (x) => cx + x * k, Y = (y) => cy + y * k;
+    for (const m of reticleMarks()) {
+      g.fillStyle = m.c; g.strokeStyle = m.c;
+      if (m.t === 'line') {
+        const lw = Math.max(m.minPx, m.w * k);
+        if (m.vertical) {
+          const y1 = Math.min(Y(m.y1), Y(m.y2)), y2 = Math.max(Y(m.y1), Y(m.y2));
+          if (y2 < 0 || y1 > size) continue;
+          let x = X(m.x1) - lw / 2; if (lw < 2) x = Math.round(X(m.x1) - 0.5);
+          g.fillRect(x, y1, lw < 2 ? Math.round(lw) : lw, Math.max(0.5, y2 - y1));
+        } else if (m.y1 === m.y2) {
+          const x1 = Math.min(X(m.x1), X(m.x2)), x2 = Math.max(X(m.x1), X(m.x2));
+          if (Y(m.y1) < -lw || Y(m.y1) > size + lw) continue;
+          let y = Y(m.y1) - lw / 2; if (lw < 2) y = Math.round(Y(m.y1) - 0.5);
+          g.fillRect(x1, y, Math.max(0.5, x2 - x1), lw < 2 ? Math.round(lw) : lw);
+        } else { g.lineWidth = lw; g.beginPath(); g.moveTo(X(m.x1), Y(m.y1)); g.lineTo(X(m.x2), Y(m.y2)); g.stroke(); }
+      } else if (m.t === 'path') {
+        g.lineWidth = Math.max(m.minPx, m.w * k); g.lineJoin = 'miter';
+        g.beginPath(); m.pts.forEach(([x, y], i) => (i ? g.lineTo(X(x), Y(y)) : g.moveTo(X(x), Y(y)))); g.stroke();
+      } else if (m.t === 'poly') {
+        g.beginPath(); m.pts.forEach(([x, y], i) => (i ? g.lineTo(X(x), Y(y)) : g.moveTo(X(x), Y(y)))); g.closePath(); g.fill();
+      } else if (m.t === 'dot') {
+        const x = X(m.x), y = Y(m.y); if (x < -4 || x > size + 4 || y < -4 || y > size + 4) continue;
+        g.beginPath(); g.arc(x, y, Math.max(0.6, (m.d * k) / 2), 0, Math.PI * 2); g.fill();
+      } else if (m.t === 'text') {
+        const px = m.h * k; if (px < 7) continue;
+        const x = X(m.x), y = Y(m.y); if (x < -40 || x > size + 40 || y < -20 || y > size + 20) continue;
+        g.font = `${px.toFixed(1)}px sans-serif`; g.textAlign = m.align || 'center'; g.textBaseline = 'middle'; g.fillText(m.s, x, y);
+      }
     }
   }
 
-  // A fine crosshair through the center and nothing more (range-day-thirteen: the Vortex's and the Leupold's reticles, whose marks
-  // the makers' documents could not be read for; data/sights.json, marksNotDrawn). The same fine line as the mil-dot's.
+  // A fine crosshair through the center and nothing more (range-day-thirteen: the Vortex's reticle, whose marks the maker's
+  // drawing could not be read for; data/sights.json, marksNotDrawn). The same fine line as the mil-dot's.
   function drawCrosshair(g, size, cx, cy) {
     g.strokeStyle = '#111'; g.lineWidth = 1;
     g.beginPath(); g.moveTo(0, cy); g.lineTo(size, cy); g.moveTo(cx, 0); g.lineTo(cx, size); g.stroke();
@@ -947,6 +1062,9 @@
     targetOnScreen(key) { const t = targets.find((x) => x.key === key), at = plateAt(t); const plain = toScreen(at.right, at.up); if (!scene) return { plain, scene: null }; syncScene(); const w = t.kind === 'paper' ? scene.paperWorld(t.paperIx) : scene.plateWorld(t.steelIx); return { plain, scene: scene.project(w.x, w.y, w.z) }; },
     plateOnScreen(ix) { const p = plates[ix], at = plateAt(p); const plain = toScreen(at.right, at.up); if (!scene) return { plain, scene: null }; syncScene(); const w = scene.plateWorld(ix); return { plain, scene: scene.project(w.x, w.y, w.z) }; },
     setPicture(v) { picture = v; measuring = null; if (v === 'plain') showPlain(''); else return startScene(v); },
+    // range-day-fourteen: the reticle alone, drawn by the same drawing at the view's present scale onto a blank canvas the size of
+    // the view, so the tests can read its marks without the ground behind them.
+    reticleAlone() { const size = view.size, c = document.createElement('canvas'); c.width = size; c.height = size; const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, size, size); if (sight.reticle && (sight.reticle.marksMoaBelowZero || sight.reticle.kind === 'chevron' || sight.reticle.kind === 'tree')) drawReticle(g, size, pxPerMoa(), size / 2, size / 2); return c; },
     // The drawn geometry, in pixels at the view's scale: what the tests compare with the data's angles.
     get geometry() {
       const k = pxPerMoa();
@@ -960,6 +1078,8 @@
         milDotPx: sight.reticle && sight.reticle.kind === 'mil-dot' ? milDotMoa() * k : null, zoom: mag, aim: center(),
         // range-day-thirteen: the ACOG's chevron, its base's width and its height in pixels; whether the reticle is a plain crosshair
         chevronPx: sight.reticle && sight.reticle.kind === 'chevron' ? { widthPx: sight.reticle.chevronBaseWidthMoa * k, heightPx: sight.reticle.chevronHeightMoa * k } : null,
-        crosshair: Boolean(sight.reticle && sight.reticle.kind === 'crosshair') };
+        crosshair: Boolean(sight.reticle && sight.reticle.kind === 'crosshair'),
+        // range-day-fourteen: the reticle's kind (the tests read its marks from the canvas against the data themselves)
+        reticleKind: sight.reticle ? sight.reticle.kind : null };
     } };
 }());

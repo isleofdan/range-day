@@ -183,56 +183,98 @@ test('range-day-thirteen items 8 and 9: home\'s chooser on the BCM lists its own
   await context.close();
 });
 
-test('range-day-thirteen verify 7: each scope\'s reticle drawn against its data, read from the canvas, at 412 and 1280 px wide at the lowest and highest power: the ACOG\'s chevron (its base\'s width and its height); the two first-focal-plane crosshairs, a fine line through the center and no mark', { skip }, async () => {
+// range-day-fourteen: what each reticle's marks should measure on the canvas, worked out here from the data alone (the drawing's
+// own list of marks is not read): for the ACOG the chevron's base and each drop line's width at its place; for the PR2-MOA the
+// open center, the long hash at the first numbered minute and the width of each holdover line in view. Each probe is a dark run:
+// 'h' across a row (y MOA under the center, within `half` MOA either side), 'v' up and down a column (x MOA right of the center).
+function reticleProbes(S, k, size) {
+  const r = S.reticle, inView = (moa) => moa * k < size / 2 - 12, out = [];
+  if (r.kind === 'chevron') {
+    out.push({ what: 'the chevron\'s base', kind: 'h', y: r.chevronHeightMoa, half: r.chevronBaseWidthMoa / 2 + 1.5, want: r.chevronBaseWidthMoa });
+    for (const l of r.dropLines) if (inView(l.belowTipMoa)) out.push({ what: `the ${l.meters} m line at ${l.belowTipMoa} MOA`, kind: 'h', y: l.belowTipMoa, half: l.widthMoa / 2 + 1.5, want: l.widthMoa });
+  }
+  if (r.kind === 'tree') {
+    // the open center where it is at least 6 px across (at 5 power on a phone it is 3 px, under the center dot's own pixel and its neighbours)
+    if (r.openingMoa * k >= 6) out.push({ what: 'the open center', kind: 'gap', want: r.openingMoa });
+    out.push({ what: `the long hash at ${r.numberedEveryMoa} MOA`, kind: 'v', x: r.numberedEveryMoa, want: r.longHashMoa });
+    for (let y = r.holdoverEveryMoa; y <= r.holdoverToMoa && inView(y); y += r.holdoverEveryMoa) out.push({ what: `the holdover line at ${y} MOA`, kind: 'h', y, half: y * r.holdoverHalfWidthPerMoa + 1.2, want: 2 * y * r.holdoverHalfWidthPerMoa, endHashes: r.lineMoa });
+  }
+  return out;
+}
+
+test('range-day-fourteen task item 4: each scope\'s reticle drawn against its data, read from the canvas, at 412 and 1280 px wide at the lowest and highest power: the ACOG\'s chevron and drop lines and the PR2-MOA\'s open center, long hash and holdover lines (Trijicon\'s and Leupold\'s sheets); the Vortex\'s fine crosshair, its drawing unread', { skip }, async () => {
   const lines = []; let worst = 0;
   for (const [sizeName, viewport] of [['phone', { width: 412, height: 915 }], ['computer', { width: 1280, height: 800 }]]) {
     const { page, context, errors } = await signedIn(viewport);
     for (const id of COLLECTION) {
       const S = flat.sights[id];
       await line(page, `course=cta-piru&rifle=molot-vepr-54r&sight=${id}&load=sb-174-hpbt`);
-      for (const power of [S.zoom.low, S.zoom.high]) {
-        // held high into the sky over the far plates, so the reticle stands on plain sky
+      for (const power of [...new Set([S.zoom.low, S.zoom.high])]) { // the ACOG has one power
+        // held high over the far plates, as range-day-thirteen's test held it
         await page.evaluate(([p, up]) => { RangeDayLine.setZoom(p); RangeDayLine.setHold(up, 0); }, [power, 0.6 * (S.fovFtAt100.low * 12 / 1.047) / (power / S.zoom.low) ** 0.5]);
         await page.waitForTimeout(250);
-        const r = await page.evaluate(() => {
-          const c = document.getElementById('view'), g = c.getContext('2d'), G = RangeDayLine.geometry, size = G.viewPx, cx = size / 2, cy = size / 2;
+        const G0 = await page.evaluate(() => RangeDayLine.geometry);
+        const probes = reticleProbes(S, G0.pxPerMoa, G0.viewPx);
+        const r = await page.evaluate((probes) => {
+          const c = document.getElementById('view'), g = c.getContext('2d'), G = RangeDayLine.geometry, size = G.viewPx, cx = size / 2, cy = size / 2, k = G.pxPerMoa;
           const dpr = c.width / size;
           const med = (xs) => xs.slice().sort((a2, b2) => a2 - b2)[Math.floor(xs.length / 2)];
-          const lum = (x, y) => { const d = g.getImageData(Math.round(x * dpr), Math.round(y * dpr), 1, 1).data; return 0.299 * d[0] + 0.587 * d[1] + 0.114 * d[2]; };
-          const sky = lum(cx + size * 0.2, cy - size * 0.2);
-          // the darkest pixels in the row at the chevron's base (or 10 px under the center): their span
-          // dark against the row's own background, read just outside the window (the sky brightens upward)
-          const row = (y, f = 0.55, half = size * 0.3) => { const all = []; for (let x = Math.round(cx - half - 8); x <= Math.round(cx + half + 8); x++) all.push(lum(x, y)); const bg = all.sort((a2, b2) => a2 - b2)[Math.floor(all.length / 2)]; const xs = []; for (let x = Math.round(cx - half); x <= Math.round(cx + half); x++) if (lum(x, y) < bg * f) xs.push(x); return xs; };
-          // the chevron's base: its two lower ends, the darker pixels in the rows across the base's height (a line of 1.2 px, smoothed), each
-          // against its row's own background (the middle value of the row around it)
-          const base = G.chevronPx ? [-1, 0, 1].flatMap((dy) => row(cy + G.chevronPx.heightPx + dy, 0.7, G.chevronPx.widthPx / 2 + 4)).sort((a, b) => a - b) : null;
-          return { G, sky, size, cx, cy, baseRow: base, // a fine line: a pixel darker than both its neighbours 3 px off by a third, in the row 10 px under the center
-            under: (() => { const y = cy + 10, xs = []; for (let x = Math.round(cx - 30); x <= Math.round(cx + 30); x++) if (lum(x, y) < 0.7 * Math.min(lum(x - 3, y), lum(x + 3, y))) xs.push(x); return xs; })(),
-            // the horizontal line at 30% out to the right against the column around it, the vertical line 30% up against the row around it
+          const lum = (x, y) => { const d = g.getImageData(Math.floor(x * dpr), Math.floor(y * dpr), 1, 1).data; return 0.299 * d[0] + 0.587 * d[1] + 0.114 * d[2]; };
+          // the marks are read from the reticle drawn alone by the same drawing at the same scale (RangeDayLine.reticleAlone), on white:
+          // a mark's pixel is under half white's brightness, or red (a lit part)
+          const A = RangeDayLine.reticleAlone().getContext('2d');
+          const mark = (x, y) => { const d = A.getImageData(Math.floor(x), Math.floor(y), 1, 1).data; return 0.299 * d[0] + 0.587 * d[1] + 0.114 * d[2] < 128 || d[0] - d[1] > 70; };
+          const measured = probes.map((p) => {
+            if (p.kind === 'h') { // the outermost mark pixels in the rows across the mark's place, counted as pixel edges
+              const xs = []; const yc = cy + p.y * k;
+              for (const dy of [-1, 0, 1]) for (let x = Math.floor(cx - p.half * k); x <= Math.ceil(cx + p.half * k); x++) if (mark(x, Math.floor(yc) + dy)) xs.push(x);
+              xs.sort((a2, b2) => a2 - b2);
+              return xs.length ? xs[xs.length - 1] + 1 - xs[0] : 0;
+            }
+            if (p.kind === 'v') { // the run up and down the column through the hash, through the main line's row
+              const x = Math.floor(cx + p.x * k), hit = (y) => mark(x, y) || mark(x - 1, y) || mark(x + 1, y);
+              let top = Math.floor(cy), bot = Math.floor(cy);
+              while (hit(top - 1)) top--; while (hit(bot + 1)) bot++;
+              return bot + 1 - top;
+            }
+            // the open center: from the first mark pixel left of the center dot to the first right of it, along the main line's rows
+            const from = Math.max(2, 0.3 * k), edge = (s) => { for (let d = Math.ceil(from); d < 6 * k + 6; d++) for (const dy of [-1, 0, 1]) if (mark(cx + s * d, Math.floor(cy) + dy)) return d; return null; };
+            const L = edge(-1), R = edge(1); return L && R ? L + R : 0;
+          });
+          // and the live view shows the same reticle: at the mark pixels of the reticle alone along the main line's row and the
+          // column below the center, the live canvas is redder, or darker than the brightest of the view beside the line there
+          const live = []; for (let i = -Math.floor(size * 0.3); i <= Math.floor(size * 0.3); i++) for (const [x, y, across] of [[cx + i, cy, false], [cx, cy + i, true]]) if (mark(x, y)) { const d = g.getImageData(Math.floor(x * dpr), Math.floor(y * dpr), 1, 1).data; const bg = across ? [lum(x - 6, y), lum(x + 6, y), lum(x - 9, y), lum(x + 9, y)] : [lum(x, y - 6), lum(x, y + 6), lum(x, y - 9), lum(x, y + 9)]; live.push(d[0] - d[1] > 70 || lum(x, y) < 0.8 * Math.max(...bg)); }
+          return { G, measured, cx, livePx: live.length, liveShown: live.filter(Boolean).length, under: (() => { const y = cy + 10, xs = []; for (let x = Math.round(cx - 30); x <= Math.round(cx + 30); x++) if (lum(x, y) < 0.7 * Math.min(lum(x - 3, y), lum(x + 3, y))) xs.push(x); return xs; })(),
             right: [lum(cx + size * 0.3, cy), med(Array.from({ length: 17 }, (_, i) => lum(cx + size * 0.3, cy - 8 + i)))], above: [lum(cx, cy - size * 0.3), med(Array.from({ length: 17 }, (_, i) => lum(cx - 8 + i, cy - size * 0.3)))] };
-        });
+        }, probes);
         const k = r.G.pxPerMoa;
-        if (S.reticle.kind === 'chevron') {
-          const wantW = S.reticle.chevronBaseWidthMoa * k, wantH = S.reticle.chevronHeightMoa * k;
-          const drawnW = r.baseRow.length ? r.baseRow[r.baseRow.length - 1] - r.baseRow[0] : 0;
-          const diff = Math.abs(drawnW - wantW);
-          lines.push(`${sizeName} ${id} at ${power}x: the chevron's base drawn ${drawnW.toFixed(1)} px wide at ${wantH.toFixed(2)} px under the tip; data ${S.reticle.chevronBaseWidthMoa} × ${k.toFixed(3)} = ${wantW.toFixed(2)} px wide, ${S.reticle.chevronHeightMoa} MOA = ${wantH.toFixed(2)} px high; difference ${diff.toFixed(2)} px`);
-          assert.ok(Math.abs(r.G.chevronPx.widthPx - wantW) < 1e-9 && Math.abs(r.G.chevronPx.heightPx - wantH) < 1e-9, 'the drawing is asked for the data\'s sizes');
-          assert.ok(diff <= 2, lines[lines.length - 1]);
-          worst = Math.max(worst, diff);
-        } else {
-          // a fine dark line through the center both ways; nothing else: the row 10 px under the center is dark only where the vertical line crosses it
+        assert.equal(r.G.reticleKind, S.reticle.kind, id);
+        if (S.reticle.kind === 'crosshair') {
+          // the Vortex: its maker's drawing could not be read (data/sights.json, marksNotDrawn), so a fine dark line through the
+          // center both ways and nothing else: the row 10 px under the center is dark only where the vertical line crosses it
           lines.push(`${sizeName} ${id} at ${power}x: crosshair dark at the right (${r.right[0].toFixed(0)} against ${r.right[1].toFixed(0)} around it) and above (${r.above[0].toFixed(0)} against ${r.above[1].toFixed(0)}); the row 10 px under the center dark at ${JSON.stringify(r.under)} only (the center is ${r.cx}); ${k.toFixed(3)} px per MOA`);
           assert.ok(r.right[0] < r.right[1] * 0.7 && r.above[0] < r.above[1] * 0.7, lines[lines.length - 1]);
           assert.ok(r.under.length >= 1 && r.under.length <= 3 && r.under.every((x) => Math.abs(x - r.cx) <= 1.5), lines[lines.length - 1]);
           assert.equal(r.G.crosshair, true);
+          continue;
         }
+        assert.ok(probes.length >= 3, `${id} at ${power}x: at least three marks measured (${probes.length})`);
+        lines.push(`${sizeName} ${id} at ${power}x: the live view shows the reticle at ${r.liveShown} of its ${r.livePx} mark pixels along the main line and the post below`);
+        assert.ok(r.livePx > 0 && r.liveShown >= 0.9 * r.livePx, lines[lines.length - 1]);
+        probes.forEach((p, i) => {
+          // a mark under 1 px wide on the screen is drawn 1 px (a line is never thinner): the data's width, or 1 px, against the canvas
+          // a holdover line is measured across its two end hashes, so their own thickness (never under 1 px) is half added at each end
+          const want = Math.max(1, p.want * k) + (p.endHashes ? Math.max(1, p.endHashes * k) : 0), got = r.measured[i], diff = Math.abs(got - want);
+          lines.push(`${sizeName} ${id} at ${power}x (${k.toFixed(3)} px per MOA): ${p.what}: drawn ${got} px, data ${p.want} MOA${p.endHashes ? ' and the end hashes\' thickness' : ''} = ${want.toFixed(2)} px, difference ${diff.toFixed(2)} px`);
+          worst = Math.max(worst, diff);
+        });
       }
     }
     assert.deepEqual(errors, []);
     await context.close();
   }
-  console.log(`  largest difference, the chevron: ${worst.toFixed(2)} px\n  ` + lines.join('\n  '));
+  console.log(`  largest difference, drawn mark against data: ${worst.toFixed(2)} px\n  ` + lines.join('\n  '));
+  assert.ok(worst <= 2, `the largest difference is ${worst.toFixed(2)} px (every mark within 2 px of the data)`);
 });
 
 test('range-day-thirteen: same scale through each scope: where the drawing puts the near paper and a far plate, against the angles from the data at the drawn aim, at the lowest and highest power, at 412 and 1280 px wide', { skip }, async () => {

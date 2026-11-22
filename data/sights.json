@@ -1758,14 +1758,180 @@
     "source": {
      "url": "https://www.trijicon.com/products/details/ta31f-a",
      "read": "2026-11-21",
-     "note": "the maker's TA31F-A page: the chevron's base is \"5.53 MOA which is 19 in. at 300 meters\"; the manual: \"The base of the reticle and the horizontal stadia lines represent 19\" at the indicated range\". Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+     "note": "the maker's TA31F-A page: the chevron's base is \"5.53 MOA which is 19 in. at 300 meters\"; the manual: \"The base of the reticle and the horizontal stadia lines represent 19\" at the indicated range\". Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches. Trijicon's dimension sheet (read 2026-11-22) prints the same width rounded: \"5.5\"."
     }
    },
    "chevronHeightMoa": {
     "value": 4.1,
-    "estimate": "Trijicon publishes no height for the chevron that could be read. The base is the 19-inch width at 300 meters (the maker's page above), so the base is taken as the 300-meter hold; its place under the tip, 4.1 minutes of angle, is the 300 m figure of a table of the TA31F's holds posted as Trijicon's on a forum (https://www.ar15.com/forums/ar-15/Ta31f-reticle/18-772141/, search text: \"200m 2.0 300m 4.1 400m 7.8 …\"), not a maker document."
+    "source": {
+     "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+     "read": "2026-11-22",
+     "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"4.1\" from the tip's line (\"ZERO at 100m\") down to the chevron's lower ends. It replaces range-day-thirteen's estimate, the same figure from a forum table."
+    }
    },
-   "marksNotDrawn": "The bullet-drop lines for 400 to 800 meters are not drawn: their width is stated by the maker (19 inches at each line's range) but their places under the tip are not in any Trijicon text that could be read; the brief allows only what the maker's reticle documents state. The forum table above has them; adding them waits on Dan (the report's asks)."
+   "chevronDepthMoa": {
+    "value": 2.0,
+    "source": {
+     "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+     "read": "2026-11-22",
+     "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"2.0\" from the tip down to the inside corner of the chevron's point."
+    }
+   },
+   "chevronLineMoa": {
+    "value": 1.1,
+    "source": {
+     "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+     "read": "2026-11-22",
+     "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"1.1\" across one arm of the chevron, square to it."
+    }
+   },
+   "stemTopMoa": {
+    "value": 4.4,
+    "source": {
+     "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+     "read": "2026-11-22",
+     "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"4.4\" from the tip down to the top of the post below the chevron."
+    }
+   },
+   "stemWidthMoa": {
+    "value": 0.4,
+    "source": {
+     "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+     "read": "2026-11-22",
+     "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"0.4\" across the post."
+    }
+   },
+   "dropLines": [
+    {
+     "meters": {
+      "value": 400,
+      "source": {
+       "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+       "read": "2026-11-22",
+       "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: the line is labeled \"4\" (hundreds of meters) beside it."
+      }
+     },
+     "label": "4",
+     "belowTipMoa": {
+      "value": 7.8,
+      "source": {
+       "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+       "read": "2026-11-22",
+       "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"7.8\" from the tip's line down to this line."
+      }
+     },
+     "widthMoa": {
+      "value": 4.2,
+      "source": {
+       "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+       "read": "2026-11-22",
+       "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"4.2\" across this line."
+      }
+     }
+    },
+    {
+     "meters": {
+      "value": 500,
+      "estimate": "the sheet prints no number beside this line; it is the line between the ones labeled \"4\" and \"6\" or after \"6\", and its width is 19 inches at 500 meters, as the maker's manual says each line is (\"The base of the reticle and the horizontal stadia lines represent 19\\\" at the indicated range\"): 19 in at 500 m is 3.32 MOA against the sheet's 3.3."
+     },
+     "belowTipMoa": {
+      "value": 12.6,
+      "source": {
+       "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+       "read": "2026-11-22",
+       "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"12.6\" from the tip's line down to this line."
+      }
+     },
+     "widthMoa": {
+      "value": 3.3,
+      "source": {
+       "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+       "read": "2026-11-22",
+       "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"3.3\" across this line."
+      }
+     }
+    },
+    {
+     "meters": {
+      "value": 600,
+      "source": {
+       "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+       "read": "2026-11-22",
+       "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: the line is labeled \"6\" (hundreds of meters) beside it."
+      }
+     },
+     "label": "6",
+     "belowTipMoa": {
+      "value": 18.7,
+      "source": {
+       "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+       "read": "2026-11-22",
+       "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"18.7\" from the tip's line down to this line."
+      }
+     },
+     "widthMoa": {
+      "value": 2.8,
+      "source": {
+       "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+       "read": "2026-11-22",
+       "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"2.8\" across this line."
+      }
+     }
+    },
+    {
+     "meters": {
+      "value": 700,
+      "estimate": "the sheet prints no number beside this line; it is the line between the ones labeled \"4\" and \"6\" or after \"6\", and its width is 19 inches at 700 meters, as the maker's manual says each line is (\"The base of the reticle and the horizontal stadia lines represent 19\\\" at the indicated range\"): 19 in at 700 m is 2.37 MOA against the sheet's 2.4."
+     },
+     "belowTipMoa": {
+      "value": 26.4,
+      "source": {
+       "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+       "read": "2026-11-22",
+       "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"26.4\" from the tip's line down to this line."
+      }
+     },
+     "widthMoa": {
+      "value": 2.4,
+      "source": {
+       "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+       "read": "2026-11-22",
+       "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"2.4\" across this line."
+      }
+     }
+    },
+    {
+     "meters": {
+      "value": 800,
+      "estimate": "the sheet prints no number beside this line; it is the line between the ones labeled \"4\" and \"6\" or after \"6\", and its width is 19 inches at 800 meters, as the maker's manual says each line is (\"The base of the reticle and the horizontal stadia lines represent 19\\\" at the indicated range\"): 19 in at 800 m is 2.07 MOA against the sheet's 2.1."
+     },
+     "belowTipMoa": {
+      "value": 35.8,
+      "source": {
+       "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+       "read": "2026-11-22",
+       "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"35.8\" from the tip's line down to this line."
+      }
+     },
+     "widthMoa": {
+      "value": 2.1,
+      "source": {
+       "url": "https://www.trijicon.com/uploads/product-uploads/product-downloads/223_Chevron_Reticle_Dimensions4x32.pdf",
+       "read": "2026-11-22",
+       "note": "Trijicon's dimension sheet \"ACOG 4x32 .223 Chevron Reticle\" (it lists the TA31F; \"Measurements shown in MOA unless otherwise noted\"), downloaded from the maker's TA31F page and read as a picture, each figure beside the line it measures: \"2.1\" across this line."
+      }
+     }
+    }
+   ],
+   "dropLineThicknessMoa": {
+    "value": 0.4,
+    "estimate": "the sheet gives no thickness for the drop lines and says \"Reticles not drawn to scale\"; taken as the post's own 0.4 MOA, which the lines look no thinner than on the sheet."
+   },
+   "labelHeightMoa": {
+    "value": 2.0,
+    "estimate": "the sheet gives no size for the numbers \"4\" and \"6\"; on it they stand about half the 4.2 MOA line's width high, taken as 2 MOA, set just right of the line's end."
+   },
+   "lit": "The sheet shows the TA31F with its red illumination: the chevron, the post down past the 400 m line, that line and its \"4\" red, the rest black. Drawn in plain red and black; nothing glows."
   },
   "mount": {
    "name": "Trijicon TA51 flat-top mount",
@@ -1867,7 +2033,7 @@
   "reticle": {
    "kind": "crosshair",
    "focalPlane": "first",
-   "marksNotDrawn": "Only the fine crosshair is drawn. Vortex's EBR-9 manual says the reticle is in the first focal plane (\"the listed MOA subtensions of the EBR-9 BDC reticle are valid at all magnification levels\", https://cdn11.bigcommerce.com/s-ycm0rvhla1/content/pdfs/vortex-ebr-9-bdc-moa.pdf, a retailer's copy, search text) and that its marks are 1 and 2 minutes apart, but the table of its marks came through without its labels, so no mark's place, length or thickness could be read; the brief allows only what the manual states. Adding the marks waits on a reading of Vortex's drawing (the report's asks)."
+   "marksNotDrawn": "Only the fine crosshair is drawn. Vortex's EBR-9 manual says the reticle is in the first focal plane (\"the listed MOA subtensions of the EBR-9 BDC reticle are valid at all magnification levels\", https://cdn11.bigcommerce.com/s-ycm0rvhla1/content/pdfs/vortex-ebr-9-bdc-moa.pdf, a retailer's copy, search text) and that its marks are 1 and 2 minutes apart, but its drawing could not be read: range-day-fourteen found it on Vortex's page for the scope as https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf, whose download the session's safety check refused, and a reticle library's copy (https://dex.scopelist.com/pdf/vortex-ebr-9-bdc-moa.pdf) was out of the session's network. Adding the marks waits on a reading of Vortex's drawing."
   },
   "mount": {
    "name": "Vortex Precision Extended Cantilever Mount, 34 mm (CM-534)",
@@ -1967,9 +2133,169 @@
    }
   },
   "reticle": {
-   "kind": "crosshair",
+   "kind": "tree",
    "focalPlane": "first",
-   "marksNotDrawn": "Only the fine crosshair is drawn. Leupold says the PR2-MOA is first focal plane, a grid of minute-of-angle holds (https://www.leupold.com/reticle/pr2-moa-ffp/, search text), but its spec sheet (https://www.leupold.com/media/binaryanvil/reticle/FFP_PR2-MOA_Reticle_Spec_Sheet.pdf) came through with its figures unlabeled, so no mark's place or width could be read; the brief allows only what the reticle document states. Adding the marks waits on a reading of Leupold's sheet (the report's asks)."
+   "about": "The PR2-MOA: a fine crosshair with an open center and a dot, a hash every minute of angle, numbered every 4; below it, a holdover line every 4 minutes down to 40, each as wide as half its depth either side, with a row of dots every minute between them; then the post below, numbered every 4 to 128. The heavy posts at the outer edge of the view carry no figure on the sheet and are not drawn.",
+   "lineMoa": {
+    "value": 0.1,
+    "source": {
+     "url": "https://www.leupold.com/media/binaryanvil/reticle/FFP_PR2-MOA_Reticle_Spec_Sheet.pdf",
+     "read": "2026-11-22",
+     "note": "Leupold's sheet \"FFP PR2-MOA, Mark 5HD\", linked from the maker's page for part 180291 as the reticle's detail, downloaded and read as a picture, each figure beside the line it measures: \"0.1MOA Fine Lines\": the thickness of the reticle's lines."
+    }
+   },
+   "centerDotMoa": {
+    "value": 0.2,
+    "source": {
+     "url": "https://www.leupold.com/media/binaryanvil/reticle/FFP_PR2-MOA_Reticle_Spec_Sheet.pdf",
+     "read": "2026-11-22",
+     "note": "Leupold's sheet \"FFP PR2-MOA, Mark 5HD\", linked from the maker's page for part 180291 as the reticle's detail, downloaded and read as a picture, each figure beside the line it measures: \"0.2MOA Dot Diameter\": the dot at the center."
+    }
+   },
+   "openingMoa": {
+    "value": 2.0,
+    "source": {
+     "url": "https://www.leupold.com/media/binaryanvil/reticle/FFP_PR2-MOA_Reticle_Spec_Sheet.pdf",
+     "read": "2026-11-22",
+     "note": "Leupold's sheet \"FFP PR2-MOA, Mark 5HD\", linked from the maker's page for part 180291 as the reticle's detail, downloaded and read as a picture, each figure beside the line it measures: \"2.0MOA\" across the open center, from the inner end of the left line to the inner end of the right."
+    }
+   },
+   "breakMoa": {
+    "value": 0.25,
+    "source": {
+     "url": "https://www.leupold.com/media/binaryanvil/reticle/FFP_PR2-MOA_Reticle_Spec_Sheet.pdf",
+     "read": "2026-11-22",
+     "note": "Leupold's sheet \"FFP PR2-MOA, Mark 5HD\", linked from the maker's page for part 180291 as the reticle's detail, downloaded and read as a picture, each figure beside the line it measures: \"0.25MOA Line Breaks\": the gaps in the lines, one at each minute where a hash stands."
+    }
+   },
+   "hashSpacingMoa": {
+    "value": 1.0,
+    "source": {
+     "url": "https://www.leupold.com/media/binaryanvil/reticle/FFP_PR2-MOA_Reticle_Spec_Sheet.pdf",
+     "read": "2026-11-22",
+     "note": "Leupold's sheet \"FFP PR2-MOA, Mark 5HD\", linked from the maker's page for part 180291 as the reticle's detail, downloaded and read as a picture, each figure beside the line it measures: \"1.0MOA\" between two neighboring hashes."
+    }
+   },
+   "shortHashMoa": {
+    "value": 0.5,
+    "source": {
+     "url": "https://www.leupold.com/media/binaryanvil/reticle/FFP_PR2-MOA_Reticle_Spec_Sheet.pdf",
+     "read": "2026-11-22",
+     "note": "Leupold's sheet \"FFP PR2-MOA, Mark 5HD\", linked from the maker's page for part 180291 as the reticle's detail, downloaded and read as a picture, each figure beside the line it measures: \"0.5MOA\": the short hash, from the line out to its end, on one side of the line (on the main line the odd minutes below it, the even ones above)."
+    }
+   },
+   "longHashMoa": {
+    "value": 2.0,
+    "source": {
+     "url": "https://www.leupold.com/media/binaryanvil/reticle/FFP_PR2-MOA_Reticle_Spec_Sheet.pdf",
+     "read": "2026-11-22",
+     "note": "Leupold's sheet \"FFP PR2-MOA, Mark 5HD\", linked from the maker's page for part 180291 as the reticle's detail, downloaded and read as a picture, each figure beside the line it measures: \"2.0MOA\": the long hash at each numbered minute, across the line, half each side."
+    }
+   },
+   "numberedEveryMoa": {
+    "value": 4.0,
+    "source": {
+     "url": "https://www.leupold.com/media/binaryanvil/reticle/FFP_PR2-MOA_Reticle_Spec_Sheet.pdf",
+     "read": "2026-11-22",
+     "note": "Leupold's sheet \"FFP PR2-MOA, Mark 5HD\", linked from the maker's page for part 180291 as the reticle's detail, downloaded and read as a picture, each figure beside the line it measures: \"4.0MOA\" between two numbered hashes (4, 8, 12, 16, 20 printed under them)."
+    }
+   },
+   "mainLineToMoa": {
+    "value": 24,
+    "source": {
+     "url": "https://www.leupold.com/media/binaryanvil/reticle/FFP_PR2-MOA_Reticle_Spec_Sheet.pdf",
+     "read": "2026-11-22",
+     "note": "Leupold's sheet \"FFP PR2-MOA, Mark 5HD\", linked from the maker's page for part 180291 as the reticle's detail, downloaded and read as a picture, each figure beside the line it measures: the numbers under the main line run to \"24\" each side; the fine line is drawn to that hash."
+    }
+   },
+   "upperStem": {
+    "toMoa": {
+     "value": 4.0,
+     "source": {
+      "url": "https://www.leupold.com/media/binaryanvil/reticle/FFP_PR2-MOA_Reticle_Spec_Sheet.pdf",
+      "read": "2026-11-22",
+      "note": "Leupold's sheet \"FFP PR2-MOA, Mark 5HD\", linked from the maker's page for part 180291 as the reticle's detail, downloaded and read as a picture, each figure beside the line it measures: the post above the center ends in a bar \"2.0MOA\" wide, at the fourth minute up (four hashes of \"1.0MOA\" spacing, read by scale on the same drawing)."
+     }
+    },
+    "midBarMoa": {
+     "value": 1.0,
+     "source": {
+      "url": "https://www.leupold.com/media/binaryanvil/reticle/FFP_PR2-MOA_Reticle_Spec_Sheet.pdf",
+      "read": "2026-11-22",
+      "note": "Leupold's sheet \"FFP PR2-MOA, Mark 5HD\", linked from the maker's page for part 180291 as the reticle's detail, downloaded and read as a picture, each figure beside the line it measures: \"1.0MOA\" across the bar at the second minute up."
+     }
+    }
+   },
+   "stemBars": {
+    "everyFourMoa": {
+     "value": 2.0,
+     "source": {
+      "url": "https://www.leupold.com/media/binaryanvil/reticle/FFP_PR2-MOA_Reticle_Spec_Sheet.pdf",
+      "read": "2026-11-22",
+      "note": "Leupold's sheet \"FFP PR2-MOA, Mark 5HD\", linked from the maker's page for part 180291 as the reticle's detail, downloaded and read as a picture, each figure beside the line it measures: \"2.0MOA\" across the bar at each numbered minute down the post (64 is the one labeled)."
+     }
+    },
+    "midMoa": {
+     "value": 1.0,
+     "source": {
+      "url": "https://www.leupold.com/media/binaryanvil/reticle/FFP_PR2-MOA_Reticle_Spec_Sheet.pdf",
+      "read": "2026-11-22",
+      "note": "Leupold's sheet \"FFP PR2-MOA, Mark 5HD\", linked from the maker's page for part 180291 as the reticle's detail, downloaded and read as a picture, each figure beside the line it measures: \"1.0MOA\" across the bar at each minute halfway between two numbered ones (58 is the one labeled)."
+     }
+    }
+   },
+   "holdoverEveryMoa": {
+    "value": 4.0,
+    "source": {
+     "url": "https://www.leupold.com/media/binaryanvil/reticle/FFP_PR2-MOA_Reticle_Spec_Sheet.pdf",
+     "read": "2026-11-22",
+     "note": "Leupold's sheet \"FFP PR2-MOA, Mark 5HD\", linked from the maker's page for part 180291 as the reticle's detail, downloaded and read as a picture, each figure beside the line it measures: the holdover lines are labeled 4, 8, 12 ... 40 at their ends: one every 4 minutes down."
+    }
+   },
+   "holdoverToMoa": {
+    "value": 40,
+    "source": {
+     "url": "https://www.leupold.com/media/binaryanvil/reticle/FFP_PR2-MOA_Reticle_Spec_Sheet.pdf",
+     "read": "2026-11-22",
+     "note": "Leupold's sheet \"FFP PR2-MOA, Mark 5HD\", linked from the maker's page for part 180291 as the reticle's detail, downloaded and read as a picture, each figure beside the line it measures: the last holdover line is labeled \"40\"; below it the post goes on alone, numbered 44, 48 ..."
+    }
+   },
+   "holdoverHalfWidthPerMoa": {
+    "value": 0.5,
+    "source": {
+     "url": "https://www.leupold.com/media/binaryanvil/reticle/FFP_PR2-MOA_Reticle_Spec_Sheet.pdf",
+     "read": "2026-11-22",
+     "note": "Leupold's sheet \"FFP PR2-MOA, Mark 5HD\", linked from the maker's page for part 180291 as the reticle's detail, downloaded and read as a picture, each figure beside the line it measures: the line labeled 8 ends at the hashes 4 minutes either side of the post, the one labeled 40 at 20, and so each one between: each line reaches half its depth either side (read against the main line's numbered hashes on the same drawing)."
+    }
+   },
+   "dotRowSmallMoa": {
+    "value": 0.1,
+    "source": {
+     "url": "https://www.leupold.com/media/binaryanvil/reticle/FFP_PR2-MOA_Reticle_Spec_Sheet.pdf",
+     "read": "2026-11-22",
+     "note": "Leupold's sheet \"FFP PR2-MOA, Mark 5HD\", linked from the maker's page for part 180291 as the reticle's detail, downloaded and read as a picture, each figure beside the line it measures: \"0.1MOA Small Dot Diameter\": the dots at the odd minutes in the rows of dots between the holdover lines."
+    }
+   },
+   "dotRowLargeMoa": {
+    "value": 0.2,
+    "source": {
+     "url": "https://www.leupold.com/media/binaryanvil/reticle/FFP_PR2-MOA_Reticle_Spec_Sheet.pdf",
+     "read": "2026-11-22",
+     "note": "Leupold's sheet \"FFP PR2-MOA, Mark 5HD\", linked from the maker's page for part 180291 as the reticle's detail, downloaded and read as a picture, each figure beside the line it measures: \"0.2MOA Large Dot Diameter\": the dots at the even minutes in those rows."
+    }
+   },
+   "stemToMoa": {
+    "value": 128,
+    "source": {
+     "url": "https://www.leupold.com/media/binaryanvil/reticle/FFP_PR2-MOA_Reticle_Spec_Sheet.pdf",
+     "read": "2026-11-22",
+     "note": "Leupold's sheet \"FFP PR2-MOA, Mark 5HD\", linked from the maker's page for part 180291 as the reticle's detail, downloaded and read as a picture, each figure beside the line it measures: the post below is numbered every 4 minutes to \"128\" in the sheet's enlarged drawing; it is drawn to that number."
+    }
+   },
+   "labelHeightMoa": {
+    "value": 1.0,
+    "estimate": "the sheet gives no size for its printed numbers; on its enlarged drawing a number stands about as high as one minute of the hash spacing."
+   }
   },
   "mount": {
    "name": "Leupold Mark IMS 35 mm (176886)",

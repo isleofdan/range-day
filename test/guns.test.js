@@ -135,12 +135,12 @@ test('range-day-thirteen: a bad scope mounting is refused by name: an unknown ra
   assert.match(refuse(broken((g) => { g.scopeMount.railHeightOverBoreIn = 1.21; })), /a bare number/);
 });
 
-test('range-day-thirteen: the three scopes\' figures, each from its maker\'s page or manual or an estimate with its basis, as the report\'s table gives them; a collection scope without its mount, a chevron without its sizes and a crosshair without its note are refused', () => {
+test('range-day-thirteen: the three scopes\' figures, each from its maker\'s page or manual or an estimate with its basis, as the report\'s table gives them; a collection scope without its mount, a chevron without its sizes, a drop line without its place, a tree without a figure and a crosshair without its note are refused (range-day-fourteen: the ACOG\'s and the Leupold\'s marks from the makers\' sheets)', () => {
   const S = flat.sights;
   const want = {
     'trijicon-acog-ta31f': { clickMoa: 0.4776, windageClickMoa: 0.4776, clicks: 42, zoom: { low: 4, high: 4 }, fovFtAt100: { low: 36.69, high: 36.69 }, mount: 1.535, reticle: 'chevron' },
     'vortex-razor-1-10': { clickMoa: 0.25, windageClickMoa: 0.25, clicks: 240, zoom: { low: 1, high: 10 }, fovFtAt100: { low: 116, high: 11.7 }, mount: 1.574, reticle: 'crosshair' },
-    'leupold-mark5hd-5-25': { clickMoa: 0.25, windageClickMoa: 0.25, clicks: 240, windageClicks: 120, zoom: { low: 5, high: 25 }, fovFtAt100: { low: 20.4, high: 4.2 }, mount: 1.5, reticle: 'crosshair' },
+    'leupold-mark5hd-5-25': { clickMoa: 0.25, windageClickMoa: 0.25, clicks: 240, windageClicks: 120, zoom: { low: 5, high: 25 }, fovFtAt100: { low: 20.4, high: 4.2 }, mount: 1.5, reticle: 'tree' },
   };
   for (const [id, w] of Object.entries(want)) {
     const s = S[id];
@@ -153,10 +153,22 @@ test('range-day-thirteen: the three scopes\' figures, each from its maker\'s pag
     assert.deepEqual(data.check(raw.sights[id], id), [], id);
   }
   assert.equal(S['trijicon-acog-ta31f'].reticle.chevronBaseWidthMoa, 5.53);
-  assert.ok(raw.sights['trijicon-acog-ta31f'].reticle.chevronHeightMoa.estimate, 'the chevron\'s height is an estimate: no maker figure could be read');
+  // range-day-fourteen: the chevron's height and its drop lines are Trijicon's dimension sheet's figures; the PR2-MOA's marks Leupold's sheet's
+  const A = S['trijicon-acog-ta31f'].reticle, rawA = raw.sights['trijicon-acog-ta31f'].reticle;
+  assert.match(rawA.chevronHeightMoa.source.url, /trijicon\.com\/.*223_Chevron_Reticle_Dimensions4x32\.pdf/, 'the chevron\'s height is the maker\'s sheet\'s');
+  assert.deepEqual([A.chevronHeightMoa, A.chevronDepthMoa, A.chevronLineMoa, A.stemTopMoa, A.stemWidthMoa], [4.1, 2.0, 1.1, 4.4, 0.4]);
+  assert.deepEqual(A.dropLines.map((l) => [l.meters, l.belowTipMoa, l.widthMoa, l.label || null]), [[400, 7.8, 4.2, '4'], [500, 12.6, 3.3, null], [600, 18.7, 2.8, '6'], [700, 26.4, 2.4, null], [800, 35.8, 2.1, null]]);
+  assert.equal(A.marksNotDrawn, undefined, 'the ACOG\'s marks are in');
+  const P = S['leupold-mark5hd-5-25'].reticle;
+  assert.deepEqual([P.lineMoa, P.centerDotMoa, P.openingMoa, P.breakMoa, P.hashSpacingMoa, P.shortHashMoa, P.longHashMoa, P.numberedEveryMoa, P.dotRowSmallMoa, P.dotRowLargeMoa, P.upperStem.midBarMoa, P.stemBars.everyFourMoa, P.stemBars.midMoa], [0.1, 0.2, 2.0, 0.25, 1.0, 0.5, 2.0, 4.0, 0.1, 0.2, 1.0, 2.0, 1.0]);
+  for (const f of ['lineMoa', 'centerDotMoa', 'openingMoa', 'breakMoa', 'longHashMoa']) assert.match(raw.sights['leupold-mark5hd-5-25'].reticle[f].source.url, /leupold\.com\/.*FFP_PR2-MOA_Reticle_Spec_Sheet\.pdf/, f);
+  assert.equal(P.marksNotDrawn, undefined, 'the Leupold\'s marks are in');
+  assert.equal(typeof S['vortex-razor-1-10'].reticle.marksNotDrawn, 'string', 'the Vortex\'s drawing could not be read; its crosshair stays');
   for (const id of ['vortex-razor-1-10', 'leupold-mark5hd-5-25']) assert.equal(S[id].reticle.focalPlane, 'first', id);
   const bad = (f) => { const s = JSON.parse(JSON.stringify(raw.sights)); f(s); return data.checkSights(s); };
   assert.match(bad((s) => { delete s['vortex-razor-1-10'].mount; }).join(), /sights.vortex-razor-1-10: a scope of the collection needs mount.name, mount.fits and mount.centerOverRailIn/);
   assert.match(bad((s) => { delete s['trijicon-acog-ta31f'].reticle.chevronHeightMoa; }).join(), /a chevron needs chevronBaseWidthMoa and chevronHeightMoa/);
-  assert.match(bad((s) => { delete s['leupold-mark5hd-5-25'].reticle.marksNotDrawn; }).join(), /a crosshair says in marksNotDrawn/);
+  assert.match(bad((s) => { delete s['vortex-razor-1-10'].reticle.marksNotDrawn; }).join(), /a crosshair says in marksNotDrawn/);
+  assert.match(bad((s) => { delete s['leupold-mark5hd-5-25'].reticle.openingMoa; }).join(), /a tree reticle needs openingMoa/);
+  assert.match(bad((s) => { delete s['trijicon-acog-ta31f'].reticle.dropLines[2].belowTipMoa; }).join(), /dropLines\[2\]: each drop line needs belowTipMoa/);
 });
