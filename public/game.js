@@ -484,6 +484,9 @@ window.RD = (function () {
         checkRecord(s, DAY_SHAPES.shot, `${at}.shots[${j}]`);
         if (!PLACES.includes(s.place)) throw notACopy(`${at}.shots[${j}].place is ${JSON.stringify(s.place)}; it must be one of ${PLACES.join(', ')}. Nothing was loaded.`);
         if (s.place === 'line') checkRecord(s, DAY_SHAPES.lineShot, `${at}.shots[${j}]`);
+        // range-day-thirteen: a line shot's time of flight and target key, written from then on; older shots have neither
+        if (s.flightS !== undefined && !(typeof s.flightS === 'number' && s.flightS > 0)) throw notACopy(`${at}.shots[${j}].flightS is ${JSON.stringify(s.flightS)}; where present it must be the time of flight in seconds, a number over 0. Nothing was loaded.`);
+        if (s.targetKey !== undefined && typeof s.targetKey !== 'string') throw notACopy(`${at}.shots[${j}].targetKey is ${JSON.stringify(s.targetKey)}; where present it must be a target's key, a string. Nothing was loaded.`);
         // Where it landed: a shot that reached has both coordinates in inches; one that went into the ground has null for both.
         for (const f of ['upIn', 'rightIn']) {
           if (s.reached && typeof s[f] !== 'number') throw notACopy(`${at}.shots[${j}].${f} is ${JSON.stringify(s[f])}; a shot that reached must have it as a number. Nothing was loaded.`);
@@ -638,12 +641,14 @@ window.RD = (function () {
   // nextClicks)` is the screen's own setter.
   function wireKnobs(doc, sight, getSetting, apply, say) {
     const $ = (id) => doc.getElementById(id);
-    const limit = sight.clicks;
+    // A scope's windage can travel less than its elevation (range-day-thirteen: the Leupold, 30 MOA each way against 60): windageClicks.
+    const limitOf = (which) => (which === 'windageClicks' && sight.windageClicks ? sight.windageClicks : sight.clicks);
     const perMoa = (which) => Math.round(1 / (which === 'elevationClicks' ? sight.clickMoa : sight.windageClickMoa));
     const coarse = sight.clickMoa < 1 || sight.windageClickMoa < 1;
-    for (const el of doc.querySelectorAll('.pair.coarse')) el.hidden = !coarse;
+    for (const el of doc.querySelectorAll('.pair.coarse, .btn.coarse')) el.hidden = !coarse; // the bench's coarse buttons stand singly in its rows (range-day-thirteen)
     const turn = (which, delta) => {
       const cur = getSetting()[which] || 0;
+      const limit = limitOf(which);
       let next = Math.max(-limit, Math.min(limit, cur + delta));
       const name = which === 'elevationClicks' ? 'elevation' : 'windage';
       if (next === cur) { say(`The ${name} knob is at the end of its travel (${limit} clicks, ${moaOf(limit, which === 'elevationClicks' ? sight.clickMoa : sight.windageClickMoa)} MOA from the middle).`); return; }

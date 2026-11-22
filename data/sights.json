@@ -1,5 +1,5 @@
 {
- "_about": "The sights. clickMoa is what one click of elevation moves the strike, windageClickMoa one click of windage, in minutes of angle; clicks is the travel each way from the middle. zoom is the magnification range; fovFtAt100 the field of view in feet at 100 yards at the lowest and highest zoom. frontPostMoa is the front post's width over the sight radius (how wide it looks against the target); apertureMoa the rear ring's lit circle and notchMoa the rear notch's width as the eye sees them; dotMoa a red dot's size. leaf is a sliding rear leaf: its marked settings, the service load it was cut for, and each setting's angle above the 100 m setting, derived with the engine (leaf545: the same leaf on the 5.45x39 rifle, cut for its own load). notchDepthMoa is the rear notch's depth as the eye sees it; stemWidthMoa a bead's stem; a drop reticle's chevronHalfWidthMoa and markHalfWidthMoa are its drawn widths. aimWanderFactor scales the drawn wander of the aim through this sight (1 where absent). frontBead marks a front sight that is a round bead on a stem rather than a flat post. range-day-twelve: sightRadiusIn is the distance between the front and rear sight, the radius the front post's width is seen over; frontPostIn and apertures (each peep's diameterIn) are the parts' own sizes; frontEars draws the front sight's guards (their inner gap, each one's width, and how far their tops stand above the post); frontStripeMoa and frontStripeTopMoa a glowing stripe on a front post; adjustWords says in plain words where each adjustment is; kind \"seeall\" is the SeeAll Open Sight, its reticle a triangle whose tip is the aim point, standing across a line that tops a glowing field; a reticle's focalPlane and trueAtPower say where a second-focal-plane reticle's marks are true (at another power p they stand trueAtPower / p times as far apart in angle). tookThePlaceOf names the sight a new one replaced on its rifles without carrying its records (they click differently or sit at another height): a record from before any sight could be chosen, made with the old sight, is never read as the new one's. rearBody is a rear peep's leaf, where it stands far from the eye (its width and how far its top stands above the peep): only the leaf is dark around the peep; a sight without it has its ring close to the eye, dark to the edges of the view. range-day-twelve-b: a rear sight with two peeps (apertures, each with its diameterIn and the apertureMoa it covers seen from the eye) flips between them on the firing line; both stand in the same plane, so the flip moves no shot. frontHood is a round hood around the front post (its inside diameter and its wall, as the eye sees them), centred on the post's tip.",
+ "_about": "The sights. clickMoa is what one click of elevation moves the strike, windageClickMoa one click of windage, in minutes of angle; clicks is the travel each way from the middle. zoom is the magnification range; fovFtAt100 the field of view in feet at 100 yards at the lowest and highest zoom. frontPostMoa is the front post's width over the sight radius (how wide it looks against the target); apertureMoa the rear ring's lit circle and notchMoa the rear notch's width as the eye sees them; dotMoa a red dot's size. leaf is a sliding rear leaf: its marked settings, the service load it was cut for, and each setting's angle above the 100 m setting, derived with the engine (leaf545: the same leaf on the 5.45x39 rifle, cut for its own load). notchDepthMoa is the rear notch's depth as the eye sees it; stemWidthMoa a bead's stem; a drop reticle's chevronHalfWidthMoa and markHalfWidthMoa are its drawn widths. aimWanderFactor scales the drawn wander of the aim through this sight (1 where absent). frontBead marks a front sight that is a round bead on a stem rather than a flat post. range-day-twelve: sightRadiusIn is the distance between the front and rear sight, the radius the front post's width is seen over; frontPostIn and apertures (each peep's diameterIn) are the parts' own sizes; frontEars draws the front sight's guards (their inner gap, each one's width, and how far their tops stand above the post); frontStripeMoa and frontStripeTopMoa a glowing stripe on a front post; adjustWords says in plain words where each adjustment is; kind \"seeall\" is the SeeAll Open Sight, its reticle a triangle whose tip is the aim point, standing across a line that tops a glowing field; a reticle's focalPlane and trueAtPower say where a second-focal-plane reticle's marks are true (at another power p they stand trueAtPower / p times as far apart in angle). tookThePlaceOf names the sight a new one replaced on its rifles without carrying its records (they click differently or sit at another height): a record from before any sight could be chosen, made with the old sight, is never read as the new one's. rearBody is a rear peep's leaf, where it stands far from the eye (its width and how far its top stands above the peep): only the leaf is dark around the peep; a sight without it has its ring close to the eye, dark to the edges of the view. range-day-twelve-b: a rear sight with two peeps (apertures, each with its diameterIn and the apertureMoa it covers seen from the eye) flips between them on the firing line; both stand in the same plane, so the flip moves no shot. frontHood is a round hood around the front post (its inside diameter and its wall, as the eye sees them), centred on the post's tip. range-day-thirteen: collection marks a scope of the scope collection, which moves among the rifles: a rifle offers it when its own scope mounting (data/rifles.json, scopeMount) takes the scope's mount (mount.fits), and its height over the bore on that rifle is the rifle's rail height plus the mount's centerOverRailIn (lib/guns.js works it out and checks it). windageClicks is a scope's windage travel each way where it differs from clicks. A reticle of kind \"chevron\" is a chevron whose tip is the aim point (chevronBaseWidthMoa wide at its base, chevronHeightMoa from tip to base); of kind \"crosshair\" a fine crosshair; marksNotDrawn says which of the maker's marks are left out and why.",
  "ar-irons": {
   "name": "AR-15 iron sights (front post, rear aperture)",
   "kind": "iron",
@@ -1316,7 +1316,7 @@
   "tookThePlaceOf": "ak-irons",
   "rearBody": {
    "widthMoa": {
-    "value": 221.0,
+    "value": 221,
     "estimate": "how wide the KNS peep's leaf looks, not published: the leaf with its peep and the notched wheel beside it is about 0.9 in across (the photographs show the wheel at the leaf's side), seen about 14 in from the eye: 221.0 MOA. Outside it the world is seen past the rear sight. A drawing figure"
    },
    "topAboveMoa": {
@@ -1680,5 +1680,311 @@
    "estimate": "how deep the rear notch is cut, as the eye sees it, in minutes of angle: a little less than it is wide (the notch is about square); the same basis as notchMoa"
   },
   "adjustWords": "Elevation is the front post (screwed with the AK tool), windage drifts its base; the rear leaf slides for distance."
+ },
+ "trijicon-acog-ta31f": {
+  "name": "Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount",
+  "kind": "scope",
+  "model": "Trijicon ACOG 4x32 TA31F: fixed 4 power, 32 mm objective, the red chevron with the 5.56 bullet-drop compensator, on Trijicon's own TA51 flat-top mount. Chosen as the brief named it; the TA31F is the ACOG Trijicon sells with the chevron for 5.56 flat-top rifles.",
+  "collection": true,
+  "clickMoa": {
+   "value": 0.4776,
+   "source": {
+    "url": "https://www.trijicon.com/uploads/page_content/MANUAL-4x32_3.5x35_BAC_.pdf",
+    "read": "2026-11-21",
+    "note": "the maker's manual for the ACOG 4x32 and 3.5x35: \"Adjustment increments are 1/2 inch per click at 100 yards. This means that 2 clicks (3 clicks internal adjuster) are required to move the bullet one inch on the target.\" Half an inch at 100 yards is 0.5 / 1.047 = 0.4776 minute of angle. (Retailers say 1/3 MOA or 1/2 MOA; the manual decides, as the brief said. Trijicon's other manuals give the same half inch \"at 100 meters\"; this model's manual says yards.) Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+   }
+  },
+  "windageClickMoa": {
+   "value": 0.4776,
+   "source": {
+    "url": "https://www.trijicon.com/uploads/page_content/MANUAL-4x32_3.5x35_BAC_.pdf",
+    "read": "2026-11-21",
+    "note": "the same manual: the same half inch per click at 100 yards for windage. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+   }
+  },
+  "clicks": {
+   "value": 42,
+   "estimate": "Trijicon publishes no travel figure that could be read. One retailer's listing gives \"Windage Adjustment 40 MOA Elevation Adjustment 40 MOA\"; taken as the whole travel, 20 MOA each way from the middle, which is 42 of the manual's half-inch clicks (20 / 0.4776 = 41.9)."
+  },
+  "zoom": {
+   "low": {
+    "value": 4,
+    "source": {
+     "url": "https://www.trijicon.com/products/details/ta31f",
+     "read": "2026-11-21",
+     "note": "the maker's TA31F page: an ACOG 4x32, fixed 4 power. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+    }
+   },
+   "high": {
+    "value": 4,
+    "source": {
+     "url": "https://www.trijicon.com/products/details/ta31f",
+     "read": "2026-11-21",
+     "note": "the same page: fixed power, so the top of the zoom is its bottom. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+    }
+   }
+  },
+  "fovFtAt100": {
+   "low": {
+    "value": 36.69,
+    "source": {
+     "url": "https://www.trijicon.com/products/details/ta31f",
+     "read": "2026-11-21",
+     "note": "the maker's TA31F page: \"Field of View (degrees) 7°\". 7 degrees across at 100 yards is 2 × 300 ft × tan(3.5°) = 36.69 ft (retailers give 36.8 ft and 36.7 ft at 100 m). Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+    }
+   },
+   "high": {
+    "value": 36.69,
+    "source": {
+     "url": "https://www.trijicon.com/products/details/ta31f",
+     "read": "2026-11-21",
+     "note": "the same figure: fixed power. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+    }
+   }
+  },
+  "reticle": {
+   "kind": "chevron",
+   "focalPlane": "fixed power: the ACOG has one power, so its chevron is true at it",
+   "zeroMeters": {
+    "value": 100,
+    "source": {
+     "url": "https://www.trijicon.com/products/details/ta31f-a",
+     "read": "2026-11-21",
+     "note": "the maker's TA31F-A page: the reticle is \"designed to be zeroed using the tip at 100 meters\"; the manual: zero at 100 meters on \"the tip of the illuminated reticle\". Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+    }
+   },
+   "chevronBaseWidthMoa": {
+    "value": 5.53,
+    "source": {
+     "url": "https://www.trijicon.com/products/details/ta31f-a",
+     "read": "2026-11-21",
+     "note": "the maker's TA31F-A page: the chevron's base is \"5.53 MOA which is 19 in. at 300 meters\"; the manual: \"The base of the reticle and the horizontal stadia lines represent 19\" at the indicated range\". Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+    }
+   },
+   "chevronHeightMoa": {
+    "value": 4.1,
+    "estimate": "Trijicon publishes no height for the chevron that could be read. The base is the 19-inch width at 300 meters (the maker's page above), so the base is taken as the 300-meter hold; its place under the tip, 4.1 minutes of angle, is the 300 m figure of a table of the TA31F's holds posted as Trijicon's on a forum (https://www.ar15.com/forums/ar-15/Ta31f-reticle/18-772141/, search text: \"200m 2.0 300m 4.1 400m 7.8 …\"), not a maker document."
+   },
+   "marksNotDrawn": "The bullet-drop lines for 400 to 800 meters are not drawn: their width is stated by the maker (19 inches at each line's range) but their places under the tip are not in any Trijicon text that could be read; the brief allows only what the maker's reticle documents state. The forum table above has them; adding them waits on Dan (the report's asks)."
+  },
+  "mount": {
+   "name": "Trijicon TA51 flat-top mount",
+   "fits": [
+    "picatinny"
+   ],
+   "centerOverRailIn": {
+    "value": 1.535,
+    "source": {
+     "url": "https://www.trijicon.com/uploads/page_content/PML4103_Rev(0)_Trijicon_Mounts__Accessories_Guide.pdf",
+     "read": "2026-11-21",
+     "note": "the maker's Mounts and Accessories Guide: TA51 \"Height Above Rail: 1.535 in.\", the top of the rail to the optic's axis. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+    }
+   }
+  },
+  "eyeReliefIn": {
+   "value": 1.5,
+   "source": {
+    "url": "https://www.trijicon.com/products/details/ta31f",
+    "read": "2026-11-21",
+    "note": "the maker's TA31F page: eye relief \"1.5 in (38.1 mm)\". Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+   }
+  },
+  "adjustWords": "The ACOG's two adjusters under their caps: elevation on top, windage on the right side, half an inch at 100 yards a click."
+ },
+ "vortex-razor-1-10": {
+  "name": "Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA",
+  "kind": "scope",
+  "model": "Vortex Razor HD Gen III 1-10x24 FFP with the EBR-9 MOA reticle (RZR-11001, the number retailers list; Vortex's own page names the model RZR-HD-GEN-III-1-10X24). Chosen as the brief named it: the MOA version, so its clicks and its marks speak the game's minutes of angle.",
+  "collection": true,
+  "clickMoa": {
+   "value": 0.25,
+   "source": {
+    "url": "https://www.riflegear.com/p-12379-vortex-razor-hd-gen-iii-1-10x24-ffp-riflescope-ebr-9-moa.aspx",
+    "read": "2026-11-21",
+    "note": "a retailer's listing of the maker's figures (Vortex's own table could not be read): \"Click value ... 1/4 MOA\". Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+   }
+  },
+  "windageClickMoa": {
+   "value": 0.25,
+   "source": {
+    "url": "https://www.riflegear.com/p-12379-vortex-razor-hd-gen-iii-1-10x24-ffp-riflescope-ebr-9-moa.aspx",
+    "read": "2026-11-21",
+    "note": "the same listing: 1/4 MOA on both turrets. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+   }
+  },
+  "clicks": {
+   "value": 240,
+   "source": {
+    "url": "https://www.riflegear.com/p-12379-vortex-razor-hd-gen-iii-1-10x24-ffp-riflescope-ebr-9-moa.aspx",
+    "read": "2026-11-21",
+    "note": "the same listing: \"Max Elevation Adjustment: 120 MOA\", \"Max Windage Adjustment: 120 MOA\", \"Travel per Rotation: 25 MOA\": 120 MOA in all is 60 each way from the middle, 240 quarter-minute clicks. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+   }
+  },
+  "zoom": {
+   "low": {
+    "value": 1,
+    "source": {
+     "url": "https://vortexoptics.com/vortex-razor-hd-gen-iii-1-10x24-riflescope.html",
+     "read": "2026-11-21",
+     "note": "the maker's page: 1-10x, 24 mm objective, 34 mm tube. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+    }
+   },
+   "high": {
+    "value": 10,
+    "source": {
+     "url": "https://vortexoptics.com/vortex-razor-hd-gen-iii-1-10x24-riflescope.html",
+     "read": "2026-11-21",
+     "note": "the same page, the top of the zoom. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+    }
+   }
+  },
+  "fovFtAt100": {
+   "low": {
+    "value": 116,
+    "source": {
+     "url": "https://vortexoptics.com/vortex-razor-hd-gen-iii-1-10x24-riflescope.html",
+     "read": "2026-11-21",
+     "note": "the maker's page: \"Field of View 116-11.7 ft @100 yds\": 116 ft across at 1x. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+    }
+   },
+   "high": {
+    "value": 11.7,
+    "source": {
+     "url": "https://vortexoptics.com/vortex-razor-hd-gen-iii-1-10x24-riflescope.html",
+     "read": "2026-11-21",
+     "note": "the same figure at 10x: 11.7 ft. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+    }
+   }
+  },
+  "tubeMm": {
+   "value": 34,
+   "source": {
+    "url": "https://vortexoptics.com/vortex-razor-hd-gen-iii-1-10x24-riflescope.html",
+    "read": "2026-11-21",
+    "note": "the maker's page: 34 mm tube. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+   }
+  },
+  "reticle": {
+   "kind": "crosshair",
+   "focalPlane": "first",
+   "marksNotDrawn": "Only the fine crosshair is drawn. Vortex's EBR-9 manual says the reticle is in the first focal plane (\"the listed MOA subtensions of the EBR-9 BDC reticle are valid at all magnification levels\", https://cdn11.bigcommerce.com/s-ycm0rvhla1/content/pdfs/vortex-ebr-9-bdc-moa.pdf, a retailer's copy, search text) and that its marks are 1 and 2 minutes apart, but the table of its marks came through without its labels, so no mark's place, length or thickness could be read; the brief allows only what the manual states. Adding the marks waits on a reading of Vortex's drawing (the report's asks)."
+  },
+  "mount": {
+   "name": "Vortex Precision Extended Cantilever Mount, 34 mm (CM-534)",
+   "fits": [
+    "picatinny"
+   ],
+   "centerOverRailIn": {
+    "value": 1.574,
+    "source": {
+     "url": "https://vortexoptics.com/precision-extended-cantilever-mount-34-mm-2022.html",
+     "read": "2026-11-21",
+     "note": "the maker's page: \"Center Scope Height: 1.574\"\" (the model number CM-534 from retailers). Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+    }
+   }
+  },
+  "adjustWords": "The turrets: elevation on top, windage on the right, a quarter minute of angle a click."
+ },
+ "leupold-mark5hd-5-25": {
+  "name": "Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA",
+  "kind": "scope",
+  "model": "Leupold Mark 5HD 5-25x56 (35 mm) M1C3 FFP PR2-MOA, part 180291. The brief said M5C3; Leupold's page lists 180291 with the M1C3 dial (the quarter-minute dial; M5C3 is the 0.1 mil dial), and no M5C3 PR2-MOA was found.",
+  "collection": true,
+  "clickMoa": {
+   "value": 0.25,
+   "source": {
+    "url": "https://www.leupold.com/mark-5hd-5-25x56-m1c3-ffp-pr2-moa-riflescope",
+    "read": "2026-11-21",
+    "note": "the maker's page: \"Windage Adjustment Value per Click: 1/4MOA\" and \"Elevation Adjustment Per Revolution: 25 MOA\" on the M1C3 dial, Leupold's quarter-minute dial (the elevation's own per-click line did not come through the search text). Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+   }
+  },
+  "windageClickMoa": {
+   "value": 0.25,
+   "source": {
+    "url": "https://www.leupold.com/mark-5hd-5-25x56-m1c3-ffp-pr2-moa-riflescope",
+    "read": "2026-11-21",
+    "note": "the same page: \"Windage Adjustment Value per Click: 1/4MOA\". Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+   }
+  },
+  "clicks": {
+   "value": 240,
+   "source": {
+    "url": "https://www.leupold.com/mark-5hd-5-25x56-m1c3-ffp-pr2-moa-riflescope",
+    "read": "2026-11-21",
+    "note": "the maker's page: \"Elevation Adjustment Range (MOA): 120\": 60 each way from the middle, 240 quarter-minute clicks. (The M1C3 dial itself turns through \"71.5MOA\" in three revolutions from its zero stop; the scope's whole range is the figure the knob is held to here.) Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+   }
+  },
+  "windageClicks": {
+   "value": 120,
+   "source": {
+    "url": "https://www.leupold.com/mark-5hd-5-25x56-m1c3-ffp-pr2-moa-riflescope",
+    "read": "2026-11-21",
+    "note": "the maker's page: \"Windage Adjustment Range (MOA): 60\": 30 each way, 120 quarter-minute clicks. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+   }
+  },
+  "zoom": {
+   "low": {
+    "value": 5,
+    "source": {
+     "url": "https://www.leupold.com/mark-5hd-5-25x56-m1c3-ffp-pr2-moa-riflescope",
+     "read": "2026-11-21",
+     "note": "the maker's page: 5-25x, 56 mm objective. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+    }
+   },
+   "high": {
+    "value": 25,
+    "source": {
+     "url": "https://www.leupold.com/mark-5hd-5-25x56-m1c3-ffp-pr2-moa-riflescope",
+     "read": "2026-11-21",
+     "note": "the same page, the top of the zoom. Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+    }
+   }
+  },
+  "fovFtAt100": {
+   "low": {
+    "value": 20.4,
+    "source": {
+     "url": "https://www.leupold.com/mark-5hd-5-25x56-m1c3-ffp-pr2-moa-riflescope",
+     "read": "2026-11-21",
+     "note": "the maker's page: \"Linear FOV Low Mag (ft@100yds): 20.4\". Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+    }
+   },
+   "high": {
+    "value": 4.2,
+    "source": {
+     "url": "https://www.leupold.com/mark-5hd-5-25x56-m1c3-ffp-pr2-moa-riflescope",
+     "read": "2026-11-21",
+     "note": "the same page: \"Linear FOV High Mag (ft@100yds): 4.2\". Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+    }
+   }
+  },
+  "tubeMm": {
+   "value": 35,
+   "source": {
+    "url": "https://www.cstactical.com/leupold-mark-5hd-5-25x56-35mm-m1c3-ffp-pr2-moa-180291.html",
+    "read": "2026-11-21",
+    "note": "a retailer's title for the same part: \"Mark 5HD 5-25x56 (35mm)\". Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+   }
+  },
+  "reticle": {
+   "kind": "crosshair",
+   "focalPlane": "first",
+   "marksNotDrawn": "Only the fine crosshair is drawn. Leupold says the PR2-MOA is first focal plane, a grid of minute-of-angle holds (https://www.leupold.com/reticle/pr2-moa-ffp/, search text), but its spec sheet (https://www.leupold.com/media/binaryanvil/reticle/FFP_PR2-MOA_Reticle_Spec_Sheet.pdf) came through with its figures unlabeled, so no mark's place or width could be read; the brief allows only what the reticle document states. Adding the marks waits on a reading of Leupold's sheet (the report's asks)."
+  },
+  "mount": {
+   "name": "Leupold Mark IMS 35 mm (176886)",
+   "fits": [
+    "picatinny"
+   ],
+   "centerOverRailIn": {
+    "value": 1.5,
+    "source": {
+     "url": "https://www.leupold.com/mark-ims-35mm",
+     "read": "2026-11-21",
+     "note": "the maker's page: the mount places \"the center of the optic 1.5\" off the rail\" (part 176886, matte). Read from the search engine's indexed text of this page on the date given: this session's network refuses page fetches."
+    }
+   }
+  },
+  "adjustWords": "The turrets: elevation on top (the M1C3 dial, with its zero stop), windage on the right, a quarter minute of angle a click."
  }
 }

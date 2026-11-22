@@ -16,6 +16,13 @@ minutes of angle (MOA) are 1/60 of a degree, about 1 inch at 100 yards;
 inches are measured square to the line of sight at the target, up and
 right positive; a date `on` is the device's local day, `YYYY-MM-DD`.
 
+A scope of the scope collection (range-day-thirteen: `trijicon-acog-ta31f`,
+`vortex-razor-1-10`, `leupold-mark5hd-5-25`) is a sight like any other in
+these keys: its setting, zeros, log and book lines are kept under the rifle
+it is on (`sight:bcm-ar15:vortex-razor-1-10`, `zero:iwi-x95:vortex-razor-1-10:imi-m193`).
+So a scope moved to another rifle starts unzeroed there, and keeps its zero
+on the rifle it left. No new key; no record of any other sight changes.
+
 ## The records
 
 ### The sight setting: `sight:<rifle>:<sight>`
@@ -189,6 +196,23 @@ deleted.
 ```json
 { "freshPaper": { "50": 7 },
   "shots": [{ "n": 8, "place": "line", "yards": 50, "target": "paper", "hit": true, "reached": true, "upIn": -1.2, "rightIn": 0.4, "book": false, "coldBore": false, "...": "the other fields as above" }] }
+```
+
+Since range-day-thirteen each shot at the line also carries `flightS`, the
+bullet's time of flight in seconds exactly as the engine gave it (not rounded),
+and `targetKey`, the key of the target it was fired at: a plate's index in
+the course's list (`"0"`, `"1"`, …) or a near target's `"near-0"`,
+`"near-1"`, …. Both are for playing a day back. Shots written before have
+neither and are read as they are; a copy is checked for both only where
+they are present. The zero bench's paper keeps its own `freshPaper` marker
+per distance under `"bench:<yards>"` (for example `"bench:100"`), set by
+**Fresh paper** and undone by **Put the old paper back** in the same way;
+the bench's holes are its shots at that distance with that sight since the
+marker, read from `shots`, so a reload shows them again.
+
+```json
+{ "freshPaper": { "50": 7, "bench:100": 12 },
+  "shots": [{ "n": 13, "place": "line", "yards": 300, "target": "steel", "targetKey": "2", "flightS": 0.36265192406949, "...": "the other fields as above" }] }
 ```
 
 ### The finished days: `days`
