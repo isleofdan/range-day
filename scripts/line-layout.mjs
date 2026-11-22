@@ -21,7 +21,7 @@ const arg = (name, fallback) => { const i = process.argv.indexOf(name); return i
 const PORT = Number(arg('--port', 8925));
 const PASS = 'open sesame';
 const base = `http://127.0.0.1:${PORT}`;
-const SIZES = [['phone', 412, 915, true], ["Dan's phone", 412, 830, true], ['computer', 1280, 800, true], ['short phone (figure only)', 412, 760, false]];
+const SIZES = [['phone', 412, 915, true], ['phone, 830 high', 412, 830, true], ["Dan's phone (range-day-fourteen, measured)", 378, 762, true], ['computer', 1280, 800, true], ['short phone (figure only)', 412, 760, false]];
 
 const server = spawn('node', ['server.js'], { cwd: root, env: { ...process.env, PORT: String(PORT), APP_PASSWORD: PASS, COOKIE_SECRET: 'x'.repeat(64), COOKIE_INSECURE: '1', SENTRY_DSN: '' }, stdio: ['ignore', 'ignore', 'inherit'] });
 process.on('exit', () => server.kill());

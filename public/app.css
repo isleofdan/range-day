@@ -428,3 +428,6 @@ body.playback-empty .reach { display: none; }
   body.playback .playtitle { grid-area: title; white-space: normal; }
   body.playback .playpanel { grid-area: panel; }
 }
+/* range-day-fourteen: on a phone under 400 px wide (Dan's, 378 px) the zoom control takes a little more of the target row, so the
+   rifle scope's slider keeps at least 125 px (it fell to 115 px at an even split); the target picker still shows its distance. */
+@media (max-width: 399px) { .reach .pick { grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr); } }

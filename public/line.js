@@ -153,7 +153,17 @@
 
   const canvas = $('view');
   let view = RD.fitCanvas(canvas, 640);
-  window.addEventListener('resize', () => { view = RD.fitCanvas(canvas, 640); if (typeof fitScene === 'function') fitScene(); });
+  // range-day-fourteen: on a phone screen too short for the within-reach list (Dan's phone, 378x762, measured from his screenshot:
+  // the book line fell 29 px under Steady and Fire), the view gives up exactly the height that is missing, never below 280 px, so
+  // everything stays above the bar; where it all fits the view keeps the screen's width, as before.
+  function fitView() {
+    view = RD.fitCanvas(canvas, 640);
+    if (PLAYBACK || window.innerWidth >= 1100) return;
+    const bar = document.querySelector('.firebar').getBoundingClientRect(), book = document.querySelector('.reach .slot.book').getBoundingClientRect();
+    const over = book.bottom + window.scrollY - bar.top; // the book line's bottom with the page at its top, against the fixed bar's top
+    if (bar.height > 0 && over > 0) view = RD.fitCanvas(canvas, Math.max(280, Math.floor(view.size - over - 2)));
+  }
+  window.addEventListener('resize', () => { fitView(); if (typeof fitScene === 'function') fitScene(); });
   const plate = () => target;
   const inchPerMoa = (y) => E.inchesPerMoa(y);
   // Each plate's own height above the firing line (data/courses.json, riseFt):
@@ -1200,7 +1210,7 @@
   if (!PLAYBACK) applyZero();
   renderLog(); conditions(); rounds(); bookLine(); coldLine(); paperRow();
   if (PLAYBACK && !picture) picture = 'plain'; // playback measures nothing and writes no setting: a device with none chosen yet sees Plain
-  fitScene(); choosePicture();
+  fitView(); fitScene(); choosePicture();
   if (PLAYBACK) startPlayback();
   requestAnimationFrame(frame);
   // For the screenshot run and tests: a way to read the state without guessing.
