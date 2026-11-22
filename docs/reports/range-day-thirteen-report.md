@@ -80,7 +80,7 @@ each source note says so.
    own travel; the Leupold's windage over its own 120 clicks
    (`windageClicks`, read by `RD.wireKnobs`). Proof: test 7.
 9. **Two fields for playback.** Each firing-line shot carries `flightS`
-   (the engine's time of flight, to a ten-thousandth of a second) and
+   (the engine's time of flight in seconds, exactly as it gave it) and
    `targetKey`; older shots read as before; a copy is checked for them
    only where present (`public/game.js`, `checkCopy`; `docs/RECORDS.md`).
    Proof: test 8.
@@ -247,7 +247,13 @@ branch.
    | Mount, center over rail | TA51, 1.535 in (maker) | CM-534, 1.574 in (maker) | Mark IMS 176886, 1.5 in (maker) |
 
    Why each model: the three the brief named, in the MOA versions so the
-   clicks and marks speak minutes of angle. Not found: Trijicon's travel
+   clicks and marks speak minutes of angle. Why each mount: the ACOG on
+   Trijicon's own TA51, as the brief named; the Vortex on Vortex's own
+   34 mm cantilever (CM-534), whose forward reach gives a 1-10x the eye
+   relief an AR-type stock needs and whose 1.574 in height the maker
+   states; the Leupold on Leupold's own 35 mm Mark IMS, made for this
+   tube, its 1.5 in height the maker's. Each is the scope maker's own
+   mount, so its height comes from the same maker as the scope. Not found: Trijicon's travel
    and drop-line places; Vortex's own adjustment table and the EBR-9's
    labeled subtensions; the PR2-MOA's subtensions.
 6. **Each rifle** (`test/guns.test.js`, printed):
@@ -265,18 +271,29 @@ branch.
    the lowest and highest power, no other mark. Same scale through each
    scope at both ends of its power, near paper and far plate, 20 targets,
    largest difference 0.000 px.
-8. **Records** (`test/bench.test.js` test 7): a zero saved with the Vortex
-   on the BCM (`zero:bcm-ar15:vortex-razor-1-10:imi-m193`, elevation +3);
-   the X95 with the Vortex reads "No zero saved yet", its sight at the
-   middle, nothing written under its key; the BCM's zero byte for byte the
-   same; every key the device held before (a zero and a setting of the
-   Troy) unchanged.
+8. **Records** (`test/bench.test.js` test 7), for each of the three
+   scopes in turn: a zero saved with it on the BCM
+   (`zero:bcm-ar15:<scope>:imi-m193`, elevation +2, +3 and +4); the X95
+   with the same scope reads "No zero saved yet", its sight at the middle,
+   nothing written under its key; each BCM zero saved so far byte for byte
+   the same. The records the device held before (a zero and a setting of
+   the Troy on the BCM) are compared byte for byte after each scope and are
+   unchanged. Left out of that comparison, by design and named in the
+   test: the open day (`day:open`) and what was last used (`last`,
+   `last:<rifle>`), which every page writes whenever it opens a rifle;
+   they are not a sight's records. Keys after: `day:open`, `last`,
+   `last:bcm-ar15`, `last:iwi-x95`, `picture`, the four BCM sight settings,
+   `when`, the four BCM zeros.
 9. **The firing line's arrangement** (`docs/reports/range-day-thirteen/line-layout-after.txt`):
    32 sights × 3 held sizes, "every held sight-and-size pair within reach"
    (the 412×760 figure-only rows fall under the bar as on `main`). Zoom
    slider (`docs/reports/range-day-thirteen/sliders-after.txt`): 149 px at
    every power for the BugBuster, the Vortex and the Leupold, at 412×915
-   and 412×830, ending 40 px from the right edge (130 px on `main`). Home's
+   and 412×830, ending 40 px from the right edge (130 px on `main`). The
+   spotting scope's slider (`docs/reports/range-day-thirteen/spotting-slider-after.txt`):
+   148 px at 25x and 125x with each collection scope and the BugBuster on
+   the rifle, at 412×915 and 412×830, ending 40 px from the right edge
+   (148 px on `main`, range-day-eleven). Home's
    doors on a phone: `test/day.test.js`, the home reach test, passes. The
    longest new scope name is 67 characters, the longest on `main` 86.
 10. **Screenshots** of every new state at both sizes, no sideways scroll,
@@ -295,12 +312,14 @@ branch.
    three new sights); in `test/browser.test.js` verify 4 (Fire is not seen
    while Open another box stands over it), the storage-refusal test (the
    knobs' words stand by the rows) and the Tavor chooser (six options, its
-   own three first); in `test/day.test.js` verify 5 (the paper keeps the
+   own three first); in `test/bench.test.js` itself, after round 2, test 7
+   (all three scopes, not the Vortex alone) and test 8 (the flight time
+   compared exactly); in `test/day.test.js` verify 5 (the paper keeps the
    day's earlier holes, and Fire's place now holds Open another box). In
    this session, each run on its own: rest, bench, browser, near, day and
    scene-rest passed; scene-scale and scene-shots were still running when
    this report was filed and passed on the Checks run.
-12. **The diff:** 152,541 bytes.
+12. **The diff:** 148,699 bytes (`git diff origin/main...HEAD`).
 13. After the deploy: in the card note.
 
 What this cannot prove: the session cannot open the live app or hold a
@@ -316,7 +335,24 @@ scope looks to him like the real one, is unverified until he looks.
    it. (2) The report recorded no result-check verdict. Fixed: this
    section records each round; the corrected report is filed again and
    checked again.
-2. (Next round below when it answers.)
+2. Job `20261122-001951-53f153` (31 s, on report event 2968): FINDINGS,
+   six. (1) The flight time was rounded: fixed, `flightS` is now the
+   engine's figure exactly (`public/line.js`, commit `f60b2b9`), and test 8
+   compares it exactly. (2) The cross-rifle zero test covered the Vortex
+   only: fixed, test 7 runs it for all three scopes. (3) The report said
+   every key was unchanged while the test left three out: fixed, Verify 8
+   names what is left out and why. (4) The spotting scope's slider was not
+   measured: fixed, Verify 9 gives it. (5) No reason was given for the
+   mounts: fixed, Verify 5 gives one for each. (6) "The notes branch is
+   deferred until after the deploy result": not changed, because the
+   order is this repository's standing rule, quoted here as the brief
+   says: "When the session merges and deploys, the order is fixed: the
+   change's pull request first (the report links it); after the deploy
+   result, a notes-only close-out pull request carrying the field report
+   and the `PLAN.md` note. That order is the rule, not a divergence."
+   (`CLAUDE.md`, "Field reports"). The notes are pushed now and wait only
+   for their pull request. Checked once more below.
+3. (Next round below when it answers.)
 
 ## Asks
 

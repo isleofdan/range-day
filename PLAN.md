@@ -679,7 +679,7 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
   the CM-534, Leupold Mark 5HD 5-25x56 M1C3 on the Mark IMS), offered on the
   AR-15, both Tavors, both AK rifles and the Vepr after their own sights,
   each at its rifle's rail height plus its mount's (`lib/guns.js`); each
-  firing-line shot carries `flightS` and `targetKey` for playback. 151 tests,
+  firing-line shot carries `flightS` (the engine's time of flight, exact) and `targetKey` for playback. 151 tests,
   105 screenshot states (140 and 94 before).
 - **Decided:** a scope moved to another rifle starts unzeroed there (its
   records are kept under the rifle); the .22 offers none (a grooved rimfire
