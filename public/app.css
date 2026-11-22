@@ -380,3 +380,20 @@ body.bench .more .knob.leaf { margin: 10px 0; }
    scope's does, so the label keeps one width at every power and the slider never changes length while it is dragged. */
 .reach .pick #zoomrow label { line-height: 1.15; min-width: 41px; }
 .reach .pick #zoomrow #zoom-text { display: block; font-size: 13px; }
+/* range-day-thirteen-b (Dan's phone, measured from his screenshot: 378×762 CSS pixels at 2.625 device pixels each, not the 412×830
+   assumed before): each row's name and setting stand on one line above its four buttons, so the buttons take the whole width
+   (83 px each on his phone, 57 before, where "1 MOA" was cut); the knobs' note, the save's note and the zeroing supply share one
+   strip between the rows and Fresh paper: the supply stands there, and a note covers it until the next shot, so no blank strip
+   is left waiting for a note; "1 MOA" never breaks. The paper keeps at least 300 px at 378×762. */
+.brow { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: 16px 44px; row-gap: 2px; height: auto; }
+.brow .blabel { grid-column: 1 / -1; display: flex; gap: 6px; align-items: baseline; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 13px; line-height: 16px; }
+.brow .blabel .bset { display: inline; }
+.brow .btn.inline { height: 44px; }
+.brows { gap: 4px; }
+.bnotes { position: relative; height: 32px; }
+.bnotes .bnote { position: absolute; left: 0; right: 0; top: 0; height: 32px; }
+.bnotes .bnote:empty { display: none; }
+.bnotes #rounds { top: 8px; height: 16px; }
+.bnotes .bnote:not(:empty) ~ #rounds { visibility: hidden; }
+.bpair .btn.inline { height: 44px; }
+.bfire .btn, .bfire .banother .btn { height: 52px; }
