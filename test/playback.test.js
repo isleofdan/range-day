@@ -100,7 +100,7 @@ test('range-day-fourteen task item 10: the seeded day of five shots played back 
   await context.close();
 });
 
-test('range-day-fourteen task item 10: every stored key byte for byte the same after a playback played, paused, stepped, dragged, slowed to the day\'s pace, zoomed and muted', { skip }, async () => {
+test('range-day-fourteen task items 6 and 10: every stored key byte for byte the same after a playback played, paused, stepped, dragged, slowed to the day\'s pace, zoomed, muted, and left and come back to (it pauses while away and goes on from the same moment)', { skip }, async () => {
   const { page, context, errors } = await signedIn({ width: 412, height: 915 });
   const id = await seeded(page);
   const snap = () => page.evaluate(() => Object.fromEntries(Object.keys(localStorage).sort().map((k) => [k, localStorage.getItem(k)])));
@@ -112,6 +112,20 @@ test('range-day-fourteen task item 10: every stored key byte for byte the same a
   await page.locator('#play-power').fill('90');
   await page.locator('#play-line').fill('800');
   await page.click('#play-pause'); await page.waitForTimeout(1500);
+  // leaving the screen while the page stays open (another app or tab) pauses it; coming back goes on from the same moment
+  const hide = (hidden) => page.evaluate((h) => { Object.defineProperty(document, 'hidden', { configurable: true, get: () => h }); document.dispatchEvent(new Event('visibilitychange')); }, hidden);
+  assert.equal(await page.evaluate(() => RangeDayLine.playback.playing), true, 'playing before leaving');
+  await hide(true);
+  const left = await page.evaluate(() => ({ playing: RangeDayLine.playback.playing, clock: RangeDayLine.playback.clock }));
+  await page.waitForTimeout(1500);
+  const away = await page.evaluate(() => RangeDayLine.playback.clock);
+  await hide(false);
+  await page.waitForTimeout(600);
+  const back = await page.evaluate(() => ({ playing: RangeDayLine.playback.playing, clock: RangeDayLine.playback.clock }));
+  assert.equal(left.playing, false, 'leaving the screen pauses it');
+  assert.equal(away, left.clock, 'nothing moves while away');
+  assert.ok(back.playing && back.clock > left.clock && back.clock < left.clock + 1.5, `coming back goes on from where it stopped: ${left.clock.toFixed(3)} s when left, ${back.clock.toFixed(3)} s 0.6 s after coming back`);
+  console.log(`  left at ${left.clock.toFixed(3)} s (paused, ${away.toFixed(3)} s after 1.5 s away), back and playing at ${back.clock.toFixed(3)} s`);
   const after = await snap();
   assert.deepEqual(Object.keys(after), Object.keys(before), 'no key added or taken away');
   for (const k of Object.keys(before)) assert.equal(after[k], before[k], `${k} byte for byte the same`);
@@ -134,7 +148,7 @@ test('range-day-fourteen task item 10: every playback control within reach and n
     for (const s of CONTROLS) { const [l, t, r, b] = box[s]; assert.ok(l >= 0 && t >= 0 && r <= w && b <= h && r - l > 0 && b - t > 0, `${w}x${h}: ${s} at ${box[s].map((v) => v.toFixed(0)).join(',')} is wholly on the first screen`); }
     for (let i = 0; i < BUTTONS.length; i++) for (let j = i + 1; j < BUTTONS.length; j++) { const a = box[BUTTONS[i]], b = box[BUTTONS[j]]; assert.ok(a[2] <= b[0] || b[2] <= a[0] || a[3] <= b[1] || b[3] <= a[1], `${w}x${h}: ${BUTTONS[i]} and ${BUTTONS[j]} do not touch`); }
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `${w}x${h}: no sideways scroll`);
-    lines.push(`${w}x${h}: view ${(box['#view'][2] - box['#view'][0]).toFixed(0)} px; lowest control's bottom edge ${Math.max(...BUTTONS.map((s) => box[s][3])).toFixed(1)} of ${h}`);
+    lines.push(`${w}x${h}: view ${(box['#view'][2] - box['#view'][0]).toFixed(0)} px; lowest control's bottom edge ${Math.max(...BUTTONS.map((s) => box[s][3])).toFixed(1)} of ${h}; each control left,top-right,bottom: ${CONTROLS.map((s) => `${s} ${box[s].map((v) => v.toFixed(0)).join(',')}`).join('; ')}`);
     assert.deepEqual(errors, []);
     await context.close();
   }
