@@ -266,26 +266,36 @@ test('range-day-thirteen: same scale through each scope: where the drawing puts 
   console.log(`  ${checked} targets checked, largest difference ${worst.toFixed(3)} px\n  ` + lines.join('\n  '));
 });
 
-test('range-day-thirteen verify 8: a zero saved with the Vortex on the BCM is not read on the X95: the X95 starts unzeroed with it, the BCM\'s zero untouched; every key the device held before is unchanged, byte for byte; each scope clicks by its own click over its own travel on the bench', { skip }, async () => {
+test('range-day-thirteen verify 8: for each of the three collection scopes, a zero saved with it on the BCM is not read on the X95: the X95 starts unzeroed with it, the BCM\'s zero untouched; every record the device held before (a zero and a setting of the BCM\'s own sight) is unchanged, byte for byte; each scope clicks by its own click over its own travel on the bench', { skip }, async () => {
   const { page, context, errors } = await signedIn();
   // a device as main left it: a zero and a setting of the BCM's own sight
   await page.evaluate(() => { localStorage.setItem('range-day:zero:bcm-ar15:troy-battlesights:imi-m193', JSON.stringify({ elevationClicks: 2, windageClicks: -1, zeroYards: 100, sight: 'troy-battlesights', savedAt: '2026-11-20T10:00:00.000Z' })); localStorage.setItem('range-day:sight:bcm-ar15:troy-battlesights', JSON.stringify({ elevationClicks: 2, windageClicks: -1 })); });
   const old = await page.evaluate(() => Object.fromEntries(Object.keys(localStorage).map((k) => [k, localStorage.getItem(k)])));
-  await bench(page, 'course=angeles-sylmar&rifle=bcm-ar15&sight=vortex-razor-1-10&load=imi-m193');
-  for (let i = 0; i < 3; i++) await page.click('#el-up');
-  await page.click('#save');
-  const bcm = await page.evaluate(() => localStorage.getItem('range-day:zero:bcm-ar15:vortex-razor-1-10:imi-m193'));
-  assert.match(bcm, /"elevationClicks":3/);
-  await page.evaluate(() => { localStorage.removeItem('range-day:day:open'); });
-  await bench(page, 'course=angeles-sylmar&rifle=iwi-x95&sight=vortex-razor-1-10&load=imi-m193');
-  assert.match(await page.textContent('#saved'), /No zero saved yet for IMI M193 55 gr.* with this sight/);
-  assert.equal(await page.textContent('#el-text'), '0 clicks (middle)');
-  const keys = await page.evaluate(() => Object.fromEntries(Object.keys(localStorage).map((k) => [k, localStorage.getItem(k)])));
-  assert.equal(keys['range-day:zero:bcm-ar15:vortex-razor-1-10:imi-m193'], bcm, 'the BCM\'s zero with the Vortex untouched');
-  assert.equal(keys['range-day:zero:iwi-x95:vortex-razor-1-10:imi-m193'], undefined, 'nothing written for the X95');
-  for (const [k, v] of Object.entries(old)) if (k !== 'range-day:day:open' && k !== 'range-day:last' && !k.startsWith('range-day:last:')) assert.equal(keys[k], v, `${k} unchanged`);
+  // Left out of the byte-for-byte comparison, by design: the open day (day:open) and what was last used (last, last:<rifle>),
+  // which every page writes whenever it opens a rifle; they are not records of a sight. Every other key is compared.
+  const written = (k) => k === 'range-day:day:open' || k === 'range-day:last' || k.startsWith('range-day:last:');
+  const lines = [`left out of the comparison, written by every visit: ${Object.keys(old).filter(written).join(', ') || 'none held before'}`];
+  const zeros = {};
+  for (const [i, id] of COLLECTION.entries()) {
+    await page.evaluate(() => { localStorage.removeItem('range-day:day:open'); });
+    await bench(page, `course=angeles-sylmar&rifle=bcm-ar15&sight=${id}&load=imi-m193`);
+    for (let j = 0; j < i + 2; j++) await page.click('#el-up');
+    await page.click('#save');
+    zeros[id] = await page.evaluate((s) => localStorage.getItem(`range-day:zero:bcm-ar15:${s}:imi-m193`), id);
+    assert.match(zeros[id], new RegExp(`"elevationClicks":${i + 2}`), id);
+    await page.evaluate(() => { localStorage.removeItem('range-day:day:open'); });
+    await bench(page, `course=angeles-sylmar&rifle=iwi-x95&sight=${id}&load=imi-m193`);
+    assert.match(await page.textContent('#saved'), /No zero saved yet for IMI M193 55 gr.* with this sight/, `${id} on the X95`);
+    assert.equal(await page.textContent('#el-text'), '0 clicks (middle)', `${id} on the X95 starts at its middle`);
+    const keys = await page.evaluate(() => Object.fromEntries(Object.keys(localStorage).map((k) => [k, localStorage.getItem(k)])));
+    assert.equal(keys[`range-day:zero:iwi-x95:${id}:imi-m193`], undefined, `${id}: nothing written for the X95`);
+    for (const done of COLLECTION.slice(0, i + 1)) assert.equal(keys[`range-day:zero:bcm-ar15:${done}:imi-m193`], zeros[done], `${done}: the BCM's zero untouched`);
+    for (const [k, v] of Object.entries(old)) if (!written(k)) assert.equal(keys[k], v, `${k} unchanged`);
+    lines.push(`${id}: zero saved on the BCM (elevation +${i + 2}); on the X95 "No zero saved yet", at its middle, no key written; the BCM's zeros and every earlier record unchanged`);
+  }
+  const keys = await page.evaluate(() => Object.keys(localStorage).sort());
+  lines.push(`stored keys after: ${keys.join(', ')}`);
   // each scope's own click on the bench: one press moves its setting's words by its own click in MOA
-  const lines = [`stored keys after: ${Object.keys(keys).sort().join(', ')}`];
   for (const id of COLLECTION) {
     const S = flat.sights[id];
     await bench(page, `course=angeles-sylmar&rifle=bcm-ar15&sight=${id}&load=imi-m193`);
@@ -308,7 +318,7 @@ test('range-day-thirteen item 11: a firing-line shot carries its time of flight 
     await page.evaluate((k) => { RangeDayLine.setTarget(k); RangeDayLine.setHold(0, 0); RangeDayLine.fire(7); RangeDayLine.landAll(); }, key);
     const r = await page.evaluate(() => ({ shot: RangeDayLine.day.shots[RangeDayLine.day.shots.length - 1], input: RangeDayLine.lastShotInput }));
     assert.equal(r.shot.targetKey, key);
-    assert.equal(r.shot.flightS, Math.round(r.input.timeS * 10000) / 10000);
+    assert.equal(r.shot.flightS, r.input.timeS, 'exactly the engine\'s figure, not rounded');
     assert.ok(r.shot.flightS > 0.05 && r.shot.flightS < 1.5, `${key}: ${r.shot.flightS} s`);
     console.log(`  shot at ${key}: flightS ${r.shot.flightS}, the engine's timeS ${r.input.timeS}`);
   }

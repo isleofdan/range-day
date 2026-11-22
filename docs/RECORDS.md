@@ -199,7 +199,7 @@ deleted.
 ```
 
 Since range-day-thirteen each shot at the line also carries `flightS`, the
-bullet's time of flight in seconds as the engine gave it (to a ten-thousandth),
+bullet's time of flight in seconds exactly as the engine gave it (not rounded),
 and `targetKey`, the key of the target it was fired at: a plate's index in
 the course's list (`"0"`, `"1"`, …) or a near target's `"near-0"`,
 `"near-1"`, …. Both are for playing a day back. Shots written before have
@@ -212,7 +212,7 @@ marker, read from `shots`, so a reload shows them again.
 
 ```json
 { "freshPaper": { "50": 7, "bench:100": 12 },
-  "shots": [{ "n": 13, "place": "line", "yards": 300, "target": "steel", "targetKey": "2", "flightS": 0.3627, "...": "the other fields as above" }] }
+  "shots": [{ "n": 13, "place": "line", "yards": 300, "target": "steel", "targetKey": "2", "flightS": 0.36265192406949, "...": "the other fields as above" }] }
 ```
 
 ### The finished days: `days`
