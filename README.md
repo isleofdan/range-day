@@ -105,10 +105,37 @@ clicks, then works out the drop and the wind for each distance himself.
   receiver takes none of their mounts. A scope's height over the bore on
   a rifle is the rifle's rail height plus the mount's (`lib/guns.js`
   works it out and checks it). A scope moved to another rifle starts
-  unzeroed there and keeps its zero on the rifle it left. The chevron is
-  drawn at its maker's width; the two zoom scopes show only their fine
-  crosshair, because the makers' reticle drawings could not be read for
-  their marks (each entry's `marksNotDrawn` says so).
+  unzeroed there and keeps its zero on the rifle it left. Since
+  range-day-fourteen the ACOG's reticle and the Leupold's PR2-MOA are drawn
+  from their makers' own reticle sheets, every mark with a figure on the
+  sheet in `data/sights.json` with its source: the ACOG's solid red chevron,
+  its post and its drop lines for 400 to 800 meters with the sheet's "4" and
+  "6"; the PR2-MOA's open center and dot, its hashes every minute of angle
+  (about 1 inch at 100 yards) numbered every 4, its holdover lines every 4
+  minutes down to 40 with rows of dots between them, and its post numbered
+  to 128. The Leupold is first focal plane, so every mark keeps its true
+  angle at every power: small at 5 power, large at 25. The Vortex still
+  shows only its fine crosshair: its maker's drawing could not be read
+  (its entry's `marksNotDrawn` says why). Nothing says where to hold.
+- **A day played back** (`/playback?id=<day>`, range-day-fourteen): **Play
+  this day back** on a day's page, open or finished, shows that day's
+  firing-line shots again through the tripod spotting scope, in the order
+  they were fired: the view on each one's target, the shot's sound, the
+  wait while the bullet flies (its recorded flight time) with the faint
+  trace of its wake arcing in, then the strike where the record says it
+  struck: a mark, a swing and the ring on steel, a hole in paper, a puff of
+  dust for a miss. Under the view, one line says which shot of how many,
+  its target and distance, and hit or miss in the day page's words, and
+  how many shots the day had at the bench (not played back). Play and
+  pause, the shot before and the next, a line to drag through the day
+  marked at each shot, the pace (the day's own, or with the waits between
+  shots skipped, which it opens on), the scope's power and the sound, all
+  under the thumb. It is the firing line's own page and drawing, read-only:
+  nothing on the device is written. A day with no firing-line shots says
+  so; a shot recorded before range-day-thirteen (without its flight time
+  and target) is found by its kind and distance and lands without the wait.
+  The trace is a drawing of what the record says happened, not a new
+  working-out of the bullet's path.
 - **Firing line** (`/line`): the view through the sight. On the canyon
   course the view is a 3D picture of the real place (below, "The
   picture"); on the rifle line it is still the flat drawing. A scope zooms

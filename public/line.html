@@ -20,7 +20,10 @@
 <main class="game">
   <h1 class="vh">Firing line</h1>
   <!-- Within reach without scrolling, in this order from the top (range-day-nine): the short line, the plate and the sight's glass, the view, where the last shot went, the sight strip, the book's line; Steady and Fire fixed below. -->
+  <!-- range-day-fourteen: a day played back (/playback): shown only there, in place of what a shot needs. -->
+  <div id="play-empty" class="playempty" hidden><p id="play-empty-text" class="readout"></p><div class="row"><a id="play-empty-back" class="btn inline" href="/day">Back to the day</a></div></div>
   <div class="reach">
+    <p id="play-title" class="playtitle" hidden></p>
     <div class="head">
       <div class="headrow">
         <button id="line-head" type="button" class="linehead" aria-expanded="false" aria-controls="line-full"><span id="line-short">Loading…</span><span class="caret" aria-hidden="true">▾</span></button>
@@ -45,6 +48,17 @@
       <div id="spotrow" class="field spotzoom" aria-hidden="true"><label for="spot-zoom">Scope <span id="spot-zoom-text" class="mono"></span></label><input id="spot-zoom" type="range" min="25" max="125" step="1" value="25" tabindex="-1"></div>
     </div>
     <div class="viewwrap"><canvas id="scene" width="400" height="400" hidden></canvas><canvas id="view" width="400" height="400"></canvas></div>
+    <div id="playpanel" class="playpanel" hidden>
+      <p id="play-words" class="readout playwords" aria-live="polite"></p>
+      <div class="playline"><label for="play-line" class="vh">Where in the day</label><input id="play-line" type="range" min="0" max="1000" step="1" value="0"><div id="play-ticks" class="playticks" aria-hidden="true"></div></div>
+      <div class="playbtns"><button id="play-before" type="button" class="btn inline secondary">◀ Shot before</button><button id="play-pause" type="button" class="btn inline">Pause</button><button id="play-next" type="button" class="btn inline secondary">Next shot ▶</button></div>
+      <div class="playrow">
+        <button id="play-pace" type="button" class="btn inline secondary">Pace: waits skipped</button>
+        <div class="field"><label for="play-power">Scope <span id="play-power-text" class="mono"></span></label><input id="play-power" type="range" min="25" max="125" step="1" value="25"></div>
+        <button id="play-sound" type="button" class="btn inline secondary" aria-pressed="true">Sound on</button>
+      </div>
+      <div class="row playback-out"><a id="play-to-day" class="btn inline secondary" href="/day">Back to the day</a></div>
+    </div>
     <div class="slot result">
       <p id="result" class="readout fold">Drag the view to hold off the target. Press and hold <strong>Steady</strong>, then <strong>Fire</strong>.</p>
       <div id="another-box-row" class="another" hidden><button id="another-box" type="button" class="btn inline">Open another box</button></div>

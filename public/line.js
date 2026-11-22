@@ -20,7 +20,33 @@
   const E = RD.E;
   const d = await RD.data();
   const q = RD.qs();
-  const entered = RD.enterDay(d, RD.chooseFrom(d, q), q);
+  // range-day-fourteen: a day played back through the spotting scope (/playback?id=<day>): this same page and drawing, read-only.
+  // The day's record is read and never written; the drawing is given a copy of the day whose shots are only those landed so far
+  // in the playback, so the marks, the holes, the swing and the dust are the firing line's own. Nothing on the device is written.
+  const PLAYBACK = location.pathname === '/playback';
+  let played = null;
+  if (PLAYBACK) {
+    document.body.classList.add('playback');
+    document.title = document.title.replace('firing line', 'a day played back');
+    played = q.id ? RD.dayById(q.id) : null;
+    const lineShots = played ? played.shots.filter((x) => x.place === 'line') : [];
+    if (!lineShots.length) {
+      // the states with nothing to show: one line and the way back
+      const refused = !played && (RD.dayReadFailed() || RD.daysReadFailed());
+      const bench = played ? played.shots.filter((x) => x.place === 'bench').length : 0;
+      document.body.classList.add('playback-empty');
+      document.getElementById('play-empty').hidden = false;
+      document.getElementById('play-empty-text').textContent = refused ? 'This day is not saved on this device: the browser refused to read its storage, so there is nothing to play back.'
+        : !played ? 'There is no such day on this device, so there is nothing to play back.'
+        : `No shots on the firing line that day${bench ? ` (${bench} at the bench, which are not played back)` : ''}, so there is nothing to play back.`;
+      document.getElementById('play-empty-back').href = played ? `/day?id=${encodeURIComponent(played.id)}` : '/day';
+      window.RangeDayLine = { playback: { empty: true } };
+      return;
+    }
+  }
+  const lastLineSight = played ? played.shots.filter((x) => x.place === 'line' && x.sight).map((x) => x.sight).pop() : null;
+  const entered = PLAYBACK ? { day: { ...JSON.parse(JSON.stringify(played)), shots: [] }, c: RD.chooseFrom(d, { course: played.course, rifle: played.rifle, load: played.load, sight: lastLineSight }), saved: true, redirected: false }
+    : RD.enterDay(d, RD.chooseFrom(d, q), q);
   const c = entered.c;
   let day = entered.day;
   const { courseId, rifleId, sightId } = c;
@@ -30,7 +56,7 @@
   // A sliding rear leaf (the AK-pattern rifles and the Vepr's irons): its settings and each one's angle, from the rifle's record.
   const leaf = RD.leafOf(d, rifleId, sightId);
   const loadId = c.loadId;
-  RD.remember(c);
+  if (!PLAYBACK) RD.remember(c);
   const weather = day.weather;
   // The targets (range-day-ten): the steel plates every 100 yards (course.plates, in their order: the 3D picture and the tests count
   // them by index) and the near targets (course.near: paper at 50 and 100 yards, and on the canyon a 100-yard plate). The picker
@@ -210,6 +236,7 @@
   // The sideways angle of the aimed plate, so the scene's own azimuths (from straight downrange) line up with the view.
   const azOf = (sideMoa) => sideMoa - toMoa(sideAngle(plate()));
   const drawnPaper = {}; // the plain drawing's last frame: each sheet's centre on the canvas
+  let drawnStrikes = []; // range-day-fourteen, at playback: where the plain drawing put each landed shot's mark, hole or dust this frame (the tests read it)
   // The holes shown on a paper, as the drawing takes them.
   const load = d.loads[loadId];
   const holesOf = (t) => RD.paperHoles(day, t).map((s) => ({ upIn: s.upIn, rightIn: s.rightIn, holeIn: RD.holeIn(load), burstIn: RD.burstIn(load, P), seed: RD.hash(`${day.id}:${s.n}`) }));
@@ -287,6 +314,7 @@
 
   function draw() {
     const { g, size } = view;
+    drawnStrikes = [];
     const k = pxPerMoa();
     const c = center();
     g.save();
@@ -303,6 +331,7 @@
         g.clearRect(0, 0, size, size);
         if (measuring) { measuring.frames++; if (now >= measuring.until) measured(); }
         drawDust(g, size, k);
+        if (PLAYBACK) drawTrace(g, size);
         if (flash > 0) { g.fillStyle = `rgba(255, 230, 180, ${flash})`; g.fillRect(0, 0, size, size); }
         g.restore();
         drawSight(g, size, k);
@@ -365,7 +394,7 @@
       g.fillStyle = mix([245, 242, 232], HAZE, haze); g.fillRect(bx, by - bh / 2, bw, bh);
       g.strokeStyle = mix([40, 40, 40], HAZE, haze); g.lineWidth = Math.min(1, bw * 0.03); g.strokeRect(bx, by - bh / 2, bw, bh);
       if (bh >= 7) { g.fillStyle = mix([20, 20, 20], HAZE, haze); g.font = `bold ${bh * 0.72}px system-ui, sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(String(p.yards), bx + bw / 2, by + bh * 0.04); }
-      for (const mk of RD.steelMarks(day, p)) { const [mx, my] = toScreen(at.right + mk.rightIn / ipm, at.up + mk.upIn / ipm); g.fillStyle = '#f3f1ea'; g.beginPath(); g.arc(mx, my, Math.max(1, 0.5 * k / 1.047), 0, 7); g.fill(); }
+      for (const mk of RD.steelMarks(day, p)) { const [mx, my] = toScreen(at.right + mk.rightIn / ipm, at.up + mk.upIn / ipm); g.fillStyle = '#f3f1ea'; g.beginPath(); g.arc(mx, my, Math.max(1, 0.5 * k / 1.047), 0, 7); g.fill(); if (PLAYBACK) drawnStrikes.push({ n: mk.n, kind: 'mark', x: mx, y: my }); }
     });
     // the paper (range-day-ten): each sheet on its white board, the board on two dark posts down to its ground, the sheet drawn by
     // the one paper drawing (game.js, drawPaper) with the day's holes, at the view's scale
@@ -383,9 +412,11 @@
       g.fillStyle = mix([238, 234, 222], HAZE, haze); g.fillRect(bx - bw / 2, bFoot - bh, bw, bh);
       const [sx, sy] = toScreen(at.right, at.up);
       RD.drawPaper(g, sx, sy, ppi, p.widthIn, p.heightIn, holesOf(p), P);
+      if (PLAYBACK) for (const h of RD.paperHoles(day, p)) drawnStrikes.push({ n: h.n, kind: 'hole', x: sx + h.rightIn * ppi, y: sy - h.upIn * ppi });
       drawnPaper[p.key] = { x: sx, y: sy, aimRight: c.right, aimUp: c.up, pxPerMoa: k, size }; // where this frame drew the sheet's centre, and the aim it drew from (the tests compare it with the angles)
     });
     drawDust(g, size, k);
+    if (PLAYBACK) drawTrace(g, size);
     // heat shimmer leaning with the wind (seen through magnification)
     if (viewMag() >= 2.5) {
       g.strokeStyle = 'rgba(255,255,255,0.10)'; g.lineWidth = 1.2;
@@ -420,6 +451,7 @@
       const riseMoa = (D.riseFt * 12 * f) / ipm;
       const drift = (D.driftFraction * wind * 1.4667 * age) / (p.yards * 3) * 3438; // ft/s × s over the distance, in MOA
       const alpha = Math.max(0, 0.85 * (1 - f) * (1 - f * 0.3));
+      if (PLAYBACK && p.n != null) { const [bx, by] = toScreen(off.right + p.rightMoa, off.up + p.upMoa); drawnStrikes.push({ n: p.n, kind: 'dust', x: bx, y: by }); }
       for (let j = 0; j < 9; j++) {
         const jr = (((j * 37) % 11) / 11 - 0.5) * (0.5 + 0.5 * f), ju = (((j * 53) % 7) / 7) * 0.6 - 0.15;
         const [x, y] = toScreen(off.right + p.rightMoa + jr * widthMoa + drift, off.up + p.upMoa + riseMoa + ju * widthMoa * 0.7);
@@ -1015,11 +1047,140 @@
   for (const ev of ['pointerup', 'pointercancel']) canvas.addEventListener(ev, () => { drag = null; });
   window.addEventListener('keydown', (e) => { if (e.key === ' ' && document.activeElement === document.body) { e.preventDefault(); fire(); } });
 
+  // --- a day played back (range-day-fourteen) -------------------------------------------------------------
+  // The day's firing-line shots in their firing order, each through the tripod spotting scope: the view on its target, the shot's
+  // sound, the wait while the bullet flies (its recorded flightS), then the strike where the record says it struck: on steel the
+  // plate's mark, its swing and the ring coming back; on paper the hole; for a miss the dust. All of it is the firing line's own
+  // drawing, given a copy of the day holding only the shots landed so far. Two paces: the day's own (the time between the records'
+  // moments) and one that skips the waits between shots (it opens on that one); the flight is waited out in both. A shot recorded
+  // before range-day-thirteen has neither flightS nor targetKey: its target is found by its kind and distance and its strike shown
+  // without the wait. The bullet's trace is a drawing of the record (a plain arc from the muzzle side to the recorded strike over
+  // the recorded flight time), not a new working-out of its path. Nothing is written to the device.
+  const PB = { shots: [], ev: [], end: 0, clock: 0, playing: false, pace: 'quick', sound: true, cur: -1, landedKey: '', wasPlaying: false };
+  const LEAD_S = 1.5, AFTER_S = 3; // the time on the target before a shot, and after its strike before the next (the pace without waits)
+  const pbTarget = (s) => targets.find((t) => t.key === s.targetKey) || targets.find((t) => t.kind === RD.kindOf({ kind: s.target }) && t.yards === s.yards) || null;
+  function pbTimeline(pace) {
+    const ev = []; let t = 0;
+    const ats = PB.shots.map((x) => Date.parse(x.at) / 1000);
+    const real = pace === 'real' && ats.every((a) => Number.isFinite(a));
+    if (real) {
+      const fire0 = ats[0] - (PB.shots[0].flightS || 0);
+      PB.shots.forEach((x, i) => {
+        const flight = x.flightS || 0, prev = ev[i - 1];
+        const strikeT = Math.max(prev ? prev.strikeT : 0, LEAD_S + ats[i] - fire0), fireT = strikeT - flight;
+        const viewT = prev ? Math.min(fireT, Math.max(prev.strikeT + AFTER_S, fireT - LEAD_S)) : 0;
+        ev.push({ s: x, t: pbTarget(x), viewT, fireT, strikeT });
+      });
+    } else {
+      for (const x of PB.shots) { const flight = x.flightS || 0; ev.push({ s: x, t: pbTarget(x), viewT: t, fireT: t + LEAD_S, strikeT: t + LEAD_S + flight }); t += LEAD_S + flight + AFTER_S; }
+    }
+    return { ev, end: ev[ev.length - 1].strikeT + AFTER_S };
+  }
+  const pbSoundBack = (t) => (t.yards * 3) / E.speedOfSound(weather.tempF);
+  // Where a shot struck, in MOA from its own target's centre, as the firing line puts its dust: a bullet that fell short lands
+  // below the target at the held line (land(), above).
+  const pbStrikeMoa = (e) => { const ipm = inchPerMoa(e.t.yards); return e.s.reached ? { right: e.s.rightIn / ipm, up: e.s.upIn / ipm } : { right: e.s.heldRightMoa || 0, up: -(e.t.heightIn / ipm) * 2 }; };
+  // The view: the target of the shot the clock is at; the drawing's copy of the day: the shots landed by the clock.
+  function pbSync(swingN) {
+    let cur = 0; PB.ev.forEach((e, i) => { if (e.viewT <= PB.clock + 1e-9) cur = i; });
+    const e = PB.ev[cur];
+    if (cur !== PB.cur && e.t) { target = e.t; $('plate').value = e.t.key; spotAim.up = 0; spotAim.right = 0; }
+    PB.cur = cur;
+    const landed = PB.ev.filter((x) => x.strikeT <= PB.clock + 1e-9);
+    const key = landed.map((x) => x.s.n).join(',');
+    if (key !== PB.landedKey) {
+      PB.landedKey = key;
+      day.shots = landed.map((x) => x.s);
+      if (scene) {
+        for (const t of steelTargets) scene.setStrikes(t.steelIx, RD.steelMarks(day, t), swingN != null && landed.some((x) => x.s.n === swingN && x.t === t));
+        for (const t of paperTargets) scene.setPaper(t.paperIx, holesOf(t));
+      }
+    }
+    pbWords();
+    $('play-line').value = String(Math.round((PB.clock / PB.end) * 1000));
+  }
+  function pbWords() {
+    const e = PB.ev[PB.cur], s = e.s, n = PB.cur + 1, of = PB.ev.length;
+    const where = e.t ? `${s.yards} yards, ${e.t.kind === 'paper' ? 'paper' : `${e.t.widthIn} × ${e.t.heightIn} in steel`}` : `${s.yards} yards`;
+    const state = PB.clock < e.fireT ? 'about to be fired' : PB.clock < e.strikeT ? 'on its way' : RD.shotWords(s);
+    const bench = PB.bench ? ` ${PB.bench} shot${PB.bench === 1 ? '' : 's'} at the bench that day, not played back.` : '';
+    const text = `Shot ${n} of ${of}: ${where}, ${state}.${PB.clock >= PB.end - 1e-9 ? ' The end of the day.' : ''}${bench}`;
+    if ($('play-words').textContent !== text) $('play-words').textContent = text;
+  }
+  // The clock moves on; a shot fired or landing in this step makes its sound and its strike as it happens.
+  function playStep(dt) {
+    if (!PB.playing) return;
+    const from = PB.clock;
+    PB.clock = Math.min(PB.end, PB.clock + dt);
+    let swingN = null;
+    for (const e of PB.ev) {
+      if (e.fireT > from && e.fireT <= PB.clock && PB.sound) RD.shotSound(1);
+      if (e.strikeT > from && e.strikeT <= PB.clock) {
+        const t = e.t; if (!t) continue;
+        const back = pbSoundBack(t), paper = t.kind === 'paper';
+        if (e.s.hit && !paper) { swingN = e.s.n; if (PB.sound) RD.ringSound(back, Math.max(0.15, 1 - t.yards / 1300)); }
+        else if (e.s.hit) { if (PB.sound) RD.thudSound(back, 0.08); }
+        else { const m = pbStrikeMoa(e); dust.push({ t, n: e.s.n, rightMoa: m.right, upMoa: m.up, bornAt: now, yards: t.yards }); if (PB.sound) RD.thudSound(back, Math.max(0.05, 0.5 - t.yards / 2500)); }
+      }
+    }
+    if (PB.clock >= PB.end) { PB.playing = false; pbButtons(); }
+    pbSync(swingN);
+  }
+  // A jump (the line dragged, a shot before or after, another pace): no sound, no swing, the dust of the shots before put away.
+  function pbSeek(t) { PB.clock = Math.max(0, Math.min(PB.end, t)); dust.length = 0; pbSync(null); pbButtons(); }
+  function pbButtons() { $('play-pause').textContent = PB.playing ? 'Pause' : PB.clock >= PB.end ? 'Play again' : 'Play'; $('play-pace').textContent = PB.pace === 'real' ? "Pace: the day's own" : 'Pace: waits skipped'; $('play-sound').textContent = PB.sound ? 'Sound on' : 'Sound off'; $('play-sound').setAttribute('aria-pressed', String(PB.sound)); }
+  // The bullet's trace: the brief wake of disturbed air the spotting scope shows, along a plain arc from the muzzle side (below
+  // the view, left) to the recorded strike, over the recorded flight time. Shots without flightS have none.
+  function drawTrace(g, size) {
+    PB.traceAt = null;
+    const e = PB.ev[PB.cur]; if (!e || !e.t || !e.s.flightS || PB.clock < e.fireT || PB.clock >= e.strikeT) return;
+    const f = (PB.clock - e.fireT) / e.s.flightS, m = pbStrikeMoa(e), at = plateAt(e.t);
+    const [x1, y1] = toScreen(at.right + m.right, at.up + m.up);
+    const x0 = size * 0.1, y0 = size * 1.05, cxp = (x0 + x1) / 2, cyp = Math.min(y0, y1) - size * 0.3;
+    const pt = (u) => [(1 - u) * (1 - u) * x0 + 2 * u * (1 - u) * cxp + u * u * x1, (1 - u) * (1 - u) * y0 + 2 * u * (1 - u) * cyp + u * u * y1];
+    g.save(); g.lineCap = 'round';
+    for (let j = 0; j < 12; j++) {
+      const u0 = Math.max(0, f - 0.14 + (j * 0.14) / 12), u1 = Math.max(0, f - 0.14 + ((j + 1) * 0.14) / 12);
+      const [ax, ay] = pt(u0), [bx, by] = pt(u1);
+      g.strokeStyle = `rgba(235, 235, 228, ${(0.05 + 0.3 * (j / 11)).toFixed(3)})`; g.lineWidth = Math.max(1.5, size * 0.006);
+      g.beginPath(); g.moveTo(ax, ay); g.lineTo(bx, by); g.stroke();
+    }
+    g.restore();
+    PB.traceAt = pt(f);
+  }
+  function startPlayback() {
+    PB.shots = played.shots.filter((x) => x.place === 'line').sort((a, b) => a.n - b.n);
+    PB.bench = played.shots.filter((x) => x.place === 'bench').length;
+    Object.assign(PB, pbTimeline(PB.pace));
+    setSpotting(true);
+    $('playpanel').hidden = false; $('play-title').hidden = false;
+    $('play-title').textContent = `${RD.dateText(played.date)}: ${rifle.name}, ${course.name.replace(/ \(modeled on.*\)$/, '')}, through the spotting scope`;
+    $('play-to-day').href = `/day?id=${encodeURIComponent(played.id)}`;
+    $('play-power').min = SP.zoom.low; $('play-power').max = SP.zoom.high; $('play-power').step = SP.zoomStep; $('play-power').value = spotMag;
+    const powerText = () => { $('play-power-text').textContent = `${spotMag}×`; };
+    powerText();
+    // the line's marks: where each shot lands along the day, filled for a hit
+    const ticks = () => { $('play-ticks').innerHTML = PB.ev.map((e) => `<i class="${e.s.hit ? 'hit' : ''}" style="left:${((e.strikeT / PB.end) * 100).toFixed(2)}%"></i>`).join(''); };
+    ticks();
+    $('play-power').addEventListener('input', (ev) => { spotMag = Number(ev.target.value); $('spot-zoom').value = spotMag; powerText(); });
+    $('play-pause').addEventListener('click', () => { RD.audio(); if (PB.playing) PB.playing = false; else { if (PB.clock >= PB.end) pbSeek(0); PB.playing = true; } pbButtons(); });
+    $('play-before').addEventListener('click', () => { const e = PB.ev[PB.cur]; pbSeek(PB.clock > e.viewT + 0.5 || PB.cur === 0 ? e.viewT : PB.ev[PB.cur - 1].viewT); });
+    $('play-next').addEventListener('click', () => { pbSeek(PB.cur + 1 < PB.ev.length ? PB.ev[PB.cur + 1].viewT : PB.end); });
+    $('play-line').addEventListener('input', (ev) => pbSeek((Number(ev.target.value) / 1000) * PB.end));
+    $('play-pace').addEventListener('click', () => { const ix = PB.cur; PB.pace = PB.pace === 'real' ? 'quick' : 'real'; Object.assign(PB, pbTimeline(PB.pace)); ticks(); pbSeek(PB.ev[ix].viewT); });
+    $('play-sound').addEventListener('click', () => { PB.sound = !PB.sound; if (PB.sound) RD.audio(); pbButtons(); });
+    // leaving the screen (another tab, the phone's home screen) pauses it; coming back while the page is open goes on from there
+    document.addEventListener('visibilitychange', () => { if (document.hidden) { PB.wasPlaying = PB.playing; PB.playing = false; } else if (PB.wasPlaying) { PB.playing = true; last = performance.now() / 1000; } pbButtons(); });
+    PB.playing = true;
+    pbSync(null); pbButtons();
+  }
+
   // --- the loop ------------------------------------------------------------------------------------------
   function frame() {
     const t = performance.now() / 1000;
     const dt = Math.min(0.05, t - last); last = t; now += dt;
     stepWander(dt);
+    if (PLAYBACK) playStep(dt);
     flash = Math.max(0, flash - dt * 4);
     for (let i = pending.length - 1; i >= 0; i--) if (now >= pending[i].at) land(pending.splice(i, 1)[0]);
     for (let i = dust.length - 1; i >= 0; i--) if (now - dust[i].bornAt > d.physics.dust.lifeS) dust.splice(i, 1);
@@ -1036,11 +1197,20 @@
     el.addEventListener('click', (e) => { if (e.target.closest('a')) return; if (el.classList.contains('open')) el.classList.remove('open'); else if (el.classList.contains('long')) el.classList.add('open'); });
     measure();
   }
-  applyZero(); renderLog(); conditions(); rounds(); bookLine(); coldLine(); paperRow();
+  if (!PLAYBACK) applyZero();
+  renderLog(); conditions(); rounds(); bookLine(); coldLine(); paperRow();
+  if (PLAYBACK && !picture) picture = 'plain'; // playback measures nothing and writes no setting: a device with none chosen yet sees Plain
   fitScene(); choosePicture();
+  if (PLAYBACK) startPlayback();
   requestAnimationFrame(frame);
   // For the screenshot run and tests: a way to read the state without guessing.
-  window.RangeDayLine = { fire, landAll, get log() { return log; }, get pending() { return pending.length; }, get setting() { return setting; }, setHold(up, right) { hold.up = up; hold.right = right; }, setZoom(m) { mag = m; $('zoom').value = m; zoomText(); }, get plate() { return plate(); }, get day() { return day; }, get weather() { return weather; }, get windCall() { return windCall(); },
+  window.RangeDayLine = {
+    // range-day-fourteen: the playback's state and its own controls, for the tests (the clock in seconds along the day)
+    playback: PLAYBACK ? { get clock() { return PB.clock; }, get end() { return PB.end; }, get playing() { return PB.playing; }, get pace() { return PB.pace; }, get current() { return PB.cur; },
+      get events() { return PB.ev.map((e) => ({ n: e.s.n, key: e.t ? e.t.key : null, viewT: e.viewT, fireT: e.fireT, strikeT: e.strikeT, flightS: e.s.flightS ?? null })); },
+      get drawn() { return drawnStrikes.slice(); }, get traceAt() { return PB.traceAt || null; }, seek(t) { pbSeek(t); }, pause() { PB.playing = false; pbButtons(); }, play() { PB.playing = true; pbButtons(); },
+      strikeOnScreen(n) { const e = PB.ev.find((x) => x.s.n === n); if (!e || !e.t) return null; const m = pbStrikeMoa(e), at = plateAt(e.t); return toScreen(at.right + m.right, at.up + m.up); } } : null,
+    fire, landAll, get log() { return log; }, get pending() { return pending.length; }, get setting() { return setting; }, setHold(up, right) { hold.up = up; hold.right = right; }, setZoom(m) { mag = m; $('zoom').value = m; zoomText(); }, get plate() { return plate(); }, get day() { return day; }, get weather() { return weather; }, get windCall() { return windCall(); },
     // Each plate's angle from the firing line (sideways and upward, in MOA) and the height the drawing uses; the last shot's inputs to the engine.
     get plateAngles() { return plates.map((p) => ({ yards: p.yards, riseFt: riseOf(p), lateralYd: p.lateralYd, upMoa: toMoa(losAngle(p)), rightMoa: toMoa(sideAngle(p)) })); },
     get lastShotInput() { return lastShotInput; },

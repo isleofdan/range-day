@@ -109,6 +109,8 @@ console.log(`rifles: ${Object.keys(guns.rifles).length} from ${guns.from}`);
 route('GET', /^\/zero$/, (req, res) => sendHtml(res, 200, page('zero.html')));
 route('GET', /^\/line$/, (req, res) => sendHtml(res, 200, page('line.html')));
 route('GET', /^\/day$/, (req, res) => sendHtml(res, 200, page('day.html')));
+// range-day-fourteen: a day played back through the spotting scope: the firing line's own page and drawing, read-only (public/line.js, PLAYBACK).
+route('GET', /^\/playback$/, (req, res) => sendHtml(res, 200, page('line.html')));
 route('GET', /^\/book$/, (req, res) => sendHtml(res, 200, page('book.html')));
 route('GET', /^\/api\/data$/, (req, res) => sendJson(res, 200, gameData.flat));
 // The page scripts, behind the cookie like the screens that use them.

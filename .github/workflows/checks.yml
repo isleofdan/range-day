@@ -47,7 +47,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        group: [scene-shots, scene-scale, scene-rest, day, browser, near, bench, rest]
+        group: [scene-shots, scene-scale, scene-rest, day, browser, near, bench, playback, rest]
     steps:
       - uses: actions/checkout@v5
 
