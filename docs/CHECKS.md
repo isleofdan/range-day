@@ -349,10 +349,10 @@ the firing line's reach holds every collection scope too. 151 tests and
 
 ## The work split retired, the reticles' marks, and a day played back (range-day-fourteen, 22 Nov 2026)
 
-The Claude and Codex work split is retired on Dan's word: `scripts/owners.mjs`,
-its three tests (`test/owners.test.js`: every file of the split exists; a
-Codex branch is refused the real-figure files; the sides) and the Checks
-workflow's job "who works on what" are gone.
+The Claude and Codex work split is retired on Dan's word: the script that
+listed each side's files, its test file with its three tests (every file of
+the split exists; a Codex branch is refused the real-figure files; the
+sides) and the Checks workflow's job that enforced it are gone.
 
 `test/bench.test.js` reads each collection scope's reticle from the canvas
 against its data at 412 and 1280 px wide at the lowest and highest power
