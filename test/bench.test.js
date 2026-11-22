@@ -193,6 +193,14 @@ function reticleProbes(S, k, size) {
     out.push({ what: 'the chevron\'s base', kind: 'h', y: r.chevronHeightMoa, half: r.chevronBaseWidthMoa / 2 + 1.5, want: r.chevronBaseWidthMoa });
     for (const l of r.dropLines) if (inView(l.belowTipMoa)) out.push({ what: `the ${l.meters} m line at ${l.belowTipMoa} MOA`, kind: 'h', y: l.belowTipMoa, half: l.widthMoa / 2 + 1.5, want: l.widthMoa });
   }
+  if (r.kind === 'bdc') {
+    // range-day-fourteen-c: the Vortex's EBR-9: each drop mark in view at its place and width, the ladder's numbered marks, the long hash at 4
+    // (a drop mark inside the red circle's band, the 2.4, is measured with the circle, so it is left to the eye; so is the hash at 4
+    // where it stands within 4 px of the drop post, at the lowest power)
+    for (const m of r.dropMarks) if (inView(m.belowMoa) && m.belowMoa > r.circleOuterMoa / 2) { const wMoa = m.long ? r.dropLongMoa : r.dropShortMoa; out.push({ what: `the drop mark at ${m.belowMoa} MOA`, kind: 'h', y: m.belowMoa, half: wMoa / 2 + 0.3, want: wMoa }); }
+    for (const y of r.ladderNumbers) if (inView(y)) out.push({ what: `the ladder's mark at ${y} MOA`, kind: 'h', y, half: r.ladderNumberedMoa / 2 + 0.3, want: r.ladderNumberedMoa });
+    if (r.numbers[0] * k >= 4) out.push({ what: `the long hash at ${r.numbers[0]} MOA`, kind: 'v', x: r.numbers[0], want: r.longHashMoa });
+  }
   if (r.kind === 'tree') {
     // the open center where it is at least 6 px across (at 5 power on a phone it is 3 px, under the center dot's own pixel and its neighbours)
     if (r.openingMoa * k >= 6) out.push({ what: 'the open center', kind: 'gap', want: r.openingMoa });
@@ -202,7 +210,7 @@ function reticleProbes(S, k, size) {
   return out;
 }
 
-test('range-day-fourteen task item 4: each scope\'s reticle drawn against its data, read from the canvas, at 412 and 1280 px wide at the lowest and highest power: the ACOG\'s chevron and drop lines (the TA31F red, the TA31F-G green) and the PR2-MOA\'s open center, long hash and holdover lines (Trijicon\'s and Leupold\'s sheets); the Vortex\'s fine crosshair, its drawing unread', { skip }, async () => {
+test('range-day-fourteen task item 4: each scope\'s reticle drawn against its data, read from the canvas, at 412 and 1280 px wide at the lowest and highest power: the ACOG\'s chevron and drop lines (the TA31F red, the TA31F-G green) and the PR2-MOA\'s open center, long hash and holdover lines, the EBR-9\'s drop marks, ladder and long hash (Trijicon\'s, Leupold\'s and Vortex\'s sheets)', { skip }, async () => {
   const lines = []; let worst = 0;
   for (const [sizeName, viewport] of [['phone', { width: 412, height: 915 }], ['computer', { width: 1280, height: 800 }]]) {
     const { page, context, errors } = await signedIn(viewport);
