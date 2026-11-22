@@ -689,8 +689,8 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
   its whole 120 MOA, its windage to its own 60; the zoom's power stands
   under the word "Zoom" so the slider keeps one length.
 - **Next session needs:** Dan's look on his phone (the bench; each scope on
-  the BCM); the three reticles' marks from the makers' documents, which
-  needs the makers' pages reachable from a cloud session (Asks 2 and 3);
+  the BCM); the three reticles' marks from the makers' documents (this
+  cloud environment now reaches the makers' sites; Ask 2);
   then, each planned by a Personal Shipyard chat: pistols and their targets;
   the .22's own scope. The playback screen can read `flightS` and
   `targetKey`. The picture work stays paused on Dan's word. Report:
