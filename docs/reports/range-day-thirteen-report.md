@@ -448,3 +448,52 @@ its full check is green.
 ```
 yes, merge and deploy range-day-thirteen, then merge its notes
 ```
+
+## Addendum: range-day-thirteen-b, 22 Nov 2026 (the bench fitted to Dan's phone)
+
+**What stands.** Pull request [#45](https://github.com/isleofdan/range-day/pull/45),
+merged as `fa6274a` on Dan's typed line and deployed by Deploy run
+[44986095614](https://github.com/isleofdan/range-day/actions/runs/44986095614).
+Dan sent a screenshot of the bench from his phone: "But rough around the
+edges". Measured from it, his phone shows the page at 378×762 CSS pixels
+(2.625 device pixels each), not the 412×830 this report's bench was built
+and held at. At 378×762:
+
+| | before | after |
+|---|---|---|
+| paper | 262 px (under this app's own 300 px rule) | 304 px |
+| 1 MOA buttons | 57 px wide, words cut | 83 px, whole ("1 MOA" never breaks) |
+| strip above Fresh paper | 32 px blank until a note | the zeroing supply stands there; the knobs' or the save's note covers it until the next shot |
+| inch numbers | grey 9 px type on the brown backer; the left ones cut at the edge and meeting the bottom row at the corner | cream 10–14 px along the bottom; dark inside the paper's left edge, ±6 and ±12 |
+
+Each adjustment row's name and setting now stand on one line above its four
+buttons; buttons 44 px tall, Fire 52 px. `test/bench-reach.js` holds the
+bench at 378×762 as well as 412×915, 412×830 and 1280×800: all 32 sights,
+paper 304 px, everything within reach, nothing moving when notes appear.
+
+**What the brief got wrong.** The brief's phone size (412×830, "Dan's own")
+was not Dan's phone. The size now comes from his screenshot, not from an
+assumption.
+
+**Deliberate divergences.** The zeroing supply is hidden while a note shows
+(it is back on the next shot); the empty-box state is still plain, because
+Open another box stands where Fire was.
+
+**Verify results.** Locally: bench, day and browser tests 42 of 42. On
+GitHub: all 13 checks of the Checks run green, including 4 screenshot
+shards. Screenshots: `docs/reports/range-day-thirteen-b/` (378×762 after a
+group, 378×762 with the save's note, 412×830, 412×915, 1280×800).
+
+**Asks.**
+1. The firing line has not been measured at 378×762. Recommended: the next
+   range-day session measures it at that size and adds it to
+   `test/line-reach.js`.
+
+**What the next session needs.** Hold every new phone screen at 378×762
+(Dan's phone) as well as 412×915.
+
+**The miss in this round's replies.** Twice this session gave Dan the merge
+line in bold quotes instead of a fenced block. It is the third time on this
+app. The automatic check that would have caught it is requested on the
+Wall card `shipyard-methods` (note 2986) for the starting kit; a hosted
+session may not install it here.

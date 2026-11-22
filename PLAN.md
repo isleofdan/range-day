@@ -695,3 +695,19 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
   the .22's own scope. The playback screen can read `flightS` and
   `targetKey`. The picture work stays paused on Dan's word. Report:
   `docs/reports/range-day-thirteen-report.md`.
+
+### range-day-thirteen-b — 22 Nov 2026 (cloud session, same session as range-day-thirteen)
+
+- **Stands:** pull request #45, merged as `fa6274a` and deployed (Deploy
+  run 44986095614): the zero bench fitted to Dan's phone as measured from
+  his screenshot, 378×762. Paper 304 px there (262 before); each row's name
+  above its four buttons, 83 px each; the knobs' note, the save's note and
+  the zeroing supply share one strip; readable inch numbers. The bench's
+  reach test now holds 378×762 too.
+- **Decided:** Dan's phone is 378×762, not 412×830; the supply is hidden
+  while a note shows, back on the next shot.
+- **Next session needs:** measure the firing line at 378×762 and add it to
+  `test/line-reach.js`; Dan's look at the bench and each scope on the BCM
+  on his phone. Report: the addendum in
+  `docs/reports/range-day-thirteen-report.md`.
+
