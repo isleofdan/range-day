@@ -3,9 +3,9 @@
 // page: the bench's twin of test/line-reach.js. scripts/bench-layout.mjs prints it; test/bench.test.js holds it. Not a test file
 // itself (no ".test.js").
 
-// The sizes the list is held at: the two phones the firing line is held at (412×915, the kit's phone; 412×830, Dan's own) and a
-// computer (1280×800).
-const SIZES = [[412, 915], [412, 830], [1280, 800]];
+// The sizes the list is held at: the two phones the firing line is held at (412×915, the kit's phone; 412×830), Dan's own phone
+// as measured from his screenshot (378×762, range-day-thirteen-b) and a computer (1280×800).
+const SIZES = [[412, 915], [412, 830], [378, 762], [1280, 800]];
 
 // Every sight of every playable rifle on the bench (the magnifier is not a sight of its own there), each on its rifle's first
 // course with its first load; the rifle set and each rifle's sights as the server serves them (lib/guns.js), so a sight a rifle

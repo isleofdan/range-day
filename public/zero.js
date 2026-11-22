@@ -37,6 +37,7 @@
   let holes = benchHoles(); // {upIn, rightIn, loadId}
 
   const $ = (id) => document.getElementById(id);
+  const knobNote = (t) => { $('knob-note').textContent = t; if (t) $('pair-note').textContent = ''; };
   $('intro').textContent = `${rifle.name}, ${sight.name}, ${d.loads[loadId].name}. Aim is the center of the paper (36 inches square); the grid is 1 inch.`;
   // The short line at the top: the rifle, the sight and the load in a few words (their full names are in the words below).
   const grains = /(\d+ gr)\b/.exec(d.loads[loadId].name);
@@ -102,9 +103,16 @@
     const cx = ox + (paperIn / 2) * px, cy = oy + (paperIn / 2) * px;
     g.fillStyle = '#1d1d1b'; g.fillRect(cx - px, cy - px, 2 * px, 2 * px);
     g.fillStyle = '#f4efe2'; g.fillRect(cx - px * 0.15, cy - px * 0.15, px * 0.3, px * 0.3);
-    // inch labels along the edges
-    g.fillStyle = '#7d7664'; g.font = `${Math.max(9, px * 0.6)}px system-ui, sans-serif`; g.textAlign = 'center';
-    for (let i = -18; i <= 18; i += 6) { g.fillText(String(i), cx + i * px, oy + paperIn * px + px * 1.2); g.fillText(String(-i), ox - px, cy + i * px + 3); }
+    // the inch labels (range-day-thirteen-b: they were grey on the brown backer, 9 px, and the left ones were cut at a 378-px phone's
+    // edge): along the bottom in the cream of the paper on the backer; up the left side inside the paper, dark, just above each
+    // heavy line, so nothing is cut at any width and the bottom row keeps the corners
+    const fs = Math.max(10, Math.min(14, px * 0.85));
+    g.font = `600 ${fs}px system-ui, sans-serif`; g.textBaseline = 'middle';
+    g.fillStyle = '#efe6d2'; g.textAlign = 'center';
+    for (let i = -18; i <= 18; i += 6) g.fillText(String(i), cx + i * px, oy + paperIn * px + px);
+    g.fillStyle = '#5a5444'; g.textAlign = 'left'; g.textBaseline = 'bottom';
+    for (let i = -12; i <= 12; i += 6) if (i) g.fillText(String(-i), ox + 3, cy + i * px - 2);
+    g.textAlign = 'center'; g.textBaseline = 'alphabetic';
     // holes: the bullet's own diameter
     const cal = d.loads[loadId].caliber.startsWith('7.62') ? 0.31 : d.loads[loadId].caliber.startsWith('.22') ? 0.22 : 0.224;
     for (const h of holes) {
@@ -172,9 +180,9 @@
   RD.wireKnobs(document, sight, () => setting, (which, next) => {
     setting = { ...setting, [which]: next };
     RD.clickSound();
-    $('knob-note').textContent = RD.setSight(rifleId, sightId, setting) ? '' : 'Sight setting not saved on this device (storage is off); it holds for this page only.';
+    knobNote(RD.setSight(rifleId, sightId, setting) ? '' : 'Sight setting not saved on this device (storage is off); it holds for this page only.');
     showSetting();
-  }, (text) => { $('knob-note').textContent = text; });
+  }, (text) => { knobNote(text); });
   if (leaf) {
     $('leafrow').hidden = false;
     const moveLeaf = (delta) => {
@@ -191,7 +199,9 @@
   // Fresh paper, and its one-tap way back (the firing line's: RD.hangFreshPaper and RD.putOldPaperBack, a marker in the day; no
   // shot is deleted). The way back stands where Fresh paper stood, until the next shot or another distance.
   let paperBack = null; // the marker Fresh paper replaced, while the old paper can be put back
-  const pairNote = (t) => { $('pair-note').textContent = t; };
+  // The knobs' words and the save's words share one slot between the rows that cause them (range-day-thirteen-b): whichever
+  // spoke last shows, the other is cleared.
+  const pairNote = (t) => { $('pair-note').textContent = t; if (t) $('knob-note').textContent = ''; };
   function freshButton() { $('fresh').textContent = paperBack ? 'Put the old paper back' : 'Fresh paper'; }
   $('fresh').addEventListener('click', () => {
     if (paperBack) {
