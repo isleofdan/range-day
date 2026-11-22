@@ -1,0 +1,63 @@
+Firing line layout, page at its top, Plain picture. Commit (working tree).
+
+== Dan's phone, measured 378x762 — Vepr with its scope (zoom)
+view: 346 x 346 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-142.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-492.5; inside the screen yes; above the bar yes
+  where the last shot went: 496.5-549; inside the screen yes; above the bar yes
+  elevation setting: 564.5-581.5; inside the screen yes; above the bar yes
+  elevation down: 586.5-630.5; inside the screen yes; above the bar yes
+  elevation up: 586.5-630.5; inside the screen yes; above the bar yes
+  windage setting: 564.5-581.5; inside the screen yes; above the bar yes
+  windage left: 586.5-630.5; inside the screen yes; above the bar yes
+  windage right: 586.5-630.5; inside the screen yes; above the bar yes
+  rounds left: 729.8-745.8; inside the screen yes; above the bar n/a
+  book line: 689.5-721.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 634.5-678.5, el-up-moa 634.5-678.5, wd-left-moa 634.5-678.5, wd-right-moa 634.5-678.5; within reach yes
+  Steady and Fire bar: from 693 to 762; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 721.8, bar from 693)
+
+== Dan's phone, measured 378x762 — Tavor SAR with its dot (magnifier)
+view: 346 x 346 px, top at 146.5; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 96.5-140.5; inside the screen yes; above the bar yes
+  sight's glass control: 96.5-140.5; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 146.5-492.5; inside the screen yes; above the bar yes
+  where the last shot went: 496.5-549; inside the screen yes; above the bar yes
+  elevation setting: 564.5-581.5; inside the screen yes; above the bar yes
+  elevation down: 586.5-630.5; inside the screen yes; above the bar yes
+  elevation up: 586.5-630.5; inside the screen yes; above the bar yes
+  windage setting: 564.5-581.5; inside the screen yes; above the bar yes
+  windage left: 586.5-630.5; inside the screen yes; above the bar yes
+  windage right: 586.5-630.5; inside the screen yes; above the bar yes
+  rounds left: 729.8-745.8; inside the screen yes; above the bar n/a
+  book line: 689.5-721.8; inside the screen yes; above the bar no
+  coarse buttons (1 MOA): el-down-moa 634.5-678.5, el-up-moa 634.5-678.5, wd-left-moa 634.5-678.5, wd-right-moa 634.5-678.5; within reach yes
+  Steady and Fire bar: from 693 to 762; fixed at the bottom inside the screen yes
+  verdict: NOT within reach — book line under the Steady and Fire bar (bottom 721.8, bar from 693)
+
+== Dan's phone, measured 378x762 — AK with its irons (rear leaf)
+view: 346 x 346 px, top at 162.4; page scrolled 0
+  short line: 46.5-90.5; inside the screen yes; above the bar yes
+  plate picker: 104.4-148.4; inside the screen yes; above the bar yes
+  sight's glass control: 94.5-158.4; inside the screen yes; above the bar yes
+  spotting scope: 46.5-90.5; inside the screen yes; above the bar yes
+  view: 162.4-508.4; inside the screen yes; above the bar yes
+  where the last shot went: 512.4-564.9; inside the screen yes; above the bar yes
+  elevation setting: 580.4-597.4; inside the screen yes; above the bar yes
+  elevation down: 602.4-646.4; inside the screen yes; above the bar yes
+  elevation up: 602.4-646.4; inside the screen yes; above the bar yes
+  windage setting: 580.4-597.4; inside the screen yes; above the bar yes
+  windage left: 602.4-646.4; inside the screen yes; above the bar yes
+  windage right: 602.4-646.4; inside the screen yes; above the bar yes
+  rounds left: 729.8-745.8; inside the screen yes; above the bar n/a
+  book line: 657.4-689.6; inside the screen yes; above the bar yes
+  coarse buttons (1 MOA): not shown for this sight; within reach n/a
+  Steady and Fire bar: from 693 to 762; fixed at the bottom inside the screen yes
+  verdict: everything within reach
+
+2 sight-and-size pair(s) not within reach
