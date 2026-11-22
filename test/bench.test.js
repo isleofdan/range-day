@@ -21,7 +21,7 @@ let browser = null, server = null, chromium = null;
 try { ({ chromium } = require('playwright')); if (!existsSync(chromium.executablePath())) chromium = null; } catch { chromium = null; }
 const skip = chromium ? false : "Playwright's browser is missing on this machine; the Checks workflow runs these";
 const rifles = guns.fromFiles(raw);
-const COLLECTION = ['trijicon-acog-ta31f', 'vortex-razor-1-10', 'leupold-mark5hd-5-25'];
+const COLLECTION = ['trijicon-acog-ta31f', 'trijicon-acog-ta31f-g', 'vortex-razor-1-10', 'leupold-mark5hd-5-25']; // range-day-fourteen: the green ACOG
 const AR = 'course=angeles-sylmar&rifle=bcm-ar15&sight=troy-battlesights&load=imi-m193';
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -202,7 +202,7 @@ function reticleProbes(S, k, size) {
   return out;
 }
 
-test('range-day-fourteen task item 4: each scope\'s reticle drawn against its data, read from the canvas, at 412 and 1280 px wide at the lowest and highest power: the ACOG\'s chevron and drop lines and the PR2-MOA\'s open center, long hash and holdover lines (Trijicon\'s and Leupold\'s sheets); the Vortex\'s fine crosshair, its drawing unread', { skip }, async () => {
+test('range-day-fourteen task item 4: each scope\'s reticle drawn against its data, read from the canvas, at 412 and 1280 px wide at the lowest and highest power: the ACOG\'s chevron and drop lines (the TA31F red, the TA31F-G green) and the PR2-MOA\'s open center, long hash and holdover lines (Trijicon\'s and Leupold\'s sheets); the Vortex\'s fine crosshair, its drawing unread', { skip }, async () => {
   const lines = []; let worst = 0;
   for (const [sizeName, viewport] of [['phone', { width: 412, height: 915 }], ['computer', { width: 1280, height: 800 }]]) {
     const { page, context, errors } = await signedIn(viewport);
@@ -223,7 +223,9 @@ test('range-day-fourteen task item 4: each scope\'s reticle drawn against its da
           // the marks are read from the reticle drawn alone by the same drawing at the same scale (RangeDayLine.reticleAlone), on white:
           // a mark's pixel is under half white's brightness, or red (a lit part)
           const A = RangeDayLine.reticleAlone().getContext('2d');
-          const mark = (x, y) => { const d = A.getImageData(Math.floor(x), Math.floor(y), 1, 1).data; return 0.299 * d[0] + 0.587 * d[1] + 0.114 * d[2] < 128 || d[0] - d[1] > 70; };
+          const mark = (x, y) => { const d = A.getImageData(Math.floor(x), Math.floor(y), 1, 1).data; return 0.299 * d[0] + 0.587 * d[1] + 0.114 * d[2] < 128 || d[0] - d[1] > 70 || d[1] - d[0] > 70; };
+          // the lit colour: how many of the reticle's pixels are plainly red and how many plainly green
+          const lit = (() => { const all = A.getImageData(0, 0, size, size).data; let red = 0, green = 0; for (let i = 0; i < all.length; i += 4) { if (all[i] - all[i + 1] > 70) red++; else if (all[i + 1] - all[i] > 70) green++; } return { red, green }; })();
           const measured = probes.map((p) => {
             if (p.kind === 'h') { // the outermost mark pixels in the rows across the mark's place, counted as pixel edges
               const xs = []; const yc = cy + p.y * k;
@@ -243,8 +245,8 @@ test('range-day-fourteen task item 4: each scope\'s reticle drawn against its da
           });
           // and the live view shows the same reticle: at the mark pixels of the reticle alone along the main line's row and the
           // column below the center, the live canvas is redder, or darker than the brightest of the view beside the line there
-          const live = []; for (let i = -Math.floor(size * 0.3); i <= Math.floor(size * 0.3); i++) for (const [x, y, across] of [[cx + i, cy, false], [cx, cy + i, true]]) if (mark(x, y)) { const d = g.getImageData(Math.floor(x * dpr), Math.floor(y * dpr), 1, 1).data; const bg = across ? [lum(x - 6, y), lum(x + 6, y), lum(x - 9, y), lum(x + 9, y)] : [lum(x, y - 6), lum(x, y + 6), lum(x, y - 9), lum(x, y + 9)]; live.push(d[0] - d[1] > 70 || lum(x, y) < 0.8 * Math.max(...bg)); }
-          return { G, measured, cx, livePx: live.length, liveShown: live.filter(Boolean).length, under: (() => { const y = cy + 10, xs = []; for (let x = Math.round(cx - 30); x <= Math.round(cx + 30); x++) if (lum(x, y) < 0.7 * Math.min(lum(x - 3, y), lum(x + 3, y))) xs.push(x); return xs; })(),
+          const live = []; for (let i = -Math.floor(size * 0.3); i <= Math.floor(size * 0.3); i++) for (const [x, y, across] of [[cx + i, cy, false], [cx, cy + i, true]]) if (mark(x, y)) { const d = g.getImageData(Math.floor(x * dpr), Math.floor(y * dpr), 1, 1).data; const bg = across ? [lum(x - 6, y), lum(x + 6, y), lum(x - 9, y), lum(x + 9, y)] : [lum(x, y - 6), lum(x, y + 6), lum(x, y - 9), lum(x, y + 9)]; live.push(Math.abs(d[0] - d[1]) > 70 || lum(x, y) < 0.8 * Math.max(...bg)); }
+          return { G, measured, lit, cx, livePx: live.length, liveShown: live.filter(Boolean).length, under: (() => { const y = cy + 10, xs = []; for (let x = Math.round(cx - 30); x <= Math.round(cx + 30); x++) if (lum(x, y) < 0.7 * Math.min(lum(x - 3, y), lum(x + 3, y))) xs.push(x); return xs; })(),
             right: [lum(cx + size * 0.3, cy), med(Array.from({ length: 17 }, (_, i) => lum(cx + size * 0.3, cy - 8 + i)))], above: [lum(cx, cy - size * 0.3), med(Array.from({ length: 17 }, (_, i) => lum(cx - 8 + i, cy - size * 0.3)))] };
         }, probes);
         const k = r.G.pxPerMoa;
@@ -259,6 +261,12 @@ test('range-day-fourteen task item 4: each scope\'s reticle drawn against its da
           continue;
         }
         assert.ok(probes.length >= 3, `${id} at ${power}x: at least three marks measured (${probes.length})`);
+        if (S.reticle.litColor) {
+          // range-day-fourteen: the ACOG's lit parts in its own colour, and none in the other (the TA31F red, the TA31F-G green)
+          const [want, other] = S.reticle.litColor === 'green' ? ['green', 'red'] : ['red', 'green'];
+          lines.push(`${sizeName} ${id} at ${power}x: lit ${S.reticle.litColor}: ${r.lit[want]} ${want} pixels, ${r.lit[other]} ${other}`);
+          assert.ok(r.lit[want] > 0 && r.lit[other] === 0, lines[lines.length - 1]);
+        }
         lines.push(`${sizeName} ${id} at ${power}x: the live view shows the reticle at ${r.liveShown} of its ${r.livePx} mark pixels along the main line and the post below`);
         assert.ok(r.livePx > 0 && r.liveShown >= 0.9 * r.livePx, lines[lines.length - 1]);
         probes.forEach((p, i) => {

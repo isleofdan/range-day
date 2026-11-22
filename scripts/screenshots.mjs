@@ -202,6 +202,8 @@ const SCREENS = [
   // range-day-thirteen: the scope collection on the BCM at 100 yards; the two zooms at their highest power on the 600-yard plate;
   // the Leupold on an AK-type rifle; the chooser on the BCM, its list shown at full length (as for the Tavor above).
   { name: 'line-acog-100', path: `${SYLMAR}&rifle=bcm-ar15&sight=trijicon-acog-ta31f&load=imi-m193`, expect: 'Trijicon ACOG 4x32', act: (page) => plate(page, 0) },
+  // range-day-fourteen: the green ACOG (TA31F-G), the same marks lit green
+  { name: 'line-acog-g-100', path: `${SYLMAR}&rifle=bcm-ar15&sight=trijicon-acog-ta31f-g&load=imi-m193`, expect: 'TA31F-G', act: (page) => plate(page, 0) },
   { name: 'line-vortex-1x-100', path: `${SYLMAR}&rifle=bcm-ar15&sight=vortex-razor-1-10&load=imi-m193`, expect: 'Vortex Razor HD Gen III', act: async (page) => { await plate(page, 0); await page.evaluate(() => RangeDayLine.setZoom(1)); await settle(page, 400); } },
   { name: 'line-vortex-10x-600', path: `${SYLMAR}&rifle=bcm-ar15&sight=vortex-razor-1-10&load=imi-m193`, expect: 'Vortex Razor HD Gen III', act: async (page) => { await plate(page, 5); await page.evaluate(() => RangeDayLine.setZoom(10)); await settle(page, 400); } },
   { name: 'line-leupold-5x-100', path: `${SYLMAR}&rifle=bcm-ar15&sight=leupold-mark5hd-5-25&load=imi-m193`, expect: 'Leupold Mark 5HD', act: async (page) => { await plate(page, 0); await page.evaluate(() => RangeDayLine.setZoom(5)); await settle(page, 400); } },

@@ -638,7 +638,8 @@
   //   dot   {x, y, d}                   a round dot d MOA across
   //   text  {x, y, s, h}                a printed number h MOA high, centred on x, y; left out when it would be under 7 px
   // Each mark carries its colour: red for the parts the maker's sheet shows lit, near-black for the rest. Nothing glows.
-  const INK = '#111', LIT = 'rgb(214, 38, 30)';
+  // The lit colour is the reticle's own (data/sights.json, reticle.litColor: the TA31F's red, the TA31F-G's green), plain, no glow.
+  const INK = '#111', LIT_COLORS = { red: 'rgb(214, 38, 30)', green: 'rgb(46, 178, 64)' };
   //
   // The ACSS drop reticle (the 3x prism sight): only what the manual's text supports: a chevron whose tip is the zero point
   // (50 yards), its base the 200-yard hold, then a hold mark at each distance the manual names, each at its derived angle below
@@ -660,6 +661,7 @@
   // 400 and 600 m lines. Lit as the sheet shows it (reticle.lit): the chevron, the post down to the first line, that line and
   // its number in red.
   function chevronMarks(r) {
+    const LIT = LIT_COLORS[r.litColor] || LIT_COLORS.red;
     const W = r.chevronBaseWidthMoa / 2, H = r.chevronHeightMoa, D = r.chevronDepthMoa;
     const inner = (H - D) * (W / H); // the inside edges run parallel to the outside ones, from the inside corner down to the base's line
     const out = [{ t: 'poly', pts: [[0, 0], [W, H], [inner, H], [0, D], [-inner, H], [-W, H]], c: LIT }];
