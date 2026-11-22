@@ -680,7 +680,7 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
   AR-15, both Tavors, both AK rifles and the Vepr after their own sights,
   each at its rifle's rail height plus its mount's (`lib/guns.js`); each
   firing-line shot carries `flightS` (the engine's time of flight, exact) and `targetKey` for playback. 151 tests,
-  105 screenshot states (140 and 94 before).
+  105 screenshot states (140 and 94 before). Merged as `5a2547d` on Dan's typed line and deployed by Deploy run 44970621113 (green, 78 s).
 - **Decided:** a scope moved to another rifle starts unzeroed there (its
   records are kept under the rifle); the .22 offers none (a grooved rimfire
   receiver); the Vortex's and the Leupold's reticles are a fine crosshair

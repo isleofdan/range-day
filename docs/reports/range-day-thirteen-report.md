@@ -325,7 +325,7 @@ branch.
    scene-rest passed; scene-scale and scene-shots were still running when
    this report was filed and passed on the Checks run.
 12. **The diff:** 148,520 bytes (`git diff origin/main...HEAD`).
-13. After the deploy: in the card note.
+13. **After the deploy:** pull request #43 merged as `5a2547d` on Dan's typed line ("yes, merge and deploy range-day-thirteen, then merge its notes"); Deploy run [44970621113](https://github.com/isleofdan/range-day/actions/runs/44970621113): success, 78 s, on `5a2547d`.
 
 What this cannot prove: the session cannot open the live app or hold a
 phone, so whether the bench is easier under Dan's thumb, and whether each
