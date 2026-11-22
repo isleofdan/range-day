@@ -335,7 +335,7 @@ scope looks to him like the real one, is unverified until he looks.
 1. Job `20261121-201509-d63392` (21 s, on report event 2966): FINDINGS,
    two. (1) The request to allow the makers' hosts gave Dan no page link
    or taps. Fixed by doing the step from the session: the environment now
-   allows the six hosts (Ask 3), and the closing message no longer asks
+   allows the six hosts (Ask 4), and the closing message no longer asks
    it. (2) The report recorded no result-check verdict. Fixed: this
    section records each round; the corrected report is filed again and
    checked again.
@@ -356,33 +356,50 @@ scope looks to him like the real one, is unverified until he looks.
    and the `PLAN.md` note. That order is the rule, not a divergence."
    (`CLAUDE.md`, "Field reports"). The notes are pushed now and wait only
    for their pull request. Checked once more below.
-3. (Next round below when it answers.)
+3. Job `20261122-003531-c948ed` (21 s, on report event 2970): FINDINGS,
+   two. (1) The notes pull request waits for the deploy result: the same
+   point as round 2's sixth, against the same rule; checked once more and
+   still standing, so it is Ask 1, as the brief orders, and not changed.
+   (2) The reticle work was put off to a later session: fixed, Ask 3 now
+   states what remains of it plainly.
+4. (Next round below when it answers.)
 
 ## Asks
 
-1. **Merge and deploy range-day-thirteen, then merge its notes.**
-   Recommended: yes.
-2. **The ACOG's drop lines (400 to 800 m): wait for Trijicon's own
-   drawing rather than draw them now from the forum table as estimates.**
-   Recommended answer: yes, wait; the next session that can open
-   Trijicon's, Vortex's and Leupold's reticle documents adds all three
-   scopes' marks from the makers themselves. It stands as the default
-   unless Dan says otherwise, so the closing message does not ask it.
-3. **Let cloud sessions open the three makers' pages.** Done from this
+1. **The notes' order: the notes-only pull request opens after the
+   deploy result, as `CLAUDE.md` orders.** The result checker asked in
+   rounds 2 and 3 for it to open now; the rule says otherwise: "When the
+   session merges and deploys, the order is fixed: the change's pull
+   request first (the report links it); after the deploy result, a
+   notes-only close-out pull request carrying the field report and the
+   `PLAN.md` note. That order is the rule, not a divergence." (`CLAUDE.md`,
+   "Field reports"). As the brief orders when a finding asks for what a
+   rule forbids and still stands after one more check, this is Ask 1.
+   Recommended answer: keep the rule's order. The merge line below says
+   so: it merges and deploys the change, then merges its notes.
+2. **Merge and deploy range-day-thirteen, then merge its notes.**
+   Recommended: yes. One typed line answers Asks 1 and 2.
+3. **The ACOG's drop lines (400 to 800 m) are left out rather than drawn
+   from the forum table as estimates.** Recommended answer: yes, left
+   out. What remains of the reticle work: the drop lines of the ACOG and
+   the marks of the Vortex EBR-9 MOA and the Leupold PR2-MOA, to be drawn
+   from the makers' own reticle documents, which this session could not
+   read. It is a standing default, so the closing message does not ask it.
+4. **Let cloud sessions open the three makers' pages.** Done from this
    session, not asked of Dan: this cloud environment ("First test") now
    allows `www.trijicon.com`, `trijicon.com`, `vortexoptics.com`,
    `www.vortexoptics.com`, `www.leupold.com` and `leupold.com`
    (`update_environment`, approved on its prompt; before, it allowed no
    extra host). A download of the three reticle documents tried from this
    session right after was refused by the auto-mode safety check
-   ("Unauthorized Access"), so the marks wait for the next session, as
-   Ask 2 says. Nothing for Dan to do.
+   ("Unauthorized Access"). Nothing for Dan to do.
 
 ## What the next session needs
 
 - Dan's look on his phone: the bench under his thumb; each scope on the BCM.
-- The three reticles' marks from the makers' documents (Ask 2); this cloud
-  environment now reaches the makers' sites (Ask 3).
+- The reticle work that remains (Ask 3): the ACOG's drop lines and the
+  Vortex's and Leupold's marks, from the makers' own documents; this
+  cloud environment now reaches the makers' sites (Ask 4).
 - Then, each planned by a Personal Shipyard chat: pistols and their targets
   at each range; the .22's own scope. The playback screen on Codex's side
   can read `flightS` and `targetKey` from each line shot. The picture work
@@ -414,7 +431,8 @@ its full check is green.
 
 **Needed from you**
 
-1. Merge and deploy it, then merge its notes (recommended: yes). Type:
+1. Merge and deploy it, then merge its notes after the deploy, in the
+   order this app's rules set (recommended: yes). Type:
 
 ```
 yes, merge and deploy range-day-thirteen, then merge its notes
