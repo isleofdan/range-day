@@ -690,7 +690,7 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
   under the word "Zoom" so the slider keeps one length.
 - **Next session needs:** Dan's look on his phone (the bench; each scope on
   the BCM); the three reticles' marks from the makers' documents (this
-  cloud environment now reaches the makers' sites; Ask 2);
+  cloud environment now reaches the makers' sites; Ask 3);
   then, each planned by a Personal Shipyard chat: pistols and their targets;
   the .22's own scope. The playback screen can read `flightS` and
   `targetKey`. The picture work stays paused on Dan's word. Report:
