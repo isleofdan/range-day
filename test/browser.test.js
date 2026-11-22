@@ -800,7 +800,8 @@ test('range-day-twelve task items 3 and 4: a control that does not apply is not 
   await page.goto(`${base}/?rifle=iwi-tavor-sar`); await page.waitForSelector('.rifle.picked[data-rifle="iwi-tavor-sar"]');
   const opts = await page.$$eval('#sight option', (o) => o.map((x) => x.textContent));
   // range-day-thirteen: then the scope collection's three, under their own heading
-  assert.equal(opts.length, 6, 'the irons, the dot (with its magnifier behind it) and the SeeAll; then the collection\'s three');
+  // (range-day-fourteen: four since the green ACOG joined the collection)
+  assert.equal(opts.length, 7, 'the irons, the dot (with its magnifier behind it) and the SeeAll; then the collection\'s four');
   assert.deepEqual(await page.$$eval('#sight > option', (o) => o.map((x) => x.value)), ['fab-flipup', 'pa-md25', 'seeall-gen1'], 'its own three first');
   assert.match(opts.join(' | '), /FAB Defense flip-up sights.*Primary Arms SLx MD-25.*SeeAll Open Sight/);
   console.log('  ' + helps.join('\n  ') + '\n  Tavor SAR sight chooser: ' + opts.join(' | '));
