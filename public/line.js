@@ -686,9 +686,9 @@
     const entry = { n: log.length + 1, yards: p.yards, target: p.kind, el: setAt.elevationClicks, wd: setAt.windageClicks, leaf: leaf ? leaf.settingsMeters[setAt.leafIx || 0] : undefined, zoom: mag, heldUp: Math.round(aimUp * 10) / 10, heldRight: Math.round(aimRight * 10) / 10, day: day.id, tempF: weather.tempF, call: call.from == null ? null : { from: call.from, mph: call.from === 'none' ? 0 : call.mph }, conditionsShown: shown };
     // The shot's number in the day is given now, at the trigger pull, so two bullets in the air keep the order they were fired in.
     const shot = { n: day.shots.length + pending.length + 1, place: 'line', yards: p.yards, target: p.kind, sight: sightId, elevationClicks: setAt.elevationClicks, windageClicks: setAt.windageClicks, elevationMoa: Math.round((setAt.elevationClicks * sight.clickMoa + leafMoa()) * 100) / 100, windageMoa: Math.round(setAt.windageClicks * sight.windageClickMoa * 100) / 100, leaf: entry.leaf ?? null, zero: zeroAt && zeroAt !== RD.store.FAILED ? { zeroYards: zeroAt.zeroYards, elevationClicks: zeroAt.elevationClicks, windageClicks: zeroAt.windageClicks, leafIx: leaf ? (zeroAt.leafIx || 0) : null, leaf: leaf ? leaf.settingsMeters[zeroAt.leafIx || 0] : null, elevationMoa: Math.round((zeroAt.elevationClicks * sight.clickMoa + (leaf ? leaf.moaAbove100[zeroAt.leafIx || 0].moaAbove100 : 0)) * 100) / 100 } : null, heldUpMoa: entry.heldUp, heldRightMoa: entry.heldRight, windCall: entry.call, conditionsShown: shown, first,
-      // range-day-thirteen, for playing a day back: the bullet's time of flight in seconds as the engine gave it, and the key of the
+      // range-day-thirteen, for playing a day back: the bullet's time of flight in seconds exactly as the engine gave it, and the key of the
       // target it was fired at (a plate's index, "0", "1", …, or a near target's "near-0", …). Older shots have neither.
-      flightS: Math.round(r.timeS * 10000) / 10000, targetKey: p.key };
+      flightS: r.timeS, targetKey: p.key };
     $('cold-line').hidden = true;
     if (!r.reached) {
       entry.where = `into the ground before the ${p.kind === 'paper' ? 'paper' : 'plate'}`; entry.hit = false;
