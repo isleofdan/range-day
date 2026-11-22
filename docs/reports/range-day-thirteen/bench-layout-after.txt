@@ -1,0 +1,2595 @@
+Zero bench layout, page at its top. Commit dcc3564. Boxes are top-bottom, left-right in CSS pixels.
+
+== 412x915 — BCM AR-15 carbine, 5.56 with the Troy folding BattleSights
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — BCM AR-15 carbine, 5.56 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — BCM AR-15 carbine, 5.56 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — BCM AR-15 carbine, 5.56 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — IWI Tavor SAR, 5.56 with the FAB Defense flip-up sights
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: not shown
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: not shown
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: not shown
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: not shown
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — IWI Tavor SAR, 5.56 with the Primary Arms SLx MD-25 red dot, 2 MOA dot
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — IWI Tavor SAR, 5.56 with the SeeAll Open Sight, first generation
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — IWI Tavor SAR, 5.56 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — IWI Tavor SAR, 5.56 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — IWI Tavor SAR, 5.56 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — IWI Tavor X95, 5.56 with the FAB Defense flip-up sights
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: not shown
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: not shown
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: not shown
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: not shown
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — IWI Tavor X95, 5.56 with the Primary Arms SLx MD-25 red dot, 2 MOA dot
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — IWI Tavor X95, 5.56 with the SeeAll Open Sight, first generation
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — IWI Tavor X95, 5.56 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — IWI Tavor X95, 5.56 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — IWI Tavor X95, 5.56 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — AK-pattern rifle, 7.62x39 with the AK ball front post (KNS 0.034 in) and KNS adjustable rear peep
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — AK-pattern rifle, 7.62x39 with the Primary Arms SLx 3x32 Gen III prism sight, ACSS CQB reticle for 7.62x39 / 300 Blackout
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — AK-pattern rifle, 7.62x39 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — AK-pattern rifle, 7.62x39 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — AK-pattern rifle, 7.62x39 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — AK-pattern rifle, 5.45x39 with the AK ball front post (KNS 0.034 in), rear notch, sliding leaf
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: not shown
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: not shown
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: not shown
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: not shown
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — AK-pattern rifle, 5.45x39 with the XS tritium stripe front post (AK), rear notch, sliding leaf
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: not shown
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: not shown
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: not shown
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: not shown
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — AK-pattern rifle, 5.45x39 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — AK-pattern rifle, 5.45x39 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — AK-pattern rifle, 5.45x39 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — Molot Vepr, 7.62x54R with the Vepr iron sights
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: not shown
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: not shown
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: not shown
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: not shown
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — Molot Vepr, 7.62x54R with the UTG BugBuster 3-9x32 compact scope, lit mil-dot
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — Molot Vepr, 7.62x54R with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — Molot Vepr, 7.62x54R with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — Molot Vepr, 7.62x54R with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 550.5-598.5, 119-184.5; on the first screen yes
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 550.5-598.5, 330.5-396; on the first screen yes
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: 604.5-652.5, 119-184.5; on the first screen yes
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 604.5-652.5, 330.5-396; on the first screen yes
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x915 — Remington bolt-action .22 LR, heavy barrel with the Open rimfire sights
+paper: 380 x 380 px; Fire's bottom edge at 866.5 of 915; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-490.5, 16-396; on the first screen yes
+  where the last group landed: 496.5-544.5, 16-396; on the first screen yes
+  elevation setting: 574.5-589.5, 16-114; on the first screen yes
+  elevation 1 MOA down: not shown
+  elevation one click down: 550.5-598.5, 189.5-255; on the first screen yes
+  elevation one click up: 550.5-598.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: not shown
+  windage setting: 628.5-643.5, 16-114; on the first screen yes
+  windage 1 MOA left: not shown
+  windage one click left: 604.5-652.5, 189.5-255; on the first screen yes
+  windage one click right: 604.5-652.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: not shown
+  the knobs' note: 658.5-690.5, 16-396; on the first screen yes
+  Fresh paper: 696.5-742.5, 16-202; on the first screen yes
+  Save this zero: 696.5-742.5, 210-396; on the first screen yes
+  the save's note: 748.5-780.5, 16-396; on the first screen yes
+  the zeroing supply: 786.5-802.5, 16-396; on the first screen yes
+  Fire one: 808.5-866.5, 16-201; on the first screen yes
+  Fire five: 808.5-866.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — BCM AR-15 carbine, 5.56 with the Troy folding BattleSights
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — BCM AR-15 carbine, 5.56 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — BCM AR-15 carbine, 5.56 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — BCM AR-15 carbine, 5.56 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — IWI Tavor SAR, 5.56 with the FAB Defense flip-up sights
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: not shown
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: not shown
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: not shown
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: not shown
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — IWI Tavor SAR, 5.56 with the Primary Arms SLx MD-25 red dot, 2 MOA dot
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — IWI Tavor SAR, 5.56 with the SeeAll Open Sight, first generation
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — IWI Tavor SAR, 5.56 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — IWI Tavor SAR, 5.56 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — IWI Tavor SAR, 5.56 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — IWI Tavor X95, 5.56 with the FAB Defense flip-up sights
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: not shown
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: not shown
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: not shown
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: not shown
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — IWI Tavor X95, 5.56 with the Primary Arms SLx MD-25 red dot, 2 MOA dot
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — IWI Tavor X95, 5.56 with the SeeAll Open Sight, first generation
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — IWI Tavor X95, 5.56 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — IWI Tavor X95, 5.56 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — IWI Tavor X95, 5.56 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — AK-pattern rifle, 7.62x39 with the AK ball front post (KNS 0.034 in) and KNS adjustable rear peep
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — AK-pattern rifle, 7.62x39 with the Primary Arms SLx 3x32 Gen III prism sight, ACSS CQB reticle for 7.62x39 / 300 Blackout
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — AK-pattern rifle, 7.62x39 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — AK-pattern rifle, 7.62x39 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — AK-pattern rifle, 7.62x39 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — AK-pattern rifle, 5.45x39 with the AK ball front post (KNS 0.034 in), rear notch, sliding leaf
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: not shown
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: not shown
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: not shown
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: not shown
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — AK-pattern rifle, 5.45x39 with the XS tritium stripe front post (AK), rear notch, sliding leaf
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: not shown
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: not shown
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: not shown
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: not shown
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — AK-pattern rifle, 5.45x39 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — AK-pattern rifle, 5.45x39 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — AK-pattern rifle, 5.45x39 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — Molot Vepr, 7.62x54R with the Vepr iron sights
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: not shown
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: not shown
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: not shown
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: not shown
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — Molot Vepr, 7.62x54R with the UTG BugBuster 3-9x32 compact scope, lit mil-dot
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — Molot Vepr, 7.62x54R with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — Molot Vepr, 7.62x54R with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — Molot Vepr, 7.62x54R with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: 500.5-548.5, 119-184.5; on the first screen yes
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: 500.5-548.5, 330.5-396; on the first screen yes
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: 554.5-602.5, 119-184.5; on the first screen yes
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: 554.5-602.5, 330.5-396; on the first screen yes
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 412x830 — Remington bolt-action .22 LR, heavy barrel with the Open rimfire sights
+paper: 330 x 330 px; Fire's bottom edge at 816.5 of 830; page scrolled 0
+  short line: 60.5-104.5, 16-272; on the first screen yes
+  paper at: 60.5-104.5, 280-396; on the first screen yes
+  paper: 110.5-440.5, 41-371; on the first screen yes
+  where the last group landed: 446.5-494.5, 16-396; on the first screen yes
+  elevation setting: 524.5-539.5, 16-114; on the first screen yes
+  elevation 1 MOA down: not shown
+  elevation one click down: 500.5-548.5, 189.5-255; on the first screen yes
+  elevation one click up: 500.5-548.5, 260-325.5; on the first screen yes
+  elevation 1 MOA up: not shown
+  windage setting: 578.5-593.5, 16-114; on the first screen yes
+  windage 1 MOA left: not shown
+  windage one click left: 554.5-602.5, 189.5-255; on the first screen yes
+  windage one click right: 554.5-602.5, 260-325.5; on the first screen yes
+  windage 1 MOA right: not shown
+  the knobs' note: 608.5-640.5, 16-396; on the first screen yes
+  Fresh paper: 646.5-692.5, 16-202; on the first screen yes
+  Save this zero: 646.5-692.5, 210-396; on the first screen yes
+  the save's note: 698.5-730.5, 16-396; on the first screen yes
+  the zeroing supply: 736.5-752.5, 16-396; on the first screen yes
+  Fire one: 758.5-816.5, 16-201; on the first screen yes
+  Fire five: 758.5-816.5, 211-396; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — BCM AR-15 carbine, 5.56 with the Troy folding BattleSights
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — BCM AR-15 carbine, 5.56 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — BCM AR-15 carbine, 5.56 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — BCM AR-15 carbine, 5.56 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — IWI Tavor SAR, 5.56 with the FAB Defense flip-up sights
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: not shown
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: not shown
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: not shown
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: not shown
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — IWI Tavor SAR, 5.56 with the Primary Arms SLx MD-25 red dot, 2 MOA dot
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — IWI Tavor SAR, 5.56 with the SeeAll Open Sight, first generation
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — IWI Tavor SAR, 5.56 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — IWI Tavor SAR, 5.56 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — IWI Tavor SAR, 5.56 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — IWI Tavor X95, 5.56 with the FAB Defense flip-up sights
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: not shown
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: not shown
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: not shown
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: not shown
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — IWI Tavor X95, 5.56 with the Primary Arms SLx MD-25 red dot, 2 MOA dot
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — IWI Tavor X95, 5.56 with the SeeAll Open Sight, first generation
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — IWI Tavor X95, 5.56 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — IWI Tavor X95, 5.56 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — IWI Tavor X95, 5.56 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — AK-pattern rifle, 7.62x39 with the AK ball front post (KNS 0.034 in) and KNS adjustable rear peep
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — AK-pattern rifle, 7.62x39 with the Primary Arms SLx 3x32 Gen III prism sight, ACSS CQB reticle for 7.62x39 / 300 Blackout
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — AK-pattern rifle, 7.62x39 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — AK-pattern rifle, 7.62x39 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — AK-pattern rifle, 7.62x39 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — AK-pattern rifle, 5.45x39 with the AK ball front post (KNS 0.034 in), rear notch, sliding leaf
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: not shown
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: not shown
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: not shown
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: not shown
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — AK-pattern rifle, 5.45x39 with the XS tritium stripe front post (AK), rear notch, sliding leaf
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: not shown
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: not shown
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: not shown
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: not shown
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — AK-pattern rifle, 5.45x39 with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — AK-pattern rifle, 5.45x39 with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — AK-pattern rifle, 5.45x39 with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — Molot Vepr, 7.62x54R with the Vepr iron sights
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: not shown
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: not shown
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: not shown
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: not shown
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — Molot Vepr, 7.62x54R with the UTG BugBuster 3-9x32 compact scope, lit mil-dot
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — Molot Vepr, 7.62x54R with the Trijicon ACOG 4x32 (TA31F), red chevron, on the TA51 flat-top mount
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — Molot Vepr, 7.62x54R with the Vortex Razor HD Gen III 1-10x24, first focal plane, EBR-9 MOA
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — Molot Vepr, 7.62x54R with the Leupold Mark 5HD 5-25x56, first focal plane, PR2-MOA
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: 170.5-218.5, 901-965.5; on the first screen yes
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: 170.5-218.5, 1109.5-1174; on the first screen yes
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: 224.5-272.5, 901-965.5; on the first screen yes
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: 224.5-272.5, 1109.5-1174; on the first screen yes
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+== 1280x800 — Remington bolt-action .22 LR, heavy barrel with the Open rimfire sights
+paper: 640 x 640 px; Fire's bottom edge at 486.5 of 800; page scrolled 0
+  short line: 66.5-110.5, 766-1050; on the first screen yes
+  paper at: 66.5-110.5, 1058-1174; on the first screen yes
+  paper: 66.5-706.5, 106-746; on the first screen yes
+  where the last group landed: 116.5-164.5, 766-1174; on the first screen yes
+  elevation setting: 194.5-209.5, 766-896; on the first screen yes
+  elevation 1 MOA down: not shown
+  elevation one click down: 170.5-218.5, 970.5-1035; on the first screen yes
+  elevation one click up: 170.5-218.5, 1040-1104.5; on the first screen yes
+  elevation 1 MOA up: not shown
+  windage setting: 248.5-263.5, 766-896; on the first screen yes
+  windage 1 MOA left: not shown
+  windage one click left: 224.5-272.5, 970.5-1035; on the first screen yes
+  windage one click right: 224.5-272.5, 1040-1104.5; on the first screen yes
+  windage 1 MOA right: not shown
+  the knobs' note: 278.5-310.5, 766-1174; on the first screen yes
+  Fresh paper: 316.5-362.5, 766-966; on the first screen yes
+  Save this zero: 316.5-362.5, 974-1174; on the first screen yes
+  the save's note: 368.5-400.5, 766-1174; on the first screen yes
+  the zeroing supply: 406.5-422.5, 766-1174; on the first screen yes
+  Fire one: 428.5-486.5, 766-965; on the first screen yes
+  Fire five: 428.5-486.5, 975-1174; on the first screen yes
+  Open another box: not shown
+  buttons touching: none
+  verdict: everything within reach
+
+every sight-and-size pair within reach

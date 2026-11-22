@@ -1,0 +1,14 @@
+412x915 utg-bugbuster-3-9x32 3x: slider 149 px, ends 40 px from the right edge
+412x915 utg-bugbuster-3-9x32 9x: slider 149 px, ends 40 px from the right edge
+412x915 vortex-razor-1-10 1x: slider 149 px, ends 40 px from the right edge
+412x915 vortex-razor-1-10 10x: slider 149 px, ends 40 px from the right edge
+412x915 leupold-mark5hd-5-25 5x: slider 149 px, ends 40 px from the right edge
+412x915 leupold-mark5hd-5-25 12.5x: slider 149 px, ends 40 px from the right edge
+412x915 leupold-mark5hd-5-25 25x: slider 149 px, ends 40 px from the right edge
+412x830 utg-bugbuster-3-9x32 3x: slider 149 px, ends 40 px from the right edge
+412x830 utg-bugbuster-3-9x32 9x: slider 149 px, ends 40 px from the right edge
+412x830 vortex-razor-1-10 1x: slider 149 px, ends 40 px from the right edge
+412x830 vortex-razor-1-10 10x: slider 149 px, ends 40 px from the right edge
+412x830 leupold-mark5hd-5-25 5x: slider 149 px, ends 40 px from the right edge
+412x830 leupold-mark5hd-5-25 12.5x: slider 149 px, ends 40 px from the right edge
+412x830 leupold-mark5hd-5-25 25x: slider 149 px, ends 40 px from the right edge

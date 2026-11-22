@@ -1,0 +1,16 @@
+412x915 spotting scope (with the utg-bugbuster-3-9x32 on the rifle) 25x: slider 148 px, ends 40 px from the right edge
+412x915 spotting scope (with the utg-bugbuster-3-9x32 on the rifle) 125x: slider 148 px, ends 40 px from the right edge
+412x915 spotting scope (with the vortex-razor-1-10 on the rifle) 25x: slider 148 px, ends 40 px from the right edge
+412x915 spotting scope (with the vortex-razor-1-10 on the rifle) 125x: slider 148 px, ends 40 px from the right edge
+412x915 spotting scope (with the leupold-mark5hd-5-25 on the rifle) 25x: slider 148 px, ends 40 px from the right edge
+412x915 spotting scope (with the leupold-mark5hd-5-25 on the rifle) 125x: slider 148 px, ends 40 px from the right edge
+412x915 spotting scope (with the trijicon-acog-ta31f on the rifle) 25x: slider 148 px, ends 40 px from the right edge
+412x915 spotting scope (with the trijicon-acog-ta31f on the rifle) 125x: slider 148 px, ends 40 px from the right edge
+412x830 spotting scope (with the utg-bugbuster-3-9x32 on the rifle) 25x: slider 148 px, ends 40 px from the right edge
+412x830 spotting scope (with the utg-bugbuster-3-9x32 on the rifle) 125x: slider 148 px, ends 40 px from the right edge
+412x830 spotting scope (with the vortex-razor-1-10 on the rifle) 25x: slider 148 px, ends 40 px from the right edge
+412x830 spotting scope (with the vortex-razor-1-10 on the rifle) 125x: slider 148 px, ends 40 px from the right edge
+412x830 spotting scope (with the leupold-mark5hd-5-25 on the rifle) 25x: slider 148 px, ends 40 px from the right edge
+412x830 spotting scope (with the leupold-mark5hd-5-25 on the rifle) 125x: slider 148 px, ends 40 px from the right edge
+412x830 spotting scope (with the trijicon-acog-ta31f on the rifle) 25x: slider 148 px, ends 40 px from the right edge
+412x830 spotting scope (with the trijicon-acog-ta31f on the rifle) 125x: slider 148 px, ends 40 px from the right edge
