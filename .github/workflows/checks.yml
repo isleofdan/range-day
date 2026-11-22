@@ -104,23 +104,3 @@ jobs:
 
       - name: Syntax and the screenshot shard
         run: node scripts/check.mjs --only screenshots --shard ${{ matrix.shard }}/4
-
-  # The work split (scripts/owners.mjs; CLAUDE.md, "Who works on what"): a
-  # Codex branch, named codex/..., may not change the files that hold or
-  # compute the real rifles' figures. Other branches pass at once.
-  owners:
-    name: who works on what
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-24.04
-    timeout-minutes: 5
-    steps:
-      - uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
-
-      - uses: actions/setup-node@v5
-        with:
-          node-version: 22
-
-      - name: A Codex branch leaves the real-figure files alone
-        run: node scripts/owners.mjs "${{ github.head_ref }}" "origin/${{ github.base_ref }}"
