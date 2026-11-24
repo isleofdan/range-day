@@ -2309,9 +2309,275 @@
    }
   },
   "reticle": {
-   "kind": "crosshair",
+   "kind": "bdc",
    "focalPlane": "first",
-   "marksNotDrawn": "Only the fine crosshair is drawn. Vortex's EBR-9 manual says the reticle is in the first focal plane (\"the listed MOA subtensions of the EBR-9 BDC reticle are valid at all magnification levels\", https://cdn11.bigcommerce.com/s-ycm0rvhla1/content/pdfs/vortex-ebr-9-bdc-moa.pdf, a retailer's copy, search text) and that its marks are 1 and 2 minutes apart, but its drawing could not be read: range-day-fourteen found it on Vortex's page for the scope as https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf, whose download the session's safety check refused, and a reticle library's copy (https://dex.scopelist.com/pdf/vortex-ebr-9-bdc-moa.pdf) was out of the session's network. Adding the marks waits on a reading of Vortex's drawing."
+   "about": "The EBR-9 BDC MOA: a red dot in a red broken circle; a fine crosshair hashed every minute and numbered at 4, 12 and 20, then heavy posts from 24; below the center a post with the bullet-drop marks at 2.4 to 17.25 minutes, then a ladder from 20 to 32, then the heavy post from 36. Lit parts (the dot and the circle) red. The wind dots in the rows at the 300 to 600 yard marks (and the row numbers beside them), the ranging marks above the center and the numbers' size carry no figure on the sheet; the dots and ranging marks are not drawn, and the numbers' size is an estimate.",
+   "centerDotMoa": {
+    "value": 1,
+    "source": {
+     "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+     "read": "2026-11-22",
+     "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: \"Ø1 (center dot)\"."
+    }
+   },
+   "circleInnerMoa": {
+    "value": 4,
+    "source": {
+     "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+     "read": "2026-11-22",
+     "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: \"Ø4 (broken circle inside)\"."
+    }
+   },
+   "circleOuterMoa": {
+    "value": 5.5,
+    "source": {
+     "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+     "read": "2026-11-22",
+     "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: \"Ø5.5 (broken circle outside)\"."
+    }
+   },
+   "circleGapDeg": {
+    "value": 24,
+    "estimate": "the circle is broken at the top, bottom, left and right where the crosshair's lines meet it; the sheet gives no size for the breaks; each looks about a fifteenth of the way round in the drawing, taken as 24 degrees of arc."
+   },
+   "lineMoa": {
+    "value": 0.25,
+    "source": {
+     "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+     "read": "2026-11-22",
+     "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: \".25\" across the fine vertical line at the top of the drawing: the thickness of the fine lines."
+    }
+   },
+   "fineLineToMoa": {
+    "value": 20,
+    "source": {
+     "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+     "read": "2026-11-22",
+     "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: the fine hashed line ends at the hash numbered \"20\" each side."
+    }
+   },
+   "postFromMoa": {
+    "value": 24,
+    "source": {
+     "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+     "read": "2026-11-22",
+     "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: \"24\" from the center to where the heavy post begins, each side."
+    }
+   },
+   "postMoa": {
+    "value": 0.5,
+    "source": {
+     "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+     "read": "2026-11-22",
+     "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: \".5\" across the heavy post."
+    }
+   },
+   "postMarkMoa": {
+    "value": 32,
+    "source": {
+     "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+     "read": "2026-11-22",
+     "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: the hash numbered \"32\" on each heavy post."
+    }
+   },
+   "postMarkLengthMoa": {
+    "value": 1.0,
+    "estimate": "the hash on the post at 32 has no printed length; it reaches about half a minute either side of the post, read against the sheet's own figures on the same drawing (its \"24\" from the center to the post, about 10.6 pixels a minute in the copy read), not printed on the sheet."
+   },
+   "hashSpacingMoa": {
+    "value": 1,
+    "source": {
+     "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+     "read": "2026-11-22",
+     "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: \"1\" between neighbouring hashes on the fine line (the lower ladder's \"1\" also)."
+    }
+   },
+   "shortHashMoa": {
+    "value": 0.5,
+    "source": {
+     "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+     "read": "2026-11-22",
+     "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: \".5\": the short hash at each minute between the numbered ones, on one side of the line (odd minutes above it, even minutes below, as drawn)."
+    }
+   },
+   "longHashMoa": {
+    "value": 1,
+    "source": {
+     "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+     "read": "2026-11-22",
+     "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: \"1\": the hash at each numbered minute (4, 12, 20), across the line."
+    }
+   },
+   "numbers": {
+    "value": [
+     4,
+     12,
+     20
+    ],
+    "source": {
+     "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+     "read": "2026-11-22",
+     "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: the numbers printed over the fine line each side: \"4\", \"12\", \"20\"."
+    }
+   },
+   "dropMarks": [
+    {
+     "belowMoa": {
+      "value": 2.4,
+      "source": {
+       "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+       "read": "2026-11-22",
+       "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: \"2.4\" (fig. 1) from the line to the first drop mark, the row labeled \"3\"."
+      }
+     },
+     "label": "3",
+     "long": true
+    },
+    {
+     "belowMoa": {
+      "value": 3.8,
+      "source": {
+       "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+       "read": "2026-11-22",
+       "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: \"3.8\" (fig. 1)."
+      }
+     }
+    },
+    {
+     "belowMoa": {
+      "value": 5.6,
+      "source": {
+       "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+       "read": "2026-11-22",
+       "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: \"5.6\" (fig. 1), the row labeled \"4\"."
+      }
+     },
+     "label": "4",
+     "long": true
+    },
+    {
+     "belowMoa": {
+      "value": 7.4,
+      "source": {
+       "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+       "read": "2026-11-22",
+       "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: \"7.4\" (fig. 1)."
+      }
+     }
+    },
+    {
+     "belowMoa": {
+      "value": 9.5,
+      "source": {
+       "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+       "read": "2026-11-22",
+       "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: \"9.5\" (fig. 1), the row labeled \"5\"."
+      }
+     },
+     "label": "5",
+     "long": true
+    },
+    {
+     "belowMoa": {
+      "value": 11.8,
+      "source": {
+       "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+       "read": "2026-11-22",
+       "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: \"11.8\" (fig. 1)."
+      }
+     }
+    },
+    {
+     "belowMoa": {
+      "value": 14.6,
+      "source": {
+       "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+       "read": "2026-11-22",
+       "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: \"14.6\" (fig. 1), the row labeled \"6\"."
+      }
+     },
+     "label": "6",
+     "long": true
+    },
+    {
+     "belowMoa": {
+      "value": 17.25,
+      "source": {
+       "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+       "read": "2026-11-22",
+       "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: \"17.25\" (fig. 1), the end of the drop post."
+      }
+     },
+     "long": true
+    }
+   ],
+   "dropLongMoa": {
+    "value": 2,
+    "estimate": "the drop marks at the labeled rows (and the post's end) have no printed width; in fig. 1 they are about 2 minutes across, read against the sheet's own figures on the same drawing (its \"24\" from the center to the post, about 10.6 pixels a minute in the copy read), not printed on the sheet."
+   },
+   "dropShortMoa": {
+    "value": 1,
+    "estimate": "the drop marks between them have no printed width; about 1 minute across in fig. 1, read against the sheet's own figures on the same drawing (its \"24\" from the center to the post, about 10.6 pixels a minute in the copy read), not printed on the sheet."
+   },
+   "ladderFromMoa": {
+    "value": 20,
+    "source": {
+     "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+     "read": "2026-11-22",
+     "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: the lower ladder's first mark, numbered \"20\"."
+    }
+   },
+   "ladderToMoa": {
+    "value": 32,
+    "source": {
+     "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+     "read": "2026-11-22",
+     "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: its last mark, numbered \"32\"."
+    }
+   },
+   "ladderMarkMoa": {
+    "value": 1,
+    "source": {
+     "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+     "read": "2026-11-22",
+     "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: \"1\" across each mark of the lower ladder."
+    }
+   },
+   "ladderNumberedMoa": {
+    "value": 2,
+    "source": {
+     "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+     "read": "2026-11-22",
+     "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: \"2\" across each numbered mark of the lower ladder (20, 24, 28, 32)."
+    }
+   },
+   "ladderNumbers": {
+    "value": [
+     20,
+     24,
+     28,
+     32
+    ],
+    "source": {
+     "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+     "read": "2026-11-22",
+     "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: the numbers beside the lower ladder."
+    }
+   },
+   "lowerPostFromMoa": {
+    "value": 36,
+    "source": {
+     "url": "https://vortexoptics.widen.net/view/pdf/6hmzejtlks/VTX_RZR-11001_EBR-9-BDC_MOA_I_RI_ST.pdf",
+     "read": "2026-11-22",
+     "note": "Vortex's sheet \"Reticle subtensions for: Razor HD Gen III, EBR-9 BDC MOA, 1-10x24 FFP\" (\"Subtensions measured in MOA and remain constant at all magnifications\"), linked from the maker's page for the scope; Dan downloaded it and sent the page to the session as a picture on 22 Nov 2026 (the session's own download had been refused), and each figure was read beside the line it measures: \"36\" from the line down to where the heavy post below begins."
+    }
+   },
+   "labelHeightMoa": {
+    "value": 1.5,
+    "estimate": "the sheet gives no size for its printed numbers; on it they stand about one and a half minutes high, read against the sheet's own figures on the same drawing (its \"24\" from the center to the post, about 10.6 pixels a minute in the copy read), not printed on the sheet."
+   },
+   "lit": "The sheet shows the dot and the broken circle red (the illuminated parts); the rest black. Drawn in plain red and black; nothing glows.",
+   "litColor": "red"
   },
   "mount": {
    "name": "Vortex Precision Extended Cantilever Mount, 34 mm (CM-534)",

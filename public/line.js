@@ -488,7 +488,7 @@
       g.strokeStyle = 'rgba(0,0,0,0.85)'; g.lineWidth = 2; g.beginPath(); g.arc(cx, cy, cx - 4, 0, Math.PI * 2); g.stroke();
       if (spotting) return; // the spotting scope has no reticle
       if (sight.reticle && sight.reticle.kind === 'mil-dot') return drawMilDot(g, size, k, cx, cy);
-      if (sight.reticle && (sight.reticle.marksMoaBelowZero || sight.reticle.kind === 'chevron' || sight.reticle.kind === 'tree')) return drawReticle(g, size, k, cx, cy);
+      if (sight.reticle && (sight.reticle.marksMoaBelowZero || ['chevron', 'tree', 'bdc'].includes(sight.reticle.kind))) return drawReticle(g, size, k, cx, cy);
       if (sight.reticle && sight.reticle.kind === 'crosshair') return drawCrosshair(g, size, cx, cy);
       return;
     }
@@ -731,11 +731,49 @@
     }
     return out;
   }
+  // The EBR-9 BDC MOA (range-day-fourteen-c, from Vortex's subtension sheet for the Razor HD Gen III 1-10x24): a red dot
+  // centerDotMoa across in a red circle broken where the lines meet it (circleInnerMoa to circleOuterMoa across); the fine line
+  // (lineMoa) from the circle out to fineLineToMoa, a hash every hashSpacingMoa (shortHashMoa: odd minutes above, even below),
+  // longHashMoa across and numbered at `numbers`; heavy posts (postMoa) from postFromMoa to the edge, a hash at postMarkMoa;
+  // below the circle the drop post to the last drop mark, each mark at its belowMoa, long or short; the ladder from
+  // ladderFromMoa to ladderToMoa, a mark each minute ladderMarkMoa across, ladderNumberedMoa at the numbered ones; the heavy
+  // post from lowerPostFromMoa down. No line above the circle, as drawn.
+  function bdcMarks(r) {
+    const LIT = LIT_COLORS[r.litColor] || LIT_COLORS.red, out = [], w = r.lineMoa, h = r.labelHeightMoa, EDGE = 400;
+    out.push({ t: 'dot', x: 0, y: 0, d: r.centerDotMoa, c: LIT });
+    out.push({ t: 'ring', r1: r.circleInnerMoa / 2, r2: r.circleOuterMoa / 2, gapDeg: r.circleGapDeg, c: LIT });
+    const R = r.circleOuterMoa / 2, sp = r.hashSpacingMoa;
+    for (const s of [-1, 1]) {
+      out.push({ t: 'line', x1: s * R, y1: 0, x2: s * r.fineLineToMoa, y2: 0, w, minPx: 1, c: INK });
+      for (let j = Math.ceil(R / sp); j * sp <= r.fineLineToMoa + 1e-9; j++) {
+        const x = s * j * sp, n = r.numbers.includes(j * sp);
+        if (n) out.push({ t: 'line', x1: x, y1: -r.longHashMoa / 2, x2: x, y2: r.longHashMoa / 2, w, minPx: 1, c: INK, vertical: true });
+        else if (j % 2) out.push({ t: 'line', x1: x, y1: -r.shortHashMoa, x2: x, y2: 0, w, minPx: 1, c: INK, vertical: true });
+        else out.push({ t: 'line', x1: x, y1: 0, x2: x, y2: r.shortHashMoa, w, minPx: 1, c: INK, vertical: true });
+        if (n) out.push({ t: 'text', x, y: -r.longHashMoa / 2 - h * 0.7, s: String(j * sp), h, c: INK });
+      }
+      out.push({ t: 'line', x1: s * r.postFromMoa, y1: 0, x2: s * EDGE, y2: 0, w: r.postMoa, minPx: 2, c: INK });
+      out.push({ t: 'line', x1: s * r.postMarkMoa, y1: -r.postMarkLengthMoa / 2, x2: s * r.postMarkMoa, y2: r.postMarkLengthMoa / 2, w, minPx: 1, c: INK, vertical: true });
+    }
+    // the drop post and its marks
+    const last = r.dropMarks[r.dropMarks.length - 1].belowMoa;
+    out.push({ t: 'line', x1: 0, y1: r.circleInnerMoa / 2, x2: 0, y2: last, w, minPx: 1, c: INK, vertical: true });
+    for (const m of r.dropMarks) { const half = (m.long ? r.dropLongMoa : r.dropShortMoa) / 2; out.push({ t: 'line', x1: -half, y1: m.belowMoa, x2: half, y2: m.belowMoa, w, minPx: 1, c: INK }); }
+    // the ladder and its numbers
+    out.push({ t: 'line', x1: 0, y1: r.ladderFromMoa, x2: 0, y2: r.ladderToMoa, w, minPx: 1, c: INK, vertical: true });
+    for (let y = r.ladderFromMoa; y <= r.ladderToMoa + 1e-9; y += sp) {
+      const n = r.ladderNumbers.includes(y), half = (n ? r.ladderNumberedMoa : r.ladderMarkMoa) / 2;
+      out.push({ t: 'line', x1: -half, y1: y, x2: half, y2: y, w, minPx: 1, c: INK });
+      if (n) out.push({ t: 'text', x: r.ladderNumberedMoa / 2 + h * 0.4, y, s: String(y), h, c: INK, align: 'left' });
+    }
+    out.push({ t: 'line', x1: 0, y1: r.lowerPostFromMoa, x2: 0, y2: EDGE, w: r.postMoa, minPx: 2, c: INK, vertical: true });
+    return out;
+  }
   let reticleCache = null;
   const reticleMarks = () => {
     if (reticleCache) return reticleCache;
     const r = sight.reticle;
-    reticleCache = r.kind === 'tree' ? treeMarks(r) : r.kind === 'chevron' ? chevronMarks(r) : acssMarks(r);
+    reticleCache = r.kind === 'tree' ? treeMarks(r) : r.kind === 'bdc' ? bdcMarks(r) : r.kind === 'chevron' ? chevronMarks(r) : acssMarks(r);
     return reticleCache;
   };
   // Draws the marks at the view's scale. A mark thinner than its minPx is drawn minPx wide, on whole pixels when it is that
@@ -762,6 +800,13 @@
         g.beginPath(); m.pts.forEach(([x, y], i) => (i ? g.lineTo(X(x), Y(y)) : g.moveTo(X(x), Y(y)))); g.stroke();
       } else if (m.t === 'poly') {
         g.beginPath(); m.pts.forEach(([x, y], i) => (i ? g.lineTo(X(x), Y(y)) : g.moveTo(X(x), Y(y)))); g.closePath(); g.fill();
+      } else if (m.t === 'ring') {
+        // a circle between two radii, broken at the top, bottom, left and right by gapDeg each
+        const ro = Math.max(m.r2 * k, m.r1 * k + 1), ri = m.r1 * k, gap = ((m.gapDeg / 2) * Math.PI) / 180;
+        for (let q = 0; q < 4; q++) {
+          const a0 = (q * Math.PI) / 2 + gap, a1 = ((q + 1) * Math.PI) / 2 - gap;
+          g.beginPath(); g.arc(cx, cy, ro, a0, a1); g.arc(cx, cy, ri, a1, a0, true); g.closePath(); g.fill();
+        }
       } else if (m.t === 'dot') {
         const x = X(m.x), y = Y(m.y); if (x < -4 || x > size + 4 || y < -4 || y > size + 4) continue;
         g.beginPath(); g.arc(x, y, Math.max(0.6, (m.d * k) / 2), 0, Math.PI * 2); g.fill();
@@ -1246,7 +1291,7 @@
     setPicture(v) { picture = v; measuring = null; if (v === 'plain') showPlain(''); else return startScene(v); },
     // range-day-fourteen: the reticle alone, drawn by the same drawing at the view's present scale onto a blank canvas the size of
     // the view, so the tests can read its marks without the ground behind them.
-    reticleAlone() { const size = view.size, c = document.createElement('canvas'); c.width = size; c.height = size; const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, size, size); if (sight.reticle && (sight.reticle.marksMoaBelowZero || sight.reticle.kind === 'chevron' || sight.reticle.kind === 'tree')) drawReticle(g, size, pxPerMoa(), size / 2, size / 2); return c; },
+    reticleAlone() { const size = view.size, c = document.createElement('canvas'); c.width = size; c.height = size; const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, size, size); if (sight.reticle && (sight.reticle.marksMoaBelowZero || ['chevron', 'tree', 'bdc'].includes(sight.reticle.kind))) drawReticle(g, size, pxPerMoa(), size / 2, size / 2); return c; },
     // The drawn geometry, in pixels at the view's scale: what the tests compare with the data's angles.
     get geometry() {
       const k = pxPerMoa();
