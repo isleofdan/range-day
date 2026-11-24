@@ -739,3 +739,16 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
   Shipyard chat: pistols and their targets; the .22's own scope. The
   picture work stays paused and the plate flicker set aside, on Dan's
   word. Report: `docs/reports/range-day-fourteen-report.md`.
+
+### range-day-fourteen-b and -c — 22 to 24 Nov 2026 (same session, on Dan's word)
+
+- **Stands:** the green ACOG (TA31F-G) in the scope collection, #49 merged
+  as `5b497bc` and deployed (Deploy run 44999222866); the Vortex's EBR-9 BDC
+  MOA marks from Vortex's sheet (sent by Dan as a picture), #50 merged as
+  `f245d82` and deployed (Deploy run 45350683176). Each reticle's lit colour
+  is in the data (`litColor`).
+- **Decided:** a colour variant of a scope is its own collection scope (its
+  own zero); a reticle mark with no figure on the maker's sheet is not drawn
+  (the Vortex's wind dots and ranging marks).
+- **Next session needs:** Dan's look at both on his phone. Report: the
+  addendum in `docs/reports/range-day-fourteen-report.md`.
