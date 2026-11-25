@@ -2,7 +2,8 @@
 // crash reporting first, so Sentry is set up before anything else loads (lib/crash.js)
 const crash = require('./lib/crash');
 // One plain Node server, made from isleofdan/starting-kit.
-//   /login (GET, POST), /logout, /app.css, /alive  — open
+//   /login (GET, POST), /logout, /app.css, /alive,
+//   /alive/guns (where the rifle set came from)    — open
 //   /manifest.webmanifest, /sw.js, /install.js,
 //   /icon-192.png, /icon-512.png                   — open (installing on the phone)
 //   /sentry.min.js, /crash.js                      — open (crash reporting, also on the sign-in page)
@@ -100,12 +101,28 @@ const gameData = require('./lib/data').load();
 if (gameData.problems.length) {
   throw new Error('data/: ' + gameData.problems.join('; '));
 }
-// The rifle set comes from gun records (lib/guns.js): data/rifles.json
-// wrapped as records, or the file GUN_RECORDS_FILE names. A bad record
-// stops the server with its name and the fault.
-const guns = require('./lib/guns').load(gameData.raw);
-gameData.flat.rifles = guns.rifles;
-console.log(`rifles: ${Object.keys(guns.rifles).length} from ${guns.from}`);
+// The rifle set comes from gun records (lib/guns.js). range-day-fifteen: with
+// SPINE_GUNS_URL set (fly.toml), from Dan's gun records in the Spine, read
+// before the server listens and every 10 minutes after, falling back to the
+// last set accepted from the Spine, or to data/rifles.json when there is none
+// yet (lib/spine-guns.js); /alive/guns says which. With GUN_RECORDS_FILE set
+// (tests, local runs), from that file; a bad record there stops the server
+// with its name and the fault. With neither, from data/rifles.json.
+let spineGuns = null;
+if (process.env.GUN_RECORDS_FILE || !process.env.SPINE_GUNS_URL) {
+  const guns = require('./lib/guns').load(gameData.raw);
+  gameData.flat.rifles = guns.rifles;
+  console.log(`rifles: ${Object.keys(guns.rifles).length} from ${guns.from}`);
+}
+if (!process.env.GUN_RECORDS_FILE) {
+  spineGuns = require('./lib/spine-guns').reader({
+    url: process.env.SPINE_GUNS_URL || '',
+    raw: gameData.raw,
+    onSet: (rifles) => { gameData.flat.rifles = rifles; },
+    everyMs: Number(process.env.SPINE_GUNS_EVERY_MS) || undefined,
+  });
+}
+const gunsLine = () => (spineGuns ? spineGuns.line() : `guns from ${process.env.GUN_RECORDS_FILE} (GUN_RECORDS_FILE): the Spine is not read`);
 route('GET', /^\/zero$/, (req, res) => sendHtml(res, 200, page('zero.html')));
 route('GET', /^\/line$/, (req, res) => sendHtml(res, 200, page('line.html')));
 route('GET', /^\/day$/, (req, res) => sendHtml(res, 200, page('day.html')));
@@ -168,6 +185,7 @@ async function handle(req, res) {
   const p = url.pathname;
 
   if (p === '/alive') return sendText(res, 200, aliveLine() + '\n');
+  if (p === '/alive/guns') return sendText(res, 200, gunsLine() + '\n');
   if (p === '/login' && req.method === 'GET') return loginPage(res, CONFIGURED ? 200 : 503, CONFIGURED ? '' : NOT_CONFIGURED, url.searchParams.get('next'));
   if (p === '/login' && req.method === 'POST') return handleLogin(req, res);
   if (p === '/logout') return redirect(res, '/login', { 'set-cookie': auth.clearCookie({ secure: SECURE_COOKIE }) });
@@ -199,7 +217,11 @@ const server = http.createServer((req, res) => {
   });
 });
 
-server.listen(PORT, () => console.log(`${app.name} on ${PORT}`));
+// The rifle set first (the Spine's read waits at most its 5-second limit), then listen.
+(spineGuns ? spineGuns.start() : Promise.resolve()).then(() => {
+  if (spineGuns) { console.log(spineGuns.line()); spineGuns.every(); }
+  server.listen(PORT, () => console.log(`${app.name} on ${PORT}`));
+}).catch((e) => { console.error(e.stack || e.message); process.exit(1); });
 
 // On stop (Fly sends SIGINT, then kills after 5 s): send what was captured,
 // then close. A connection still open after 2 s more does not hold it up.

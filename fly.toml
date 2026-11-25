@@ -13,6 +13,9 @@ primary_region = "nrt"   # Tokyo
   # Crash reporting (lib/crash.js, public/crash.js): a new app's DSN goes here; it is public by Sentry's design (https://docs.sentry.io/concepts/key-terms/dsn-explainer/).
   # Empty means no reporting: nothing is loaded and nothing is sent.
   SENTRY_DSN = ""
+  # range-day-fifteen: the rifle set comes from Dan's gun records in the Spine, read on the Spine's private listener (only
+  # callers on Dan's Fly private network; no token); lib/spine-guns.js falls back to data/rifles.json, and /alive/guns says which.
+  SPINE_GUNS_URL = "http://spine-dan.internal:8080/internal/records?type=gun"
 
 [http_service]
   internal_port = 8080
