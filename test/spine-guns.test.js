@@ -44,15 +44,17 @@ async function standIn() {
 }
 const json = (body, delay = 0) => (req, res) => setTimeout(() => { res.writeHead(200, { 'content-type': 'application/json' }); res.end(JSON.stringify(body)); }, delay);
 
-// The game itself, started against the stand-in, signed in through the form as a person would.
+// The game itself, started against the stand-in, signed in through the form as a person would, with a passphrase made
+// fresh for each run (no fixed credential in the repository).
+const PASS = require('node:crypto').randomBytes(12).toString('hex');
 async function game(port, env) {
   const t0 = Date.now();
-  const proc = spawn('node', ['server.js'], { cwd: root, env: { ...process.env, PORT: String(port), APP_PASSWORD: 'open sesame', COOKIE_SECRET: 'x'.repeat(64), COOKIE_INSECURE: '1', SENTRY_DSN: '', GUN_RECORDS_FILE: '', ...env }, stdio: ['ignore', 'ignore', 'inherit'] });
+  const proc = spawn('node', ['server.js'], { cwd: root, env: { ...process.env, PORT: String(port), APP_PASSWORD: PASS, COOKIE_SECRET: require('node:crypto').randomBytes(32).toString('hex'), COOKIE_INSECURE: '1', SENTRY_DSN: '', GUN_RECORDS_FILE: '', ...env }, stdio: ['ignore', 'ignore', 'inherit'] });
   const base = `http://127.0.0.1:${port}`;
   for (let i = 0; i < 400; i++) { try { await fetch(`${base}/alive`); break; } catch { await wait(25); } }
   const upAfter = Date.now() - t0;
   const line = (await (await fetch(`${base}/alive/guns`)).text()).trim();
-  const login = await fetch(`${base}/login`, { method: 'POST', redirect: 'manual', headers: { 'content-type': 'application/x-www-form-urlencoded' }, body: 'passphrase=open+sesame&next=%2F' });
+  const login = await fetch(`${base}/login`, { method: 'POST', redirect: 'manual', headers: { 'content-type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams({ passphrase: PASS, next: '/' }).toString() });
   const cookie = login.headers.get('set-cookie').split(';')[0];
   const d = await (await fetch(`${base}/api/data`, { headers: { cookie, accept: 'application/json' } })).json();
   return { proc, upAfter, line, rifles: d.rifles };
