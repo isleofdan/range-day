@@ -4,7 +4,8 @@
 # it on Fly, deploys, then proves the result: the alive line answers, and
 # signing in through the sign-in form, as a person would, reaches the
 # sample screen; the picture file built into the image answers with its
-# bytes; then POST /crash-test answers 500 (a warning, never a failure,
+# bytes; /alive/guns says where the rifles came from (a warning, never a
+# failure, when not the Spine); then POST /crash-test answers 500 (a warning, never a failure,
 # when it does not).
 #
 # Repository secrets it needs: FLY_API_TOKEN (a Fly org token for Dan's
@@ -103,6 +104,25 @@ jobs:
           if [ "$code" != "200" ] || ! grep -q "^alive since .* · ${GITHUB_SHA::7}$" /tmp/alive.txt; then
             echo "::error::$base/alive did not answer 200 with this commit's alive line."
             exit 1
+          fi
+
+      # range-day-fifteen: where the rifle set came from. The game reads Dan's gun
+      # records from the Spine before it listens; /alive/guns (open, no figures)
+      # says the source, the counts, the read time against its 5-second limit and
+      # any rifle whose Spine figures differ from data/rifles.json. A fallback to
+      # the file only warns: a Spine outage never blocks a release of the game.
+      - name: Say where the guns came from
+        run: |
+          base="https://$APP.fly.dev"
+          code=$(curl -s -o /tmp/guns.txt -w '%{http_code}' --max-time 30 "$base/alive/guns") || code="${code:-000}"
+          line=$(cat /tmp/guns.txt 2>/dev/null)
+          echo "where the guns came from: $line"
+          if [ "$code" != "200" ]; then
+            echo "::warning::$base/alive/guns answered $code, not 200; where the rifles came from is not known."
+          elif ! printf '%s' "$line" | grep -q '^guns from the Spine:'; then
+            echo "::warning::The rifles came from data/rifles.json, not the Spine: $line"
+          elif ! printf '%s' "$line" | grep -q 'differs from data/rifles.json: none'; then
+            echo "::warning::A rifle's figures in the Spine differ from data/rifles.json: $line"
           fi
 
       # As a person would: open the sign-in page, send the form with the

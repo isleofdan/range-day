@@ -176,3 +176,48 @@ test('range-day-fifteen: with SPINE_GUNS_URL unset nothing is called and the set
     assert.match(alive, /^alive since \S+ · \S+\n$/);
   } finally { g.proc.kill(); }
 });
+
+test('range-day-fifteen step 6: the deploy\'s "Say where the guns came from" step, after "Check the alive line", prints the line and warns, never fails, when the set is not the Spine\'s, differs, or the route does not answer', () => {
+  const fs = require('node:fs');
+  const os = require('node:os');
+  const { spawnSync } = require('node:child_process');
+  const yml = fs.readFileSync(path.join(root, '.github', 'workflows', 'deploy.yml'), 'utf8');
+  const at = yml.indexOf('- name: Say where the guns came from');
+  assert.ok(at > yml.indexOf('- name: Check the alive line'), 'after the alive line');
+  const lines = yml.slice(at).split('\n');
+  const from = lines.findIndex((l) => /^\s+run: \|\s*$/.test(l));
+  const run = [];
+  for (const l of lines.slice(from + 1)) { if (l.trim() && !l.startsWith('          ')) break; run.push(l.slice(10)); }
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'range-day-guns-step-'));
+  try {
+    fs.writeFileSync(path.join(dir, 'step.sh'), run.join('\n'));
+    // a stand-in curl: writes FAKE_LINE to the -o file and prints FAKE_CODE, or 000 and exit 7 (could not connect)
+    fs.writeFileSync(path.join(dir, 'curl'), `#!/bin/bash
+out=""; while [ $# -gt 0 ]; do [ "$1" = "-o" ] && out="$2"; shift; done
+if [ "$FAKE_DOWN" = 1 ]; then printf 000; exit 7; fi
+printf '%s\\n' "$FAKE_LINE" > "$out"; printf "\${FAKE_CODE:-200}"
+`);
+    fs.chmodSync(path.join(dir, 'curl'), 0o755);
+    const step = (env) => {
+      const r = spawnSync('bash', ['--noprofile', '--norc', '-eo', 'pipefail', path.join(dir, 'step.sh')], { encoding: 'utf8', env: { ...process.env, PATH: `${dir}:${process.env.PATH}`, APP: 'proof-app-dan', ...env } });
+      return { status: r.status, out: r.stdout + r.stderr };
+    };
+    const good = 'guns from the Spine: 12 records, 7 in the game, 5 not modeled · read in 140 ms (limit 5000 ms) at 2026-11-25T23:00:00Z · differs from data/rifles.json: none';
+    const ok = step({ FAKE_LINE: good });
+    assert.equal(ok.status, 0, ok.out);
+    assert.ok(ok.out.includes(`where the guns came from: ${good}`), ok.out);
+    assert.ok(!ok.out.includes('::warning::'), ok.out);
+    for (const env of [
+      { FAKE_LINE: 'guns from data/rifles.json, fell back: the Spine read at 2026-11-25T23:00:00Z failed after 5004 ms: no answer within 5000 ms' },
+      { FAKE_LINE: good.replace('none', 'bcm-ar15') },
+      { FAKE_LINE: '', FAKE_CODE: '502' },
+      { FAKE_DOWN: '1' },
+    ]) {
+      const r = step(env);
+      assert.equal(r.status, 0, r.out);
+      assert.ok(r.out.includes('::warning::'), r.out);
+    }
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
