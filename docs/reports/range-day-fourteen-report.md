@@ -527,3 +527,46 @@ this app's rules order, and the phone fit was not in the brief.
 ```
 yes, merge and deploy range-day-fourteen, then merge its notes
 ```
+
+## Addendum: range-day-fourteen-b and -c, 22 to 24 Nov 2026 (the same session, on Dan's word)
+
+**What stands.**
+
+- **The green ACOG** (range-day-fourteen-b), after Dan asked during the
+  walkthrough whether Trijicon makes the chevron green ("Green Trijicon too
+  please"): pull request [#49](https://github.com/isleofdan/range-day/pull/49),
+  merged as `5b497bc` on Dan's yes, Deploy run
+  [44999222866](https://github.com/isleofdan/range-day/actions/runs/44999222866)
+  (success, 73 s). The TA31F-G joins the scope collection: Trijicon's
+  dimension sheet lists it under the TA31F's drawing, so every mark is the
+  TA31F's; its chevron, post to the 400 m line and that line are green.
+  Each reticle's lit colour is in the data (`litColor`), refused unless red
+  or green. Checks run 44996528264 green; result check PASS (job
+  `20261122-072932-ab0c15`, after two rounds: the first graded against the
+  range-day-fourteen brief instead of Dan's request; the second asked for the
+  run's final result and the zero bench's files named). Screenshot state
+  `line-acog-g-100` added (114 states).
+- **The Vortex's EBR-9 BDC MOA marks** (range-day-fourteen-c): the session's
+  download of Vortex's drawing had been refused, so Dan fetched it and sent
+  its page as a picture. Pull request
+  [#50](https://github.com/isleofdan/range-day/pull/50), merged as `f245d82`
+  on Dan's line ("yes, rerun the check, then merge and deploy
+  range-day-fourteen-c"), Deploy run
+  [45350683176](https://github.com/isleofdan/range-day/actions/runs/45350683176)
+  (success, 74 s). Every mark the sheet gives a figure for is in the data
+  (kind `bdc`): the red 1-minute dot in its red broken circle (4 and 5.5
+  across), the fine line hashed every minute and numbered at 4, 12, 20 to
+  20, posts from 24, the drop marks at 2.4 to 17.25, the ladder 20 to 32,
+  the post from 36. Not drawn, no figure on the sheet: the wind dots and the
+  ranging marks above the center. Checks run 44999515570: one flaky piece of
+  the 3D tests (the Vepr's and the Tavor's sights, untouched by this change)
+  failed and passed on its rerun, attempt 2 green; result check PASS (job
+  `20261122-080436-db8c8d`).
+- No scope in the collection shows a bare crosshair any more.
+
+**What the next session needs.** Dan's look at the green ACOG and the
+Vortex on his phone. The Vortex's wind dots and ranging marks would need
+figures Vortex's sheet does not print. The notes are on
+`ccr-8bf11ea5-zc6c5m-notes`; this addendum, the screenshots and the
+`PLAN.md` note reach `main` in a notes-only pull request after the deploy,
+as `CLAUDE.md` orders.
