@@ -1,6 +1,6 @@
 # FIELD REPORT — range-day-fifteen — 2026-11-25
 
-The game on Dan's phone looks the same. What is new on his screen is his guns in the Spine: twelve records on the Spine's records page, seven of them carrying the game's figures. Once pull request [#52](https://github.com/isleofdan/range-day/pull/52) is merged and deployed, the game reads its rifles from those records.
+The game on Dan's phone looks the same. What is new on his screen is his guns in the Spine: twelve records on the Spine's records page, seven of them carrying the game's figures. Pull request [#52](https://github.com/isleofdan/range-day/pull/52) is merged as `a132f32` and deployed (Deploy run 25, [45722913828](https://github.com/isleofdan/range-day/actions/runs/45722913828), success, 85 s): the live game reads its rifles from those records.
 
 Route: a Claude Code cloud session (no `/data/home/dan/FACTS.md` here: `ls` answered "No such file or directory"), permission mode not readable from inside this session (its status line is not shown to it), though edits, commits and the push ran without a prompt, as Auto mode does; builder Claude (this session); independent checker the Codex result check (`check_result`). Branch `ccr-f2ea3998-tpyxa0`.
 
@@ -30,7 +30,7 @@ Route: a Claude Code cloud session (no `/data/home/dan/FACTS.md` here: `ls` answ
 - **Tests of the limit, both ways** (`test/spine-guns.test.js`; commits `1414622` and `a2fc8e2`), against a stand-in Spine: one that never answers, so the game listens after 5,063 ms on `guns from data/rifles.json, fell back: … failed after 5004 ms: no answer within 5000 ms`; one that answers after 2 seconds, so the game uses its set (read in 2,036 ms; its changed barrel figure is served, and `bcm-ar15` is listed as a difference); a refused record, an empty list, an answer that is not JSON, a 403 and a refused connection, each falling back with its reason (`gun 'iwi-x95': defaultSight 'troy-battlesights' is not one of its sights: fab-flipup, pa-md25, seeall-gen1`; `gun records: the list is empty; …`; `the Spine's answer is not JSON: <html>…`; `the Spine answered 403: …`; `no answer: ECONNREFUSED`); a set equal to the file reads `none` whatever the key order; after one accepted read, a read that never answers and then an empty list each keep the accepted set, with the reason, and the next good read is used again.
 - **The deploy says where the guns came from** (`.github/workflows/deploy.yml`; commit `7bc4181`): the step "Say where the guns came from", after "Check the alive line", prints `/alive/guns` and writes a warning annotation, never a failure, when the line is not from the Spine, shows a difference, or the route does not answer. A test runs the step's own shell against a stand-in `curl` in all five cases.
 - **The rule for later sessions** (`CLAUDE.md`, "Range Day's own rules"; commit `85dc132`), and `/alive/guns` added to the gate rule's list of open routes.
-- Pull request [#52](https://github.com/isleofdan/range-day/pull/52), open.
+- Pull request [#52](https://github.com/isleofdan/range-day/pull/52), merged as `a132f32` on Dan's line (below), deployed by Deploy run 25 (success).
 
 ## What the brief got wrong
 
@@ -60,19 +60,22 @@ Route: a Claude Code cloud session (no `/data/home/dan/FACTS.md` here: `ls` answ
 - `node --test test/spine-guns.test.js` on `a2fc8e2`: 7 tests, 7 pass.
 - The twelve records read back as in "What stands".
 - **Result check:** two runs gave findings about this report and one test line (jobs `20261125-231829-ac717d` on event 3049, `20261125-231948-2f4d84` on event 3051); every finding is answered in this version: the result check's outcome is stated here, the production Deploy line is named as divergence 6, and the test passphrase is now made fresh each run (commit `a2fc8e2`). This version goes back to the check.
-- **The production Deploy's "where the guns came from" line:** see divergence 6. The measured read duration so far, in tests: 5 to 7 ms from a stand-in on the same machine, 2,036 ms from the stand-in delayed by 2 seconds, against the 5,000 ms limit.
+- **The production Deploy's "where the guns came from" line** (Deploy run 25, step "Say where the guns came from", no warning):
+
+  ```
+  guns from the Spine: 12 records, 7 in the game, 5 not modeled · read in 2581 ms (limit 5000 ms) at 2026-11-25T23:39:38Z · differs from data/rifles.json: none
+  ```
+
+  The Spine was the source; twelve records, seven in the game, five not modeled; no rifle's figures differ from `data/rifles.json`, which is the by-code read-back divergence 1 promised. The one request kind, this read, took **2,581 ms against its 5,000 ms limit**: about half the limit, on the first read after the machine started (the alive line says it started at 23:39:38Z, the same second). Likely cause, not checked from here: the first connection's cost across Dan's private network (the name lookup and the connection to the Spine's machine, which may itself have been waking). If a later start ever goes past the limit, the game takes `data/rifles.json` with the reason and picks the Spine's set up on the next 10-minute read, so no player sees a fault; `/alive/guns` and the status page show it. No change is recommended until a slower read is seen.
+- **Merge and deploy:** Dan's line, typed in this session: "yes, merge and deploy range-day-fifteen, then merge its notes". The result check had not passed (divergence 6: its standing item was this line itself); Dan said yes knowing that.
 
 ## Asks
 
-1. Merge and deploy range-day-fifteen? Recommended: yes. The game restarts for a few seconds; saved days and zeroes stay on the phone. If yes, type:
-
-```
-yes, merge and deploy range-day-fifteen, then merge its notes
-```
+None. The merge and deploy were asked and answered; the line above closes the last verify item.
 
 ## What the next session needs
 
-- The deploy's `/alive/guns` line. If it says the set fell back to the file, its reason names the cause: the Spine's door not deployed yet (spine-gun-shelf), the two apps not on the same Fly private network, or a record refused.
+- The live game reads its rifles from the Spine (Deploy run 25's line above). A change to a rifle's figures goes in `data/rifles.json` and its Spine record in the same session (`CLAUDE.md`), then `/alive/guns` after the deploy must show no difference.
 - The next work, each planned by a Personal Shipyard chat: the workbench; pistols in the game and their targets (their records now exist, with no `game` section); the .22's own scope. The picture work stays paused and the plate flicker set aside, on Dan's word.
 
 ## For other sessions
@@ -83,12 +86,6 @@ yes, merge and deploy range-day-fifteen, then merge its notes
 
 ## Closing message to Dan
 
-The game on your phone looks the same. Your twelve guns are now records in the Spine: open https://spine-dan.fly.dev/?type=gun and you will see them, the seven rifles carrying the game's figures and the five pistols with what you've told me about them. Please don't change a rifle's game figures there; those go through a session. Once this is merged and deployed, the game reads its rifles from those records, and falls back to its own file if the Spine doesn't answer within 5 seconds.
+The game on your phone looks the same, but it now reads its rifles from your gun records in the Spine. The deploy confirmed it: twelve guns read, seven in the game, and the figures match the game's own file exactly. You can see the records at https://spine-dan.fly.dev/?type=gun. Please don't change a rifle's game figures there; those go through a session.
 
-Needed from you:
-
-1. Merge and deploy range-day-fifteen? The game restarts for a few seconds; your saved days and zeroes stay. If yes, type:
-
-```
-yes, merge and deploy range-day-fifteen, then merge its notes
-```
+Needed from you: nothing to decide. The next work (the workbench, pistols in the game, the .22's own scope) starts when you open it.

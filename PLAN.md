@@ -758,7 +758,7 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
 - **Stands:** Dan's twelve guns are records in the Spine (type `gun`): the
   seven rifles, each with `gameId` and the game's figures in `game`, and
   five pistols with no `game` section. Pull request #52, merged as
-  `a132f32` and deployed (DEPLOY_RESULT): the server reads its rifles from
+  `a132f32` and deployed (Deploy run 25, 45722913828, success, 85 s; its line: "guns from the Spine: 12 records, 7 in the game, 5 not modeled · read in 2581 ms (limit 5000 ms) · differs from data/rifles.json: none"): the server reads its rifles from
   the Spine's private read-only route (`SPINE_GUNS_URL` in `fly.toml`)
   before listening and every 10 minutes, limit 5 seconds, through the one
   check in `lib/guns.js`; on a failure it keeps the last set it accepted, or
@@ -770,9 +770,10 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
   Spine's own id (a hash of type and name); a record without `game` is
   skipped and counted, never refused; a rifle's figures change in
   `data/rifles.json` and its Spine record in the same session (`CLAUDE.md`).
-- **Next session needs:** the deploy's line below. The result check could
-  not pass before the deploy (its one standing item was the deploy's own
-  line); Dan said yes to merge and deploy without it. Next work, each
+- **Next session needs:** nothing waiting. The result check could not pass
+  before the deploy (its one standing item was the deploy's own line); Dan
+  said yes to merge and deploy without it, and the line then came back
+  clean. Next work, each
   planned by a Personal Shipyard chat: the workbench; pistols in the game
   and their targets; the .22's own scope. Report:
   `docs/reports/range-day-fifteen-report.md`.
