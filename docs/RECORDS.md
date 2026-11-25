@@ -405,3 +405,16 @@ environment variable `GUN_RECORDS_FILE` naming a JSON file (a list of
 records, or `{ "records": [...] }`), the set comes from that file; without
 it, from `data/rifles.json`. A refused record stops the server with the
 message.
+
+Since range-day-fifteen the live game reads its rifles from Dan's gun
+records in the Spine: `fly.toml` sets `SPINE_GUNS_URL` to the Spine's
+private read-only route (`http://spine-dan.internal:8080/internal/records?type=gun`,
+answering `{ items, state }`), and `lib/spine-guns.js` reads it before the
+server listens and every 10 minutes after, with a limit of 5 seconds, passing
+the items through `fromRecords`. When a read fails or its set is refused, the
+game keeps the last set it accepted from the Spine, or, with none yet, takes
+the whole set from `data/rifles.json`; never a mix. The open route
+`/alive/guns` answers one line: where the set came from, the counts, the
+read time and the rifles whose Spine `game` section differs from the file,
+or the reason it fell back. `GUN_RECORDS_FILE`, when set, still wins (tests,
+local runs); with neither set, the file is used and nothing is called.
