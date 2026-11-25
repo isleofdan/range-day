@@ -752,3 +752,28 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
   (the Vortex's wind dots and ranging marks).
 - **Next session needs:** Dan's look at both on his phone. Report: the
   addendum in `docs/reports/range-day-fourteen-report.md`.
+
+### range-day-fifteen — 25 Nov 2026 (cloud session, from the Wall card `range-day`)
+
+- **Stands:** Dan's twelve guns are records in the Spine (type `gun`): the
+  seven rifles, each with `gameId` and the game's figures in `game`, and
+  five pistols with no `game` section. Pull request #52, merged as
+  `a132f32` and deployed (Deploy run 25, 45722913828, success, 85 s; its line: "guns from the Spine: 12 records, 7 in the game, 5 not modeled · read in 2581 ms (limit 5000 ms) · differs from data/rifles.json: none"): the server reads its rifles from
+  the Spine's private read-only route (`SPINE_GUNS_URL` in `fly.toml`)
+  before listening and every 10 minutes, limit 5 seconds, through the one
+  check in `lib/guns.js`; on a failure it keeps the last set it accepted, or
+  takes `data/rifles.json`; the open route `/alive/guns` says which. The
+  deploy prints that line and only warns when it is not the Spine.
+  `npm run gun-records` prints the rifles' records as the file makes them.
+  164 tests (153 before); screenshot states unchanged.
+- **Decided:** the game keys a rifle by `fields.gameId`, never by the
+  Spine's own id (a hash of type and name); a record without `game` is
+  skipped and counted, never refused; a rifle's figures change in
+  `data/rifles.json` and its Spine record in the same session (`CLAUDE.md`).
+- **Next session needs:** nothing waiting. The result check could not pass
+  before the deploy (its one standing item was the deploy's own line); Dan
+  said yes to merge and deploy without it, and the line then came back
+  clean. Next work, each
+  planned by a Personal Shipyard chat: the workbench; pistols in the game
+  and their targets; the .22's own scope. Report:
+  `docs/reports/range-day-fifteen-report.md`.
