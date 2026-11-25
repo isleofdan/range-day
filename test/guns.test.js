@@ -225,3 +225,14 @@ test('range-day-fifteen: a game section without gameId, a bad kind, a caliber ne
   assert.match(refuse(broken((f) => { delete f.whose; })), /^gun 'bcm-ar15': whose must say whose gun it is/);
   assert.match(refuse(broken((f) => { f.caliber = '7.62x39'; })), /^gun 'bcm-ar15': the record's caliber "7\.62x39" is not its game section's "5\.56x45"$/);
 });
+
+test('range-day-fifteen step 2: npm run gun-records prints the seven rifles as import_records takes them, each exactly as toRecord makes it', () => {
+  const { execFileSync } = require('node:child_process');
+  const out = JSON.parse(execFileSync('node', ['scripts/gun-records.mjs'], { cwd: root }).toString());
+  const ids = Object.keys(raw.rifles).filter((k) => !k.startsWith('_'));
+  assert.equal(out.records.length, ids.length);
+  out.records.forEach((row, i) => {
+    const r = guns.toRecord(ids[i], raw.rifles[ids[i]]);
+    assert.deepStrictEqual(row, { type: 'gun', name: r.name, fields: r.fields }, ids[i]);
+  });
+});
