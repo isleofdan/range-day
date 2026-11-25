@@ -512,7 +512,7 @@ test('verify 4 (browser): with GUN_RECORDS_FILE naming a file with an eighth gun
   const dir = mkdtempSync(path.join(os.tmpdir(), 'range-day-guns-'));
   const records = Object.entries(raw.rifles).filter(([id]) => !id.startsWith('_')).map(([id, e]) => guns.toRecord(id, e));
   const eighth = JSON.parse(JSON.stringify(guns.toRecord('bcm-ar15', raw.rifles['bcm-ar15'])));
-  eighth.id = 'test-carbine'; eighth.name = 'Test carbine, 5.56';
+  eighth.id = 'test-carbine'; eighth.fields.gameId = 'test-carbine'; eighth.name = 'Test carbine, 5.56';
   eighth.fields.game.sightHeightIn['troy-battlesights'] = { value: 3.4, estimate: 'a made-up height for the test, higher than the AR\'s own' };
   eighth.fields.game.firstCourse = 'cta-piru';
   records.push(eighth);

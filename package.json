@@ -17,7 +17,8 @@
     "screenshots": "node scripts/screenshots.mjs",
     "check": "node scripts/check.mjs",
     "build": "node scripts/build-sentry.mjs",
-    "build:scene": "node scripts/build-scene.mjs"
+    "build:scene": "node scripts/build-scene.mjs",
+    "gun-records": "node scripts/gun-records.mjs"
   },
   "devDependencies": {
     "esbuild": "^0.28.2",

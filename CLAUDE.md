@@ -50,7 +50,8 @@ files in a brief includes them.
 - **Gate.** The app's own sign-in page (`public/login.html`, `lib/auth.js`),
   never the browser's username-and-password box: phone in-app browsers
   never show it. Every route except `/login`, `/logout`, `/app.css`,
-  `/alive`, the five install files below and crash reporting's
+  `/alive`, `/alive/guns` (range-day-fifteen: where the rifles came from,
+  no figures), the five install files below and crash reporting's
   `/sentry.min.js` and `/crash.js` stays behind the cookie.
 - **Installable on the phone, by default.** Every screen links
   `/manifest.webmanifest`, the theme color, the icon and `/install.js`, so
@@ -227,6 +228,16 @@ These bind every session on this app, on top of the kit's rules above.
   server reads records from the file `GUN_RECORDS_FILE` names, else from
   that file. No screen names a rifle by its id (a test reads
   `public/*.js` for them); what differs per rifle lives in its record.
+- **A rifle's figures change in two places in one session** (range-day-fifteen).
+  The game reads its rifles from Dan's gun records in the Spine (type `gun`,
+  each rifle's `fields.game` being its entry in `data/rifles.json`, keyed by
+  `fields.gameId`). A change to a rifle's figures is made in
+  `data/rifles.json`, where the checks prove it, and, in the same session,
+  written to that gun's Spine record with `import_records`, after reading the
+  record with `list_records` and changing only its `game` section, keeping
+  every other field; `npm run gun-records` prints the section as the file
+  makes it. After the deploy, `/alive/guns` must show "differs from
+  data/rifles.json: none".
 - **Pull-only, and no game mechanics**: no points, scores, levels,
   unlocks, streaks, badges, reminders, or praise. A hit is a hit; a
   record is a plain record; the day's page shows no totals dressed as a
