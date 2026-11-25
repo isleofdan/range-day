@@ -37,7 +37,7 @@ test('fromFiles() yields the same seven rifles the screens had before, figure fo
 
 test('a bare number, an unknown sight, a defaultSight it does not carry, a missing sight height: each refused, naming the gun, the fault and the valid values', () => {
   const base = guns.toRecord('bcm-ar15', raw.rifles['bcm-ar15']);
-  const broken = (change) => { const r = JSON.parse(JSON.stringify(base)); r.id = 'x'; change(r.fields.game); return r; };
+  const broken = (change) => { const r = JSON.parse(JSON.stringify(base)); r.id = 'x'; r.fields.gameId = 'x'; change(r.fields.game); return r; };
   const refuse = (r) => { try { guns.fromRecords([r], raw); } catch (e) { assert.ok(e instanceof guns.RecordError, e.message); return e.message; } assert.fail('accepted a bad record'); };
   const messages = [
     refuse(broken((g) => { g.barrelIn = 16; })),
@@ -73,7 +73,7 @@ test('with GUN_RECORDS_FILE naming a file with an eighth gun, the server serves 
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'range-day-guns-'));
   const records = Object.entries(raw.rifles).filter(([id]) => !id.startsWith('_')).map(([id, e]) => guns.toRecord(id, e));
   const eighth = JSON.parse(JSON.stringify(guns.toRecord('bcm-ar15', raw.rifles['bcm-ar15'])));
-  eighth.id = 'test-carbine'; eighth.name = 'Test carbine, 5.56';
+  eighth.id = 'test-carbine'; eighth.fields.gameId = 'test-carbine'; eighth.name = 'Test carbine, 5.56';
   eighth.fields.game.sightHeightIn['troy-battlesights'] = { value: 3.4, estimate: 'a made-up height for the test, higher than the AR\'s own' };
   eighth.fields.game.firstCourse = 'cta-piru';
   records.push(eighth);
@@ -126,7 +126,7 @@ test('range-day-thirteen: each rifle offers the collection\'s scopes its scope m
 
 test('range-day-thirteen: a bad scope mounting is refused by name: an unknown rail, no words, a rail height that puts a scope outside 1.5 to 5 in, a Picatinny rail with no height', () => {
   const base = guns.toRecord('bcm-ar15', raw.rifles['bcm-ar15']);
-  const broken = (f) => { const r = JSON.parse(JSON.stringify(base)); r.id = 'x'; f(r.fields.game); return r; };
+  const broken = (f) => { const r = JSON.parse(JSON.stringify(base)); r.id = 'x'; r.fields.gameId = 'x'; f(r.fields.game); return r; };
   const refuse = (r) => { try { guns.checkRecord(r, raw); } catch (e) { return e.message; } assert.fail('accepted'); };
   assert.match(refuse(broken((g) => { g.scopeMount.rail = 'weaver'; })), /^gun 'x': scopeMount.rail must be one of: picatinny, rimfire-dovetail$/);
   assert.match(refuse(broken((g) => { g.scopeMount.words = ''; })), /scopeMount needs words/);
@@ -185,4 +185,43 @@ test('range-day-thirteen: the three scopes\' figures, each from its maker\'s pag
   assert.match(bad((s) => { s['trijicon-acog-ta31f-g'].reticle.litColor = 'blue'; }).join(), /names its lit colour, litColor 'red' or 'green'/);
   assert.match(bad((s) => { delete s['leupold-mark5hd-5-25'].reticle.openingMoa; }).join(), /a tree reticle needs openingMoa/);
   assert.match(bad((s) => { delete s['trijicon-acog-ta31f'].reticle.dropLines[2].belowTipMoa; }).join(), /dropLines\[2\]: each drop line needs belowTipMoa/);
+});
+
+// range-day-fifteen step 1: the record's shape { id, name, fields: { gameId?, kind, caliber, whose, game?, notes? } }.
+test('range-day-fifteen: toRecord writes the game id, a rifle, the entry\'s caliber and Dan\'s; the game keys each rifle by gameId, never by the record\'s own id', () => {
+  const r = guns.toRecord('bcm-ar15', raw.rifles['bcm-ar15']);
+  assert.equal(r.fields.gameId, 'bcm-ar15');
+  assert.equal(r.fields.kind, 'rifle');
+  assert.equal(r.fields.caliber, '5.56x45');
+  assert.equal(r.fields.whose, "Dan's");
+  const { name, ...game } = raw.rifles['bcm-ar15'];
+  assert.deepStrictEqual(r.fields.game, game);
+  assert.equal(r.name, name);
+  // As the Spine keeps it: its own id from type and name; the game still finds the rifle by gameId.
+  const spine = { ...JSON.parse(JSON.stringify(r)), id: 'gun-bcm-ar-15-carbine-5-56', type: 'gun' };
+  const set = guns.fromRecords([spine], raw);
+  assert.deepEqual(Object.keys(set), ['bcm-ar15']);
+});
+
+test('range-day-fifteen: a record with no game section is a gun the game does not model: skipped and counted, never refused, whatever else it holds', () => {
+  const rifle = guns.toRecord('bcm-ar15', raw.rifles['bcm-ar15']);
+  const pistol = { id: 'gun-dan-wesson-1911', name: 'Dan Wesson 1911', fields: { kind: 'pistol', caliber: '.45 ACP', whose: "Dan's", notes: 'Model possibly the Discretion; Dan is not sure.' } };
+  const bare = { id: 'gun-odd', name: 'Odd', fields: { kind: 'cannon' } };
+  const count = {};
+  const set = guns.fromRecords([pistol, rifle, bare], raw, count);
+  assert.deepEqual(Object.keys(set), ['bcm-ar15']);
+  assert.deepEqual(count, { records: 3, inGame: 1, notModeled: 2 });
+  assert.throws(() => guns.fromRecords([pistol], raw), /none of the 1 records has a game section/);
+});
+
+test('range-day-fifteen: a game section without gameId, a bad kind, a caliber neither string nor null, no whose, a caliber that differs from the game\'s: each refused by name with the valid values', () => {
+  const base = guns.toRecord('bcm-ar15', raw.rifles['bcm-ar15']);
+  const broken = (change) => { const r = JSON.parse(JSON.stringify(base)); change(r.fields); return r; };
+  const refuse = (r) => { try { guns.fromRecords([r], raw); } catch (e) { assert.ok(e instanceof guns.RecordError, e.message); return e.message; } assert.fail('accepted a bad record'); };
+  assert.match(refuse(broken((f) => { delete f.gameId; })), /^gun 'BCM AR-15 carbine, 5\.56': has a game section but no fields\.gameId; it needs the rifle's id in data\/rifles\.json, one of: bcm-ar15, iwi-tavor-sar, iwi-x95, ak-762, ak-545, molot-vepr-54r, remington-22$/);
+  assert.match(refuse(broken((f) => { f.gameId = 'Bad Id'; })), /^gun 'Bad Id': gameId "Bad Id" must be lowercase letters, digits and hyphens$/);
+  assert.match(refuse(broken((f) => { f.kind = 'shotgun'; })), /^gun 'bcm-ar15': kind "shotgun" is not one of: rifle, pistol$/);
+  assert.match(refuse(broken((f) => { f.caliber = 5.56; })), /^gun 'bcm-ar15': caliber must be a string such as "5\.56x45", or null when not known$/);
+  assert.match(refuse(broken((f) => { delete f.whose; })), /^gun 'bcm-ar15': whose must say whose gun it is/);
+  assert.match(refuse(broken((f) => { f.caliber = '7.62x39'; })), /^gun 'bcm-ar15': the record's caliber "7\.62x39" is not its game section's "5\.56x45"$/);
 });

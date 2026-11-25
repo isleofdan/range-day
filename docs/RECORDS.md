@@ -331,10 +331,30 @@ elsewhere.
 
 ## The gun record's `game` section, and how `lib/guns.js` checks it
 
-The game takes each rifle from a gun record, one record per gun:
-`{ id, name, fields: { game: {...} } }`. Only `id`, `name` and `game` are
-read; every other section of a record is ignored and never written
-anywhere. `game` is, field for field, one entry of `data/rifles.json`:
+The game takes each rifle from a gun record, one record per gun
+(range-day-fifteen: the records live in the Spine, type `gun`):
+
+```json
+{ "id": "<the Spine's own id>", "name": "BCM AR-15 carbine, 5.56",
+  "fields": { "gameId": "bcm-ar15", "kind": "rifle", "caliber": "5.56x45", "whose": "Dan's",
+              "game": { "...": "one entry of data/rifles.json, less its name" }, "notes": "optional" } }
+```
+
+| Field | What it is |
+| - | - |
+| `gameId` | the rifle's id in `data/rifles.json`; the game keys the rifle by it (saved zeroes, shot logs and days are keyed by it), never by the record's own `id`, which the Spine derives from the record's type and name; required when there is a `game` section |
+| `kind` | `rifle` or `pistol` |
+| `caliber` | a string, or `null` when Dan has not said; with a `game` section, the same as the section's `caliber` |
+| `whose` | `"Dan's"` |
+| `game` | optional: the game's figures for the gun |
+| `notes` | optional: words |
+
+A record with no `game` section is a gun the game does not model (the
+pistols today): it is skipped and counted, never refused. A record with a
+`game` section and no `gameId` is refused by name. `name`, `gameId` and
+`game` are what the game reads; every other section of a record is ignored
+and never written anywhere. `game` is, field for field, one entry of
+`data/rifles.json`:
 
 | Field | What it is |
 | - | - |
@@ -354,9 +374,10 @@ A figure is `{ "value": <number>, "source": { "url": "...", "read": "YYYY-MM-DD"
 or `{ "value": <number>, "estimate": "<its basis>" }`; a bare number is
 refused.
 
-`fromRecords(records, raw)` takes a list of records and the game's own
+`fromRecords(records, raw, count)` takes a list of records and the game's own
 data (`lib/data.load().raw`) and returns the rifle set the screens use
-(an object keyed by id, in the records' order, each figure reduced to its
+(an object keyed by `gameId`, in the records' order, filling `count`, when
+given, with `{ records, inGame, notModeled }`; each figure reduced to its
 value), or throws a `RecordError` naming the gun, the fault and the
 valid values, for example:
 
@@ -368,11 +389,17 @@ valid values, for example:
 - `gun 'x': firstCourse 'moon' is not a course: cta-piru, angeles-sylmar`
 - `gun 'x': sightLeaf for 'troy-battlesights' names 'leaf', which is not a leaf table on that sight: it has none`
 
+- `gun 'BCM AR-15 carbine, 5.56': has a game section but no fields.gameId; it needs the rifle's id in data/rifles.json, one of: bcm-ar15, …`
+- `gun 'bcm-ar15': kind "shotgun" is not one of: rifle, pistol`
+- `gun 'bcm-ar15': the record's caliber "7.62x39" is not its game section's "5.56x45"`
+
 It also refuses a missing or unknown `game` field, a record that appears
-twice, an empty list, and a set with no playable gun.
+twice, an empty list, a list with no `game` section in it, and a set with
+no playable gun.
 
 `fromFiles(raw)` wraps each `data/rifles.json` entry as a record
-(`toRecord(id, entry)`) and passes it through `fromRecords`, so the one
+(`toRecord(id, entry)`, which writes `gameId: id`, `kind: "rifle"`, the
+entry's `caliber`, `whose: "Dan's"` and the entry less its name as `game`) and passes it through `fromRecords`, so the one
 path is always the path. `load(raw)` is what the server calls: with the
 environment variable `GUN_RECORDS_FILE` naming a JSON file (a list of
 records, or `{ "records": [...] }`), the set comes from that file; without
