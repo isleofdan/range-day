@@ -28,6 +28,9 @@
       <div class="headrow">
         <button id="line-head" type="button" class="linehead" aria-expanded="false" aria-controls="line-full"><span id="line-short">Loading…</span><span class="caret" aria-hidden="true">▾</span></button>
         <!-- The spotting scope's door (range-day-ten-b: moved here from the target row, which it cramped): reads "Back to the rifle" at the scope. -->
+        <!-- range-day-sixteen: the way of aiming, one tap to switch; Center, shown only in tilt mode, makes where the phone points now the target's center. -->
+        <button id="aim-mode" type="button" class="btn inline secondary aimbtn" aria-pressed="false">Aim: drag</button>
+        <button id="aim-center" type="button" class="btn inline aimbtn" hidden>Center</button>
         <button id="spotting" type="button" class="btn inline secondary spotbtn" aria-pressed="false">Spotting scope</button>
       </div>
       <div id="line-full" class="linefull" hidden>
@@ -115,6 +118,9 @@
     <pre id="conditions" class="mono small conditions"></pre>
     <div class="field picture"><label for="picture">Picture</label><select id="picture"><option value="full">Full (the surveyed ground, the real sun, every bush)</option><option value="light">Light (the same ground, fewer bushes, a smaller photograph)</option><option value="plain">Plain (flat shapes, as before)</option></select></div>
     <p class="muted small">The ground, the sun and the plates' places are the same under every picture; a shot lands the same way. The first visit picks Full or Light by how fast this device draws.</p>
+    <div class="field gearing"><label for="gearing">How far the aim moves when the phone tilts</label><select id="gearing"><option value="1">True angle (one degree of phone is one degree of aim)</option><option value="4">A quarter</option><option value="10">A tenth</option><option value="20">A twentieth</option></select></div>
+    <p id="steadiness" class="small mono" hidden></p>
+    <p id="aim-note" class="muted small" hidden></p>
   </div>
 </main>
 <div class="firebar">
@@ -124,6 +130,7 @@
 </div>
 <script src="/engine.js"></script>
 <script src="/game.js"></script>
+<script src="/tilt.js"></script>
 <script src="/line.js"></script>
 </body>
 </html>

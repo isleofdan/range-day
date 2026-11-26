@@ -56,6 +56,7 @@ function measure(glass) {
     ['plate picker', q('#plate')],
     ['sight\'s glass control', glass ? q(glass) : null],
     ['spotting scope', q('#spotting')], // range-day-ten: beside the sight's glass control
+    ['aim switch', q('#aim-mode')], ['center', q('#aim-center')], // range-day-sixteen: the way of aiming, and Center in tilt mode
     ['view', q('#view')],
     ['where the last shot went', q('#result')],
     ['elevation setting', q('#el-text')], ['elevation down', q('#el-down')], ['elevation up', q('#el-up')],
@@ -80,7 +81,7 @@ function measure(glass) {
     ? { besideView: !(bar.left < view.right && bar.right > view.left && bar.top < view.bottom && bar.bottom > view.top), inside: bar.top >= 0 && bar.bottom <= h && bar.left >= 0 && bar.right <= w }
     : { fixedAtBottom: fixed && Math.abs(bar.bottom - h) <= 1 && bar.top >= 0, inside: bar.top >= 0 && bar.bottom <= h && bar.left >= 0 && bar.right <= w };
   // Every button and control a thumb uses in the within-reach list, with its height.
-  const touch = ['#plate', '#zoom', '#magnifier', '#aperture', '#leaf-down', '#leaf-up', '#el-down', '#el-up', '#wd-left', '#wd-right', '#el-down-moa', '#el-up-moa', '#wd-left-moa', '#wd-right-moa', '#line-head', '#another-box', '#steady', '#fire', '#spotting', '#spot-zoom', '#back-to-rifle', '#fresh-paper', '#old-paper']
+  const touch = ['#plate', '#zoom', '#magnifier', '#aperture', '#leaf-down', '#leaf-up', '#el-down', '#el-up', '#wd-left', '#wd-right', '#el-down-moa', '#el-up-moa', '#wd-left-moa', '#wd-right-moa', '#line-head', '#another-box', '#steady', '#fire', '#spotting', '#aim-mode', '#aim-center', '#spot-zoom', '#back-to-rifle', '#fresh-paper', '#old-paper']
     .map((s) => q(s)).filter(shown).map((el) => ({ id: el.id, height: Math.round(el.getBoundingClientRect().height * 10) / 10 }));
   return { w, h, wide, scrollY: window.scrollY, view: { width: view.width, height: view.height, top: view.top }, bar, barChecks, items, coarse: coarseBoxes, coarseInStrip, touch };
 }

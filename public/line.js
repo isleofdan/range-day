@@ -887,12 +887,14 @@
     recoil.up += 14 * rifle.recoilFactor * (0.8 + Math.random() * 0.4); recoil.right += 4 * rifle.recoilFactor * (0.5 + Math.random());
     lastShotAt = now;
     const ipm = inchPerMoa(p.yards);
-    const entry = { n: log.length + 1, yards: p.yards, target: p.kind, el: setAt.elevationClicks, wd: setAt.windageClicks, leaf: leaf ? leaf.settingsMeters[setAt.leafIx || 0] : undefined, zoom: mag, heldUp: Math.round(aimUp * 10) / 10, heldRight: Math.round(aimRight * 10) / 10, day: day.id, tempF: weather.tempF, call: call.from == null ? null : { from: call.from, mph: call.from === 'none' ? 0 : call.mph }, conditionsShown: shown };
+    const entry = { n: log.length + 1, yards: p.yards, target: p.kind, el: setAt.elevationClicks, wd: setAt.windageClicks, leaf: leaf ? leaf.settingsMeters[setAt.leafIx || 0] : undefined, zoom: mag, heldUp: Math.round(aimUp * 10) / 10, heldRight: Math.round(aimRight * 10) / 10, day: day.id, tempF: weather.tempF, call: call.from == null ? null : { from: call.from, mph: call.from === 'none' ? 0 : call.mph }, conditionsShown: shown, aim: aimMode };
     // The shot's number in the day is given now, at the trigger pull, so two bullets in the air keep the order they were fired in.
     const shot = { n: day.shots.length + pending.length + 1, place: 'line', yards: p.yards, target: p.kind, sight: sightId, elevationClicks: setAt.elevationClicks, windageClicks: setAt.windageClicks, elevationMoa: Math.round((setAt.elevationClicks * sight.clickMoa + leafMoa()) * 100) / 100, windageMoa: Math.round(setAt.windageClicks * sight.windageClickMoa * 100) / 100, leaf: entry.leaf ?? null, zero: zeroAt && zeroAt !== RD.store.FAILED ? { zeroYards: zeroAt.zeroYards, elevationClicks: zeroAt.elevationClicks, windageClicks: zeroAt.windageClicks, leafIx: leaf ? (zeroAt.leafIx || 0) : null, leaf: leaf ? leaf.settingsMeters[zeroAt.leafIx || 0] : null, elevationMoa: Math.round((zeroAt.elevationClicks * sight.clickMoa + (leaf ? leaf.moaAbove100[zeroAt.leafIx || 0].moaAbove100 : 0)) * 100) / 100 } : null, heldUpMoa: entry.heldUp, heldRightMoa: entry.heldRight, windCall: entry.call, conditionsShown: shown, first,
       // range-day-thirteen, for playing a day back: the bullet's time of flight in seconds exactly as the engine gave it, and the key of the
       // target it was fired at (a plate's index, "0", "1", …, or a near target's "near-0", …). Older shots have neither.
-      flightS: r.timeS, targetKey: p.key };
+      flightS: r.timeS, targetKey: p.key,
+      // range-day-sixteen: how the shot was aimed, "drag" or "tilt" (a shot without it was aimed by drag)
+      aim: aimMode };
     $('cold-line').hidden = true;
     if (!r.reached) {
       entry.where = `into the ground before the ${p.kind === 'paper' ? 'paper' : 'plate'}`; entry.hit = false;
@@ -1036,7 +1038,7 @@
     setting = { ...setting, [which]: next };
     RD.clickSound(); showSetting(); zeroNote(); storeSetting();
   }, (text) => { $('result').textContent = text; });
-  $('plate').addEventListener('change', (e) => { target = targets.find((t) => t.key === e.target.value) || target; hold.up = 0; hold.right = 0; spotAim.up = 0; spotAim.right = 0; conditions(); bookLine(); paperRow(); });
+  $('plate').addEventListener('change', (e) => { target = targets.find((t) => t.key === e.target.value) || target; hold.up = 0; hold.right = 0; spotAim.up = 0; spotAim.right = 0; recenterTilt(); conditions(); bookLine(); paperRow(); });
   // Going to the spotting scope and back. Nothing on the page moves: the scope's zoom takes the glass control's cell, the button
   // keeps its size, and "Back to the rifle" stands in the bar where Steady and Fire stood (they are hidden and cannot be pressed).
   const spotZoomText = () => { $('spot-zoom-text').textContent = `${spotMag}×`; };
@@ -1050,6 +1052,7 @@
     $('spotrow').setAttribute('aria-hidden', String(!spotting)); $('spot-zoom').tabIndex = spotting ? 0 : -1;
     for (const id of ['steady', 'fire']) { $(id).classList.toggle('away', spotting); $(id).setAttribute('aria-hidden', String(spotting)); $(id).tabIndex = spotting ? -1 : 0; }
     $('back-to-rifle').hidden = !spotting;
+    if (!spotting) recenterTilt(); // the tilt moved nothing at the scope: back at the rifle the phone's present direction is the hold as it was
   }
   $('spotting').addEventListener('click', () => setSpotting(!spotting));
   $('back-to-rifle').addEventListener('click', () => setSpotting(false));
@@ -1096,10 +1099,10 @@
   $('fire').addEventListener('pointerdown', (e) => { if (e.button !== 0 && e.pointerType === 'mouse') return; e.preventDefault(); if (spotting) return; RD.audio(); fire(); });
   $('fire').addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); RD.audio(); fire(); } });
   for (const id of ['steady', 'fire']) $(id).addEventListener('contextmenu', (e) => e.preventDefault());
-  // Dragging the view moves the hold.
+  // Dragging the view moves the hold (in drag mode; in tilt mode the phone's pointing moves it, range-day-sixteen).
   let drag = null;
-  // At the spotting scope a drag moves the scope's view, not the rifle's hold.
-  canvas.addEventListener('pointerdown', (e) => { const a = spotting ? spotAim : hold; drag = { x: e.clientX, y: e.clientY, up: a.up, right: a.right, a }; canvas.setPointerCapture(e.pointerId); });
+  // At the spotting scope a drag moves the scope's view, not the rifle's hold, in both modes.
+  canvas.addEventListener('pointerdown', (e) => { if (!spotting && aimMode === 'tilt') return; const a = spotting ? spotAim : hold; drag = { x: e.clientX, y: e.clientY, up: a.up, right: a.right, a }; canvas.setPointerCapture(e.pointerId); });
   canvas.addEventListener('pointermove', (e) => { if (!drag) return; const k = pxPerMoa(); drag.a.right = drag.right - (e.clientX - drag.x) / k; drag.a.up = drag.up + (e.clientY - drag.y) / k; });
   for (const ev of ['pointerup', 'pointercancel']) canvas.addEventListener(ev, () => { drag = null; });
   window.addEventListener('keydown', (e) => { if (e.key === ' ' && document.activeElement === document.body) { e.preventDefault(); fire(); } });
@@ -1232,12 +1235,107 @@
     pbSync(null); pbButtons();
   }
 
+  // --- tilt aiming (range-day-sixteen) ---------------------------------------------------------------------
+  // Two ways of moving the hold: a drag on the view, or tilting the phone. Only the way the hold moves changes: the same hold feeds
+  // the same center(), wander, breathing, recoil, Steady, Fire and engine. In tilt mode, with the rifle's sight up, the hold is the
+  // hold at the last centering plus the tilt's degrees right and up (public/tilt.js), times 60 (minutes of angle in a degree), over
+  // the gearing. At the spotting scope and in playback the tilt moves nothing.
+  const TILT = window.RangeDayTilt;
+  const INSTRUCT = { drag: 'Drag the view to hold off the target.', tilt: 'Tilt the phone to hold off the target.' };
+  const instructionHtml = (m) => `${INSTRUCT[m]} Press and hold <strong>Steady</strong>, then <strong>Fire</strong>.`;
+  const savedAim = RD.getAim();
+  let aimMode = 'drag', gearing = savedAim.gearing;
+  const tiltReader = TILT.reader();
+  let tiltBase = { up: 0, right: 0 }, tiltSince = 0, tiltWait = null, wake = null, steadyShownAt = -10;
+  const tiltTrail = []; // {t, right, up}: the tilt's own degrees over the last 3 seconds, for the steadiness line
+  const screenAngle = () => { try { return (screen.orientation && Number(screen.orientation.angle)) || 0; } catch { return 0; } };
+  const tiltActive = () => aimMode === 'tilt' && !spotting && !PLAYBACK;
+  function recenterTilt() { tiltReader.center(); tiltTrail.length = 0; }
+  function onTilt(r) {
+    if (aimMode !== 'tilt' || PLAYBACK) return;
+    if (r && [r.alpha, r.beta, r.gamma].every((x) => typeof x === 'number' && Number.isFinite(x))) tiltSince++; // a reading came, wherever the eye is
+    if (spotting) return; // the scope is moved by a drag; the tilt is read again from a new center on the way back
+    const o = tiltReader.feed(r, screenAngle());
+    if (!o) return;
+    if (o.centered) { tiltBase = { up: hold.up, right: hold.right }; tiltTrail.length = 0; }
+    tiltTrail.push({ t: now, right: o.right, up: o.up });
+    while (tiltTrail.length && now - tiltTrail[0].t > 3) tiltTrail.shift();
+    hold.right = tiltBase.right + (o.right * 60) / gearing;
+    hold.up = tiltBase.up + (o.up * 60) / gearing;
+  }
+  window.addEventListener('deviceorientation', (e) => onTilt({ alpha: e.alpha, beta: e.beta, gamma: e.gamma, t: e.timeStamp / 1000 }));
+  try { if (screen.orientation) screen.orientation.addEventListener('change', recenterTilt); } catch {}
+  // The screen stays awake while tilting (a phone on a stand is not touched); a refusal is ignored.
+  async function keepAwake() {
+    if (aimMode !== 'tilt' || document.hidden || wake || !navigator.wakeLock) return;
+    try { wake = await navigator.wakeLock.request('screen'); wake.addEventListener('release', () => { wake = null; }); if (aimMode !== 'tilt') { wake.release(); wake = null; } } catch { wake = null; }
+  }
+  function letSleep() { if (wake) { try { wake.release(); } catch {} wake = null; } }
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) keepAwake(); });
+  const aimSaveNote = (ok) => { $('aim-note').hidden = ok; $('aim-note').textContent = ok ? '' : 'The way of aiming is not saved on this device (the browser refused its storage); it holds while this page is open.'; return ok; };
+  const storeAim = () => aimSaveNote(RD.setAim({ mode: aimMode, gearing }));
+  function showAim() {
+    $('aim-mode').textContent = aimMode === 'tilt' ? 'Aim: tilt' : 'Aim: drag';
+    $('aim-mode').setAttribute('aria-pressed', String(aimMode === 'tilt'));
+    $('aim-center').hidden = aimMode !== 'tilt';
+    $('steadiness').hidden = aimMode !== 'tilt';
+    $('gearing').value = String(gearing);
+    steadinessLine();
+  }
+  // The instruction line under the view, while it still holds an instruction (a shot's result is never overwritten).
+  function instruct(extra) {
+    const t = $('result').textContent;
+    if (extra || Object.values(INSTRUCT).some((x) => t.startsWith(x)) || t.startsWith('This device gives') || t.startsWith('Tilt was not')) $('result').innerHTML = extra ? RD.esc(extra) : instructionHtml(aimMode);
+  }
+  // Back to drag, with the one line saying why.
+  function tiltFailed(why) {
+    clearTimeout(tiltWait); tiltWait = null;
+    aimMode = 'drag'; letSleep(); showAim(); storeAim();
+    instruct(why);
+  }
+  function setAimMode(mode, fromTap) {
+    clearTimeout(tiltWait); tiltWait = null;
+    if (mode === 'drag') { aimMode = 'drag'; letSleep(); showAim(); storeAim(); instruct(); return; }
+    const start = () => {
+      aimMode = 'tilt'; tiltSince = 0; recenterTilt(); showAim(); storeAim(); instruct(); keepAwake();
+      // No readings within one second (a computer, a phone without the sensor): back to drag, saying so.
+      tiltWait = setTimeout(() => { tiltWait = null; if (aimMode === 'tilt' && tiltSince === 0) tiltFailed('This device gives no tilt readings, so the aim stays on drag.'); }, 1000);
+    };
+    const DOE = window.DeviceOrientationEvent;
+    if (DOE && typeof DOE.requestPermission === 'function') {
+      if (!fromTap) { tiltFailed('Tilt needs a tap on "Aim: drag" to be allowed in this browser, so the aim stays on drag.'); return; }
+      Promise.resolve().then(() => DOE.requestPermission()).then((answer) => { if (answer === 'granted') start(); else tiltFailed('Tilt was not allowed in the browser, so the aim stays on drag.'); }, () => tiltFailed('Tilt was not allowed in the browser, so the aim stays on drag.'));
+      return;
+    }
+    start();
+  }
+  $('aim-mode').addEventListener('click', () => setAimMode(aimMode === 'tilt' ? 'drag' : 'tilt', true));
+  // Center: the phone's present direction now points at the target's center (the hold of zero).
+  $('aim-center').addEventListener('click', () => { hold.up = 0; hold.right = 0; recenterTilt(); });
+  $('gearing').addEventListener('change', (e) => { const g = Number(e.target.value); if (!RD.GEARINGS.includes(g)) return; gearing = g; recenterTilt(); storeAim(); steadinessLine(); });
+  // The steadiness line, about once a second: the extreme spread of the tilt's own share of the hold over the last 3 seconds, at
+  // the gearing in use and at true angle. Flat on a table it shows the sensor's own noise; in the hand it shows the hand.
+  function steadinessLine() {
+    if (aimMode !== 'tilt') return;
+    steadyShownAt = now;
+    if (tiltTrail.length < 2) { $('steadiness').textContent = 'Tilt steadiness: no tilt readings yet.'; return; }
+    const deg = TILT.spread(tiltTrail);
+    const geared = (deg * 60) / gearing, trueMoa = deg * 60;
+    $('steadiness').textContent = `Tilt steadiness: the aim moved about ${geared.toFixed(1)} minutes of angle over the last 3 seconds${gearing === 1 ? '' : ` (${trueMoa.toFixed(1)} at true angle)`}.`;
+  }
+  if (!PLAYBACK) {
+    if (RD.aimReadFailed()) aimSaveNote(false);
+    showAim();
+    if (savedAim.mode === 'tilt') setAimMode('tilt', false);
+  }
+
   // --- the loop ------------------------------------------------------------------------------------------
   function frame() {
     const t = performance.now() / 1000;
     const dt = Math.min(0.05, t - last); last = t; now += dt;
     stepWander(dt);
     if (PLAYBACK) playStep(dt);
+    if (aimMode === 'tilt' && now - steadyShownAt >= 1) steadinessLine();
     flash = Math.max(0, flash - dt * 4);
     for (let i = pending.length - 1; i >= 0; i--) if (now >= pending[i].at) land(pending.splice(i, 1)[0]);
     for (let i = dust.length - 1; i >= 0; i--) if (now - dust[i].bornAt > d.physics.dust.lifeS) dust.splice(i, 1);
@@ -1267,6 +1365,10 @@
       get events() { return PB.ev.map((e) => ({ n: e.s.n, key: e.t ? e.t.key : null, viewT: e.viewT, fireT: e.fireT, strikeT: e.strikeT, flightS: e.s.flightS ?? null })); },
       get drawn() { return drawnStrikes.slice(); }, get traceAt() { return PB.traceAt || null; }, seek(t) { pbSeek(t); }, pause() { PB.playing = false; pbButtons(); }, play() { PB.playing = true; pbButtons(); },
       strikeOnScreen(n) { const e = PB.ev.find((x) => x.s.n === n); if (!e || !e.t) return null; const m = pbStrikeMoa(e), at = plateAt(e.t); return toScreen(at.right + m.right, at.up + m.up); } } : null,
+    // range-day-sixteen: the way of aiming, a made-up orientation fed as the browser's event would be, Center, and the hold
+    get aimMode() { return aimMode; }, setAimMode(m) { setAimMode(m, true); }, get gearing() { return gearing; }, setGearing(g) { $('gearing').value = String(g); $('gearing').dispatchEvent(new Event('change')); },
+    feedOrientation(alpha, beta, gamma, t) { onTilt({ alpha, beta, gamma, t }); }, center() { $('aim-center').click(); }, get hold() { return { up: hold.up, right: hold.right }; }, get tilt() { return tiltReader.now; },
+    get wakeLock() { return Boolean(wake); },
     fire, landAll, get log() { return log; }, get pending() { return pending.length; }, get setting() { return setting; }, setHold(up, right) { hold.up = up; hold.right = right; }, setZoom(m) { mag = m; $('zoom').value = m; zoomText(); }, get plate() { return plate(); }, get day() { return day; }, get weather() { return weather; }, get windCall() { return windCall(); },
     // Each plate's angle from the firing line (sideways and upward, in MOA) and the height the drawing uses; the last shot's inputs to the engine.
     get plateAngles() { return plates.map((p) => ({ yards: p.yards, riseFt: riseOf(p), lateralYd: p.lateralYd, upMoa: toMoa(losAngle(p)), rightMoa: toMoa(sideAngle(p)) })); },
