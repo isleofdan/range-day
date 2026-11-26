@@ -1,0 +1,46 @@
+# Opens the live app in a real browser and checks the firing line drew
+# (scripts/prod-check.mjs): signs in through the sign-in form with the
+# repository secret APP_PASSWORD, opens the firing line under the plain and
+# the full picture, checks the view drew, the Aim switch and Fire are there,
+# and the browser logged no error; keeps a screenshot of each as an artifact.
+# It deploys nothing, changes nothing on Fly and spends nothing. Run by hand
+# from the Actions tab ("Production check", then "Run workflow"), after a
+# deploy (range-day-sixteen: a deploy's success does not prove the page drew).
+name: Production check
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: |
+          npm ci --no-audit --no-fund
+          npx playwright install chromium
+
+      - name: Open the live firing line in a browser
+        env:
+          APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
+        run: |
+          name=$(jq -r .name app.json)
+          BASE="https://$name-dan.fly.dev" node scripts/prod-check.mjs
+
+      - name: Keep the screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: prod-check
+          path: prod-check/
