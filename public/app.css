@@ -297,6 +297,11 @@ body.line .more .windcall { margin-top: 0; }
 .reach .headrow .linehead { flex: 1 1 auto; min-width: 0; }
 .reach .headrow .spotbtn { flex: 0 0 auto; width: 108px; margin: 0; min-height: 44px; padding: 2px 6px; font-size: 14px; line-height: 1.2; white-space: normal; }
 .reach .headrow .spotbtn[aria-pressed="true"] { background: var(--accent); color: #fff; }
+/* range-day-sixteen: the way of aiming and Center, between the short line and the spotting scope's button; the short line gives up the room. */
+.reach .headrow .aimbtn { flex: 0 0 auto; width: 64px; margin: 0; min-height: 44px; padding: 2px 4px; font-size: 14px; line-height: 1.2; white-space: normal; }
+.reach .headrow .aimbtn[hidden] { display: none; }
+.reach .headrow #aim-mode[aria-pressed="true"] { background: var(--accent); color: #fff; }
+body.playback .reach .headrow .aimbtn { display: none; }
 .firebar > .btn { grid-row: 1; }
 .firebar #steady { grid-column: 1; } .firebar #fire { grid-column: 2; }
 .firebar .btn.away { visibility: hidden; }

@@ -51,7 +51,7 @@ const plate = async (page, ix) => { await ready(page); await page.selectOption('
 // Clears what this device keeps for a rifle and sight, so a state starts from the middle.
 const fresh = (page, rifle, sight) => page.evaluate(([r, s]) => { for (const k of Object.keys(localStorage)) if (k.startsWith(`range-day:sight:${r}:${s}`) || k.startsWith(`range-day:zero:${r}:`) || k.startsWith(`range-day:log:${r}:`)) localStorage.removeItem(k); }, [rifle, sight]);
 // Closes the open day, so a screen opens on the choice its address makes (an open day with shots wins over the address). Every screen starts that way unless it says keepDay.
-const noDay = (page) => page.evaluate(() => { localStorage.removeItem('range-day:day:open'); localStorage.removeItem('range-day:day:packed'); for (const k of Object.keys(localStorage)) if (k.startsWith('range-day:supply:')) localStorage.removeItem(k); localStorage.setItem('range-day:picture', JSON.stringify('full')); }); // a fresh day, a full zeroing supply and the Full picture before each state (a state that wants another picture sets it)
+const noDay = (page) => page.evaluate(() => { localStorage.removeItem('range-day:day:open'); localStorage.removeItem('range-day:day:packed'); for (const k of Object.keys(localStorage)) if (k.startsWith('range-day:supply:')) localStorage.removeItem(k); localStorage.setItem('range-day:picture', JSON.stringify('full')); localStorage.removeItem('range-day:aim'); }); // a fresh day, a full zeroing supply and the Full picture before each state (a state that wants another picture sets it); aiming by drag (range-day-sixteen)
 const picture = (page, v) => page.evaluate((p) => localStorage.setItem('range-day:picture', JSON.stringify(p)), v);
 // The shot just fired has landed (the picture's clock runs slower than the wall's where frames are slow, so the flight is waited out, not timed).
 const landed = (page) => page.waitForFunction(() => RangeDayLine.pending === 0, null, { timeout: 30000 });
@@ -240,6 +240,10 @@ const SCREENS = [
   { name: 'line-top-after-hit', path: AR, expect: 'Written in the book', act: async (page) => { await plate(page, 0); await seededHit(page, 42); await page.evaluate(() => window.scrollTo(0, 0)); await settle(page, 300); } },
   { name: 'line-top-short-opened', path: AR, expect: 'BCM AR-15 carbine, 5.56 with', act: async (page) => { await plate(page, 0); await page.evaluate(() => window.scrollTo(0, 0)); await page.click('#line-head'); await page.waitForSelector('#line-full:not([hidden])'); await settle(page, 200); } },
   { name: 'line-top-scrolled-wind', path: AR, expect: 'Wind as you read it', act: async (page) => { await plate(page, 0); await page.evaluate(() => document.getElementById('windcall').scrollIntoView({ block: 'center' })); await settle(page, 300); } },
+  // range-day-sixteen: tilt aiming, fed made-up readings (no real sensor here): the firing line with "Aim: tilt" and Center, the
+  // hold a little off the plate's center; and the Setting section with the gearing and the steadiness line after a small wobble.
+  { name: 'line-aim-tilt', path: AR, expect: 'Tilt the phone to hold off the target', act: async (page) => { await plate(page, 0); await page.click('#aim-mode'); await page.waitForFunction(() => RangeDayLine.aimMode === 'tilt'); await page.evaluate(() => { const t0 = performance.now() / 1000; RangeDayLine.feedOrientation(0, 90, 0, t0); for (let i = 1; i <= 60; i++) RangeDayLine.feedOrientation(-0.05, 90.03, 0, t0 + i / 60); }); await settle(page, 300); } },
+  { name: 'line-aim-steadiness', path: AR, expect: 'Tilt steadiness: the aim moved about', act: async (page) => { await plate(page, 0); await page.click('#aim-mode'); await page.waitForFunction(() => RangeDayLine.aimMode === 'tilt'); await page.evaluate(() => new Promise((done) => { let i = 0; const t = setInterval(() => { RangeDayLine.feedOrientation(0.04 * Math.sin(i / 4), 90 + 0.03 * Math.cos(i / 5), 0, performance.now() / 1000); if (++i > 80) { clearInterval(t); done(); } }, 16); })); await page.waitForFunction(() => /moved about/.test(document.getElementById('steadiness').textContent)); await page.evaluate(() => document.getElementById('gearing').scrollIntoView({ block: 'center' })); await settle(page, 200); } },
 ];
 // range-day-ten: the near targets and the spotting scope. A group on paper: the first seeded shot shows where the seed lands, the
 // hold is moved so the seeds land about the sheet's center, then five seeded shots; the steel's marks the same way.
@@ -331,6 +335,7 @@ const noSideways = async (page) => page.evaluate(() => document.documentElement.
 const browser = await chromium.launch();
 for (const [size, viewport] of Object.entries(SIZES)) {
   const context = await browser.newContext({ viewport, deviceScaleFactor: 1, isMobile: size === 'phone', hasTouch: size === 'phone' });
+  await context.grantPermissions(['accelerometer', 'gyroscope']); // range-day-sixteen: tilt aiming reads the motion sensor (fed made-up readings below)
   const page = await context.newPage();
 
   await page.goto(`${base}/`);
@@ -353,6 +358,7 @@ for (const [size, viewport] of Object.entries(SIZES)) {
     if (s.no3d) {
       // a browser that cannot draw 3D: its own context, signed in through the form, with the 3D contexts refused
       ctx = await browser.newContext({ viewport, deviceScaleFactor: 1, isMobile: size === 'phone', hasTouch: size === 'phone' });
+      await ctx.grantPermissions(['accelerometer', 'gyroscope']);
       await ctx.addInitScript(() => { const orig = HTMLCanvasElement.prototype.getContext; HTMLCanvasElement.prototype.getContext = function (type, ...rest) { if (type === 'webgl2' || type === 'webgl') return null; return orig.call(this, type, ...rest); }; });
       p = await ctx.newPage();
       await p.goto(`${base}/login`); await p.fill('#passphrase', PASS); await p.click('button[type=submit]'); await p.waitForURL(`${base}/`);

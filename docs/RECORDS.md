@@ -215,6 +215,17 @@ marker, read from `shots`, so a reload shows them again.
   "shots": [{ "n": 13, "place": "line", "yards": 300, "target": "steel", "targetKey": "2", "flightS": 0.36265192406949, "...": "the other fields as above" }] }
 ```
 
+Since range-day-sixteen each shot at the line, and each row of the shot
+log, also carries `aim`: `"drag"` when the hold was moved by a finger drag
+on the view, `"tilt"` when it was moved by tilting the phone (the setting
+`aim`, below). A shot or row without it was aimed by drag. Nothing else
+about the shot, the book line or the cold-bore line changes: a tilt shot
+counts like any other.
+
+```json
+{ "shots": [{ "n": 14, "place": "line", "yards": 300, "target": "steel", "aim": "tilt", "...": "the other fields as above" }] }
+```
+
 A day played back (range-day-fourteen, `/playback?id=<day>`) reads the open
 day or a finished day by its `id` and writes nothing: no key is added,
 changed or removed, and the playback keeps nothing of its own (its pace,
@@ -298,6 +309,7 @@ without `target` is from before range-day-ten and was at steel.
 | `wind-call` | `{ "from": "left", "mph": 6 }` | the last wind call (`from` is `"left"`, `"right"`, `"none"` or `null` for not called) |
 | `show-conditions` | `true` or `false` | the setting "Show the conditions" |
 | `picture` | `"full"`, `"light"` or `"plain"` | the picture on the firing line (range-day-five): Full and Light are the 3D scene on the surveyed ground, Plain the flat drawing; absent until the first visit to the firing line has chosen Full or Light by counting frames, or the player has chosen |
+| `aim` | `{ "mode": "drag", "gearing": 10 }` | the way of aiming on the firing line (range-day-sixteen): `mode` is `"drag"` (a finger drag on the view moves the hold) or `"tilt"` (tilting the phone moves it); `gearing` is how many degrees of phone make one degree of aim, one of 1 (true angle), 4, 10 or 20. Absent means drag at 10. A device that remembers tilt but gives no tilt readings goes back to drag and says so |
 
 ## The copy file
 

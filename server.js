@@ -131,7 +131,7 @@ route('GET', /^\/playback$/, (req, res) => sendHtml(res, 200, page('line.html'))
 route('GET', /^\/book$/, (req, res) => sendHtml(res, 200, page('book.html')));
 route('GET', /^\/api\/data$/, (req, res) => sendJson(res, 200, gameData.flat));
 // The page scripts, behind the cookie like the screens that use them.
-route('GET', /^\/(engine|game|home|zero|line|day|book)\.js$/, (req, res, m) => { if (!serveStatic(res, PUBLIC, `/${m[1]}.js`)) sendJson(res, 404, { error: 'not found' }); });
+route('GET', /^\/(engine|game|home|zero|line|tilt|day|book)\.js$/, (req, res, m) => { if (!serveStatic(res, PUBLIC, `/${m[1]}.js`)) sendJson(res, 404, { error: 'not found' }); });
 // The firing line's 3D picture (public/scene.min.js, built by scripts/build-scene.mjs) and the surveyed ground it stands on
 // (public/terrain/, fetched by the Terrain workflow): each terrain file is named with its content hash, so a browser may keep
 // it for a year and a second visit downloads none of it. Both behind the cookie like the screens.
