@@ -1255,7 +1255,7 @@
     if (aimMode !== 'tilt' || PLAYBACK) return;
     if (r && [r.alpha, r.beta, r.gamma].every((x) => typeof x === 'number' && Number.isFinite(x))) tiltSince++; // a reading came, wherever the eye is
     if (spotting) return; // the scope is moved by a drag; the tilt is read again from a new center on the way back
-    const o = tiltReader.feed(r, screenAngle());
+    const o = tiltReader.feed(r, screenAngle(), steady ? TILT.TAU_STEADY_S : TILT.TAU_S); // Steady soaks up the hand's shake (public/tilt.js)
     if (!o) return;
     if (o.centered) { tiltBase = { up: hold.up, right: hold.right }; tiltTrail.length = 0; }
     tiltTrail.push({ t: now, right: o.right, up: o.up });
@@ -1368,7 +1368,7 @@
       strikeOnScreen(n) { const e = PB.ev.find((x) => x.s.n === n); if (!e || !e.t) return null; const m = pbStrikeMoa(e), at = plateAt(e.t); return toScreen(at.right + m.right, at.up + m.up); } } : null,
     // range-day-sixteen: the way of aiming, a made-up orientation fed as the browser's event would be, Center, and the hold
     get aimMode() { return aimMode; }, setAimMode(m) { setAimMode(m, true); }, get gearing() { return gearing; }, setGearing(g) { $('gearing').value = String(g); $('gearing').dispatchEvent(new Event('change')); },
-    feedOrientation(alpha, beta, gamma, t) { onTilt({ alpha, beta, gamma, t }); }, center() { $('aim-center').click(); }, get hold() { return { up: hold.up, right: hold.right }; }, get tilt() { return tiltReader.now; },
+    feedOrientation(alpha, beta, gamma, t) { onTilt({ alpha, beta, gamma, t }); }, center() { $('aim-center').click(); }, get hold() { return { up: hold.up, right: hold.right }; }, get tilt() { return tiltReader.now; }, setSteady(on) { if (on) steadyOn(); else steadyOff(); }, get steady() { return steady; },
     get wakeLock() { return Boolean(wake); },
     fire, landAll, get log() { return log; }, get pending() { return pending.length; }, get setting() { return setting; }, setHold(up, right) { hold.up = up; hold.right = right; }, setZoom(m) { mag = m; $('zoom').value = m; zoomText(); }, get plate() { return plate(); }, get day() { return day; }, get weather() { return weather; }, get windCall() { return windCall(); },
     // Each plate's angle from the firing line (sideways and upward, in MOA) and the height the drawing uses; the last shot's inputs to the engine.

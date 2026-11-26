@@ -20,7 +20,12 @@
 
    Smoothing: one-pole low-pass on the two angles, time constant TAU_S
    (50 ms), stepped by each reading's own time; at a slow sweep it lags the
-   phone by about 50 ms.
+   phone by about 50 ms. While Steady is held the firing line passes
+   TAU_STEADY_S (400 ms) instead (range-day-sixteen, Dan on his phone: Steady
+   did nothing he could see in tilt mode): a hand's tremor and the jolt of
+   pressing the button are soaked up, a slow deliberate move still arrives,
+   about 0.4 s behind. The hold is the smoothed figure either way, so the shot
+   goes where the sight shows.
 
    Plain JavaScript that loads in a page (window.RangeDayTilt) and in Node
    (require), so the tests can drive the maths with made-up readings. */
@@ -31,6 +36,7 @@
   'use strict';
   const RAD = Math.PI / 180;
   const TAU_S = 0.05;
+  const TAU_STEADY_S = 0.4;
 
   // The rotation matrix from the phone's axes to the room's, rows first.
   function rotation(alpha, beta, gamma) {
@@ -55,12 +61,12 @@
     return { right: Math.atan2(x, -v[2]) / RAD, up: Math.atan2(y, -v[2]) / RAD };
   }
 
-  // A reader: feed it readings ({alpha, beta, gamma, t} with t in seconds, and the screen's angle); it answers the smoothed
-  // degrees right and up from the last centering. center() makes the next reading the new zero.
+  // A reader: feed it readings ({alpha, beta, gamma, t} with t in seconds, the screen's angle, and the smoothing time in seconds,
+  // TAU_S when left out); it answers the smoothed degrees right and up from the last centering. center() makes the next reading the new zero.
   function reader() {
     let R0 = null, screen = null, sm = null, lastT = null, readings = 0, wantCenter = true;
     return {
-      feed(r, screenDeg) {
+      feed(r, screenDeg, tauS) {
         if (r == null || ![r.alpha, r.beta, r.gamma].every((x) => typeof x === 'number' && Number.isFinite(x))) return null;
         const R = rotation(r.alpha, r.beta, r.gamma);
         readings++;
@@ -68,7 +74,7 @@
         const raw = offset(R0, R, screen);
         const dt = lastT == null || r.t == null ? 1 / 60 : Math.max(0, r.t - lastT);
         lastT = r.t;
-        const k = 1 - Math.exp(-dt / TAU_S);
+        const k = 1 - Math.exp(-dt / (tauS > 0 ? tauS : TAU_S));
         sm = { right: sm.right + (raw.right - sm.right) * k, up: sm.up + (raw.up - sm.up) * k };
         return { ...sm, centered: false };
       },
@@ -85,5 +91,5 @@
     return best;
   }
 
-  return { TAU_S, rotation, back, offset, reader, spread };
+  return { TAU_S, TAU_STEADY_S, rotation, back, offset, reader, spread };
 }));
