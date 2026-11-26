@@ -333,3 +333,63 @@ test('range-day-sixteen step 3 and verify: the within-reach list, the Aim switch
     await context.close();
   }
 });
+
+// Steady in tilt mode (range-day-sixteen, after Dan on his phone: "The steady button doesn't work for phone orientation aiming").
+test('range-day-sixteen Steady: the reader smooths with the time it is given (TAU_STEADY_S, 400 ms, while Steady is held; TAU_S, 50 ms, otherwise): a sudden one-degree turn shows about 86% after 0.1 s at 50 ms and about 22% at 400 ms, and both settle on the same degree', () => {
+  const run = (tau) => {
+    const r = T.reader();
+    r.feed({ alpha: 0, beta: 90, gamma: 0, t: 0 }, 0, tau);
+    const seen = [];
+    for (let i = 1; i <= 120; i++) seen.push(r.feed({ alpha: -1, beta: 90, gamma: 0, t: i / 60 }, 0, tau).right);
+    return seen;
+  };
+  const quick = run(undefined), steady = run(T.TAU_STEADY_S);
+  assert.equal(T.TAU_S, 0.05); assert.equal(T.TAU_STEADY_S, 0.4);
+  const want = (tau) => 1 - Math.exp(-0.1 / tau);
+  // after 6 readings at 60 a second (0.1 s)
+  assert.ok(near(quick[5], want(0.05), 0.01), `50 ms: ${quick[5]}`);
+  assert.ok(near(steady[5], want(0.4), 0.01), `400 ms: ${steady[5]}`);
+  // two seconds on, both have arrived at the same degree: Steady slows the sight, it never moves where it ends up
+  assert.ok(near(quick[119], 1, 0.001) && near(steady[119], 1, 0.01), `${quick[119]} ${steady[119]}`);
+});
+
+test('range-day-sixteen Steady: on the firing line in tilt mode, pressing and holding the Steady button calms a hand\'s tremor in the hold to under a third of what it is without, and a shot fired then goes from the smoothed hold the sight shows; in drag mode a drag moves the hold the same with Steady held or not', { skip }, async () => {
+  const { page, context, errors } = await signedIn();
+  await line(page, VEPR);
+  await tiltOn(page);
+  // a tremor of a tenth of a degree, eight times a second, for two seconds: the hold's spread over the last second, in MOA
+  const tremor = () => page.evaluate(() => {
+    const t0 = performance.now() / 1000, out = [];
+    for (let i = 1; i <= 120; i++) { RangeDayLine.feedOrientation(0.1 * Math.sin(2 * Math.PI * 8 * i / 60), 90, 0.1 * Math.cos(2 * Math.PI * 8 * i / 60), t0 + i / 60); if (i > 60) out.push(RangeDayLine.hold); }
+    const ups = out.map((h) => h.up), rights = out.map((h) => h.right);
+    return Math.max(Math.max(...ups) - Math.min(...ups), Math.max(...rights) - Math.min(...rights));
+  });
+  const without = await tremor();
+  // the real button, pressed and held as a finger would
+  const b = await page.locator('#steady').boundingBox();
+  await page.mouse.move(b.x + b.width / 2, b.y + b.height / 2); await page.mouse.down();
+  assert.equal(await page.evaluate(() => RangeDayLine.steady), true);
+  const held = await tremor();
+  assert.ok(without > 0.3, `without Steady the tremor shows: ${without} MOA`);
+  assert.ok(held < without / 3, `Steady held: ${held} MOA against ${without} MOA without`);
+  // a shot fired while Steady is held goes from the smoothed hold the sight shows (plus the game's small wander, under a minute of angle)
+  const shown = await page.evaluate(() => RangeDayLine.hold);
+  await page.evaluate(() => RangeDayLine.fire()); await page.evaluate(() => RangeDayLine.landAll());
+  const shot = await page.evaluate(() => RangeDayLine.log[RangeDayLine.log.length - 1]);
+  assert.equal(shot.aim, 'tilt');
+  assert.ok(near(shot.heldUp, shown.up, 1) && near(shot.heldRight, shown.right, 1), `shot held ${shot.heldUp}, ${shot.heldRight}; the sight showed ${JSON.stringify(shown)}`);
+  await page.mouse.up();
+  assert.equal(await page.evaluate(() => RangeDayLine.steady), false);
+  // drag mode is as it was: the same drag moves the hold the same, Steady held or not
+  await page.click('#aim-mode');
+  await page.waitForFunction(() => RangeDayLine.aimMode === 'drag');
+  const box = await page.locator('#view').boundingBox();
+  const drag = async () => { await page.evaluate(() => RangeDayLine.setHold(0, 0)); await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2); await page.mouse.down(); await page.mouse.move(box.x + box.width / 2 - 40, box.y + box.height / 2 + 20, { steps: 4 }); await page.mouse.up(); return page.evaluate(() => RangeDayLine.hold); };
+  const free = await drag();
+  await page.evaluate(() => RangeDayLine.setSteady(true));
+  const steadied = await drag();
+  await page.evaluate(() => RangeDayLine.setSteady(false));
+  same(free, steadied, 'a drag with Steady held');
+  assert.deepEqual(errors, []);
+  await context.close();
+});
