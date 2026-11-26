@@ -1303,8 +1303,9 @@
     };
     const DOE = window.DeviceOrientationEvent;
     if (DOE && typeof DOE.requestPermission === 'function') {
-      if (!fromTap) { tiltFailed('Tilt needs a tap on "Aim: drag" to be allowed in this browser, so the aim stays on drag.'); return; }
-      Promise.resolve().then(() => DOE.requestPermission()).then((answer) => { if (answer === 'granted') start(); else tiltFailed('Tilt was not allowed in the browser, so the aim stays on drag.'); }, () => tiltFailed('Tilt was not allowed in the browser, so the aim stays on drag.'));
+      // Asked from the tap; on a visit that opens in tilt mode it is asked too, and a browser that wants a tap first says no.
+      const no = fromTap ? 'Tilt was not allowed in the browser, so the aim stays on drag.' : 'Tilt needs a tap on "Aim: drag" to be allowed in this browser, so the aim stays on drag.';
+      Promise.resolve().then(() => DOE.requestPermission()).then((answer) => { if (answer === 'granted') start(); else tiltFailed(no); }, () => tiltFailed(no));
       return;
     }
     start();

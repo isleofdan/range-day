@@ -7,7 +7,8 @@
 // Steady and Fire bar; the bar's own checks; the view's size in pixels; and
 // every button's touch height at 412×915. The Plain picture is used: the
 // layout is the same under every picture and the measure is quicker.
-//   node scripts/line-layout.mjs [--port 8925] > docs/reports/line-layout-after.txt
+//   node scripts/line-layout.mjs [--port 8925] [--aim tilt] > docs/reports/line-layout-after.txt
+// range-day-sixteen: --aim tilt measures the firing line in tilt mode ("Aim: tilt" and Center shown), fed one made-up reading.
 import { chromium } from 'playwright';
 import { spawn } from 'node:child_process';
 import { join, dirname } from 'node:path';
@@ -19,6 +20,7 @@ const { SIGHTS, measure, meets } = require('../test/line-reach.js');
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const arg = (name, fallback) => { const i = process.argv.indexOf(name); return i > 0 && process.argv[i + 1] ? process.argv[i + 1] : fallback; };
 const PORT = Number(arg('--port', 8925));
+const AIM = arg('--aim', 'drag');
 const PASS = 'open sesame';
 const base = `http://127.0.0.1:${PORT}`;
 const SIZES = [['phone', 412, 915, true], ['phone, 830 high', 412, 830, true], ["Dan's phone (range-day-fourteen, measured)", 378, 762, true], ['computer', 1280, 800, true], ['short phone (figure only)', 412, 760, false]];
@@ -31,10 +33,11 @@ const yn = (v) => (v == null ? 'n/a' : v ? 'yes' : 'no');
 const out = [];
 const say = (s) => { out.push(s); console.log(s); };
 let failures = 0;
-say(`Firing line layout, page at its top, Plain picture. Commit ${process.env.GIT_COMMIT || '(working tree)'}.`);
+say(`Firing line layout, page at its top, Plain picture, aiming by ${AIM}. Commit ${process.env.GIT_COMMIT || '(working tree)'}.`);
 const browser = await chromium.launch();
 for (const [size, width, height, held] of SIZES) {
   const context = await browser.newContext({ viewport: { width, height }, deviceScaleFactor: 1, isMobile: width < 900, hasTouch: width < 900 });
+  if (AIM === 'tilt') await context.grantPermissions(['accelerometer', 'gyroscope']);
   const page = await context.newPage();
   await page.goto(`${base}/login`);
   await page.fill('#passphrase', PASS);
@@ -45,6 +48,7 @@ for (const [size, width, height, held] of SIZES) {
     await page.goto(`${base}/line?${s.q}`);
     await page.waitForSelector('#fire');
     await page.waitForFunction(() => window.RangeDayLine);
+    if (AIM === 'tilt') { await page.click('#aim-mode'); await page.waitForFunction(() => RangeDayLine.aimMode === 'tilt'); await page.evaluate(() => RangeDayLine.feedOrientation(0, 90, 0, performance.now() / 1000)); }
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.waitForTimeout(300);
     const m = await page.evaluate(measure, s.glass);
