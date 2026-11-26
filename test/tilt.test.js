@@ -257,6 +257,14 @@ test('range-day-sixteen steps 5 and 6: the way of aiming and the gearing are rem
   const m = /moved about ([\d.]+) minutes of angle over the last 3 seconds \(([\d.]+) at true angle\)\./.exec(st);
   assert.ok(m, st);
   assert.ok(near(Number(m[1]) * 4, Number(m[2]), 0.25), st);
+  // at true angle both figures still show, and they are the same
+  await page.selectOption('#gearing', '1');
+  await page.evaluate(() => { const t0 = performance.now() / 1000; for (let i = 0; i < 120; i++) RangeDayLine.feedOrientation(0.1 * Math.sin(i / 5), 90, 0, t0 + i / 60); });
+  await page.waitForFunction(() => /moved about/.test(document.getElementById('steadiness').textContent), null, { timeout: 3000 });
+  const st1 = await page.textContent('#steadiness');
+  const m1 = /moved about ([\d.]+) minutes of angle over the last 3 seconds \(([\d.]+) at true angle\)\./.exec(st1);
+  assert.ok(m1 && m1[1] === m1[2], st1);
+  await page.selectOption('#gearing', '4');
   // reload: still tilt at a quarter; readings keep it on
   await page.reload(); await page.waitForFunction(() => window.RangeDayLine && RangeDayLine.feedOrientation);
   await page.waitForFunction(() => RangeDayLine.aimMode === 'tilt');

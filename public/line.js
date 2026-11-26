@@ -1322,7 +1322,7 @@
     if (tiltTrail.length < 2) { $('steadiness').textContent = 'Tilt steadiness: no tilt readings yet.'; return; }
     const deg = TILT.spread(tiltTrail);
     const geared = (deg * 60) / gearing, trueMoa = deg * 60;
-    $('steadiness').textContent = `Tilt steadiness: the aim moved about ${geared.toFixed(1)} minutes of angle over the last 3 seconds${gearing === 1 ? '' : ` (${trueMoa.toFixed(1)} at true angle)`}.`;
+    $('steadiness').textContent = `Tilt steadiness: the aim moved about ${geared.toFixed(1)} minutes of angle over the last 3 seconds (${trueMoa.toFixed(1)} at true angle).`;
   }
   if (!PLAYBACK) {
     if (RD.aimReadFailed()) aimSaveNote(false);
