@@ -309,7 +309,9 @@ test('verify 4 (range-day-six): the sights\' angles are unchanged: for the Vepr\
   console.log(`  Vepr scope at the old 7x view (${OLD7.toFixed(1)}x on the BugBuster's rule): first mil-dot ${r.first.toFixed(1)} px right and ${r.firstLeft.toFixed(1)} px left of the centre, the next ${r.spacing && r.spacing.toFixed(1)} px on (data ${dot} MOA × ${r.k.toFixed(3)} = ${(dot * r.k).toFixed(1)} px)`);
   assert.ok(Math.abs(r.first - dot * r.k) <= 1.5 && Math.abs(r.firstLeft - dot * r.k) <= 1.5, `mil-dot spacing ${r.first}/${r.firstLeft} vs ${(dot * r.k).toFixed(1)}`);
   // the Tavor's iron sights (ring and post) on the rifle line: the post's width at the row just under the centre
-  await page.goto(`${base}/line?course=angeles-sylmar&rifle=iwi-tavor-sar&sight=fab-flipup&load=imi-m193`); // range-day-twelve: the FAB sights took the Tavor irons' place await page.waitForSelector('#fire'); await sceneReady(page);
+  // range-day-twelve: the FAB sights took the Tavor irons' place. range-day-sixteen: the two waits below had been inside this comment, so the
+  // page was sometimes read before the firing line had loaded ("RangeDayLine is not defined", Checks run 45762397221).
+  await page.goto(`${base}/line?course=angeles-sylmar&rifle=iwi-tavor-sar&sight=fab-flipup&load=imi-m193`); await page.waitForSelector('#fire'); await sceneReady(page);
   await page.evaluate(() => { window.__raf = window.__raf || window.requestAnimationFrame.bind(window); window.requestAnimationFrame = () => 0; RangeDayLine.setHold(0, 0); }); await wait(300); await framesPassed(page);
   r = await page.evaluate(() => {
     const c = document.getElementById('view'), g = c.getContext('2d'), size = RangeDayLine.geometry.viewPx, cx = size / 2, cy = size / 2;
