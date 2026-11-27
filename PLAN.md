@@ -777,3 +777,24 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
   planned by a Personal Shipyard chat: the workbench; pistols in the game
   and their targets; the .22's own scope. Report:
   `docs/reports/range-day-fifteen-report.md`.
+
+### range-day-sixteen — 26–27 Nov 2026 (cloud session, from the Wall card `range-day`)
+
+- **Stands:** tilt aiming on the firing line (pull request #54, `738416d`,
+  Deploy run 26): an Aim switch (drag or tilt), Center, a gearing setting
+  (1, 4, 10, 20; a tenth at first), a steadiness line in Setting, a screen
+  wake lock in tilt mode, and each shot records how it was aimed (`aim`).
+  Steady smooths the tilt over 400 ms while held (#56, `2bbb41b`, Deploy
+  run 27). A Production check workflow opens the live firing line in a real
+  browser after a deploy (#55, run 1 green). The scene test's waits are out
+  of the comment (in #56).
+- **Decided:** tilt is read from the whole rotation, never from beta and
+  gamma alone; a phone with no readings, or a refusal, goes back to drag
+  with a line saying why; Steady in tilt mode slows the sight, never moves
+  where it ends up.
+- **Next session needs:** Dan's yes to move Setting above the shot log, the
+  steadiness line under the view in tilt mode, and a test with a long log;
+  the steadiness line to measure by angle between directions (the flat-table
+  reading ran away, 3328.9). Report: the addendum in
+  `docs/reports/range-day-sixteen-report.md`.
+
