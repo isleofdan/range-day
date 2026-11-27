@@ -40,7 +40,11 @@ in the order `CLAUDE.md` fixes.
   - Barrel lengths per rifle, the rifle's own among them, each with its
     source: the BCM 14.5, 16, 18, 20 in; the Tavor SAR 16.5, 18; the X95
     16.5, 18.5; the 7.62x39 AK 16.3 only; the 5.45 AK 16.2, 16.3; the
-    Vepr 16.5, 20.5, 23.2; the Remington .22 20, 24, 28.
+    Vepr 16.5, 20.5, 23.2; the Remington .22 20, 24, 28, these three
+    marked estimates, since the .22's model is not identified and each is
+    a length Remington sold in another heavy-barrel target model (the 504-T
+    HB, the 541-T and 40-XRBR, the 40X Rangemaster); corrected after the
+    result check, in the notes pull request #61, with a test holding it.
   - Mounts per collection scope, the one it came in first: the two
     ACOGs, the TA51 (1.535 in over the rail) and the Q-LOC Extra High
     AC12044 (2.05); the Vortex, the CM-534 (1.574), the Pro Extended
@@ -269,7 +273,12 @@ before the deploy, stood on item 8 (it waited on the deploy) and on the
 notes pull request not being pushed yet (the order `CLAUDE.md` fixes);
 the second also asked for the pictures to show in the report, done in the
 table under item 7. Item 8 is now filled in and the notes are in their
-pull request; the check of this final report is on the card.
+pull request. Job 20261127-212209-bdca2f, on the filled-in report, found
+one thing in the data: the .22's barrel lengths were cited to other
+Remington models as sources although the rifle's model is unknown. They
+are now estimates with that basis (`data/workbench.json`, the same
+figures, so nothing the game shows or does changes), held by a test, in
+#61. The check of this report is on the card.
 
 ## Asks
 
