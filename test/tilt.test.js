@@ -413,6 +413,9 @@ test('range-day-sixteen steadiness: the sway is the largest angle between pointi
   const d2 = [], p2 = [];
   for (let i = 1; i <= 180; i++) { const o = r2.feed({ alpha: 0.1 * Math.sin(i / 5), beta: 90, gamma: 0, t: i / 60 }, 0); d2.push(o.dir); p2.push({ right: o.right, up: o.up }); }
   assert.ok(near(T.sway(d2), 0.2, 0.01), `upright: ${T.sway(d2)} degrees for a sweep of a tenth either way`);
+  // the old measure on the same unsmoothed readings: degrees right and up from each direction, then their spread
+  const raw2 = d2.map(([x, y, z]) => ({ right: Math.atan2(x, -z) * 180 / Math.PI, up: Math.atan2(y, -z) * 180 / Math.PI }));
+  assert.ok(near(T.sway(d2), T.spread(raw2), 0.001), `near the centering the two measures agree: sway ${T.sway(d2)}, spread ${T.spread(raw2)}`);
   // two known directions: 1 degree apart
   const a = T.offset(T.rotation(0, 90, 0), T.rotation(0, 90, 0), 0).dir, b = T.offset(T.rotation(0, 90, 0), T.rotation(-1, 90, 0), 0).dir;
   assert.ok(near(T.sway([a, b]), 1, 1e-6), `${T.sway([a, b])}`);
@@ -435,6 +438,8 @@ test('range-day-sixteen Setting move: with a shot log of 300 rows, Setting stand
     await tiltOn(page);
     await page.evaluate(() => { const t0 = performance.now() / 1000; for (let i = 0; i < 120; i++) RangeDayLine.feedOrientation(0.1 * Math.sin(i / 5), 90, 0, t0 + i / 60); });
     await page.waitForFunction(() => /^Steadiness: [\d.]+ MOA in 3 s \([\d.]+ at true angle\)$/.test(document.getElementById('steadiness-near').textContent), null, { timeout: 3000 });
+    const steadyAt = await page.evaluate(() => { const top = (el) => el.getBoundingClientRect().top + window.scrollY; const el = document.getElementById('steadiness'); return { shown: !el.hidden && el.offsetParent !== null, top: top(el), log: top(document.getElementById('log')) }; });
+    assert.ok(steadyAt.shown && steadyAt.top < steadyAt.log, `${w}x${h}: the steadiness line in Setting stands above the log ${JSON.stringify(steadyAt)}`);
     await page.evaluate(() => window.scrollTo(0, 0)); await wait(100);
     const near_ = await page.evaluate(() => { const b = document.getElementById('steadiness-near').getBoundingClientRect(), v = document.getElementById('view').getBoundingClientRect(); return { top: b.top, bottom: b.bottom, left: b.left, right: b.right, view: { top: v.top, bottom: v.bottom, left: v.left, right: v.right } }; });
     assert.ok(near_.top >= 0 && near_.bottom <= h && near_.left >= 0 && near_.right <= w, `${w}x${h}: inside the screen ${JSON.stringify(near_)}`);
