@@ -1052,6 +1052,7 @@
     $('spotrow').setAttribute('aria-hidden', String(!spotting)); $('spot-zoom').tabIndex = spotting ? 0 : -1;
     for (const id of ['steady', 'fire']) { $(id).classList.toggle('away', spotting); $(id).setAttribute('aria-hidden', String(spotting)); $(id).tabIndex = spotting ? -1 : 0; }
     $('back-to-rifle').hidden = !spotting;
+    nearShown();
     if (!spotting) recenterTilt(); // the tilt moved nothing at the scope: back at the rifle the phone's present direction is the hold as it was
   }
   $('spotting').addEventListener('click', () => setSpotting(!spotting));
@@ -1247,7 +1248,7 @@
   let aimMode = 'drag', gearing = savedAim.gearing;
   const tiltReader = TILT.reader();
   let tiltBase = { up: 0, right: 0 }, tiltSince = 0, tiltWait = null, wake = null, steadyShownAt = -10;
-  const tiltTrail = []; // {t, right, up}: the tilt's own degrees over the last 3 seconds, for the steadiness line
+  const tiltTrail = []; // {t, dir}: where the phone pointed, unsmoothed, over the last 3 seconds, for the steadiness line
   const screenAngle = () => { try { return (screen.orientation && Number(screen.orientation.angle)) || 0; } catch { return 0; } };
   const tiltActive = () => aimMode === 'tilt' && !spotting && !PLAYBACK;
   function recenterTilt() { tiltReader.center(); tiltTrail.length = 0; }
@@ -1258,7 +1259,7 @@
     const o = tiltReader.feed(r, screenAngle(), steady ? TILT.TAU_STEADY_S : TILT.TAU_S); // Steady soaks up the hand's shake (public/tilt.js)
     if (!o) return;
     if (o.centered) { tiltBase = { up: hold.up, right: hold.right }; tiltTrail.length = 0; }
-    tiltTrail.push({ t: now, right: o.right, up: o.up });
+    tiltTrail.push({ t: now, dir: o.dir });
     while (tiltTrail.length && now - tiltTrail[0].t > 3) tiltTrail.shift();
     hold.right = tiltBase.right + (o.right * 60) / gearing;
     hold.up = tiltBase.up + (o.up * 60) / gearing;
@@ -1274,11 +1275,14 @@
   document.addEventListener('visibilitychange', () => { if (!document.hidden) keepAwake(); });
   const aimSaveNote = (ok) => { $('aim-note').hidden = ok; $('aim-note').textContent = ok ? '' : 'The way of aiming is not saved on this device (the browser refused its storage); it holds while this page is open.'; return ok; };
   const storeAim = () => aimSaveNote(RD.setAim({ mode: aimMode, gearing }));
+  // The steadiness reading over the view: in tilt mode at the rifle, never at the spotting scope or in playback.
+  function nearShown() { $('steadiness-near').hidden = !(aimMode === 'tilt' && !spotting && !PLAYBACK); }
   function showAim() {
     $('aim-mode').textContent = aimMode === 'tilt' ? 'Aim: tilt' : 'Aim: drag';
     $('aim-mode').setAttribute('aria-pressed', String(aimMode === 'tilt'));
     $('aim-center').hidden = aimMode !== 'tilt';
     $('steadiness').hidden = aimMode !== 'tilt';
+    nearShown();
     $('gearing').value = String(gearing);
     steadinessLine();
   }
@@ -1319,10 +1323,12 @@
   function steadinessLine() {
     if (aimMode !== 'tilt') return;
     steadyShownAt = now;
-    if (tiltTrail.length < 2) { $('steadiness').textContent = 'Tilt steadiness: no tilt readings yet.'; return; }
-    const deg = TILT.spread(tiltTrail);
+    if (tiltTrail.length < 2) { $('steadiness').textContent = 'Tilt steadiness: no tilt readings yet.'; $('steadiness-near').textContent = 'Steadiness: no tilt readings yet'; return; }
+    // The largest angle between two of the last 3 seconds' pointing directions (public/tilt.js, sway): the hand, before any smoothing.
+    const deg = TILT.sway(tiltTrail.map((p) => p.dir));
     const geared = (deg * 60) / gearing, trueMoa = deg * 60;
     $('steadiness').textContent = `Tilt steadiness: the aim moved about ${geared.toFixed(1)} minutes of angle over the last 3 seconds (${trueMoa.toFixed(1)} at true angle).`;
+    $('steadiness-near').textContent = `Steadiness: ${geared.toFixed(1)} MOA over 3 s (${trueMoa.toFixed(1)} at true angle)`;
   }
   if (!PLAYBACK) {
     if (RD.aimReadFailed()) aimSaveNote(false);

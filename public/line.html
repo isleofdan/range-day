@@ -50,7 +50,7 @@
       <!-- The spotting scope (range-day-ten): its zoom stands where the sight's glass control stands, shown only at the scope; the button that goes there and back is in the short line's row above. -->
       <div id="spotrow" class="field spotzoom" aria-hidden="true"><label for="spot-zoom">Scope <span id="spot-zoom-text" class="mono"></span></label><input id="spot-zoom" type="range" min="25" max="125" step="1" value="25" tabindex="-1"></div>
     </div>
-    <div class="viewwrap"><canvas id="scene" width="400" height="400" hidden></canvas><canvas id="view" width="400" height="400"></canvas></div>
+    <div class="viewwrap"><canvas id="scene" width="400" height="400" hidden></canvas><canvas id="view" width="400" height="400"></canvas><p id="steadiness-near" class="viewnote small" hidden></p></div>
     <div id="playpanel" class="playpanel" hidden>
       <p id="play-words" class="readout playwords" aria-live="polite"></p>
       <div class="playline"><label for="play-line" class="vh">Where in the day</label><input id="play-line" type="range" min="0" max="1000" step="1" value="0"><div id="play-ticks" class="playticks" aria-hidden="true"></div></div>
@@ -109,10 +109,7 @@
       <a id="to-day" class="btn inline secondary" href="/day">The day so far</a>
       <button id="pack-up" type="button" class="btn inline secondary">Pack up</button>
     </div>
-    <h2>Shot log</h2>
-    <p class="muted small">Each shot's distance, sight setting, wind call and where it landed. Kept on this device; the book keeps the hits by themselves.</p>
-    <div class="tablewrap"><table id="log" class="log"><thead><tr><th>#</th><th>Yards</th><th>Elev.</th><th>Wind.</th><th>Zoom</th><th>Held</th><th>Call</th><th>Landed</th></tr></thead><tbody></tbody></table></div>
-    <div class="row"><button id="clear-log" type="button" class="btn inline secondary">Clear the log</button></div>
+    <!-- range-day-sixteen: Setting stands above the shot log, which grows with every shot (on Dan's phone it held several hundred rows above Setting). -->
     <h2>Setting</h2>
     <label class="check"><input id="show-conditions" type="checkbox"> Show the conditions (the true wind, temperature, and the engine's drop, for learning; a shot fired with this on goes in the log but not in the book)</label>
     <pre id="conditions" class="mono small conditions"></pre>
@@ -121,6 +118,10 @@
     <div class="field gearing"><label for="gearing">How far the aim moves when the phone tilts</label><select id="gearing"><option value="1">True angle (one degree of phone is one degree of aim)</option><option value="4">A quarter</option><option value="10">A tenth</option><option value="20">A twentieth</option></select></div>
     <p id="steadiness" class="small" hidden></p>
     <p id="aim-note" class="muted small" hidden></p>
+    <h2>Shot log</h2>
+    <p class="muted small">Each shot's distance, sight setting, wind call and where it landed. Kept on this device; the book keeps the hits by themselves.</p>
+    <div class="tablewrap"><table id="log" class="log"><thead><tr><th>#</th><th>Yards</th><th>Elev.</th><th>Wind.</th><th>Zoom</th><th>Held</th><th>Call</th><th>Landed</th></tr></thead><tbody></tbody></table></div>
+    <div class="row"><button id="clear-log" type="button" class="btn inline secondary">Clear the log</button></div>
   </div>
 </main>
 <div class="firebar">

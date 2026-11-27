@@ -137,6 +137,8 @@ main.game h1 { margin: 2px 0 4px; font-size: 22px; }
 body.line .viewwrap { margin: 6px 0; }
 .viewwrap { margin: 8px 0; }
 .viewwrap { position: relative; }
+/* range-day-sixteen: the steadiness reading over the view's bottom edge in tilt mode; it takes no height from the page. */
+.viewwrap .viewnote { position: absolute; left: 50%; bottom: 6px; transform: translateX(-50%); z-index: 2; margin: 0; padding: 2px 8px; border-radius: 6px; background: rgba(0,0,0,0.55); color: #fff; white-space: nowrap; pointer-events: none; }
 .viewwrap canvas { display: block; margin: 0 auto; border-radius: 10px; touch-action: none; background: #222; }
 .viewwrap canvas#scene { position: absolute; left: 50%; top: 0; transform: translateX(-50%); z-index: 0; }
 .viewwrap canvas#view { position: relative; z-index: 1; }

@@ -58,25 +58,26 @@
     const v = [R0[0][0] * w[0] + R0[1][0] * w[1] + R0[2][0] * w[2], R0[0][1] * w[0] + R0[1][1] * w[1] + R0[2][1] * w[2], R0[0][2] * w[0] + R0[1][2] * w[1] + R0[2][2] * w[2]];
     const s = (screenDeg || 0) * RAD;
     const x = v[0] * Math.cos(s) - v[1] * Math.sin(s), y = v[0] * Math.sin(s) + v[1] * Math.cos(s);
-    return { right: Math.atan2(x, -v[2]) / RAD, up: Math.atan2(y, -v[2]) / RAD };
+    return { right: Math.atan2(x, -v[2]) / RAD, up: Math.atan2(y, -v[2]) / RAD, dir: [x, y, v[2]] };
   }
 
   // A reader: feed it readings ({alpha, beta, gamma, t} with t in seconds, the screen's angle, and the smoothing time in seconds,
   // TAU_S when left out); it answers the smoothed degrees right and up from the last centering. center() makes the next reading the new zero.
   function reader() {
-    let R0 = null, screen = null, sm = null, lastT = null, readings = 0, wantCenter = true;
+    let R0 = null, screen = null, sm = null, lastT = null, readings = 0, wantCenter = true, lastDir = null;
     return {
       feed(r, screenDeg, tauS) {
         if (r == null || ![r.alpha, r.beta, r.gamma].every((x) => typeof x === 'number' && Number.isFinite(x))) return null;
         const R = rotation(r.alpha, r.beta, r.gamma);
         readings++;
-        if (wantCenter || screen !== (screenDeg || 0)) { R0 = R; screen = screenDeg || 0; sm = { right: 0, up: 0 }; lastT = r.t; wantCenter = false; return { ...sm, centered: true }; }
+        if (wantCenter || screen !== (screenDeg || 0)) { R0 = R; screen = screenDeg || 0; sm = { right: 0, up: 0 }; lastT = r.t; wantCenter = false; lastDir = [0, 0, -1]; return { ...sm, centered: true, dir: lastDir }; }
         const raw = offset(R0, R, screen);
+        lastDir = raw.dir;
         const dt = lastT == null || r.t == null ? 1 / 60 : Math.max(0, r.t - lastT);
         lastT = r.t;
         const k = 1 - Math.exp(-dt / (tauS > 0 ? tauS : TAU_S));
         sm = { right: sm.right + (raw.right - sm.right) * k, up: sm.up + (raw.up - sm.up) * k };
-        return { ...sm, centered: false };
+        return { ...sm, centered: false, dir: lastDir };
       },
       center() { wantCenter = true; },
       get readings() { return readings; },
@@ -91,5 +92,19 @@
     return best;
   }
 
-  return { TAU_S, TAU_STEADY_S, rotation, back, offset, reader, spread };
+  // The steadiness measure (range-day-sixteen, after Dan's flat-table reading of 3328.9): the largest angle, in degrees,
+  // between any two of a run of pointing directions (unit vectors, as the reader's dir). Unlike the spread of the
+  // right-and-up degrees, it holds at any distance from the centering: laid flat, 90 degrees from where the aim was
+  // centered, atan2 over a forward part near zero turned tiny movements into huge ones.
+  function sway(dirs) {
+    let best = 0;
+    for (let i = 0; i < dirs.length; i++) for (let j = i + 1; j < dirs.length; j++) {
+      const a = dirs[i], b = dirs[j];
+      const c = Math.hypot(a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]);
+      best = Math.max(best, Math.atan2(c, a[0] * b[0] + a[1] * b[1] + a[2] * b[2]));
+    }
+    return best / RAD;
+  }
+
+  return { TAU_S, TAU_STEADY_S, sway, rotation, back, offset, reader, spread };
 }));

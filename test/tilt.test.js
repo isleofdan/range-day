@@ -393,3 +393,62 @@ test('range-day-sixteen Steady: on the firing line in tilt mode, pressing and ho
   assert.deepEqual(errors, []);
   await context.close();
 });
+
+// The Setting move and the steadiness measure (range-day-sixteen, after Dan's walkthrough: Setting stood under a shot log
+// of several hundred rows, and the steadiness line read 3328.9 with the phone flat on a table).
+test('range-day-sixteen steadiness: the sway is the largest angle between pointing directions, so it holds far from the centering: centered upright, then laid flat (90 degrees off) and shaken a tenth of a degree, it reads about a tenth of a degree, where the right-and-up spread runs away', () => {
+  const r = T.reader();
+  r.feed({ alpha: 0, beta: 90, gamma: 0, t: 0 }, 0);
+  const dirs = [], pts = [];
+  for (let i = 1; i <= 180; i++) {
+    const o = r.feed({ alpha: 0, beta: 0.05 * Math.sin(i / 3), gamma: 0.05 * Math.cos(i / 4), t: i / 60 }, 0);
+    dirs.push(o.dir); pts.push({ right: o.right, up: o.up });
+  }
+  const sway = T.sway(dirs);
+  assert.ok(sway > 0.05 && sway < 0.2, `flat on the table: ${sway} degrees`);
+  assert.ok(T.spread(pts) > 10 * sway, `the old measure ran away there: ${T.spread(pts)} degrees`);
+  // and near the centering both measures agree
+  const r2 = T.reader();
+  r2.feed({ alpha: 0, beta: 90, gamma: 0, t: 0 }, 0);
+  const d2 = [], p2 = [];
+  for (let i = 1; i <= 180; i++) { const o = r2.feed({ alpha: 0.1 * Math.sin(i / 5), beta: 90, gamma: 0, t: i / 60 }, 0); d2.push(o.dir); p2.push({ right: o.right, up: o.up }); }
+  assert.ok(near(T.sway(d2), 0.2, 0.01), `upright: ${T.sway(d2)} degrees for a sweep of a tenth either way`);
+  // two known directions: 1 degree apart
+  const a = T.offset(T.rotation(0, 90, 0), T.rotation(0, 90, 0), 0).dir, b = T.offset(T.rotation(0, 90, 0), T.rotation(-1, 90, 0), 0).dir;
+  assert.ok(near(T.sway([a, b]), 1, 1e-6), `${T.sway([a, b])}`);
+});
+
+test('range-day-sixteen Setting move: with a shot log of 300 rows, Setting stands above the log at the three phone sizes; in tilt mode the steadiness reading shows over the view without scrolling, inside the screen and the within-reach list still holds; it is hidden in drag mode and at the spotting scope', { skip }, async () => {
+  const rows = Array.from({ length: 300 }, (_, i) => ({ n: i + 1, yards: 300, target: 'steel', el: 12, wd: -3, zoom: 7, heldUp: 0.5, heldRight: -1.2, hit: i % 2 === 0, where: i % 2 === 0 ? 'hit (2.1 in high, 0.8 in right of center)' : 'miss: 14 in low, 3 in left', upIn: 2.1, rightIn: 0.8, call: null, conditionsShown: false, aim: 'tilt' }));
+  for (const [w, h] of PHONES) {
+    const { page, context, errors } = await signedIn({ width: w, height: h });
+    await page.evaluate((v) => localStorage.setItem('range-day:log:molot-vepr-54r:utg-bugbuster-3-9x32:sb-174-hpbt', JSON.stringify(v)), rows);
+    await line(page, VEPR);
+    assert.equal(await page.evaluate(() => document.querySelectorAll('#log tbody tr').length), 300, 'the 300 rows are drawn');
+    const order = await page.evaluate(() => {
+      const top = (el) => el.getBoundingClientRect().top + window.scrollY;
+      const setting = [...document.querySelectorAll('h2')].find((x) => x.textContent === 'Setting');
+      return { setting: top(setting), gearing: top(document.getElementById('gearing')), log: top(document.getElementById('log')) };
+    });
+    assert.ok(order.setting < order.log && order.gearing < order.log, `${w}x${h}: Setting at ${order.setting} px, the log at ${order.log} px`);
+    assert.equal(await page.isVisible('#steadiness-near'), false, 'hidden in drag mode');
+    await tiltOn(page);
+    await page.evaluate(() => { const t0 = performance.now() / 1000; for (let i = 0; i < 120; i++) RangeDayLine.feedOrientation(0.1 * Math.sin(i / 5), 90, 0, t0 + i / 60); });
+    await page.waitForFunction(() => /^Steadiness: [\d.]+ MOA over 3 s \([\d.]+ at true angle\)$/.test(document.getElementById('steadiness-near').textContent), null, { timeout: 3000 });
+    await page.evaluate(() => window.scrollTo(0, 0)); await wait(100);
+    const near_ = await page.evaluate(() => { const b = document.getElementById('steadiness-near').getBoundingClientRect(), v = document.getElementById('view').getBoundingClientRect(); return { top: b.top, bottom: b.bottom, left: b.left, right: b.right, view: { top: v.top, bottom: v.bottom } }; });
+    assert.ok(near_.top >= 0 && near_.bottom <= h && near_.left >= 0 && near_.right <= w, `${w}x${h}: inside the screen ${JSON.stringify(near_)}`);
+    assert.ok(near_.top >= near_.view.top && near_.bottom <= near_.view.bottom, `${w}x${h}: over the view ${JSON.stringify(near_)}`);
+    const m = await page.evaluate(measure, '#zoomrow');
+    assert.deepEqual(meets(m), [], `${w}x${h}: the within-reach list with the reading shown`);
+    await page.click('#spotting');
+    assert.equal(await page.isVisible('#steadiness-near'), false, 'hidden at the spotting scope');
+    await page.click('#back-to-rifle');
+    assert.equal(await page.isVisible('#steadiness-near'), true, 'back at the rifle');
+    await page.click('#aim-mode');
+    await page.waitForFunction(() => RangeDayLine.aimMode === 'drag');
+    assert.equal(await page.isVisible('#steadiness-near'), false, 'hidden back in drag mode');
+    assert.deepEqual(errors, []);
+    await context.close();
+  }
+});
