@@ -231,6 +231,41 @@ clicks, then works out the drop and the wind for each distance himself.
 One MOA is a minute of angle, 1/60 of a degree, about 1 inch at 100
 yards; sights click in MOA.
 
+## The workbench
+
+**The workbench** (`/workbench`, from home's "The workbench" link) makes
+what-if versions of the rifles, called builds: the same rifle with a
+different barrel length, or with a scope of the scope collection in a
+different mount (higher or lower over the rail). Making one is choosing
+the rifle, changing one thing (the rifle as fitted is already chosen in
+every list) and naming it; a name is offered from the change. Beside the
+rifle as fitted the page shows only what the build changes: the barrel
+length, each load's muzzle speed from that barrel (with how it was worked
+out, in plain words), and each sight's height over the bore. It never
+shows where a shot would land: that is for the zero bench, the firing
+line and the book.
+
+A build is then a rifle of its own everywhere: home offers it under its
+rifle ("Version: As fitted", then each build by name); it starts
+unzeroed; its zeros, shot log, book, cold-bore record and days are its
+own; the rifle as fitted keeps everything it had. On the book page, a
+build's page can be shown beside the rifle as fitted (or another build)
+with the same sight and load: distances lined up, each side only the
+player's own hits, blank where there are none. Removing a build takes it
+off the lists; it can be put back from the workbench, and nothing of it
+is deleted.
+
+The figures (`data/workbench.json`, each with its source or its basis):
+per caliber, how much speed an inch of barrel adds (25 feet per second
+for 5.56, 20 for 7.62x39, 25 for 5.45x39 and 25.7 for 7.62x54R; none for
+the .22, which is no faster from a longer barrel); per rifle, the barrel
+lengths its maker or importer sold, its own among them; per collection
+scope, the mounts its maker sells and the height of each. A build's
+speed for a load is the load's speed from the rifle's own barrel plus
+that figure for each inch added; a scope's height over the bore is the
+rifle's rail height plus the mount's. Both are worked out in one place,
+`public/builds.js`, and the bullet still flies through the one engine.
+
 ## The picture
 
 Since range-day-five the canyon course's firing line is drawn as a 3D
@@ -364,7 +399,7 @@ names carrying their content hash. Each scan's ground size is in
 ## Where the numbers come from
 
 `data/` holds every figure the game uses: each load's speed, drag figure,
-drag model and box, each rifle's barrel length and sight height, each sight's
+drag model and box, each rifle's barrel length and sight height, the workbench's barrel lengths, mount heights and speed per inch of barrel (`data/workbench.json`), each sight's
 click value, dot size, reticle marks or leaf settings (each setting's
 angle derived with the engine from the service load the leaf was cut
 for), each course's firing position, bearing of fire and plates (distance,

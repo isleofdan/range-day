@@ -140,7 +140,7 @@
     if (!took.saved) $('saved').textContent = 'The zeroing supply is not saved on this device (the browser refused its storage); it holds while this page is open.';
     if (paperBack) { paperBack = null; freshButton(); pairNote(''); } // the way back lasts until the next shot
     if (!out) { rounds(); return; }
-    const load = d.loads[loadId];
+    const load = RD.loadFor(d, rifleId, loadId); // a build's speed for this load (public/builds.js); a rifle as fitted, the load itself
     RD.shotSound(0.5);
     for (let i = 0; i < out; i++) {
       const r = E.shoot({

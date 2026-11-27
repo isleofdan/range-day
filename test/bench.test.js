@@ -38,6 +38,9 @@ async function signedIn(viewport) {
   await page.fill('#passphrase', PASS);
   await page.click('button[type=submit]');
   await page.waitForURL(`${base}/`);
+  // range-day-seventeen: home writes the last-used rifle (RD.remember) as it first renders, then fills the whole set's list; wait
+  // for that list, so the write has landed before the device is cleared and cannot fall inside a test's snapshot of the keys.
+  await page.waitForFunction(() => document.querySelector('#set li'));
   await fresh(page);
   return { page, context, errors };
 }

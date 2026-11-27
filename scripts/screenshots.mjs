@@ -32,7 +32,7 @@ if (!(shardIx >= 1 && shardOf >= 1 && shardIx <= shardOf)) { console.error(`--sh
 export const PORT = Number(arg('--port', 8921));
 const PASS = 'open sesame';
 const base = `http://127.0.0.1:${PORT}`;
-const SIZES = { phone: { width: 412, height: 915 }, computer: { width: 1280, height: 800 } };
+const SIZES = { phone: { width: 412, height: 915 }, computer: { width: 1280, height: 800 }, small: { width: 378, height: 762 } }; // small: only the states marked small (range-day-seventeen: the workbench's screens)
 // Range Day's screens. `act` drives the screen into the state the brief asks
 // to see before the screenshot; `expect` is text the screen must show.
 const PIRU = '/line?course=cta-piru&rifle=molot-vepr-54r&load=sb-174-hpbt';
@@ -316,6 +316,41 @@ SCREENS.push(
   { name: 'day-play-control', path: '/', expect: 'Play this day back', act: async (page) => { const id = await pbOpen(page); await page.goto(`${base}/day?id=${encodeURIComponent(id)}`); await page.waitForSelector('#play-back'); } },
 );
 
+// range-day-seventeen: the workbench, home's chooser showing a build, and the book's comparison. Each starts with no builds and
+// takes its build away after (builds and their records), so no other state sees one.
+const noBuilds = (page) => page.evaluate(() => { for (const k of Object.keys(localStorage)) if (k === 'range-day:builds' || /^range-day:[^:]+:b-/.test(k) || /^range-day:last:b-/.test(k) || (k === 'range-day:last' && /"b-/.test(localStorage.getItem(k)))) localStorage.removeItem(k); });
+const WB_MOUNT = JSON.parse(readFileSync(join(root, 'data', 'workbench.json'), 'utf8')).mounts['vortex-razor-1-10'].find((m) => /PR34-L/.test(m.name)).name;
+async function wbChange(page) {
+  await page.waitForSelector('#changes table');
+  await page.selectOption('#barrel', '20');
+  await page.click('#mounts summary');
+  await page.selectOption('#mount-vortex-razor-1-10', WB_MOUNT);
+}
+async function wbMake(page) {
+  await page.goto(`${base}/workbench?rifle=bcm-ar15`);
+  await wbChange(page); await page.fill('#name', '20 in, low rings'); await page.click('#make'); await page.waitForSelector('#made a');
+  return page.evaluate(() => JSON.parse(localStorage.getItem('range-day:builds')).slice(-1)[0].id);
+}
+const bookLines = (page, id) => page.evaluate((b) => {
+  const line = (rifle, day, n, yards, el) => RD.addBookLine(rifle, 'troy-battlesights', 'imi-m193', { id: `${day}:${n}`, day, n, at: `2026-11-2${n}T09:00:00.000Z`, on: `2026-11-2${n}`, course: 'angeles-sylmar', yards, elevationClicks: el, windageClicks: 0, elevationMoa: el * 1.33, windageMoa: 0, leaf: null, zero: { zeroYards: 100, elevationClicks: 2, windageClicks: 0, leafIx: null, leaf: null, elevationMoa: 2.66 }, heldUpMoa: 0, heldRightMoa: 0, tempF: 60, windCall: null, upIn: 1, rightIn: 0, struck: false, note: '' });
+  line(b, 'shot-b', 1, 300, 6); line(b, 'shot-b', 2, 400, 9);
+  line('bcm-ar15', 'shot-a', 3, 300, 7); line('bcm-ar15', 'shot-a', 4, 500, 14);
+}, id);
+// The BCM's own book page, set aside while a comparison state runs (an earlier state, book-several, writes real hits there) and
+// put back after, so each comparison shows only its own lines and no later state sees a change.
+const BCM_BOOK = 'range-day:book:bcm-ar15:troy-battlesights:imi-m193';
+const setBookAside = (page) => page.evaluate((k) => { const v = localStorage.getItem(k); localStorage.removeItem(k); if (v !== null) sessionStorage.setItem('aside', v); else sessionStorage.removeItem('aside'); }, BCM_BOOK);
+const putBookBack = (page) => page.evaluate((k) => { const v = sessionStorage.getItem('aside'); if (v !== null) localStorage.setItem(k, v); else localStorage.removeItem(k); sessionStorage.removeItem('aside'); }, BCM_BOOK);
+SCREENS.push(
+  { name: 'workbench-empty', small: true, path: '/', expect: 'No builds yet', act: async (page) => { await noBuilds(page); await page.goto(`${base}/workbench?rifle=bcm-ar15`); await page.waitForSelector('#changes table'); } },
+  { name: 'workbench-changed', small: true, path: '/', expect: '3,166 feet per second', act: async (page) => { await noBuilds(page); await page.goto(`${base}/workbench?rifle=bcm-ar15`); await wbChange(page); } },
+  { name: 'workbench-made', small: true, path: '/', expect: 'It starts unzeroed', after: noBuilds, act: async (page) => { await noBuilds(page); await wbMake(page); await page.evaluate(() => window.scrollTo(0, 0)); } },
+  { name: 'workbench-removed', small: true, path: '/', expect: 'Put it back', after: noBuilds, act: async (page) => { await noBuilds(page); await wbMake(page); await page.click('.entry.build .remove'); await page.waitForSelector('.entry.removed'); await page.evaluate(() => document.getElementById('builds').scrollIntoView()); } },
+  { name: 'home-build-chooser', small: true, path: '/', expect: 'Version:', after: noBuilds, act: async (page) => { await noBuilds(page); const id = await wbMake(page); await page.goto(`${base}/?rifle=${id}`); await page.waitForSelector('#builds-of .chip.picked'); } },
+  { name: 'book-compare-empty', small: true, path: '/', expect: 'No hits on steel yet with either', after: async (page) => { await putBookBack(page); await noBuilds(page); }, act: async (page) => { await noBuilds(page); await setBookAside(page); const id = await wbMake(page); await page.goto(`${base}/book?course=angeles-sylmar&rifle=${id}&sight=troy-battlesights&load=imi-m193`); await page.waitForSelector('#compare-box:not([hidden])'); await page.evaluate(() => document.getElementById('compare-box').scrollIntoView()); } },
+  { name: 'book-compare', small: true, path: '/', expect: 'Beside another version', after: async (page) => { await putBookBack(page); await noBuilds(page); }, act: async (page) => { await noBuilds(page); await setBookAside(page); const id = await wbMake(page); await bookLines(page, id); await page.goto(`${base}/book?course=angeles-sylmar&rifle=${id}&sight=troy-battlesights&load=imi-m193`); await page.waitForSelector('#compare-table table'); await page.evaluate(() => document.getElementById('compare-box').scrollIntoView()); } },
+);
+
 const GREP = arg('--grep', null) ? new RegExp(arg('--grep')) : null; // --grep <pattern>: only the states whose names match (for a before-and-after pair by hand; the check runs every state)
 const SHARD = SCREENS.filter((_, i) => i % shardOf === shardIx - 1).filter((s) => !GREP || GREP.test(s.name));
 if (process.argv.includes('--list')) { for (const s of SHARD) console.log(s.name); process.exit(0); }
@@ -354,7 +389,7 @@ for (const [size, viewport] of Object.entries(SIZES)) {
   await page.waitForURL(`${base}/`);
   check(`${size}: the passphrase typed into the form signs in`, true);
 
-  for (const s of SHARD) {
+  for (const s of SHARD.filter((x) => size !== 'small' || x.small)) {
     const started = Date.now();
     let p = page, ctx = null;
     if (s.no3d) {
@@ -372,6 +407,7 @@ for (const [size, viewport] of Object.entries(SIZES)) {
     check(`${size}: ${s.name} shows "${s.expect.trim()}"`, text.includes(s.expect));
     check(`${size}: ${s.name} fits the width`, await noSideways(p));
     await p.screenshot({ path: join(out, `${s.name}-${size}.png`) });
+    if (s.after) await s.after(p);
     if (ctx) await ctx.close();
     console.log(`time ${size}: ${s.name} ${((Date.now() - started) / 1000).toFixed(1)} s`);
   }

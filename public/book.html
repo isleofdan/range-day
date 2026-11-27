@@ -30,6 +30,12 @@
   <div id="cold"></div>
   <h2>By distance</h2>
   <div id="pages"></div>
+  <section id="compare-box" hidden>
+    <h2>Beside another version</h2>
+    <p class="muted small">This page beside the same rifle as fitted, or another of its builds, with the same sight and load: your own hits only, lined up by distance, blank where you have none.</p>
+    <div class="picks"><div class="field wide"><label for="compare">Beside</label><select id="compare"></select></div></div>
+    <div id="compare-table"></div>
+  </section>
   <h2 class="copy">A copy of everything on this device</h2>
   <p class="muted small">"Save a copy" hands you one file holding every book page, the cold-bore records, the finished days and the saved zeros on this device. "Load a copy" reads such a file and adds what this device lacks; it never replaces or removes a line already here. This is how the book moves between the phone and the computer.</p>
   <div class="row copy">
@@ -40,6 +46,7 @@
   <p id="copy-note" class="readout" hidden></p>
 </main>
 <script src="/engine.js"></script>
+<script src="/builds.js"></script>
 <script src="/game.js"></script>
 <script src="/book.js"></script>
 </body>

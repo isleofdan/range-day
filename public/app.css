@@ -438,3 +438,20 @@ body.playback-empty .reach { display: none; }
 /* range-day-fourteen: on a phone under 400 px wide (Dan's, 378 px) the zoom control takes a little more of the target row, so the
    rifle scope's slider keeps at least 125 px (it fell to 115 px at an even split); the target picker still shows its distance. */
 @media (max-width: 399px) { .reach .pick { grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr); } }
+
+/* range-day-seventeen: the workbench. The table of what a build changes wraps, so its figures stay on a phone's screen; a
+   button that cannot be pressed yet looks it. */
+.workbench table.facts th, .workbench table.facts td { white-space: normal; vertical-align: top; }
+.workbench table.facts td:first-child { width: 46%; }
+.workbench details { margin: 8px 0; }
+.workbench details summary { cursor: pointer; padding: 8px 0; min-height: 28px; }
+.workbench details label { display: block; margin: 8px 0 3px; }
+.workbench .entry { margin: 10px 0 18px; }
+.btn:disabled { background: var(--line); color: var(--muted); border-color: var(--line); cursor: not-allowed; }
+.builds-of { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0 0 8px; }
+.builds-of:empty { display: none; }
+.chip { min-height: 44px; padding: 4px 12px; border: 2px solid var(--line); border-radius: 22px; background: var(--card); color: var(--fg); font: inherit; font-size: 15px; cursor: pointer; }
+.chip.picked { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent) inset; }
+table.log.compare { table-layout: fixed; }
+table.log.compare th, table.log.compare td { white-space: normal; vertical-align: top; overflow-wrap: anywhere; }
+table.log.compare th:first-child { width: 3.6em; }
