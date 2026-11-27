@@ -552,14 +552,15 @@ window.RD = (function () {
   // Checks a parsed file whole, then adds what is missing. Throws an Error with the reason for a file that is not a copy; then nothing was written.
   function loadCopy(obj) {
     checkCopy(obj);
-    const added = { zeros: 0, book: 0, cold_bore: 0, days: 0, builds: 0 };
+    const added = { zeros: 0, book: 0, cold_bore: 0, days: 0 };
+    let buildsAdded = 0; // range-day-seventeen: told apart from `added`, whose four counts are the copy's old answer
     let failed = false;
     // The builds first, so the lines that name one read as that build here too; a build already here (by id) is never replaced.
     if (Array.isArray(obj.builds) && obj.builds.length) {
       const have = getBuilds(), add = obj.builds.filter((b) => !have.some((x) => x.id === b.id));
       if (add.length) {
         const recs = add.map((b) => ({ id: b.id, name: b.name, rifle: b.rifle, barrelIn: b.barrelIn, mounts: { ...b.mounts }, madeAt: b.madeAt || null, removedAt: b.removedAt || null }));
-        if (!buildsReadFailed() && store.set('builds', [...have, ...recs])) { added.builds = recs.length; if (DATA && window.RangeDayBuilds) window.RangeDayBuilds.withBuilds(DATA, recs); } else failed = true;
+        if (!buildsReadFailed() && store.set('builds', [...have, ...recs])) { buildsAdded = recs.length; if (DATA && window.RangeDayBuilds) window.RangeDayBuilds.withBuilds(DATA, recs); } else failed = true;
       }
     }
     for (const z of obj.zeros) {
@@ -586,7 +587,7 @@ window.RD = (function () {
       days.push(d); added.days++; changed = true;
     }
     if (changed) { days.sort((a, b) => (a.startedAt < b.startedAt ? 1 : -1)); if (!store.set('days', days)) failed = true; }
-    return { added, failed };
+    return { added, failed, buildsAdded };
   }
 
   // --- sounds, made in code ---------------------------------------------------------

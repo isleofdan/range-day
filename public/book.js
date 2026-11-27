@@ -118,7 +118,7 @@
       let obj;
       try { obj = JSON.parse(text); } catch { throw new Error(`This is not a Range Day copy: the file "${file.name}" is not JSON.`); }
       const r = RD.loadCopy(obj);
-      say(`Loaded: added ${r.added.book} book line${r.added.book === 1 ? '' : 's'}, ${r.added.cold_bore} cold-bore line${r.added.cold_bore === 1 ? '' : 's'}, ${r.added.days} day${r.added.days === 1 ? '' : 's'}, ${r.added.zeros} zero${r.added.zeros === 1 ? '' : 's'}${r.added.builds ? `, ${r.added.builds} build${r.added.builds === 1 ? '' : 's'}` : ''}; nothing already here was changed.${r.failed ? ' Some of it was not saved on this device: the browser refused its storage.' : ''}`);
+      say(`Loaded: added ${r.added.book} book line${r.added.book === 1 ? '' : 's'}, ${r.added.cold_bore} cold-bore line${r.added.cold_bore === 1 ? '' : 's'}, ${r.added.days} day${r.added.days === 1 ? '' : 's'}, ${r.added.zeros} zero${r.added.zeros === 1 ? '' : 's'}${r.buildsAdded ? `, ${r.buildsAdded} build${r.buildsAdded === 1 ? '' : 's'}` : ''}; nothing already here was changed.${r.failed ? ' Some of it was not saved on this device: the browser refused its storage.' : ''}`);
       renderCold(); renderPages();
     } catch (err) { say(err.message); }
     e.target.value = '';

@@ -224,3 +224,28 @@ test('range-day-seventeen step 6 and verify 6: no drop is given: with no shots t
   assert.deepEqual(errors, []);
   await context.close();
 });
+
+test('range-day-seventeen step 3: the copy file carries the builds: saved with a build and its book line, loaded on an empty device, the build is back under its id with its line; loading twice adds nothing; a copy without builds still loads', { skip }, async () => {
+  const { page, context, errors } = await signedIn();
+  const id = await makeBuild(page, 'copied');
+  await page.goto(`${base}/book?course=angeles-sylmar&rifle=${id}&sight=troy-battlesights&load=imi-m193`); await page.waitForSelector('#intro:not(:empty)');
+  await page.evaluate((b) => RD.addBookLine(b, 'troy-battlesights', 'imi-m193', { id: 'cp:1', day: 'cp', n: 1, at: '2026-11-21T09:00:00.000Z', on: '2026-11-21', course: 'angeles-sylmar', yards: 300, elevationClicks: 6, windageClicks: 0, elevationMoa: 7.98, windageMoa: 0, leaf: null, zero: null, heldUpMoa: 0, heldRightMoa: 0, tempF: 60, windCall: null, upIn: 1, rightIn: 0, struck: false, note: '' }), id);
+  const text = JSON.stringify(await page.evaluate(() => RangeDayBook.copy));
+  assert.equal(JSON.parse(text).builds.length, 1);
+  await page.evaluate(() => localStorage.clear());
+  await page.reload(); await page.waitForSelector('#intro:not(:empty)');
+  const r = await page.evaluate((t) => RangeDayBook.loadText(t), text);
+  assert.equal(r.buildsAdded, 1); assert.deepEqual(r.added, { zeros: 0, book: 1, cold_bore: 0, days: 0 }, 'the four counts keep their old shape');
+  const back = await page.evaluate(() => JSON.parse(localStorage.getItem('range-day:builds')));
+  assert.equal(back[0].id, id); assert.equal(back[0].barrelIn, 20);
+  await page.reload(); await page.waitForSelector('.entry');
+  assert.match(await page.textContent('#intro'), /build “copied”/);
+  const twice = await page.evaluate((t) => RangeDayBook.loadText(t), text);
+  assert.equal(twice.buildsAdded, 0); assert.equal(twice.added.book, 0);
+  const old = JSON.parse(text); delete old.builds;
+  assert.equal(await page.evaluate((t) => { try { RD.checkCopy(JSON.parse(t)); return 'ok'; } catch (e) { return e.message; } }, JSON.stringify(old)), 'ok', 'a copy from before has no builds and loads');
+  const bad = JSON.parse(text); bad.builds[0].barrelIn = 'long';
+  assert.match(await page.evaluate((t) => { try { RD.checkCopy(JSON.parse(t)); return 'ok'; } catch (e) { return e.message; } }, JSON.stringify(bad)), /builds\[0\]\.barrelIn is "long"/);
+  assert.deepEqual(errors, []);
+  await context.close();
+});
