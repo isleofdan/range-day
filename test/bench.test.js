@@ -38,10 +38,6 @@ async function signedIn(viewport) {
   await page.fill('#passphrase', PASS);
   await page.click('button[type=submit]');
   await page.waitForURL(`${base}/`);
-  // The home page writes the last rifle and sight (RD.remember) once its data has loaded; wait for that before clearing, or the
-  // write can land after the clear and a test's "every key held before" snapshot holds it (Checks run 45943349607, bench:
-  // range-day:last read {"rifle":"bcm-ar15"} before, {"rifle":"iwi-x95"} after the X95's visit).
-  await page.waitForFunction(() => localStorage.getItem('range-day:last') !== null);
   await fresh(page);
   return { page, context, errors };
 }
