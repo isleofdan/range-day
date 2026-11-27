@@ -1276,7 +1276,11 @@
   const aimSaveNote = (ok) => { $('aim-note').hidden = ok; $('aim-note').textContent = ok ? '' : 'The way of aiming is not saved on this device (the browser refused its storage); it holds while this page is open.'; return ok; };
   const storeAim = () => aimSaveNote(RD.setAim({ mode: aimMode, gearing }));
   // The steadiness reading over the view: in tilt mode at the rifle, never at the spotting scope or in playback.
-  function nearShown() { $('steadiness-near').hidden = !(aimMode === 'tilt' && !spotting && !PLAYBACK); }
+  function nearShown() {
+    const el = $('steadiness-near');
+    el.hidden = !(aimMode === 'tilt' && !spotting && !PLAYBACK);
+    el.style.maxWidth = `${Math.max(120, $('view').clientWidth - 16)}px`; // inside the view itself, which is narrower than its frame on a phone
+  }
   function showAim() {
     $('aim-mode').textContent = aimMode === 'tilt' ? 'Aim: tilt' : 'Aim: drag';
     $('aim-mode').setAttribute('aria-pressed', String(aimMode === 'tilt'));
@@ -1328,7 +1332,8 @@
     const deg = TILT.sway(tiltTrail.map((p) => p.dir));
     const geared = (deg * 60) / gearing, trueMoa = deg * 60;
     $('steadiness').textContent = `Tilt steadiness: the aim moved about ${geared.toFixed(1)} minutes of angle over the last 3 seconds (${trueMoa.toFixed(1)} at true angle).`;
-    $('steadiness-near').textContent = `Steadiness: ${geared.toFixed(1)} MOA over 3 s (${trueMoa.toFixed(1)} at true angle)`;
+    nearShown();
+    $('steadiness-near').textContent = `Steadiness: ${geared.toFixed(1)} MOA in 3 s (${trueMoa.toFixed(1)} at true angle)`;
   }
   if (!PLAYBACK) {
     if (RD.aimReadFailed()) aimSaveNote(false);

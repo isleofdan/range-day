@@ -434,13 +434,16 @@ test('range-day-sixteen Setting move: with a shot log of 300 rows, Setting stand
     assert.equal(await page.isVisible('#steadiness-near'), false, 'hidden in drag mode');
     await tiltOn(page);
     await page.evaluate(() => { const t0 = performance.now() / 1000; for (let i = 0; i < 120; i++) RangeDayLine.feedOrientation(0.1 * Math.sin(i / 5), 90, 0, t0 + i / 60); });
-    await page.waitForFunction(() => /^Steadiness: [\d.]+ MOA over 3 s \([\d.]+ at true angle\)$/.test(document.getElementById('steadiness-near').textContent), null, { timeout: 3000 });
+    await page.waitForFunction(() => /^Steadiness: [\d.]+ MOA in 3 s \([\d.]+ at true angle\)$/.test(document.getElementById('steadiness-near').textContent), null, { timeout: 3000 });
     await page.evaluate(() => window.scrollTo(0, 0)); await wait(100);
-    const near_ = await page.evaluate(() => { const b = document.getElementById('steadiness-near').getBoundingClientRect(), v = document.getElementById('view').getBoundingClientRect(); return { top: b.top, bottom: b.bottom, left: b.left, right: b.right, view: { top: v.top, bottom: v.bottom } }; });
+    const near_ = await page.evaluate(() => { const b = document.getElementById('steadiness-near').getBoundingClientRect(), v = document.getElementById('view').getBoundingClientRect(); return { top: b.top, bottom: b.bottom, left: b.left, right: b.right, view: { top: v.top, bottom: v.bottom, left: v.left, right: v.right } }; });
     assert.ok(near_.top >= 0 && near_.bottom <= h && near_.left >= 0 && near_.right <= w, `${w}x${h}: inside the screen ${JSON.stringify(near_)}`);
-    assert.ok(near_.top >= near_.view.top && near_.bottom <= near_.view.bottom, `${w}x${h}: over the view ${JSON.stringify(near_)}`);
+    assert.ok(near_.top >= near_.view.top && near_.bottom <= near_.view.bottom && near_.left >= near_.view.left && near_.right <= near_.view.right, `${w}x${h}: over the view ${JSON.stringify(near_)}`);
     const m = await page.evaluate(measure, '#zoomrow');
     assert.deepEqual(meets(m), [], `${w}x${h}: the within-reach list with the reading shown`);
+    // the widest reading it can show (a runaway figure, as on Dan's table) still stays inside the view: it wraps, never spills
+    const wide = await page.evaluate(() => { const el = document.getElementById('steadiness-near'); el.textContent = 'Steadiness: 3328.9 MOA in 3 s (33289.0 at true angle)'; const b = el.getBoundingClientRect(), v = document.getElementById('view').getBoundingClientRect(); return { left: b.left, right: b.right, top: b.top, bottom: b.bottom, view: { left: v.left, right: v.right, top: v.top, bottom: v.bottom } }; });
+    assert.ok(wide.left >= wide.view.left && wide.right <= wide.view.right && wide.top >= wide.view.top && wide.bottom <= wide.view.bottom, `${w}x${h}: the widest reading inside the view ${JSON.stringify(wide)}`);
     await page.click('#spotting');
     assert.equal(await page.isVisible('#steadiness-near'), false, 'hidden at the spotting scope');
     await page.click('#back-to-rifle');
