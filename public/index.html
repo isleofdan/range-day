@@ -34,11 +34,13 @@
       <button id="pack-up" type="button" class="btn inline secondary">Pack up</button>
     </div>
     <p id="pack-note" class="muted small"></p>
+    <p class="small"><a href="/workbench">The workbench</a>: what-if versions of a rifle.</p>
   </section>
   <section id="no-day">
     <h1>Pick a rifle</h1>
     <p class="muted small">This is {{TITLE}}: steel from 100 to 1,000 yards, shot through the rifle's own sight. Zero on paper first; then the drop and the wind are yours to work out.</p>
     <div id="rifles" class="rifles"><p class="muted">Loading…</p></div>
+    <div id="builds-of" class="builds-of"></div>
     <div class="picks">
       <div class="field wide"><label for="sight">Sight</label><select id="sight"></select></div>
       <div class="field"><label for="load">Load</label><select id="load"></select></div>
@@ -60,6 +62,7 @@
   <ul id="set" class="set"></ul>
 </main>
 <script src="/engine.js"></script>
+<script src="/builds.js"></script>
 <script src="/game.js"></script>
 <script src="/home.js"></script>
 </body>

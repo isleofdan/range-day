@@ -63,9 +63,20 @@
       const n = RD.zeroCount(id, r);
       const failed = RD.store.get('last') === RD.store.FAILED;
       const mark = failed ? 'storage refused' : n ? `zeroed (${n} saved)` : 'no zero saved';
-      return `<button type="button" class="rifle${id === c.rifleId ? ' picked' : ''}" data-rifle="${id}"><span class="rname">${RD.esc(r.name)}</span><span class="rmark ${n ? 'yes' : 'no'}">${mark}</span></button>`;
+      return `<button type="button" class="rifle${id === baseOf(c.rifleId) ? ' picked' : ''}" data-rifle="${id}"><span class="rname">${RD.esc(r.name)}</span><span class="rmark ${n ? 'yes' : 'no'}">${mark}</span></button>`;
     }).join('');
     for (const b of $('rifles').querySelectorAll('button')) b.addEventListener('click', () => { c = RD.chooseFrom(d, { rifle: b.dataset.rifle, remembered: true }); renderPicks(); renderRifles(); });
+    renderBuilds();
+  }
+  // range-day-seventeen: the picked rifle's builds (public/builds.js), offered under it: the rifle as fitted first, then each
+  // build by its own name. A build is a rifle of its own on every screen after this choice.
+  function baseOf(id) { return (d.rifles[id] && d.rifles[id].buildOf) || id; }
+  function renderBuilds() {
+    const baseId = baseOf(c.rifleId), builds = window.RangeDayBuilds.buildsOf(d, baseId);
+    if (!builds.length) { $('builds-of').innerHTML = ''; return; } // nothing shown: the workbench is linked beside the book, below the doors
+    const opt = (id, label) => `<button type="button" class="chip${id === c.rifleId ? ' picked' : ''}" data-rifle="${id}">${RD.esc(label)}</button>`;
+    $('builds-of').innerHTML = `<span class="small muted">Version:</span> ${opt(baseId, 'As fitted')}${builds.map((b) => opt(b, `“${d.rifles[b].build.name}”`)).join('')}`;
+    for (const b of $('builds-of').querySelectorAll('button')) b.addEventListener('click', () => { c = RD.chooseFrom(d, { rifle: b.dataset.rifle, remembered: true }); renderPicks(); renderRifles(); });
   }
   function renderPicks() {
     const r = d.rifles[c.rifleId];
@@ -101,7 +112,7 @@
     renderRifles(); renderPicks();
     const days = RD.finishedDays();
     const packed = RD.packedDayId();
-    $('past').innerHTML = (days.length ? `<a href="/day">${days.length} past day${days.length === 1 ? '' : 's'}</a>` : 'No days yet: a day starts when you go through a door.') + (packed ? ` · <a href="/day?id=${encodeURIComponent(packed)}">Packed up early: back to the range</a>` : '') + ` · <a id="go-book" href="/book${RD.params(c)}">The book</a>`;
+    $('past').innerHTML = (days.length ? `<a href="/day">${days.length} past day${days.length === 1 ? '' : 's'}</a>` : 'No days yet: a day starts when you go through a door.') + (packed ? ` · <a href="/day?id=${encodeURIComponent(packed)}">Packed up early: back to the range</a>` : '') + ` · <a id="go-book" href="/book${RD.params(c)}">The book</a> · <a id="go-workbench" href="/workbench">The workbench</a>`;
   }
   $('sight').addEventListener('change', (e) => { c = { ...c, sightId: e.target.value }; showZero(); });
   $('load').addEventListener('change', (e) => { c = { ...c, loadId: e.target.value }; showZero(); });
@@ -116,6 +127,6 @@
   render();
 
   // The whole set, for reference.
-  $('set').innerHTML = Object.entries(d.rifles).filter(([k]) => !k.startsWith('_')).map(([k, r]) =>
+  $('set').innerHTML = Object.entries(d.rifles).filter(([k, r]) => !k.startsWith('_') && !r.buildOf).map(([k, r]) =>
     `<li><strong>${RD.esc(r.name)}</strong><br><span class="muted">${r.loads.map((l) => `${RD.esc(d.loads[l].name)} (box of ${d.loads[l].boxCount})`).join('; ')}. Sights: ${r.sights.filter((s) => !(r.collection || []).includes(s)).map((s) => RD.esc(d.sights[s].name)).join('; ')}.${(r.collection || []).length ? ` From the scope collection: ${r.collection.map((s) => RD.esc(d.sights[s].name)).join('; ')}.` : ''}</span></li>`).join('');
 }());

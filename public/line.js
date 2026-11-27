@@ -864,7 +864,7 @@
     if (boxEmpty()) { $('result').textContent = `The box of ${day.box.size} is empty. Open another box to go on, or pack up; the day's page has every shot.`; return; }
     if (!RD.takeRounds(day, 1)) { rounds(); return; }
     rounds();
-    const p = plate(), load = d.loads[loadId];
+    const p = plate(), load = RD.loadFor(d, rifleId, loadId); // a build's speed for this load (public/builds.js); a rifle as fitted, the load itself
     // Everything the row and the book record is read now, at the trigger pull, never after.
     const call = windCall();
     const shown = RD.showConditions();
@@ -989,7 +989,7 @@
     const on = RD.showConditions();
     $('show-conditions').checked = on;
     if (!on) { $('conditions').textContent = ''; return; }
-    const p = plate(), load = d.loads[loadId];
+    const p = plate(), load = RD.loadFor(d, rifleId, loadId);
     const base = { load, drag: d.physics.dragTables, powder: d.physics.powderTemperature, sightHeightIn: rifle.sightHeightIn[sightId], elevationMoa: setting.elevationClicks * sight.clickMoa + rifle.boreOffsetMoa.up + leafMoa(), windageMoa: setting.windageClicks * sight.windageClickMoa + rifle.boreOffsetMoa.right, targetYards: p.yards, targetRiseFt: riseOf(p), conditions: RD.conditionsOf(weather), t0: now };
     const still = E.fly({ ...base, wind: [] }), windy = E.fly({ ...base, wind: weather.wind });
     const lines = [
