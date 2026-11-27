@@ -75,11 +75,38 @@
   }
   const say = (t) => { $('copy-note').hidden = false; $('copy-note').textContent = t; };
 
+  // range-day-seventeen: this page beside another version of the same rifle (the rifle as fitted, or another of its builds) with
+  // the same sight and load. Each side holds only the player's own unstruck book lines, lined up by distance; a distance where
+  // one side has none is blank on that side. Nothing is worked out: each line's come-up is the one the book already shows.
+  let compareWith = null;
+  function versions() {
+    const base = rifle().buildOf || c.rifleId;
+    return [base, ...window.RangeDayBuilds.buildsOf(d, base)].filter((id) => id !== c.rifleId && d.rifles[id].sights.includes(c.sightId));
+  }
+  const versionName = (id) => (d.rifles[id].buildOf ? `Build “${d.rifles[id].build.name}”` : 'As fitted');
+  function renderCompare() {
+    const others = versions();
+    $('compare-box').hidden = !others.length;
+    if (!others.length) return;
+    if (!others.includes(compareWith)) compareWith = others[0];
+    $('compare').innerHTML = others.map((id) => `<option value="${id}"${id === compareWith ? ' selected' : ''}>${RD.esc(versionName(id))}</option>`).join('');
+    const s = d.sights[c.sightId];
+    const linesOf = (id) => RD.getBook(id, c.sightId, c.loadId).filter((l) => !l.struck);
+    const mine = linesOf(c.rifleId), theirs = linesOf(compareWith);
+    const yards = [...new Set([...mine, ...theirs].map((l) => l.yards))].sort((a, b) => a - b);
+    const cell = (lines, y) => lines.filter((l) => l.yards === y).sort(RD.newestFirst).map((l) => `<div>${RD.esc(RD.comeUpText(l, s.clickMoa))}, ${l.tempF} F</div>`).join('');
+    const head = `<thead><tr><th>Yards</th><th>${RD.esc(versionName(c.rifleId))} (this page)</th><th>${RD.esc(versionName(compareWith))}</th></tr></thead>`;
+    $('compare-table').innerHTML = yards.length
+      ? `<div class="tablewrap"><table class="log compare">${head}<tbody>${yards.map((y) => `<tr><td>${y}</td><td>${cell(mine, y)}</td><td>${cell(theirs, y)}</td></tr>`).join('')}</tbody></table></div>`
+      : '<p class="muted small">No hits on steel yet with either, with this sight and load. Each hit writes its own line on its own side.</p>';
+  }
+  $('compare').addEventListener('change', (e) => { compareWith = e.target.value; renderCompare(); });
+
   // A copy of everything: save, and load.
   $('save-copy').addEventListener('click', () => {
     const copy = RD.makeCopy();
     RD.download(`range-day-copy-${RD.localDate()}.json`, JSON.stringify(copy, null, 1));
-    say(`Saved a copy: ${copy.book.length} book line${copy.book.length === 1 ? '' : 's'}, ${copy.cold_bore.length} cold-bore line${copy.cold_bore.length === 1 ? '' : 's'}, ${copy.days.length} day${copy.days.length === 1 ? '' : 's'}, ${copy.zeros.length} zero${copy.zeros.length === 1 ? '' : 's'}.`);
+    say(`Saved a copy: ${copy.book.length} book line${copy.book.length === 1 ? '' : 's'}, ${copy.cold_bore.length} cold-bore line${copy.cold_bore.length === 1 ? '' : 's'}, ${copy.days.length} day${copy.days.length === 1 ? '' : 's'}, ${copy.zeros.length} zero${copy.zeros.length === 1 ? '' : 's'}${copy.builds.length ? `, ${copy.builds.length} build${copy.builds.length === 1 ? '' : 's'}` : ''}.`);
   });
   $('load-copy').addEventListener('click', () => $('copy-file').click());
   $('copy-file').addEventListener('change', async (e) => {
@@ -90,15 +117,16 @@
       let obj;
       try { obj = JSON.parse(text); } catch { throw new Error(`This is not a Range Day copy: the file "${file.name}" is not JSON.`); }
       const r = RD.loadCopy(obj);
-      say(`Loaded: added ${r.added.book} book line${r.added.book === 1 ? '' : 's'}, ${r.added.cold_bore} cold-bore line${r.added.cold_bore === 1 ? '' : 's'}, ${r.added.days} day${r.added.days === 1 ? '' : 's'}, ${r.added.zeros} zero${r.added.zeros === 1 ? '' : 's'}; nothing already here was changed.${r.failed ? ' Some of it was not saved on this device: the browser refused its storage.' : ''}`);
+      say(`Loaded: added ${r.added.book} book line${r.added.book === 1 ? '' : 's'}, ${r.added.cold_bore} cold-bore line${r.added.cold_bore === 1 ? '' : 's'}, ${r.added.days} day${r.added.days === 1 ? '' : 's'}, ${r.added.zeros} zero${r.added.zeros === 1 ? '' : 's'}${r.added.builds ? `, ${r.added.builds} build${r.added.builds === 1 ? '' : 's'}` : ''}; nothing already here was changed.${r.failed ? ' Some of it was not saved on this device: the browser refused its storage.' : ''}`);
       renderCold(); renderPages();
     } catch (err) { say(err.message); }
     e.target.value = '';
   });
   // The tests' door: load a copy from text without the file dialog.
-  window.RangeDayBook = { loadText(text) { const r = RD.loadCopy(JSON.parse(text)); renderCold(); renderPages(); return r; }, get copy() { return RD.makeCopy(); } };
+  window.RangeDayBook = { loadText(text) { const r = RD.loadCopy(JSON.parse(text)); renderCold(); renderPages(); renderCompare(); return r; }, get copy() { return RD.makeCopy(); } };
 
-  $('sight').addEventListener('change', (e) => { c = { ...c, sightId: e.target.value }; header(); renderCold(); renderPages(); });
-  $('load').addEventListener('change', (e) => { c = { ...c, loadId: e.target.value }; header(); renderCold(); renderPages(); });
-  header(); renderCold(); renderPages();
+  $('sight').addEventListener('change', (e) => { c = { ...c, sightId: e.target.value }; header(); renderCold(); renderPages(); renderCompare(); });
+  $('load').addEventListener('change', (e) => { c = { ...c, loadId: e.target.value }; header(); renderCold(); renderPages(); renderCompare(); });
+  if (q.beside && d.rifles[q.beside]) compareWith = q.beside;
+  header(); renderCold(); renderPages(); renderCompare();
 }());
