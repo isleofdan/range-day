@@ -11,12 +11,20 @@ window.RD = (function () {
   // --- data ------------------------------------------------------------------
   let DATA = null;
   async function data() {
-    if (!DATA) DATA = await (await fetch('/api/data', { headers: { accept: 'application/json' } })).json();
+    if (!DATA) {
+      DATA = await (await fetch('/api/data', { headers: { accept: 'application/json' } })).json();
+      // range-day-seventeen: the player's builds join the data as rifles of their own (public/builds.js); the rifles as fitted
+      // are untouched.
+      if (window.RangeDayBuilds) window.RangeDayBuilds.withBuilds(DATA, getBuilds());
+    }
     defaultSightOf = (rifle) => (DATA.rifles[rifle] ? DATA.rifles[rifle].defaultSight : null);
     carriedFrom = (rifle, sight) => carriedSight(DATA, rifle, sight);
     return DATA;
   }
-  const rifleIds = (d) => Object.keys(d.rifles).filter((k) => !k.startsWith('_') && d.rifles[k].playable);
+  // The rifles as fitted (a build is offered under its rifle, never among them).
+  const rifleIds = (d) => Object.keys(d.rifles).filter((k) => !k.startsWith('_') && d.rifles[k].playable && !d.rifles[k].buildOf);
+  // Every rifle a screen can open: the rifles as fitted and the builds not removed (range-day-seventeen).
+  const choosableIds = (d) => [...rifleIds(d), ...Object.keys(d.rifles).filter((k) => d.rifles[k].buildOf && !d.rifles[k].build.removed && d.rifles[d.rifles[k].buildOf] && d.rifles[d.rifles[k].buildOf].playable)];
 
   // --- what lives on this device -------------------------------------------------
   // Every read and write is wrapped: a browser that refuses storage (a
@@ -113,6 +121,35 @@ window.RD = (function () {
     let n = 0;
     for (const sight of rifleData.sights) for (const load of rifleData.loads) { const z = getZero(rifle, sight, load); if (z && z !== FAILED) n++; }
     return n;
+  }
+  // --- the builds (range-day-seventeen): what-if versions of a rifle, made on the workbench --------------------------
+  // One list under `builds`, oldest first, each { id, name, rifle, barrelIn, mounts, madeAt, removedAt }. A build is never
+  // deleted: removing one sets removedAt (it leaves every list) and putting it back clears it. Its records are kept under its
+  // id in the keys every rifle uses. The shape: docs/RECORDS.md, "The builds".
+  const getBuilds = () => { const v = store.get('builds'); return Array.isArray(v) ? v : []; };
+  const buildsReadFailed = () => store.get('builds') === FAILED;
+  // Adds a build and puts it in the loaded data; answers { build, saved }. Refuses (throws) a build of no rifle as fitted.
+  function makeBuild(d, spec) {
+    const B = window.RangeDayBuilds;
+    const base = d.rifles[spec.rifle];
+    if (!base || base.buildOf) throw new Error('A build is made from a rifle as fitted.');
+    let id = B.newId();
+    while (d.rifles[id]) id = B.newId();
+    const build = { id, name: String(spec.name || '').trim().slice(0, 40) || 'unnamed', rifle: spec.rifle, barrelIn: spec.barrelIn, mounts: { ...(spec.mounts || {}) }, madeAt: new Date().toISOString(), removedAt: null };
+    const list = getBuilds();
+    const saved = !buildsReadFailed() && store.set('builds', [...list, build]);
+    B.withBuilds(d, [build]);
+    return { build, saved };
+  }
+  // Takes a build off the lists (removed: true) or puts it back (removed: false); its records stay as they are.
+  function setBuildRemoved(d, id, removed) {
+    const list = getBuilds();
+    const b = list.find((x) => x.id === id);
+    if (!b || buildsReadFailed()) return false;
+    b.removedAt = removed ? new Date().toISOString() : null;
+    const saved = store.set('builds', list);
+    if (d.rifles[id] && d.rifles[id].build) d.rifles[id].build.removed = Boolean(removed);
+    return saved;
   }
   // What was last used on this device: the rifle, and per rifle its sight, load and course; the time of day; the wind call.
   const getLast = () => { const v = store.get('last'); return ok(v) ? v : null; };
@@ -420,7 +457,7 @@ window.RD = (function () {
   const COPY_KIND = 'range-day copy';
   function makeCopy() {
     const keys = store.keys();
-    const out = { kind: COPY_KIND, version: 1, savedAt: new Date().toISOString(), zeros: [], book: [], cold_bore: [], days: finishedDays() };
+    const out = { kind: COPY_KIND, version: 1, savedAt: new Date().toISOString(), zeros: [], book: [], cold_bore: [], days: finishedDays(), builds: getBuilds() };
     if (keys === FAILED) return out;
     // A record under a sight another now carries is left out where the carrying sight holds its own copy (it was written forward).
     const forwarded = (p) => p.length === 4 && DATA && keys.includes([p[0], p[1], sightNow(DATA, p[1], p[2]), p[3]].join(':')) && sightNow(DATA, p[1], p[2]) !== p[2];
@@ -451,6 +488,7 @@ window.RD = (function () {
     shot: { n: 'number', place: 'string', yards: 'number', elevationClicks: 'number', windageClicks: 'number', reached: 'boolean', upIn: 'number|null', rightIn: 'number|null' },
     lineShot: { hit: 'boolean', heldUpMoa: 'number', heldRightMoa: 'number' }, // a shot at steel has these too; a bench shot has no hit
   };
+  const BUILD_SHAPE = { id: 'string', name: 'string', rifle: 'string', barrelIn: 'number', mounts: 'object' };
   const PLACES = ['bench', 'line'];
   const COPY_VERSIONS = [1];
   // Checks a whole copy before anything is written: throws an Error naming
@@ -476,6 +514,15 @@ window.RD = (function () {
     // Inside a book line: its saved zero and its wind call, where not null; inside a cold-bore line, its wind call.
     obj.book.forEach((l, i) => { if (l.zero) checkRecord(l.zero, DAY_SHAPES.zero, `book[${i}].zero`); if (l.windCall) checkRecord(l.windCall, DAY_SHAPES.windCall, `book[${i}].windCall`); });
     obj.cold_bore.forEach((l, i) => { if (l.windCall) checkRecord(l.windCall, DAY_SHAPES.windCall, `cold_bore[${i}].windCall`); });
+    // range-day-seventeen: the builds, where present (a copy from before has none)
+    if (obj.builds !== undefined) {
+      if (!Array.isArray(obj.builds)) throw notACopy('"builds" is not a list; where present it must be the list of builds. Nothing was loaded.');
+      obj.builds.forEach((b, i) => {
+        checkRecord(b, BUILD_SHAPE, `builds[${i}]`);
+        if (!/^b-[a-z0-9]+$/.test(b.id)) throw notACopy(`builds[${i}].id is ${JSON.stringify(b.id)}; a build's id is "b-" then letters and digits. Nothing was loaded.`);
+        if (b.removedAt !== undefined && b.removedAt !== null && typeof b.removedAt !== 'string') throw notACopy(`builds[${i}].removedAt is ${JSON.stringify(b.removedAt)}; it must be a moment, or null. Nothing was loaded.`);
+      });
+    }
     // A day's inside: the box, the weather and its wind, every shot.
     obj.days.forEach((day, i) => {
       const at = `days[${i}]`;
@@ -505,8 +552,16 @@ window.RD = (function () {
   // Checks a parsed file whole, then adds what is missing. Throws an Error with the reason for a file that is not a copy; then nothing was written.
   function loadCopy(obj) {
     checkCopy(obj);
-    const added = { zeros: 0, book: 0, cold_bore: 0, days: 0 };
+    const added = { zeros: 0, book: 0, cold_bore: 0, days: 0, builds: 0 };
     let failed = false;
+    // The builds first, so the lines that name one read as that build here too; a build already here (by id) is never replaced.
+    if (Array.isArray(obj.builds) && obj.builds.length) {
+      const have = getBuilds(), add = obj.builds.filter((b) => !have.some((x) => x.id === b.id));
+      if (add.length) {
+        const recs = add.map((b) => ({ id: b.id, name: b.name, rifle: b.rifle, barrelIn: b.barrelIn, mounts: { ...b.mounts }, madeAt: b.madeAt || null, removedAt: b.removedAt || null }));
+        if (!buildsReadFailed() && store.set('builds', [...have, ...recs])) { added.builds = recs.length; if (DATA && window.RangeDayBuilds) window.RangeDayBuilds.withBuilds(DATA, recs); } else failed = true;
+      }
+    }
     for (const z of obj.zeros) {
       if (ok(getZero(z.rifle, z.sight, z.load))) continue; // never replace a zero already here
       const rec = { elevationClicks: z.elevationClicks, windageClicks: z.windageClicks || 0, zeroYards: z.zeroYards, sight: z.sight, savedAt: z.saved_on || new Date().toISOString() };
@@ -598,7 +653,7 @@ window.RD = (function () {
   // device opens the first playable rifle in the set, on its first course).
   function chooseFrom(d, q) {
     const last = getLast();
-    const ids = rifleIds(d);
+    const ids = choosableIds(d);
     const rifleId = ids.includes(q.rifle) ? q.rifle : (last && ids.includes(last.rifle) ? last.rifle : ids[0]);
     const rifle = d.rifles[rifleId];
     const lastFor = getLastFor(rifleId) || {};
@@ -865,5 +920,5 @@ window.RD = (function () {
   }
 
   return { kindOf, holeIn, burstIn, paperMarks, nearestMark, onSheet, drawPaper, shotsAt, paperHoles, steelMarks, shotWords, daysReadFailed, hangFreshPaper, putOldPaperBack, offText,
-    E, data, rifleIds, store, getSight, sightReadFailed, setSight, getZero, setZero, getLog, setLog, zeroCount, getLast, setLast, getLastFor, setLastFor, getWhen, setWhen, thisMonth, TIMES, MONTHS, getWindCall, setWindCall, windCallText, wireWindCall, chooseFrom, params, remember, leafOf, holdRepeat, wireKnobs, settingLine, roundsText, leafText, showConditions, setShowConditions, PICTURES, getPicture, pictureReadFailed, setPicture, GEARINGS, getAim, aimReadFailed, setAim, drawDay, conditionsOf, dayWords, localDate, openDay, dayReadFailed, hasShots, finishedDays, dayById, startDay, enterDay, takeRounds, openAnotherBox, boxesOpened, roundsFired, boxesText, getSupply, supplyReadFailed, takeSupply, openSupplyBox, supplyText, recordShot, finishDay, packUp, packedDayId, restorePacked, bookKey, getBook, bookReadFailed, addBookLine, changeBookLine, bookAt, bookNeighbours, newestFirst, comeUpMoa, comeUpText, getColdBore, addColdBore, makeCopy, checkCopy, loadCopy, COPY_KIND, audio, shotSound, ringSound, thudSound, clickSound, qs, esc, sign, moaOf, clicksText, whereText, heldText, dateText, windWord, crosswindMph, fovMoa, fitCanvas, hash, download, carriedSight, sightNow };
+    E, data, rifleIds, choosableIds, getBuilds, buildsReadFailed, makeBuild, setBuildRemoved, loadFor: (d, rifleId, loadId) => window.RangeDayBuilds.loadFor(d, rifleId, loadId), store, getSight, sightReadFailed, setSight, getZero, setZero, getLog, setLog, zeroCount, getLast, setLast, getLastFor, setLastFor, getWhen, setWhen, thisMonth, TIMES, MONTHS, getWindCall, setWindCall, windCallText, wireWindCall, chooseFrom, params, remember, leafOf, holdRepeat, wireKnobs, settingLine, roundsText, leafText, showConditions, setShowConditions, PICTURES, getPicture, pictureReadFailed, setPicture, GEARINGS, getAim, aimReadFailed, setAim, drawDay, conditionsOf, dayWords, localDate, openDay, dayReadFailed, hasShots, finishedDays, dayById, startDay, enterDay, takeRounds, openAnotherBox, boxesOpened, roundsFired, boxesText, getSupply, supplyReadFailed, takeSupply, openSupplyBox, supplyText, recordShot, finishDay, packUp, packedDayId, restorePacked, bookKey, getBook, bookReadFailed, addBookLine, changeBookLine, bookAt, bookNeighbours, newestFirst, comeUpMoa, comeUpText, getColdBore, addColdBore, makeCopy, checkCopy, loadCopy, COPY_KIND, audio, shotSound, ringSound, thudSound, clickSound, qs, esc, sign, moaOf, clicksText, whereText, heldText, dateText, windWord, crosswindMph, fovMoa, fitCanvas, hash, download, carriedSight, sightNow };
 }());

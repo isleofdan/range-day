@@ -1,0 +1,154 @@
+{
+ "_about": "range-day-seventeen verify 2: the engine's strike for each rifle as fitted, with its default sight and first load, at 100, 300 and 600 yards, computed on main at 2903ab9 (before the workbench) by the bench's own call to the engine: the sight at its middle, no wind, 1,500 ft, 59 F, 28.4 inHg, humidity 0.4, the engine's seeded draw 17. test/workbench.test.js computes the same on this branch through public/builds.js and compares every digit.",
+ "sightLoad": {
+  "bcm-ar15": [
+   "troy-battlesights",
+   "imi-m193"
+  ],
+  "iwi-tavor-sar": [
+   "fab-flipup",
+   "imi-m193"
+  ],
+  "iwi-x95": [
+   "fab-flipup",
+   "imi-m193"
+  ],
+  "ak-762": [
+   "ak762-kns-peep",
+   "silver-bear-123"
+  ],
+  "ak-545": [
+   "ak545-ball",
+   "hornady-545-60"
+  ],
+  "molot-vepr-54r": [
+   "utg-bugbuster-3-9x32",
+   "sb-174-hpbt"
+  ],
+  "remington-22": [
+   "rem-irons",
+   "cci-sv-40"
+  ]
+ },
+ "strikes": {
+  "bcm-ar15": {
+   "100": {
+    "upIn": -7.7174063852939305,
+    "rightIn": 2.1627988218221628,
+    "timeS": 0.1048444671291949
+   },
+   "300": {
+    "upIn": -34.1028754172074,
+    "rightIn": 6.488396465466485,
+    "timeS": 0.36283638395418677
+   },
+   "600": {
+    "upIn": -148.39236813098148,
+    "rightIn": 9.066271701154939,
+    "timeS": 0.9326790698386153
+   }
+  },
+  "iwi-tavor-sar": {
+   "100": {
+    "upIn": -7.929647558138049,
+    "rightIn": 2.6863975651355942,
+    "timeS": 0.10484445840630272
+   },
+   "300": {
+    "upIn": -32.63959508437732,
+    "rightIn": 8.059192695406775,
+    "timeS": 0.3628363357334599
+   },
+   "600": {
+    "upIn": -144.41574365782816,
+    "rightIn": 12.207864161035548,
+    "timeS": 0.9326786293186413
+   }
+  },
+  "iwi-x95": {
+   "100": {
+    "upIn": -7.406047915022942,
+    "rightIn": -2.2354324908291456,
+    "timeS": 0.10484443960583095
+   },
+   "300": {
+    "upIn": -31.068789117847942,
+    "rightIn": -6.706297472487453,
+    "timeS": 0.3628362524035193
+   },
+   "600": {
+    "upIn": -141.27406135053272,
+    "rightIn": -17.323116174752954,
+    "timeS": 0.9326781833528559
+   }
+  },
+  "ak-762": {
+   "100": {
+    "upIn": -9.22208498905635,
+    "rightIn": 3.726334781401116,
+    "timeS": 0.12556250334514238
+   },
+   "300": {
+    "upIn": -46.397080151533544,
+    "rightIn": 11.179004344203356,
+    "timeS": 0.4273629804551821
+   },
+   "600": {
+    "upIn": -197.76092205957778,
+    "rightIn": 17.665383212673092,
+    "timeS": 1.0561092976505175
+   }
+  },
+  "ak-545": {
+   "100": {
+    "upIn": -8.114660223548633,
+    "rightIn": -0.9642686157917005,
+    "timeS": 0.11351185530925072
+   },
+   "300": {
+    "upIn": -38.90272966951825,
+    "rightIn": -2.892805847375106,
+    "timeS": 0.3856764630806583
+   },
+   "600": {
+    "upIn": -163.12058621925527,
+    "rightIn": -8.131924432617039,
+    "timeS": 0.9551819947703056
+   }
+  },
+  "molot-vepr-54r": {
+   "100": {
+    "upIn": -13.630361300657487,
+    "rightIn": 3.75539440690478,
+    "timeS": 0.12365024232857326
+   },
+   "300": {
+    "upIn": -54.94514788824762,
+    "rightIn": 11.266183220714337,
+    "timeS": 0.39970697925106496
+   },
+   "600": {
+    "upIn": -185.4015598666524,
+    "rightIn": 22.532366441428692,
+    "timeS": 0.9038385508685551
+   }
+  },
+  "remington-22": {
+   "100": {
+    "upIn": -20.289421516875517,
+    "rightIn": 1.339566817882067,
+    "timeS": 0.30841106422830455
+   },
+   "300": {
+    "upIn": -197.5301975354227,
+    "rightIn": 4.018700453646195,
+    "timeS": 1.0538014626390457
+   },
+   "600": {
+    "upIn": -1005.9581946033571,
+    "rightIn": 8.037400907292355,
+    "timeS": 2.505895636894744
+   }
+  }
+ }
+}

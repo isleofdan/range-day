@@ -299,6 +299,53 @@ Since range-day-ten a cold-bore line, and a book line, carries `target`:
 on steel). A cold-bore line at paper has `hit` meaning on the sheet. A line
 without `target` is from before range-day-ten and was at steel.
 
+### The builds: `builds` (range-day-seventeen)
+
+A build is a what-if version of one rifle, made on the workbench
+(`/workbench`): a different barrel length, or a scope of the scope
+collection in a different mount. `builds` is the list of every build made
+on the device, oldest first:
+
+```json
+[{ "id": "b-mwkoc3x1k9f", "name": "20 inch", "rifle": "bcm-ar15", "barrelIn": 20,
+   "mounts": { "vortex-razor-1-10": "Vortex Pro Series 34 mm rings, Low, PR34-L" },
+   "madeAt": "2026-11-27T10:00:00.000Z", "removedAt": null }]
+```
+
+- `id` is `b-` then letters and digits, made on the device; it is never a
+  rifle's id. `name` is what the player typed (up to 40 characters).
+  `rifle` is the rifle as fitted it is a version of. `barrelIn` is one of
+  that rifle's lengths in `data/workbench.json` (`barrels`). `mounts` names,
+  per collection scope whose mount was changed, the mount by its name in
+  `data/workbench.json` (`mounts`); a scope not named keeps the mount it
+  came in.
+- What a build changes is worked out by `public/builds.js`, never stored:
+  each load's muzzle speed is its speed from the rifle's own barrel plus
+  the caliber's speed per inch (`fpsPerInch`) times the inches added, to
+  the whole foot per second; a mounted scope's height over the bore is the
+  rifle's rail height plus the mount's. Nothing else about the rifle
+  changes.
+- A build is a rifle of its own in every other record, under its `id` in
+  the rifle's place, in the shapes above: `sight:<build>:<sight>`,
+  `zero:<build>:<sight>:<load>`, `log:<build>:<sight>:<load>`,
+  `book:<build>:<sight>:<load>`, `cold-bore:<build>:<load>`,
+  `supply:<build>:<load>` (a build has its own zeroing supply),
+  `last:<build>`, and `last` when it was the last used. A day fired with a
+  build names it in `rifle`. So a new build starts unzeroed, and the
+  rifle as fitted keeps every record it has: no existing key changes
+  meaning, and none is written for the rifle as fitted when a build is
+  fired.
+- Removing a build sets `removedAt` to the moment: it leaves the lists
+  (home, the workbench's list of builds, the book's comparison). The
+  workbench lists removed builds under "Removed" with **Put it back**,
+  which sets `removedAt` back to null. A build is never deleted, and none
+  of its records is touched by either: its days, book and zeros stay
+  readable on the day's page, playback and the copy file.
+- A build of a rifle the game no longer has is kept and not offered.
+
+The copy file (below) carries `builds` too; a copy from before has none
+and loads as before.
+
 ### Small records
 
 | Key | Shape | What it is |
@@ -333,12 +380,21 @@ zero lines use the field names of the gun record's `measured` section,
 so the file can be taken as it is by the build that keeps records
 elsewhere.
 
+Since range-day-seventeen the file also holds `builds`, every build on the
+device (removed ones too) in the shape of "The builds" above, so the lines
+and days that name a build read as that build on the device that loads
+it. Loading adds a build the device lacks, by `id`, before the lines;
+`builds` is optional (a copy from before has none), and where present
+each build must carry `id` (`b-` then letters and digits), `name`,
+`rifle`, `barrelIn` as a number and `mounts` as an object.
+
 ```json
 { "kind": "range-day copy", "version": 1, "savedAt": "2026-11-17T10:00:00.000Z",
   "zeros": [{ "rifle": "bcm-ar15", "sight": "ar-irons", "load": "imi-m193", "zeroYards": 100, "elevationClicks": 3, "windageClicks": -1, "leafIx": null, "saved_on": "2026-11-17T09:15:00.000Z" }],
   "book": [{ "rifle": "bcm-ar15", "sight": "ar-irons", "load": "imi-m193", "id": "2026-11-17-mwkoc3x1:6", "...": "the book line's fields" }],
   "cold_bore": [{ "rifle": "bcm-ar15", "load": "imi-m193", "id": "2026-11-17-mwkoc3x1:1", "...": "the cold-bore line's fields" }],
-  "days": [{ "id": "2026-11-17-mwkoc3x1", "...": "a finished day record" }] }
+  "days": [{ "id": "2026-11-17-mwkoc3x1", "...": "a finished day record" }],
+  "builds": [{ "id": "b-mwkoc3x1k9f", "...": "a build" }] }
 ```
 
 ## The gun record's `game` section, and how `lib/guns.js` checks it
