@@ -11,15 +11,10 @@ the two doors.
 Executor: a Claude Code cloud session (Dan opened it; permission mode
 Auto, read from the session). Independent checker: the Codex result
 checker through the Spine tool `check_result` (verdict under "Verify
-results"). The notes work is prepared: this report, its 22 pictures and
-the `PLAN.md` note are committed on a notes branch made from `main`
-(`range-day-seventeen-notes`, in this session). `CLAUDE.md` fixes the order (the change's pull request, then the
-deploy, then a notes-only pull request carrying the deploy's own
-results), and this cloud session can push only its one branch (the
-change's), so that commit is pushed as the notes pull request once #60 is
-merged and deployed, with item 8 below filled in; the card's link to the
-report opens once it is merged. Everything else in the notes is final now:
-only item 8 waits on the deploy.
+results"). This report, its 22 pictures and the `PLAN.md` note are in
+the notes-only pull request
+[#61](https://github.com/isleofdan/range-day/pull/61), after the deploy,
+in the order `CLAUDE.md` fixes.
 
 ## What stands
 
