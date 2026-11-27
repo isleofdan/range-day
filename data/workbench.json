@@ -1,0 +1,335 @@
+{
+  "_about": "range-day-seventeen: the workbench's figures. fpsPerInch is, per caliber, how many feet per second a load's muzzle speed changes for each inch of barrel added (or lost for each inch taken off), from the load's speed from the rifle's own barrel (data/loads.json, muzzleFps); public/builds.js applies it and rounds to the whole foot per second. barrels lists, per rifle, the barrel lengths in inches its maker or importer sold for that model, the rifle's own length among them (data/rifles.json, barrelIn); lengths that would make a short-barreled rifle under US federal law (under 16 in without a permanently attached muzzle device) are left out. mounts lists, per scope of the scope collection, the mounts its maker sells, each with the height of the scope's center line over the top of a Picatinny rail; the first is the mount the scope came in (data/sights.json, mount), and a mount at the same height as one already listed is left out. A scope's height over the bore on a rifle is the rifle's rail height (data/rifles.json, scopeMount) plus its mount's. Every figure was read on the date given; this session's network allowed web search but refused page fetches, so each was read from the search engine's indexed text of the page named.",
+  "_readingNote": "WebFetch was tried once (fimegroup.com) and refused: the host did not resolve in this session's network. Every figure below was read from the search engine's indexed text of the cited page (WebSearch result text, which is a summary of the indexed page with quoted fragments), not from a fetched page. Each note says so. Retailer pages are cited only where no maker page appeared in the results.",
+  "fpsPerInch": {
+    "5.56x45": {
+      "value": 25,
+      "estimate": "Kept at the game's 25 feet per second per inch. Read from the search engine's indexed text: rifleshooter.com's .223 cut-down from 26 in to 16.5 in, relayed by AccurateShooter (https://bulletin.accurateshooter.com/?p=58189), reported 'an average loss of 25.34 fps per inch', per-load 22.5 to 25.7. Gorilla Ammunition (https://www.gorillaammo.com/?p=224, cited by the game, not re-read this task) gives 34 fps per inch for one 69 gr load between 24 and 16 in. 25 is the rounded cut-down average."
+    },
+    "7.62x39": {
+      "value": 20,
+      "estimate": "Kept at the game's 20. Read from the search engine's indexed text of https://www.luckygunner.com/lounge/7-62x39-barrel-length-vs-velocity-what-the-data-shows/: 'on average, they lost 137 fps between the 16.5 and 10.5-inch barrels' (about 23 fps per inch, over a shorter band than the game's rifles use). Velocity loss per inch shrinks as barrels lengthen (same text: losses grow on shorter barrels), so 20 for the 16 to 20 in band."
+    },
+    "5.45x39": {
+      "value": 25,
+      "estimate": "No 5.45x39 cut-down test was found (searched ballisticsbytheinch and 'barrel length velocity' for 5.45; nothing indexed). Basis: the nearest small-bore, similar-velocity cut-down, rifleshooter.com's .223 test relayed at https://bulletin.accurateshooter.com/?p=58189, 'average loss of 25.34 fps per inch' (search engine's indexed text), and Hornady's FAQ (https://www.hornady.com/support/faqs/what-would-the-velocity-of-your-ammunition-if-using-a-shorter-barrel), 'approximately 25 to 35 feet per second per inch' (search engine's indexed text)."
+    },
+    "7.62x54R": {
+      "value": 25.7,
+      "source": {
+        "url": "https://digitalcommons.usf.edu/honors_et/8",
+        "read": "2026-11-27",
+        "note": "University of South Florida honors thesis (B. L. Clark, 2011), 'Effect of Barrel Length on the Muzzle Velocity and Report from a Mosin-Nagant 7.62x54R Rifle': barrel cut from 28.75 in to 16.75 in in 2 in steps, ten rounds per length. Read from the search engine's indexed text: the abstract's method is from the thesis page; the slope 'was 25.658 (Ft/Sec), or 51.316 (Ft/Sec) per barrel length iteration (2 inch cut)' came in a search answer whose result list included https://www.gunboards.com/threads/barrel-length-and-velocity.1246480/ and https://weaponsman.com/effects-of-a-short-barrel/ (the latter quoting one step '2827 fps to 2521 fps'); the thesis PDF itself was not read, so the slope is second-hand. Replaces the game's 20 (Lucky Gunner 7.62x39 basis)."
+      }
+    },
+    ".22 LR": {
+      "value": 0,
+      "estimate": "Over roughly 16 to 27 in, standard-velocity .22 LR gains nothing and may lose a little. Read from the search engine's indexed text: AccurateShooter relaying MDT's test (https://bulletin.accurateshooter.com/tag/barrel-length-velocity), 'with standard rimfire ammunition, the velocity started to decline after 16″ length'; oocities .22 LR page (https://www.oocities.org/CapitolHill/lobby/1221/22lrammo.htm), 'maximum velocities for the .22 LR are usually produced by firearms with barrels between 16\" and 18\"... friction takes over and actually slows the bullet down'; rec.guns chronograph table (https://groups.google.com/g/rec.guns/c/aEEJy117Ao8), one load about 1,226 fps at 16 in and 1,229 fps at 18.5 in. No CCI Standard Velocity 40 gr figures by barrel length were found. Zero chosen because no source gave a per-inch loss figure to put a negative number on."
+    }
+  },
+  "barrels": {
+    "bcm-ar15": [
+      {
+        "value": 14.5,
+        "source": {
+          "url": "https://bravocompanyusa.com/bcm-standard-14-5-mid-length-upper-receiver-group/",
+          "read": "2026-11-27",
+          "note": "BCM page title 'BCM® Standard 14.5\" Mid Length Complete Upper Receiver Group'. Search engine's indexed text. Needs a pinned muzzle device to be a non-NFA rifle (not stated by the source; note only)."
+        }
+      },
+      {
+        "value": 16,
+        "source": {
+          "url": "https://bravocompanyusa.com/bcm-standard-16-mid-length-upper-receiver-group/",
+          "read": "2026-11-27",
+          "note": "BCM page title 'BCM® Standard 16\" Mid Length Complete Upper Receiver Group'. Search engine's indexed text. The game's current length."
+        }
+      },
+      {
+        "value": 18,
+        "source": {
+          "url": "https://bravocompanyusa.com/ar15-upper-receiver-groups/",
+          "read": "2026-11-27",
+          "note": "BCM category filter '18in (13)'; gas system text 'Rifle (18” to 20” barrels)'. Search engine's indexed text."
+        }
+      },
+      {
+        "value": 20,
+        "source": {
+          "url": "https://bravocompanyusa.com/ar15-upper-receiver-groups/",
+          "read": "2026-11-27",
+          "note": "BCM category filter '20in (9)'. Search engine's indexed text."
+        }
+      }
+    ],
+    "iwi-tavor-sar": [
+      {
+        "value": 16.5,
+        "source": {
+          "url": "https://iwi.us/firearms/tavor-sar/5-56-nato-16-5in-barrel-left-hand",
+          "read": "2026-11-27",
+          "note": "The game's current figure and source, given in the brief; not re-read this task."
+        }
+      },
+      {
+        "value": 18,
+        "source": {
+          "url": "https://iwi.us/firearms/tavor-sar/5-56-nato-18in-barrel-restricted-state/",
+          "read": "2026-11-27",
+          "note": "IWI US page '5.56 NATO 18in Barrel Restricted State'; IWI spec text lists the TSB18 with '18″ barrel length, 27.625″ overall length'. Search engine's indexed text; retailer listing https://www.eurooptic.com/iwi-tavor-sar-bullpup-rifle-556-nato-18in-black-tsb18 agrees."
+        }
+      }
+    ],
+    "iwi-x95": [
+      {
+        "value": 16.5,
+        "source": {
+          "url": "https://iwi.us/firearms/tavor-x95/",
+          "read": "2026-11-27",
+          "note": "The game's current figure and source, given in the brief; not re-read this task."
+        }
+      },
+      {
+        "value": 18.5,
+        "source": {
+          "url": "https://iwi.us/firearms/tavor-x95/",
+          "read": "2026-11-27",
+          "note": "IWI US lists 'the 5.56 NATO 18.5″ model as XB18, with a 28.125″ overall length' (search engine's indexed text). The 18.6 in figure appears only on a Canadian retailer (https://www.rdsc.ca/...xb18-18-60-chf-barrel...) and Wikipedia's 'non-restricted' model; IWI US says 18.5."
+        }
+      }
+    ],
+    "ak-762": [
+      {
+        "value": 16.3,
+        "source": {
+          "url": "https://arsenalinc.com/usa/sam7r-68.html",
+          "read": "2026-11-27",
+          "note": "Arsenal SAM7R-68 page: 'cold hammer-forged 16.3 barrel from Arsenals Bulgarian factory'. Search engine's indexed text. Retailers list the same SAM7R/SAM7SF family as 16.25 or 16.33 in; no other Arsenal 7.62x39 rifle length appeared (only rifles searched; pistols excluded)."
+        }
+      }
+    ],
+    "ak-545": [
+      {
+        "value": 16.3,
+        "source": {
+          "url": "https://arsenalinc.com/usa/slr-104ur_5-45x39-5mm-caliber-rifle.html",
+          "read": "2026-11-27",
+          "note": "Arsenal SLR104UR-51: 'Barrel length of 16.33 in. (415 mm), with 4 grooves rifling and a twist rate of 1:7.8'. Search engine's indexed text. The game's current length (415 mm)."
+        }
+      },
+      {
+        "value": 16.2,
+        "source": {
+          "url": "https://arsenalinc.com/usa/slr-104ur-gambit.html",
+          "read": "2026-11-27",
+          "note": "Arsenal SLR104UR-80: '16.2 in. (411 mm) barrel'. Search engine's indexed text."
+        }
+      }
+    ],
+    "molot-vepr-54r": [
+      {
+        "value": 16.5,
+        "source": {
+          "url": "https://www.k-var.com/vepr-762x54r-16in-barrel-with-wood-thumbhole-stock-and-2-5-rd-magazines",
+          "read": "2026-11-27",
+          "note": "K-Var listing 'Barrel Length: 16.5 inch / 420 mm'; American Rifleman: 'Model VPR-76254-01 (16.5\" barrel)'. Search engine's indexed text. fimegroup.com could not be fetched (host refused in this session); the search text says FIME's page 'lists 16.5\", 20.5\", and 23.2\" options' but its indexed text did not map them to model numbers."
+        }
+      },
+      {
+        "value": 20.5,
+        "source": {
+          "url": "https://www.wholesalehunter.com/Product/Details/11185401",
+          "read": "2026-11-27",
+          "note": "Distributor listing, manufacturer number VPR7625402, 'Barrel Length: 20.5\"'. Search engine's indexed text. The game's current length."
+        }
+      },
+      {
+        "value": 23.2,
+        "source": {
+          "url": "https://fimegroup.com/?p=58",
+          "read": "2026-11-27",
+          "note": "Search engine's indexed text of FIME's page lists '16.5\", 20.5\", and 23.2\"'; a seller lists VPR-76254-03 'Barrel Length: 23.2\"'. American Rifleman (https://www.americanrifleman.org/content/unexpected-collectibles-molot-vepr-rifles/) calls the -03 the 23.5 in barrel, so 23.2 vs 23.5 is unsettled; 23.2 follows the importer."
+        }
+      }
+    ],
+    "remington-22": [
+      {
+        "value": 20,
+        "source": {
+          "url": "https://chuckhawks.com/rem_504_series.htm",
+          "read": "2026-11-27",
+          "note": "Chuck Hawks catalog specs for the Remington 504-T LS HB .22 LR: 'Barrel Length - 20\" heavy weight', 'Order # - 26493'. Search engine's indexed text; Blue Book (https://bluebookofgunvalues.com/products/remington-model-504-t) 'Barrel Length 20 in.'. The game's current length. The rifle's model is not identified, so which of these lengths is the real one is unknown."
+        }
+      },
+      {
+        "value": 24,
+        "source": {
+          "url": "https://bluebookofgunvalues.com/products/remington-model-541t",
+          "read": "2026-11-27",
+          "note": "Remington 541-T: '.22 Short, Long, and Long Rifle, the 541-T features a 24-inch heavy barrel', 1985 to 1999, heavy-barrel 541-T HB from 1993; Blue Book 40-XRBR KS (https://bluebookofgunvalues.com/products/remington-model-40-xrbr-ks-rimfire-single-shot): '.22 LR cal., 24 in. heavy stainless barrel'. Search engine's indexed text."
+        }
+      },
+      {
+        "value": 28,
+        "source": {
+          "url": "https://bluebookofgunvalues.com/products/remington-model-40x-target-rifle-rangemaster",
+          "read": "2026-11-27",
+          "note": "Blue Book, Remington Model 40X Rangemaster Target: '.22 LR cal., 28 in. heavy barrel, Redfield Olympic sights, scope bases, target stock rifle, manufactured 1956-64'. Search engine's indexed text. A single-shot target rifle; 27 in was not found."
+        }
+      }
+    ]
+  },
+  "mounts": {
+    "trijicon-acog-ta31f": [
+      {
+        "name": "Trijicon TA51 flat-top mount",
+        "centerOverRailIn": {
+          "value": 1.535,
+          "source": {
+            "url": "https://www.trijicon.com/uploads/page_content/PML4103_Rev(0)_Trijicon_Mounts__Accessories_Guide.pdf",
+            "read": "2026-11-27",
+            "note": "The game's current mount and source, given in the brief. Re-confirmed this task from the search engine's indexed text of retailer listings: Hero Outdoors (https://www.herooutdoors.com/trijicon-thumbscrew-mount-for-3-5x35-4x32-5-5x50-acog-1x42-reflex-with-acog-bases-and-1-6x24-vcog) gives 1.535 in for 3.5x35, 4x32 and 5.5x50 ACOGs."
+          }
+        }
+      },
+      {
+        "name": "Trijicon ACOG Extra High Mount with Q-LOC, AC12044",
+        "centerOverRailIn": {
+          "value": 2.05,
+          "source": {
+            "url": "https://gptactical-llc.com/product/acog-mount-w-q-loc-black-extra-high",
+            "read": "2026-11-27",
+            "note": "'Height Above Rail (in/mm) 2.05″ in. (52.07mm)'; GunMag Warehouse (https://gunmagwarehouse.com/trijicon-acog-extra-high-mount-with-q-loc-technology.html) agrees, 2.05 in above rail. Search engine's indexed text. That it fits the TA31 body was not stated in what was read."
+          }
+        }
+      }
+    ],
+    "trijicon-acog-ta31f-g": [
+      {
+        "name": "Trijicon TA51 flat-top mount",
+        "centerOverRailIn": {
+          "value": 1.535,
+          "source": {
+            "url": "https://www.trijicon.com/uploads/page_content/PML4103_Rev(0)_Trijicon_Mounts__Accessories_Guide.pdf",
+            "read": "2026-11-27",
+            "note": "The game's current mount and source, given in the brief. Re-confirmed this task from the search engine's indexed text of retailer listings: Hero Outdoors (https://www.herooutdoors.com/trijicon-thumbscrew-mount-for-3-5x35-4x32-5-5x50-acog-1x42-reflex-with-acog-bases-and-1-6x24-vcog) gives 1.535 in for 3.5x35, 4x32 and 5.5x50 ACOGs."
+          }
+        }
+      },
+      {
+        "name": "Trijicon ACOG Extra High Mount with Q-LOC, AC12044",
+        "centerOverRailIn": {
+          "value": 2.05,
+          "source": {
+            "url": "https://gptactical-llc.com/product/acog-mount-w-q-loc-black-extra-high",
+            "read": "2026-11-27",
+            "note": "'Height Above Rail (in/mm) 2.05″ in. (52.07mm)'; GunMag Warehouse (https://gunmagwarehouse.com/trijicon-acog-extra-high-mount-with-q-loc-technology.html) agrees, 2.05 in above rail. Search engine's indexed text. That it fits the TA31 body was not stated in what was read."
+          }
+        }
+      }
+    ],
+    "vortex-razor-1-10": [
+      {
+        "name": "Vortex Precision Extended Cantilever Mount, 34 mm (CM-534)",
+        "centerOverRailIn": {
+          "value": 1.574,
+          "source": {
+            "url": "https://vortexoptics.com/precision-extended-cantilever-mount-34-mm-2022.html",
+            "read": "2026-11-27",
+            "note": "The game's current mount and source. Re-confirmed from the search engine's indexed text of retailer and Vortex listings: 'positions the center of the riflescope tube at a height of 1.574” (40mm) from the base'."
+          }
+        }
+      },
+      {
+        "name": "Vortex Pro Extended Cantilever Mount 34 mm",
+        "centerOverRailIn": {
+          "value": 1.44,
+          "source": {
+            "url": "https://vortexoptics.com/pro-extended-cantilever-mount-34mm.html",
+            "read": "2026-11-27",
+            "note": "'Center Scope Height | 1.44\"'. Search engine's indexed text. Part number not in the text read."
+          }
+        }
+      },
+      {
+        "name": "Vortex Pro Series 34 mm rings, Low, PR34-L",
+        "centerOverRailIn": {
+          "value": 0.95,
+          "source": {
+            "url": "https://www.bhphotovideo.com/c/product/1848364-REG/vortex_pr34_l_pro_series_riflescope_ring.html/specs",
+            "read": "2026-11-27",
+            "note": "'Center scope height: 0.95\" (Low)'. Search engine's indexed text."
+          }
+        }
+      },
+      {
+        "name": "Vortex Pro Series 34 mm rings, Medium, PR34-M",
+        "centerOverRailIn": {
+          "value": 1.1,
+          "source": {
+            "url": "https://www.adorama.com/vortex-pro-series-34-mm-riflescope-mounting-ring/p/vopr34m",
+            "read": "2026-11-27",
+            "note": "'Center Scope Height: 1.10\" (medium), 1.45\" (high)'. Search engine's indexed text; the exact page this line came from among the Pro Series listings returned is not certain."
+          }
+        }
+      },
+      {
+        "name": "Vortex Pro Series 34 mm rings, High, PR34-H",
+        "centerOverRailIn": {
+          "value": 1.45,
+          "source": {
+            "url": "https://www.bhphotovideo.com/c/product/1848363-REG/vortex_pr34_h_pro_series_riflescope_ring.html",
+            "read": "2026-11-27",
+            "note": "'The center height is 1.45\" above the rail'. Search engine's indexed text."
+          }
+        }
+      },
+      {
+        "name": "Vortex Precision Matched Rings 34 mm, Low (0.92 in)",
+        "centerOverRailIn": {
+          "value": 0.92,
+          "source": {
+            "url": "https://www.adorama.com/vortex-optics-34-mm-medium-height-precision-matched-rings/p/vorpmr3492",
+            "read": "2026-11-27",
+            "note": "'Center Scope Height: .92 inches'; Gohunt lists 'Low .92\"'. Search engine's indexed text. Adorama labels this set 'medium'; Gohunt labels it 'low'."
+          }
+        }
+      },
+      {
+        "name": "Vortex Precision Matched Rings 34 mm, High, PMR-34-126",
+        "centerOverRailIn": {
+          "value": 1.26,
+          "source": {
+            "url": "https://www.scheels.com/p/875874-PMR-34-126",
+            "read": "2026-11-27",
+            "note": "Listing 'Vortex Precision Matched 34mm Ring Set 1.26\"', height 'measured from the base of the mount'. Search engine's indexed text."
+          }
+        }
+      }
+    ],
+    "leupold-mark5hd-5-25": [
+      {
+        "name": "Leupold Mark IMS 35 mm (176886)",
+        "centerOverRailIn": {
+          "value": 1.5,
+          "source": {
+            "url": "https://www.leupold.com/mark-ims-35mm",
+            "read": "2026-11-27",
+            "note": "The game's current mount and source. Re-confirmed from the search engine's indexed text: Leupold 'places the center of the optic 1.5\" off the rail, the same height as open sights on a classic AR'; Sportsman's listing 'Leupold 35mm Mark IMS 1.5in Height', MPN 176886."
+          }
+        }
+      },
+      {
+        "name": "Leupold Mark 4 35 mm rings, High (aluminum, matte), 120180",
+        "centerOverRailIn": {
+          "value": 1.06,
+          "source": {
+            "url": "https://www.eurooptic.com/120180-leupold-leupold-mark-4-35mm-high--aluminum--matte-rin",
+            "read": "2026-11-27",
+            "note": "'Centerline Height: 1.06\"'. Search engine's indexed text."
+          }
+        }
+      }
+    ]
+  }
+}
