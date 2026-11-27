@@ -800,3 +800,24 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
   `bench-race-fix`, `dd5dd68`) in its own pull request. Report: the
   addenda in `docs/reports/range-day-sixteen-report.md`.
 
+
+### range-day-seventeen — 27 Nov 2026 (cloud session, from the Wall card `range-day`)
+
+- **Stands:** the workbench (pull request #60): `/workbench` makes what-if
+  versions of a rifle (builds): another barrel length, or a collection
+  scope in another mount. Each build is a rifle of its own on the device
+  (`builds`; records under its id in the existing key shapes), starts
+  unzeroed, is offered under its rifle on home, and fires through the one
+  engine with its own speed per load and sight height (`public/builds.js`).
+  The book shows a build's page beside the rifle as fitted. The figures are
+  in `data/workbench.json`. The bench test's timing race is fixed (20 of 20
+  runs).
+- **Decided:** a build is keyed by its id, not its typed name; never
+  edited, never deleted (removed and put back); barrel lengths that would
+  make a short-barreled rifle are not offered; the rifles as fitted strike
+  where they did, to every digit (`test/fitted-strikes.json`); the gun
+  records in the Spine do not change for builds.
+- **Then:** merged as `b21c9bc` on Dan's line and deployed (Deploy run 29,
+  green; "differs from data/rifles.json: none"); Production check run 2 green.
+- **Next session needs:** nothing waiting from this work. Report:
+  `docs/reports/range-day-seventeen-report.md`.

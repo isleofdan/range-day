@@ -52,6 +52,8 @@ test('range-day-seventeen step 2: each of the seven rifles offers barrel lengths
     assert.equal(new Set(heights).size, heights.length, `${s}: no height twice`);
     for (const h of heights) assert.ok(h > 0.5 && h < 3, `${s}: ${h} in over the rail`);
   }
+  // range-day-seventeen result check: the .22's model is not identified, so its lengths (sold in other Remington models) are estimates
+  for (const b of raw.workbench.barrels['remington-22']) assert.ok(typeof b.estimate === 'string' && !b.source, `.22 ${b.value} in: an estimate with its basis`);
   // iron sights and sights fixed to the rifle offer no height choice
   for (const [id, list] of Object.entries(w.mounts)) assert.equal(flat.sights[id].collection, true, id);
 });

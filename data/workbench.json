@@ -162,27 +162,15 @@
     "remington-22": [
       {
         "value": 20,
-        "source": {
-          "url": "https://chuckhawks.com/rem_504_series.htm",
-          "read": "2026-11-27",
-          "note": "Chuck Hawks catalog specs for the Remington 504-T LS HB .22 LR: 'Barrel Length - 20\" heavy weight', 'Order # - 26493'. Search engine's indexed text; Blue Book (https://bluebookofgunvalues.com/products/remington-model-504-t) 'Barrel Length 20 in.'. The game's current length. The rifle's model is not identified, so which of these lengths is the real one is unknown."
-        }
+        "estimate": "the rifle's model is not identified (data/rifles.json, remington-22), so this is a length Remington sold in a heavy-barrel bolt-action .22 target model, not one known to be this rifle's: Chuck Hawks catalog specs for the Remington 504-T LS HB .22 LR: 'Barrel Length - 20\" heavy weight', 'Order # - 26493'. Search engine's indexed text; Blue Book (https://bluebookofgunvalues.com/products/remington-model-504-t) 'Barrel Length 20 in.'. The game's current length. The rifle's model is not identified, so which of these lengths is the real one is unknown. (https://chuckhawks.com/rem_504_series.htm, read 2026-11-27)"
       },
       {
         "value": 24,
-        "source": {
-          "url": "https://bluebookofgunvalues.com/products/remington-model-541t",
-          "read": "2026-11-27",
-          "note": "Remington 541-T: '.22 Short, Long, and Long Rifle, the 541-T features a 24-inch heavy barrel', 1985 to 1999, heavy-barrel 541-T HB from 1993; Blue Book 40-XRBR KS (https://bluebookofgunvalues.com/products/remington-model-40-xrbr-ks-rimfire-single-shot): '.22 LR cal., 24 in. heavy stainless barrel'. Search engine's indexed text."
-        }
+        "estimate": "the rifle's model is not identified (data/rifles.json, remington-22), so this is a length Remington sold in a heavy-barrel bolt-action .22 target model, not one known to be this rifle's: Remington 541-T: '.22 Short, Long, and Long Rifle, the 541-T features a 24-inch heavy barrel', 1985 to 1999, heavy-barrel 541-T HB from 1993; Blue Book 40-XRBR KS (https://bluebookofgunvalues.com/products/remington-model-40-xrbr-ks-rimfire-single-shot): '.22 LR cal., 24 in. heavy stainless barrel'. Search engine's indexed text. (https://bluebookofgunvalues.com/products/remington-model-541t, read 2026-11-27)"
       },
       {
         "value": 28,
-        "source": {
-          "url": "https://bluebookofgunvalues.com/products/remington-model-40x-target-rifle-rangemaster",
-          "read": "2026-11-27",
-          "note": "Blue Book, Remington Model 40X Rangemaster Target: '.22 LR cal., 28 in. heavy barrel, Redfield Olympic sights, scope bases, target stock rifle, manufactured 1956-64'. Search engine's indexed text. A single-shot target rifle; 27 in was not found."
-        }
+        "estimate": "the rifle's model is not identified (data/rifles.json, remington-22), so this is a length Remington sold in a heavy-barrel bolt-action .22 target model, not one known to be this rifle's: Blue Book, Remington Model 40X Rangemaster Target: '.22 LR cal., 28 in. heavy barrel, Redfield Olympic sights, scope bases, target stock rifle, manufactured 1956-64'. Search engine's indexed text. A single-shot target rifle; 27 in was not found. (https://bluebookofgunvalues.com/products/remington-model-40x-target-rifle-rangemaster, read 2026-11-27)"
       }
     ]
   },
