@@ -95,7 +95,8 @@
     const mine = linesOf(c.rifleId), theirs = linesOf(compareWith);
     const yards = [...new Set([...mine, ...theirs].map((l) => l.yards))].sort((a, b) => a - b);
     const cell = (lines, y) => lines.filter((l) => l.yards === y).sort(RD.newestFirst).map((l) => `<div>${RD.esc(RD.comeUpText(l, s.clickMoa))}, ${l.tempF} F</div>`).join('');
-    const head = `<thead><tr><th>Yards</th><th>${RD.esc(versionName(c.rifleId))} (this page)</th><th>${RD.esc(versionName(compareWith))}</th></tr></thead>`;
+    // Short headings, so three columns fit a phone: this page's version, then the one beside it, each named as the picker names it.
+    const head = `<thead><tr><th>Yards</th><th>${RD.esc(d.rifles[c.rifleId].buildOf ? 'This build' : 'As fitted')}</th><th>${RD.esc(versionName(compareWith))}</th></tr></thead>`;
     $('compare-table').innerHTML = yards.length
       ? `<div class="tablewrap"><table class="log compare">${head}<tbody>${yards.map((y) => `<tr><td>${y}</td><td>${cell(mine, y)}</td><td>${cell(theirs, y)}</td></tr>`).join('')}</tbody></table></div>`
       : '<p class="muted small">No hits on steel yet with either, with this sight and load. Each hit writes its own line on its own side.</p>';

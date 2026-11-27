@@ -452,4 +452,6 @@ body.playback-empty .reach { display: none; }
 .builds-of:empty { display: none; }
 .chip { min-height: 44px; padding: 4px 12px; border: 2px solid var(--line); border-radius: 22px; background: var(--card); color: var(--fg); font: inherit; font-size: 15px; cursor: pointer; }
 .chip.picked { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent) inset; }
-table.log.compare td { white-space: normal; vertical-align: top; }
+table.log.compare { table-layout: fixed; }
+table.log.compare th, table.log.compare td { white-space: normal; vertical-align: top; overflow-wrap: anywhere; }
+table.log.compare th:first-child { width: 3.6em; }
