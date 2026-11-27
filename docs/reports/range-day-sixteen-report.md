@@ -304,3 +304,24 @@ yes, merge and deploy range-day-sixteen, then merge its notes
 - **Dan's correction, recorded:** a line for Dan to type went into a chat reply as inline code, not a fenced block (third
   instance; the report check in `test/report-shape.test.js` reads reports only). Filed for the reply guard on the Wall card
   Shipyard shared notes (event 3086).
+
+## The Setting move (addendum, 27 Nov 2026)
+
+- **On Dan's yes ("yes, build, merge and deploy the Setting move"):** pull request
+  [#58](https://github.com/isleofdan/range-day/pull/58), merged as `591df8c`; Deploy run 28
+  ([45945691797](https://github.com/isleofdan/range-day/actions/runs/45945691797)) green. Setting stands above the shot log;
+  in tilt mode a "Steadiness" reading shows over the bottom edge of the view; the steadiness measure is the largest angle
+  between the last 3 seconds' unsmoothed pointing directions, so it holds at any distance from the centering. Two new tests
+  (the flat-table case; a 300-row log at the three phone sizes) and a screenshot state, `line-long-log` (117 states).
+  Independent result check PASS (job 20261127-051101-1f486d) after three rounds of findings: a bench test fix kept out of
+  scope, the Setting steadiness line added to the long-log test, the two measures compared on the same readings.
+- **The first Checks run caught a real fault:** at 378×762 the reading ran 5 px past the screen's edge in the Checks
+  browser's font; it now wraps inside the view, and the widest reading is tested.
+- **What Dan saw after the deploy** (true angle, minutes of angle over 3 seconds): in the hand **49.5** (56.5 the day
+  before); flat on the table read at once **4085.9**, read again after 10 untouched seconds **5.3**. The first table
+  reading still held the moment the phone was laid down: the window is 3 seconds and the steps said to wait 5, which
+  is too short once reading time is counted. The sensor itself, lying still, moves about 0.09 degree; Dan's hold about
+  0.8 degree.
+- **Found, not fixed here:** `test/bench.test.js` verify 8 failed once on #58's first run: its sign-in helper clears the
+  device before the home page has written the last rifle, so that write can land in the test's "every key held before"
+  snapshot. The one-line wait (`dd5dd68`, local branch `bench-race-fix`) goes in its own pull request.

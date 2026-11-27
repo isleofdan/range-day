@@ -792,9 +792,11 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
   gamma alone; a phone with no readings, or a refusal, goes back to drag
   with a line saying why; Steady in tilt mode slows the sight, never moves
   where it ends up.
-- **Next session needs:** Dan's yes to move Setting above the shot log, the
-  steadiness line under the view in tilt mode, and a test with a long log;
-  the steadiness line to measure by angle between directions (the flat-table
-  reading ran away, 3328.9). Report: the addendum in
-  `docs/reports/range-day-sixteen-report.md`.
+- **Then (27 Nov):** Setting above the shot log, the steadiness reading over
+  the view in tilt mode, measured as the angle between pointing directions
+  (#58, `591df8c`, Deploy run 28). Dan's readings: hand 49.5, table 5.3
+  (minutes of angle over 3 s, true angle).
+- **Next session needs:** the bench test's one-line wait (local branch
+  `bench-race-fix`, `dd5dd68`) in its own pull request. Report: the
+  addenda in `docs/reports/range-day-sixteen-report.md`.
 
