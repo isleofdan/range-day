@@ -1,5 +1,5 @@
 {
-  "_about": "range-day-seventeen: the workbench's figures. fpsPerInch is, per caliber, how many feet per second a load's muzzle speed changes for each inch of barrel added (or lost for each inch taken off), from the load's speed from the rifle's own barrel (data/loads.json, muzzleFps); public/builds.js applies it and rounds to the whole foot per second; fpsPerInchWords says each one's basis in plain words for the workbench page. barrels lists, per rifle, the barrel lengths in inches its maker or importer sold for that model, the rifle's own length among them (data/rifles.json, barrelIn); lengths that would make a short-barreled rifle under US federal law (under 16 in without a permanently attached muzzle device) are left out. mounts lists, per scope of the scope collection, the mounts its maker sells, each with the height of the scope's center line over the top of a Picatinny rail; the first is the mount the scope came in (data/sights.json, mount), and a mount at the same height as one already listed is left out. A scope's height over the bore on a rifle is the rifle's rail height (data/rifles.json, scopeMount) plus its mount's. Every figure was read on the date given; this session's network allowed web search but refused page fetches, so each was read from the search engine's indexed text of the page named.",
+  "_about": "range-day-seventeen: the workbench's figures. fpsPerInch is, per caliber, how many feet per second a load's muzzle speed changes for each inch of barrel added (or lost for each inch taken off), from the load's speed from the rifle's own barrel (data/loads.json, muzzleFps); public/builds.js applies it and rounds to the whole foot per second; fpsPerInchWords says each one's basis in plain words for the workbench page. barrels lists, per rifle, the barrel lengths in inches its maker or importer sold for that model, the rifle's own length among them (data/rifles.json, barrelIn); lengths that would make a short-barreled rifle under US federal law (under 16 in without a permanently attached muzzle device) are left out. mounts lists, per scope of the scope collection, the mounts its maker sells, each with the height of the scope's center line over the top of a Picatinny rail; the first is the mount the scope came in (data/sights.json, mount), and a mount at the same height as one already listed is left out. A scope's height over the bore on a rifle is the rifle's rail height (data/rifles.json, scopeMount) plus its mount's. Every figure was read on the date given; this session's network allowed web search but refused page fetches, so each was read from the search engine's indexed text of the page named. range-day-eighteen: short is a mount's name cut to what tells it from the others listed for the same scope, which the workbench shows in its closed picker beside the height (the full name stands under the picker).",
   "_readingNote": "WebFetch was tried once (fimegroup.com) and refused: the host did not resolve in this session's network. Every figure below was read from the search engine's indexed text of the cited page (WebSearch result text, which is a summary of the indexed page with quoted fragments), not from a fetched page. Each note says so. Retailer pages are cited only where no maker page appeared in the results.",
   "fpsPerInch": {
     "5.56x45": {
@@ -178,6 +178,7 @@
     "trijicon-acog-ta31f": [
       {
         "name": "Trijicon TA51 flat-top mount",
+        "short": "TA51 flat-top",
         "centerOverRailIn": {
           "value": 1.535,
           "source": {
@@ -189,6 +190,7 @@
       },
       {
         "name": "Trijicon ACOG Extra High Mount with Q-LOC, AC12044",
+        "short": "Extra High, Q-LOC",
         "centerOverRailIn": {
           "value": 2.05,
           "source": {
@@ -202,6 +204,7 @@
     "trijicon-acog-ta31f-g": [
       {
         "name": "Trijicon TA51 flat-top mount",
+        "short": "TA51 flat-top",
         "centerOverRailIn": {
           "value": 1.535,
           "source": {
@@ -213,6 +216,7 @@
       },
       {
         "name": "Trijicon ACOG Extra High Mount with Q-LOC, AC12044",
+        "short": "Extra High, Q-LOC",
         "centerOverRailIn": {
           "value": 2.05,
           "source": {
@@ -226,6 +230,7 @@
     "vortex-razor-1-10": [
       {
         "name": "Vortex Precision Extended Cantilever Mount, 34 mm (CM-534)",
+        "short": "CM-534 cantilever",
         "centerOverRailIn": {
           "value": 1.574,
           "source": {
@@ -237,6 +242,7 @@
       },
       {
         "name": "Vortex Pro Extended Cantilever Mount 34 mm",
+        "short": "Pro cantilever",
         "centerOverRailIn": {
           "value": 1.44,
           "source": {
@@ -248,6 +254,7 @@
       },
       {
         "name": "Vortex Pro Series 34 mm rings, Low, PR34-L",
+        "short": "Pro rings, Low",
         "centerOverRailIn": {
           "value": 0.95,
           "source": {
@@ -259,6 +266,7 @@
       },
       {
         "name": "Vortex Pro Series 34 mm rings, Medium, PR34-M",
+        "short": "Pro rings, Medium",
         "centerOverRailIn": {
           "value": 1.1,
           "source": {
@@ -270,6 +278,7 @@
       },
       {
         "name": "Vortex Pro Series 34 mm rings, High, PR34-H",
+        "short": "Pro rings, High",
         "centerOverRailIn": {
           "value": 1.45,
           "source": {
@@ -281,6 +290,7 @@
       },
       {
         "name": "Vortex Precision Matched Rings 34 mm, Low (0.92 in)",
+        "short": "Matched rings, Low",
         "centerOverRailIn": {
           "value": 0.92,
           "source": {
@@ -292,6 +302,7 @@
       },
       {
         "name": "Vortex Precision Matched Rings 34 mm, High, PMR-34-126",
+        "short": "Matched rings, High",
         "centerOverRailIn": {
           "value": 1.26,
           "source": {
@@ -305,6 +316,7 @@
     "leupold-mark5hd-5-25": [
       {
         "name": "Leupold Mark IMS 35 mm (176886)",
+        "short": "Mark IMS",
         "centerOverRailIn": {
           "value": 1.5,
           "source": {
@@ -316,6 +328,7 @@
       },
       {
         "name": "Leupold Mark 4 35 mm rings, High (aluminum, matte), 120180",
+        "short": "Mark 4 rings, High",
         "centerOverRailIn": {
           "value": 1.06,
           "source": {

@@ -64,11 +64,14 @@
     $('barrel').disabled = lengths.length < 2;
     const scopes = B.mountableOf(d, r);
     // The scopes' mounts, folded under one line (the barrel is the change most often made); open when a mount was changed.
-    $('mounts').innerHTML = scopes.length ? `<details class="field wide"${$('mounts').querySelector('details[open]') ? ' open' : ''}><summary>Scope mounts (${scopes.length} scope${scopes.length === 1 ? '' : 's'} of the collection fit this rifle)</summary>${scopes.map((s) => `<label for="mount-${s}">${RD.esc(sightWord(s))}</label><select id="mount-${s}" data-scope="${s}">${B.mountsOf(d, s).map((m) => `<option value="${RD.esc(m.name)}"${m.name === B.fittedMount(d, s) ? ' selected' : ''}>${m.centerOverRailIn} in over the rail: ${RD.esc(m.name)}${m.name === B.fittedMount(d, s) ? ' (as it came)' : ''}</option>`).join('')}</select>`).join('')}</details>` : '';
-    for (const el of $('mounts').querySelectorAll('select')) el.addEventListener('change', renderPreview);
+    $('mounts').innerHTML = scopes.length ? `<details class="field wide"${$('mounts').querySelector('details[open]') ? ' open' : ''}><summary>Scope mounts (${scopes.length} scope${scopes.length === 1 ? '' : 's'} of the collection fit this rifle)</summary>${scopes.map((s) => `<label for="mount-${s}">${RD.esc(sightWord(s))}</label><select id="mount-${s}" data-scope="${s}">${B.mountsOf(d, s).map((m) => `<option value="${RD.esc(m.name)}"${m.name === B.fittedMount(d, s) ? ' selected' : ''}>${m.centerOverRailIn} in · ${RD.esc(m.short || m.name)}${m.name === B.fittedMount(d, s) ? ' (as it came)' : ''}</option>`).join('')}</select><p class="muted small mount-full" id="mount-full-${s}"></p>`).join('')}</details>` : '';
+    // range-day-eighteen: the closed picker shows the height and the mount's short name, so two choices never read the same on a
+    // phone; the full name, and that the height is over the rail, stand under it.
+    const fullName = (el) => { const m = B.mountsOf(d, el.dataset.scope).find((x) => x.name === el.value); $(`mount-full-${el.dataset.scope}`).textContent = m ? `${m.name}: its center ${m.centerOverRailIn} in over the rail` : ''; };
+    for (const el of $('mounts').querySelectorAll('select')) { fullName(el); el.addEventListener('change', () => { fullName(el); renderPreview(); }); }
     const notes = [];
     if (lengths.length < 2) notes.push(`The ${r.name} was sold with one barrel length only, ${inches(r.barrelIn)}.`);
-    if (!scopes.length) notes.push(r.scopeMount && r.scopeMount.rail !== 'picatinny' ? `No scope of the collection fits the ${r.name}'s receiver, so there is no mount to change.` : 'No scope of the collection fits this rifle, so there is no mount to change.');
+    if (!scopes.length) notes.push(r.scopeMount && r.scopeMount.rail !== 'picatinny' ? `No scope of the collection fits the ${r.name}'s receiver, so there is no mount to change.${r.scopeMount.ownScope ? ` Its own scope, the ${sightWord(r.scopeMount.ownScope.sight)}, stays in its own rings in every build.` : ''}` : 'No scope of the collection fits this rifle, so there is no mount to change.');
     $('no-change').textContent = notes.join(' ');
     renderPreview();
   }
