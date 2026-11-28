@@ -167,7 +167,16 @@ Screenshots, each at 412×915 (`-phone`), 378×762 (`-small`) and
    browser: 196 tests, 109 passed, 87 skipped (the browser tests), 0
    failed. On the branch: 205 tests (196, plus 8 in
    `test/expansion.test.js`, plus 1 in `test/guns.test.js`).
-   RESULTS_TESTS
+   Checks run [46112023756](https://github.com/isleofdan/range-day/actions/runs/46112023756)
+   on `6c8bc65`, the last code change: all 13 jobs passed (the 9 test
+   groups and the 4 screenshot shards). The run before it, 46111521611 on
+   `19c3a98`, failed in "tests (day)": two tests in `test/day.test.js`
+   counted every `.rifle` card on home, and the new "More rifles" card is
+   one too. Fixed in `3a09f18` and `6c8bc65` to count only rifle cards and
+   to walk all eleven rifles. The same mistake was caught earlier in
+   `test/browser.test.js` verify 11, but I did not search the other test
+   files for it then. Here the bench, day, browser and rest groups passed
+   too.
    `test/fitted-strikes.json` is unchanged (the pull request's diff does
    not touch it), and `test/workbench.test.js` "verify 2" passes: the
    seven rifles strike where they did, to every digit.
@@ -210,7 +219,8 @@ Screenshots, each at 412×915 (`-phone`), 378×762 (`-small`) and
    378×762 and 1280×800; every state shows its text and fits the width
    (`npm run screenshots` with those states: "all checks passed").
 
-RESULTS_CHECK
+Result check: see the card `range-day`, the checker's note on this
+report.
 
 ## Numbered asks
 
