@@ -217,6 +217,16 @@
           "note": "Tikka JRTXC382CAS, T3x CTR, 6.5 Creedmoor, 24 in. The rifle's own length (data/rifles.json, tikka-t3x-ctr). Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
         }
       }
+    ],
+    "jp-15-6arc": [
+      {
+        "value": 18,
+        "source": {
+          "url": "https://battlehawkarmory.com/product/jp-enterprises-jp-15-6mm-arc-101rd-18-supermatch-barrel-black-gold-rifle",
+          "read": "2026-11-28",
+          "note": "JP-15, 6mm ARC, 18 in Supermatch barrel; the only length found for JP's 6mm ARC rifle. The rifle's own length (data/rifles.json, jp-15-6arc). Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+        }
+      }
     ]
   },
   "mounts": {

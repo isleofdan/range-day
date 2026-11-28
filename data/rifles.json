@@ -464,5 +464,53 @@
     "estimate": "Tikka publishes no rail height. A T3x owner measured the top of the factory-style rail \"about 0.55 in above center of bore\" (https://rokslide.com/forums/threads/height-over-bore-tikka-t3x.364494, search text); another puts a scope's center 1.65 in over the bore in low rings, which fits the same band (same thread)"
    }
   }
+ },
+ "jp-15-6arc": {
+  "name": "JP Enterprises JP-15, 6mm ARC",
+  "caliber": "6mm ARC",
+  "playable": true,
+  "expansion": true,
+  "barrelIn": {
+   "value": 18,
+   "source": {
+    "url": "https://battlehawkarmory.com/product/jp-enterprises-jp-15-6mm-arc-101rd-18-supermatch-barrel-black-gold-rifle",
+    "read": "2026-11-28",
+    "note": "JP Enterprises JP-15 in 6mm ARC: \"18\" Supermatch\" cut-rifled barrel, 1:7.5 twist, 10+1 rounds (also https://battlehawkarmory.com/product/jp-enterprises-jp-15-18-6mm-arc-multicam-brown-rifle, 18 in). The brief named JP's SCR-11; no SCR-11 in 6mm ARC was found (the SCR-11 is listed in 5.56, .223 Wylde, .224 Valkyrie, 6.5 Grendel, .300 Blackout and .22 LR), so JP's 6mm ARC rifle, the JP-15, is used. No other JP-15 6mm ARC barrel length was found. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "sightHeightIn": {},
+  "boreOffsetMoa": {
+   "up": {
+    "value": -2.1,
+    "estimate": "a scope set to its mechanical middle is a few minutes off on most rifles; the figure is chosen so the rifle needs zeroing, not measured"
+   },
+   "right": {
+    "value": 1.9,
+    "estimate": "same basis: the same basis as the figure next to it in this entry"
+   }
+  },
+  "recoilFactor": {
+   "value": 1.1,
+   "estimate": "a 6mm ARC AR-15 kicks a little more than a 5.56 carbine (1, the reference) and less than a 7.62x39 rifle (1.4)"
+  },
+  "sights": [],
+  "defaultSight": "leupold-mark5hd-5-25",
+  "loads": [
+   "hornady-6arc-108-eldm",
+   "hornady-6arc-105-bthp"
+  ],
+  "firstCourse": "cta-piru",
+  "scopeMount": {
+   "rail": "picatinny",
+   "words": "the flat-top upper's own Picatinny rail. JP sells the rifle with no iron sights in the listings found, so it aims through the scope collection and opens with the Leupold Mark 5HD",
+   "railHeightOverBoreIn": {
+    "value": 1.21,
+    "source": {
+     "url": "https://en.wikipedia.org/wiki/Bore_axis",
+     "read": "2026-11-28",
+     "note": "\"1.211 inches\" from the bore's center to the top of an AR-type (mil-spec) rail, the figure the BCM's entry already uses; the JP-15 is an AR-15. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+    }
+   }
+  }
  }
 }
