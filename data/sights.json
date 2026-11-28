@@ -1,5 +1,5 @@
 {
- "_about": "The sights. clickMoa is what one click of elevation moves the strike, windageClickMoa one click of windage, in minutes of angle; clicks is the travel each way from the middle. zoom is the magnification range; fovFtAt100 the field of view in feet at 100 yards at the lowest and highest zoom. frontPostMoa is the front post's width over the sight radius (how wide it looks against the target); apertureMoa the rear ring's lit circle and notchMoa the rear notch's width as the eye sees them; dotMoa a red dot's size. leaf is a sliding rear leaf: its marked settings, the service load it was cut for, and each setting's angle above the 100 m setting, derived with the engine (leaf545: the same leaf on the 5.45x39 rifle, cut for its own load). notchDepthMoa is the rear notch's depth as the eye sees it; stemWidthMoa a bead's stem; a drop reticle's chevronHalfWidthMoa and markHalfWidthMoa are its drawn widths. aimWanderFactor scales the drawn wander of the aim through this sight (1 where absent). frontBead marks a front sight that is a round bead on a stem rather than a flat post. range-day-twelve: sightRadiusIn is the distance between the front and rear sight, the radius the front post's width is seen over; frontPostIn and apertures (each peep's diameterIn) are the parts' own sizes; frontEars draws the front sight's guards (their inner gap, each one's width, and how far their tops stand above the post); frontStripeMoa and frontStripeTopMoa a glowing stripe on a front post; adjustWords says in plain words where each adjustment is; kind \"seeall\" is the SeeAll Open Sight, its reticle a triangle whose tip is the aim point, standing across a line that tops a glowing field; a reticle's focalPlane and trueAtPower say where a second-focal-plane reticle's marks are true (at another power p they stand trueAtPower / p times as far apart in angle). tookThePlaceOf names the sight a new one replaced on its rifles without carrying its records (they click differently or sit at another height): a record from before any sight could be chosen, made with the old sight, is never read as the new one's. rearBody is a rear peep's leaf, where it stands far from the eye (its width and how far its top stands above the peep): only the leaf is dark around the peep; a sight without it has its ring close to the eye, dark to the edges of the view. range-day-twelve-b: a rear sight with two peeps (apertures, each with its diameterIn and the apertureMoa it covers seen from the eye) flips between them on the firing line; both stand in the same plane, so the flip moves no shot. frontHood is a round hood around the front post (its inside diameter and its wall, as the eye sees them), centred on the post's tip. range-day-thirteen: collection marks a scope of the scope collection, which moves among the rifles: a rifle offers it when its own scope mounting (data/rifles.json, scopeMount) takes the scope's mount (mount.fits), and its height over the bore on that rifle is the rifle's rail height plus the mount's centerOverRailIn (lib/guns.js works it out and checks it). windageClicks is a scope's windage travel each way where it differs from clicks. A reticle of kind \"chevron\" is a chevron whose tip is the aim point (chevronBaseWidthMoa wide at its base, chevronHeightMoa from tip to base); of kind \"crosshair\" a fine crosshair; marksNotDrawn says which of the maker's marks are left out and why.",
+ "_about": "The sights. clickMoa is what one click of elevation moves the strike, windageClickMoa one click of windage, in minutes of angle; clicks is the travel each way from the middle. zoom is the magnification range; fovFtAt100 the field of view in feet at 100 yards at the lowest and highest zoom. frontPostMoa is the front post's width over the sight radius (how wide it looks against the target); apertureMoa the rear ring's lit circle and notchMoa the rear notch's width as the eye sees them; dotMoa a red dot's size. leaf is a sliding rear leaf: its marked settings, the service load it was cut for, and each setting's angle above the 100 m setting, derived with the engine (leaf545: the same leaf on the 5.45x39 rifle, cut for its own load). notchDepthMoa is the rear notch's depth as the eye sees it; stemWidthMoa a bead's stem; a drop reticle's chevronHalfWidthMoa and markHalfWidthMoa are its drawn widths. aimWanderFactor scales the drawn wander of the aim through this sight (1 where absent). frontBead marks a front sight that is a round bead on a stem rather than a flat post. range-day-twelve: sightRadiusIn is the distance between the front and rear sight, the radius the front post's width is seen over; frontPostIn and apertures (each peep's diameterIn) are the parts' own sizes; frontEars draws the front sight's guards (their inner gap, each one's width, and how far their tops stand above the post); frontStripeMoa and frontStripeTopMoa a glowing stripe on a front post; adjustWords says in plain words where each adjustment is; kind \"seeall\" is the SeeAll Open Sight, its reticle a triangle whose tip is the aim point, standing across a line that tops a glowing field; a reticle's focalPlane and trueAtPower say where a second-focal-plane reticle's marks are true (at another power p they stand trueAtPower / p times as far apart in angle). tookThePlaceOf names the sight a new one replaced on its rifles without carrying its records (they click differently or sit at another height): a record from before any sight could be chosen, made with the old sight, is never read as the new one's. rearBody is a rear peep's leaf, where it stands far from the eye (its width and how far its top stands above the peep): only the leaf is dark around the peep; a sight without it has its ring close to the eye, dark to the edges of the view. range-day-twelve-b: a rear sight with two peeps (apertures, each with its diameterIn and the apertureMoa it covers seen from the eye) flips between them on the firing line; both stand in the same plane, so the flip moves no shot. frontHood is a round hood around the front post (its inside diameter and its wall, as the eye sees them), centred on the post's tip. range-day-thirteen: collection marks a scope of the scope collection, which moves among the rifles: a rifle offers it when its own scope mounting (data/rifles.json, scopeMount) takes the scope's mount (mount.fits), and its height over the bore on that rifle is the rifle's rail height plus the mount's centerOverRailIn (lib/guns.js works it out and checks it). windageClicks is a scope's windage travel each way where it differs from clicks. A reticle of kind \"chevron\" is a chevron whose tip is the aim point (chevronBaseWidthMoa wide at its base, chevronHeightMoa from tip to base); of kind \"crosshair\" a fine crosshair; marksNotDrawn says which of the maker's marks are left out and why. range-day-eighteen: ownScopeOf names the one rifle whose own scope a sight is (not one of the collection: it is offered by that rifle's sights list and mounted as data/rifles.json, scopeMount.ownScope, says); tubeMm is a scope's tube; a crosshair's centerDotMoa is a dot at its center, drawn in its litColor; on a second-focal-plane reticle every mark, a dot included, stands trueAtPower / p times its true size in angle at power p.",
  "ar-irons": {
   "name": "AR-15 iron sights (front post, rear aperture)",
   "kind": "iron",
@@ -583,6 +583,98 @@
    "estimate": "the thin stem the bead stands on, seen over the sight radius: about a third of the bead's width; not a maker figure"
   },
   "frontBead": true
+ },
+ "pa-clx-1-6x24": {
+  "name": "Primary Arms CLx 1-6x24 SFP scope, illuminated duplex (PA-CLX-1-6X24S-D)",
+  "kind": "scope",
+  "model": "Primary Arms CLx 1-6x24 SFP with the illuminated duplex reticle, PA-CLX-1-6X24S-D (the maker first sold it as the Classic Series 1-6x24 SFP; its pages now name it CLx). The maker sells the CLx 1-6x24 SFP with two reticles: this duplex, and the ACSS 22LR G2 (released September 2026), whose drop marks are cut for .22 LR. Neither carries marks cut for a centerfire cartridge. The duplex is modeled because its maker's figures could be read; the ACSS 22LR G2's reticle sheet could not be read from this session (range-day-eighteen report).",
+  "ownScopeOf": "remington-22",
+  "clickMoa": {
+   "value": 0.5,
+   "source": {
+    "url": "https://www.primaryarms.com/primary-arms-classic-series-1-6x24mm-sfp-rifle-scope-illuminated-duplex-reticle",
+    "read": "2026-11-28",
+    "note": "the maker's page: click value 1/2 MOA. Read from the search engine's indexed text of this page on the date given: this session's network refuses this host (CONNECT 403)."
+   }
+  },
+  "windageClickMoa": {
+   "value": 0.5,
+   "source": {
+    "url": "https://www.primaryarms.com/primary-arms-classic-series-1-6x24mm-sfp-rifle-scope-illuminated-duplex-reticle",
+    "read": "2026-11-28",
+    "note": "the same page: the same 1/2 MOA click on both turrets. Read from the search engine's indexed text of this page on the date given: this session's network refuses this host (CONNECT 403)."
+   }
+  },
+  "clicks": {
+   "value": 120,
+   "source": {
+    "url": "https://www.primaryarms.com/primary-arms-classic-series-1-6x24mm-sfp-rifle-scope-illuminated-duplex-reticle",
+    "read": "2026-11-28",
+    "note": "the maker's page: total elevation adjustment 120 MOA and total windage adjustment 120 MOA: 60 MOA each way from the middle, 120 half-minute clicks. Read from the search engine's indexed text of this page on the date given: this session's network refuses this host (CONNECT 403)."
+   }
+  },
+  "zoom": {
+   "low": {
+    "value": 1,
+    "source": {
+     "url": "https://www.primaryarms.com/primary-arms-classic-series-1-6x24mm-sfp-rifle-scope-illuminated-duplex-reticle",
+     "read": "2026-11-28",
+     "note": "the maker's page: 1-6x, 24 mm objective, 30 mm tube, second focal plane. Read from the search engine's indexed text of this page on the date given: this session's network refuses this host (CONNECT 403)."
+    }
+   },
+   "high": {
+    "value": 6,
+    "source": {
+     "url": "https://www.primaryarms.com/primary-arms-classic-series-1-6x24mm-sfp-rifle-scope-illuminated-duplex-reticle",
+     "read": "2026-11-28",
+     "note": "the same page, the top of the zoom. Read from the search engine's indexed text of this page on the date given: this session's network refuses this host (CONNECT 403)."
+    }
+   }
+  },
+  "fovFtAt100": {
+   "low": {
+    "value": 113.5,
+    "source": {
+     "url": "https://op1.0ps.us/pdf/opplanet-primary-arms-clx-1-6x24-manual-pdf.pdf",
+     "read": "2026-11-28",
+     "note": "the maker's manual \"SECOND FOCAL PLANE SCOPE MANUAL 1-6x24\" (a copy hosted by a retailer): field of view 113.5 ft at 100 yards at 1x (the maker's product page rounds it to 113 ft). Read from the search engine's indexed text of this page on the date given: this session's network refuses this host (CONNECT 403)."
+    }
+   },
+   "high": {
+    "value": 18.8,
+    "source": {
+     "url": "https://op1.0ps.us/pdf/opplanet-primary-arms-clx-1-6x24-manual-pdf.pdf",
+     "read": "2026-11-28",
+     "note": "the same manual: 18.8 ft at 100 yards at 6x. Read from the search engine's indexed text of this page on the date given: this session's network refuses this host (CONNECT 403)."
+    }
+   }
+  },
+  "tubeMm": {
+   "value": 30,
+   "source": {
+    "url": "https://www.primaryarms.com/primary-arms-classic-series-1-6x24mm-sfp-rifle-scope-illuminated-duplex-reticle",
+    "read": "2026-11-28",
+    "note": "the maker's page: 30 mm main tube. Read from the search engine's indexed text of this page on the date given: this session's network refuses this host (CONNECT 403)."
+   }
+  },
+  "reticle": {
+   "kind": "crosshair",
+   "centerDotMoa": {
+    "value": 2,
+    "source": {
+     "url": "https://www.primaryarms.com/primary-arms-classic-series-1-6x24mm-sfp-rifle-scope-illuminated-duplex-reticle",
+     "read": "2026-11-28",
+     "note": "the maker's page: an illuminated red 2 MOA center dot in a duplex reticle. Read from the search engine's indexed text of this page on the date given: this session's network refuses this host (CONNECT 403)."
+    }
+   },
+   "litColor": "red",
+   "focalPlane": "second",
+   "trueAtPower": {
+    "value": 6,
+    "estimate": "the maker states the dot as 2 MOA without naming the power; Primary Arms gives a second-focal-plane reticle's figures at the top power (its ACSS 1-6x manuals: set the scope to 6x for the marks to hold), so 6x is taken; at 1x the dot covers 12 MOA"
+   },
+   "marksNotDrawn": "the duplex's heavy outer posts: no figure for where they begin or how thick they are could be read, so the fine crosshair runs to the edge and the 2 MOA dot is drawn at its center"
+  }
  },
  "pa-md25": {
   "name": "Primary Arms SLx MD-25 red dot, 2 MOA dot",
