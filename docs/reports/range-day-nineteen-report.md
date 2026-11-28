@@ -219,8 +219,9 @@ Screenshots, each at 412×915 (`-phone`), 378×762 (`-small`) and
    378×762 and 1280×800; every state shows its text and fits the width
    (`npm run screenshots` with those states: "all checks passed").
 
-Result check: see the card `range-day`, the checker's note on this
-report.
+Result check: PASS, no findings (job 20261128-054341-d8ce81, 19 s, on
+pull request #64 at `0a8ace7`, against the brief's note 3163 on the card
+`range-day`).
 
 ## Numbered asks
 
