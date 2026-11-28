@@ -844,3 +844,38 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
   data/rifles.json: none"); Production check run 3 green (the live firing line opened in a real browser).
 - **Next session needs:** nothing waiting from this work. Report:
   `docs/reports/range-day-eighteen-report.md`.
+
+### range-day-nineteen — 28 Nov 2026 (cloud session, from the Wall card `range-day`)
+
+- **Stands:** pull request #64: the expansion's four single-caliber rifles,
+  each marked `expansion` in `data/rifles.json`: the Tikka T3x CTR (6.5
+  Creedmoor, 24 in), JP Enterprises' JP-15 (6mm ARC, 18 in), the IWI
+  Tavor 7 (7.62x51, 16.5 in) and the Vudoo V-22 Ravage (.22 LR, 16.5 in).
+  Six new loads (Hornady 140 and 147 gr ELD Match; Hornady 108 gr ELD Match
+  and 105 gr BLACK; Federal Gold Medal Match 168 gr and Hornady 168 gr ELD
+  Match), each speed the maker's moved to the rifle's barrel by the
+  caliber's speed per inch (22, 15 and 22.7 ft/s, sourced, in
+  `data/workbench.json`). None of the four is sold with sights of its own:
+  `lib/guns.js` lets a rifle with an empty `sights` and a Picatinny rail
+  aim through the scope collection and open on a collection scope. Home
+  lists the four under "More rifles", a card after the first seven that
+  swaps the list in place. Their gun records say `whose: "no one's: one of
+  the game's expansion rifles"`; `npm run gun-records -- <ids>` prints
+  only the named ones.
+- **Decided:** the JP-15 stands in for the brief's SCR-11, which JP is not
+  found to sell in 6mm ARC; the Tavor 7 has no iron sights (American
+  Rifleman), so it opens on the Vortex Razor 1-10; the Tikka's 24 in
+  barrel (the loads' test barrel; Tikka's own page could not be read);
+  the Vudoo's 16.5 in, the first length Vudoo's page lists; G7 wherever
+  the maker publishes one. Home's two lists take turns in one place
+  because a 412 px screen holds the first seven, the picks and the doors
+  with about 40 px to spare.
+- **Then:** on Dan's typed line: merge #64; write the four gun records to
+  the Spine (`npm run gun-records -- tikka-t3x-ctr jp-15-6arc iwi-tavor-7
+  vudoo-v22-ravage`, through `import_records`); run Deploy, whose guns
+  line should read "16 records, 11 in the game, 5 not modeled ·
+  differs from data/rifles.json: none"; then the notes pull request.
+- **Next session needs:** the two multi-caliber rifles (Barrett MRAD MK22,
+  Blaser R8: a barrel that changes a rifle's caliber is a new workbench
+  mechanic) and then the three new collection scopes. Report:
+  `docs/reports/range-day-nineteen-report.md`.
