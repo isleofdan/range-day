@@ -492,7 +492,8 @@ test('verify 13: the phone: home with no day open shows the picks, When and both
     lines.push(`${id}: When bottom ${r.boxes[4].bottom.toFixed(0)}, zero line bottom ${r.boxes[5].bottom.toFixed(0)}, doors bottom ${r.boxes[7].bottom.toFixed(0)} of 915`);
     assert.match(await page.getAttribute('#go-book', 'href'), new RegExp(`rifle=${id}&`), 'the book link follows the rifle picked');
   }
-  // The book link follows the sight and the load too.
+  // The book link follows the sight and the load too (back to the first seven, where the loop left "More rifles" open).
+  if (!(await page.$('.rifle[data-rifle="iwi-tavor-sar"]'))) await page.click('.rifle.turn');
   await page.click('.rifle[data-rifle="iwi-tavor-sar"]'); await page.waitForSelector('.rifle.picked[data-rifle="iwi-tavor-sar"]');
   await page.selectOption('#sight', 'pa-md25'); await page.selectOption('#load', 'federal-gmm-69');
   assert.match(await page.getAttribute('#go-book', 'href'), /rifle=iwi-tavor-sar&sight=pa-md25&load=federal-gmm-69/);
