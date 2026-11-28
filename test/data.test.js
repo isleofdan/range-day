@@ -48,7 +48,7 @@ test('the whole rifle set is in the data; all seven rifles are playable', () => 
   const ids = Object.keys(flat.rifles).filter((k) => !k.startsWith('_'));
   assert.equal(ids.length, 7);
   assert.deepEqual(ids.filter((k) => flat.rifles[k].playable).sort(), ids.slice().sort());
-  assert.equal(Object.keys(flat.loads).filter((k) => !k.startsWith('_')).length, 16);
+  assert.equal(Object.keys(flat.loads).filter((k) => !k.startsWith('_')).length, 22); // range-day-nineteen: six loads for the three new calibers
 });
 
 test('the drag tables are the standard shape: Cd peaks just past Mach 1 and is lower well below and well above it', () => {

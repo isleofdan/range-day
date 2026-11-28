@@ -25,6 +25,30 @@
     ".22 LR": {
       "value": 0,
       "estimate": "Over roughly 16 to 27 in, standard-velocity .22 LR gains nothing and may lose a little. Read from the search engine's indexed text: AccurateShooter relaying MDT's test (https://bulletin.accurateshooter.com/tag/barrel-length-velocity), 'with standard rimfire ammunition, the velocity started to decline after 16″ length'; oocities .22 LR page (https://www.oocities.org/CapitolHill/lobby/1221/22lrammo.htm), 'maximum velocities for the .22 LR are usually produced by firearms with barrels between 16\" and 18\"... friction takes over and actually slows the bullet down'; rec.guns chronograph table (https://groups.google.com/g/rec.guns/c/aEEJy117Ao8), one load about 1,226 fps at 16 in and 1,229 fps at 18.5 in. No CCI Standard Velocity 40 gr figures by barrel length were found. Zero chosen because no source gave a per-inch loss figure to put a negative number on."
+    },
+    "6.5 Creedmoor": {
+      "value": 22,
+      "source": {
+        "url": "https://rifleshooter.com/2019/03/6-5-creedmoor-effects-of-barrel-length-on-velocity-2019/",
+        "read": "2026-11-28",
+        "note": "RifleShooter.com's 2019 6.5 Creedmoor cut-down test: average losses of about 21 to 27 feet per second per inch depending on the load; its 2016 test (https://rifleshooter.com/2016/02/6-5-creedmoor-effect-of-barrel-length-on-velocity-cutting-up-a-creedmoor/) averaged 21.8 with a 120 gr bullet and about 16 from 24 to 16 in with a 142 gr bullet. 22, the low end of the 2019 range and the 2016 average, is used. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+      }
+    },
+    "6mm ARC": {
+      "value": 15,
+      "source": {
+        "url": "https://www.shootingillustrated.com/articles/2020/10/8/is-hornadys-6-mm-arc-the-best-ar-15-round-ever-made",
+        "read": "2026-11-28",
+        "note": "Shooting Illustrated: Hornady's 108 gr ELD Match, advertised at 2,750 fps (24-inch test barrel), averaged 2,661 fps from an 18-inch Wilson Combat AR-15, \"a reasonable 14.8 fps loss in velocity, for each inch of barrel length\"; rounded to 15. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+      }
+    },
+    "7.62x51": {
+      "value": 22.7,
+      "source": {
+        "url": "https://rifleshooter.com/2014/12/308-winchester-7-62x51mm-nato-barrel-length-versus-velocity-28-to-16-5/",
+        "read": "2026-11-28",
+        "note": "RifleShooter.com cut a .308 Win barrel from 28 to 16.5 inches with four factory loads: 261 fps lost in all, 22.7 feet per second per inch on average (24.6, 22.8, 20.9 and 22.5 per load; Federal's 168 gr Gold Medal 20.9). Berger's manual gives about 20 per inch from a 24-inch baseline, an MDT test about 25 from 24 to 16 inches. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+      }
     }
   },
   "fpsPerInchWords": {
@@ -32,7 +56,10 @@
     "7.62x39": "the rule the 7.62x39 loads already use; a test of 7.62x39 between 16.5 and 10.5 inches lost about 23 feet per second per inch, and longer barrels lose less per inch",
     "5.45x39": "no test of 5.45x39 was found, so the 5.56 figure is used: a cartridge of the same size and speed; Hornady gives 25 to 35 feet per second per inch for shorter barrels",
     "7.62x54R": "a university test that cut a Mosin-Nagant barrel from 28.75 to 16.75 inches, two inches at a time, found 25.7 feet per second per inch",
-    ".22 LR": "a standard-speed .22 is fastest from about 16 to 18 inches and gains nothing from a longer barrel, so a longer barrel leaves its speed as it is"
+    ".22 LR": "a standard-speed .22 is fastest from about 16 to 18 inches and gains nothing from a longer barrel, so a longer barrel leaves its speed as it is",
+    "6.5 Creedmoor": "cut-down tests of 6.5 Creedmoor barrels lost about 21 to 27 feet per second per inch, depending on the load; 22 is used",
+    "6mm ARC": "Hornady's 108 gr match load, rated at 2,750 from a 24-inch test barrel, ran 2,661 from an 18-inch AR-15: about 15 feet per second per inch",
+    "7.62x51": "a test that cut a .308 barrel from 28 to 16.5 inches with four factory loads lost 22.7 feet per second per inch on average"
   },
   "barrels": {
     "bcm-ar15": [

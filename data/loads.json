@@ -715,5 +715,331 @@
     "note": "CCI Standard Velocity .22 LR 40 gr, 50 rounds per box. read from the search engine's indexed text of this page on the date given: this session's network allowed web search but no page fetches"
    }
   }
+ },
+ "hornady-65cm-140-eldm": {
+  "caliber": "6.5 Creedmoor",
+  "name": "Hornady Match 140 gr ELD Match (#81500)",
+  "grains": {
+   "value": 140,
+   "source": {
+    "url": "https://www.hornady.com/ammunition/rifle/6-5-creedmoor-140-gr-eld-match",
+    "read": "2026-11-28",
+    "note": "Hornady: item #81500, 20 per box. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "makerFps": {
+   "value": 2710,
+   "source": {
+    "url": "https://www.luckygunner.com/6-5-mm-creedmoor-140-grain-eld-match-hornady-20-rounds",
+    "read": "2026-11-28",
+    "note": "Hornady's figures as retailers repeat them: 2,710 fps \"with the aid of a 24\" barrel\", G1 .646, G7 .326. Hornady's own page (https://www.hornady.com/ammunition/rifle/6-5-creedmoor-140-gr-eld-match) did not show the figures in the indexed text. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "makerBarrelIn": {
+   "value": 24,
+   "source": {
+    "url": "https://www.luckygunner.com/6-5-mm-creedmoor-140-grain-eld-match-hornady-20-rounds",
+    "read": "2026-11-28",
+    "note": "the 24-inch test barrel the 2,710 fps figure is given for, as retailers quote Hornady (also https://www.targetsportsusa.com/hornady-match-65-creedmoor-140-grain-eld-81500-p-58815.aspx: \"Test Barrel Length 24\"\"). Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "muzzleFps": {
+   "value": 2710,
+   "source": {
+    "url": "https://www.luckygunner.com/6-5-mm-creedmoor-140-grain-eld-match-hornady-20-rounds",
+    "read": "2026-11-28",
+    "note": "Hornady's 2,710 fps from its 24-inch test barrel; the Tikka T3x CTR in this set has a 24-inch barrel, so no adjustment. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "bc": {
+   "value": 0.326,
+   "source": {
+    "url": "https://www.opticsplanet.com/hornady-ammo-6-5-creedmoor-140gr-eld-match-20-81500.html",
+    "read": "2026-11-28",
+    "note": "Hornady: G1 .646, G7 .326 (retailers quoting Hornady; the same pair on luckygunner.com and targetsportsusa.com). The maker publishes a G7 figure, so G7 is used. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "dragModel": "G7",
+  "spreadMoa": {
+   "value": 0.75,
+   "estimate": "a match load in a precision bolt rifle; Hornady publishes no group size. Tikka guarantees its T3x rifles shoot a 3-shot group of 1 MOA at 100 yards with the right ammunition (a maker's claim), so a five-shot spread under 1 MOA is taken"
+  },
+  "boxCount": {
+   "value": 20,
+   "source": {
+    "url": "https://www.hornady.com/ammunition/rifle/6-5-creedmoor-140-gr-eld-match",
+    "read": "2026-11-28",
+    "note": "\"Item #81500 | 20/Box\". Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  }
+ },
+ "hornady-65cm-147-eldm": {
+  "caliber": "6.5 Creedmoor",
+  "name": "Hornady Match 147 gr ELD Match (#81501)",
+  "grains": {
+   "value": 147,
+   "source": {
+    "url": "https://www.hornady.com/ammunition/rifle/6.5-creedmoor-147-gr-eld-match",
+    "read": "2026-11-28",
+    "note": "Hornady: item #81501. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "makerFps": {
+   "value": 2695,
+   "source": {
+    "url": "https://www.targetsportsusa.com/hornady-match-65-creedmoor-ammo-147-grain-eld-match-81501-p-62860.aspx",
+    "read": "2026-11-28",
+    "note": "Hornady's figures as retailers repeat them: 2,695 fps, 2,370 ft-lb, \"Test Barrel Length 24 Inches\"; one table gives 2,567 / 2,443 fps at 100 / 200 yards (https://ammunitiontogo.com/200rds-6-5-creedmoor-hornady-147gr-eld-match-ammo). Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "makerBarrelIn": {
+   "value": 24,
+   "source": {
+    "url": "https://www.targetsportsusa.com/hornady-match-65-creedmoor-ammo-147-grain-eld-match-81501-p-62860.aspx",
+    "read": "2026-11-28",
+    "note": "\"Test Barrel Length 24 Inches\" (also targetbarn.com: 2,695 fps from a 24-inch test barrel). Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "muzzleFps": {
+   "value": 2695,
+   "source": {
+    "url": "https://www.targetsportsusa.com/hornady-match-65-creedmoor-ammo-147-grain-eld-match-81501-p-62860.aspx",
+    "read": "2026-11-28",
+    "note": "Hornady's 2,695 fps from its 24-inch test barrel; the Tikka in this set has a 24-inch barrel, so no adjustment. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "bc": {
+   "value": 0.351,
+   "source": {
+    "url": "https://www.opticsplanet.com/hornady-ammo-6-5-creedmoor-147gr-eld-match-20-81501.html",
+    "read": "2026-11-28",
+    "note": "\"G1 Ballistic Coefficient: 0.697\", \"G7 Ballistic Coefficient: 0.351\" (one retailer, ammunitiontogo.com, lists .713 / .358; most give Hornady's .697 / .351). The maker publishes a G7 figure, so G7 is used. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "dragModel": "G7",
+  "spreadMoa": {
+   "value": 0.75,
+   "estimate": "set like the 140 gr match load in the same rifle; Hornady publishes no group size"
+  },
+  "boxCount": {
+   "value": 20,
+   "source": {
+    "url": "https://globalordnance.com/hornady-match-6-5-creedmoor-147-grain-eld-match-20-round-box-81501-upc-090255815016",
+    "read": "2026-11-28",
+    "note": "\"20 Round Box\", item 81501. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  }
+ },
+ "hornady-6arc-108-eldm": {
+  "caliber": "6mm ARC",
+  "name": "Hornady Match 108 gr ELD Match (#81608)",
+  "grains": {
+   "value": 108,
+   "source": {
+    "url": "https://www.hornady.com/ammunition/rifle/6mm-arc-108-gr-eld-match",
+    "read": "2026-11-28",
+    "note": "Hornady's 6mm ARC 108 gr ELD Match; retailers give its item number as 81608 (https://palmettostatearmory.com/hornady-match-108-gr-eld-6mm-arc-ammunition-20-rounds-81608.html). Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "makerFps": {
+   "value": 2750,
+   "source": {
+    "url": "https://www.gaprecision.net/hornady-6mm-arc-108-eld-m.html",
+    "read": "2026-11-28",
+    "note": "Hornady's figures as retailers repeat them: 2,750 fps and 1,813 ft-lb \"at the muzzle of a 24-inch Hornady test barrel\". Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "makerBarrelIn": {
+   "value": 24,
+   "source": {
+    "url": "https://www.gaprecision.net/hornady-6mm-arc-108-eld-m.html",
+    "read": "2026-11-28",
+    "note": "the 24-inch Hornady test barrel the 2,750 fps figure is given for. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "muzzleFps": {
+   "value": 2660,
+   "estimate": "2,750 fps from Hornady's 24-inch test barrel, less 15 feet per second per inch (data/workbench.json, fpsPerInch, 6mm ARC) for the JP-15's 18-inch barrel: 2,750 - 6 x 15 = 2,660. Shooting Illustrated chronographed this load at 2,661 fps from an 18-inch AR-15 (https://www.shootingillustrated.com/articles/2020/10/8/is-hornadys-6-mm-arc-the-best-ar-15-round-ever-made, search text)"
+  },
+  "bc": {
+   "value": 0.27,
+   "source": {
+    "url": "https://www.opticsplanet.com/hornady-6mm-arc-108gr-eld-match-rifle-ammo-20-rounds.html",
+    "read": "2026-11-28",
+    "note": "\"G1 ballistic coefficient of 0.536 and a G7 ballistic coefficient of 0.27\" (retailers quoting Hornady). The maker publishes a G7 figure, so G7 is used. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "dragModel": "G7",
+  "spreadMoa": {
+   "value": 1,
+   "estimate": "a match load in a match-barreled AR-15; Hornady publishes no group size, and JP's Supermatch barrels are sold as match barrels without a group figure in the indexed text"
+  },
+  "boxCount": {
+   "value": 20,
+   "source": {
+    "url": "https://www.primaryarms.com/hornady-match-108-gr-eld-m-6mm-arc-ammunition-20-rounds",
+    "read": "2026-11-28",
+    "note": "\"20 Rounds\". Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  }
+ },
+ "hornady-6arc-105-bthp": {
+  "caliber": "6mm ARC",
+  "name": "Hornady BLACK 105 gr boat tail hollow point (#81604)",
+  "grains": {
+   "value": 105,
+   "source": {
+    "url": "https://www.hornady.com/ammunition/rifle/6mm-arc-105-gr-bthp-hornady-black",
+    "read": "2026-11-28",
+    "note": "\"6mm ARC 105 gr BTHP Hornady BLACK® Item #81604 | 20/Box\". Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "makerFps": {
+   "value": 2750,
+   "source": {
+    "url": "https://www.brownells.com/ammunition/rifle-ammunition/6mm-arc-105gr-bthp-20box",
+    "read": "2026-11-28",
+    "note": "Hornady's figures as retailers repeat them: 2,750 fps, 1,763 ft-lb, \"Test barrel: 24\"\", minimum twist 1:8 (one retailer, primaryarms.com, lists 3,100 fps, inconsistent with Hornady's and every other listing, so not used). Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "makerBarrelIn": {
+   "value": 24,
+   "source": {
+    "url": "https://www.brownells.com/ammunition/rifle-ammunition/6mm-arc-105gr-bthp-20box",
+    "read": "2026-11-28",
+    "note": "\"Test barrel: 24\"\". Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "muzzleFps": {
+   "value": 2660,
+   "estimate": "2,750 fps from Hornady's 24-inch test barrel, less 15 feet per second per inch (data/workbench.json, fpsPerInch, 6mm ARC) for the JP-15's 18-inch barrel: 2,750 - 6 x 15 = 2,660"
+  },
+  "bc": {
+   "value": 0.53,
+   "source": {
+    "url": "https://www.sportsmansguide.com/product/index/hornady-black-6mm-arc-bthp-105-grain-20-rounds?a=2233218",
+    "read": "2026-11-28",
+    "note": "\"Ballistic Coefficient .530 (G1)\"; no G7 figure for this load was found in the indexed text, so G1 is used. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "dragModel": "G1",
+  "spreadMoa": {
+   "value": 1.25,
+   "estimate": "Hornady's BLACK line is its general-purpose ammunition, with a match-type bullet; set a little wider than the ELD Match load in the same rifle. Hornady publishes no group size"
+  },
+  "boxCount": {
+   "value": 20,
+   "source": {
+    "url": "https://www.hornady.com/ammunition/rifle/6mm-arc-105-gr-bthp-hornady-black",
+    "read": "2026-11-28",
+    "note": "\"20/Box\". Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  }
+ },
+ "federal-gm308m-168": {
+  "caliber": "7.62x51",
+  "name": "Federal Gold Medal Match 168 gr Sierra MatchKing (GM308M)",
+  "grains": {
+   "value": 168,
+   "source": {
+    "url": "https://www.federalpremium.com/rifle/gold-medal/gold-medal-sierra-matchking/11-GM308M.html",
+    "read": "2026-11-28",
+    "note": "Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "makerFps": {
+   "value": 2650,
+   "source": {
+    "url": "https://www.federalpremium.com/rifle/gold-medal/gold-medal-sierra-matchking/11-GM308M.html",
+    "read": "2026-11-28",
+    "note": "Federal: 2,650 fps, 2,619 ft-lb, \"captured ... with the aid of a 24\" test barrel\" (Federal's wording as retailers repeat it). A downrange table found with it (about 2,460 / 2,277 fps at 100 / 200 yards) was labeled for another product code, so it is not used. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "makerBarrelIn": {
+   "value": 24,
+   "source": {
+    "url": "https://www.federalpremium.com/rifle/gold-medal/gold-medal-sierra-matchking/11-GM308M.html",
+    "read": "2026-11-28",
+    "note": "the 24-inch test barrel Federal names for its rifle loads. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "muzzleFps": {
+   "value": 2480,
+   "estimate": "2,650 fps from Federal's 24-inch test barrel, less 22.7 feet per second per inch (data/workbench.json, fpsPerInch, 7.62x51) for the Tavor 7's 16.5-inch barrel: 2,650 - 7.5 x 22.7 = 2,479.75, rounded to 2,480"
+  },
+  "bc": {
+   "value": 0.224,
+   "source": {
+    "url": "https://www.federalpremium.com/rifle/gold-medal/gold-medal-sierra-matchking/11-GM308M.html",
+    "read": "2026-11-28",
+    "note": "Federal lists G1 .462 and G7 .224 for this load (Federal's figures as the search answer gave them, with \"The G7 ballistic coefficient of a .30 caliber 168 grain MatchKing is 0.224\"). The maker publishes a G7 figure, so G7 is used. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "dragModel": "G7",
+  "spreadMoa": {
+   "value": 1,
+   "estimate": "the classic .308 match load; Federal publishes no group size. Set like the Federal 5.56 match load in the set"
+  },
+  "boxCount": {
+   "value": 20,
+   "source": {
+    "url": "https://www.kitterytradingpost.com/federal-premium-308-win-match-168-gr-bthp-20",
+    "read": "2026-11-28",
+    "note": "\"20\" rounds per box, as the listing's title gives it. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  }
+ },
+ "hornady-308-168-eldm": {
+  "caliber": "7.62x51",
+  "name": "Hornady Match 168 gr ELD Match (#80966)",
+  "grains": {
+   "value": 168,
+   "source": {
+    "url": "https://www.hornady.com/ammunition/rifle/308-win-168-gr-eld-match",
+    "read": "2026-11-28",
+    "note": "Hornady's 308 Win 168 gr ELD Match, item #80966. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "makerFps": {
+   "value": 2700,
+   "source": {
+    "url": "https://www.bulkammo.com/20-rounds-of-308-win-ammo-by-hornady-168gr-eld-match",
+    "read": "2026-11-28",
+    "note": "Hornady's figures as retailers repeat them: \"2,700 fps (24\" barrel)\"; also 2,700 fps and 2,719 ft-lb (https://www.sportsmansguide.com/product/index/hornady-match-308-winchester-eld-match-168-grain-20-rounds?a=3006177). Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "makerBarrelIn": {
+   "value": 24,
+   "source": {
+    "url": "https://www.bulkammo.com/20-rounds-of-308-win-ammo-by-hornady-168gr-eld-match",
+    "read": "2026-11-28",
+    "note": "\"(24\" barrel)\". Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "muzzleFps": {
+   "value": 2530,
+   "estimate": "2,700 fps from Hornady's 24-inch test barrel, less 22.7 feet per second per inch (data/workbench.json, fpsPerInch, 7.62x51) for the Tavor 7's 16.5-inch barrel: 2,700 - 7.5 x 22.7 = 2,529.75, rounded to 2,530"
+  },
+  "bc": {
+   "value": 0.263,
+   "source": {
+    "url": "https://www.sportsmansguide.com/product/index/hornady-match-308-winchester-eld-match-168-grain-20-rounds?a=3006177",
+    "read": "2026-11-28",
+    "note": "Hornady: G1 .523, G7 .263 (also https://globalordnance.com/hornady-match-308-win-168-grain-eld-match-20-round-box-80966-upc-090255809664). The maker publishes a G7 figure, so G7 is used. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "dragModel": "G7",
+  "spreadMoa": {
+   "value": 1,
+   "estimate": "a match load; Hornady publishes no group size. Set like the Federal match load beside it"
+  },
+  "boxCount": {
+   "value": 20,
+   "source": {
+    "url": "https://globalordnance.com/hornady-match-308-win-168-grain-eld-match-20-round-box-80966-upc-090255809664",
+    "read": "2026-11-28",
+    "note": "\"20 Round Box\". Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  }
  }
 }
