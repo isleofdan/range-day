@@ -327,13 +327,20 @@ test('on a wide screen the Steady and Fire bar stands beside the view and covers
   await context.close();
 });
 
-test('verify 11: home at 412x915, each of the seven rifles chosen in turn: both doors and the zero line are inside the screen without scrolling', { skip }, async () => {
+test('verify 11: home at 412x915, each of the seven rifles chosen in turn: both doors and the zero line are inside the screen without scrolling (range-day-nineteen: and each of the four under "More rifles", reached by its card and back)', { skip }, async () => {
   const { page, context, errors } = await signedIn({ width: 412, height: 915 });
   await page.goto(`${base}/`); await page.waitForSelector('.rifle');
-  const rifles = await page.$$eval('.rifle', (els) => els.map((e) => e.dataset.rifle));
+  const rifles = await page.$$eval('.rifle[data-rifle]', (els) => els.map((e) => e.dataset.rifle));
   assert.equal(rifles.length, 7);
+  assert.equal(await page.textContent('.rifle.turn .rname'), 'More rifles ›');
+  await page.click('.rifle.turn'); await page.waitForSelector('.rifles-head');
+  assert.equal(await page.textContent('.rifles-head'), 'More rifles');
+  const more = await page.$$eval('.rifle[data-rifle]', (els) => els.map((e) => e.dataset.rifle));
+  assert.deepEqual(more, ['tikka-t3x-ctr', 'jp-15-6arc', 'iwi-tavor-7', 'vudoo-v22-ravage']);
+  await page.click('.rifle.turn'); await page.waitForSelector('.rifle[data-rifle="bcm-ar15"]');
   const lines = [];
-  for (const id of rifles) {
+  for (const id of [...rifles, ...more]) {
+    if (more.includes(id) && !(await page.$(`.rifle[data-rifle="${id}"]`))) await page.click('.rifle.turn');
     await page.click(`.rifle[data-rifle="${id}"]`);
     await page.waitForSelector(`.rifle.picked[data-rifle="${id}"]`);
     const r = await page.evaluate(() => {

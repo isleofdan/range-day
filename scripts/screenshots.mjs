@@ -363,6 +363,16 @@ SCREENS.push(
   { name: 'workbench-22', small: true, path: '/', expect: 'Primary Arms CLx', act: async (page) => { await noBuilds(page); await page.goto(`${base}/workbench?rifle=remington-22`); await page.waitForSelector('#changes table'); } },
 );
 
+// range-day-nineteen: the expansion's four rifles: home with "More rifles" open, the Tikka picked (its sight choice the scope
+// collection, the Leupold first picked), the line through the Leupold on the Tikka at 10x, and the workbench with the Tikka.
+const TIKKA = 'course=cta-piru&rifle=tikka-t3x-ctr&sight=leupold-mark5hd-5-25&load=hornady-65cm-140-eldm';
+SCREENS.push(
+  { name: 'home-more-rifles', small: true, path: '/', expect: 'More rifles', act: async (page) => { await page.waitForSelector('.rifle.turn'); await page.click('.rifle.turn'); await page.waitForSelector('.rifles-head'); await settle(page, 200); } },
+  { name: 'home-tikka-sight', small: true, path: '/?rifle=tikka-t3x-ctr', expect: 'Leupold Mark 5HD', act: async (page) => { await page.waitForSelector('.rifle.picked[data-rifle="tikka-t3x-ctr"]'); await settle(page, 200); } },
+  { name: 'line-tikka-scope', small: true, path: `/line?${TIKKA}`, expect: 'Zoom', act: async (page) => { await fresh(page, 'tikka-t3x-ctr', 'leupold-mark5hd-5-25'); await page.reload(); await ready(page); await page.selectOption('#plate', await nearestSteel(page)); await page.evaluate(() => RangeDayLine.setZoom(10)); await settle(page, 500); } },
+  { name: 'workbench-tikka', small: true, path: '/', expect: 'Tikka T3x CTR', act: async (page) => { await noBuilds(page); await page.goto(`${base}/workbench?rifle=tikka-t3x-ctr`); await page.waitForSelector('#changes table'); } },
+);
+
 const GREP = arg('--grep', null) ? new RegExp(arg('--grep')) : null; // --grep <pattern>: only the states whose names match (for a before-and-after pair by hand; the check runs every state)
 const SHARD = SCREENS.filter((_, i) => i % shardOf === shardIx - 1).filter((s) => !GREP || GREP.test(s.name));
 if (process.argv.includes('--list')) { for (const s of SHARD) console.log(s.name); process.exit(0); }

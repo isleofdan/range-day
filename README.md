@@ -110,6 +110,19 @@ clicks, then works out the drop and the wind for each distance himself.
   (the rings' maker's figure, half the 30 mm tube, and an estimate for
   the receiver), and starts unzeroed. It is the .22's own scope, not one
   of the collection, so the workbench offers no mount for it.
+- **More rifles** (range-day-nineteen): the game's expansion, rifles
+  beyond the first seven, each marked `expansion` in `data/rifles.json`
+  and listed on home under the heading "More rifles" (the card after the
+  first seven swaps the list in the same place; the last card goes back,
+  and the list a picked rifle is in is the one shown). The first four:
+  the Tikka T3x CTR in 6.5 Creedmoor (24 in), JP Enterprises' JP-15 in
+  6mm ARC (18 in), the IWI Tavor 7 in 7.62x51 (16.5 in) and the Vudoo
+  V-22 Ravage in .22 LR (16.5 in), with Hornady's and Federal's match
+  loads for the three new calibers. None is sold with sights of its own,
+  so each aims through the scope collection and opens on one (the
+  Leupold, or the Vortex on the Tavor 7); unlike the set's Remington .22,
+  the Vudoo's Picatinny base takes every collection mount. Their gun
+  records say they are no one's (`docs/RECORDS.md`).
 - **The scope collection** (range-day-thirteen): three scopes that move
   among the rifles, each from its maker's figures in `data/sights.json`:
   the Trijicon ACOG 4x32 TA31F on its TA51 mount (fixed 4 power, half an

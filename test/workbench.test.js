@@ -62,8 +62,10 @@ test('range-day-seventeen verify 2: nothing moved for the rifles as fitted: each
   const d = B.withBuilds(served(), []);
   const conditions = { altitudeFt: 1500, tempF: 59, pressureInHg: 28.4, humidity: 0.4 };
   const lines = [];
-  assert.deepEqual(Object.keys(MAIN.strikes).sort(), RIFLES.slice().sort());
-  for (const id of RIFLES) {
+  // range-day-nineteen: the rifles main had are all still here; the expansion's are new and have no strikes on main to keep
+  for (const id of Object.keys(MAIN.strikes)) assert.ok(RIFLES.includes(id), `${id} is still in the set`);
+  assert.deepEqual(RIFLES.filter((id) => !(id in MAIN.strikes)).filter((id) => !flat.rifles[id].expansion), [], 'every rifle not on main is an expansion rifle');
+  for (const id of Object.keys(MAIN.strikes)) {
     const rifle = d.rifles[id];
     const [sightId, loadId] = MAIN.sightLoad[id];
     assert.deepEqual([rifle.defaultSight, rifle.loads[0]], [sightId, loadId], `${id}: the same default sight and first load as main`);

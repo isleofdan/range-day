@@ -413,7 +413,7 @@ The game takes each rifle from a gun record, one record per gun
 | `gameId` | the rifle's id in `data/rifles.json`; the game keys the rifle by it (saved zeroes, shot logs and days are keyed by it), never by the record's own `id`, which the Spine derives from the record's type and name; required when there is a `game` section |
 | `kind` | `rifle` or `pistol` |
 | `caliber` | a string, or `null` when Dan has not said; with a `game` section, the same as the section's `caliber` |
-| `whose` | `"Dan's"` |
+| `whose` | `"Dan's"`; for an expansion rifle (range-day-nineteen, `game.expansion`), `"no one's: one of the game's expansion rifles"` |
 | `game` | optional: the game's figures for the gun |
 | `notes` | optional: words |
 
@@ -432,11 +432,12 @@ and never written anywhere. `game` is, field for field, one entry of
 | `sightHeightIn` | an object, sight id to figure, one for every sight it carries |
 | `boreOffsetMoa` | `{ up, right }`, two figures: the rifle's own offset with the sight at its middle |
 | `recoilFactor` | a figure: how hard the view is knocked, 1 being a 5.56 carbine |
-| `sights` | a list of sight ids from `data/sights.json` |
-| `defaultSight` | one of its sights: the one an address without a sight opens |
+| `sights` | a list of sight ids from `data/sights.json`; empty (range-day-nineteen) for a rifle sold with no sights of its own, which then needs a Picatinny `scopeMount` and aims through the scope collection |
+| `defaultSight` | one of its sights, or a collection scope it carries: the one an address without a sight opens |
 | `loads` | a list of load ids from `data/loads.json` |
 | `firstCourse` | a course id from `data/courses.json`: the course the rifle opens on the first time on a device |
 | `sightLeaf` | optional: an object, sight id to the name of a leaf table on that sight (for example `{ "ak-irons": "leaf545" }`, the 5.45 rifle's until range-day-twelve, whose two sights now carry that leaf as their own); a sight not named uses its own `leaf` |
+| `expansion` | optional (range-day-nineteen): `true` for the game's expansion rifles, which home lists under "More rifles" and whose gun record's `whose` says they are no one's |
 | `scopeMount` | optional (range-day-thirteen): `{ rail, words, railHeightOverBoreIn }`, how a scope is mounted; range-day-eighteen adds `ownScope`, the rifle's own scope that is not one of the collection (the .22's Primary Arms CLx): `{ sight, rings, ringsSaddleOverDovetailIn, receiverTopOverBoreIn }`, the two heights figures; the scope's `sightHeightIn` is the saddle plus half its tube plus the receiver top |
 
 A figure is `{ "value": <number>, "source": { "url": "...", "read": "YYYY-MM-DD" } }`
@@ -468,7 +469,7 @@ no playable gun.
 
 `fromFiles(raw)` wraps each `data/rifles.json` entry as a record
 (`toRecord(id, entry)`, which writes `gameId: id`, `kind: "rifle"`, the
-entry's `caliber`, `whose: "Dan's"` and the entry less its name as `game`) and passes it through `fromRecords`, so the one
+entry's `caliber`, `whose: "Dan's"` (an expansion rifle's: `"no one's: one of the game's expansion rifles"`) and the entry less its name as `game`) and passes it through `fromRecords`, so the one
 path is always the path. `load(raw)` is what the server calls: with the
 environment variable `GUN_RECORDS_FILE` naming a JSON file (a list of
 records, or `{ "records": [...] }`), the set comes from that file; without

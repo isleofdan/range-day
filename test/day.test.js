@@ -477,7 +477,14 @@ test('verify 13: the phone: home with no day open shows the picks, When and both
   const inside = async (sels) => page.evaluate((ss) => { const h = window.innerHeight, w = window.innerWidth; return { scrollY: window.scrollY, boxes: ss.map((s) => { const b = document.querySelector(s).getBoundingClientRect(); return { sel: s, top: b.top, bottom: b.bottom, ok: b.top >= 0 && b.bottom <= h && b.left >= 0 && b.right <= w }; }) }; }, sels);
   await page.goto(`${base}/`); await page.waitForSelector('.rifle');
   const lines = [];
-  for (const id of await page.$$eval('.rifle', (els) => els.map((e) => e.dataset.rifle))) {
+  // range-day-nineteen: the first seven, then the four under "More rifles", reached by the swap card (a .rifle with no data-rifle)
+  const first = await page.$$eval('.rifle[data-rifle]', (els) => els.map((e) => e.dataset.rifle));
+  await page.click('.rifle.turn'); await page.waitForSelector('.rifles-head');
+  const more = await page.$$eval('.rifle[data-rifle]', (els) => els.map((e) => e.dataset.rifle));
+  await page.click('.rifle.turn'); await page.waitForSelector('.rifle[data-rifle="bcm-ar15"]');
+  assert.equal(first.length + more.length, Object.keys(flat.rifles).filter((k) => !k.startsWith('_')).length, 'every rifle is on home');
+  for (const id of [...first, ...more]) {
+    if (!(await page.$(`.rifle[data-rifle="${id}"]`))) await page.click('.rifle.turn');
     await page.click(`.rifle[data-rifle="${id}"]`); await page.waitForSelector(`.rifle.picked[data-rifle="${id}"]`);
     const r = await inside(['#sight', '#load', '#course', '#time', '#month', '#zero', '#go-zero', '#go-line']);
     assert.equal(r.scrollY, 0);
@@ -485,7 +492,8 @@ test('verify 13: the phone: home with no day open shows the picks, When and both
     lines.push(`${id}: When bottom ${r.boxes[4].bottom.toFixed(0)}, zero line bottom ${r.boxes[5].bottom.toFixed(0)}, doors bottom ${r.boxes[7].bottom.toFixed(0)} of 915`);
     assert.match(await page.getAttribute('#go-book', 'href'), new RegExp(`rifle=${id}&`), 'the book link follows the rifle picked');
   }
-  // The book link follows the sight and the load too.
+  // The book link follows the sight and the load too (back to the first seven, where the loop left "More rifles" open).
+  if (!(await page.$('.rifle[data-rifle="iwi-tavor-sar"]'))) await page.click('.rifle.turn');
   await page.click('.rifle[data-rifle="iwi-tavor-sar"]'); await page.waitForSelector('.rifle.picked[data-rifle="iwi-tavor-sar"]');
   await page.selectOption('#sight', 'pa-md25'); await page.selectOption('#load', 'federal-gmm-69');
   assert.match(await page.getAttribute('#go-book', 'href'), /rifle=iwi-tavor-sar&sight=pa-md25&load=federal-gmm-69/);
@@ -523,7 +531,8 @@ test('verify 4 (browser): with GUN_RECORDS_FILE naming a file with an eighth gun
     await up(b);
     const { page, context, errors } = await signedIn(null, b);
     await page.goto(`${b}/`); await page.waitForSelector('.rifle');
-    assert.equal(await page.$$eval('.rifle', (e) => e.length), 8);
+    // range-day-nineteen: the file's first seven and the record's eighth on home's first list; the expansion's behind "More rifles"
+    assert.equal(await page.$$eval('.rifle[data-rifle]', (e) => e.length), records.filter((r) => !r.fields.game.expansion).length);
     assert.equal(await page.textContent('.rifle[data-rifle="test-carbine"] .rname'), 'Test carbine, 5.56');
     await page.click('.rifle[data-rifle="test-carbine"]'); await page.waitForSelector('.rifle.picked[data-rifle="test-carbine"]');
     assert.equal(await page.inputValue('#course'), 'cta-piru', 'its first course from the record');

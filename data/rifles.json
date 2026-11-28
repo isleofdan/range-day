@@ -420,5 +420,184 @@
     }
    }
   }
+ },
+ "tikka-t3x-ctr": {
+  "name": "Tikka T3x CTR, 6.5 Creedmoor",
+  "caliber": "6.5 Creedmoor",
+  "playable": true,
+  "expansion": true,
+  "barrelIn": {
+   "value": 24,
+   "source": {
+    "url": "https://www.kygunco.com/product/tikka-jrtxc382cas-t3x-ctr-compact-tactical-tb-ss-6.5-crdmr-24-101",
+    "read": "2026-11-28",
+    "note": "Tikka sells the T3x CTR in 6.5 Creedmoor with a 20 or a 24 in barrel, 1:8 twist, threaded 5/8x24 (JRTXC382CAS, 24 in; JRTXC382, 20 in: https://www.kygunco.com/product/tikka-jrtxc382-t3x-ctr-compact-tactical-tb-6.5-creedmoor-20-101; https://www.rifleconfigurator.com/catalog/platforms/tikka-t3x-ctr \"20 or 24 inch\"). Tikka's own page could not be read (no tikka.com page came up in the indexed text), so which length it leads with is unknown; 24 in is used because it is the test barrel of both 6.5 Creedmoor loads in this set, so their speeds need no adjustment. Gun Tests measured a 24.0 in barrel, 1:8, 44.0 in overall (https://www.gun-tests.com/rifles/tikka-t3x-ctr-jrtxc382cas-6-5-creedmoor/). Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "sightHeightIn": {},
+  "boreOffsetMoa": {
+   "up": {
+    "value": -2.6,
+    "estimate": "a scope set to its mechanical middle is a few minutes off on most rifles; the figure is chosen so the rifle needs zeroing, not measured"
+   },
+   "right": {
+    "value": -1.4,
+    "estimate": "same basis: the same basis as the figure next to it in this entry"
+   }
+  },
+  "recoilFactor": {
+   "value": 1.6,
+   "estimate": "a 6.5 Creedmoor bolt rifle of about 8 lb kicks harder than a 7.62x39 rifle (1.4 in this set) and less than the Vepr's 7.62x54R (2.2)"
+  },
+  "sights": [],
+  "defaultSight": "leupold-mark5hd-5-25",
+  "loads": [
+   "hornady-65cm-140-eldm",
+   "hornady-65cm-147-eldm"
+  ],
+  "firstCourse": "cta-piru",
+  "scopeMount": {
+   "rail": "picatinny",
+   "words": "the Picatinny rail Tikka fits to the CTR's receiver at the factory (\"factory-fitted picatinny rail\", https://www.thecountryman.com/tikka-t3x-ctr-blued-6-5mm-24, search text). The rifle comes with no iron sights, so it aims through the scope collection and opens with the Leupold Mark 5HD",
+   "railHeightOverBoreIn": {
+    "value": 0.55,
+    "estimate": "Tikka publishes no rail height. A T3x owner measured the top of the factory-style rail \"about 0.55 in above center of bore\" (https://rokslide.com/forums/threads/height-over-bore-tikka-t3x.364494, search text); another puts a scope's center 1.65 in over the bore in low rings, which fits the same band (same thread)"
+   }
+  }
+ },
+ "jp-15-6arc": {
+  "name": "JP Enterprises JP-15, 6mm ARC",
+  "caliber": "6mm ARC",
+  "playable": true,
+  "expansion": true,
+  "barrelIn": {
+   "value": 18,
+   "source": {
+    "url": "https://battlehawkarmory.com/product/jp-enterprises-jp-15-6mm-arc-101rd-18-supermatch-barrel-black-gold-rifle",
+    "read": "2026-11-28",
+    "note": "JP Enterprises JP-15 in 6mm ARC: \"18\" Supermatch\" cut-rifled barrel, 1:7.5 twist, 10+1 rounds (also https://battlehawkarmory.com/product/jp-enterprises-jp-15-18-6mm-arc-multicam-brown-rifle, 18 in). The brief named JP's SCR-11; no SCR-11 in 6mm ARC was found (the SCR-11 is listed in 5.56, .223 Wylde, .224 Valkyrie, 6.5 Grendel, .300 Blackout and .22 LR), so JP's 6mm ARC rifle, the JP-15, is used. No other JP-15 6mm ARC barrel length was found. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "sightHeightIn": {},
+  "boreOffsetMoa": {
+   "up": {
+    "value": -2.1,
+    "estimate": "a scope set to its mechanical middle is a few minutes off on most rifles; the figure is chosen so the rifle needs zeroing, not measured"
+   },
+   "right": {
+    "value": 1.9,
+    "estimate": "same basis: the same basis as the figure next to it in this entry"
+   }
+  },
+  "recoilFactor": {
+   "value": 1.1,
+   "estimate": "a 6mm ARC AR-15 kicks a little more than a 5.56 carbine (1, the reference) and less than a 7.62x39 rifle (1.4)"
+  },
+  "sights": [],
+  "defaultSight": "leupold-mark5hd-5-25",
+  "loads": [
+   "hornady-6arc-108-eldm",
+   "hornady-6arc-105-bthp"
+  ],
+  "firstCourse": "cta-piru",
+  "scopeMount": {
+   "rail": "picatinny",
+   "words": "the flat-top upper's own Picatinny rail. JP sells the rifle with no iron sights in the listings found, so it aims through the scope collection and opens with the Leupold Mark 5HD",
+   "railHeightOverBoreIn": {
+    "value": 1.21,
+    "source": {
+     "url": "https://en.wikipedia.org/wiki/Bore_axis",
+     "read": "2026-11-28",
+     "note": "\"1.211 inches\" from the bore's center to the top of an AR-type (mil-spec) rail, the figure the BCM's entry already uses; the JP-15 is an AR-15. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+    }
+   }
+  }
+ },
+ "iwi-tavor-7": {
+  "name": "IWI Tavor 7, 7.62x51",
+  "caliber": "7.62x51",
+  "playable": true,
+  "expansion": true,
+  "barrelIn": {
+   "value": 16.5,
+   "source": {
+    "url": "https://www.americanrifleman.org/content/review-iwi-tavor-7-bullpup/",
+    "read": "2026-11-28",
+    "note": "American Rifleman: a 16.5 in chrome-lined, cold-hammer-forged barrel, about 26.75 in overall; \"A 20\" barrel conversion kit is available from IWI\". IWI sells the rifle with the 16.5 in barrel and the 20 in as a kit (and in a 20 in model listed by retailers, https://www.sportsmans.com/shooting-gear-gun-supplies/modern-sporting-rifles/iwi-tavor-762mm-nato-20in-black-semi-automatic-modern-sporting-rifle-201-rounds/p/1783171), so 16.5 in, the rifle as IWI leads with it, is used. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "sightHeightIn": {},
+  "boreOffsetMoa": {
+   "up": {
+    "value": -3.4,
+    "estimate": "a scope set to its mechanical middle is a few minutes off on most rifles; the figure is chosen so the rifle needs zeroing, not measured"
+   },
+   "right": {
+    "value": -2.2,
+    "estimate": "same basis: the same basis as the figure next to it in this entry"
+   }
+  },
+  "recoilFactor": {
+   "value": 1.9,
+   "estimate": "a .308 semi-automatic bullpup of about 9 lb: harder than a 7.62x39 rifle (1.4), a little softer than the Vepr's 7.62x54R (2.2), the gas action taking some of the jolt"
+  },
+  "sights": [],
+  "defaultSight": "vortex-razor-1-10",
+  "loads": [
+   "federal-gm308m-168",
+   "hornady-308-168-eldm"
+  ],
+  "firstCourse": "cta-piru",
+  "scopeMount": {
+   "rail": "picatinny",
+   "words": "the receiver's full-length top Picatinny rail. \"Unlike the X95, the Tavor 7 does not come equipped with iron sights. Instead, it has a 14.75\" section of ... M1913 Picatinny rail for mounting iron sights or optics\" (https://www.americanrifleman.org/content/review-iwi-tavor-7-bullpup/, search text), so it aims through the scope collection and opens with the Vortex Razor 1-10",
+   "railHeightOverBoreIn": {
+    "value": 2.25,
+    "estimate": "IWI publishes no rail height for the Tavor 7. A bullpup's rail stands high over its bore: on the Tavor SAR an owner measured a scope 3.75 in over the bore in an AR-height (about 1.5 in) mount, putting that rail about 2.25 in over the bore (https://www.ar15.com/forums/armory/Tavor_sight_height_over_bore_/43-412550/, the basis of the Tavor SAR's and X95's entries in this file), and Manticore sells a riser that lifts the Tavor 7's factory rail about 1/2 in (https://www.opticsplanet.com/manticore-arms-tavor-7-overatch-full-length-top-rail.html, search text), as it sells one for the SAR. The SAR's 2.25 in is used"
+   }
+  }
+ },
+ "vudoo-v22-ravage": {
+  "name": "Vudoo V-22 Ravage, .22 LR",
+  "caliber": ".22 LR",
+  "playable": true,
+  "expansion": true,
+  "barrelIn": {
+   "value": 16.5,
+   "source": {
+    "url": "https://www.vudoogunworks.com/shop/firearms/rimfire-rifles/ravage",
+    "read": "2026-11-28",
+    "note": "Vudoo's Ravage page: a Three 60 or V-22 action; barrels of 16.5, 18, 20 or 22 in, Kukri or MTU-V contour, 416R stainless, single-point cut; scope base of 0, 20, 30, 40 or 60 MOA; Timney 510v2 trigger; 10-round V-2210 magazine; about 10 lb. The page lists 16.5 in first, so 16.5 in is used. The set's .22 load's speed is not given for a barrel length (data/loads.json, cci-sv-40), and .22 LR gains nothing between about 16 and 27 in (data/workbench.json, fpsPerInch), so the length does not change its speed. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "sightHeightIn": {},
+  "boreOffsetMoa": {
+   "up": {
+    "value": -1.8,
+    "estimate": "a scope set to its mechanical middle is a few minutes off on most rifles; the figure is chosen so the rifle needs zeroing, not measured"
+   },
+   "right": {
+    "value": 1.2,
+    "estimate": "same basis: the same basis as the figure next to it in this entry"
+   }
+  },
+  "recoilFactor": {
+   "value": 0.1,
+   "estimate": "a .22 barely moves the view, as on the set's other .22"
+  },
+  "sights": [],
+  "defaultSight": "leupold-mark5hd-5-25",
+  "loads": [
+   "cci-sv-40"
+  ],
+  "firstCourse": "angeles-sylmar",
+  "scopeMount": {
+   "rail": "picatinny",
+   "words": "Vudoo's Picatinny scope base on the receiver (the 0 MOA base of the page's choices; Vudoo's repeater bases are sold as \"~5.75\" of Picatinny rail\", https://www.midwestgunworks.com/page/mgwi/prod/vudoo-sb-rh, search text). Unlike the set's Remington .22, whose grooved receiver takes none of the collection's mounts, it takes them all. It comes with no iron sights, so it aims through the scope collection and opens with the Leupold Mark 5HD",
+   "railHeightOverBoreIn": {
+    "value": 1,
+    "estimate": "Vudoo publishes no rail height. The V-22 is a rimfire action true to the Remington 700's scale and footprint (\"fits Remington 700 footprints\", https://bulletin.accurateshooter.com/?p=68601, search text); a Remington 700 receiver is about 1.35 in across with the bore on its axis, so its top stands about 0.68 in over the bore, and a Picatinny base adds about 0.3 in: about 1 in"
+   }
+  }
  }
 }
