@@ -211,7 +211,7 @@ test('range-day-eighteen verify 7: no drop is given: at the bench and on the lin
   await context.close();
 });
 
-test('range-day-eighteen step 5: the workbench\'s closed mount pickers show the height and a name that tells the choices apart, wholly, at 412 and 378 wide; home with a build picked keeps Zero bench and Firing line wholly on a 412x915 screen with room under them', { skip }, async () => {
+test('range-day-eighteen step 5: the workbench\'s closed mount pickers show the height and a name that tells the choices apart, wholly, at 412 and 378 wide; home with a build picked keeps Zero bench and Firing line wholly on a 412x915 screen with room under them (measured on the Checks machine, whose font is wider than a phone's)', { skip }, async () => {
   for (const vp of [{ width: 412, height: 915 }, { width: 378, height: 762 }]) {
     const { page, context, errors } = await signedIn(vp);
     await page.goto(`${base}/workbench?rifle=bcm-ar15`); await page.waitForSelector('#changes table'); await page.click('#mounts summary');

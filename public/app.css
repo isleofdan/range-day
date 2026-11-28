@@ -128,7 +128,8 @@ main.home:has(.builds-of:not(:empty)) .rifles { gap: 4px; }
 main.home:has(.builds-of:not(:empty)) .rifle { padding: 3px 10px; }
 main.home:has(.builds-of:not(:empty)) .builds-of { margin-bottom: 2px; }
 main.home:has(.builds-of:not(:empty)) .picks .field label { margin: 4px 0 2px; }
-main.home:has(.builds-of:not(:empty)) .zero-line { margin: 8px 0 6px; padding: 6px 12px; }
+main.home:has(.builds-of:not(:empty)) .rifle .rname { font-size: 14px; line-height: 1.2; }
+main.home:has(.builds-of:not(:empty)) .zero-line { margin: 8px 0 6px; padding: 6px 12px; font-size: 15px; line-height: 1.35; }
 select, input[type=range] { width: 100%; font-size: 17px; padding: 12px 10px; border-radius: 10px; border: 1px solid var(--line); background: var(--card); color: var(--fg); }
 input[type=range] { padding: 0; height: 44px; }
 .row { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }
