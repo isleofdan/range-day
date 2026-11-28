@@ -37,8 +37,15 @@ test('range-day-eighteen steps 1 to 3: the CLx\'s figures are the maker\'s, each
   assert.equal(S.tubeMm, 30);
   for (const k of ['clickMoa', 'windageClickMoa', 'clicks', 'tubeMm']) assert.match(r[k].source.url, /primaryarms\.com/, `${k} is the maker's figure`);
   for (const end of ['low', 'high']) { assert.ok(r.zoom[end].source.url); assert.ok(r.fovFtAt100[end].source.url); }
-  assert.equal(S.reticle.focalPlane, 'second'); assert.equal(S.reticle.trueAtPower, 6); assert.equal(S.reticle.centerDotMoa, 2);
-  assert.match(S.reticle.marksNotDrawn, /posts/);
+  assert.equal(S.reticle.kind, 'ladder'); assert.equal(S.reticle.focalPlane, 'second'); assert.equal(S.reticle.trueAtPower, 6);
+  // the reticle from the maker's drawing: five stadia going down, each narrower than the one above, its wind dots further out; the
+  // 125- and 175-yard stadia are 4.3 in at their distance (the manual's clay pigeon), the scale every other mark was read at
+  const st = S.reticle.stadia;
+  assert.deepEqual(st.map((x) => x.makerLabel), ['100 y', '125 y', '150 y', '175 y', '200 y']);
+  for (let i = 1; i < st.length; i++) { assert.ok(st[i].belowMoa > st[i - 1].belowMoa && st[i].widthMoa < st[i - 1].widthMoa && st[i].windDotOutMoa > st[i - 1].windDotOutMoa, `stadia ${i}`); }
+  for (const [i, yd] of [[1, 125], [3, 175]]) assert.ok(Math.abs(st[i].widthMoa - 4.3 / (E.inchesPerMoa(yd))) < 0.002, `the ${yd}-yard stadia is 4.3 in at ${yd} yards`);
+  assert.deepEqual(st.map((x) => x.barbell), [true, false, true, false, true]);
+  for (const k of ['centerDotMoa', 'lineMoa', 'postFromMoa', 'stemTopMoa', 'lowerPostTipMoa', 'trueAtPower']) assert.match(r.reticle[k].source.url, /primaryarmsoptics\.com/, `${k} is from the maker's reticle manual`);
   assert.ok(!r.collection, 'not one of the scope collection');
   // the height: the sourced saddle, half the maker's tube, the estimated receiver top
   const own = raw.rifles[RIFLE].scopeMount.ownScope;
@@ -142,7 +149,7 @@ test('range-day-eighteen verify 4: a click is the maker\'s click: 8 clicks up an
   await context.close();
 });
 
-test('range-day-eighteen verify 5: the glass is the maker\'s glass: the drawn view at 1x and 6x is the maker\'s field of view; the 2 MOA dot is 2 MOA at 6x and six times that at 1x (second focal plane)', { skip }, async () => {
+test('range-day-eighteen verify 5: the glass is the maker\'s glass: the drawn view at 1x and 6x is the maker\'s field of view; the reticle is the maker\'s at 6x and six times its angles at 1x (second focal plane): the center dot, and the stadia read off the canvas at 6x', { skip }, async () => {
   const { page, context, errors } = await signedIn();
   await line(page);
   const lines = [];
@@ -153,11 +160,20 @@ test('range-day-eighteen verify 5: the glass is the maker\'s glass: the drawn vi
     lines.push(`at ${m}x: view ${fov.toFixed(3)} MOA across, the maker's ${S.fovFtAt100[end]} ft at 100 yards is ${want.toFixed(3)} MOA`);
     assert.ok(Math.abs(fov - want) < 1e-9, lines[lines.length - 1]);
     const g = await page.evaluate(() => RangeDayLine.geometry);
-    assert.equal(g.crosshair, true);
+    assert.equal(g.reticleKind, 'ladder'); assert.equal(g.sfpScale, S.reticle.trueAtPower / m);
     const dotMoa = g.centerDotPx / g.pxPerMoa;
     assert.ok(Math.abs(dotMoa - (S.reticle.centerDotMoa * S.reticle.trueAtPower) / m) < 1e-9, `the dot at ${m}x covers ${dotMoa} MOA`);
     lines.push(`  the dot covers ${dotMoa.toFixed(2)} MOA (${g.centerDotPx.toFixed(2)} px)`);
   }
+  // at 6x, the stadia read off the reticle drawn alone: each dark row at its depth, as wide as its figure (within 1.5 px)
+  await page.evaluate(() => RangeDayLine.setZoom(6));
+  const probe = await page.evaluate((stadia) => {
+    const c = RangeDayLine.reticleAlone(), g = c.getContext('2d'), k = RangeDayLine.geometry.pxPerMoa, n = c.width, mid = n / 2, px = g.getImageData(0, 0, n, n).data;
+    const dark = (x, y) => { const i = (Math.round(y) * n + Math.round(x)) * 4; return px[i] < 128; };
+    return stadia.map((s) => { const y = mid + s.belowMoa * k; let best = 0; for (const dy of [-1, 0, 1]) { let a = mid, b = mid; while (dark(a - 1, y + dy)) a--; while (dark(b + 1, y + dy)) b++; best = Math.max(best, b - a + 1); } return { want: s.widthMoa * k, got: best }; });
+  }, S.reticle.stadia);
+  for (const [i, p] of probe.entries()) assert.ok(Math.abs(p.got - p.want) <= 1.5, `${S.reticle.stadia[i].makerLabel}: drawn ${p.got} px, the figure ${p.want.toFixed(1)} px`);
+  lines.push(`at 6x the stadia drawn ${probe.map((p) => `${p.got} px (figure ${p.want.toFixed(1)})`).join(', ')}`);
   console.log('  ' + lines.join('\n  '));
   assert.deepEqual(errors, []);
   await context.close();
@@ -194,7 +210,7 @@ test('range-day-eighteen verify 6: old records are untouched: with a zero, a sig
   await context.close();
 });
 
-test('range-day-eighteen verify 7: no drop is given: at the bench and on the line with the scope and no shots fired, no distance or come-up worked out from a flight appears; the reticle carries no figure', { skip }, async () => {
+test('range-day-eighteen verify 7: no drop is given: at the bench and on the line with the scope and no shots fired, no distance or come-up worked out from a flight appears; the reticle\'s holds stand as the maker\'s angles with no figure written on the glass', { skip }, async () => {
   const { page, context, errors } = await signedIn();
   const FLIGHT = /\b(drop|come-?up|holdover|hold over|point of impact|will land|lands? at|should hit)\b/i;
   await bench(page);
@@ -205,7 +221,7 @@ test('range-day-eighteen verify 7: no drop is given: at the bench and on the lin
     const text = (await page.textContent('main')).replace(/Show the conditions \([^)]*\)/, ''); // the setting's own label names what it shows
     assert.doesNotMatch(text, FLIGHT, `the line at ${z}x`);
     const g = await page.evaluate(() => RangeDayLine.geometry);
-    assert.equal(g.marksPx, null, 'no hold marks on the reticle'); assert.equal(g.reticleKind, 'crosshair');
+    assert.equal(g.reticleTexts, 0, 'no figure or word is written on the glass'); assert.equal(g.reticleKind, 'ladder');
   }
   assert.deepEqual(errors, []);
   await context.close();
