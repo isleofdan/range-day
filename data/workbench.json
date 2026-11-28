@@ -227,6 +227,24 @@
           "note": "JP-15, 6mm ARC, 18 in Supermatch barrel; the only length found for JP's 6mm ARC rifle. The rifle's own length (data/rifles.json, jp-15-6arc). Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
         }
       }
+    ],
+    "iwi-tavor-7": [
+      {
+        "value": 16.5,
+        "source": {
+          "url": "https://www.americanrifleman.org/content/review-iwi-tavor-7-bullpup/",
+          "read": "2026-11-28",
+          "note": "16.5 in, the rifle as sold. The rifle's own length (data/rifles.json, iwi-tavor-7). Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+        }
+      },
+      {
+        "value": 20,
+        "source": {
+          "url": "https://www.americanrifleman.org/content/review-iwi-tavor-7-bullpup/",
+          "read": "2026-11-28",
+          "note": "\"A 20\" barrel conversion kit is available from IWI for $529\"; retailers also list a 20 in Tavor 7 (https://blackstoneshooting.com/iwi-tavor-7-7-62x51mm-nato-20-barrel-10-1-rds-flat-dark-earth). Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+        }
+      }
     ]
   },
   "mounts": {

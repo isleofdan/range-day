@@ -512,5 +512,49 @@
     }
    }
   }
+ },
+ "iwi-tavor-7": {
+  "name": "IWI Tavor 7, 7.62x51",
+  "caliber": "7.62x51",
+  "playable": true,
+  "expansion": true,
+  "barrelIn": {
+   "value": 16.5,
+   "source": {
+    "url": "https://www.americanrifleman.org/content/review-iwi-tavor-7-bullpup/",
+    "read": "2026-11-28",
+    "note": "American Rifleman: a 16.5 in chrome-lined, cold-hammer-forged barrel, about 26.75 in overall; \"A 20\" barrel conversion kit is available from IWI\". IWI sells the rifle with the 16.5 in barrel and the 20 in as a kit (and in a 20 in model listed by retailers, https://www.sportsmans.com/shooting-gear-gun-supplies/modern-sporting-rifles/iwi-tavor-762mm-nato-20in-black-semi-automatic-modern-sporting-rifle-201-rounds/p/1783171), so 16.5 in, the rifle as IWI leads with it, is used. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "sightHeightIn": {},
+  "boreOffsetMoa": {
+   "up": {
+    "value": -3.4,
+    "estimate": "a scope set to its mechanical middle is a few minutes off on most rifles; the figure is chosen so the rifle needs zeroing, not measured"
+   },
+   "right": {
+    "value": -2.2,
+    "estimate": "same basis: the same basis as the figure next to it in this entry"
+   }
+  },
+  "recoilFactor": {
+   "value": 1.9,
+   "estimate": "a .308 semi-automatic bullpup of about 9 lb: harder than a 7.62x39 rifle (1.4), a little softer than the Vepr's 7.62x54R (2.2), the gas action taking some of the jolt"
+  },
+  "sights": [],
+  "defaultSight": "vortex-razor-1-10",
+  "loads": [
+   "federal-gm308m-168",
+   "hornady-308-168-eldm"
+  ],
+  "firstCourse": "cta-piru",
+  "scopeMount": {
+   "rail": "picatinny",
+   "words": "the receiver's full-length top Picatinny rail. \"Unlike the X95, the Tavor 7 does not come equipped with iron sights. Instead, it has a 14.75\" section of ... M1913 Picatinny rail for mounting iron sights or optics\" (https://www.americanrifleman.org/content/review-iwi-tavor-7-bullpup/, search text), so it aims through the scope collection and opens with the Vortex Razor 1-10",
+   "railHeightOverBoreIn": {
+    "value": 2.25,
+    "estimate": "IWI publishes no rail height for the Tavor 7. A bullpup's rail stands high over its bore: on the Tavor SAR an owner measured a scope 3.75 in over the bore in an AR-height (about 1.5 in) mount, putting that rail about 2.25 in over the bore (https://www.ar15.com/forums/armory/Tavor_sight_height_over_bore_/43-412550/, the basis of the Tavor SAR's and X95's entries in this file), and Manticore sells a riser that lifts the Tavor 7's factory rail about 1/2 in (https://www.opticsplanet.com/manticore-arms-tavor-7-overatch-full-length-top-rail.html, search text), as it sells one for the SAR. The SAR's 2.25 in is used"
+   }
+  }
  }
 }
