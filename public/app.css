@@ -115,6 +115,10 @@ main.home h1 { margin: 4px 0 6px; font-size: 22px; }
 .rifle .rname { font-size: 15px; line-height: 1.25; font-weight: 600; }
 .rifle .rmark { font-size: 13px; line-height: 1.2; color: var(--muted); }
 .rifle .rmark.yes { color: var(--accent); }
+/* range-day-nineteen: the card that turns home's list between the first seven and "More rifles", and that list's heading. */
+.rifle.turn { border-style: dashed; color: var(--accent); }
+.rifle.turn .rname { color: var(--accent); }
+.rifles-head { grid-column: 1 / -1; margin: 0; font-size: 17px; }
 .picks { display: grid; grid-template-columns: 1fr 1fr; gap: 0 10px; }
 .picks .wide { grid-column: 1 / -1; }
 .picks .field label { margin: 6px 0 3px; }

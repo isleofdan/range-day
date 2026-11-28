@@ -57,15 +57,25 @@
   }
 
   // --- no day open: the picks ------------------------------------------------------------------
+  // range-day-nineteen: the expansion's rifles (data/rifles.json, expansion) stand apart under the heading "More rifles". A 412 px
+  // screen holds the first seven, the picks and the two doors with about 40 px to spare, so the two lists take turns in the same
+  // place: the card after the first seven opens "More rifles", whose last card goes back. The list a picked rifle is in shows.
+  const FIRST_IDS = RIFLE_IDS.filter((id) => !d.rifles[id].expansion), MORE_IDS = RIFLE_IDS.filter((id) => d.rifles[id].expansion);
+  let showMore = MORE_IDS.includes(baseOf(c.rifleId));
   function renderRifles() {
-    $('rifles').innerHTML = RIFLE_IDS.map((id) => {
+    const card = (id) => {
       const r = d.rifles[id];
       const n = RD.zeroCount(id, r);
       const failed = RD.store.get('last') === RD.store.FAILED;
       const mark = failed ? 'storage refused' : n ? `zeroed (${n} saved)` : 'no zero saved';
       return `<button type="button" class="rifle${id === baseOf(c.rifleId) ? ' picked' : ''}" data-rifle="${id}"><span class="rname">${RD.esc(r.name)}</span><span class="rmark ${n ? 'yes' : 'no'}">${mark}</span></button>`;
-    }).join('');
-    for (const b of $('rifles').querySelectorAll('button')) b.addEventListener('click', () => { c = RD.chooseFrom(d, { rifle: b.dataset.rifle, remembered: true }); renderPicks(); renderRifles(); });
+    };
+    const turn = (to, name, mark) => `<button type="button" class="rifle turn" data-more="${to ? 1 : 0}"><span class="rname">${name}</span><span class="rmark">${mark}</span></button>`;
+    $('rifles').innerHTML = !MORE_IDS.length ? FIRST_IDS.map(card).join('')
+      : showMore ? `<h2 class="rifles-head">More rifles</h2>${MORE_IDS.map(card).join('')}${turn(false, '‹ The first seven', `${FIRST_IDS.length} rifles`)}`
+      : `${FIRST_IDS.map(card).join('')}${turn(true, 'More rifles ›', `${MORE_IDS.length} more`)}`;
+    for (const b of $('rifles').querySelectorAll('button[data-rifle]')) b.addEventListener('click', () => { c = RD.chooseFrom(d, { rifle: b.dataset.rifle, remembered: true }); renderPicks(); renderRifles(); });
+    for (const b of $('rifles').querySelectorAll('button[data-more]')) b.addEventListener('click', () => { showMore = b.dataset.more === '1'; renderRifles(); });
     renderBuilds();
   }
   // range-day-seventeen: the picked rifle's builds (public/builds.js), offered under it: the rifle as fitted first, then each
@@ -126,7 +136,11 @@
   }
   render();
 
-  // The whole set, for reference.
-  $('set').innerHTML = Object.entries(d.rifles).filter(([k, r]) => !k.startsWith('_') && !r.buildOf).map(([k, r]) =>
-    `<li><strong>${RD.esc(r.name)}</strong><br><span class="muted">${r.loads.map((l) => `${RD.esc(d.loads[l].name)} (box of ${d.loads[l].boxCount})`).join('; ')}. Sights: ${r.sights.filter((s) => !(r.collection || []).includes(s)).map((s) => RD.esc(d.sights[s].name)).join('; ')}.${(r.collection || []).length ? ` From the scope collection: ${r.collection.map((s) => RD.esc(d.sights[s].name)).join('; ')}.` : ''}</span></li>`).join('');
+  // The whole set, for reference (range-day-nineteen: the expansion's rifles under their own heading, after the first seven).
+  const setItem = ([k, r]) =>
+    `<li><strong>${RD.esc(r.name)}</strong><br><span class="muted">${r.loads.map((l) => `${RD.esc(d.loads[l].name)} (box of ${d.loads[l].boxCount})`).join('; ')}. ${r.sights.some((s) => !(r.collection || []).includes(s)) ? `Sights: ${r.sights.filter((s) => !(r.collection || []).includes(s)).map((s) => RD.esc(d.sights[s].name)).join('; ')}.` : 'No sights of its own.'}${(r.collection || []).length ? ` From the scope collection: ${r.collection.map((s) => RD.esc(d.sights[s].name)).join('; ')}.` : ''}</span></li>`;
+  const setOf = (more) => Object.entries(d.rifles).filter(([k, r]) => !k.startsWith('_') && !r.buildOf && Boolean(r.expansion) === more).map(setItem).join('');
+  $('set').innerHTML = setOf(false);
+  $('set-more').innerHTML = setOf(true);
+  $('set-more-head').hidden = !$('set-more').innerHTML;
 }());
