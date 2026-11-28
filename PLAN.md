@@ -833,15 +833,14 @@ Pin Checks to ubuntu-24.04 after verifying the latest successful run used 24.04 
   (`scopeMount.ownScope`). The open sights stay the default and keep their
   records. Repairs: the workbench's closed mount picker shows the height
   and a short name; home with a build keeps its two doors on screen. 196
-  tests (189 before); Checks green. Not merged when this note was written:
-  the merge, the .22's gun record in the Spine and the deploy wait on
-  Dan's line, and the notes pull request after the deploy adds their
-  results.
+  tests (189 before); Checks green.
 - **Decided:** of the CLx's two reticles (ACSS 22LR G2, duplex), neither
   cut for a centerfire cartridge, the G2 (cut for .22 LR, its manual read
   in full); a mark is measured from the maker's vector drawing at the
   scale its own stated stadia widths give; no distance or word is written
   on the glass.
-- **Next session needs:** the Deploy run's guns line ("differs from
-  data/rifles.json: none") and the Production check, then Dan's look at the
-  scope on his phone. Report: `docs/reports/range-day-eighteen-report.md`.
+- **Then:** merged as `c16313b` on Dan's line; the .22's gun record written
+  in the Spine; deployed (Deploy run 30, green; "differs from
+  data/rifles.json: none"); Production check run 3 green (the live firing line opened in a real browser).
+- **Next session needs:** nothing waiting from this work. Report:
+  `docs/reports/range-day-eighteen-report.md`.
