@@ -70,10 +70,12 @@
       const mark = failed ? 'storage refused' : n ? `zeroed (${n} saved)` : 'no zero saved';
       return `<button type="button" class="rifle${id === baseOf(c.rifleId) ? ' picked' : ''}" data-rifle="${id}"><span class="rname">${RD.esc(r.name)}</span><span class="rmark ${n ? 'yes' : 'no'}">${mark}</span></button>`;
     };
+    // The card to the other list names the picked rifle when the pick is in that list, so the picks below are never a rifle out of sight.
+    const pickedThere = (ids) => (ids.includes(baseOf(c.rifleId)) ? ` · ${RD.esc(d.rifles[baseOf(c.rifleId)].name.replace(/,.*$/, ''))} picked` : '');
     const turn = (to, name, mark) => `<button type="button" class="rifle turn" data-more="${to ? 1 : 0}"><span class="rname">${name}</span><span class="rmark">${mark}</span></button>`;
     $('rifles').innerHTML = !MORE_IDS.length ? FIRST_IDS.map(card).join('')
-      : showMore ? `<h2 class="rifles-head">More rifles</h2>${MORE_IDS.map(card).join('')}${turn(false, '‹ The first seven', `${FIRST_IDS.length} rifles`)}`
-      : `${FIRST_IDS.map(card).join('')}${turn(true, 'More rifles ›', `${MORE_IDS.length} more`)}`;
+      : showMore ? `<h2 class="rifles-head">More rifles</h2>${MORE_IDS.map(card).join('')}${turn(false, '‹ The first seven', `${FIRST_IDS.length} rifles${pickedThere(FIRST_IDS)}`)}`
+      : `${FIRST_IDS.map(card).join('')}${turn(true, 'More rifles ›', `${MORE_IDS.length} more${pickedThere(MORE_IDS)}`)}`;
     for (const b of $('rifles').querySelectorAll('button[data-rifle]')) b.addEventListener('click', () => { c = RD.chooseFrom(d, { rifle: b.dataset.rifle, remembered: true }); renderPicks(); renderRifles(); });
     for (const b of $('rifles').querySelectorAll('button[data-more]')) b.addEventListener('click', () => { showMore = b.dataset.more === '1'; renderRifles(); });
     renderBuilds();
