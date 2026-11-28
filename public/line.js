@@ -489,7 +489,7 @@
       if (spotting) return; // the spotting scope has no reticle
       if (sight.reticle && sight.reticle.kind === 'mil-dot') return drawMilDot(g, size, k, cx, cy);
       if (sight.reticle && (sight.reticle.marksMoaBelowZero || ['chevron', 'tree', 'bdc'].includes(sight.reticle.kind))) return drawReticle(g, size, k, cx, cy);
-      if (sight.reticle && sight.reticle.kind === 'crosshair') return drawCrosshair(g, size, cx, cy);
+      if (sight.reticle && sight.reticle.kind === 'crosshair') return drawCrosshair(g, size, k, cx, cy);
       return;
     }
     if (sight.kind === 'seeall') return drawSeeAll(g, size, k, cx, cy);
@@ -778,7 +778,11 @@
   };
   // Draws the marks at the view's scale. A mark thinner than its minPx is drawn minPx wide, on whole pixels when it is that
   // thin, so a fine line stays one crisp pixel; a dot is never under 0.6 px across its radius; a number under 7 px is left out.
-  function drawReticle(g, size, k, cx, cy) {
+  // range-day-eighteen: a second-focal-plane reticle keeps its size in the eye, so at power p each mark stands trueAtPower / p times
+  // its true angle (the rule milDotMoa follows for the BugBuster); a first-focal-plane reticle, or one with no stated plane, 1.
+  const sfpScale = () => { const r = sight.reticle; return r && r.focalPlane === 'second' && r.trueAtPower ? r.trueAtPower / mag : 1; };
+  function drawReticle(g, size, k0, cx, cy) {
+    const k = k0 * sfpScale();
     const X = (x) => cx + x * k, Y = (y) => cy + y * k;
     for (const m of reticleMarks()) {
       g.fillStyle = m.c; g.strokeStyle = m.c;
@@ -820,9 +824,15 @@
 
   // A fine crosshair through the center and nothing more (range-day-thirteen: the Vortex's reticle, whose marks the maker's
   // drawing could not be read for; data/sights.json, marksNotDrawn). The same fine line as the mil-dot's.
-  function drawCrosshair(g, size, cx, cy) {
+  // range-day-eighteen: a crosshair with a centerDotMoa (the .22's Primary Arms CLx duplex, its posts not drawn) has that dot at
+  // its center in its lit colour, sized as every mark of its focal plane is (sfpScale).
+  function drawCrosshair(g, size, k, cx, cy) {
     g.strokeStyle = '#111'; g.lineWidth = 1;
     g.beginPath(); g.moveTo(0, cy); g.lineTo(size, cy); g.moveTo(cx, 0); g.lineTo(cx, size); g.stroke();
+    const r = sight.reticle;
+    if (!r.centerDotMoa) return;
+    g.fillStyle = LIT_COLORS[r.litColor] || INK;
+    g.beginPath(); g.arc(cx, cy, Math.max(0.6, (r.centerDotMoa * sfpScale() * k) / 2), 0, Math.PI * 2); g.fill();
   }
 
   // Iron sights with a ring: the rear aperture's circle, dark and soft around it; the front post rising to the center.
