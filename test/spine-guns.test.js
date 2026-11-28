@@ -28,6 +28,9 @@ const PISTOLS = [
   { name: 'Springfield XD (second of two)', fields: { kind: 'pistol', caliber: null, whose: "Dan's" } },
   { name: 'Dan Wesson 1911', fields: { kind: 'pistol', caliber: '.45 ACP', whose: "Dan's", notes: 'Model possibly the Discretion; Dan is not sure.' } },
 ];
+// range-day-nineteen: the rifles are every entry of data/rifles.json (the seven and the expansion's), so the counts come from it.
+const NR = Object.keys(raw.rifles).filter((id) => !id.startsWith('_')).length;
+const COUNTS = `${NR + 5} records, ${NR} in the game, 5 not modeled`;
 function twelve() {
   const rifles = Object.entries(raw.rifles).filter(([id]) => !id.startsWith('_')).map(([id, e]) => guns.toRecord(id, e));
   return [...rifles, ...PISTOLS].map((r, i) => ({ id: `${(i + 1).toString(16).padStart(12, '0')}`, type: 'gun', name: r.name, fields: JSON.parse(JSON.stringify(r.fields)) }));
@@ -81,7 +84,7 @@ test('range-day-fifteen: at start, a Spine that answers after 2 seconds is read 
   const g = await game(8993, { SPINE_GUNS_URL: spine.url });
   try {
     console.log(`  ${g.line}`);
-    assert.match(g.line, /^guns from the Spine: 12 records, 7 in the game, 5 not modeled · read in 2\d\d\d ms \(limit 5000 ms\) at \S+ · differs from data\/rifles\.json: bcm-ar15$/);
+    assert.match(g.line, new RegExp(`^guns from the Spine: ${COUNTS} · read in 2\\d\\d\\d ms \\(limit 5000 ms\\) at \\S+ · differs from data/rifles\\.json: bcm-ar15$`));
     assert.equal(g.rifles['bcm-ar15'].barrelIn, 18, 'the Spine\'s figure is the one served');
     assert.deepEqual(Object.keys(g.rifles), Object.keys(guns.fromFiles(raw)), 'the same seven rifles, keyed by their game ids');
     assert.doesNotMatch(g.line, /\b18\b|barrel|fps|MOA/, 'no figure of any gun on the line');
@@ -148,7 +151,7 @@ test('range-day-fifteen: after one accepted read, a later read that fails keeps 
     console.log(`  ${r.line()}`);
     assert.equal(r.state().from, 'spine', 'still the Spine\'s set');
     assert.equal(served['bcm-ar15'].barrelIn, 18, 'the accepted set is kept, never the file\'s');
-    assert.match(r.line(), /^guns from the Spine: 12 records, 7 in the game, 5 not modeled · .* · the last read, at \S+, failed after \d+ ms: no answer within 500 ms; keeping the set read at \S+$/);
+    assert.match(r.line(), new RegExp(`^guns from the Spine: ${COUNTS} · .* · the last read, at \\S+, failed after \\d+ ms: no answer within 500 ms; keeping the set read at \\S+$`));
     spine.answer = json({ items: [], state: 'no data' });
     assert.equal(await r.readOnce(), false);
     assert.match(r.line(), /failed after \d+ ms: gun records: the list is empty; .*; keeping the set read at/);

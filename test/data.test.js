@@ -44,9 +44,12 @@ test('every load has a speed, a coefficient with its drag model, and a spread', 
   }
 });
 
-test('the whole rifle set is in the data; all seven rifles are playable', () => {
+test('the whole rifle set is in the data; all seven rifles are playable (range-day-nineteen: and the expansion\'s, each marked)', () => {
   const ids = Object.keys(flat.rifles).filter((k) => !k.startsWith('_'));
-  assert.equal(ids.length, 7);
+  const SEVEN = ['bcm-ar15', 'iwi-tavor-sar', 'iwi-x95', 'ak-762', 'ak-545', 'molot-vepr-54r', 'remington-22'];
+  assert.deepEqual(ids.slice(0, 7), SEVEN, 'the seven come first, in their order');
+  for (const k of SEVEN) assert.ok(!flat.rifles[k].expansion, `${k} is not marked an expansion rifle`);
+  for (const k of ids.slice(7)) assert.equal(flat.rifles[k].expansion, true, `${k}, after the seven, is marked an expansion rifle`);
   assert.deepEqual(ids.filter((k) => flat.rifles[k].playable).sort(), ids.slice().sort());
   assert.equal(Object.keys(flat.loads).filter((k) => !k.startsWith('_')).length, 22); // range-day-nineteen: six loads for the three new calibers
 });

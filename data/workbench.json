@@ -199,6 +199,24 @@
         "value": 28,
         "estimate": "the rifle's model is not identified (data/rifles.json, remington-22), so this is a length Remington sold in a heavy-barrel bolt-action .22 target model, not one known to be this rifle's: Blue Book, Remington Model 40X Rangemaster Target: '.22 LR cal., 28 in. heavy barrel, Redfield Olympic sights, scope bases, target stock rifle, manufactured 1956-64'. Search engine's indexed text. A single-shot target rifle; 27 in was not found. (https://bluebookofgunvalues.com/products/remington-model-40x-target-rifle-rangemaster, read 2026-11-27)"
       }
+    ],
+    "tikka-t3x-ctr": [
+      {
+        "value": 20,
+        "source": {
+          "url": "https://www.kygunco.com/product/tikka-jrtxc382-t3x-ctr-compact-tactical-tb-6.5-creedmoor-20-101",
+          "read": "2026-11-28",
+          "note": "Tikka JRTXC382, T3x CTR, 6.5 Creedmoor, 20 in. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+        }
+      },
+      {
+        "value": 24,
+        "source": {
+          "url": "https://www.kygunco.com/product/tikka-jrtxc382cas-t3x-ctr-compact-tactical-tb-ss-6.5-crdmr-24-101",
+          "read": "2026-11-28",
+          "note": "Tikka JRTXC382CAS, T3x CTR, 6.5 Creedmoor, 24 in. The rifle's own length (data/rifles.json, tikka-t3x-ctr). Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+        }
+      }
     ]
   },
   "mounts": {

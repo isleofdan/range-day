@@ -420,5 +420,49 @@
     }
    }
   }
+ },
+ "tikka-t3x-ctr": {
+  "name": "Tikka T3x CTR, 6.5 Creedmoor",
+  "caliber": "6.5 Creedmoor",
+  "playable": true,
+  "expansion": true,
+  "barrelIn": {
+   "value": 24,
+   "source": {
+    "url": "https://www.kygunco.com/product/tikka-jrtxc382cas-t3x-ctr-compact-tactical-tb-ss-6.5-crdmr-24-101",
+    "read": "2026-11-28",
+    "note": "Tikka sells the T3x CTR in 6.5 Creedmoor with a 20 or a 24 in barrel, 1:8 twist, threaded 5/8x24 (JRTXC382CAS, 24 in; JRTXC382, 20 in: https://www.kygunco.com/product/tikka-jrtxc382-t3x-ctr-compact-tactical-tb-6.5-creedmoor-20-101; https://www.rifleconfigurator.com/catalog/platforms/tikka-t3x-ctr \"20 or 24 inch\"). Tikka's own page could not be read (no tikka.com page came up in the indexed text), so which length it leads with is unknown; 24 in is used because it is the test barrel of both 6.5 Creedmoor loads in this set, so their speeds need no adjustment. Gun Tests measured a 24.0 in barrel, 1:8, 44.0 in overall (https://www.gun-tests.com/rifles/tikka-t3x-ctr-jrtxc382cas-6-5-creedmoor/). Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "sightHeightIn": {},
+  "boreOffsetMoa": {
+   "up": {
+    "value": -2.6,
+    "estimate": "a scope set to its mechanical middle is a few minutes off on most rifles; the figure is chosen so the rifle needs zeroing, not measured"
+   },
+   "right": {
+    "value": -1.4,
+    "estimate": "same basis: the same basis as the figure next to it in this entry"
+   }
+  },
+  "recoilFactor": {
+   "value": 1.6,
+   "estimate": "a 6.5 Creedmoor bolt rifle of about 8 lb kicks harder than a 7.62x39 rifle (1.4 in this set) and less than the Vepr's 7.62x54R (2.2)"
+  },
+  "sights": [],
+  "defaultSight": "leupold-mark5hd-5-25",
+  "loads": [
+   "hornady-65cm-140-eldm",
+   "hornady-65cm-147-eldm"
+  ],
+  "firstCourse": "cta-piru",
+  "scopeMount": {
+   "rail": "picatinny",
+   "words": "the Picatinny rail Tikka fits to the CTR's receiver at the factory (\"factory-fitted picatinny rail\", https://www.thecountryman.com/tikka-t3x-ctr-blued-6-5mm-24, search text). The rifle comes with no iron sights, so it aims through the scope collection and opens with the Leupold Mark 5HD",
+   "railHeightOverBoreIn": {
+    "value": 0.55,
+    "estimate": "Tikka publishes no rail height. A T3x owner measured the top of the factory-style rail \"about 0.55 in above center of bore\" (https://rokslide.com/forums/threads/height-over-bore-tikka-t3x.364494, search text); another puts a scope's center 1.65 in over the bore in low rings, which fits the same band (same thread)"
+   }
+  }
  }
 }

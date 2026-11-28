@@ -48,7 +48,7 @@ test('a bare number, an unknown sight, a defaultSight it does not carry, a missi
   console.log('  ' + messages.join('\n  '));
   assert.match(messages[0], /^gun 'x': game\.barrelIn: a bare number; wrap it as \{value, source\} or \{value, estimate\}$/);
   assert.match(messages[1], /^gun 'x': sight 'foo' is not in the game's data: ar-irons, tavor-irons, ak-irons, vepr-irons, rem-irons, pa-clx-1-6x24, pa-md25, pa-magnifier, pa-3x-acss, utg-2-7x44, utg-bugbuster-3-9x32, troy-battlesights, fab-flipup, seeall-gen1, ak762-kns-peep, ak545-ball, ak545-xs, trijicon-acog-ta31f, trijicon-acog-ta31f-g, vortex-razor-1-10, leupold-mark5hd-5-25$/); // range-day-thirteen: the collection scopes are in the data (range-day-fourteen: and the green ACOG; range-day-eighteen: the .22's own scope)
-  assert.match(messages[2], /^gun 'x': defaultSight 'pa-md25' is not one of its sights: troy-battlesights$/);
+  assert.match(messages[2], /^gun 'x': defaultSight 'pa-md25' is not one of its sights: troy-battlesights, trijicon-acog-ta31f, trijicon-acog-ta31f-g, vortex-razor-1-10, leupold-mark5hd-5-25$/);
   assert.match(messages[3], /^gun 'x': no sightHeightIn for sight 'troy-battlesights'; it carries: troy-battlesights$/);
   // And the rest of the shape: an unknown load, a wrong caliber, a course that does not exist, a leaf table the sight lacks, a duplicate.
   assert.match(refuse(broken((g) => { g.loads = ['imi-m193', 'nope']; })), /load 'nope' is not in the game's data: /);
@@ -86,14 +86,14 @@ test('with GUN_RECORDS_FILE naming a file with an eighth gun, the server serves 
     const login = await fetch(`http://127.0.0.1:${PORT}/login`, { method: 'POST', redirect: 'manual', headers: { 'content-type': 'application/x-www-form-urlencoded' }, body: 'passphrase=open+sesame&next=%2F' });
     const cookie = login.headers.get('set-cookie').split(';')[0];
     const d = await (await fetch(`http://127.0.0.1:${PORT}/api/data`, { headers: { cookie, accept: 'application/json' } })).json();
-    assert.equal(Object.keys(d.rifles).length, 8);
+    assert.equal(Object.keys(d.rifles).length, records.length); // range-day-nineteen: the file's rifles and the extra one
     assert.equal(d.rifles['test-carbine'].name, 'Test carbine, 5.56');
     assert.equal(d.rifles['test-carbine'].sightHeightIn['troy-battlesights'], 3.4);
     assert.equal(d.rifles['test-carbine'].firstCourse, 'cta-piru');
     assert.equal(d.rifles['bcm-ar15'].sightHeightIn['troy-battlesights'], 2.6, 'the AR itself is unchanged');
   } finally { server.kill(); }
   // A file with a bad record: the server stops and says why.
-  const bad = JSON.parse(JSON.stringify(records)); bad[7].fields.game.defaultSight = 'utg-2-7x44';
+  const bad = JSON.parse(JSON.stringify(records)); bad[bad.length - 1].fields.game.defaultSight = 'utg-2-7x44';
   fs.writeFileSync(path.join(dir, 'bad.json'), JSON.stringify(bad));
   const stopped = spawn('node', ['server.js'], { cwd: root, env: { ...process.env, PORT: String(PORT + 1), APP_PASSWORD: 'open sesame', COOKIE_SECRET: 'x'.repeat(64), COOKIE_INSECURE: '1', SENTRY_DSN: '', GUN_RECORDS_FILE: path.join(dir, 'bad.json') }, stdio: ['ignore', 'ignore', 'pipe'] });
   let err = '';
@@ -218,7 +218,7 @@ test('range-day-fifteen: a game section without gameId, a bad kind, a caliber ne
   const base = guns.toRecord('bcm-ar15', raw.rifles['bcm-ar15']);
   const broken = (change) => { const r = JSON.parse(JSON.stringify(base)); change(r.fields); return r; };
   const refuse = (r) => { try { guns.fromRecords([r], raw); } catch (e) { assert.ok(e instanceof guns.RecordError, e.message); return e.message; } assert.fail('accepted a bad record'); };
-  assert.match(refuse(broken((f) => { delete f.gameId; })), /^gun 'BCM AR-15 carbine, 5\.56': has a game section but no fields\.gameId; it needs the rifle's id in data\/rifles\.json, one of: bcm-ar15, iwi-tavor-sar, iwi-x95, ak-762, ak-545, molot-vepr-54r, remington-22$/);
+  assert.match(refuse(broken((f) => { delete f.gameId; })), /^gun 'BCM AR-15 carbine, 5\.56': has a game section but no fields\.gameId; it needs the rifle's id in data\/rifles\.json, one of: bcm-ar15, iwi-tavor-sar, iwi-x95, ak-762, ak-545, molot-vepr-54r, remington-22(, [a-z0-9-]+)*$/); // range-day-nineteen: then the expansion's
   assert.match(refuse(broken((f) => { f.gameId = 'Bad Id'; })), /^gun 'Bad Id': gameId "Bad Id" must be lowercase letters, digits and hyphens$/);
   assert.match(refuse(broken((f) => { f.kind = 'shotgun'; })), /^gun 'bcm-ar15': kind "shotgun" is not one of: rifle, pistol$/);
   assert.match(refuse(broken((f) => { f.caliber = 5.56; })), /^gun 'bcm-ar15': caliber must be a string such as "5\.56x45", or null when not known$/);
