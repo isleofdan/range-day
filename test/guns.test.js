@@ -47,7 +47,7 @@ test('a bare number, an unknown sight, a defaultSight it does not carry, a missi
   ];
   console.log('  ' + messages.join('\n  '));
   assert.match(messages[0], /^gun 'x': game\.barrelIn: a bare number; wrap it as \{value, source\} or \{value, estimate\}$/);
-  assert.match(messages[1], /^gun 'x': sight 'foo' is not in the game's data: ar-irons, tavor-irons, ak-irons, vepr-irons, rem-irons, pa-md25, pa-magnifier, pa-3x-acss, utg-2-7x44, utg-bugbuster-3-9x32, troy-battlesights, fab-flipup, seeall-gen1, ak762-kns-peep, ak545-ball, ak545-xs, trijicon-acog-ta31f, trijicon-acog-ta31f-g, vortex-razor-1-10, leupold-mark5hd-5-25$/); // range-day-thirteen: the collection scopes are in the data (range-day-fourteen: and the green ACOG)
+  assert.match(messages[1], /^gun 'x': sight 'foo' is not in the game's data: ar-irons, tavor-irons, ak-irons, vepr-irons, rem-irons, pa-clx-1-6x24, pa-md25, pa-magnifier, pa-3x-acss, utg-2-7x44, utg-bugbuster-3-9x32, troy-battlesights, fab-flipup, seeall-gen1, ak762-kns-peep, ak545-ball, ak545-xs, trijicon-acog-ta31f, trijicon-acog-ta31f-g, vortex-razor-1-10, leupold-mark5hd-5-25$/); // range-day-thirteen: the collection scopes are in the data (range-day-fourteen: and the green ACOG; range-day-eighteen: the .22's own scope)
   assert.match(messages[2], /^gun 'x': defaultSight 'pa-md25' is not one of its sights: troy-battlesights$/);
   assert.match(messages[3], /^gun 'x': no sightHeightIn for sight 'troy-battlesights'; it carries: troy-battlesights$/);
   // And the rest of the shape: an unknown load, a wrong caliber, a course that does not exist, a leaf table the sight lacks, a duplicate.

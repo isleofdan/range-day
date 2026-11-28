@@ -488,8 +488,8 @@
       g.strokeStyle = 'rgba(0,0,0,0.85)'; g.lineWidth = 2; g.beginPath(); g.arc(cx, cy, cx - 4, 0, Math.PI * 2); g.stroke();
       if (spotting) return; // the spotting scope has no reticle
       if (sight.reticle && sight.reticle.kind === 'mil-dot') return drawMilDot(g, size, k, cx, cy);
-      if (sight.reticle && (sight.reticle.marksMoaBelowZero || ['chevron', 'tree', 'bdc'].includes(sight.reticle.kind))) return drawReticle(g, size, k, cx, cy);
-      if (sight.reticle && sight.reticle.kind === 'crosshair') return drawCrosshair(g, size, cx, cy);
+      if (sight.reticle && (sight.reticle.marksMoaBelowZero || ['chevron', 'tree', 'bdc', 'ladder'].includes(sight.reticle.kind))) return drawReticle(g, size, k, cx, cy);
+      if (sight.reticle && sight.reticle.kind === 'crosshair') return drawCrosshair(g, size, k, cx, cy);
       return;
     }
     if (sight.kind === 'seeall') return drawSeeAll(g, size, k, cx, cy);
@@ -769,16 +769,43 @@
     out.push({ t: 'line', x1: 0, y1: r.lowerPostFromMoa, x2: 0, y2: EDGE, w: r.postMoa, minPx: 2, c: INK, vertical: true });
     return out;
   }
+  // The ACSS 22LR G2 (range-day-eighteen, from Primary Arms' reticle manual for the CLx 1-6x24, measured from its drawing): a red
+  // dot centerDotMoa across; the fine line (lineMoa thick) from fineLineFromMoa to postFromMoa each side, then the heavy posts
+  // (postMoa) to the edge; no line above the center; the post below from stemTopMoa (the 75-yard hold) to stemToMoa; each stadia
+  // line widthMoa wide at its belowMoa, a barbell's end ticks barbellTickMoa tall, a wind dot windDotMoa across windDotOutMoa
+  // either side; the lower heavy post from its pointed tip (lowerPostTipMoa) widening to full thickness at lowerPostShoulderMoa,
+  // down to the edge. No number or word is drawn: the maker's labels explain the drawing and are not on the glass.
+  function ladderMarks(r) {
+    const LIT = LIT_COLORS[r.litColor] || LIT_COLORS.red, out = [], w = r.lineMoa, EDGE = 400, P = r.postMoa / 2;
+    out.push({ t: 'dot', x: 0, y: 0, d: r.centerDotMoa, c: LIT });
+    for (const s of [-1, 1]) {
+      out.push({ t: 'line', x1: s * r.fineLineFromMoa, y1: 0, x2: s * r.postFromMoa, y2: 0, w, minPx: 1, c: INK });
+      out.push({ t: 'line', x1: s * r.postFromMoa, y1: 0, x2: s * EDGE, y2: 0, w: r.postMoa, minPx: 2, c: INK });
+    }
+    out.push({ t: 'line', x1: 0, y1: r.stemTopMoa, x2: 0, y2: r.stemToMoa, w: r.stemWidthMoa || w, minPx: 1, c: INK, vertical: true });
+    for (const st of r.stadia) {
+      const half = st.widthMoa / 2;
+      out.push({ t: 'line', x1: -half, y1: st.belowMoa, x2: half, y2: st.belowMoa, w, minPx: 1, c: INK });
+      if (st.barbell) for (const s of [-1, 1]) out.push({ t: 'line', x1: s * (half - w / 2), y1: st.belowMoa - r.barbellTickMoa / 2, x2: s * (half - w / 2), y2: st.belowMoa + r.barbellTickMoa / 2, w, minPx: 1, c: INK, vertical: true });
+      for (const s of [-1, 1]) out.push({ t: 'dot', x: s * st.windDotOutMoa, y: st.belowMoa, d: r.windDotMoa, c: INK });
+    }
+    out.push({ t: 'poly', pts: [[0, r.lowerPostTipMoa], [P, r.lowerPostShoulderMoa], [P, EDGE], [-P, EDGE], [-P, r.lowerPostShoulderMoa]], c: INK });
+    return out;
+  }
   let reticleCache = null;
   const reticleMarks = () => {
     if (reticleCache) return reticleCache;
     const r = sight.reticle;
-    reticleCache = r.kind === 'tree' ? treeMarks(r) : r.kind === 'bdc' ? bdcMarks(r) : r.kind === 'chevron' ? chevronMarks(r) : acssMarks(r);
+    reticleCache = r.kind === 'tree' ? treeMarks(r) : r.kind === 'bdc' ? bdcMarks(r) : r.kind === 'chevron' ? chevronMarks(r) : r.kind === 'ladder' ? ladderMarks(r) : acssMarks(r);
     return reticleCache;
   };
   // Draws the marks at the view's scale. A mark thinner than its minPx is drawn minPx wide, on whole pixels when it is that
   // thin, so a fine line stays one crisp pixel; a dot is never under 0.6 px across its radius; a number under 7 px is left out.
-  function drawReticle(g, size, k, cx, cy) {
+  // range-day-eighteen: a second-focal-plane reticle keeps its size in the eye, so at power p each mark stands trueAtPower / p times
+  // its true angle (the rule milDotMoa follows for the BugBuster); a first-focal-plane reticle, or one with no stated plane, 1.
+  const sfpScale = () => { const r = sight.reticle; return r && r.focalPlane === 'second' && r.trueAtPower ? r.trueAtPower / mag : 1; };
+  function drawReticle(g, size, k0, cx, cy) {
+    const k = k0 * sfpScale();
     const X = (x) => cx + x * k, Y = (y) => cy + y * k;
     for (const m of reticleMarks()) {
       g.fillStyle = m.c; g.strokeStyle = m.c;
@@ -820,9 +847,15 @@
 
   // A fine crosshair through the center and nothing more (range-day-thirteen: the Vortex's reticle, whose marks the maker's
   // drawing could not be read for; data/sights.json, marksNotDrawn). The same fine line as the mil-dot's.
-  function drawCrosshair(g, size, cx, cy) {
+  // range-day-eighteen: a crosshair with a centerDotMoa (the .22's Primary Arms CLx duplex, its posts not drawn) has that dot at
+  // its center in its lit colour, sized as every mark of its focal plane is (sfpScale).
+  function drawCrosshair(g, size, k, cx, cy) {
     g.strokeStyle = '#111'; g.lineWidth = 1;
     g.beginPath(); g.moveTo(0, cy); g.lineTo(size, cy); g.moveTo(cx, 0); g.lineTo(cx, size); g.stroke();
+    const r = sight.reticle;
+    if (!r.centerDotMoa) return;
+    g.fillStyle = LIT_COLORS[r.litColor] || INK;
+    g.beginPath(); g.arc(cx, cy, Math.max(0.6, (r.centerDotMoa * sfpScale() * k) / 2), 0, Math.PI * 2); g.fill();
   }
 
   // Iron sights with a ring: the rear aperture's circle, dark and soft around it; the front post rising to the center.
@@ -1405,7 +1438,7 @@
     setPicture(v) { picture = v; measuring = null; if (v === 'plain') showPlain(''); else return startScene(v); },
     // range-day-fourteen: the reticle alone, drawn by the same drawing at the view's present scale onto a blank canvas the size of
     // the view, so the tests can read its marks without the ground behind them.
-    reticleAlone() { const size = view.size, c = document.createElement('canvas'); c.width = size; c.height = size; const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, size, size); if (sight.reticle && (sight.reticle.marksMoaBelowZero || ['chevron', 'tree', 'bdc'].includes(sight.reticle.kind))) drawReticle(g, size, pxPerMoa(), size / 2, size / 2); return c; },
+    reticleAlone() { const size = view.size, c = document.createElement('canvas'); c.width = size; c.height = size; const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, size, size); if (sight.reticle && (sight.reticle.marksMoaBelowZero || ['chevron', 'tree', 'bdc', 'ladder'].includes(sight.reticle.kind))) drawReticle(g, size, pxPerMoa(), size / 2, size / 2); return c; },
     // The drawn geometry, in pixels at the view's scale: what the tests compare with the data's angles.
     get geometry() {
       const k = pxPerMoa();
@@ -1420,6 +1453,10 @@
         // range-day-thirteen: the ACOG's chevron, its base's width and its height in pixels; whether the reticle is a plain crosshair
         chevronPx: sight.reticle && sight.reticle.kind === 'chevron' ? { widthPx: sight.reticle.chevronBaseWidthMoa * k, heightPx: sight.reticle.chevronHeightMoa * k } : null,
         crosshair: Boolean(sight.reticle && sight.reticle.kind === 'crosshair'),
+        // range-day-eighteen: a crosshair's center dot as drawn at the power in use (a second-focal-plane dot grows as the power falls)
+        centerDotPx: sight.reticle && sight.reticle.centerDotMoa ? sight.reticle.centerDotMoa * sfpScale() * k : null,
+        // the number of words or figures written on the glass by the marks drawing (the .22's ladder has none)
+        reticleTexts: sight.reticle && (sight.reticle.marksMoaBelowZero || ['chevron', 'tree', 'bdc', 'ladder'].includes(sight.reticle.kind)) ? reticleMarks().filter((m) => m.t === 'text').length : 0, sfpScale: sfpScale(),
         // range-day-fourteen: the reticle's kind (the tests read its marks from the canvas against the data themselves)
         reticleKind: sight.reticle ? sight.reticle.kind : null };
     } };

@@ -1,5 +1,5 @@
 {
- "_about": "The sights. clickMoa is what one click of elevation moves the strike, windageClickMoa one click of windage, in minutes of angle; clicks is the travel each way from the middle. zoom is the magnification range; fovFtAt100 the field of view in feet at 100 yards at the lowest and highest zoom. frontPostMoa is the front post's width over the sight radius (how wide it looks against the target); apertureMoa the rear ring's lit circle and notchMoa the rear notch's width as the eye sees them; dotMoa a red dot's size. leaf is a sliding rear leaf: its marked settings, the service load it was cut for, and each setting's angle above the 100 m setting, derived with the engine (leaf545: the same leaf on the 5.45x39 rifle, cut for its own load). notchDepthMoa is the rear notch's depth as the eye sees it; stemWidthMoa a bead's stem; a drop reticle's chevronHalfWidthMoa and markHalfWidthMoa are its drawn widths. aimWanderFactor scales the drawn wander of the aim through this sight (1 where absent). frontBead marks a front sight that is a round bead on a stem rather than a flat post. range-day-twelve: sightRadiusIn is the distance between the front and rear sight, the radius the front post's width is seen over; frontPostIn and apertures (each peep's diameterIn) are the parts' own sizes; frontEars draws the front sight's guards (their inner gap, each one's width, and how far their tops stand above the post); frontStripeMoa and frontStripeTopMoa a glowing stripe on a front post; adjustWords says in plain words where each adjustment is; kind \"seeall\" is the SeeAll Open Sight, its reticle a triangle whose tip is the aim point, standing across a line that tops a glowing field; a reticle's focalPlane and trueAtPower say where a second-focal-plane reticle's marks are true (at another power p they stand trueAtPower / p times as far apart in angle). tookThePlaceOf names the sight a new one replaced on its rifles without carrying its records (they click differently or sit at another height): a record from before any sight could be chosen, made with the old sight, is never read as the new one's. rearBody is a rear peep's leaf, where it stands far from the eye (its width and how far its top stands above the peep): only the leaf is dark around the peep; a sight without it has its ring close to the eye, dark to the edges of the view. range-day-twelve-b: a rear sight with two peeps (apertures, each with its diameterIn and the apertureMoa it covers seen from the eye) flips between them on the firing line; both stand in the same plane, so the flip moves no shot. frontHood is a round hood around the front post (its inside diameter and its wall, as the eye sees them), centred on the post's tip. range-day-thirteen: collection marks a scope of the scope collection, which moves among the rifles: a rifle offers it when its own scope mounting (data/rifles.json, scopeMount) takes the scope's mount (mount.fits), and its height over the bore on that rifle is the rifle's rail height plus the mount's centerOverRailIn (lib/guns.js works it out and checks it). windageClicks is a scope's windage travel each way where it differs from clicks. A reticle of kind \"chevron\" is a chevron whose tip is the aim point (chevronBaseWidthMoa wide at its base, chevronHeightMoa from tip to base); of kind \"crosshair\" a fine crosshair; marksNotDrawn says which of the maker's marks are left out and why.",
+ "_about": "The sights. clickMoa is what one click of elevation moves the strike, windageClickMoa one click of windage, in minutes of angle; clicks is the travel each way from the middle. zoom is the magnification range; fovFtAt100 the field of view in feet at 100 yards at the lowest and highest zoom. frontPostMoa is the front post's width over the sight radius (how wide it looks against the target); apertureMoa the rear ring's lit circle and notchMoa the rear notch's width as the eye sees them; dotMoa a red dot's size. leaf is a sliding rear leaf: its marked settings, the service load it was cut for, and each setting's angle above the 100 m setting, derived with the engine (leaf545: the same leaf on the 5.45x39 rifle, cut for its own load). notchDepthMoa is the rear notch's depth as the eye sees it; stemWidthMoa a bead's stem; a drop reticle's chevronHalfWidthMoa and markHalfWidthMoa are its drawn widths. aimWanderFactor scales the drawn wander of the aim through this sight (1 where absent). frontBead marks a front sight that is a round bead on a stem rather than a flat post. range-day-twelve: sightRadiusIn is the distance between the front and rear sight, the radius the front post's width is seen over; frontPostIn and apertures (each peep's diameterIn) are the parts' own sizes; frontEars draws the front sight's guards (their inner gap, each one's width, and how far their tops stand above the post); frontStripeMoa and frontStripeTopMoa a glowing stripe on a front post; adjustWords says in plain words where each adjustment is; kind \"seeall\" is the SeeAll Open Sight, its reticle a triangle whose tip is the aim point, standing across a line that tops a glowing field; a reticle's focalPlane and trueAtPower say where a second-focal-plane reticle's marks are true (at another power p they stand trueAtPower / p times as far apart in angle). tookThePlaceOf names the sight a new one replaced on its rifles without carrying its records (they click differently or sit at another height): a record from before any sight could be chosen, made with the old sight, is never read as the new one's. rearBody is a rear peep's leaf, where it stands far from the eye (its width and how far its top stands above the peep): only the leaf is dark around the peep; a sight without it has its ring close to the eye, dark to the edges of the view. range-day-twelve-b: a rear sight with two peeps (apertures, each with its diameterIn and the apertureMoa it covers seen from the eye) flips between them on the firing line; both stand in the same plane, so the flip moves no shot. frontHood is a round hood around the front post (its inside diameter and its wall, as the eye sees them), centred on the post's tip. range-day-thirteen: collection marks a scope of the scope collection, which moves among the rifles: a rifle offers it when its own scope mounting (data/rifles.json, scopeMount) takes the scope's mount (mount.fits), and its height over the bore on that rifle is the rifle's rail height plus the mount's centerOverRailIn (lib/guns.js works it out and checks it). windageClicks is a scope's windage travel each way where it differs from clicks. A reticle of kind \"chevron\" is a chevron whose tip is the aim point (chevronBaseWidthMoa wide at its base, chevronHeightMoa from tip to base); of kind \"crosshair\" a fine crosshair; marksNotDrawn says which of the maker's marks are left out and why. range-day-eighteen: ownScopeOf names the one rifle whose own scope a sight is (not one of the collection: it is offered by that rifle's sights list and mounted as data/rifles.json, scopeMount.ownScope, says); tubeMm is a scope's tube; a crosshair's centerDotMoa is a dot at its center, drawn in its litColor; on a second-focal-plane reticle every mark, a dot included, stands trueAtPower / p times its true size in angle at power p. A reticle of kind \"ladder\" is the ACSS 22LR G2 (the .22's scope): a lit center dot, a fine line turning into heavy posts at the sides, a post below carrying stadia lines (each its depth, its width, whether it is a barbell with end ticks, and its wind dots' spread), and a pointed lower post; every figure measured from the maker's reticle drawing (public/line.js, ladderMarks).",
  "ar-irons": {
   "name": "AR-15 iron sights (front post, rear aperture)",
   "kind": "iron",
@@ -583,6 +583,325 @@
    "estimate": "the thin stem the bead stands on, seen over the sight radius: about a third of the bead's width; not a maker figure"
   },
   "frontBead": true
+ },
+ "pa-clx-1-6x24": {
+  "name": "Primary Arms CLx 1-6x24 SFP scope, ACSS 22LR G2",
+  "kind": "scope",
+  "model": "Primary Arms CLx 1-6x24 SFP with the ACSS 22LR G2 reticle (released September 2026). The maker sells the CLx 1-6x24 SFP with two reticles: this one, whose holds are cut for .22 LR, and an illuminated duplex. Neither carries marks cut for a centerfire cartridge; the ACSS 22LR G2 is modeled because it is the one cut for the .22's own cartridge and its maker's reticle manual could be read (range-day-eighteen report).",
+  "ownScopeOf": "remington-22",
+  "clickMoa": {
+   "value": 0.5,
+   "source": {
+    "url": "https://www.primaryarms.com/primary-arms-clx-1-6x24mm-sfp-rifle-scope-acss-22lr-g2-reticle",
+    "read": "2026-11-28",
+    "note": "the maker's page: adjustment click value 1/2 MOA. Read from the search engine's indexed text of this page on the date given: this session's network refuses this host (CONNECT 403)."
+   }
+  },
+  "windageClickMoa": {
+   "value": 0.5,
+   "source": {
+    "url": "https://www.primaryarms.com/primary-arms-clx-1-6x24mm-sfp-rifle-scope-acss-22lr-g2-reticle",
+    "read": "2026-11-28",
+    "note": "the same page: the same 1/2 MOA click on both turrets. Read from the search engine's indexed text of this page on the date given: this session's network refuses this host (CONNECT 403)."
+   }
+  },
+  "clicks": {
+   "value": 120,
+   "source": {
+    "url": "https://www.primaryarms.com/primary-arms-clx-1-6x24mm-sfp-rifle-scope-acss-22lr-g2-reticle",
+    "read": "2026-11-28",
+    "note": "the maker's page: total elevation adjustment 120 MOA (and the release: \"Total Windage / Elevation Adjustment: 120+ MOA\" each): 60 MOA each way from the middle, 120 half-minute clicks. Read from the search engine's indexed text of this page on the date given: this session's network refuses this host (CONNECT 403)."
+   }
+  },
+  "zoom": {
+   "low": {
+    "value": 1,
+    "source": {
+     "url": "https://www.primaryarms.com/primary-arms-clx-1-6x24mm-sfp-rifle-scope-acss-22lr-g2-reticle",
+     "read": "2026-11-28",
+     "note": "the maker's page: 1-6x, 24 mm objective, 30 mm tube, second focal plane. Read from the search engine's indexed text of this page on the date given: this session's network refuses this host (CONNECT 403)."
+    }
+   },
+   "high": {
+    "value": 6,
+    "source": {
+     "url": "https://www.primaryarms.com/primary-arms-clx-1-6x24mm-sfp-rifle-scope-acss-22lr-g2-reticle",
+     "read": "2026-11-28",
+     "note": "the same page, the top of the zoom. Read from the search engine's indexed text of this page on the date given: this session's network refuses this host (CONNECT 403)."
+    }
+   }
+  },
+  "fovFtAt100": {
+   "low": {
+    "value": 113.5,
+    "source": {
+     "url": "https://www.primaryarms.com/primary-arms-clx-1-6x24mm-sfp-rifle-scope-acss-22lr-g2-reticle",
+     "read": "2026-11-28",
+     "note": "the maker's page: field of view 113.5 ft at 100 yards at 1x; the CLx 1-6x24 scope manual gives the same (https://op1.0ps.us/pdf/opplanet-primary-arms-clx-1-6x24-manual-pdf.pdf). Read from the search engine's indexed text of this page on the date given: this session's network refuses this host (CONNECT 403)."
+    }
+   },
+   "high": {
+    "value": 18.8,
+    "source": {
+     "url": "https://www.rifleconfigurator.com/articles/pa-clx-1-6-22lr",
+     "read": "2026-11-28",
+     "note": "a review of this scope listing the maker's figures: 18.8 ft at 100 yards at 6x; the CLx 1-6x24 scope manual gives the same (https://op1.0ps.us/pdf/opplanet-primary-arms-clx-1-6x24-manual-pdf.pdf). Read from the search engine's indexed text of this page on the date given: this session's network refuses this host (CONNECT 403)."
+    }
+   }
+  },
+  "tubeMm": {
+   "value": 30,
+   "source": {
+    "url": "https://www.primaryarms.com/primary-arms-clx-1-6x24mm-sfp-rifle-scope-acss-22lr-g2-reticle",
+    "read": "2026-11-28",
+    "note": "the maker's page: 30 mm main tube. Read from the search engine's indexed text of this page on the date given: this session's network refuses this host (CONNECT 403)."
+   }
+  },
+  "reticle": {
+   "kind": "ladder",
+   "about": "The ACSS 22LR G2: a red center dot (lit) in a gap of the fine horizontal line, which turns into heavy posts at the sides; no line above the center; below it a post from the 75-yard hold at its top down past five stadia lines (100, 150 and 200 yards drawn as barbells, with end ticks; 125 and 175 plain), a 5 mph wind dot either side of each stadia, then a heavy post with a pointed tip. The maker calibrates the holds \"to best fit 36-40gr projectiles at 1000-1200 FPS\" with the center dot zeroed at 50 yards, at 6x only. Every mark is drawn at its angle from the maker's drawing; no distance is written beside any of them on the screen.",
+   "focalPlane": "second",
+   "trueAtPower": {
+    "value": 6,
+    "source": {
+     "url": "https://primaryarmsoptics.com/about-us/manuals/",
+     "read": "2026-11-28",
+     "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Page 2: \"For Second Focal Plane (SFP) scopes, your auto-ranging and holds are for MAX MAGNIFICATION ONLY\"; page 5: \"calibrated for use at the scope's maximum magnification setting of 6x\"."
+    }
+   },
+   "litColor": "red",
+   "centerDotMoa": {
+    "value": 0.997,
+    "source": {
+     "url": "https://primaryarmsoptics.com/about-us/manuals/",
+     "read": "2026-11-28",
+     "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Measured from the reticle drawing's own vector outlines on its page 4 (the \"Target Ranging\" drawing), in the drawing's units turned to minutes of angle by its 125- and 175-yard stadia, which the manual says are each \"the diameter of a clay pigeon (~4.3\\\")\" at their distance: 4.3 in at 125 yards is 3.286 MOA and at 175 yards 2.347 MOA, and both give the same scale (7.6713 drawing units to the minute). The page 5 drawing (\"Wind Holds\"), at its own scale, gives the same figures to the thousandth. The red center dot's diameter (the \"Center Point Illumination\", page 2)."
+    }
+   },
+   "lineMoa": {
+    "value": 0.399,
+    "source": {
+     "url": "https://primaryarmsoptics.com/about-us/manuals/",
+     "read": "2026-11-28",
+     "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Measured from the reticle drawing's own vector outlines on its page 4 (the \"Target Ranging\" drawing), in the drawing's units turned to minutes of angle by its 125- and 175-yard stadia, which the manual says are each \"the diameter of a clay pigeon (~4.3\\\")\" at their distance: 4.3 in at 125 yards is 3.286 MOA and at 175 yards 2.347 MOA, and both give the same scale (7.6713 drawing units to the minute). The page 5 drawing (\"Wind Holds\"), at its own scale, gives the same figures to the thousandth. The fine line's thickness: the horizontal line, the post and each stadia line."
+    }
+   },
+   "fineLineFromMoa": {
+    "value": 2.857,
+    "source": {
+     "url": "https://primaryarmsoptics.com/about-us/manuals/",
+     "read": "2026-11-28",
+     "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Measured from the reticle drawing's own vector outlines on its page 4 (the \"Target Ranging\" drawing), in the drawing's units turned to minutes of angle by its 125- and 175-yard stadia, which the manual says are each \"the diameter of a clay pigeon (~4.3\\\")\" at their distance: 4.3 in at 125 yards is 3.286 MOA and at 175 yards 2.347 MOA, and both give the same scale (7.6713 drawing units to the minute). The page 5 drawing (\"Wind Holds\"), at its own scale, gives the same figures to the thousandth. Where the fine horizontal line begins either side of the center, leaving the dot clear."
+    }
+   },
+   "postFromMoa": {
+    "value": 18.959,
+    "source": {
+     "url": "https://primaryarmsoptics.com/about-us/manuals/",
+     "read": "2026-11-28",
+     "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Measured from the reticle drawing's own vector outlines on its page 4 (the \"Target Ranging\" drawing), in the drawing's units turned to minutes of angle by its 125- and 175-yard stadia, which the manual says are each \"the diameter of a clay pigeon (~4.3\\\")\" at their distance: 4.3 in at 125 yards is 3.286 MOA and at 175 yards 2.347 MOA, and both give the same scale (7.6713 drawing units to the minute). The page 5 drawing (\"Wind Holds\"), at its own scale, gives the same figures to the thousandth. Where the heavy horizontal posts begin either side of the center."
+    }
+   },
+   "postMoa": {
+    "value": 1.502,
+    "source": {
+     "url": "https://primaryarmsoptics.com/about-us/manuals/",
+     "read": "2026-11-28",
+     "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Measured from the reticle drawing's own vector outlines on its page 4 (the \"Target Ranging\" drawing), in the drawing's units turned to minutes of angle by its 125- and 175-yard stadia, which the manual says are each \"the diameter of a clay pigeon (~4.3\\\")\" at their distance: 4.3 in at 125 yards is 3.286 MOA and at 175 yards 2.347 MOA, and both give the same scale (7.6713 drawing units to the minute). The page 5 drawing (\"Wind Holds\"), at its own scale, gives the same figures to the thousandth. The heavy posts' thickness (the lower post as well, page 5)."
+    }
+   },
+   "stemTopMoa": {
+    "value": 1.596,
+    "source": {
+     "url": "https://primaryarmsoptics.com/about-us/manuals/",
+     "read": "2026-11-28",
+     "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Measured from the reticle drawing's own vector outlines on its page 4 (the \"Target Ranging\" drawing), in the drawing's units turned to minutes of angle by its 125- and 175-yard stadia, which the manual says are each \"the diameter of a clay pigeon (~4.3\\\")\" at their distance: 4.3 in at 125 yards is 3.286 MOA and at 175 yards 2.347 MOA, and both give the same scale (7.6713 drawing units to the minute). The page 5 drawing (\"Wind Holds\"), at its own scale, gives the same figures to the thousandth. The top of the post under the center: the 75-yard hold (\"starting at 75 yards at the top of the post\")."
+    }
+   },
+   "stemToMoa": {
+    "value": 19.452,
+    "source": {
+     "url": "https://primaryarmsoptics.com/about-us/manuals/",
+     "read": "2026-11-28",
+     "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Measured from the reticle drawing's own vector outlines on its page 4 (the \"Target Ranging\" drawing), in the drawing's units turned to minutes of angle by its 125- and 175-yard stadia, which the manual says are each \"the diameter of a clay pigeon (~4.3\\\")\" at their distance: 4.3 in at 125 yards is 3.286 MOA and at 175 yards 2.347 MOA, and both give the same scale (7.6713 drawing units to the minute). The page 5 drawing (\"Wind Holds\"), at its own scale, gives the same figures to the thousandth. The bottom of the post, at the 200-yard barbell's lower end ticks."
+    }
+   },
+   "barbellTickMoa": {
+    "value": 0.997,
+    "source": {
+     "url": "https://primaryarmsoptics.com/about-us/manuals/",
+     "read": "2026-11-28",
+     "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Measured from the reticle drawing's own vector outlines on its page 4 (the \"Target Ranging\" drawing), in the drawing's units turned to minutes of angle by its 125- and 175-yard stadia, which the manual says are each \"the diameter of a clay pigeon (~4.3\\\")\" at their distance: 4.3 in at 125 yards is 3.286 MOA and at 175 yards 2.347 MOA, and both give the same scale (7.6713 drawing units to the minute). The page 5 drawing (\"Wind Holds\"), at its own scale, gives the same figures to the thousandth. The height of a barbell's end ticks."
+    }
+   },
+   "windDotMoa": {
+    "value": 0.6,
+    "source": {
+     "url": "https://primaryarmsoptics.com/about-us/manuals/",
+     "read": "2026-11-28",
+     "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Measured from the reticle drawing's own vector outlines on its page 4 (the \"Target Ranging\" drawing), in the drawing's units turned to minutes of angle by its 125- and 175-yard stadia, which the manual says are each \"the diameter of a clay pigeon (~4.3\\\")\" at their distance: 4.3 in at 125 yards is 3.286 MOA and at 175 yards 2.347 MOA, and both give the same scale (7.6713 drawing units to the minute). The page 5 drawing (\"Wind Holds\"), at its own scale, gives the same figures to the thousandth. A wind dot's diameter."
+    }
+   },
+   "lowerPostTipMoa": {
+    "value": 23.546,
+    "source": {
+     "url": "https://primaryarmsoptics.com/about-us/manuals/",
+     "read": "2026-11-28",
+     "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Measured from the page 5 drawing (\"Wind Holds\"), the only one that shows the lower heavy post, at that drawing's own scale from its 125- and 175-yard stadia (5.9666 units to the minute): the post's pointed tip under the center."
+    }
+   },
+   "lowerPostShoulderMoa": {
+    "value": 24.297,
+    "source": {
+     "url": "https://primaryarmsoptics.com/about-us/manuals/",
+     "read": "2026-11-28",
+     "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). The same drawing: where the lower post's point widens to its full thickness."
+    }
+   },
+   "stadia": [
+    {
+     "makerLabel": "100 y",
+     "belowMoa": {
+      "value": 4.294,
+      "source": {
+       "url": "https://primaryarmsoptics.com/about-us/manuals/",
+       "read": "2026-11-28",
+       "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Measured from the reticle drawing's own vector outlines on its page 4 (the \"Target Ranging\" drawing), in the drawing's units turned to minutes of angle by its 125- and 175-yard stadia, which the manual says are each \"the diameter of a clay pigeon (~4.3\\\")\" at their distance: 4.3 in at 125 yards is 3.286 MOA and at 175 yards 2.347 MOA, and both give the same scale (7.6713 drawing units to the minute). The page 5 drawing (\"Wind Holds\"), at its own scale, gives the same figures to the thousandth. The 100-yard stadia line's middle, under the center of the crosshair."
+      }
+     },
+     "widthMoa": {
+      "value": 4.294,
+      "source": {
+       "url": "https://primaryarmsoptics.com/about-us/manuals/",
+       "read": "2026-11-28",
+       "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Measured from the reticle drawing's own vector outlines on its page 4 (the \"Target Ranging\" drawing), in the drawing's units turned to minutes of angle by its 125- and 175-yard stadia, which the manual says are each \"the diameter of a clay pigeon (~4.3\\\")\" at their distance: 4.3 in at 125 yards is 3.286 MOA and at 175 yards 2.347 MOA, and both give the same scale (7.6713 drawing units to the minute). The page 5 drawing (\"Wind Holds\"), at its own scale, gives the same figures to the thousandth. The 100-yard stadia line's width, across the barbell's end ticks."
+      }
+     },
+     "barbell": true,
+     "windDotOutMoa": {
+      "value": 2.792,
+      "source": {
+       "url": "https://primaryarmsoptics.com/about-us/manuals/",
+       "read": "2026-11-28",
+       "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Measured from the reticle drawing's own vector outlines on its page 4 (the \"Target Ranging\" drawing), in the drawing's units turned to minutes of angle by its 125- and 175-yard stadia, which the manual says are each \"the diameter of a clay pigeon (~4.3\\\")\" at their distance: 4.3 in at 125 yards is 3.286 MOA and at 175 yards 2.347 MOA, and both give the same scale (7.6713 drawing units to the minute). The page 5 drawing (\"Wind Holds\"), at its own scale, gives the same figures to the thousandth. The 5 mph wind dots beside the 100-yard stadia, each side of the post, to their centers (left and right agree within 0.012 MOA; their mean)."
+      }
+     }
+    },
+    {
+     "makerLabel": "125 y",
+     "belowMoa": {
+      "value": 7.485,
+      "source": {
+       "url": "https://primaryarmsoptics.com/about-us/manuals/",
+       "read": "2026-11-28",
+       "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Measured from the reticle drawing's own vector outlines on its page 4 (the \"Target Ranging\" drawing), in the drawing's units turned to minutes of angle by its 125- and 175-yard stadia, which the manual says are each \"the diameter of a clay pigeon (~4.3\\\")\" at their distance: 4.3 in at 125 yards is 3.286 MOA and at 175 yards 2.347 MOA, and both give the same scale (7.6713 drawing units to the minute). The page 5 drawing (\"Wind Holds\"), at its own scale, gives the same figures to the thousandth. The 125-yard stadia line's middle, under the center of the crosshair."
+      }
+     },
+     "widthMoa": {
+      "value": 3.285,
+      "source": {
+       "url": "https://primaryarmsoptics.com/about-us/manuals/",
+       "read": "2026-11-28",
+       "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Measured from the reticle drawing's own vector outlines on its page 4 (the \"Target Ranging\" drawing), in the drawing's units turned to minutes of angle by its 125- and 175-yard stadia, which the manual says are each \"the diameter of a clay pigeon (~4.3\\\")\" at their distance: 4.3 in at 125 yards is 3.286 MOA and at 175 yards 2.347 MOA, and both give the same scale (7.6713 drawing units to the minute). The page 5 drawing (\"Wind Holds\"), at its own scale, gives the same figures to the thousandth. The 125-yard stadia line's width."
+      }
+     },
+     "barbell": false,
+     "windDotOutMoa": {
+      "value": 3.391,
+      "source": {
+       "url": "https://primaryarmsoptics.com/about-us/manuals/",
+       "read": "2026-11-28",
+       "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Measured from the reticle drawing's own vector outlines on its page 4 (the \"Target Ranging\" drawing), in the drawing's units turned to minutes of angle by its 125- and 175-yard stadia, which the manual says are each \"the diameter of a clay pigeon (~4.3\\\")\" at their distance: 4.3 in at 125 yards is 3.286 MOA and at 175 yards 2.347 MOA, and both give the same scale (7.6713 drawing units to the minute). The page 5 drawing (\"Wind Holds\"), at its own scale, gives the same figures to the thousandth. The 5 mph wind dots beside the 125-yard stadia, each side of the post, to their centers (left and right agree within 0.012 MOA; their mean)."
+      }
+     }
+    },
+    {
+     "makerLabel": "150 y",
+     "belowMoa": {
+      "value": 11.075,
+      "source": {
+       "url": "https://primaryarmsoptics.com/about-us/manuals/",
+       "read": "2026-11-28",
+       "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Measured from the reticle drawing's own vector outlines on its page 4 (the \"Target Ranging\" drawing), in the drawing's units turned to minutes of angle by its 125- and 175-yard stadia, which the manual says are each \"the diameter of a clay pigeon (~4.3\\\")\" at their distance: 4.3 in at 125 yards is 3.286 MOA and at 175 yards 2.347 MOA, and both give the same scale (7.6713 drawing units to the minute). The page 5 drawing (\"Wind Holds\"), at its own scale, gives the same figures to the thousandth. The 150-yard stadia line's middle, under the center of the crosshair."
+      }
+     },
+     "widthMoa": {
+      "value": 2.734,
+      "source": {
+       "url": "https://primaryarmsoptics.com/about-us/manuals/",
+       "read": "2026-11-28",
+       "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Measured from the reticle drawing's own vector outlines on its page 4 (the \"Target Ranging\" drawing), in the drawing's units turned to minutes of angle by its 125- and 175-yard stadia, which the manual says are each \"the diameter of a clay pigeon (~4.3\\\")\" at their distance: 4.3 in at 125 yards is 3.286 MOA and at 175 yards 2.347 MOA, and both give the same scale (7.6713 drawing units to the minute). The page 5 drawing (\"Wind Holds\"), at its own scale, gives the same figures to the thousandth. The 150-yard stadia line's width, across the barbell's end ticks."
+      }
+     },
+     "barbell": true,
+     "windDotOutMoa": {
+      "value": 4.089,
+      "source": {
+       "url": "https://primaryarmsoptics.com/about-us/manuals/",
+       "read": "2026-11-28",
+       "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Measured from the reticle drawing's own vector outlines on its page 4 (the \"Target Ranging\" drawing), in the drawing's units turned to minutes of angle by its 125- and 175-yard stadia, which the manual says are each \"the diameter of a clay pigeon (~4.3\\\")\" at their distance: 4.3 in at 125 yards is 3.286 MOA and at 175 yards 2.347 MOA, and both give the same scale (7.6713 drawing units to the minute). The page 5 drawing (\"Wind Holds\"), at its own scale, gives the same figures to the thousandth. The 5 mph wind dots beside the 150-yard stadia, each side of the post, to their centers (left and right agree within 0.000 MOA; their mean)."
+      }
+     }
+    },
+    {
+     "makerLabel": "175 y",
+     "belowMoa": {
+      "value": 14.97,
+      "source": {
+       "url": "https://primaryarmsoptics.com/about-us/manuals/",
+       "read": "2026-11-28",
+       "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Measured from the reticle drawing's own vector outlines on its page 4 (the \"Target Ranging\" drawing), in the drawing's units turned to minutes of angle by its 125- and 175-yard stadia, which the manual says are each \"the diameter of a clay pigeon (~4.3\\\")\" at their distance: 4.3 in at 125 yards is 3.286 MOA and at 175 yards 2.347 MOA, and both give the same scale (7.6713 drawing units to the minute). The page 5 drawing (\"Wind Holds\"), at its own scale, gives the same figures to the thousandth. The 175-yard stadia line's middle, under the center of the crosshair."
+      }
+     },
+     "widthMoa": {
+      "value": 2.346,
+      "source": {
+       "url": "https://primaryarmsoptics.com/about-us/manuals/",
+       "read": "2026-11-28",
+       "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Measured from the reticle drawing's own vector outlines on its page 4 (the \"Target Ranging\" drawing), in the drawing's units turned to minutes of angle by its 125- and 175-yard stadia, which the manual says are each \"the diameter of a clay pigeon (~4.3\\\")\" at their distance: 4.3 in at 125 yards is 3.286 MOA and at 175 yards 2.347 MOA, and both give the same scale (7.6713 drawing units to the minute). The page 5 drawing (\"Wind Holds\"), at its own scale, gives the same figures to the thousandth. The 175-yard stadia line's width."
+      }
+     },
+     "barbell": false,
+     "windDotOutMoa": {
+      "value": 4.687,
+      "source": {
+       "url": "https://primaryarmsoptics.com/about-us/manuals/",
+       "read": "2026-11-28",
+       "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Measured from the reticle drawing's own vector outlines on its page 4 (the \"Target Ranging\" drawing), in the drawing's units turned to minutes of angle by its 125- and 175-yard stadia, which the manual says are each \"the diameter of a clay pigeon (~4.3\\\")\" at their distance: 4.3 in at 125 yards is 3.286 MOA and at 175 yards 2.347 MOA, and both give the same scale (7.6713 drawing units to the minute). The page 5 drawing (\"Wind Holds\"), at its own scale, gives the same figures to the thousandth. The 5 mph wind dots beside the 175-yard stadia, each side of the post, to their centers (left and right agree within 0.000 MOA; their mean)."
+      }
+     }
+    },
+    {
+     "makerLabel": "200 y",
+     "belowMoa": {
+      "value": 18.959,
+      "source": {
+       "url": "https://primaryarmsoptics.com/about-us/manuals/",
+       "read": "2026-11-28",
+       "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Measured from the reticle drawing's own vector outlines on its page 4 (the \"Target Ranging\" drawing), in the drawing's units turned to minutes of angle by its 125- and 175-yard stadia, which the manual says are each \"the diameter of a clay pigeon (~4.3\\\")\" at their distance: 4.3 in at 125 yards is 3.286 MOA and at 175 yards 2.347 MOA, and both give the same scale (7.6713 drawing units to the minute). The page 5 drawing (\"Wind Holds\"), at its own scale, gives the same figures to the thousandth. The 200-yard stadia line's middle, under the center of the crosshair."
+      }
+     },
+     "widthMoa": {
+      "value": 2.041,
+      "source": {
+       "url": "https://primaryarmsoptics.com/about-us/manuals/",
+       "read": "2026-11-28",
+       "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Measured from the reticle drawing's own vector outlines on its page 4 (the \"Target Ranging\" drawing), in the drawing's units turned to minutes of angle by its 125- and 175-yard stadia, which the manual says are each \"the diameter of a clay pigeon (~4.3\\\")\" at their distance: 4.3 in at 125 yards is 3.286 MOA and at 175 yards 2.347 MOA, and both give the same scale (7.6713 drawing units to the minute). The page 5 drawing (\"Wind Holds\"), at its own scale, gives the same figures to the thousandth. The 200-yard stadia line's width, across the barbell's end ticks."
+      }
+     },
+     "barbell": true,
+     "windDotOutMoa": {
+      "value": 5.188,
+      "source": {
+       "url": "https://primaryarmsoptics.com/about-us/manuals/",
+       "read": "2026-11-28",
+       "note": "Primary Arms' \"ACSS 22LR G2 Reticle Manual\" for the CLx 1-6x24, listed on the maker's manuals page; Dan downloaded it and gave it to the session on 28 Nov 2026 (this session's own fetch of the maker's hosts was refused). Measured from the reticle drawing's own vector outlines on its page 4 (the \"Target Ranging\" drawing), in the drawing's units turned to minutes of angle by its 125- and 175-yard stadia, which the manual says are each \"the diameter of a clay pigeon (~4.3\\\")\" at their distance: 4.3 in at 125 yards is 3.286 MOA and at 175 yards 2.347 MOA, and both give the same scale (7.6713 drawing units to the minute). The page 5 drawing (\"Wind Holds\"), at its own scale, gives the same figures to the thousandth. The 5 mph wind dots beside the 200-yard stadia, each side of the post, to their centers (left and right agree within 0.006 MOA; their mean)."
+      }
+     }
+    }
+   ],
+   "marksNotDrawn": "none of the drawing's marks is left out; the drawing's own labels (\"75 y\" and the like, and \"5 mph\") are the manual's explanations, not part of the reticle, and are not drawn"
+  }
  },
  "pa-md25": {
   "name": "Primary Arms SLx MD-25 red dot, 2 MOA dot",

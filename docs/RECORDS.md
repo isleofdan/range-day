@@ -437,6 +437,7 @@ and never written anywhere. `game` is, field for field, one entry of
 | `loads` | a list of load ids from `data/loads.json` |
 | `firstCourse` | a course id from `data/courses.json`: the course the rifle opens on the first time on a device |
 | `sightLeaf` | optional: an object, sight id to the name of a leaf table on that sight (for example `{ "ak-irons": "leaf545" }`, the 5.45 rifle's until range-day-twelve, whose two sights now carry that leaf as their own); a sight not named uses its own `leaf` |
+| `scopeMount` | optional (range-day-thirteen): `{ rail, words, railHeightOverBoreIn }`, how a scope is mounted; range-day-eighteen adds `ownScope`, the rifle's own scope that is not one of the collection (the .22's Primary Arms CLx): `{ sight, rings, ringsSaddleOverDovetailIn, receiverTopOverBoreIn }`, the two heights figures; the scope's `sightHeightIn` is the saddle plus half its tube plus the receiver top |
 
 A figure is `{ "value": <number>, "source": { "url": "...", "read": "YYYY-MM-DD" } }`
 or `{ "value": <number>, "estimate": "<its basis>" }`; a bare number is

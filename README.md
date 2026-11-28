@@ -93,6 +93,23 @@ clicks, then works out the drop and the wind for each distance himself.
   one click moves, the rear leaf, the saved zero's full words, the
   conditions, the supply's note, **The day so far**, **Pack up**) is a
   short scroll below. `scripts/bench-layout.mjs` measures it.
+- **The .22's own scope** (range-day-eighteen): a Primary Arms CLx 1-6x24,
+  the second choice of sight on the .22 after its open sights (which stay
+  the first, with every zero, setting and book line they had). It zooms
+  from 1 to 6 power; one click moves the strike half a minute of angle
+  (about half an inch at 100 yards), 120 clicks each way; the view is the
+  maker's 113.5 ft across at 100 yards at 1 power and 18.8 ft at 6 power.
+  Its reticle is the maker's ACSS 22LR G2, cut for .22 ammunition: a
+  red dot at the center, a fine line turning into heavy posts at the
+  sides, and below the dot a post with five hold lines and a wind dot
+  either side of each, every mark measured from the maker's reticle
+  manual. No distance is written on the glass: which line is which is
+  for the player to learn. The reticle is in the second focal plane, so
+  its marks are the maker's angles at 6 power and stand six times as
+  far apart at 1 power. It sits in Warne 731M dovetail rings, 1.49 in over the bore
+  (the rings' maker's figure, half the 30 mm tube, and an estimate for
+  the receiver), and starts unzeroed. It is the .22's own scope, not one
+  of the collection, so the workbench offers no mount for it.
 - **The scope collection** (range-day-thirteen): three scopes that move
   among the rifles, each from its maker's figures in `data/sights.json`:
   the Trijicon ACOG 4x32 TA31F on its TA51 mount (fixed 4 power, half an

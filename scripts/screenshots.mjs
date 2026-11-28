@@ -351,6 +351,18 @@ SCREENS.push(
   { name: 'book-compare', small: true, path: '/', expect: 'Beside another version', after: async (page) => { await putBookBack(page); await noBuilds(page); }, act: async (page) => { await noBuilds(page); await setBookAside(page); const id = await wbMake(page); await bookLines(page, id); await page.goto(`${base}/book?course=angeles-sylmar&rifle=${id}&sight=troy-battlesights&load=imi-m193`); await page.waitForSelector('#compare-table table'); await page.evaluate(() => document.getElementById('compare-box').scrollIntoView()); } },
 );
 
+// range-day-eighteen: the .22's own scope, the Primary Arms CLx 1-6x24 (home, the bench, the line at both ends of its zoom, the
+// workbench with the .22). Each starts with the scope's records cleared, so it opens unzeroed at the middle of its clicks.
+const R22 = 'course=angeles-sylmar&rifle=remington-22&sight=pa-clx-1-6x24&load=cci-sv-40';
+const nearestSteel = (page) => page.evaluate(() => { const o = [...document.querySelectorAll('#plate option')]; return o.find((x) => /steel/.test(x.textContent)).value; });
+SCREENS.push(
+  { name: 'home-22-scope', small: true, path: '/?rifle=remington-22', expect: 'Primary Arms CLx 1-6x24', act: async (page) => { await page.waitForSelector('.rifle.picked[data-rifle="remington-22"]'); await page.selectOption('#sight', 'pa-clx-1-6x24'); await settle(page, 300); } },
+  { name: 'zero-22-scope', small: true, path: `/zero?${R22}`, expect: 'Primary Arms CLx', act: async (page) => { await fresh(page, 'remington-22', 'pa-clx-1-6x24'); await page.reload(); await page.waitForSelector('#fire5'); } },
+  { name: 'line-22-scope-1x', small: true, path: `/line?${R22}`, expect: 'Zoom', act: async (page) => { await fresh(page, 'remington-22', 'pa-clx-1-6x24'); await page.reload(); await ready(page); await page.selectOption('#plate', await nearestSteel(page)); await page.evaluate(() => RangeDayLine.setZoom(1)); await settle(page, 500); } },
+  { name: 'line-22-scope-6x', small: true, path: `/line?${R22}`, expect: 'Zoom', act: async (page) => { await fresh(page, 'remington-22', 'pa-clx-1-6x24'); await page.reload(); await ready(page); await page.selectOption('#plate', await nearestSteel(page)); await page.evaluate(() => RangeDayLine.setZoom(6)); await settle(page, 500); } },
+  { name: 'workbench-22', small: true, path: '/', expect: 'Primary Arms CLx', act: async (page) => { await noBuilds(page); await page.goto(`${base}/workbench?rifle=remington-22`); await page.waitForSelector('#changes table'); } },
+);
+
 const GREP = arg('--grep', null) ? new RegExp(arg('--grep')) : null; // --grep <pattern>: only the states whose names match (for a before-and-after pair by hand; the check runs every state)
 const SHARD = SCREENS.filter((_, i) => i % shardOf === shardIx - 1).filter((s) => !GREP || GREP.test(s.name));
 if (process.argv.includes('--list')) { for (const s of SHARD) console.log(s.name); process.exit(0); }

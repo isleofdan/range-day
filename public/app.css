@@ -121,6 +121,15 @@ main.home h1 { margin: 4px 0 6px; font-size: 22px; }
 .picks select { padding: 9px 8px; font-size: 16px; }
 main.home .zero-line { margin: 10px 0 8px; padding: 8px 12px; font-size: 16px; }
 main.home .row.doors { margin: 0 0 8px; }
+/* range-day-eighteen: with a build picked the Version row adds a line; the rifle cards, the gaps and the zero line tighten so the
+   Zero bench and Firing line buttons stay wholly on a 412x915 screen with room under them (test/scope22.test.js measures it).
+   Nothing is removed: the same cards, chips and words. */
+main.home:has(.builds-of:not(:empty)) .rifles { gap: 4px; }
+main.home:has(.builds-of:not(:empty)) .rifle { padding: 3px 10px; }
+main.home:has(.builds-of:not(:empty)) .builds-of { margin-bottom: 2px; }
+main.home:has(.builds-of:not(:empty)) .picks .field label { margin: 4px 0 2px; }
+main.home:has(.builds-of:not(:empty)) .rifle .rname { font-size: 14px; line-height: 1.2; }
+main.home:has(.builds-of:not(:empty)) .zero-line { margin: 8px 0 6px; padding: 6px 12px; font-size: 15px; line-height: 1.35; }
 select, input[type=range] { width: 100%; font-size: 17px; padding: 12px 10px; border-radius: 10px; border: 1px solid var(--line); background: var(--card); color: var(--fg); }
 input[type=range] { padding: 0; height: 44px; }
 .row { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }

@@ -1,5 +1,5 @@
 {
- "_about": "The rifle set. barrelIn is the barrel length the loads' speeds are given for. sightHeightIn is how far the sight line sits above the bore for each sight the rifle can carry. boreOffsetMoa is the rifle's mechanical offset with the sight at its middle setting: the reason a sight needs zeroing. sights lists the sights (data/sights.json) the rifle can carry; defaultSight is the sight the rifle opened with before every sight could be chosen (the Vepr its scope, the others their iron sights), which an address without a sight still opens and whose old saved zero and shot log are read forward. firstCourse is the course the rifle opens on the first time on a device (then the last used). sightLeaf names, per iron sight that has more than one leaf table, which table this rifle's leaf follows (the 5.45x39 rifle's leaf is cut for its own load); a sight not named uses its own \"leaf\". range-day-thirteen: scopeMount is how a scope is mounted on the rifle: the kind of rail (rail: \"picatinny\" takes every mount of the scope collection; \"rimfire-dovetail\" takes none of them), in words, and the rail top's height over the bore (railHeightOverBoreIn); a collection scope's height over the bore on the rifle is that height plus its mount's (data/sights.json, mount.centerOverRailIn), worked out and checked by lib/guns.js.",
+ "_about": "The rifle set. barrelIn is the barrel length the loads' speeds are given for. sightHeightIn is how far the sight line sits above the bore for each sight the rifle can carry. boreOffsetMoa is the rifle's mechanical offset with the sight at its middle setting: the reason a sight needs zeroing. sights lists the sights (data/sights.json) the rifle can carry; defaultSight is the sight the rifle opened with before every sight could be chosen (the Vepr its scope, the others their iron sights), which an address without a sight still opens and whose old saved zero and shot log are read forward. firstCourse is the course the rifle opens on the first time on a device (then the last used). sightLeaf names, per iron sight that has more than one leaf table, which table this rifle's leaf follows (the 5.45x39 rifle's leaf is cut for its own load); a sight not named uses its own \"leaf\". range-day-thirteen: scopeMount is how a scope is mounted on the rifle: the kind of rail (rail: \"picatinny\" takes every mount of the scope collection; \"rimfire-dovetail\" takes none of them), in words, and the rail top's height over the bore (railHeightOverBoreIn); a collection scope's height over the bore on the rifle is that height plus its mount's (data/sights.json, mount.centerOverRailIn), worked out and checked by lib/guns.js. range-day-eighteen: scopeMount.ownScope is a rifle's own scope that is not one of the collection (the .22's Primary Arms CLx): the sight it names, the rings it sits in, the rings' saddle height over the dovetail and the receiver top's height over the bore; the scope's sightHeightIn is the saddle plus half its tube (data/sights.json, tubeMm) plus the receiver top, which test/data.test.js works out again.",
  "bcm-ar15": {
   "name": "BCM AR-15 carbine, 5.56",
   "caliber": "5.56x45",
@@ -371,6 +371,10 @@
    "rem-irons": {
     "value": 0.9,
     "estimate": "open sights on a rimfire sporter sit under an inch over the bore; no maker figure"
+   },
+   "pa-clx-1-6x24": {
+    "value": 1.491,
+    "estimate": "the scope's center over the bore in the Warne 731M rings (scopeMount.ownScope): the rings' saddle stands 0.4 in over the dovetail (a sourced figure), the 30 mm tube's center 0.591 in over the saddle (half the maker's 30 mm), and the receiver's top, where the dovetail is cut, 0.5 in over the bore (an estimate, scopeMount.ownScope.receiverTopOverBoreIn): 0.4 + 0.591 + 0.5 = 1.491 in"
    }
   },
   "boreOffsetMoa": {
@@ -388,7 +392,8 @@
    "estimate": "a .22 barely moves the view"
   },
   "sights": [
-   "rem-irons"
+   "rem-irons",
+   "pa-clx-1-6x24"
   ],
   "defaultSight": "rem-irons",
   "loads": [
@@ -397,7 +402,23 @@
   "firstCourse": "angeles-sylmar",
   "scopeMount": {
    "rail": "rimfire-dovetail",
-   "words": "a receiver grooved for 3/8-inch tip-off rimfire mounts (Remington's open-sighted bolt-action .22s, e.g. the Model Five: \"the receiver is grooved for tip-off scope mounts\", https://www.gunblast.com/Remington-ModelFive.htm, search text). None of the collection's mounts clamps a dovetail, and an adapter rail is no part of this set, so the .22 offers none of them."
+   "words": "a receiver grooved for 3/8-inch tip-off rimfire mounts (Remington's open-sighted bolt-action .22s, e.g. the Model Five: \"the receiver is grooved for tip-off scope mounts\", https://www.gunblast.com/Remington-ModelFive.htm, search text). Its own scope, the Primary Arms CLx 1-6x24 (range-day-eighteen), sits in dovetail rings (ownScope). None of the scope collection's mounts clamps a dovetail, and an adapter rail is no part of this set, so the .22 offers none of the collection.",
+   "ownScope": {
+    "sight": "pa-clx-1-6x24",
+    "rings": "Warne 731M rimfire rings, 30 mm, medium, matte: steel rings that clamp a 3/8-inch (or 11 mm) dovetail and hold a 30 mm tube, the CLx's tube",
+    "ringsSaddleOverDovetailIn": {
+     "value": 0.4,
+     "source": {
+      "url": "https://warnescopemounts.com/731m-warne-30mm-rimfire-med-matte-rings/",
+      "read": "2026-11-28",
+      "note": "the maker's page for the 731M: dimension B (the saddle's height, from the top of the dovetail to the bottom of the scope's tube) 0.400 in; retailers list the same \".400 in\" saddle height (https://www.opticsplanet.com/warne-22-30mm-riflescope-rings.html). Read from the search engine's indexed text of this page on the date given: this session's network refuses this host (CONNECT 403)."
+     }
+    },
+    "receiverTopOverBoreIn": {
+     "value": 0.5,
+     "estimate": "no maker figure, and the rifle's model is not identified (barrelIn). Remington's bolt-action rimfires have a round receiver about an inch across with the bore on its axis, the dovetail grooves cut along its top, so the top stands about half an inch over the bore"
+    }
+   }
   }
  }
 }
