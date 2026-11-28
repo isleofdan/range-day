@@ -1430,6 +1430,8 @@
         // range-day-thirteen: the ACOG's chevron, its base's width and its height in pixels; whether the reticle is a plain crosshair
         chevronPx: sight.reticle && sight.reticle.kind === 'chevron' ? { widthPx: sight.reticle.chevronBaseWidthMoa * k, heightPx: sight.reticle.chevronHeightMoa * k } : null,
         crosshair: Boolean(sight.reticle && sight.reticle.kind === 'crosshair'),
+        // range-day-eighteen: a crosshair's center dot as drawn at the power in use (a second-focal-plane dot grows as the power falls)
+        centerDotPx: sight.reticle && sight.reticle.centerDotMoa ? sight.reticle.centerDotMoa * sfpScale() * k : null,
         // range-day-fourteen: the reticle's kind (the tests read its marks from the canvas against the data themselves)
         reticleKind: sight.reticle ? sight.reticle.kind : null };
     } };
