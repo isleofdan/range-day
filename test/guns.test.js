@@ -236,3 +236,19 @@ test('range-day-fifteen step 2: npm run gun-records prints the seven rifles as i
     assert.deepStrictEqual(row, { type: 'gun', name: r.name, fields: r.fields }, ids[i]);
   });
 });
+
+test('range-day-nineteen step 7: npm run gun-records -- <ids> prints only those rifles\' records, the expansion\'s saying they are no one\'s and the seven still Dan\'s; an id not in the file stops it', () => {
+  const { execFileSync, spawnSync } = require('node:child_process');
+  const FOUR = ['tikka-t3x-ctr', 'jp-15-6arc', 'iwi-tavor-7', 'vudoo-v22-ravage'];
+  const out = JSON.parse(execFileSync('node', ['scripts/gun-records.mjs', ...FOUR], { cwd: root }).toString());
+  assert.deepEqual(out.records.map((r) => r.fields.gameId), FOUR);
+  for (const r of out.records) {
+    assert.deepStrictEqual(r, (({ name, fields }) => ({ type: 'gun', name, fields }))(guns.toRecord(r.fields.gameId, raw.rifles[r.fields.gameId])));
+    assert.equal(r.fields.whose, "no one's: one of the game's expansion rifles");
+    assert.equal(r.fields.game.expansion, true);
+  }
+  for (const id of Object.keys(raw.rifles).filter((k) => !k.startsWith('_') && !raw.rifles[k].expansion)) assert.equal(guns.toRecord(id, raw.rifles[id]).fields.whose, "Dan's", id);
+  const bad = spawnSync('node', ['scripts/gun-records.mjs', 'no-such-rifle'], { cwd: root, encoding: 'utf8' });
+  assert.equal(bad.status, 1);
+  assert.match(bad.stderr, /^gun-records: 'no-such-rifle' is not in data\/rifles\.json: bcm-ar15, /);
+});
