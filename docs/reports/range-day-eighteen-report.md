@@ -3,9 +3,11 @@
 The .22 has its own scope: a Primary Arms CLx 1-6x24 with the ACSS 22LR
 G2 reticle, the second sight choice on the .22 after its open sights.
 Pull request [#62](https://github.com/isleofdan/range-day/pull/62) holds
-all of it; it is not merged. Nothing on Dan's screen has changed yet: the
-live game shows the scope only after the merge and the deploy, which wait
-on his typed line.
+all of it. On Dan's typed line ("yes, merge and deploy range-day-eighteen,
+write the .22's gun record, then merge its notes") it was merged as
+`c16313b`, the .22's gun record in the Spine was written, and Deploy run
+30 ([46104617819](https://github.com/isleofdan/range-day/actions/runs/46104617819))
+put it live: the .22 offers the scope on home now.
 
 Executor: a Claude Code cloud session (Dan opened it from the Wall card
 `range-day`; permission mode Auto, as the session's own notices state).
@@ -168,7 +170,7 @@ again after the repairs in commit `8ddb051`): `home-22-scope-*`,
    by name), the branch's own run reached 123 tests with none failing
    before it was stopped for time; the proof is the Checks workflow.
    On the branch: 196 tests (189 + 7 in `test/scope22.test.js`).
-   Checks run [46099042351](https://github.com/isleofdan/range-day/actions/runs/46099042351) on `5202636`, the pull request's head: all 13 jobs passed (the 9 test groups and the 4 screenshot shards). Two earlier runs failed and were fixed in this pull request: run 46097095351 (home's doors 1.4 px from the foot of the screen in the Checks machine's wider font; fixed in `56d6520`) and run 46097387243 (a test name with an unescaped apostrophe, my slip; fixed in `063c132`).
+   Checks run [46100379029](https://github.com/isleofdan/range-day/actions/runs/46100379029) on `7609e53`, the pull request's head when merged: all 13 jobs passed (the 9 test groups and the 4 screenshot shards); the run before it, [46099042351](https://github.com/isleofdan/range-day/actions/runs/46099042351) on `5202636` (the code's last change), passed all 13 too. Two earlier runs failed and were fixed in the pull request: run 46097095351 (home's doors 1.4 px from the foot of the screen in the Checks machine's wider font; fixed in `56d6520`) and run 46097387243 (a test name with an unescaped apostrophe, my slip; fixed in `063c132`).
 2. **Nothing moved for what existed**: `test/workbench.test.js`
    "verify 2" (the seven rifles' strikes with their default sights,
    `test/fitted-strikes.json`, from range-day-seventeen) passes unchanged;
@@ -202,30 +204,22 @@ again after the repairs in commit `8ddb051`): `home-22-scope-*`,
    writes no figure or word (0 text marks at 1 and 6 power).
 8. **Screens**: the states listed under the UI review, at 412×915,
    378×762 and 1280×800; every state fits the width.
-9. **After the deploy**: not reached; it cannot be before Dan's line
-   (merge, gun record, deploy). The Deploy run's guns line and the
-   Production check result go into the notes-only pull request after the
-   deploy, as `CLAUDE.md` orders it.
+9. **After the deploy**: the gun record was written first (`import_records`: 1 updated, 0 rejected; only its `game` section changed, to what `npm run gun-records` prints). Deploy run [46104617819](https://github.com/isleofdan/range-day/actions/runs/46104617819), green, its line about the guns word for word: "guns from the Spine: 12 records, 7 in the game, 5 not modeled · read in 578 ms (limit 5000 ms) at 2026-11-28T03:49:55Z · differs from data/rifles.json: none"; the alive line "alive since 2026-11-28T03:49:55Z · c16313b". Production check run [46104790573](https://github.com/isleofdan/range-day/actions/runs/46104790573): green (the live firing line opened in a real browser).
 
-Result check: the first check (job 20261128-025346-b3f2c2) returned
-four findings: the first paragraph did not say Dan's screen is unchanged
-(fixed above); two repaired screens' pictures were not in the pull
-request (taken again and committed); the report and the `PLAN.md` note
-were not in the pull request (both added to #62; the brief asks for every
-change in one pull request, and the notes-only pull request after the
-deploy then adds the deploy's results, the order `CLAUDE.md` fixes); and
-item 9 above, which only the deploy can answer. Second check: on this
-report.
+Result check: three checks before the merge (jobs 20261128-025346-b3f2c2,
+20261128-025607-5eef98, 20261128-031623-069133). The first two found the
+first paragraph, two missing pictures, the report and `PLAN.md` note not
+in the pull request, and the checks still running on the new head; each
+was fixed in #62. The third found only item 9, which only the deploy
+could answer; Dan's line came after it, and item 9 is answered above.
 
 ## Numbered asks
 
-1. Merge, write the .22's gun record in the Spine, deploy, then merge
-   the notes. Recommended: yes; every check on #62 is green.
+None open. (The one ask, the merge, the gun record and the deploy, was
+answered by Dan's typed line above.)
 
 ## What the next session needs
 
-- After the deploy: the Deploy run's line about the guns must read
-  "differs from data/rifles.json: none", and the Production check green.
 - Dan's look on his phone: the .22 with the scope on home, the bench,
   the line at 1 and 6 power.
 - Open: a second-focal-plane scope's holds are true only at 6 power; the
@@ -234,11 +228,6 @@ report.
 
 ## Closing message to Dan
 
-The .22 has its own scope: the Primary Arms CLx 1-6x24 with the ACSS 22LR G2 reticle, drawn from the manual you sent. Pull request #62; all 13 checks are green.
+The .22's own scope is live: the Primary Arms CLx 1-6x24 with the ACSS 22LR G2 reticle from the manual you sent. The deploy and the live check are green, and the .22's record matches the game.
 
-Needed from you:
-1. Type this line to merge, write the .22's gun record, deploy, and merge the notes:
-
-```
-yes, merge and deploy range-day-eighteen, write the .22's gun record, then merge its notes
-```
+Needed from you: nothing to decide. Next is the walk-through on your phone, one step per message.
