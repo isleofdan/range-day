@@ -556,5 +556,48 @@
     "estimate": "IWI publishes no rail height for the Tavor 7. A bullpup's rail stands high over its bore: on the Tavor SAR an owner measured a scope 3.75 in over the bore in an AR-height (about 1.5 in) mount, putting that rail about 2.25 in over the bore (https://www.ar15.com/forums/armory/Tavor_sight_height_over_bore_/43-412550/, the basis of the Tavor SAR's and X95's entries in this file), and Manticore sells a riser that lifts the Tavor 7's factory rail about 1/2 in (https://www.opticsplanet.com/manticore-arms-tavor-7-overatch-full-length-top-rail.html, search text), as it sells one for the SAR. The SAR's 2.25 in is used"
    }
   }
+ },
+ "vudoo-v22-ravage": {
+  "name": "Vudoo V-22 Ravage, .22 LR",
+  "caliber": ".22 LR",
+  "playable": true,
+  "expansion": true,
+  "barrelIn": {
+   "value": 16.5,
+   "source": {
+    "url": "https://www.vudoogunworks.com/shop/firearms/rimfire-rifles/ravage",
+    "read": "2026-11-28",
+    "note": "Vudoo's Ravage page: a Three 60 or V-22 action; barrels of 16.5, 18, 20 or 22 in, Kukri or MTU-V contour, 416R stainless, single-point cut; scope base of 0, 20, 30, 40 or 60 MOA; Timney 510v2 trigger; 10-round V-2210 magazine; about 10 lb. The page lists 16.5 in first, so 16.5 in is used. The set's .22 load's speed is not given for a barrel length (data/loads.json, cci-sv-40), and .22 LR gains nothing between about 16 and 27 in (data/workbench.json, fpsPerInch), so the length does not change its speed. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+   }
+  },
+  "sightHeightIn": {},
+  "boreOffsetMoa": {
+   "up": {
+    "value": -1.8,
+    "estimate": "a scope set to its mechanical middle is a few minutes off on most rifles; the figure is chosen so the rifle needs zeroing, not measured"
+   },
+   "right": {
+    "value": 1.2,
+    "estimate": "same basis: the same basis as the figure next to it in this entry"
+   }
+  },
+  "recoilFactor": {
+   "value": 0.1,
+   "estimate": "a .22 barely moves the view, as on the set's other .22"
+  },
+  "sights": [],
+  "defaultSight": "leupold-mark5hd-5-25",
+  "loads": [
+   "cci-sv-40"
+  ],
+  "firstCourse": "angeles-sylmar",
+  "scopeMount": {
+   "rail": "picatinny",
+   "words": "Vudoo's Picatinny scope base on the receiver (the 0 MOA base of the page's choices; Vudoo's repeater bases are sold as \"~5.75\" of Picatinny rail\", https://www.midwestgunworks.com/page/mgwi/prod/vudoo-sb-rh, search text). Unlike the set's Remington .22, whose grooved receiver takes none of the collection's mounts, it takes them all. It comes with no iron sights, so it aims through the scope collection and opens with the Leupold Mark 5HD",
+   "railHeightOverBoreIn": {
+    "value": 1,
+    "estimate": "Vudoo publishes no rail height. The V-22 is a rimfire action true to the Remington 700's scale and footprint (\"fits Remington 700 footprints\", https://bulletin.accurateshooter.com/?p=68601, search text); a Remington 700 receiver is about 1.35 in across with the bore on its axis, so its top stands about 0.68 in over the bore, and a Picatinny base adds about 0.3 in: about 1 in"
+   }
+  }
  }
 }

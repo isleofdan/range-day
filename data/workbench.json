@@ -245,6 +245,40 @@
           "note": "\"A 20\" barrel conversion kit is available from IWI for $529\"; retailers also list a 20 in Tavor 7 (https://blackstoneshooting.com/iwi-tavor-7-7-62x51mm-nato-20-barrel-10-1-rds-flat-dark-earth). Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
         }
       }
+    ],
+    "vudoo-v22-ravage": [
+      {
+        "value": 16.5,
+        "source": {
+          "url": "https://www.vudoogunworks.com/shop/firearms/rimfire-rifles/ravage",
+          "read": "2026-11-28",
+          "note": "Vudoo's Ravage: barrels of 16.5, 18, 20 or 22 in. The rifle's own length (data/rifles.json, vudoo-v22-ravage). Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+        }
+      },
+      {
+        "value": 18,
+        "source": {
+          "url": "https://www.vudoogunworks.com/shop/firearms/rimfire-rifles/ravage",
+          "read": "2026-11-28",
+          "note": "Vudoo's Ravage: barrels of 16.5, 18, 20 or 22 in. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+        }
+      },
+      {
+        "value": 20,
+        "source": {
+          "url": "https://www.vudoogunworks.com/shop/firearms/rimfire-rifles/ravage",
+          "read": "2026-11-28",
+          "note": "Vudoo's Ravage: barrels of 16.5, 18, 20 or 22 in. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+        }
+      },
+      {
+        "value": 22,
+        "source": {
+          "url": "https://www.vudoogunworks.com/shop/firearms/rimfire-rifles/ravage",
+          "read": "2026-11-28",
+          "note": "Vudoo's Ravage: barrels of 16.5, 18, 20 or 22 in. Read from the search engine's indexed text of this page on the date given: this session's network allows web search but refuses page fetches."
+        }
+      }
     ]
   },
   "mounts": {
